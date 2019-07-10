@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SunacCoordination.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="SunacCoordinationDlg.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SunacCoordinationDlg.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="SunacCoordination.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source">
+      <UniqueIdentifier>{efe70b79-2d79-4a9b-a5a8-790775b65eab}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="res\AsdkAcUiSample.rc2">
+      <Filter>Source</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SunacCoordination.rc">
+      <Filter>Source</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
