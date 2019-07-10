@@ -132,17 +132,13 @@
   <ItemGroup>
     <ClCompile Include="Common\Excel\CExcel.cpp" />
     <ClCompile Include="Common\Excel\Excel.cpp" />
-    <ClCompile Include="SunacCoordinationDlg.cpp" />
-    <ClCompile Include="SunacCoordination.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="SunacCoordination.rc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Excel\CApplication.h" />
@@ -158,9 +154,8 @@
     <ClInclude Include="Common\Excel\CWorksheet.h" />
     <ClInclude Include="Common\Excel\CWorksheets.h" />
     <ClInclude Include="Common\Excel\Excel.h" />
-    <ClInclude Include="SunacCoordinationDlg.h" />
-    <ClInclude Include="SunacCoordination.h" />
-    <ClInclude Include="Resource.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="res\resource.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="UI\Menu\CAcadApplication.h" />
     <ClInclude Include="UI\Menu\CAcadMenuBar.h" />
@@ -173,9 +168,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
-    <None Include="res\AsdkAcUiSample.rc2" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="SunacCoordination.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

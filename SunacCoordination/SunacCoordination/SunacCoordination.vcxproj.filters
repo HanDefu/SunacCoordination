@@ -4,30 +4,18 @@
     <ClCompile Include="StdAfx.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="SunacCoordination.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="SunacCoordinationDlg.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="Common\Excel\CExcel.cpp">
       <Filter>Common\Excel</Filter>
     </ClCompile>
     <ClCompile Include="Common\Excel\Excel.cpp">
       <Filter>Common\Excel</Filter>
     </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SunacCoordinationDlg.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>Source</Filter>
-    </ClInclude>
     <ClInclude Include="StdAfx.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="SunacCoordination.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Common\Excel\CApplication.h">
@@ -93,6 +81,12 @@
     <ClInclude Include="UI\Menu\Menu_Def.h">
       <Filter>UI\Menu</Filter>
     </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="res\resource.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -118,13 +112,5 @@
     <None Include="ReadMe.txt">
       <Filter>Source</Filter>
     </None>
-    <None Include="res\AsdkAcUiSample.rc2">
-      <Filter>Source</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="SunacCoordination.rc">
-      <Filter>Source</Filter>
-    </ResourceCompile>
   </ItemGroup>
 </Project>

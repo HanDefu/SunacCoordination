@@ -11,14 +11,7 @@
 //
 
 
-#include "resource.h"       // main symbols
+#include "res\resource.h"       // main symbols
 
-
-#define PI  3.14159265359
-/////////////////////////////////////////////////////////////////////////////
-
-// Forward declaration for the entry point function of our application
-
-void testCreate();
 
 
