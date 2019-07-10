@@ -130,6 +130,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Common\Excel\CExcel.cpp" />
+    <ClCompile Include="Common\Excel\Excel.cpp" />
     <ClCompile Include="SunacCoordinationDlg.cpp" />
     <ClCompile Include="SunacCoordination.cpp" />
     <ClCompile Include="StdAfx.cpp">
@@ -143,10 +145,31 @@
     <ResourceCompile Include="SunacCoordination.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Common\Excel\CApplication.h" />
+    <ClInclude Include="Common\Excel\CBorder.h" />
+    <ClInclude Include="Common\Excel\CBorders.h" />
+    <ClInclude Include="Common\Excel\CExcel.h" />
+    <ClInclude Include="Common\Excel\CFont0.h" />
+    <ClInclude Include="Common\Excel\Cnterior.h" />
+    <ClInclude Include="Common\Excel\CRange.h" />
+    <ClInclude Include="Common\Excel\CRanges.h" />
+    <ClInclude Include="Common\Excel\CWorkbook.h" />
+    <ClInclude Include="Common\Excel\CWorkbooks.h" />
+    <ClInclude Include="Common\Excel\CWorksheet.h" />
+    <ClInclude Include="Common\Excel\CWorksheets.h" />
+    <ClInclude Include="Common\Excel\Excel.h" />
     <ClInclude Include="SunacCoordinationDlg.h" />
     <ClInclude Include="SunacCoordination.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="UI\Menu\CAcadApplication.h" />
+    <ClInclude Include="UI\Menu\CAcadMenuBar.h" />
+    <ClInclude Include="UI\Menu\CAcadMenuGroup.h" />
+    <ClInclude Include="UI\Menu\CAcadMenuGroups.h" />
+    <ClInclude Include="UI\Menu\CAcadPopupMenu.h" />
+    <ClInclude Include="UI\Menu\CAcadPopupMenuItem.h" />
+    <ClInclude Include="UI\Menu\CAcadPopupMenus.h" />
+    <ClInclude Include="UI\Menu\Menu_Def.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />

@@ -10,6 +10,12 @@
     <ClCompile Include="SunacCoordinationDlg.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Common\Excel\CExcel.cpp">
+      <Filter>Common\Excel</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\Excel\Excel.cpp">
+      <Filter>Common\Excel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SunacCoordinationDlg.h">
@@ -24,10 +30,88 @@
     <ClInclude Include="SunacCoordination.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Common\Excel\CApplication.h">
+      <Filter>Common\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Excel\CBorder.h">
+      <Filter>Common\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Excel\CBorders.h">
+      <Filter>Common\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Excel\CExcel.h">
+      <Filter>Common\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Excel\CFont0.h">
+      <Filter>Common\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Excel\Cnterior.h">
+      <Filter>Common\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Excel\CRange.h">
+      <Filter>Common\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Excel\CRanges.h">
+      <Filter>Common\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Excel\CWorkbook.h">
+      <Filter>Common\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Excel\CWorkbooks.h">
+      <Filter>Common\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Excel\CWorksheet.h">
+      <Filter>Common\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Excel\CWorksheets.h">
+      <Filter>Common\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Excel\Excel.h">
+      <Filter>Common\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Menu\CAcadApplication.h">
+      <Filter>UI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Menu\CAcadMenuBar.h">
+      <Filter>UI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Menu\CAcadMenuGroup.h">
+      <Filter>UI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Menu\CAcadMenuGroups.h">
+      <Filter>UI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Menu\CAcadPopupMenu.h">
+      <Filter>UI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Menu\CAcadPopupMenuItem.h">
+      <Filter>UI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Menu\CAcadPopupMenus.h">
+      <Filter>UI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Menu\Menu_Def.h">
+      <Filter>UI\Menu</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
       <UniqueIdentifier>{efe70b79-2d79-4a9b-a5a8-790775b65eab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{e183cb25-5c73-48fd-b49e-7315c7333170}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\Menu">
+      <UniqueIdentifier>{d75291fd-bef4-4ad0-a200-c99f7e841cc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src">
+      <UniqueIdentifier>{a04d779a-3118-49f1-98a4-49050108b9af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{5096803b-0346-4b6b-86c8-6aa77e6e463c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Excel">
+      <UniqueIdentifier>{0218a6c0-1120-44bd-ad71-df03ade2b843}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
