@@ -13,6 +13,21 @@
     <ClCompile Include="main.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="UI\WindowDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\KitchenDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\BathroomDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\RailingBaseDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\RailingDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -87,6 +102,21 @@
     <ClInclude Include="res\resource.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="UI\WindowDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\KitchenDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\BathroomDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\RailingBaseDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\RailingDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -112,5 +142,10 @@
     <None Include="ReadMe.txt">
       <Filter>Source</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="res\SunacCoordination.rc">
+      <Filter>Source</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

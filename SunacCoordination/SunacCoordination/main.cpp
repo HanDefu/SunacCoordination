@@ -24,6 +24,10 @@
 #include "AcExtensionModule.h"
 #include "accmd.h"
 #include "UI\menu\Menu_Def.h"
+#include "UI\WindowDlg.h"
+#include "UI\KitchenDlg.h"
+#include "UI\BathroomDlg.h"
+#include "UI\RailingDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -39,12 +43,26 @@ AC_IMPLEMENT_EXTENSION_MODULE(theArxDLL);
 
 void CMD_SUNACWINDOW()
 {
-
+	CWindowDlg dlg;
+	dlg.DoModal();
 }
 
 void CMD_SUNACKITCHEN()
 {
+	CKitchenDlg dlg;
+	dlg.DoModal();
+}
 
+void CMD_SUNACBATHROOM()
+{
+	CBathroomDlg dlg;
+	dlg.DoModal();
+}
+
+void CMD_SUNACRAILING()
+{
+	CRailingDlg dlg;
+	dlg.DoModal();
 }
 
 void InitMenu()
@@ -95,7 +113,17 @@ void InitMenu()
 			VariantInit(&index);
 			V_VT(&index) = VT_I4;
 			V_I4(&index) = MenuIndex++;
-			IPopUpMenu.AddMenuItem(index, _T("厨房"), _T("_SUNACKITCHEN ")); //命令的前面的下划线_ 和最后的空格都不能少
+			IPopUpMenu.AddMenuItem(index, _T("厨房"), _T("_SUNACKITCHEN "));
+
+			VariantInit(&index);
+			V_VT(&index) = VT_I4;
+			V_I4(&index) = MenuIndex++;
+			IPopUpMenu.AddMenuItem(index, _T("卫生间"), _T("_SUNACBATHROOM "));
+
+			VariantInit(&index);
+			V_VT(&index) = VT_I4;
+			V_I4(&index) = MenuIndex++;
+			IPopUpMenu.AddMenuItem(index, _T("栏杆"), _T("_SUNACRAILING "));
 
 			pDisp = IPopUpMenu.m_lpDispatch;
 			pDisp->AddRef();
@@ -146,6 +174,24 @@ static void initApp()
 		_T("SUNACKITCHEN"),
 		ACRX_CMD_MODAL,
 		CMD_SUNACKITCHEN,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SUNACBATHROOM"),
+		_T("SUNACBATHROOM"),
+		ACRX_CMD_MODAL,
+		CMD_SUNACBATHROOM,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SUNACRAILING"),
+		_T("SUNACRAILING"),
+		ACRX_CMD_MODAL,
+		CMD_SUNACRAILING,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());

@@ -139,6 +139,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="UI\BathroomDlg.cpp" />
+    <ClCompile Include="UI\KitchenDlg.cpp" />
+    <ClCompile Include="UI\RailingBaseDlg.cpp" />
+    <ClCompile Include="UI\RailingDlg.cpp" />
+    <ClCompile Include="UI\WindowDlg.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common\Excel\CApplication.h" />
@@ -157,6 +162,8 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="UI\BathroomDlg.h" />
+    <ClInclude Include="UI\KitchenDlg.h" />
     <ClInclude Include="UI\Menu\CAcadApplication.h" />
     <ClInclude Include="UI\Menu\CAcadMenuBar.h" />
     <ClInclude Include="UI\Menu\CAcadMenuGroup.h" />
@@ -165,16 +172,22 @@
     <ClInclude Include="UI\Menu\CAcadPopupMenuItem.h" />
     <ClInclude Include="UI\Menu\CAcadPopupMenus.h" />
     <ClInclude Include="UI\Menu\Menu_Def.h" />
+    <ClInclude Include="UI\RailingBaseDlg.h" />
+    <ClInclude Include="UI\RailingDlg.h" />
+    <ClInclude Include="UI\WindowDlg.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="res\SunacCoordination.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties RESOURCE_FILE="SunacCoordination.rc" />
+      <UserProperties RESOURCE_FILE="" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
