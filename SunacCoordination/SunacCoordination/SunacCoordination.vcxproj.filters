@@ -28,6 +28,60 @@
     <ClCompile Include="UI\RailingDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="UI\GsPreviewCtrl.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\GridCell.cpp">
+      <Filter>UI\GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\GridCellBase.cpp">
+      <Filter>UI\GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\GridCtrl.cpp">
+      <Filter>UI\GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\GridDropTarget.cpp">
+      <Filter>UI\GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\InPlaceEdit.cpp">
+      <Filter>UI\GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\TitleTip.cpp">
+      <Filter>UI\GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellCheck.cpp">
+      <Filter>UI\GridCtrl\NewCellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellCombo.cpp">
+      <Filter>UI\GridCtrl\NewCellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellDateTime.cpp">
+      <Filter>UI\GridCtrl\NewCellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellNumeric.cpp">
+      <Filter>UI\GridCtrl\NewCellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridURLCell.cpp">
+      <Filter>UI\GridCtrl\NewCellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\AirconditionerDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\DoorDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\FacadeDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\FillingDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\MoldingsDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\WaterproofDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -117,6 +171,66 @@
     <ClInclude Include="UI\RailingDlg.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="UI\GsPreviewCtrl.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\CellRange.h">
+      <Filter>UI\GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\GridCell.h">
+      <Filter>UI\GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\GridCellBase.h">
+      <Filter>UI\GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\GridCtrl.h">
+      <Filter>UI\GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\GridDropTarget.h">
+      <Filter>UI\GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\InPlaceEdit.h">
+      <Filter>UI\GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\MemDC.h">
+      <Filter>UI\GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\TitleTip.h">
+      <Filter>UI\GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellCheck.h">
+      <Filter>UI\GridCtrl\NewCellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellCombo.h">
+      <Filter>UI\GridCtrl\NewCellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellDateTime.h">
+      <Filter>UI\GridCtrl\NewCellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellNumeric.h">
+      <Filter>UI\GridCtrl\NewCellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridURLCell.h">
+      <Filter>UI\GridCtrl\NewCellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\AirconditionerDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DoorDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\FacadeDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\FillingDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\MoldingsDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\WaterproofDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -137,11 +251,12 @@
     <Filter Include="Common\Excel">
       <UniqueIdentifier>{0218a6c0-1120-44bd-ad71-df03ade2b843}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ReadMe.txt">
-      <Filter>Source</Filter>
-    </None>
+    <Filter Include="UI\GridCtrl">
+      <UniqueIdentifier>{916e2724-ca36-471d-afff-083e0b932025}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\GridCtrl\NewCellTypes">
+      <UniqueIdentifier>{83e4724a-0bab-4242-95e2-3f49ac48765e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\SunacCoordination.rc">

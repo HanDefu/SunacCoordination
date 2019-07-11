@@ -93,7 +93,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-x64;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
     </ClCompile>
@@ -139,10 +139,28 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="UI\AirconditionerDlg.cpp" />
     <ClCompile Include="UI\BathroomDlg.cpp" />
+    <ClCompile Include="UI\DoorDlg.cpp" />
+    <ClCompile Include="UI\FacadeDlg.cpp" />
+    <ClCompile Include="UI\FillingDlg.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\GridCell.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\GridCellBase.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\GridCtrl.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\GridDropTarget.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\InPlaceEdit.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellCheck.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellCombo.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellDateTime.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellNumeric.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridURLCell.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\TitleTip.cpp" />
+    <ClCompile Include="UI\GsPreviewCtrl.cpp" />
     <ClCompile Include="UI\KitchenDlg.cpp" />
+    <ClCompile Include="UI\MoldingsDlg.cpp" />
     <ClCompile Include="UI\RailingBaseDlg.cpp" />
     <ClCompile Include="UI\RailingDlg.cpp" />
+    <ClCompile Include="UI\WaterproofDlg.cpp" />
     <ClCompile Include="UI\WindowDlg.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -162,7 +180,25 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="UI\AirconditionerDlg.h" />
     <ClInclude Include="UI\BathroomDlg.h" />
+    <ClInclude Include="UI\DoorDlg.h" />
+    <ClInclude Include="UI\FacadeDlg.h" />
+    <ClInclude Include="UI\FillingDlg.h" />
+    <ClInclude Include="UI\GridCtrl_src\CellRange.h" />
+    <ClInclude Include="UI\GridCtrl_src\GridCell.h" />
+    <ClInclude Include="UI\GridCtrl_src\GridCellBase.h" />
+    <ClInclude Include="UI\GridCtrl_src\GridCtrl.h" />
+    <ClInclude Include="UI\GridCtrl_src\GridDropTarget.h" />
+    <ClInclude Include="UI\GridCtrl_src\InPlaceEdit.h" />
+    <ClInclude Include="UI\GridCtrl_src\MemDC.h" />
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellCheck.h" />
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellCombo.h" />
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellDateTime.h" />
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellNumeric.h" />
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridURLCell.h" />
+    <ClInclude Include="UI\GridCtrl_src\TitleTip.h" />
+    <ClInclude Include="UI\GsPreviewCtrl.h" />
     <ClInclude Include="UI\KitchenDlg.h" />
     <ClInclude Include="UI\Menu\CAcadApplication.h" />
     <ClInclude Include="UI\Menu\CAcadMenuBar.h" />
@@ -172,12 +208,11 @@
     <ClInclude Include="UI\Menu\CAcadPopupMenuItem.h" />
     <ClInclude Include="UI\Menu\CAcadPopupMenus.h" />
     <ClInclude Include="UI\Menu\Menu_Def.h" />
+    <ClInclude Include="UI\MoldingsDlg.h" />
     <ClInclude Include="UI\RailingBaseDlg.h" />
     <ClInclude Include="UI\RailingDlg.h" />
+    <ClInclude Include="UI\WaterproofDlg.h" />
     <ClInclude Include="UI\WindowDlg.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\SunacCoordination.rc" />

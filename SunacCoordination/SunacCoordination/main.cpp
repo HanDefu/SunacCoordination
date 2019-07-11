@@ -28,6 +28,12 @@
 #include "UI\KitchenDlg.h"
 #include "UI\BathroomDlg.h"
 #include "UI\RailingDlg.h"
+#include "UI\AirconditionerDlg.h"
+#include "UI\DoorDlg.h"
+#include "UI\FacadeDlg.h"
+#include "UI\FillingDlg.h"
+#include "UI\MoldingsDlg.h"
+#include "UI\WaterproofDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -41,28 +47,80 @@ extern "C" HWND adsw_acadMainWnd();
 
 AC_IMPLEMENT_EXTENSION_MODULE(theArxDLL);
 
+//窗
 void CMD_SUNACWINDOW()
 {
 	CWindowDlg dlg;
 	dlg.DoModal();
 }
 
+//厨房
 void CMD_SUNACKITCHEN()
 {
 	CKitchenDlg dlg;
 	dlg.DoModal();
 }
 
+//卫生间
 void CMD_SUNACBATHROOM()
 {
 	CBathroomDlg dlg;
 	dlg.DoModal();
 }
 
+//门
+void CMD_SUNACDOOR()
+{
+	CDoorDlg dlg;
+	dlg.DoModal();
+}
+
+//栏杆
 void CMD_SUNACRAILING()
 {
 	CRailingDlg dlg;
 	dlg.DoModal();
+}
+
+//线脚
+void CMD_SUNACMOLDINGS()
+{
+	CMoldingsDlg dlg;
+	dlg.DoModal();
+}
+
+//填充材质
+void CMD_SUNACFILLING()
+{
+	CFillingDlg dlg;
+	dlg.DoModal();
+}
+
+//空调
+void CMD_SUNACAIRCONDITIONER()
+{
+	CAirconditionerDlg dlg;
+	dlg.DoModal();
+}
+
+//标准立面
+void CMD_SUNACFACADE()
+{
+	CFacadeDlg dlg;
+	dlg.DoModal();
+}
+
+//防水构造
+void CMD_SUNACWATERPROOF()
+{
+	CWaterproofDlg dlg;
+	dlg.DoModal();
+}
+
+//统计算量
+void CMD_SUNACSTATISTICS()
+{
+
 }
 
 void InitMenu()
@@ -123,7 +181,42 @@ void InitMenu()
 			VariantInit(&index);
 			V_VT(&index) = VT_I4;
 			V_I4(&index) = MenuIndex++;
+			IPopUpMenu.AddMenuItem(index, _T("门"), _T("_SUNACDOOR "));
+
+			VariantInit(&index);
+			V_VT(&index) = VT_I4;
+			V_I4(&index) = MenuIndex++;
 			IPopUpMenu.AddMenuItem(index, _T("栏杆"), _T("_SUNACRAILING "));
+
+			VariantInit(&index);
+			V_VT(&index) = VT_I4;
+			V_I4(&index) = MenuIndex++;
+			IPopUpMenu.AddMenuItem(index, _T("线脚"), _T("_SUNACMOLDINGS "));
+
+			VariantInit(&index);
+			V_VT(&index) = VT_I4;
+			V_I4(&index) = MenuIndex++;
+			IPopUpMenu.AddMenuItem(index, _T("填充材质"), _T("_SUNACFILLING "));
+
+			VariantInit(&index);
+			V_VT(&index) = VT_I4;
+			V_I4(&index) = MenuIndex++;
+			IPopUpMenu.AddMenuItem(index, _T("空调"), _T("_SUNACAIRCONDITIONER "));
+
+			VariantInit(&index);
+			V_VT(&index) = VT_I4;
+			V_I4(&index) = MenuIndex++;
+			IPopUpMenu.AddMenuItem(index, _T("标准立面"), _T("_SUNACFACADE "));
+
+			VariantInit(&index);
+			V_VT(&index) = VT_I4;
+			V_I4(&index) = MenuIndex++;
+			IPopUpMenu.AddMenuItem(index, _T("防水构造"), _T("_SUNACWATERPROOF "));
+
+			VariantInit(&index);
+			V_VT(&index) = VT_I4;
+			V_I4(&index) = MenuIndex++;
+			IPopUpMenu.AddMenuItem(index, _T("统计算量"), _T("_SUNACSTATISTICS "));
 
 			pDisp = IPopUpMenu.m_lpDispatch;
 			pDisp->AddRef();
@@ -188,10 +281,73 @@ static void initApp()
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SUNACDOOR"),
+		_T("SUNACDOOR"),
+		ACRX_CMD_MODAL,
+		CMD_SUNACDOOR,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
 		_T("SUNACRAILING"),
 		_T("SUNACRAILING"),
 		ACRX_CMD_MODAL,
 		CMD_SUNACRAILING,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SUNACMOLDINGS"),
+		_T("SUNACMOLDINGS"),
+		ACRX_CMD_MODAL,
+		CMD_SUNACMOLDINGS,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SUNACFILLING"),
+		_T("SUNACFILLING"),
+		ACRX_CMD_MODAL,
+		CMD_SUNACFILLING,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SUNACAIRCONDITIONER"),
+		_T("SUNACAIRCONDITIONER"),
+		ACRX_CMD_MODAL,
+		CMD_SUNACAIRCONDITIONER,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SUNACFACADE"),
+		_T("SUNACFACADE"),
+		ACRX_CMD_MODAL,
+		CMD_SUNACFACADE,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SUNACWATERPROOF"),
+		_T("SUNACWATERPROOF"),
+		ACRX_CMD_MODAL,
+		CMD_SUNACWATERPROOF,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SUNACSTATISTICS"),
+		_T("SUNACSTATISTICS"),
+		ACRX_CMD_MODAL,
+		CMD_SUNACSTATISTICS,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());
