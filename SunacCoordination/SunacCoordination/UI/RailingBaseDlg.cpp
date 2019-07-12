@@ -32,3 +32,10 @@ END_MESSAGE_MAP()
 
 
 // CRailingBaseDlg 消息处理程序
+
+
+BOOL CRailingBaseDlg::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+	return TRUE;
+}

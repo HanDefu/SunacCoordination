@@ -31,3 +31,10 @@ END_MESSAGE_MAP()
 
 
 // CBathroomDlg 消息处理程序
+
+
+BOOL CBathroomDlg::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+	return TRUE;
+}

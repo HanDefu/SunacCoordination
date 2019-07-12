@@ -31,3 +31,10 @@ END_MESSAGE_MAP()
 
 
 // CAirconditionerDlg 消息处理程序
+
+
+BOOL CAirconditionerDlg::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+	return TRUE;
+}

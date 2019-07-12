@@ -32,3 +32,10 @@ END_MESSAGE_MAP()
 
 
 // CFillingDlg 消息处理程序
+
+
+BOOL CFillingDlg::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+	return TRUE;
+}

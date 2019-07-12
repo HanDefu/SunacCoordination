@@ -25,9 +25,15 @@ void CRailingDlg::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 }
 
-
 BEGIN_MESSAGE_MAP(CRailingDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
 // CRailingDlg 消息处理程序
+
+
+BOOL CRailingDlg::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+	return TRUE;
+}

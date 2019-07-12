@@ -32,3 +32,10 @@ END_MESSAGE_MAP()
 
 
 // CFacadeDlg 消息处理程序
+
+
+BOOL CFacadeDlg::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+	return TRUE;
+}

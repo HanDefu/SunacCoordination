@@ -19,6 +19,7 @@ void CGridCtrlWithPreview::LoadDefaltSettings()
 {
 	EnableDragAndDrop(FALSE);
 	SetEditable(FALSE);
+	EnableTitleTips(FALSE);
 	m_dStyle = DT_LEFT;
 	SetGridLines(0);
 	SetMargin(10);

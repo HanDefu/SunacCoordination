@@ -42,8 +42,13 @@ BOOL CWindowDlg::OnInitDialog()
 
 	m_preWindow.SetRowCount(4);
 	m_preWindow.SetColumnCount(2);
+
+	//设置预览图显示区域为3行1列
 	m_preWindow.SetDisplayRows(3);
-	m_preWindow.SetDisplayColumns(2);
+	m_preWindow.SetDisplayColumns(1);
+
+	//设置第一列占60%，其余部分为第二列
+	m_preWindow.SetHeaderWidth(_T("60;+"));
 
 	m_preWindow.AddPreview(0, 0, _T("C:\\Daqo\\LogicDwg\\1开口三角.dwg")); //测试用dwg文件
 	m_preWindow.SetContentItemText(0, 1, _T("窗类型：双扇单开\n窗户面积：2.1\n通风量：1.6"));

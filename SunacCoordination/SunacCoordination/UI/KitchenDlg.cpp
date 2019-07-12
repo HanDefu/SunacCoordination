@@ -26,9 +26,15 @@ void CKitchenDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_PREVIEW_KITCHEN, m_preKitchen);
 }
 
-
 BEGIN_MESSAGE_MAP(CKitchenDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 
 // CKitchenDlg 消息处理程序
+
+
+BOOL CKitchenDlg::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+	return TRUE;
+}

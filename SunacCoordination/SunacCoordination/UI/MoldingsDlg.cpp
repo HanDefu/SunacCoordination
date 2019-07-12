@@ -32,3 +32,10 @@ END_MESSAGE_MAP()
 
 
 // CMoldingsDlg 消息处理程序
+
+
+BOOL CMoldingsDlg::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+	return TRUE;
+}

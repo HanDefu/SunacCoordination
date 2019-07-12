@@ -31,3 +31,10 @@ END_MESSAGE_MAP()
 
 
 // CWaterproofDlg 消息处理程序
+
+
+BOOL CWaterproofDlg::OnInitDialog()
+{
+	CDialogEx::OnInitDialog();
+	return TRUE;
+}
