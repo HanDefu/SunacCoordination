@@ -23,6 +23,7 @@ CKitchenDlg::~CKitchenDlg()
 void CKitchenDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_PREVIEW_KITCHEN, m_preKitchen);
 }
 
 

@@ -23,6 +23,7 @@ CMoldingsDlg::~CMoldingsDlg()
 void CMoldingsDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_PREVIEW_MOLDINGS, m_preMoldings);
 }
 
 

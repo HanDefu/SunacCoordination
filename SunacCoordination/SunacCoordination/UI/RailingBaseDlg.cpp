@@ -23,6 +23,7 @@ CRailingBaseDlg::~CRailingBaseDlg()
 void CRailingBaseDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_PREVIEW_RAILINGBASE, m_preRailingBase);
 }
 
 

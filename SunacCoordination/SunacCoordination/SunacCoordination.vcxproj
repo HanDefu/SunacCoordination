@@ -144,6 +144,8 @@
     <ClCompile Include="UI\DoorDlg.cpp" />
     <ClCompile Include="UI\FacadeDlg.cpp" />
     <ClCompile Include="UI\FillingDlg.cpp" />
+    <ClCompile Include="UI\GridCtrlEx.cpp" />
+    <ClCompile Include="UI\GridCtrlWithPreview.cpp" />
     <ClCompile Include="UI\GridCtrl_src\GridCell.cpp" />
     <ClCompile Include="UI\GridCtrl_src\GridCellBase.cpp" />
     <ClCompile Include="UI\GridCtrl_src\GridCtrl.cpp" />
@@ -185,6 +187,8 @@
     <ClInclude Include="UI\DoorDlg.h" />
     <ClInclude Include="UI\FacadeDlg.h" />
     <ClInclude Include="UI\FillingDlg.h" />
+    <ClInclude Include="UI\GridCtrlEx.h" />
+    <ClInclude Include="UI\GridCtrlWithPreview.h" />
     <ClInclude Include="UI\GridCtrl_src\CellRange.h" />
     <ClInclude Include="UI\GridCtrl_src\GridCell.h" />
     <ClInclude Include="UI\GridCtrl_src\GridCellBase.h" />

@@ -43,10 +43,10 @@ BEGIN_MESSAGE_MAP(CGsPreviewCtrl, CStatic)
 ON_WM_PAINT()
 ON_WM_SIZE()
 ON_WM_MOUSEWHEEL()
-ON_WM_MOUSEMOVE()
+//ON_WM_MOUSEMOVE()
 ON_WM_NCHITTEST()
 //ON_WM_SETFOCUS()
-//ON_WM_LBUTTONDOWN()
+ON_WM_LBUTTONDOWN()
 //ON_WM_LBUTTONDBLCLK()
 END_MESSAGE_MAP()
 
@@ -312,13 +312,12 @@ void CGsPreviewCtrl::OnMouseMove(UINT nFlags, CPoint point)
 	}	
 }
 
-/*
 void CGsPreviewCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	ClientToScreen(&point);
 	GetParent()->PostMessage(WM_PREVIEW_SELECTED, point.x, point.y);
 }
-*/
+
 
 #if _MSC_VER <= 1310
 UINT CGsPreviewCtrl::OnNcHitTest(CPoint point) 

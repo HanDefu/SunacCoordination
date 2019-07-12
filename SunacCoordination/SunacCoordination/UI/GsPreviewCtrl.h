@@ -38,7 +38,7 @@
 
 extern CAcExtensionModule theArxDLL;
 
-//#define WM_PREVIEW_SELECTED (WM_USER + 1001)
+#define WM_PREVIEW_SELECTED (WM_USER + 1001)
 
 class OrbitGadget : public AcGiDrawable
 {
@@ -148,7 +148,7 @@ protected:
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
-	//afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
+	afx_msg void OnLButtonDown(UINT nFlags, CPoint point);
 	//afx_msg void OnLButtonDblClk(UINT nFlags, CPoint point);
 
 	CString msFileName;

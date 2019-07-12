@@ -23,6 +23,7 @@ CFillingDlg::~CFillingDlg()
 void CFillingDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_PREVIEW_FILLING, m_preFilling);
 }
 
 

@@ -82,6 +82,12 @@
     <ClCompile Include="UI\WaterproofDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="UI\GridCtrlEx.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrlWithPreview.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -229,6 +235,12 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="UI\WaterproofDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrlEx.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrlWithPreview.h">
       <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
