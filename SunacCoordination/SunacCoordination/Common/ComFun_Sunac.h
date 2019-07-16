@@ -30,6 +30,7 @@ bool DQ_GetAttributeValue( AcDbBlockReference *pBlkRef, const TCHAR* attributena
 
 int MD2010_GetAllTypedObjectsInLayer(vAcDbObjectId &allEntites, CString layname, eACDBOBJECTTYPE type, vAcDbObjectId &vids);
 
+void YT_UpdateBlockReference(AcDbObjectId &entId);
 
 
 

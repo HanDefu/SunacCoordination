@@ -97,6 +97,7 @@ int              MD2010_CycleAllBlockReferencesInLayer(CString layname,  vAcDbOb
 int              MD2010_CycleAllBlockReferencesInAllLayer(vAcDbObjectId &vids);
 int              MD2010_CycleAllEntitesInLayer(CString layname, vAcDbObjectId &vids);
 int              MD2010_CycleAllEntites(vAcDbObjectId &vids);
+int              MD2010_CycleAllBlockReferencesInRect(vAcDbObjectId &vids, AcGePoint3d lb, AcGePoint3d rt);
 
 
 //ÆÕÍ¨¼ÆËãº¯Êý

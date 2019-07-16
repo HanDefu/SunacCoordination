@@ -103,3 +103,22 @@ CHAR* WCHARTOCHAR(const WCHAR * pchar)
 
 	return m_pchar;
 }
+
+//此函数用于获得AutoCAD的安装路径，返回该路径。
+CString MD2010_GetAppPath()
+{
+	WCHAR lpFileName[MAX_PATH];
+	GetModuleFileName(AfxGetInstanceHandle(),lpFileName,MAX_PATH);
+	CString strFileName = lpFileName;
+	int nIndex = strFileName.ReverseFind ('\\');
+	CString strPath;
+	if (nIndex > 0)
+	{
+		strPath = strFileName.Left (nIndex);
+	}
+	else
+	{
+		strPath = "";
+	}
+	return strPath;
+}

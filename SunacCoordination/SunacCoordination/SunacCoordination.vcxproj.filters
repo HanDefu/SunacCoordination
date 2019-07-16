@@ -166,6 +166,9 @@
     <ClCompile Include="Object\RCXianJiao.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="Common\ComFun_DynamicBlock.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -342,9 +345,6 @@
     <ClInclude Include="Common\ComFun_ACAD_Geometry.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Common\ComFun_Base.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="Common\ComFun_Convert.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -404,6 +404,9 @@
     </ClInclude>
     <ClInclude Include="Object\RCXianJiao.h">
       <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_DynamicBlock.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

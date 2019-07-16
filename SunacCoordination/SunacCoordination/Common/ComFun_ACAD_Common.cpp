@@ -28,6 +28,7 @@
 #include <dbObjectContextManager.h>
 #include <acdb.h>
 #include <dbObjectContextInterface.h>
+#include "ComFun_ACad.h"
 
 AcDbObjectId MD2010_PostModalToBlockTable(const ACHAR* entryName, AcDbEntity *pent)
 {
@@ -1122,6 +1123,39 @@ int MD2010_CycleAllEntites(vAcDbObjectId &vids)
 	delete pItr; // 遍历器使用完毕之后一定要删除！
 	pBlkTblRcd->close();
 	return num;
+}
+
+int MD2010_CycleAllBlockReferencesInRect(vAcDbObjectId &vids, AcGePoint3d lb, AcGePoint3d rt)
+{
+	AcDbBlockTable *pBlkTbl;
+	acdbHostApplicationServices()->workingDatabase()
+		->getBlockTable(pBlkTbl, AcDb::kForRead);
+
+	AcDbBlockTableRecord *pBlkTblRcd;
+	pBlkTbl->getAt(ACDB_MODEL_SPACE, pBlkTblRcd,
+		AcDb::kForRead);
+	pBlkTbl->close();
+
+	AcDbBlockTableRecordIterator *pItr;
+	pBlkTblRcd->newIterator(pItr);
+
+	AcDbEntity *pEnt;
+	for (pItr->start(); !pItr->done(); pItr->step())
+	{
+		pItr->getEntity(pEnt, AcDb::kForRead);
+		AcDbBlockReference *pblk = AcDbBlockReference::cast(pEnt);
+		if(pblk)
+		{
+			AcGePoint3d minPt, maxPt;
+			JHCOM_GetObjectMinMaxPoint(pEnt->objectId(), minPt, maxPt);
+			if(MD2010_CheckPointIsInRect(lb,rt,minPt) && MD2010_CheckPointIsInRect(lb,rt,maxPt))
+				vids.push_back(pEnt->objectId());
+		}
+		pEnt->close();
+	}
+	delete pItr; 
+	pBlkTblRcd->close();
+	return 0;
 }
 
 //普通计算函数

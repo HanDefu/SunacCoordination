@@ -186,4 +186,32 @@ CString JHCOM_GetNextString(CString pstr)
 }
 
 
+vector<CString> YT_SplitCString(CString strSource, const TCHAR ch)
+{ 
+	vector<CString> vecString;
+
+	CString strTmp;   
+	int n =strSource.Find(ch);
+	while(n!=-1)
+	{
+		strTmp = strSource.Left(n);
+		strTmp.Trim();
+		if (strTmp.GetLength()>0)
+		{
+			vecString.push_back(strTmp);
+		}
+
+		strSource = strSource.Mid(n+1);
+		n = strSource.Find(ch);
+	}
+
+	strSource.Trim();
+	if (strSource.GetLength()>0)
+	{
+		vecString.push_back(strSource);
+	}
+
+	return vecString;
+}
+
 //-------From PIP Com-------//

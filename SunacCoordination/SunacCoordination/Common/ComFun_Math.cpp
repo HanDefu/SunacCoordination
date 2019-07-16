@@ -420,3 +420,11 @@ double JHCOM_R2A(double rad)
 {
 	return rad*180/PI;
 }
+
+bool MD2010_CheckPointIsInRect(AcGePoint3d pt1, AcGePoint3d pt3, AcGePoint3d pt)
+{
+	double xx = (pt.x - pt1.x)*(pt.x - pt3.x);
+	double yy = (pt.y - pt1.y)*(pt.y - pt3.y);
+	if (xx <= 0 && yy <= 0) return true;
+	return false;
+}

@@ -530,3 +530,17 @@ Acad::ErrorStatus JHCOM_ConvertDbCurveToGeCurve(AcDbCurve *pDbCurve,AcGeCurve3d 
 	return (pGeCurve)?Acad::eOk:Acad::eNotImplemented;
 }
 
+AcDbObjectId JHCOM_GetConvertGeCurveToAcDbCurve(AcGeCurve3d &geCurve3d)
+
+{
+	AcDbObjectId oid = AcDbObjectId::kNull;
+	Acad::ErrorStatus es = Acad::eOk;
+	AcDbCurve *pDbCurve = NULL;
+	es = acdbConvertGelibCurveToAcDbCurve(geCurve3d, pDbCurve);
+	if(es == Acad::eOk)
+	{
+		oid = JHCOM_PostToModelSpace(pDbCurve);
+		//postToDb(pDbCurve, oid);
+	}
+	return oid;
+}

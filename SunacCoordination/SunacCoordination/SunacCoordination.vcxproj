@@ -138,6 +138,7 @@
     <ClCompile Include="Common\ComFun_ACAD_Common.cpp" />
     <ClCompile Include="Common\ComFun_ACAD_Geometry.cpp" />
     <ClCompile Include="Common\ComFun_Convert.cpp" />
+    <ClCompile Include="Common\ComFun_DynamicBlock.cpp" />
     <ClCompile Include="Common\ComFun_Interactive.cpp" />
     <ClCompile Include="Common\ComFun_Layer.cpp" />
     <ClCompile Include="Common\ComFun_Math.cpp" />
@@ -199,9 +200,9 @@
     <ClInclude Include="Common\ComFun_ACad.h" />
     <ClInclude Include="Common\ComFun_ACAD_Common.h" />
     <ClInclude Include="Common\ComFun_ACAD_Geometry.h" />
-    <ClInclude Include="Common\ComFun_Base.h" />
     <ClInclude Include="Common\ComFun_Convert.h" />
     <ClInclude Include="Common\ComFun_Def.h" />
+    <ClInclude Include="Common\ComFun_DynamicBlock.h" />
     <ClInclude Include="Common\ComFun_Interactive.h" />
     <ClInclude Include="Common\ComFun_Layer.h" />
     <ClInclude Include="Common\ComFun_Math.h" />

@@ -6,4 +6,5 @@
 #include "ComFun_Layer.h"
 #include "ComFun_Math.h"
 #include "ComFun_String.h"
-#include "ComFun_Base.h"
+#include "ComFun_DynamicBlock.h"
+#include "ComFun_Sunac.h"

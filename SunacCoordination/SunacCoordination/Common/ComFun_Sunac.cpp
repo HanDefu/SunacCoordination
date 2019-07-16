@@ -423,3 +423,26 @@ int MD2010_GetAllTypedObjectsInLayer(vAcDbObjectId &allEntites, CString layname,
 	return 0;
 }
 
+void YT_UpdateBlockReference(AcDbObjectId &entId)
+{
+	AcDbEntity* pEnt = NULL;
+	if (acdbOpenObject(pEnt, entId, AcDb::kForWrite) != Acad::eOk)
+	{
+		acutPrintf(L"\nError opening entity.");
+		if (pEnt)
+			pEnt->close();
+		return ;
+	}
+	if (pEnt->isA() != AcDbBlockReference::desc())
+	{
+		acutPrintf(L"\nMust select a block insert.");
+		pEnt->close();
+		return ;
+	}
+	AcDbEvalVariant var;
+	AcDbBlockReference *pBlkRef = AcDbBlockReference::cast(pEnt);
+	pBlkRef->recordGraphicsModified(true) ;
+	//pBlkRef->draw();
+	pBlkRef->close();
+}
+

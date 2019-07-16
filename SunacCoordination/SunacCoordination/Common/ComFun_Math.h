@@ -227,3 +227,5 @@ double Omit(double in);
 double GetAngle(double Y,double Z);
 double JHCOM_A2R(double angle);
 double JHCOM_R2A(double rad);
+
+bool MD2010_CheckPointIsInRect(AcGePoint3d pt1, AcGePoint3d pt3, AcGePoint3d pt);
