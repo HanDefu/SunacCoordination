@@ -115,13 +115,12 @@ void CKitchenDlg::OnBnClickedButton1()//插入厨房模块
 		else
 			oneKitchen.Insert(allFiles[1], origin, 0, L"0", 256);
 		oneKitchen.InitParametersFromDynamicBlock();
-		oneKitchen.SetParameter(L"Deepth", height);
-		oneKitchen.SetParameter(L"Width", width);
+		oneKitchen.SetParameter(L"进深", height);
+		oneKitchen.SetParameter(L"开间", width);
 		oneKitchen.RunParameters();
 	}
 	ShowWindow(true);
 }
-
 
 void CKitchenDlg::OnBnClickedButtonKitchenrange()
 {
