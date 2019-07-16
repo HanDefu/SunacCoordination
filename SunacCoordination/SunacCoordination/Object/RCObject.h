@@ -48,6 +48,7 @@ public:
 public:
 	CString m_name;
 	void * m_userData;
+	AcDbObjectId m_id;
 };
 
 typedef std::vector<RCObject> vRCObject;

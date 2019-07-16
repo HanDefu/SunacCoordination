@@ -37,6 +37,8 @@ public:
 
 protected: 
 	
+private:
+	
 };
 
 typedef std::vector<RCWindow> vRCWindow;

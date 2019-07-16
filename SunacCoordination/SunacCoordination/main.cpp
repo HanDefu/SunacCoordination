@@ -50,15 +50,23 @@ AC_IMPLEMENT_EXTENSION_MODULE(theArxDLL);
 //´°
 void CMD_SUNACWINDOW()
 {
-	CWindowDlg dlg;
-	dlg.DoModal();
+	CAcModuleResourceOverride resOverride;
+
+	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
+	CWindowDlg * pDlg = new CWindowDlg(acedGetAcadFrame());
+	pDlg->Create(IDD_DIALOG_WINDOW);
+	pDlg->ShowWindow(SW_SHOW);
 }
 
 //³ø·¿
 void CMD_SUNACKITCHEN()
 {
-	CKitchenDlg dlg;
-	dlg.DoModal();
+	CAcModuleResourceOverride resOverride;
+
+	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
+	CKitchenDlg * pDlg = new CKitchenDlg(acedGetAcadFrame());
+	pDlg->Create(IDD_DIALOG_KITCHEN);
+	pDlg->ShowWindow(SW_SHOW);
 }
 
 //ÎÀÉú¼ä

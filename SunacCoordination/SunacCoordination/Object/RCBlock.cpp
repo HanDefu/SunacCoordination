@@ -16,6 +16,9 @@ File description:
 #include "StdAfx.h"
 #include "math.h"
 #include "RCBlock.h"
+#include "../Common/ComFun_Str.h"
+#include "../Common/ComFun_ACAD_Common.h"
+#include <acdocman.h>
 
 //default constructor
 RCBlock::RCBlock()
@@ -37,3 +40,15 @@ RCBlock & RCBlock::operator=(const RCBlock &rhs)
 {
     return *this;
 } 
+
+AcDbObjectId RCBlock::Insert(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color)
+{
+	WCHAR blockname[256] = L"";
+	CF_STR_get_file_name(fileName, blockname);
+	CF_STR_get_file_name_2(blockname, blockname);
+	CString blockDefName(blockname);
+	acDocManager->lockDocument(curDoc());
+	MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, fileName, blockDefName,  m_id, origin, angle, AcGeScale3d(1), layerName, color);
+	acDocManager->unlockDocument(curDoc());
+	return 0;
+}

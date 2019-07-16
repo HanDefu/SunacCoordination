@@ -37,6 +37,7 @@ bool TYCOM_IsDyanamicBlock(AcDbObjectId eId)
 			if(isb)
 			{
 				pEnt->close();
+				delete pDynBlkRef;
 				return true;
 			}
 			delete pDynBlkRef;

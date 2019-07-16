@@ -3,6 +3,8 @@
 #define  SUNAC_DEBUG
 
 #include "ComFun_ACAD_Common.h"
+#include "TYRect.h"
+
 //判断是不是一个直线（线段）
 bool DQ_IsALine(AcDbObjectId entId);
 //判断是不是一个块参照
@@ -32,6 +34,12 @@ int MD2010_GetAllTypedObjectsInLayer(vAcDbObjectId &allEntites, CString layname,
 
 void YT_UpdateBlockReference(AcDbObjectId &entId);
 
+void TY_GetAllWindowFiles(vCString &files);
+void TY_GetAllKitchenFiles(vCString &files);
+void TY_GetAllLanGanFiles(vCString &files);
+
+AcGePoint3d TY_GetPoint();
+TYRect TY_GetOneRect();
 
 
 

@@ -138,6 +138,7 @@ typedef vector<double> vdouble;
 typedef vector<AcDbGroup*> vpGroups;
 
 
+
 typedef std::vector<AcDbObjectId> vAcDbObjectId;
 typedef std::vector<double> vdouble;
 typedef std::vector<int> vint;
@@ -159,6 +160,16 @@ typedef std::vector<AcBrComplex> vAcBrComplex;
 typedef std::vector<AcBrShell> vAcBrShell;
 typedef std::vector<bool> vbool;
 typedef std::vector<CStringA> vCStringA;
+
+
+
+typedef std::pair<CString, double> RCPairKeyDValue;
+typedef std::pair<CString, Adesk::Int32> RCPairKeyIValue;
+typedef std::pair<CString, CString> RCPairKeyStrValue;
+
+typedef std::vector<RCPairKeyDValue> vRCPairKeyDValue;
+typedef std::vector<RCPairKeyIValue> vRCPairKeyIValue;
+typedef std::vector<RCPairKeyStrValue> vRCPairKeyStrValue;
 
 #define  RAY_LEN 10000000//һǧė
 

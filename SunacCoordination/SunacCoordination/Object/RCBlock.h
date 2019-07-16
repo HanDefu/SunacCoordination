@@ -28,8 +28,10 @@ public:
 	//Operator = 
 	RCBlock & operator=(const RCBlock &rhs);
 
-public:
+	AcDbObjectId Insert(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color);
 
+public:
+	
 };
 
 

@@ -2,7 +2,7 @@
 #include <dbdynblk.h>
 #include <dbobjptr.h>
 
-bool YT_IsDyanamicBlock(AcDbObjectId id);
+bool TYCOM_IsDyanamicBlock(AcDbObjectId id);
 
 CString TYCOM_GetDynaBlkName(AcDbObjectId eId);
 int TYCOM_GetDynamicBlockName(AcDbBlockReference *pBlkRef, CString &name);
@@ -26,6 +26,8 @@ int TYCOM_GetDynamicBlockData(AcDbObjectId eId, CString key, CString &value);
 //±éÀú
 int TYCOM_CycleAllDynamicBlockReferencesInRect(vAcDbObjectId &vids, AcGePoint3d lb, AcGePoint3d rt);
 int TYCOM_CycleAllDynamicBlockReferencesInLayer(vAcDbObjectId &vids, CString layer);
+
+
 
 
 

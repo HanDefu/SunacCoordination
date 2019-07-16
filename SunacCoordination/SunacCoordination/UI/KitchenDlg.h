@@ -1,5 +1,6 @@
 #pragma once
 #include "gridctrlwithpreview.h"
+#include "afxwin.h"
 
 
 // CKitchenDlg ¶Ô»°¿ò
@@ -23,4 +24,13 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	CGridCtrlWithPreview m_preKitchen;
+	CComboBox m_floorRange;
+	CComboBox m_basinType;
+	CComboBox m_benchWidth;
+	CComboBox m_frigeType;
+	CComboBox m_projectLevel;
+	afx_msg void OnBnClickedOk();
+	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);///---01
+	afx_msg void OnBnClickedButton1();
+	afx_msg void OnBnClickedButtonKitchenrange();
 };

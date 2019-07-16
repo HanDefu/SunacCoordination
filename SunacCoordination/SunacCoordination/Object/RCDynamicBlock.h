@@ -30,8 +30,23 @@ public:
 	//Operator = 
 	RCDynamicBlock & operator=(const RCDynamicBlock &rhs);
 
+	int SetParameter(CString key, double value);
+	int SetParameter(CString key, int value);
+	int SetParameter(CString key, CString value);
+
+	int GetParameter(CString key, double &value);
+	int GetParameter(CString key, int &value);
+	int GetParameter(CString key, CString &value);
+
+	int InitParametersFromDynamicBlock();
+
+	//Çý¶¯²ÎÊý
+	int RunParameters();
+
 protected: 
-	
+	vRCPairKeyDValue m_dKeyValues;
+	vRCPairKeyIValue m_iKeyValues;
+	vRCPairKeyStrValue m_strKeyValues;
 };
 
 typedef std::vector<RCDynamicBlock> vRCDynamicBlock;
