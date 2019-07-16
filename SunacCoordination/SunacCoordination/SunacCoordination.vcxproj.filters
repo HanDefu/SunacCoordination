@@ -4,12 +4,6 @@
     <ClCompile Include="StdAfx.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="Common\Excel\CExcel.cpp">
-      <Filter>Common\Excel</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\Excel\Excel.cpp">
-      <Filter>Common\Excel</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -88,49 +82,94 @@
     <ClCompile Include="UI\GridCtrlWithPreview.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="Object\RCBlock.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCStandBlock.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Tool\Excel\CExcel.cpp">
+      <Filter>Tool\Excel</Filter>
+    </ClCompile>
+    <ClCompile Include="Tool\Excel\Excel.cpp">
+      <Filter>Tool\Excel</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\AcessDatabase.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ComFun_ACad.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ComFun_ACAD_Common.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ComFun_ACAD_Geometry.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ComFun_Convert.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ComFun_Interactive.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ComFun_Layer.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ComFun_Math.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ComFun_Str.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ComFun_String.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\TYRect.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ComFun_Sunac.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCDynamicBlock.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCWindow.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCDoor.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCKitchen.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCToilet.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCAirCondition.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCWaterProof.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCStdFacade.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCStdFill.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCLanGan.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCXianJiao.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
       <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\CApplication.h">
-      <Filter>Common\Excel</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\CBorder.h">
-      <Filter>Common\Excel</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\CBorders.h">
-      <Filter>Common\Excel</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\CExcel.h">
-      <Filter>Common\Excel</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\CFont0.h">
-      <Filter>Common\Excel</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\Cnterior.h">
-      <Filter>Common\Excel</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\CRange.h">
-      <Filter>Common\Excel</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\CRanges.h">
-      <Filter>Common\Excel</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\CWorkbook.h">
-      <Filter>Common\Excel</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\CWorkbooks.h">
-      <Filter>Common\Excel</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\CWorksheet.h">
-      <Filter>Common\Excel</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\CWorksheets.h">
-      <Filter>Common\Excel</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\Excel.h">
-      <Filter>Common\Excel</Filter>
     </ClInclude>
     <ClInclude Include="UI\Menu\CAcadApplication.h">
       <Filter>UI\Menu</Filter>
@@ -243,6 +282,129 @@
     <ClInclude Include="UI\GridCtrlWithPreview.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="Object\RCBlock.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCStandBlock.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\CApplication.h">
+      <Filter>Tool\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\CBorder.h">
+      <Filter>Tool\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\CBorders.h">
+      <Filter>Tool\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\CExcel.h">
+      <Filter>Tool\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\CFont0.h">
+      <Filter>Tool\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\Cnterior.h">
+      <Filter>Tool\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\CRange.h">
+      <Filter>Tool\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\CRanges.h">
+      <Filter>Tool\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\CWorkbook.h">
+      <Filter>Tool\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\CWorkbooks.h">
+      <Filter>Tool\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\CWorksheet.h">
+      <Filter>Tool\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\CWorksheets.h">
+      <Filter>Tool\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\Excel.h">
+      <Filter>Tool\Excel</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\AcessDatabase.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_ACad.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_ACAD_Common.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_ACAD_Geometry.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_Base.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_Convert.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_Def.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_Interactive.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_Layer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_Math.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_Str.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_String.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\TYRect.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_Sunac.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCDynamicBlock.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCWindow.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCDoor.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCKitchen.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCToilet.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCAirCondition.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCWaterProof.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCStdFacade.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCStdFill.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCLanGan.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCXianJiao.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -254,20 +416,23 @@
     <Filter Include="UI\Menu">
       <UniqueIdentifier>{d75291fd-bef4-4ad0-a200-c99f7e841cc3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Src">
-      <UniqueIdentifier>{a04d779a-3118-49f1-98a4-49050108b9af}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Common">
       <UniqueIdentifier>{5096803b-0346-4b6b-86c8-6aa77e6e463c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Common\Excel">
-      <UniqueIdentifier>{0218a6c0-1120-44bd-ad71-df03ade2b843}</UniqueIdentifier>
     </Filter>
     <Filter Include="UI\GridCtrl">
       <UniqueIdentifier>{916e2724-ca36-471d-afff-083e0b932025}</UniqueIdentifier>
     </Filter>
     <Filter Include="UI\GridCtrl\NewCellTypes">
       <UniqueIdentifier>{83e4724a-0bab-4242-95e2-3f49ac48765e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{a7392403-256d-4676-86f3-d6742dadb573}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tool">
+      <UniqueIdentifier>{8c8599a7-0dbd-4592-8f3b-3e64a4a1168f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tool\Excel">
+      <UniqueIdentifier>{454bc2d0-be15-4f72-ae3d-203eae19c3f8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
