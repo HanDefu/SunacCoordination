@@ -82,6 +82,7 @@ bool CGridCtrlWithPreview::AddPreview(int nRow, int nCol, CString sPath)
 	gridRect.DeflateRect(m_nMargin, m_nMargin);
 	CGsPreviewCtrl* pPreview = new CGsPreviewCtrl;
 	pPreview->Create(_T(""), WS_CHILD, gridRect, this);
+	pPreview->Init(theArxDLL.ModuleResourceInstance(), true);
 	pPreview->SetDwgFile(sPath);
 	m_pPreviews[nRow][nCol] = pPreview;
 

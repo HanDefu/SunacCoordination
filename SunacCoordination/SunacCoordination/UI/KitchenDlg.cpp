@@ -27,6 +27,24 @@ LRESULT CKitchenDlg::onAcadKeepFocus(WPARAM, LPARAM)
 	return TRUE;
 }
 
+void CKitchenDlg::OnOK()
+{
+	CDialogEx::OnOK();
+	DestroyWindow();
+}
+
+void CKitchenDlg::OnCancel()
+{
+	CDialogEx::OnCancel();
+	DestroyWindow();
+}
+
+void CKitchenDlg::PostNcDestroy()
+{
+	CDialogEx::PostNcDestroy();
+	delete this;
+}
+
 void CKitchenDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);

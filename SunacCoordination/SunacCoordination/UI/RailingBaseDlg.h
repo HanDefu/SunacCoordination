@@ -1,5 +1,6 @@
 #pragma once
 #include "gridctrlwithpreview.h"
+#include "afxcmn.h"
 
 
 // CRailingBaseDlg ¶Ô»°¿ò
@@ -23,4 +24,5 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	CGridCtrlWithPreview m_preRailingBase;
+	CTreeCtrl m_category;
 };

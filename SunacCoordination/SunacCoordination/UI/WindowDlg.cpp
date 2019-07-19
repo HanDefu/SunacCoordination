@@ -28,6 +28,24 @@ LRESULT CWindowDlg::onAcadKeepFocus(WPARAM, LPARAM)
 	return TRUE;
 }
 
+void CWindowDlg::OnOK()
+{
+	CDialogEx::OnOK();
+	DestroyWindow();
+}
+
+void CWindowDlg::OnCancel()
+{
+	CDialogEx::OnCancel();
+	DestroyWindow();
+}
+
+void CWindowDlg::PostNcDestroy()
+{
+	CDialogEx::PostNcDestroy();
+	delete this;
+}
+
 void CWindowDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);

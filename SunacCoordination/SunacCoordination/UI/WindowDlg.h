@@ -20,6 +20,10 @@ protected:
 
 	virtual BOOL OnInitDialog();
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);///---01
+	virtual void OnOK();
+	virtual void OnCancel();
+	virtual void PostNcDestroy(); //释放非模态对话框内存
+
 	DECLARE_MESSAGE_MAP()
 public:
 	CGridCtrlWithPreview m_preWindow;

@@ -55,6 +55,8 @@ END_MESSAGE_MAP()
 
 void CGsPreviewCtrl::OnPaint() 
 {
+	if (mpView == NULL)
+		return;
 	CPaintDC dc(this); 
 	//update the gs view
 	mpView->invalidate(); 
