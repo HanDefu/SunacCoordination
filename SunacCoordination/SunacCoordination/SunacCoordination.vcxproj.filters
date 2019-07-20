@@ -160,14 +160,14 @@
     <ClCompile Include="Object\RCStdFill.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Object\RCLanGan.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="Object\RCXianJiao.cpp">
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="Common\ComFun_DynamicBlock.cpp">
       <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCRailing.cpp">
+      <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -399,14 +399,14 @@
     <ClInclude Include="Object\RCStdFill.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Object\RCLanGan.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="Object\RCXianJiao.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Common\ComFun_DynamicBlock.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCRailing.h">
+      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -446,5 +446,11 @@
   <ItemGroup>
     <None Include="mainicon.bmp" />
     <None Include="res\mainicon.bmp" />
+    <None Include="lib.bmp" />
+    <None Include="res\lib.bmp" />
+    <None Include="selOne.bmp" />
+    <None Include="res\selOne.bmp" />
+    <None Include="Cancel.bmp" />
+    <None Include="res\Cancel.bmp" />
   </ItemGroup>
 </Project>

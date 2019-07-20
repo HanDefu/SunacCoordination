@@ -463,8 +463,9 @@ void TY_GetAllKitchenFiles(vCString &files)
 	files.push_back(appPath + L"\\support\\Sunac2019\\Kitchen\\Kitchen_2.0.dwg");
 }
 
-void TY_GetAllLanGanFiles(vCString &files)
+void TY_GetAllTieYiLanGanFiles(vCString &files)
 {
+	files.clear();
 	CString appPath = MD2010_GetAppPath();
 	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\铁艺栏杆_1.dwg");
 	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\铁艺栏杆_2.dwg");
@@ -473,6 +474,19 @@ void TY_GetAllLanGanFiles(vCString &files)
 	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\铁艺栏杆_5.dwg");
 	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\铁艺栏杆_6.dwg");
 	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\铁艺栏杆_7.dwg");
+}
+
+void TY_GetAllBoLiLanGanFiles(vCString &files)
+{
+	files.clear();
+	CString appPath = MD2010_GetAppPath();
+	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\玻璃栏杆_1.dwg");
+	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\玻璃栏杆_2.dwg");
+	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\玻璃栏杆_3.dwg");
+	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\玻璃栏杆_4.dwg");
+	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\玻璃栏杆_5.dwg");
+	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\玻璃栏杆_6.dwg");
+	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\玻璃栏杆_7.dwg");
 }
 
 
@@ -492,7 +506,6 @@ AcGePoint3d TY_GetPoint()
 
 TYRect TY_GetOneRect()
 {
-	ads_name sset; // 选择集名称
 	ads_point pt,result;
 	acedInitGet(32,NULL);
 	if(acedGetPoint(NULL,L"\npoint\n",pt)!=RTNORM) //第一角点选择
@@ -512,4 +525,25 @@ TYRect TY_GetOneRect()
 	rect.Add(pnt2);
 
 	return rect;
+}
+
+int TY_GetTwoPoints(AcGePoint3d &pnt1, AcGePoint3d &pnt2)
+{
+	ads_name sset; // 选择集名称
+	ads_point pt,result;
+	acedInitGet(32,NULL);
+	if(acedGetPoint(NULL,L"\请选择第一个点\n",pt)!=RTNORM) //第一角点选择
+	{
+		return 0;
+	}
+
+	if(acedGetPoint(pt,L"\请选择第二个点\n",result)!=RTNORM) //第一角点选择
+	{
+		return 0;
+	}
+
+	pnt1 = AcGePoint3d(pt[0],pt[1],pt[2]);
+	pnt2 = AcGePoint3d(result[0],result[1],result[2]);
+
+	return 0;
 }

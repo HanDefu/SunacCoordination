@@ -89,6 +89,20 @@ bool CGridCtrlWithPreview::AddPreview(int nRow, int nCol, CString sPath)
 	return true;
 }
 
+bool CGridCtrlWithPreview::ClearAllPreviews()
+{
+	
+	for (int i = 0; i < m_pPreviews.size(); i++)
+	{
+		for (int j = 0; j < m_pPreviews[i].size(); j++)
+		{
+            delete m_pPreviews[i][j];
+			m_pPreviews[i][j] = NULL;
+		}
+	}
+	return true;
+}
+
 void CGridCtrlWithPreview::ShowPreviews()
 {
 	if (m_nVPos >= m_pPreviews.size() || m_nHPos >= m_pPreviews[m_nVPos].size())

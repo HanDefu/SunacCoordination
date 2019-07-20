@@ -17,27 +17,29 @@ File description:
 #include <vector>
 #include "RCStandBlock.h"
 
-class RCLanGan : public RCStandBlock
+class RCRailing : public RCStandBlock
 {
 public:
 	//Constructors
-	RCLanGan(void);
-	RCLanGan(const RCLanGan &other);
+	RCRailing(void);
+	RCRailing(const RCRailing &other);
 
 	//Destructor
-	~RCLanGan(void);
+	~RCRailing(void);
 
 	//Operator = 
-	RCLanGan & operator=(const RCLanGan &rhs);
+	RCRailing & operator=(const RCRailing &rhs);
 
 	virtual RCTYPE GetType()const{return T_STDFACADE;}
 
-	virtual RCLanGan * Clone();
+	virtual RCRailing * Clone();
 	virtual void Draw();
+
+	int InsertRailing(AcGePoint3d start, AcGePoint3d end, CString fileName);
 
 protected: 
 	
 };
 
-typedef std::vector<RCLanGan> vRCLanGan;
-typedef std::vector<RCLanGan*> vpRCLanGan;
+typedef std::vector<RCRailing> vRCLanGan;
+typedef std::vector<RCRailing*> vpRCLanGan;

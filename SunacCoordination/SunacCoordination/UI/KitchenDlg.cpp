@@ -138,6 +138,7 @@ void CKitchenDlg::OnBnClickedButton1()//²åÈë³ø·¿Ä£¿é
 		oneKitchen.RunParameters();
 	}
 	ShowWindow(true);
+	OnOK();
 }
 
 void CKitchenDlg::OnBnClickedButtonKitchenrange()

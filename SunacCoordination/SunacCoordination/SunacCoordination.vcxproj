@@ -152,7 +152,7 @@
     <ClCompile Include="Object\RCDoor.cpp" />
     <ClCompile Include="Object\RCDynamicBlock.cpp" />
     <ClCompile Include="Object\RCKitchen.cpp" />
-    <ClCompile Include="Object\RCLanGan.cpp" />
+    <ClCompile Include="Object\RCRailing.cpp" />
     <ClCompile Include="Object\RCObject.cpp" />
     <ClCompile Include="Object\RCStandBlock.cpp" />
     <ClCompile Include="Object\RCStdFacade.cpp" />
@@ -216,7 +216,7 @@
     <ClInclude Include="Object\RCDoor.h" />
     <ClInclude Include="Object\RCDynamicBlock.h" />
     <ClInclude Include="Object\RCKitchen.h" />
-    <ClInclude Include="Object\RCLanGan.h" />
+    <ClInclude Include="Object\RCRailing.h" />
     <ClInclude Include="Object\RCObject.h" />
     <ClInclude Include="Object\RCStandBlock.h" />
     <ClInclude Include="Object\RCStdFacade.h" />
@@ -280,8 +280,14 @@
     <ResourceCompile Include="res\SunacCoordination.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Cancel.bmp" />
+    <None Include="lib.bmp" />
     <None Include="mainicon.bmp" />
+    <None Include="res\Cancel.bmp" />
+    <None Include="res\lib.bmp" />
     <None Include="res\mainicon.bmp" />
+    <None Include="res\selOne.bmp" />
+    <None Include="selOne.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

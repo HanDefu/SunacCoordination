@@ -6,6 +6,8 @@
 #include "afxdialogex.h"
 #include "../Common/ComFun_Sunac.h"
 #include "RailingBaseDlg.h"
+#include "../Object/RCRailing.h"
+
 
 // CRailingDlg 对话框
 
@@ -34,42 +36,78 @@ BEGIN_MESSAGE_MAP(CRailingDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_MFCBUTTON_LIB, &CRailingDlg::OnBnClickedMfcbuttonLib)
 	ON_BN_CLICKED(IDC_MFCBUTTON_SELECTLINE, &CRailingDlg::OnBnClickedMfcbuttonSelectline)
 	ON_BN_CLICKED(IDC_MFCBUTTON_CLOSE, &CRailingDlg::OnBnClickedMfcbuttonClose)
+	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
 END_MESSAGE_MAP()
 
 
 // CRailingDlg 消息处理程序
 
+LRESULT CRailingDlg::onAcadKeepFocus(WPARAM, LPARAM)
+{
+	//return FALSE;
+	return TRUE;
+}
 
 BOOL CRailingDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
 	vCString allRailingFiles;
-	TY_GetAllKitchenFiles(allRailingFiles); //暂时用厨房图纸代替
+	TY_GetAllTieYiLanGanFiles(allRailingFiles);
+	m_selectedFile = allRailingFiles[0];
 
 	m_preStyle.SubclassDlgItem(IDC_STATIC_STYLE, this);
 	m_preStyle.Init(theArxDLL.ModuleResourceInstance(), true);
-	m_preStyle.SetDwgFile(allRailingFiles[0]);
+	m_preStyle.SetDwgFile(m_selectedFile);
 
 	m_railingInfo.SetWindowText(_T("栏杆信息说明\r\n栏杆间距\r\n单元尺寸\r\n栏杆类型："));
 
+	m_width.SetWindowTextW(_T("2600"));
+	m_height.SetWindowTextW(_T("1200"));
+	m_reverse.SetWindowTextW(_T("20"));
+
+	((CMFCButton*)GetDlgItem(IDC_MFCBUTTON_LIB))->SetImage(IDB_BITMAP37);
+	((CMFCButton*)GetDlgItem(IDC_MFCBUTTON_CANCEL))->SetImage(IDB_BITMAP37);
 	return TRUE;
 }
 
 void CRailingDlg::OnBnClickedMfcbuttonLib()
 {
-	CRailingBaseDlg dlg;
-	dlg.DoModal();
+	CAcModuleResourceOverride resOverride;
+
+	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
+	CRailingBaseDlg * pDlg = new CRailingBaseDlg(acedGetAcadFrame());
+	pDlg->Create(IDD_DIALOG_RAILINGBASE);
+	pDlg->SetParent(this);
+	pDlg->ShowWindow(SW_SHOW);
 }
 
+void CRailingDlg::UpdateSelectFile(CString selectFile)
+{
+	if (selectFile.GetLength() > 0)
+	{
+		m_preStyle.SetDwgFile(selectFile);
+		m_selectedFile = selectFile;
+	}
+}
 
 void CRailingDlg::OnBnClickedMfcbuttonSelectline()
 {
-	// TODO: 在此添加控件通知处理程序代码
+	ShowWindow(FALSE);
+
+	AcGePoint3d pnt1, pnt2;
+	TY_GetTwoPoints(pnt1, pnt2);
+	if (m_selectedFile.GetLength() > 0)
+	{
+		RCRailing oneRailing;
+		oneRailing.InsertRailing(pnt1, pnt2, m_selectedFile);
+	}
+	ShowWindow(true);
+	OnOK();
 }
 
 
 void CRailingDlg::OnBnClickedMfcbuttonClose()
 {
-	// TODO: 在此添加控件通知处理程序代码
+	OnOK();
 }

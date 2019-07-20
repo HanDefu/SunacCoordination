@@ -36,10 +36,12 @@ void YT_UpdateBlockReference(AcDbObjectId &entId);
 
 void TY_GetAllWindowFiles(vCString &files);
 void TY_GetAllKitchenFiles(vCString &files);
-void TY_GetAllLanGanFiles(vCString &files);
+void TY_GetAllTieYiLanGanFiles(vCString &files);
+void TY_GetAllBoLiLanGanFiles(vCString &files);
 
 AcGePoint3d TY_GetPoint();
 TYRect TY_GetOneRect();
+int TY_GetTwoPoints(AcGePoint3d &pnt1, AcGePoint3d &pnt2);
 
 
 

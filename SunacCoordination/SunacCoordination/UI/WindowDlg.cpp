@@ -138,4 +138,5 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		oneWindow.RunParameters();
 	}
 	ShowWindow(true);
+	OnOK();
 }

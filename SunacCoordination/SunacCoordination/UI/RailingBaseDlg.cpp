@@ -5,7 +5,7 @@
 #include "RailingBaseDlg.h"
 #include "afxdialogex.h"
 #include "../Common/ComFun_Sunac.h"
-
+#include "RailingDlg.h"
 // CRailingBaseDlg 对话框
 
 IMPLEMENT_DYNAMIC(CRailingBaseDlg, CDialogEx)
@@ -13,7 +13,7 @@ IMPLEMENT_DYNAMIC(CRailingBaseDlg, CDialogEx)
 CRailingBaseDlg::CRailingBaseDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CRailingBaseDlg::IDD, pParent)
 {
-
+	m_parent = 0;
 }
 
 CRailingBaseDlg::~CRailingBaseDlg()
@@ -27,9 +27,16 @@ void CRailingBaseDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_TREE_RAILINGBASE, m_category);
 }
 
+LRESULT CRailingBaseDlg::onAcadKeepFocus(WPARAM, LPARAM)
+{
+	//return FALSE;
+	return TRUE;
+}
 
 BEGIN_MESSAGE_MAP(CRailingBaseDlg, CDialogEx)
-	ON_BN_CLICKED(IDOK, &CRailingBaseDlg::OnBnClickedOk)
+	ON_BN_CLICKED(IDC_MFCBUTTON_LIB, &CRailingBaseDlg::OnBnClickedMfcbuttonOK)
+	ON_NOTIFY(NM_CLICK, IDC_TREE_RAILINGBASE, &CRailingBaseDlg::OnNMClickTreeRailingbase)
+	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
 END_MESSAGE_MAP()
 
 
@@ -50,7 +57,7 @@ int CRailingBaseDlg::InitLib()
 {
 	m_libPreview.LoadDefaltSettings();
 
-	m_libPreview.SetRowCount(3);
+	m_libPreview.SetRowCount(4);
 	m_libPreview.SetColumnCount(2);
 
 	//设置预览图显示区域为3行1列
@@ -60,19 +67,21 @@ int CRailingBaseDlg::InitLib()
 	//设置第一列占60%，其余部分为第二列
 	//m_libPreview.SetHeaderWidth(_T("60;+"));
 
-	vCString allFiles;
-	TY_GetAllLanGanFiles(allFiles);
-	m_libPreview.AddPreview(0, 0, allFiles[0]); 
-	m_libPreview.AddPreview(0, 1, allFiles[1]); 
-	m_libPreview.AddPreview(1, 0, allFiles[2]); 
-	m_libPreview.AddPreview(1, 1, allFiles[3]); 
-	m_libPreview.AddPreview(2, 0, allFiles[4]); 
-	m_libPreview.AddPreview(2, 1, allFiles[5]); 
-	m_libPreview.AddPreview(3, 0, allFiles[6]); 
+	TY_GetAllTieYiLanGanFiles(m_allFilePathNames);//临时测试
 
-	m_libPreview.ShowPreviews();
+	RefreshPreviewFiles();
 
 	return 0;
+}
+
+void CRailingBaseDlg::RefreshPreviewFiles()
+{
+	m_libPreview.ClearAllPreviews();
+	for (int i = 0; i < m_allFilePathNames.size(); i++)
+	{
+		m_libPreview.AddPreview(i/2, i%2, m_allFilePathNames[i]);
+	}
+	m_libPreview.ShowPreviews();
 }
 
 int CRailingBaseDlg::InitTree()
@@ -130,8 +139,57 @@ int CRailingBaseDlg::FillTreeItem()
 }
 
 
-void CRailingBaseDlg::OnBnClickedOk()
+void CRailingBaseDlg::OnBnClickedMfcbuttonOK()//
 {
-	// TODO: 在此添加控件通知处理程序代码
-	CDialogEx::OnOK();
+	CCellRange range = m_libPreview.GetSelectedCellRange();
+	int row = range.GetMaxRow();
+	int col = range.GetMaxCol();
+
+	int index = row * 2 + col;
+
+	if (index < m_allFilePathNames.size())
+	{
+	    m_selectedFile = m_allFilePathNames[index];
+		if (m_parent != 0)
+		{
+			CRailingDlg * pRailingDlg = (CRailingDlg *)m_parent;
+			pRailingDlg->UpdateSelectFile(m_selectedFile);
+		}
+	}
+	OnOK();
+}
+
+
+void CRailingBaseDlg::OnNMClickTreeRailingbase(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	DWORD dw = GetMessagePos();
+	CPoint pt(LOWORD(dw),HIWORD(dw)); //鼠标的屏幕坐标
+	CPoint ptClient;
+	CRect rcPart;
+	m_category.GetWindowRect(rcPart);
+	ptClient.x = pt.x - rcPart.left;
+	ptClient.y = pt.y - rcPart.top;
+	UINT uFlags;
+	m_selItem = m_category.HitTest(ptClient, &uFlags);
+	if ((m_selItem != NULL))
+	{
+		if (m_category.ItemHasChildren(m_selItem))
+		{
+			 CString folderName = m_category.GetItemText(m_selItem);
+			 if (folderName == L"铁艺栏杆")
+			 {
+				 TY_GetAllTieYiLanGanFiles(m_allFilePathNames);
+				 RefreshPreviewFiles();
+			 }
+			 else if(folderName == L"玻璃栏杆")
+			 {
+				 TY_GetAllBoLiLanGanFiles(m_allFilePathNames);
+				 RefreshPreviewFiles();
+			 }
+		}
+		m_category.Select(m_selItem, TVGN_CARET);
+		*pResult = 0;
+		return;
+	}
+	*pResult = 0;
 }

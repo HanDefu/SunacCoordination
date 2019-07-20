@@ -86,8 +86,12 @@ void CMD_SUNACDOOR()
 //À¸¸Ë
 void CMD_SUNACRAILING()
 {
-	CRailingDlg dlg;
-	dlg.DoModal();
+	CAcModuleResourceOverride resOverride;
+
+	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
+	CRailingDlg * pDlg = new CRailingDlg(acedGetAcadFrame());
+	pDlg->Create(IDD_DIALOG_RAILING);
+	pDlg->ShowWindow(SW_SHOW);
 }
 
 //Ïß½Å

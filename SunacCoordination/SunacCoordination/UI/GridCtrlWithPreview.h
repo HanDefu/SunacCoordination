@@ -16,6 +16,7 @@ public:
 	void SetMargin(int nMargin); //设置边距
 
 	bool AddPreview(int nRow, int nCol, CString sPath); //绑定dwg预览图到指定单元格
+	bool ClearAllPreviews();
 	void ShowPreviews(); //显示预览图
 	void UpdatePreviews(); //滚动条变化时刷新预览图
 
