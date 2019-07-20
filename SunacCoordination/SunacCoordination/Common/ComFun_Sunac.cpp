@@ -465,9 +465,14 @@ void TY_GetAllKitchenFiles(vCString &files)
 
 void TY_GetAllLanGanFiles(vCString &files)
 {
-	//CString appPath = MD2010_GetAppPath();
-	//files.push_back(appPath + L"\\support\\Sunac2019\\Kitchen\\Kitchen_1.0.dwg");
-	//files.push_back(appPath + L"\\support\\Sunac2019\\Kitchen\\Kitchen_2.0.dwg");
+	CString appPath = MD2010_GetAppPath();
+	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\ÌúÒÕÀ¸¸Ë_1.dwg");
+	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\ÌúÒÕÀ¸¸Ë_2.dwg");
+	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\ÌúÒÕÀ¸¸Ë_3.dwg");
+	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\ÌúÒÕÀ¸¸Ë_4.dwg");
+	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\ÌúÒÕÀ¸¸Ë_5.dwg");
+	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\ÌúÒÕÀ¸¸Ë_6.dwg");
+	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\ÌúÒÕÀ¸¸Ë_7.dwg");
 }
 
 

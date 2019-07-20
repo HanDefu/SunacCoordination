@@ -443,4 +443,8 @@
       <Filter>Source</Filter>
     </ResourceCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="mainicon.bmp" />
+    <None Include="res\mainicon.bmp" />
+  </ItemGroup>
 </Project>

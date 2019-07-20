@@ -20,9 +20,21 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
 
 	virtual BOOL OnInitDialog();
+	afx_msg void OnBnClickedOk();
+	int InitTree();
+	int FillTreeItem();
+	int InitLib();
 
 	DECLARE_MESSAGE_MAP()
-public:
-	CGridCtrlWithPreview m_preRailingBase;
+
+private:
+
+	CGridCtrlWithPreview m_libPreview;
 	CTreeCtrl m_category;
+	CImageList m_treeImages;
+	HTREEITEM m_hroot;
+	HTREEITEM m_hlibTieYi;
+	HTREEITEM m_hlibBoLi;
+
+	
 };

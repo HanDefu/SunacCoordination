@@ -279,6 +279,10 @@
   <ItemGroup>
     <ResourceCompile Include="res\SunacCoordination.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="mainicon.bmp" />
+    <None Include="res\mainicon.bmp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
