@@ -60,14 +60,14 @@ BOOL CRailingDlg::OnInitDialog()
 	m_preStyle.Init(theArxDLL.ModuleResourceInstance(), true);
 	m_preStyle.SetDwgFile(m_selectedFile);
 
-	m_railingInfo.SetWindowText(_T("栏杆信息说明\r\n栏杆间距\r\n单元尺寸\r\n栏杆类型："));
+	m_railingInfo.SetWindowText(_T("栏杆信息说明:\r\n栏杆间距:\r\n单元尺寸:\r\n栏杆类型："));
 
 	m_width.SetWindowTextW(_T("2600"));
 	m_height.SetWindowTextW(_T("1200"));
 	m_reverse.SetWindowTextW(_T("20"));
 
-	((CMFCButton*)GetDlgItem(IDC_MFCBUTTON_LIB))->SetImage(IDB_BITMAP37);
-	((CMFCButton*)GetDlgItem(IDC_MFCBUTTON_CANCEL))->SetImage(IDB_BITMAP37);
+	//((CMFCButton*)GetDlgItem(IDC_MFCBUTTON_LIB))->SetImage(IDB_BITMAP37);
+	//((CMFCButton*)GetDlgItem(IDC_MFCBUTTON_CANCEL))->SetImage(IDB_BITMAP37);
 	return TRUE;
 }
 

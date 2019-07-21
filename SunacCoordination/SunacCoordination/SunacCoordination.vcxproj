@@ -280,14 +280,24 @@
     <ResourceCompile Include="res\SunacCoordination.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\Doc\软件图标\Insert.bmp" />
     <None Include="Cancel.bmp" />
+    <None Include="doordir.bmp" />
+    <None Include="kitchenrange.bmp" />
     <None Include="lib.bmp" />
     <None Include="mainicon.bmp" />
     <None Include="res\Cancel.bmp" />
+    <None Include="res\doordir.bmp" />
+    <None Include="res\Insert.bmp" />
+    <None Include="res\kitchenrange.bmp" />
     <None Include="res\lib.bmp" />
     <None Include="res\mainicon.bmp" />
+    <None Include="res\search.bmp" />
     <None Include="res\selOne.bmp" />
+    <None Include="res\windowdir.bmp" />
+    <None Include="search.bmp" />
     <None Include="selOne.bmp" />
+    <None Include="windowdir.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

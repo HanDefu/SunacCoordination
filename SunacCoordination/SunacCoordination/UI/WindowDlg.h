@@ -31,7 +31,8 @@ public:
 	CComboBox m_openType;
 	CComboBox m_openAmount;
 	CComboBox m_openWidth;
-	afx_msg void OnBnClickedButtonInsert();
 	CEdit m_width;
 	CEdit m_height;
+	afx_msg void OnBnClickedMfcbuttonInsert();
+	afx_msg void OnBnClickedMfcbuttonSearch();
 };

@@ -452,5 +452,15 @@
     <None Include="res\selOne.bmp" />
     <None Include="Cancel.bmp" />
     <None Include="res\Cancel.bmp" />
+    <None Include="..\..\..\..\Doc\软件图标\Insert.bmp" />
+    <None Include="search.bmp" />
+    <None Include="res\search.bmp" />
+    <None Include="res\Insert.bmp" />
+    <None Include="doordir.bmp" />
+    <None Include="windowdir.bmp" />
+    <None Include="res\doordir.bmp" />
+    <None Include="res\windowdir.bmp" />
+    <None Include="kitchenrange.bmp" />
+    <None Include="res\kitchenrange.bmp" />
   </ItemGroup>
 </Project>

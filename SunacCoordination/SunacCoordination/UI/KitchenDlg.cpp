@@ -59,8 +59,7 @@ void CKitchenDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CKitchenDlg, CDialogEx)
 	ON_BN_CLICKED(IDOK, &CKitchenDlg::OnBnClickedOk)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
-	ON_BN_CLICKED(IDC_BUTTON1, &CKitchenDlg::OnBnClickedButton1)
-	ON_BN_CLICKED(IDC_BUTTON_KITCHENRANGE, &CKitchenDlg::OnBnClickedButtonKitchenrange)
+	ON_BN_CLICKED(IDC_MFCBUTTON_INSERT, &CKitchenDlg::OnBnClickedMfcbuttonInsert)
 END_MESSAGE_MAP()
 
 
@@ -111,7 +110,7 @@ void CKitchenDlg::OnBnClickedOk()
 }
 
 
-void CKitchenDlg::OnBnClickedButton1()//插入厨房模块
+void CKitchenDlg::OnBnClickedMfcbuttonInsert()
 {
 	ShowWindow(FALSE);
 
@@ -139,9 +138,4 @@ void CKitchenDlg::OnBnClickedButton1()//插入厨房模块
 	}
 	ShowWindow(true);
 	OnOK();
-}
-
-void CKitchenDlg::OnBnClickedButtonKitchenrange()
-{
-	// TODO: 在此添加控件通知处理程序代码
 }

@@ -34,6 +34,5 @@ public:
 	CComboBox m_projectLevel;
 	afx_msg void OnBnClickedOk();
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);///---01
-	afx_msg void OnBnClickedButton1();
-	afx_msg void OnBnClickedButtonKitchenrange();
+	afx_msg void OnBnClickedMfcbuttonInsert();
 };

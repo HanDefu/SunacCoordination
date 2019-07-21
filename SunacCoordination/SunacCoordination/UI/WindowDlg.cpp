@@ -60,8 +60,9 @@ void CWindowDlg::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(CWindowDlg, CDialogEx)
-	ON_BN_CLICKED(IDC_BUTTON_INSERT, &CWindowDlg::OnBnClickedButtonInsert)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
+	ON_BN_CLICKED(IDC_MFCBUTTON_SELECTLINE, &CWindowDlg::OnBnClickedMfcbuttonInsert)
+	ON_BN_CLICKED(IDC_MFCBUTTON_SEARCH, &CWindowDlg::OnBnClickedMfcbuttonSearch)
 END_MESSAGE_MAP()
 
 
@@ -89,7 +90,7 @@ BOOL CWindowDlg::OnInitDialog()
 	for (int i = 0; i < allWindowFiles.size(); i++)
 	{
 		m_preWindow.AddPreview(i, 0, allWindowFiles[i]); 
-		m_preWindow.SetContentItemText(i, 1, _T("窗类型：双扇单开\n窗户面积：2.1\n通风量：1.6"));
+		m_preWindow.SetContentItemText(i, 1, _T("窗类型:双扇单开\n窗户面积:2.1\n通风量:1.6"));
 	}
 
 	
@@ -107,14 +108,15 @@ BOOL CWindowDlg::OnInitDialog()
 	return TRUE;
 }
 
-void CWindowDlg::OnBnClickedButtonInsert()
+
+void CWindowDlg::OnBnClickedMfcbuttonInsert()
 {
 	ShowWindow(FALSE);
 
 	// TODO: 在此添加控件通知处理程序代码
 	vCString allWindowFiles;
 	TY_GetAllWindowFiles(allWindowFiles);
-	
+
 	AcGePoint3d origin = TY_GetPoint();
 
 	double width = 0, height = 0;
@@ -139,4 +141,10 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	}
 	ShowWindow(true);
 	OnOK();
+}
+
+
+void CWindowDlg::OnBnClickedMfcbuttonSearch()//搜索
+{
+	// TODO: 在此添加控件通知处理程序代码
 }
