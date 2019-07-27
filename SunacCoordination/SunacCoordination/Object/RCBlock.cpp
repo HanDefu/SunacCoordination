@@ -62,7 +62,7 @@ AcDbObjectId RCBlock::Insert(CString layoutname, CString blockDefineName,
 	CString name;
 	MD2010_GetCurrentLayer(name);
 	MD2010_SetCurrentLayer(layerName);
-	MD2010_InsertBlockReference_Layout(layoutname, blockDefineName,m_id, origin, angle, AcGeScale3d(1,1,1),color);
+	MD2010_InsertBlockReference_Layout(layoutname, blockDefineName, m_id, origin, angle, AcGeScale3d(1,1,1),color);
 	MD2010_SetCurrentLayer(name);
 	return m_id;
 }

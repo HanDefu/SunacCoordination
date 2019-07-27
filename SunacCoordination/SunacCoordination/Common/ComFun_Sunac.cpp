@@ -919,6 +919,23 @@ int TYCOM_Rotate(AcDbObjectId entId, AcGePoint3d ptBase, double rotation)
 	return 0;
 }
 
+
+int TYCOM_Move(AcDbObjectId entId, AcGeVector3d offset)
+{
+	CDocLock docLock;
+	AcGeMatrix3d xform;
+	xform.setToTranslation(offset);
+
+	AcDbEntity *pEnt = NULL;
+	Acad::ErrorStatus es = acdbOpenObject(pEnt, entId, AcDb::kForWrite, false);
+	if (es == Acad::eOk)
+	{
+		es = pEnt->transformBy(xform);
+		pEnt->close();
+	}
+	return 0;
+}
+
 double GePlineLength(AcDbObjectId eId)
 {
 
