@@ -49,6 +49,11 @@ extern "C" HWND adsw_acadMainWnd();
 
 AC_IMPLEMENT_EXTENSION_MODULE(theArxDLL);
 
+//登录
+void CMD_Login()
+{
+
+}
 //窗
 void CMD_SUNACWINDOW()
 {
@@ -137,6 +142,89 @@ void CMD_SUNACSTATISTICS()
 
 }
 
+void AddSubMenu_Old(CAcadPopupMenu&IPopUpMenu, UINT MenuStartIndex)
+{
+	VARIANT index;
+
+	VariantInit(&index);
+	V_VT(&index) = VT_I4;
+	V_I4(&index) = MenuStartIndex++;
+
+
+	VariantInit(&index);
+	V_VT(&index) = VT_I4;
+	V_I4(&index) = MenuStartIndex++;
+	IPopUpMenu.AddMenuItem(index, _T("窗"), _T("_SUNACWINDOW ")); //命令的前面的下划线_ 和最后的空格都不能少
+
+
+	VariantInit(&index);
+	V_VT(&index) = VT_I4;
+	V_I4(&index) = MenuStartIndex++;
+	IPopUpMenu.AddMenuItem(index, _T("厨房"), _T("_SUNACKITCHEN "));
+
+	VariantInit(&index);
+	V_VT(&index) = VT_I4;
+	V_I4(&index) = MenuStartIndex++;
+	IPopUpMenu.AddMenuItem(index, _T("卫生间"), _T("_SUNACBATHROOM "));
+
+	VariantInit(&index);
+	V_VT(&index) = VT_I4;
+	V_I4(&index) = MenuStartIndex++;
+	IPopUpMenu.AddMenuItem(index, _T("门"), _T("_SUNACDOOR "));
+
+	VariantInit(&index);
+	V_VT(&index) = VT_I4;
+	V_I4(&index) = MenuStartIndex++;
+	IPopUpMenu.AddMenuItem(index, _T("栏杆"), _T("_SUNACRAILING "));
+
+	VariantInit(&index);
+	V_VT(&index) = VT_I4;
+	V_I4(&index) = MenuStartIndex++;
+	IPopUpMenu.AddMenuItem(index, _T("线脚"), _T("_SUNACMOLDINGS "));
+
+	VariantInit(&index);
+	V_VT(&index) = VT_I4;
+	V_I4(&index) = MenuStartIndex++;
+	IPopUpMenu.AddMenuItem(index, _T("填充材质"), _T("_SUNACFILLING "));
+
+	VariantInit(&index);
+	V_VT(&index) = VT_I4;
+	V_I4(&index) = MenuStartIndex++;
+	IPopUpMenu.AddMenuItem(index, _T("空调"), _T("_SUNACAIRCONDITIONER "));
+
+	VariantInit(&index);
+	V_VT(&index) = VT_I4;
+	V_I4(&index) = MenuStartIndex++;
+	IPopUpMenu.AddMenuItem(index, _T("标准立面"), _T("_SUNACFACADE "));
+
+	VariantInit(&index);
+	V_VT(&index) = VT_I4;
+	V_I4(&index) = MenuStartIndex++;
+	IPopUpMenu.AddMenuItem(index, _T("防水构造"), _T("_SUNACWATERPROOF "));
+
+	VariantInit(&index);
+	V_VT(&index) = VT_I4;
+	V_I4(&index) = MenuStartIndex++;
+	IPopUpMenu.AddMenuItem(index, _T("统计算量"), _T("_SUNACSTATISTICS "));
+
+}
+
+void AddSubMenu(CAcadPopupMenu&IPopUpMenu, UINT MenuStartIndex)
+{
+	VARIANT index;
+
+	VariantInit(&index);
+	V_VT(&index) = VT_I4;
+	V_I4(&index) = MenuStartIndex++;
+	IPopUpMenu.AddMenuItem(index, _T("登录"), _T("_SLOGIN ")); //命令的前面的下划线_ 和最后的空格都不能少
+	
+	VariantInit(&index);
+	V_VT(&index) = VT_I4;
+	V_I4(&index) = MenuStartIndex++;
+	IPopUpMenu.AddMenuItem(index, _T("产品标准"), _T(" "));
+
+}
+
 void InitMenu()
 {
 	TRY
@@ -144,8 +232,7 @@ void InitMenu()
 		CAcadApplication IAcad(acedGetAcadWinApp()->GetIDispatch(TRUE));
 		CAcadMenuBar IMenuBar(IAcad.get_MenuBar());
 
-		long numberOfMenus;
-		numberOfMenus = IMenuBar.get_Count();
+		long numberOfMenus = IMenuBar.get_Count();
 
 		CAcadMenuGroups IMenuGroups(IAcad.get_MenuGroups());
 
@@ -157,80 +244,21 @@ void InitMenu()
 		CAcadMenuGroup IMenuGroup(IMenuGroups.Item(index));
 		CAcadPopupMenus IPopUpMenus(IMenuGroup.get_Menus());
 
-		CString cstrMenuName = _T("融创设计");//自定义主菜单
+		CString cstrMenuName = _T("融创产品标准");//自定义主菜单
 
 		VariantInit(&index);
 		V_VT(&index) = VT_BSTR;
 		V_BSTR(&index) = cstrMenuName.AllocSysString();
 
-		IDispatch* pDisp=NULL;
-		TRY{pDisp = IPopUpMenus.Item(index); pDisp->AddRef();} CATCH(COleDispatchException,e){}END_CATCH;
+		IDispatch* pDisp = NULL;
+		TRY{ pDisp = IPopUpMenus.Item(index); pDisp->AddRef(); } CATCH(COleDispatchException, e){}END_CATCH;
 
-		if (pDisp==NULL) 
+		if (pDisp == NULL)
 		{
 			CAcadPopupMenu IPopUpMenu(IPopUpMenus.Add(cstrMenuName));
-			UINT MenuIndex=0;
+			UINT MenuIndex = 0;
 
-			VariantInit(&index);
-			V_VT(&index) = VT_I4;
-			V_I4(&index) = MenuIndex++;
-
-
-			VariantInit(&index);
-			V_VT(&index) = VT_I4;
-			V_I4(&index) = MenuIndex++;
-			IPopUpMenu.AddMenuItem(index, _T("窗"), _T("_SUNACWINDOW ")); //命令的前面的下划线_ 和最后的空格都不能少
-
-
-			VariantInit(&index);
-			V_VT(&index) = VT_I4;
-			V_I4(&index) = MenuIndex++;
-			IPopUpMenu.AddMenuItem(index, _T("厨房"), _T("_SUNACKITCHEN "));
-
-			VariantInit(&index);
-			V_VT(&index) = VT_I4;
-			V_I4(&index) = MenuIndex++;
-			IPopUpMenu.AddMenuItem(index, _T("卫生间"), _T("_SUNACBATHROOM "));
-
-			VariantInit(&index);
-			V_VT(&index) = VT_I4;
-			V_I4(&index) = MenuIndex++;
-			IPopUpMenu.AddMenuItem(index, _T("门"), _T("_SUNACDOOR "));
-
-			VariantInit(&index);
-			V_VT(&index) = VT_I4;
-			V_I4(&index) = MenuIndex++;
-			IPopUpMenu.AddMenuItem(index, _T("栏杆"), _T("_SUNACRAILING "));
-
-			VariantInit(&index);
-			V_VT(&index) = VT_I4;
-			V_I4(&index) = MenuIndex++;
-			IPopUpMenu.AddMenuItem(index, _T("线脚"), _T("_SUNACMOLDINGS "));
-
-			VariantInit(&index);
-			V_VT(&index) = VT_I4;
-			V_I4(&index) = MenuIndex++;
-			IPopUpMenu.AddMenuItem(index, _T("填充材质"), _T("_SUNACFILLING "));
-
-			VariantInit(&index);
-			V_VT(&index) = VT_I4;
-			V_I4(&index) = MenuIndex++;
-			IPopUpMenu.AddMenuItem(index, _T("空调"), _T("_SUNACAIRCONDITIONER "));
-
-			VariantInit(&index);
-			V_VT(&index) = VT_I4;
-			V_I4(&index) = MenuIndex++;
-			IPopUpMenu.AddMenuItem(index, _T("标准立面"), _T("_SUNACFACADE "));
-
-			VariantInit(&index);
-			V_VT(&index) = VT_I4;
-			V_I4(&index) = MenuIndex++;
-			IPopUpMenu.AddMenuItem(index, _T("防水构造"), _T("_SUNACWATERPROOF "));
-
-			VariantInit(&index);
-			V_VT(&index) = VT_I4;
-			V_I4(&index) = MenuIndex++;
-			IPopUpMenu.AddMenuItem(index, _T("统计算量"), _T("_SUNACSTATISTICS "));
+			AddSubMenu(IPopUpMenu, MenuIndex);
 
 			pDisp = IPopUpMenu.m_lpDispatch;
 			pDisp->AddRef();
@@ -241,7 +269,7 @@ void InitMenu()
 		{
 			VariantInit(&index);
 			V_VT(&index) = VT_I4;
-			V_I4(&index) = numberOfMenus ;
+			V_I4(&index) = numberOfMenus;
 			IPopUpMenu.InsertInMenuBar(index);
 		}
 		else
@@ -254,18 +282,26 @@ void InitMenu()
 		}
 		pDisp->Release();
 	}
-	CATCH(COleDispatchException,e)
+	CATCH(COleDispatchException, e)
 	{
 		e->ReportError();
 		e->Delete();
 	}
 	END_CATCH;
 }
-
 static void initApp()
 {
 	CAcModuleResourceOverride resOverride;
 	////----------------提取数据-------------------//
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SLOGIN"),
+		_T("SLOGIN"),
+		ACRX_CMD_MODAL,
+		CMD_Login,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
 		_T("SUNACWINDOW"),
@@ -404,12 +440,12 @@ extern "C" int APIENTRY
 static void CADPalette_AddP(void)
 {
 	CMyPaletteSet *pPaletteSet = new CMyPaletteSet;
-	CRect rect(0,30,300,300);
-	pPaletteSet->Create(_T("工具面板"),WS_VISIBLE,rect,acedGetAcadFrame());
+	CRect rect(0,30,160,300);
+	pPaletteSet->Create(_T("标准产品"),WS_VISIBLE,rect,acedGetAcadFrame());
 	CMyPalette *pPalette1 = new CMyPalette;
 	CAdUiPalette *pPalette2 = new CAdUiPalette;
-	pPalette1->Create(WS_VISIBLE|WS_CHILD,_T("工具1"),pPaletteSet);
-	pPalette2->Create(WS_VISIBLE|WS_CHILD,_T("工具2"),pPaletteSet);
+	pPalette1->Create(WS_VISIBLE|WS_CHILD,_T("产品"),pPaletteSet);
+	pPalette2->Create(WS_VISIBLE|WS_CHILD,_T("算量"),pPaletteSet);
 
 	pPaletteSet->AddPalette(pPalette1);
 	pPaletteSet->AddPalette(pPalette2);
