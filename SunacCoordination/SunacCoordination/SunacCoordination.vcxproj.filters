@@ -169,6 +169,15 @@
     <ClCompile Include="Object\RCRailing.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="UI\MyPalette.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\MyPaletteSet.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\DlgLeftBar.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -408,6 +417,15 @@
     <ClInclude Include="Object\RCRailing.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="UI\MyPalette.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\MyPaletteSet.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DlgLeftBar.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -437,6 +455,9 @@
     <Filter Include="Tool\Excel">
       <UniqueIdentifier>{454bc2d0-be15-4f72-ae3d-203eae19c3f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="bmp">
+      <UniqueIdentifier>{f6892d25-12ee-476a-975e-aa77be1ed2fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\SunacCoordination.rc">
@@ -444,23 +465,59 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="mainicon.bmp" />
-    <None Include="res\mainicon.bmp" />
-    <None Include="lib.bmp" />
-    <None Include="res\lib.bmp" />
-    <None Include="selOne.bmp" />
-    <None Include="res\selOne.bmp" />
-    <None Include="Cancel.bmp" />
-    <None Include="res\Cancel.bmp" />
-    <None Include="..\..\..\..\Doc\软件图标\Insert.bmp" />
-    <None Include="search.bmp" />
-    <None Include="res\search.bmp" />
-    <None Include="res\Insert.bmp" />
-    <None Include="doordir.bmp" />
-    <None Include="windowdir.bmp" />
-    <None Include="res\doordir.bmp" />
-    <None Include="res\windowdir.bmp" />
-    <None Include="kitchenrange.bmp" />
-    <None Include="res\kitchenrange.bmp" />
+    <None Include="Cancel.bmp">
+      <Filter>bmp</Filter>
+    </None>
+    <None Include="windowdir.bmp">
+      <Filter>bmp</Filter>
+    </None>
+    <None Include="res\Cancel.bmp">
+      <Filter>bmp</Filter>
+    </None>
+    <None Include="res\doordir.bmp">
+      <Filter>bmp</Filter>
+    </None>
+    <None Include="doordir.bmp">
+      <Filter>bmp</Filter>
+    </None>
+    <None Include="..\..\..\..\Doc\软件图标\Insert.bmp">
+      <Filter>bmp</Filter>
+    </None>
+    <None Include="res\Insert.bmp">
+      <Filter>bmp</Filter>
+    </None>
+    <None Include="res\kitchenrange.bmp">
+      <Filter>bmp</Filter>
+    </None>
+    <None Include="kitchenrange.bmp">
+      <Filter>bmp</Filter>
+    </None>
+    <None Include="res\lib.bmp">
+      <Filter>bmp</Filter>
+    </None>
+    <None Include="lib.bmp">
+      <Filter>bmp</Filter>
+    </None>
+    <None Include="mainicon.bmp">
+      <Filter>bmp</Filter>
+    </None>
+    <None Include="res\mainicon.bmp">
+      <Filter>bmp</Filter>
+    </None>
+    <None Include="res\search.bmp">
+      <Filter>bmp</Filter>
+    </None>
+    <None Include="search.bmp">
+      <Filter>bmp</Filter>
+    </None>
+    <None Include="selOne.bmp">
+      <Filter>bmp</Filter>
+    </None>
+    <None Include="res\selOne.bmp">
+      <Filter>bmp</Filter>
+    </None>
+    <None Include="res\windowdir.bmp">
+      <Filter>bmp</Filter>
+    </None>
   </ItemGroup>
 </Project>

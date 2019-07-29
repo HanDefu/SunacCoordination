@@ -34,6 +34,8 @@
 #include "UI\FillingDlg.h"
 #include "UI\MoldingsDlg.h"
 #include "UI\WaterproofDlg.h"
+#include "ui\MyPalette.h"
+#include "ui\MyPaletteSet.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -398,6 +400,25 @@ extern "C" int APIENTRY
 	return 1;   // ok
 }
 
+
+static void CADPalette_AddP(void)
+{
+	CMyPaletteSet *pPaletteSet = new CMyPaletteSet;
+	CRect rect(0,30,300,300);
+	pPaletteSet->Create(_T("工具面板"),WS_VISIBLE,rect,acedGetAcadFrame());
+	CMyPalette *pPalette1 = new CMyPalette;
+	CAdUiPalette *pPalette2 = new CAdUiPalette;
+	pPalette1->Create(WS_VISIBLE|WS_CHILD,_T("工具1"),pPaletteSet);
+	pPalette2->Create(WS_VISIBLE|WS_CHILD,_T("工具2"),pPaletteSet);
+
+	pPaletteSet->AddPalette(pPalette1);
+	pPaletteSet->AddPalette(pPalette2);
+	pPaletteSet->EnableDocking(CBRS_ALIGN_ANY);
+	pPaletteSet->RestoreControlBar();
+
+	acedGetAcadFrame()->ShowControlBar(pPaletteSet,TRUE,FALSE);
+}
+
 extern "C" AcRx::AppRetCode acrxEntryPoint( AcRx::AppMsgCode msg, void* appId)
 {
 	switch( msg ) 
@@ -407,6 +428,7 @@ extern "C" AcRx::AppRetCode acrxEntryPoint( AcRx::AppMsgCode msg, void* appId)
 		acrxDynamicLinker->registerAppMDIAware(appId);
 		initApp(); 
 		InitMenu();
+		CADPalette_AddP();
 		break;
 	case AcRx::kUnloadAppMsg: 
 		unloadApp();

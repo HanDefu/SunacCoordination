@@ -171,6 +171,7 @@
     <ClCompile Include="Tool\Excel\Excel.cpp" />
     <ClCompile Include="UI\AirconditionerDlg.cpp" />
     <ClCompile Include="UI\BathroomDlg.cpp" />
+    <ClCompile Include="UI\DlgLeftBar.cpp" />
     <ClCompile Include="UI\DoorDlg.cpp" />
     <ClCompile Include="UI\FacadeDlg.cpp" />
     <ClCompile Include="UI\FillingDlg.cpp" />
@@ -190,6 +191,8 @@
     <ClCompile Include="UI\GsPreviewCtrl.cpp" />
     <ClCompile Include="UI\KitchenDlg.cpp" />
     <ClCompile Include="UI\MoldingsDlg.cpp" />
+    <ClCompile Include="UI\MyPalette.cpp" />
+    <ClCompile Include="UI\MyPaletteSet.cpp" />
     <ClCompile Include="UI\RailingBaseDlg.cpp" />
     <ClCompile Include="UI\RailingDlg.cpp" />
     <ClCompile Include="UI\WaterproofDlg.cpp" />
@@ -242,6 +245,7 @@
     <ClInclude Include="Tool\Excel\Excel.h" />
     <ClInclude Include="UI\AirconditionerDlg.h" />
     <ClInclude Include="UI\BathroomDlg.h" />
+    <ClInclude Include="UI\DlgLeftBar.h" />
     <ClInclude Include="UI\DoorDlg.h" />
     <ClInclude Include="UI\FacadeDlg.h" />
     <ClInclude Include="UI\FillingDlg.h" />
@@ -271,6 +275,8 @@
     <ClInclude Include="UI\Menu\CAcadPopupMenus.h" />
     <ClInclude Include="UI\Menu\Menu_Def.h" />
     <ClInclude Include="UI\MoldingsDlg.h" />
+    <ClInclude Include="UI\MyPalette.h" />
+    <ClInclude Include="UI\MyPaletteSet.h" />
     <ClInclude Include="UI\RailingBaseDlg.h" />
     <ClInclude Include="UI\RailingDlg.h" />
     <ClInclude Include="UI\WaterproofDlg.h" />
