@@ -178,6 +178,9 @@
     <ClCompile Include="UI\DlgLeftBar.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="UI\DlgLogin.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -424,6 +427,9 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="UI\DlgLeftBar.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DlgLogin.h">
       <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>

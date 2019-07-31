@@ -36,6 +36,7 @@
 #include "UI\WaterproofDlg.h"
 #include "ui\MyPalette.h"
 #include "ui\MyPaletteSet.h"
+#include "ui\DlgLogin.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -44,6 +45,7 @@ static char THIS_FILE[] = __FILE__;
 #endif
 extern "C" HWND adsw_acadMainWnd();
 
+static void CADPalette_AddP(void);
 /////////////////////////////////////////////////////////////////////////////
 // Define the sole extension module object.
 
@@ -52,7 +54,9 @@ AC_IMPLEMENT_EXTENSION_MODULE(theArxDLL);
 //登录
 void CMD_Login()
 {
-
+	DlgLogin dlg;
+	dlg.DoModal();
+	CADPalette_AddP();
 }
 //窗
 void CMD_SUNACWINDOW()
@@ -445,10 +449,10 @@ static void CADPalette_AddP(void)
 	CMyPalette *pPalette1 = new CMyPalette;
 	CAdUiPalette *pPalette2 = new CAdUiPalette;
 	pPalette1->Create(WS_VISIBLE|WS_CHILD,_T("产品"),pPaletteSet);
-	pPalette2->Create(WS_VISIBLE|WS_CHILD,_T("算量"),pPaletteSet);
+	//pPalette2->Create(WS_VISIBLE|WS_CHILD,_T("算量"),pPaletteSet);
 
 	pPaletteSet->AddPalette(pPalette1);
-	pPaletteSet->AddPalette(pPalette2);
+	//pPaletteSet->AddPalette(pPalette2);
 	pPaletteSet->EnableDocking(CBRS_ALIGN_ANY);
 	pPaletteSet->RestoreControlBar();
 
@@ -464,7 +468,6 @@ extern "C" AcRx::AppRetCode acrxEntryPoint( AcRx::AppMsgCode msg, void* appId)
 		acrxDynamicLinker->registerAppMDIAware(appId);
 		initApp(); 
 		InitMenu();
-		CADPalette_AddP();
 		break;
 	case AcRx::kUnloadAppMsg: 
 		unloadApp();

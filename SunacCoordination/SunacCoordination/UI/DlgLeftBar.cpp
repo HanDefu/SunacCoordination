@@ -66,7 +66,7 @@ int DlgLeftBar::InitTreeCtrl()
 int DlgLeftBar::FillTreeItem()
 {
 	HTREEITEM  hItem= m_treeCtrlMenu.InsertItem(_T("门窗"), 12, 12);
-	m_treeCtrlMenu.SetItemState(hItem, TVIS_BOLD, TVIS_BOLD);
+	//m_treeCtrlMenu.SetItemState(hItem, TVIS_BOLD, TVIS_BOLD);
 
 	m_treeItemWindows = m_treeCtrlMenu.InsertItem(_T("外窗"), 12, 12, hItem);
 	m_treeItemWindowsQuantity = m_treeCtrlMenu.InsertItem(_T("外窗算量"), 12, 12, hItem);
@@ -76,7 +76,7 @@ int DlgLeftBar::FillTreeItem()
 
 	//////////////////////////////////////////////////////////////////////////
 	hItem = m_treeCtrlMenu.InsertItem(_T("厨卫"), 12, 12);
-	m_treeCtrlMenu.SetItemState(hItem, TVIS_BOLD, TVIS_BOLD);
+	//m_treeCtrlMenu.SetItemState(hItem, TVIS_BOLD, TVIS_BOLD);
 
 	m_treeItemKitchen = m_treeCtrlMenu.InsertItem(_T("厨房"), 12, 12, hItem);
 	m_treeItemKitchenQuantity = m_treeCtrlMenu.InsertItem(_T("厨房算量"), 12, 12, hItem);
@@ -84,20 +84,20 @@ int DlgLeftBar::FillTreeItem()
 	m_treeItemBathroomQuantity = m_treeCtrlMenu.InsertItem(_T("卫生间算量"), 12, 12, hItem);
 
 	//////////////////////////////////////////////////////////////////////////
-	hItem = m_treeCtrlMenu.InsertItem(_T("栏杆"), 12, 12);
-	m_treeCtrlMenu.SetItemState(hItem, TVIS_BOLD, TVIS_BOLD);
+	m_treeItemRailing = m_treeCtrlMenu.InsertItem(_T("栏杆"), 12, 12);
+	//m_treeCtrlMenu.SetItemState(m_treeItemRailing, TVIS_BOLD, TVIS_BOLD);
 
 	hItem = m_treeCtrlMenu.InsertItem(_T("空调"), 12, 12);
-	m_treeCtrlMenu.SetItemState(hItem, TVIS_BOLD, TVIS_BOLD);
+	//m_treeCtrlMenu.SetItemState(hItem, TVIS_BOLD, TVIS_BOLD);
 
 	hItem = m_treeCtrlMenu.InsertItem(_T("防水"), 12, 12);
-	m_treeCtrlMenu.SetItemState(hItem, TVIS_BOLD, TVIS_BOLD);
+	//m_treeCtrlMenu.SetItemState(hItem, TVIS_BOLD, TVIS_BOLD);
 
 	hItem = m_treeCtrlMenu.InsertItem(_T("填充"), 12, 12);
-	m_treeCtrlMenu.SetItemState(hItem, TVIS_BOLD, TVIS_BOLD);
+	//m_treeCtrlMenu.SetItemState(hItem, TVIS_BOLD, TVIS_BOLD);
 
 	hItem = m_treeCtrlMenu.InsertItem(_T("立面"), 12, 12);
-	m_treeCtrlMenu.SetItemState(hItem, TVIS_BOLD, TVIS_BOLD);
+	//m_treeCtrlMenu.SetItemState(hItem, TVIS_BOLD, TVIS_BOLD);
 
 
 
@@ -127,6 +127,10 @@ void DlgLeftBar::OnTvnSelchangedTreeMenu(NMHDR *pNMHDR, LRESULT *pResult)
 	else if (m_treeItemKitchenQuantity == curHItem)
 	{
 		CMD_SUNACSTATISTICS();
+	}
+	else if (m_treeItemRailing == curHItem)
+	{
+		CMD_SUNACRAILING();
 	}
 
 

@@ -172,6 +172,7 @@
     <ClCompile Include="UI\AirconditionerDlg.cpp" />
     <ClCompile Include="UI\BathroomDlg.cpp" />
     <ClCompile Include="UI\DlgLeftBar.cpp" />
+    <ClCompile Include="UI\DlgLogin.cpp" />
     <ClCompile Include="UI\DoorDlg.cpp" />
     <ClCompile Include="UI\FacadeDlg.cpp" />
     <ClCompile Include="UI\FillingDlg.cpp" />
@@ -246,6 +247,7 @@
     <ClInclude Include="UI\AirconditionerDlg.h" />
     <ClInclude Include="UI\BathroomDlg.h" />
     <ClInclude Include="UI\DlgLeftBar.h" />
+    <ClInclude Include="UI\DlgLogin.h" />
     <ClInclude Include="UI\DoorDlg.h" />
     <ClInclude Include="UI\FacadeDlg.h" />
     <ClInclude Include="UI\FillingDlg.h" />

@@ -452,8 +452,8 @@ void TY_GetAllWindowFiles(vCString &files)
 {
 	CString appPath = MD2010_GetAppPath();
 	files.push_back(appPath + L"\\support\\Sunac2019\\Window\\Window_1.0.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Window\\Window_1.1.dwg");
 	files.push_back(appPath + L"\\support\\Sunac2019\\Window\\Window_2.0.dwg");
+	files.push_back(appPath + L"\\support\\Sunac2019\\Window\\Window_1.1.dwg");
 }
 
 void TY_GetAllKitchenFiles(vCString &files)
@@ -461,6 +461,7 @@ void TY_GetAllKitchenFiles(vCString &files)
 	CString appPath = MD2010_GetAppPath();
 	files.push_back(appPath + L"\\support\\Sunac2019\\Kitchen\\Kitchen_1.0.dwg");
 	files.push_back(appPath + L"\\support\\Sunac2019\\Kitchen\\Kitchen_2.0.dwg");
+	files.push_back(appPath + L"\\support\\Sunac2019\\Kitchen\\Kitchen_1.0.dwg");
 }
 
 void TY_GetAllTieYiLanGanFiles(vCString &files)
