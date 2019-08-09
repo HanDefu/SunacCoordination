@@ -60,6 +60,9 @@ BEGIN_MESSAGE_MAP(CKitchenDlg, CDialogEx)
 	ON_BN_CLICKED(IDOK, &CKitchenDlg::OnBnClickedOk)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
 	ON_BN_CLICKED(IDC_MFCBUTTON_INSERT, &CKitchenDlg::OnBnClickedMfcbuttonInsert)
+	ON_BN_CLICKED(IDC_MFCBUTTON_RANGE, &CKitchenDlg::OnBnClickedMfcbuttonRange)
+	ON_BN_CLICKED(IDC_MFCBUTTON_DOOR_DIR, &CKitchenDlg::OnBnClickedMfcbuttonDoorDir)
+	ON_BN_CLICKED(IDC_MFCBUTTON_WINDOW_DIR, &CKitchenDlg::OnBnClickedMfcbuttonWindowDir)
 END_MESSAGE_MAP()
 
 
@@ -109,6 +112,7 @@ void CKitchenDlg::OnBnClickedOk()
 	CDialogEx::OnOK();
 }
 
+TYRect rect;
 
 void CKitchenDlg::OnBnClickedMfcbuttonInsert()
 {
@@ -117,8 +121,6 @@ void CKitchenDlg::OnBnClickedMfcbuttonInsert()
 	// TODO: 在此添加控件通知处理程序代码
 	vCString allFiles;
 	TY_GetAllKitchenFiles(allFiles);
-
-	TYRect rect = TY_GetOneRect();
 
 	double width = rect.GetWidth(), height = rect.GetHeight();
 	AcGePoint3d origin = rect.GetLB();
@@ -138,4 +140,39 @@ void CKitchenDlg::OnBnClickedMfcbuttonInsert()
 	}
 	ShowWindow(true);
 	OnOK();
+}
+
+
+void CKitchenDlg::OnBnClickedMfcbuttonRange()
+{
+	ShowWindow(false);
+	rect = TY_GetOneRect();
+	ShowWindow(true);
+}
+
+
+void CKitchenDlg::OnBnClickedMfcbuttonDoorDir()//门方向
+{
+	// TODO: 在此添加控件通知处理程序代码
+	ShowWindow(false);
+	ads_point pt,result;
+	acedInitGet(32,NULL);
+	if(acedGetPoint(NULL,L"\n选择门的位置\n",pt)!=RTNORM) //第一角点选择
+	{
+		return;
+	}
+	ShowWindow(true);
+}
+
+void CKitchenDlg::OnBnClickedMfcbuttonWindowDir()//窗方向
+{
+	// TODO: 在此添加控件通知处理程序代码
+	ShowWindow(false);
+	ads_point pt,result;
+	acedInitGet(32,NULL);
+	if(acedGetPoint(NULL,L"\n选择窗的位置\n",pt)!=RTNORM) //第一角点选择
+	{
+		return;
+	}
+	ShowWindow(true);
 }

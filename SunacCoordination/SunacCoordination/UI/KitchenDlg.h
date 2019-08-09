@@ -35,4 +35,7 @@ public:
 	afx_msg void OnBnClickedOk();
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);///---01
 	afx_msg void OnBnClickedMfcbuttonInsert();
+	afx_msg void OnBnClickedMfcbuttonRange();
+	afx_msg void OnBnClickedMfcbuttonDoorDir();
+	afx_msg void OnBnClickedMfcbuttonWindowDir();
 };

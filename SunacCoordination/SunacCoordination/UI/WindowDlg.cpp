@@ -56,6 +56,9 @@ void CWindowDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_OPENWIDTH, m_openWidth);
 	DDX_Control(pDX, IDC_EDIT_WIDTH, m_width);
 	DDX_Control(pDX, IDC_EDIT_HEIGHT, m_height);
+	DDX_Control(pDX, IDC_EDIT_FIXEDVALUE, m_H2);
+	DDX_Control(pDX, IDC_EDIT_FIXEDVALUE2, m_cengShu);
+	DDX_Control(pDX, IDC_EDIT_FIXEDVALUE3, m_cengGao);
 }
 
 
@@ -104,6 +107,10 @@ BOOL CWindowDlg::OnInitDialog()
 
 	m_width.SetWindowText(L"2000");
 	m_height.SetWindowText(L"2000");
+	m_H2.SetWindowText(L"450");
+
+	m_cengShu.SetWindowText(L"1");
+	m_cengGao.SetWindowText(L"3000");
 
 	return TRUE;
 }
@@ -127,17 +134,40 @@ void CWindowDlg::OnBnClickedMfcbuttonInsert()
 	height = _wtof(str.GetBuffer());
 
 	vector<int> sels = m_preWindow.GetSelectedRows();
+
+	m_openWidth.GetWindowText(str);
+	double W1 = _wtof(str.GetBuffer());
+
+	m_H2.GetWindowText(str);
+	double H2 = _wtof(str.GetBuffer());
+
+	m_cengShu.GetWindowText(str);
+	int cengShu = _wtoi(str.GetBuffer());
+
+	m_cengGao.GetWindowText(str);
+	double cengGao = _wtof(str.GetBuffer());
+
 	if (sels.size() > 0)
 	{
-		RCWindow oneWindow;
-		if (sels[0] == 0)
-			oneWindow.Insert(allWindowFiles[0], origin, 0, L"0", 256);
-		else
-			oneWindow.Insert(allWindowFiles[2], origin, 0, L"0", 256);
-		oneWindow.InitParametersFromDynamicBlock();
-		oneWindow.SetParameter(L"H", height);
-		oneWindow.SetParameter(L"W", width);
-		oneWindow.RunParameters();
+		for (int i = 0; i < cengShu; i++)
+		{
+			RCWindow oneWindow;
+			
+			if (sels[0] == 0)
+				oneWindow.Insert(allWindowFiles[0], origin, 0, L"0", 256);
+			//else
+				//oneWindow.Insert(allWindowFiles[2], origin, 0, L"0", 256);
+			oneWindow.InitParametersFromDynamicBlock();
+			oneWindow.SetParameter(L"H", height);
+			oneWindow.SetParameter(L"W", width);
+
+			oneWindow.SetParameter(L"W1", W1);
+			oneWindow.SetParameter(L"H2", H2);
+
+			oneWindow.RunParameters();
+			origin.y += cengGao;
+		}
+		
 	}
 	ShowWindow(true);
 	OnOK();

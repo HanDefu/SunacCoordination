@@ -35,4 +35,7 @@ public:
 	CEdit m_height;
 	afx_msg void OnBnClickedMfcbuttonInsert();
 	afx_msg void OnBnClickedMfcbuttonSearch();
+	CEdit m_H2;
+	CEdit m_cengShu;
+	CEdit m_cengGao;
 };

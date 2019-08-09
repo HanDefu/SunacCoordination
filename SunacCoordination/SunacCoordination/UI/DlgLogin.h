@@ -1,4 +1,5 @@
 #pragma once
+#include "afxwin.h"
 
 
 // DlgLogin dialog
@@ -18,4 +19,9 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnBnClickedOk();
+	virtual BOOL OnInitDialog();
+	CEdit m_name;
+	CEdit m_password;
 };
