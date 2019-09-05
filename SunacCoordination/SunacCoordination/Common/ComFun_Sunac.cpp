@@ -9,6 +9,12 @@
 #include <dbhatch.h>
 #include <acedads.h>
 #include "../Common/TYRect.h"
+#include "../Object\AttrWindow.h"
+#include "../Object\AttrAirCon.h"
+#include "../Object\AttrDoor.h"
+#include "../Object\AttrKitchen.h"
+#include "../Object\AttrToilet.h"
+#include "../Object\AttrRailing.h"
 
 bool DQ_IsALine(AcDbObjectId entId)
 {
@@ -491,11 +497,11 @@ void TY_GetAllBoLiLanGanFiles(vCString &files)
 }
 
 
-AcGePoint3d TY_GetPoint()
+AcGePoint3d TY_GetPoint(CString prompt)
 {
 	ads_point pt;
 	acedInitGet(32,NULL);
-	if(acedGetPoint(NULL,L"\npoint\n",pt)!=RTNORM) //第一角点选择
+	if(acedGetPoint(NULL,prompt,pt)!=RTNORM) //第一角点选择
 	{
 		return AcGePoint3d(0,0,0);
 	}
@@ -547,4 +553,231 @@ int TY_GetTwoPoints(AcGePoint3d &pnt1, AcGePoint3d &pnt2)
 	pnt2 = AcGePoint3d(result[0],result[1],result[2]);
 
 	return 0;
+}
+
+AcDbObjectId TY_GetExtensionDictionaryID(AcDbObjectId id)
+{
+	AcDbObject *pObj;
+	acDocManager->lockDocument(curDoc());
+	if(acdbOpenObject(pObj, id, AcDb::kForWrite)==Acad::eOk)
+	{
+		if (pObj->createExtensionDictionary()==Acad::eOk||pObj->createExtensionDictionary()==Acad::eAlreadyInDb)
+		{
+			pObj->close();
+			acDocManager->unlockDocument(curDoc());
+			return pObj->extensionDictionary();
+		}
+		else
+			pObj->close();
+	}
+	acDocManager->unlockDocument(curDoc());
+	return 0;
+}
+
+//把UI的信息数据写入图框
+int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt)
+{
+	if (pDataEnt == 0)
+		return -2;
+
+	AcDbObjectId m_dicID = TY_GetExtensionDictionaryID(Id);
+	if (m_dicID == 0)
+		return -1;
+
+	AcDbObject *pObj = NULL;
+	AcDbObjectId patternID = NULL;
+	AcDbDictionary *pDict = NULL;
+
+	//注意这里有时候加入不进去， 是因为没有注册
+	Acad::ErrorStatus es = acDocManager->lockDocument(curDoc());
+	if(acdbOpenObject(pDict, m_dicID, AcDb::kForWrite)==Acad::eOk)
+	{
+		es =pDict->setAt(SUNAC_ATTRIBUTE_ENTITY, pDataEnt, patternID);
+		pDict->close();
+		acDocManager->unlockDocument(curDoc());
+		return 0;
+	}
+	else
+	{
+		//pObj->close();
+		acDocManager->unlockDocument(curDoc());
+		return -3;
+	}
+	acDocManager->unlockDocument(curDoc());
+	return 0;
+}
+
+int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt)
+{
+	AcDbObjectId m_dicID = TY_GetExtensionDictionaryID(tkId);
+	if (m_dicID == 0)
+		return -1;
+
+	AcDbDictionary *pDict = NULL;
+	if(acdbOpenObject(pDict, m_dicID, AcDb::kForRead)==Acad::eOk)
+	{
+		Acad::ErrorStatus es =pDict->getAt(SUNAC_ATTRIBUTE_ENTITY, (AcDbObject*&)pDataEnt, AcDb::kForRead);
+		pDict->close();
+		if(pDataEnt == NULL)
+			return 68;
+		pDataEnt->close();
+	}
+	return 0;
+}
+
+bool TY_IsWindow(AcDbObjectId Id)
+{
+	AcDbObject * pDataEnt = 0;
+	TY_GetAttributeData(Id, pDataEnt);
+	AttrWindow * pWindow = dynamic_cast<AttrWindow *>(pDataEnt);
+	if (pWindow != 0)
+		return true;
+	return false;
+}
+
+bool TY_Iskitchen(AcDbObjectId Id)
+{
+	AcDbObject * pDataEnt = 0;
+	TY_GetAttributeData(Id, pDataEnt);
+	AttrKitchen * pKitchen = dynamic_cast<AttrKitchen *>(pDataEnt);
+	if (pKitchen != 0)
+		return true;
+	return false;
+}
+
+bool TY_IsRailing(AcDbObjectId Id)
+{
+	AcDbObject * pDataEnt = 0;
+	TY_GetAttributeData(Id, pDataEnt);
+	AttrRailing * pKitchen = dynamic_cast<AttrRailing *>(pDataEnt);
+	if (pKitchen != 0)
+		return true;
+	return false;
+}
+
+bool TY_IsAirCon(AcDbObjectId Id)
+{
+	AcDbObject * pDataEnt = 0;
+	TY_GetAttributeData(Id, pDataEnt);
+	AttrAirCon * pKitchen = dynamic_cast<AttrAirCon *>(pDataEnt);
+	if (pKitchen != 0)
+		return true;
+	return false;
+}
+
+bool TY_IsToilet(AcDbObjectId Id)
+{
+	AcDbObject * pDataEnt = 0;
+	TY_GetAttributeData(Id, pDataEnt);
+	AttrToilet * pKitchen = dynamic_cast<AttrToilet *>(pDataEnt);
+	if (pKitchen != 0)
+		return true;
+	return false;
+}
+
+bool TY_IsDoor(AcDbObjectId Id)
+{
+	AcDbObject * pDataEnt = 0;
+	TY_GetAttributeData(Id, pDataEnt);
+	AttrDoor * pKitchen = dynamic_cast<AttrDoor *>(pDataEnt);
+	if (pKitchen != 0)
+		return true;
+	return false;
+}
+
+int vFind(RCPairKeyDValue &A, vRCPairKeyDValue &B)
+{
+	int ret = -1;
+	for (int i = 0; i < B.size(); i++)
+	{
+		if (A.first == B[i].first  &&
+			fabs(A.second - B[i].second) < TOL)
+		{
+			return i;
+		}
+	}
+	return ret;
+}
+
+int vFind(RCPairKeyIValue &A, vRCPairKeyIValue &B)
+{
+	int ret = -1;
+	for (int i = 0; i < B.size(); i++)
+	{
+		if (A.first == B[i].first  &&
+			A.second == B[i].second)
+		{
+			return i;
+		}
+	}
+	return ret;
+}
+
+int vFind(RCPairKeyStrValue &A, vRCPairKeyStrValue &B)
+{
+	int ret = -1;
+	for (int i = 0; i < B.size(); i++)
+	{
+		if (A.first == B[i].first  &&
+			A.second == B[i].second)
+		{
+			return i;
+		}
+	}
+	return ret;
+}
+
+int vFind(RCWindow &oneWindow, vRCWindow &allWindows)
+{
+	for (int i = 0; i < allWindows.size(); i++)
+	{
+		if (oneWindow.isEqualTo(&(allWindows[i])))
+		{
+			return i;
+		}
+	}
+
+	return -1;
+}
+
+bool TY_IsPairsEqual(vRCPairKeyDValue &A, vRCPairKeyDValue &B)
+{
+	if (A.size() != B.size())
+		return false;
+
+	for (int i = 0; i < A.size(); i++)
+	{
+		int index = vFind(A[i],B);
+		if (index == -1)
+			return false;
+	}
+	return true;
+}
+
+bool TY_IsPairsEqual(vRCPairKeyIValue &A, vRCPairKeyIValue &B)
+{
+	if (A.size() != B.size())
+		return false;
+
+	for (int i = 0; i < A.size(); i++)
+	{
+		int index = vFind(A[i],B);
+		if (index == -1)
+			return false;
+	}
+	return true;
+}
+
+bool TY_IsPairsEqual(vRCPairKeyStrValue &A, vRCPairKeyStrValue &B)
+{
+	if (A.size() != B.size())
+		return false;
+
+	for (int i = 0; i < A.size(); i++)
+	{
+		int index = vFind(A[i],B);
+		if (index == -1)
+			return false;
+	}
+	return true;
 }

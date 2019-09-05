@@ -25,6 +25,8 @@ public:
 	//Destructor
 	~RCBlock(void);
 	
+	virtual bool isEqualTo(RCObject*other = 0);//基础数据一致
+
 	//Operator = 
 	RCBlock & operator=(const RCBlock &rhs);
 

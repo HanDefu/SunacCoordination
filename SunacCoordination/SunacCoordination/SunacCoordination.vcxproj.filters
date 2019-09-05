@@ -181,6 +181,33 @@
     <ClCompile Include="UI\DlgLogin.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="Object\AttrAirCon.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\AttrDoor.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\AttrKitchen.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\AttrRailing.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\AttrToilet.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\AttrWindow.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\AttrObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Command\Command.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="Command\CommandWindowDoorTable.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -432,6 +459,33 @@
     <ClInclude Include="UI\DlgLogin.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="Object\AttrAirCon.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\AttrDoor.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\AttrKitchen.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\AttrRailing.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\AttrToilet.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\AttrWindow.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\AttrObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Command\Command.h">
+      <Filter>Command</Filter>
+    </ClInclude>
+    <ClInclude Include="Command\CommandWindowDoorTable.h">
+      <Filter>Command</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -463,6 +517,9 @@
     </Filter>
     <Filter Include="bmp">
       <UniqueIdentifier>{f6892d25-12ee-476a-975e-aa77be1ed2fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Command">
+      <UniqueIdentifier>{1820d1ff-4187-4dca-8f46-376bd45f8b92}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -16,6 +16,7 @@ File description:
 
 #include <vector>
 #include "RCDynamicBlock.h"
+#include "../Object/AttrWindow.h"
 
 class RCWindow : public RCDynamicBlock
 {
@@ -32,13 +33,36 @@ public:
 
 	virtual RCTYPE GetType()const{return T_WINDOW;}
 
+	double GetH();
+	double GetH1();
+	double GetH2();
+	double GetW();
+	double GetW1();
+	double GetW2();
+	double GetW3();
+	double GetA();
+
+	int SetH(double newValue);
+	int SetH1(double newValue);
+	int SetH2(double newValue);
+	int SetW(double newValue);
+	int SetW1(double newValue);
+	int SetW2(double newValue);
+	int SetW3(double newValue);
+	int SetA(double newValue);
+
+	AttrWindow * GetAttribute();
+	void AddAttribute(AttrWindow * attr);
+
 	virtual RCWindow * Clone();
 	virtual void Draw();
+
+	virtual bool isEqualTo(RCObject*other = 0);//基础数据一致
 
 protected: 
 	
 private:
-	
+	AttrWindow *m_pAttribute;
 };
 
 typedef std::vector<RCWindow> vRCWindow;

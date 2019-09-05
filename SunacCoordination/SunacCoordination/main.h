@@ -20,6 +20,9 @@ void CMD_SUNACDOOR();
 //统计算量
 void CMD_SUNACSTATISTICS();
 
+//门窗表
+void CMD_SUNACWINDOWTable();
+
 //厨房
 void CMD_SUNACKITCHEN();
 void CMD_SUNACBATHROOM();
@@ -29,8 +32,10 @@ void CMD_SUNACMOLDINGS(); //线脚
 
 //填充材质
 void CMD_SUNACFILLING();
+
 //空调
 void CMD_SUNACAIRCONDITIONER();
+
 //标准立面
 void CMD_SUNACFACADE();
 

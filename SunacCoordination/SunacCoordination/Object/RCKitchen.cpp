@@ -17,11 +17,12 @@ File description:
 #include "RCKitchen.h"
 #include "float.h"
 #include <algorithm>
+#include "../Common/ComFun_Sunac.h"
 
 //Constructor
 RCKitchen::RCKitchen(void)
 {
-
+	m_pAttribute = 0;
 }
 
 //Destructor
@@ -34,7 +35,7 @@ RCKitchen::~RCKitchen(void)
 //Constructor
 RCKitchen::RCKitchen(const RCKitchen &other):RCDynamicBlock(other)
 {
-
+	m_pAttribute = other.m_pAttribute;
 }
 
 //Operator = 
@@ -53,5 +54,22 @@ RCKitchen * RCKitchen::Clone()
 	RCKitchen * newObj = new RCKitchen;
 
 	return newObj;
+}
+
+AttrKitchen * RCKitchen::GetAttribute()
+{
+	if (m_pAttribute == 0)
+	{
+		AcDbObject * pDataEnt = 0;
+		TY_GetAttributeData(m_id, pDataEnt);
+		m_pAttribute = dynamic_cast<AttrKitchen *>(pDataEnt);
+	}
+	return m_pAttribute;
+}
+
+void RCKitchen::AddAttribute(AttrKitchen * attr)
+{
+	if (attr != 0)
+		TY_AddAttributeData(m_id, attr);
 }
 

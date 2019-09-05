@@ -70,8 +70,10 @@ int DlgLeftBar::FillTreeItem()
 
 	m_treeItemWindows = m_treeCtrlMenu.InsertItem(_T("外窗"), 12, 12, hItem);
 	m_treeItemWindowsQuantity = m_treeCtrlMenu.InsertItem(_T("外窗算量"), 12, 12, hItem);
+
 	m_treeItemDoor = m_treeCtrlMenu.InsertItem(_T("门"), 12, 12, hItem);
 	m_treeItemDoorQuantity = m_treeCtrlMenu.InsertItem(_T("门算量"), 12, 12, hItem);
+	m_treeItemWindowTable = m_treeCtrlMenu.InsertItem(_T("门窗表"), 12, 12, hItem);
 
 
 	//////////////////////////////////////////////////////////////////////////
@@ -131,6 +133,10 @@ void DlgLeftBar::OnTvnSelchangedTreeMenu(NMHDR *pNMHDR, LRESULT *pResult)
 	else if (m_treeItemRailing == curHItem)
 	{
 		CMD_SUNACRAILING();
+	}
+	else if (m_treeItemWindowTable == curHItem)
+	{
+		CMD_SUNACWINDOWTable();
 	}
 
 

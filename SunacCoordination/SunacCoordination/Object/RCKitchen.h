@@ -16,6 +16,7 @@ File description:
 
 #include <vector>
 #include "RCDynamicBlock.h"
+#include "../Object/AttrKitchen.h"
 
 class RCKitchen : public RCDynamicBlock
 {
@@ -35,8 +36,11 @@ public:
 	virtual RCKitchen * Clone();
 	virtual void Draw();
 
+	AttrKitchen * GetAttribute();
+	void AddAttribute(AttrKitchen * attr);
+
 protected: 
-	
+	AttrKitchen * m_pAttribute;
 };
 
 typedef std::vector<RCKitchen> vRCKitchen;

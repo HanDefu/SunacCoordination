@@ -24,19 +24,14 @@
 #include "AcExtensionModule.h"
 #include "accmd.h"
 #include "UI\menu\Menu_Def.h"
-#include "UI\WindowDlg.h"
-#include "UI\KitchenDlg.h"
-#include "UI\BathroomDlg.h"
-#include "UI\RailingDlg.h"
-#include "UI\AirconditionerDlg.h"
-#include "UI\DoorDlg.h"
-#include "UI\FacadeDlg.h"
-#include "UI\FillingDlg.h"
-#include "UI\MoldingsDlg.h"
-#include "UI\WaterproofDlg.h"
-#include "ui\MyPalette.h"
-#include "ui\MyPaletteSet.h"
-#include "ui\DlgLogin.h"
+#include "object\AttrWindow.h"
+#include "object\AttrAirCon.h"
+#include "object\AttrDoor.h"
+#include "object\AttrKitchen.h"
+#include "object\AttrToilet.h"
+#include "object\AttrRailing.h"
+#include "Command\CommandWindowDoorTable.h"
+#include "Command\Command.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -45,106 +40,10 @@ static char THIS_FILE[] = __FILE__;
 #endif
 extern "C" HWND adsw_acadMainWnd();
 
-static void CADPalette_AddP(void);
 /////////////////////////////////////////////////////////////////////////////
 // Define the sole extension module object.
 
 AC_IMPLEMENT_EXTENSION_MODULE(theArxDLL);
-
-//登录
-void CMD_Login()
-{
-	DlgLogin dlg;
-	dlg.DoModal();
-	CADPalette_AddP();
-}
-//窗
-void CMD_SUNACWINDOW()
-{
-	CAcModuleResourceOverride resOverride;
-
-	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
-	CWindowDlg * pDlg = new CWindowDlg(acedGetAcadFrame());
-	pDlg->Create(IDD_DIALOG_WINDOW);
-	pDlg->ShowWindow(SW_SHOW);
-}
-
-//厨房
-void CMD_SUNACKITCHEN()
-{
-	CAcModuleResourceOverride resOverride;
-
-	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
-	CKitchenDlg * pDlg = new CKitchenDlg(acedGetAcadFrame());
-	pDlg->Create(IDD_DIALOG_KITCHEN);
-	pDlg->ShowWindow(SW_SHOW);
-}
-
-//卫生间
-void CMD_SUNACBATHROOM()
-{
-	CBathroomDlg dlg;
-	dlg.DoModal();
-}
-
-//门
-void CMD_SUNACDOOR()
-{
-	CDoorDlg dlg;
-	dlg.DoModal();
-}
-
-//栏杆
-void CMD_SUNACRAILING()
-{
-	CAcModuleResourceOverride resOverride;
-
-	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
-	CRailingDlg * pDlg = new CRailingDlg(acedGetAcadFrame());
-	pDlg->Create(IDD_DIALOG_RAILING);
-	pDlg->ShowWindow(SW_SHOW);
-}
-
-//线脚
-void CMD_SUNACMOLDINGS()
-{
-	CMoldingsDlg dlg;
-	dlg.DoModal();
-}
-
-//填充材质
-void CMD_SUNACFILLING()
-{
-	CFillingDlg dlg;
-	dlg.DoModal();
-}
-
-//空调
-void CMD_SUNACAIRCONDITIONER()
-{
-	CAirconditionerDlg dlg;
-	dlg.DoModal();
-}
-
-//标准立面
-void CMD_SUNACFACADE()
-{
-	CFacadeDlg dlg;
-	dlg.DoModal();
-}
-
-//防水构造
-void CMD_SUNACWATERPROOF()
-{
-	CWaterproofDlg dlg;
-	dlg.DoModal();
-}
-
-//统计算量
-void CMD_SUNACSTATISTICS()
-{
-
-}
 
 void AddSubMenu_Old(CAcadPopupMenu&IPopUpMenu, UINT MenuStartIndex)
 {
@@ -405,6 +304,43 @@ static void initApp()
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("mcb"),
+		_T("mcb"),
+		ACRX_CMD_MODAL,
+		CMD_SUNACWINDOWTable,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	AttrObject::rxInit();
+	acrxBuildClassHierarchy();
+	acrxRegisterService(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_OBJECT));
+
+	AttrWindow::rxInit();
+	acrxBuildClassHierarchy();
+	acrxRegisterService(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_WINDOW));
+
+	AttrDoor::rxInit();
+	acrxBuildClassHierarchy();
+	acrxRegisterService(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_DOOR));
+
+	AttrAirCon::rxInit();
+	acrxBuildClassHierarchy();
+	acrxRegisterService(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_AIRCON));
+
+	AttrKitchen::rxInit();
+	acrxBuildClassHierarchy();
+	acrxRegisterService(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_KITCHEN));
+
+	AttrToilet::rxInit();
+	acrxBuildClassHierarchy();
+	acrxRegisterService(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_TOILET));
+
+	AttrRailing::rxInit();
+	acrxBuildClassHierarchy();
+	acrxRegisterService(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_RAILING));
 }
 
 
@@ -412,7 +348,27 @@ static void unloadApp()
 {
 	// Do other cleanup tasks here  
 	acedRegCmds->removeGroup(_T("SUNAC"));  
-	InitMenu();
+
+	deleteAcRxClass(AttrWindow::desc());
+	delete acrxServiceDictionary->remove(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_WINDOW));
+
+	deleteAcRxClass(AttrAirCon::desc());
+	delete acrxServiceDictionary->remove(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_AIRCON));
+
+	deleteAcRxClass(AttrRailing::desc());
+	delete acrxServiceDictionary->remove(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_RAILING));
+
+	deleteAcRxClass(AttrDoor::desc());
+	delete acrxServiceDictionary->remove(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_DOOR));
+
+	deleteAcRxClass(AttrKitchen::desc());
+	delete acrxServiceDictionary->remove(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_KITCHEN));
+
+	deleteAcRxClass(AttrToilet::desc());
+	delete acrxServiceDictionary->remove(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_TOILET));
+
+	deleteAcRxClass(AttrObject::desc());
+	delete acrxServiceDictionary->remove(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_OBJECT));
 }
 
 
@@ -438,25 +394,6 @@ extern "C" int APIENTRY
 		theArxDLL.DetachInstance();  
 	}
 	return 1;   // ok
-}
-
-
-static void CADPalette_AddP(void)
-{
-	CMyPaletteSet *pPaletteSet = new CMyPaletteSet;
-	CRect rect(0,30,160,300);
-	pPaletteSet->Create(_T("标准产品"),WS_VISIBLE,rect,acedGetAcadFrame());
-	CMyPalette *pPalette1 = new CMyPalette;
-	CAdUiPalette *pPalette2 = new CAdUiPalette;
-	pPalette1->Create(WS_VISIBLE|WS_CHILD,_T("产品"),pPaletteSet);
-	//pPalette2->Create(WS_VISIBLE|WS_CHILD,_T("算量"),pPaletteSet);
-
-	pPaletteSet->AddPalette(pPalette1);
-	//pPaletteSet->AddPalette(pPalette2);
-	pPaletteSet->EnableDocking(CBRS_ALIGN_ANY);
-	pPaletteSet->RestoreControlBar();
-
-	acedGetAcadFrame()->ShowControlBar(pPaletteSet,TRUE,FALSE);
 }
 
 extern "C" AcRx::AppRetCode acrxEntryPoint( AcRx::AppMsgCode msg, void* appId)

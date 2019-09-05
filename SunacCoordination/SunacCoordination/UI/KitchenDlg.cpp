@@ -7,6 +7,7 @@
 #include "../Common/ComFun_Sunac.h"
 #include "../Common/ComFun_Sunac.h"
 #include "../Object/RCKitchen.h"
+#include "../Object/AttrKitchen.h"
 // CKitchenDlg 对话框
 
 IMPLEMENT_DYNAMIC(CKitchenDlg, CDialogEx)
@@ -63,6 +64,7 @@ BEGIN_MESSAGE_MAP(CKitchenDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_MFCBUTTON_RANGE, &CKitchenDlg::OnBnClickedMfcbuttonRange)
 	ON_BN_CLICKED(IDC_MFCBUTTON_DOOR_DIR, &CKitchenDlg::OnBnClickedMfcbuttonDoorDir)
 	ON_BN_CLICKED(IDC_MFCBUTTON_WINDOW_DIR, &CKitchenDlg::OnBnClickedMfcbuttonWindowDir)
+	ON_BN_CLICKED(IDC_BUTTON_SEARCH, &CKitchenDlg::OnBnClickedButtonSearch)
 END_MESSAGE_MAP()
 
 
@@ -85,17 +87,7 @@ BOOL CKitchenDlg::OnInitDialog()
 	//设置第一列占60%，其余部分为第二列
 	m_preKitchen.SetHeaderWidth(_T("60;+"));
 
-	vCString allFiles;
-	TY_GetAllKitchenFiles(allFiles);
-	for (int i = 0; i < allFiles.size(); i++)
-	{
-		m_preKitchen.AddPreview(i, 0, allFiles[i]); 
-		m_preKitchen.SetContentItemText(i, 1, _T("厨房类型：KU\n厨房面积：2.1\n通风量：1.6"));
-	}
-
-
-	m_preKitchen.ShowPreviews();
-
+	
 	m_floorRange.SetCurSel(0);
 	m_basinType.SetCurSel(0);
 	m_benchWidth.SetCurSel(0);
@@ -137,6 +129,18 @@ void CKitchenDlg::OnBnClickedMfcbuttonInsert()
 		oneKitchen.SetParameter(L"进深", height);
 		oneKitchen.SetParameter(L"开间", width);
 		oneKitchen.RunParameters();
+
+		//把UI的数据记录在图框的扩展字典中
+		AttrKitchen *pAttribute = new AttrKitchen();
+		if (sels[0] == 0)
+			pAttribute->m_id = L"KUA";
+		else if (sels[0] == 1)
+			pAttribute->m_id = L"KUB";
+		else
+			pAttribute->m_id = L"KUC";
+
+		oneKitchen.AddAttribute(pAttribute);
+		pAttribute->close();
 	}
 	ShowWindow(true);
 	OnOK();
@@ -175,4 +179,20 @@ void CKitchenDlg::OnBnClickedMfcbuttonWindowDir()//窗方向
 		return;
 	}
 	ShowWindow(true);
+}
+
+
+void CKitchenDlg::OnBnClickedButtonSearch()
+{
+	vCString allFiles;
+	TY_GetAllKitchenFiles(allFiles);
+	for (int i = 0; i < allFiles.size(); i++)
+	{
+		m_preKitchen.AddPreview(i, 0, allFiles[i]); 
+		m_preKitchen.SetContentItemText(i, 1, _T("厨房类型：KU\n厨房面积：2.1\n通风量：1.6"));
+	}
+
+
+	m_preKitchen.ShowPreviews();
+
 }

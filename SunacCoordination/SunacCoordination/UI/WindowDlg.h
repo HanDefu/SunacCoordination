@@ -38,4 +38,5 @@ public:
 	CEdit m_H2;
 	CEdit m_cengShu;
 	CEdit m_cengGao;
+	afx_msg void OnBnClickedButtonSearchwindow();
 };

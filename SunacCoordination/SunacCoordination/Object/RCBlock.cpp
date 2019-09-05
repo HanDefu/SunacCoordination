@@ -52,3 +52,18 @@ AcDbObjectId RCBlock::Insert(CString fileName, AcGePoint3d origin, double angle,
 	acDocManager->unlockDocument(curDoc());
 	return 0;
 }
+
+bool RCBlock::isEqualTo(RCObject*other)
+{
+	if (other == 0)
+		return false;
+
+	RCBlock * pObj = dynamic_cast<RCBlock *>(other);
+	if (pObj == 0)
+		return false;
+
+	if (!RCObject::isEqualTo(other))
+		return false;
+
+	return true;
+}

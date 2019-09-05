@@ -38,4 +38,5 @@ public:
 	afx_msg void OnBnClickedMfcbuttonRange();
 	afx_msg void OnBnClickedMfcbuttonDoorDir();
 	afx_msg void OnBnClickedMfcbuttonWindowDir();
+	afx_msg void OnBnClickedButtonSearch();
 };

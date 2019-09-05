@@ -133,6 +133,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Command\Command.cpp" />
+    <ClCompile Include="Command\CommandWindowDoorTable.cpp" />
     <ClCompile Include="Common\AcessDatabase.cpp" />
     <ClCompile Include="Common\ComFun_ACad.cpp" />
     <ClCompile Include="Common\ComFun_ACAD_Common.cpp" />
@@ -147,6 +149,13 @@
     <ClCompile Include="Common\ComFun_Sunac.cpp" />
     <ClCompile Include="Common\TYRect.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Object\AttrAirCon.cpp" />
+    <ClCompile Include="Object\AttrDoor.cpp" />
+    <ClCompile Include="Object\AttrKitchen.cpp" />
+    <ClCompile Include="Object\AttrObject.cpp" />
+    <ClCompile Include="Object\AttrRailing.cpp" />
+    <ClCompile Include="Object\AttrToilet.cpp" />
+    <ClCompile Include="Object\AttrWindow.cpp" />
     <ClCompile Include="Object\RCAirCondition.cpp" />
     <ClCompile Include="Object\RCBlock.cpp" />
     <ClCompile Include="Object\RCDoor.cpp" />
@@ -200,6 +209,8 @@
     <ClCompile Include="UI\WindowDlg.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Command\Command.h" />
+    <ClInclude Include="Command\CommandWindowDoorTable.h" />
     <ClInclude Include="Common\AcessDatabase.h" />
     <ClInclude Include="Common\ComFun_ACad.h" />
     <ClInclude Include="Common\ComFun_ACAD_Common.h" />
@@ -215,6 +226,13 @@
     <ClInclude Include="Common\ComFun_Sunac.h" />
     <ClInclude Include="Common\TYRect.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="Object\AttrAirCon.h" />
+    <ClInclude Include="Object\AttrDoor.h" />
+    <ClInclude Include="Object\AttrKitchen.h" />
+    <ClInclude Include="Object\AttrObject.h" />
+    <ClInclude Include="Object\AttrRailing.h" />
+    <ClInclude Include="Object\AttrToilet.h" />
+    <ClInclude Include="Object\AttrWindow.h" />
     <ClInclude Include="Object\RCAirCondition.h" />
     <ClInclude Include="Object\RCBlock.h" />
     <ClInclude Include="Object\RCDoor.h" />

@@ -6,6 +6,7 @@
 #include "afxdialogex.h"
 #include "../Common/ComFun_Sunac.h"
 #include "../Object/RCWindow.h"
+#include "../Object/AttrWindow.h"
 
 
 // CWindowDlg 对话框
@@ -66,6 +67,7 @@ BEGIN_MESSAGE_MAP(CWindowDlg, CDialogEx)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
 	ON_BN_CLICKED(IDC_MFCBUTTON_SELECTLINE, &CWindowDlg::OnBnClickedMfcbuttonInsert)
 	ON_BN_CLICKED(IDC_MFCBUTTON_SEARCH, &CWindowDlg::OnBnClickedMfcbuttonSearch)
+	ON_BN_CLICKED(IDC_BUTTON_SEARCHWINDOW, &CWindowDlg::OnBnClickedButtonSearchwindow)
 END_MESSAGE_MAP()
 
 
@@ -88,16 +90,6 @@ BOOL CWindowDlg::OnInitDialog()
 	//设置第一列占60%，其余部分为第二列
 	m_preWindow.SetHeaderWidth(_T("60;+"));
 
-	vCString allWindowFiles;
-	TY_GetAllWindowFiles(allWindowFiles);
-	for (int i = 0; i < allWindowFiles.size(); i++)
-	{
-		m_preWindow.AddPreview(i, 0, allWindowFiles[i]); 
-		m_preWindow.SetContentItemText(i, 1, _T("窗类型:双扇单开\n窗户面积:2.1\n通风量:1.6"));
-	}
-
-	
-	m_preWindow.ShowPreviews();
 
 
 	m_areaType.SetCurSel(0);
@@ -114,7 +106,6 @@ BOOL CWindowDlg::OnInitDialog()
 
 	return TRUE;
 }
-
 
 void CWindowDlg::OnBnClickedMfcbuttonInsert()
 {
@@ -155,6 +146,10 @@ void CWindowDlg::OnBnClickedMfcbuttonInsert()
 			
 			if (sels[0] == 0)
 				oneWindow.Insert(allWindowFiles[0], origin, 0, L"0", 256);
+			else if (sels[0] == 1)
+				oneWindow.Insert(allWindowFiles[1], origin, 0, L"0", 256);
+			else if (sels[0] == 2)
+				oneWindow.Insert(allWindowFiles[2], origin, 0, L"0", 256);
 			//else
 				//oneWindow.Insert(allWindowFiles[2], origin, 0, L"0", 256);
 			oneWindow.InitParametersFromDynamicBlock();
@@ -166,6 +161,19 @@ void CWindowDlg::OnBnClickedMfcbuttonInsert()
 
 			oneWindow.RunParameters();
 			origin.y += cengGao;
+
+
+			//把UI的数据记录在图框的扩展字典中
+			AttrWindow *pAttribute = new AttrWindow();
+			if (sels[0] == 0)
+			    pAttribute->m_id = L"CA";
+			else if (sels[0] == 1)
+				pAttribute->m_id = L"CB";
+			else
+				pAttribute->m_id = L"CC";
+
+			oneWindow.AddAttribute(pAttribute);
+			pAttribute->close();
 		}
 		
 	}
@@ -178,3 +186,19 @@ void CWindowDlg::OnBnClickedMfcbuttonSearch()//搜索
 {
 	// TODO: 在此添加控件通知处理程序代码
 }
+
+
+void CWindowDlg::OnBnClickedButtonSearchwindow()
+{
+	vCString allWindowFiles;
+	TY_GetAllWindowFiles(allWindowFiles);
+	for (int i = 0; i < allWindowFiles.size(); i++)
+	{
+		m_preWindow.AddPreview(i, 0, allWindowFiles[i]); 
+		m_preWindow.SetContentItemText(i, 1, _T("窗类型:双扇单开\n窗户面积:2.1\n通风量:1.6"));
+	}
+
+
+	m_preWindow.ShowPreviews();
+}
+

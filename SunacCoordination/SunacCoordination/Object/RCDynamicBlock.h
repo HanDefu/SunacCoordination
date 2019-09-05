@@ -38,12 +38,14 @@ public:
 	int GetParameter(CString key, int &value);
 	int GetParameter(CString key, CString &value);
 
-	int InitParametersFromDynamicBlock();
+	virtual int InitParametersFromDynamicBlock();
 
 	//驱动参数
 	int RunParameters();
 
-protected: 
+	virtual bool isEqualTo(RCObject*other = 0);//基础数据一致
+
+public: 
 	vRCPairKeyDValue m_dKeyValues;
 	vRCPairKeyIValue m_iKeyValues;
 	vRCPairKeyStrValue m_strKeyValues;

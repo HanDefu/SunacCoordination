@@ -18,6 +18,7 @@ File description:
 #include "float.h"
 #include <algorithm>
 #include "../Common/ComFun_DynamicBlock.h"
+#include "../Common/ComFun_Sunac.h"
 
 //Constructor
 RCDynamicBlock::RCDynamicBlock(void)
@@ -35,7 +36,9 @@ RCDynamicBlock::~RCDynamicBlock(void)
 //Constructor
 RCDynamicBlock::RCDynamicBlock(const RCDynamicBlock &other):RCBlock(other)
 {
-
+	m_dKeyValues = other.m_dKeyValues;
+	m_iKeyValues = other.m_iKeyValues;
+	m_strKeyValues = other.m_strKeyValues;
 }
 
 //Operator = 
@@ -46,7 +49,7 @@ RCDynamicBlock & RCDynamicBlock::operator=(const RCDynamicBlock &rhs)
 
 int RCDynamicBlock::SetParameter(CString key, double value)
 {
-	int error = 1;
+	int error = -1;
 	for (int m = 0; m < m_dKeyValues.size(); m++)
 	{
         if (key == m_dKeyValues[m].first)
@@ -62,7 +65,7 @@ int RCDynamicBlock::SetParameter(CString key, double value)
 
 int RCDynamicBlock::SetParameter(CString key, int value)
 {
-	int error = 1;
+	int error = -1;
 	for (int m = 0; m < m_iKeyValues.size(); m++)
 	{
 		if (key == m_iKeyValues[m].first)
@@ -77,7 +80,7 @@ int RCDynamicBlock::SetParameter(CString key, int value)
 
 int RCDynamicBlock::GetParameter(CString key, CString &value)
 {
-	int error = 1;
+	int error = -1;
 	for (int m = 0; m < m_strKeyValues.size(); m++)
 	{
 		if (key == m_strKeyValues[m].first)
@@ -92,7 +95,7 @@ int RCDynamicBlock::GetParameter(CString key, CString &value)
 
 int RCDynamicBlock::GetParameter(CString key, double &value)
 {
-	int error = 1;
+	int error = -1;
 	for (int m = 0; m < m_dKeyValues.size(); m++)
 	{
 		if (key == m_dKeyValues[m].first)
@@ -108,7 +111,7 @@ int RCDynamicBlock::GetParameter(CString key, double &value)
 
 int RCDynamicBlock::GetParameter(CString key, int &value)
 {
-	int error = 1;
+	int error = -1;
 	for (int m = 0; m < m_iKeyValues.size(); m++)
 	{
 		if (key == m_iKeyValues[m].first)
@@ -123,7 +126,7 @@ int RCDynamicBlock::GetParameter(CString key, int &value)
 
 int RCDynamicBlock::SetParameter(CString key, CString value)
 {
-	int error = 1;
+	int error = -1;
 	for (int m = 0; m < m_strKeyValues.size(); m++)
 	{
 		if (key == m_strKeyValues[m].first)
@@ -312,4 +315,27 @@ int RCDynamicBlock::RunParameters()
 	return 0;
 }
 
+bool RCDynamicBlock::isEqualTo(RCObject*other)
+{
+	if (other == 0)
+		return false;
+
+	RCDynamicBlock * pObj = dynamic_cast<RCDynamicBlock *>(other);
+	if (pObj == 0)
+		return false;
+
+	if (!RCBlock::isEqualTo(other))
+		return false;
+
+	if (!TY_IsPairsEqual(m_dKeyValues, pObj->m_dKeyValues))
+		return false;
+
+	if (!TY_IsPairsEqual(m_iKeyValues, pObj->m_iKeyValues))
+		return false;
+
+	if (!TY_IsPairsEqual(m_strKeyValues, pObj->m_strKeyValues))
+		return false;
+	
+	return true;
+}
 
