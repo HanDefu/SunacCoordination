@@ -10,6 +10,7 @@
 
 #include "dbmain.h"
 #include "AttrObject.h"
+#include "../Sunac_def.h"
 #pragma warning(disable: 4275 4251)
 
 #ifdef _CUSTOMOBJECTDB_
@@ -42,14 +43,18 @@ public:
 
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
 
-private:
-
-
 public:
 
+	bool m_isGuoBiao;//排气道
+	int m_floorOption;//楼层选项
+	double m_paiQiDaoLen;//排气道长度
+	double m_paiQiDaoWid;//排气道宽度
+	bool m_isMirror;//镜像
 
-private:
+	bool m_hasPaiQiDao;//是否含有排气道
+	eWindowDoorPos m_windowDoorPos;//门窗位置关系
 
+	double m_guanXiWidth;//盥洗区宽度
 };
 
 

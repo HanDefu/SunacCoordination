@@ -47,9 +47,9 @@ private:
 
 
 public:
-
-private:
-
+	double m_piShu;
+	CString m_lengNingShuiGuanPos;//冷凝水管位置---不确定
+	bool m_hasYuShuiGuan;//
 };
 
 

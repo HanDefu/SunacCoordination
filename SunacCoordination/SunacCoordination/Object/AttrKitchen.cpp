@@ -71,8 +71,11 @@ bool AttrKitchen::isEqualTo(AttrObject*other)
 	if (!AttrObject::isEqualTo(other))
 		return false;
 
-	return true;
-	/*return (m_openType == pRealObj->m_openType
-		);*/
+	return (m_isGuoBiao == pRealObj->m_isGuoBiao &&
+		m_floorOption == pRealObj->m_floorOption &&
+		m_paiQiDaoLen == pRealObj->m_paiQiDaoLen &&
+		m_paiQiDaoWid == pRealObj->m_paiQiDaoWid &&
+		m_isMirror == pRealObj->m_isMirror 
+		);
 }
 

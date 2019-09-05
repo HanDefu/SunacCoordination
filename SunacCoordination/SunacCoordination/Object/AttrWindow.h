@@ -10,6 +10,7 @@
 
 #include "dbmain.h"
 #include "AttrObject.h"
+#include "../Sunac_def.h"
 #pragma warning(disable: 4275 4251)
 
 #ifdef _CUSTOMOBJECTDB_
@@ -50,6 +51,10 @@ public:
 	double m_maxWid;//宽度尺寸最大值
 	CString m_tongFengFormula;//通风量计算公式
 	double m_tongFengQty;
+
+	bool m_isMirror;//是否镜像
+	eViewDir m_viewDir;//视图方向
+	double m_wallDis;//外墙距离
 };
 
 

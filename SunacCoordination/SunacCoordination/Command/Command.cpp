@@ -48,6 +48,7 @@ void CMD_Login()
 	dlg.DoModal();
 	CADPalette_AddP();
 }
+
 //窗
 void CMD_SUNACWINDOW()
 {

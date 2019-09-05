@@ -43,10 +43,21 @@ public:
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
 private:
 
-
 public:
-private:
+	bool m_isGuoBiao;//排气道
+	int m_floorOption;//楼层选项
+	double m_paiQiDaoLen;//排气道长度
+	double m_paiQiDaoWid;//排气道宽度
+	bool m_isMirror;//镜像
+	bool m_hasPaiQiDao;//是否含有排气道
+	CString m_windowDoorPos;//门窗位置关系
 
+	//这些属性体现在图块中--可以从图块直接取出的 就不用从属性记录
+	/*CString m_shuiPenType;//水盆类型
+	CString m_bingXiangType;//冰箱类型
+	CString m_zaoTaiWidth;//灶台宽度 
+	double len;//长度
+	double kuandu;//宽度*/
 };
 
 

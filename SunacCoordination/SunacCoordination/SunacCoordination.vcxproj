@@ -207,6 +207,7 @@
     <ClCompile Include="UI\RailingDlg.cpp" />
     <ClCompile Include="UI\WaterproofDlg.cpp" />
     <ClCompile Include="UI\WindowDlg.cpp" />
+    <ClCompile Include="Web\WebIO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command\Command.h" />
@@ -249,6 +250,7 @@
     <ClInclude Include="Object\RCXianJiao.h" />
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="Sunac_def.h" />
     <ClInclude Include="Tool\Excel\CApplication.h" />
     <ClInclude Include="Tool\Excel\CBorder.h" />
     <ClInclude Include="Tool\Excel\CBorders.h" />
@@ -301,6 +303,7 @@
     <ClInclude Include="UI\RailingDlg.h" />
     <ClInclude Include="UI\WaterproofDlg.h" />
     <ClInclude Include="UI\WindowDlg.h" />
+    <ClInclude Include="Web\WebIO.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\SunacCoordination.rc" />

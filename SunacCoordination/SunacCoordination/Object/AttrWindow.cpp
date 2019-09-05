@@ -38,6 +38,10 @@ AttrWindow::AttrWindow(const AttrWindow &other) : AttrObject(other)
 	m_maxWid = other.m_maxWid; 
 	m_tongFengFormula = other.m_tongFengFormula;
 	m_tongFengQty = other.m_tongFengQty;
+
+	m_isMirror = other.m_isMirror;
+	m_viewDir = other.m_viewDir;
+	m_wallDis = other.m_wallDis;
 }
 
 AttrWindow & AttrWindow::operator=(const AttrWindow &rhs)
@@ -50,6 +54,10 @@ AttrWindow & AttrWindow::operator=(const AttrWindow &rhs)
 	m_maxWid = rhs.m_maxWid; 
 	m_tongFengFormula = rhs.m_tongFengFormula;
 	m_tongFengQty = rhs.m_tongFengQty;
+
+	m_isMirror = rhs.m_isMirror;
+	m_viewDir = rhs.m_viewDir;
+	m_wallDis = rhs.m_wallDis;
 
 	return *this;
 }
@@ -122,7 +130,10 @@ bool AttrWindow::isEqualTo(AttrObject*other)
 		m_minWid == pRealObj->m_minWid &&
 		m_maxWid == pRealObj->m_maxWid &&
 		m_tongFengFormula == pRealObj->m_tongFengFormula &&
-		m_tongFengQty == pRealObj->m_tongFengQty
+		m_tongFengQty == pRealObj->m_tongFengQty &&
+		m_isMirror == pRealObj->m_isMirror &&
+		m_viewDir == pRealObj->m_viewDir &&
+		m_wallDis == pRealObj->m_wallDis
 		);
 }
 
