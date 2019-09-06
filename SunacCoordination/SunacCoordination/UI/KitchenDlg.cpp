@@ -159,7 +159,7 @@ void CKitchenDlg::OnBnClickedMfcbuttonDoorDir()//门方向
 {
 	// TODO: 在此添加控件通知处理程序代码
 	ShowWindow(false);
-	ads_point pt,result;
+	ads_point pt;
 	acedInitGet(32,NULL);
 	if(acedGetPoint(NULL,L"\n选择门的位置\n",pt)!=RTNORM) //第一角点选择
 	{
@@ -172,7 +172,7 @@ void CKitchenDlg::OnBnClickedMfcbuttonWindowDir()//窗方向
 {
 	// TODO: 在此添加控件通知处理程序代码
 	ShowWindow(false);
-	ads_point pt,result;
+	ads_point pt;
 	acedInitGet(32,NULL);
 	if(acedGetPoint(NULL,L"\n选择窗的位置\n",pt)!=RTNORM) //第一角点选择
 	{

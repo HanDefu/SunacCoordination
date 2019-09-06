@@ -9,6 +9,7 @@
 #endif // _MSC_VER > 1000
 
 #include "dbmain.h"
+#include "../Sunac_def.h"
 
 #pragma warning(disable: 4275 4251)
 
@@ -40,9 +41,17 @@ public:
 	virtual Acad::ErrorStatus dwgInFields(AcDbDwgFiler* pFiler);
 	//}}AFX_ARX_METHODS
 	
-	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
-private:
+	virtual eRCType GetType(){return TYPENUM;}
 
+	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
+	
+	//得到从服务器下载到本地的一个文件（含路径）
+	//或者是本地本身就存在的一个文件路径
+	//成功返回0 否则返回-1
+	int GetFile(CString &filePathName);
+
+private:
+	
 public:
 	Adesk::Int32 m_version;//文件版本 临时存储
 

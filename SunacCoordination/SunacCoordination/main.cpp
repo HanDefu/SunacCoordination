@@ -32,6 +32,7 @@
 #include "object\AttrRailing.h"
 #include "Command\CommandWindowDoorTable.h"
 #include "Command\Command.h"
+#include "GlobalSetting.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -39,9 +40,12 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 extern "C" HWND adsw_acadMainWnd();
+static HANDLE mThreadHandle = 0;
 
 /////////////////////////////////////////////////////////////////////////////
 // Define the sole extension module object.
+//和服务器同步数据
+static void SyncDataWithService(void * ptr);
 
 AC_IMPLEMENT_EXTENSION_MODULE(theArxDLL);
 
@@ -341,6 +345,9 @@ static void initApp()
 	AttrRailing::rxInit();
 	acrxBuildClassHierarchy();
 	acrxRegisterService(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_RAILING));
+
+	mThreadHandle = (HANDLE)_beginthread(&SyncDataWithService, 0, 0);
+	GSINST->InitLocalFiles();
 }
 
 
@@ -369,6 +376,9 @@ static void unloadApp()
 
 	deleteAcRxClass(AttrObject::desc());
 	delete acrxServiceDictionary->remove(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_OBJECT));
+
+	WaitForSingleObject(mThreadHandle, 1000);
+	TerminateThread(mThreadHandle,0);
 }
 
 
@@ -378,7 +388,6 @@ static void unloadApp()
 // Entry points
 //
 //////////////////////////////////////////////////////////////
-
 extern "C" int APIENTRY
 	DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 {
@@ -421,5 +430,14 @@ extern "C" AcRx::AppRetCode acrxEntryPoint( AcRx::AppMsgCode msg, void* appId)
 		break;
 	}
 	return AcRx::kRetOK;
+}
+
+static void SyncDataWithService(void * ptr)
+{
+	while(1)
+	{
+		Sleep(1000);
+	}
+	GSINST->m_syncOK = true;
 }
 

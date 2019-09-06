@@ -42,6 +42,7 @@ Acad::ErrorStatus AttrAirCon::dwgInFields(AcDbDwgFiler* filer)
 	if ((es = AttrObject::dwgInFields(filer)) != Acad::eOk) {
 		return es;
 	}
+	return Acad::eOk;
 }
 
 Acad::ErrorStatus AttrAirCon::dwgOutFields(AcDbDwgFiler* filer) const

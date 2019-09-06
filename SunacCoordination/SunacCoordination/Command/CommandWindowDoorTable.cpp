@@ -80,7 +80,7 @@ void CMD_SUNACWINDOWTable()
 		
 	}
 
-	int numWindow = allWindowsTypes.size();
+	int numWindow = (int)allWindowsTypes.size();
 	Acad::ErrorStatus es;
 	AcDbTable *table = new AcDbTable();
 	int dataStartRow = 3;
@@ -94,7 +94,7 @@ void CMD_SUNACWINDOWTable()
 
 	//t通用设置
 	table->setPosition(pnt);
-	table->setAlignment(AcDb::CellAlignment::kMiddleCenter);
+	table->setAlignment(AcDb::kMiddleCenter);
 
 
 	//1.设置行数列数
@@ -134,7 +134,7 @@ void CMD_SUNACWINDOWTable()
 		for (int j = 0; j < 17; j++)
 		{
 			table->setTextHeight(i,j,100);
-			table->setAlignment(i,j,AcDb::CellAlignment::kMiddleCenter);
+			table->setAlignment(i,j,AcDb::kMiddleCenter);
 		}
 	}
 
@@ -151,9 +151,9 @@ void CMD_SUNACWINDOWTable()
 	table->setTextString(1,6,L"传热系数设计值K([w/(m²xk)]");
 	table->setTextString(1,7,L"门窗洞口尺寸");
 	table->setTextString(2,7,L"宽（mm)");
-	table->setAlignment(2,7,AcDb::CellAlignment::kMiddleCenter);
+	table->setAlignment(2,7,AcDb::kMiddleCenter);
 	table->setTextString(2,8,L"高（mm)");
-	table->setAlignment(2,8,AcDb::CellAlignment::kMiddleCenter);
+	table->setAlignment(2,8,AcDb::kMiddleCenter);
 	table->setTextString(1,9,L"樘数");
 	table->setTextString(1,10,L"单樘门窗展开面积（m2)");
 	table->setTextString(1,11,L"标准化窗框展开面积小计(m2)");

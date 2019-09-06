@@ -39,7 +39,7 @@ public:
 	virtual Acad::ErrorStatus dwgOutFields(AcDbDwgFiler* pFiler) const;
 	virtual Acad::ErrorStatus dwgInFields(AcDbDwgFiler* pFiler);
 	//}}AFX_ARX_METHODS
-
+	virtual eRCType GetType() {return WINDOW;}
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
 private:
 
@@ -51,12 +51,14 @@ public:
 	double m_maxWid;//宽度尺寸最大值
 	CString m_tongFengFormula;//通风量计算公式
 	double m_tongFengQty;
+	vSCalcData m_calFormulas;
 
 	bool m_isMirror;//是否镜像
 	eViewDir m_viewDir;//视图方向
 	double m_wallDis;//外墙距离
 };
 
+typedef std::vector<AttrWindow> vAttrWindow;
 
 
 #endif // !defined(ARX__ZFFDWGSCALE_H__20140205_113541_WINDOW)

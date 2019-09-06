@@ -208,8 +208,14 @@
     <ClCompile Include="Command\CommandWindowDoorTable.cpp">
       <Filter>Command</Filter>
     </ClCompile>
-    <ClCompile Include="Web\WebIO.cpp">
-      <Filter>Web</Filter>
+    <ClCompile Include="GlobalSetting.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Tool\Regedit.cpp">
+      <Filter>Tool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -489,11 +495,17 @@
     <ClInclude Include="Command\CommandWindowDoorTable.h">
       <Filter>Command</Filter>
     </ClInclude>
-    <ClInclude Include="Web\WebIO.h">
-      <Filter>Web</Filter>
-    </ClInclude>
     <ClInclude Include="Sunac_def.h">
       <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalSetting.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Regedit.h">
+      <Filter>Tool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -529,9 +541,6 @@
     </Filter>
     <Filter Include="Command">
       <UniqueIdentifier>{1820d1ff-4187-4dca-8f46-376bd45f8b92}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Web">
-      <UniqueIdentifier>{61250566-6ab7-44ee-84a9-5138c0d255fd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

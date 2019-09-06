@@ -1,14 +1,28 @@
 #pragma once
 
-#define  SUNAC_DEBUG
-
 #include "ComFun_ACAD_Common.h"
 #include "TYRect.h"
 #include "../Object/RCWindow.h"
+#include <utility>
 
-#define  SUNAC_ATTRIBUTE_ENTITY L"SUNAC_ATTRIBUTE_ENTITY"
-#define  SUNAC_COMMON_STR_LEN (256)
-#define  FILE_VERSION ((Adesk::Int32)1)
+using namespace std;
+
+template<typename T> 
+int TYCOM_vFind(T &B, std::vector<T>&A)
+{
+	for(int i = 0; i < (int)A.size(); i++)
+	{
+		if(A[i] == B)
+			return i;
+	}
+	return -1;
+}
+
+int vFind(RCPairKeyDValue &A, vRCPairKeyDValue &B);
+int vFind(RCPairKeyIValue &A, vRCPairKeyIValue &B);
+int vFind(RCPairKeyStrValue &A, vRCPairKeyStrValue &B);
+int vFind(RCWindow &oneWindow, vRCWindow &allWindows);
+
 
 //判断是不是一个直线（线段）
 bool DQ_IsALine(AcDbObjectId entId);
@@ -63,10 +77,11 @@ bool TY_IsPairsEqual(vRCPairKeyDValue &A, vRCPairKeyDValue &B);
 bool TY_IsPairsEqual(vRCPairKeyIValue &A, vRCPairKeyIValue &B);
 bool TY_IsPairsEqual(vRCPairKeyStrValue &A, vRCPairKeyStrValue &B);
 
-int vFind(RCPairKeyDValue &A, vRCPairKeyDValue &B);
-int vFind(RCPairKeyIValue &A, vRCPairKeyIValue &B);
-int vFind(RCPairKeyStrValue &A, vRCPairKeyStrValue &B);
-int vFind(RCWindow &oneWindow, vRCWindow &allWindows);
+
+CString TY_GetLocalFilePath();
+
+vector<pair<CString,CString>> TY_FindFilesInDirecotry(CString fileName,CString directory );
+vector<pair<CString,CString>> TY_FindFilesInDirecotryRecursion( CString fileName,CString directory,int recursionCount);
 
 
 

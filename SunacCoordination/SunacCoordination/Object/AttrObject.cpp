@@ -6,6 +6,8 @@
 #include "acgi.h"
 #include "AttrObject.h"
 #include "../Common/ComFun_Sunac.h"
+#include "../GlobalSetting.h"
+#include "../WebIO.h"
 
 
 //{{AFX_ARX_MACRO
@@ -123,5 +125,20 @@ bool AttrObject::isEqualTo(AttrObject*other)
 		m_type == other->m_type && 
 		m_isDynamic == other->m_isDynamic
 		);
+}
+
+int AttrObject::GetFile(CString &filePathName)
+{
+	//首先本地搜索
+	bool has = GSINST->HasLocalFile(m_name,filePathName);
+	if (has)
+		return 0;
+	
+	//如果本地不存在这个文件 去服务器下载一个文件到本地
+	int ret = WebIO::DownLoadFile(m_id, filePathName);
+	if (ret != 0)
+		filePathName = L"";
+
+	return ret;
 }
 

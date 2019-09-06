@@ -148,6 +148,7 @@
     <ClCompile Include="Common\ComFun_String.cpp" />
     <ClCompile Include="Common\ComFun_Sunac.cpp" />
     <ClCompile Include="Common\TYRect.cpp" />
+    <ClCompile Include="GlobalSetting.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object\AttrAirCon.cpp" />
     <ClCompile Include="Object\AttrDoor.cpp" />
@@ -178,6 +179,7 @@
     </ClCompile>
     <ClCompile Include="Tool\Excel\CExcel.cpp" />
     <ClCompile Include="Tool\Excel\Excel.cpp" />
+    <ClCompile Include="Tool\Regedit.cpp" />
     <ClCompile Include="UI\AirconditionerDlg.cpp" />
     <ClCompile Include="UI\BathroomDlg.cpp" />
     <ClCompile Include="UI\DlgLeftBar.cpp" />
@@ -207,7 +209,7 @@
     <ClCompile Include="UI\RailingDlg.cpp" />
     <ClCompile Include="UI\WaterproofDlg.cpp" />
     <ClCompile Include="UI\WindowDlg.cpp" />
-    <ClCompile Include="Web\WebIO.cpp" />
+    <ClCompile Include="WebIO.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command\Command.h" />
@@ -226,6 +228,7 @@
     <ClInclude Include="Common\ComFun_String.h" />
     <ClInclude Include="Common\ComFun_Sunac.h" />
     <ClInclude Include="Common\TYRect.h" />
+    <ClInclude Include="GlobalSetting.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Object\AttrAirCon.h" />
     <ClInclude Include="Object\AttrDoor.h" />
@@ -264,6 +267,7 @@
     <ClInclude Include="Tool\Excel\CWorksheet.h" />
     <ClInclude Include="Tool\Excel\CWorksheets.h" />
     <ClInclude Include="Tool\Excel\Excel.h" />
+    <ClInclude Include="Tool\Regedit.h" />
     <ClInclude Include="UI\AirconditionerDlg.h" />
     <ClInclude Include="UI\BathroomDlg.h" />
     <ClInclude Include="UI\DlgLeftBar.h" />
@@ -303,7 +307,7 @@
     <ClInclude Include="UI\RailingDlg.h" />
     <ClInclude Include="UI\WaterproofDlg.h" />
     <ClInclude Include="UI\WindowDlg.h" />
-    <ClInclude Include="Web\WebIO.h" />
+    <ClInclude Include="WebIO.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\SunacCoordination.rc" />
