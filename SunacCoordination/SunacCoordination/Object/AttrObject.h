@@ -23,6 +23,7 @@
 #define ZFFCUSTOMOBJECTDB_DBXSERVICE_OBJECT "ZFFCUSTOMOBJECTDB_DBXSERVICE_OBJECT"
 #endif
 
+//需要存储的都要放这个系列下
 class DLLIMPEXP  AttrObject : public AcDbObject
 {
 public:
@@ -50,17 +51,25 @@ public:
 	//成功返回0 否则返回-1
 	int GetFile(CString &filePathName);
 
+	void SetBianHao(CString  bianHao) { m_instBianHao = bianHao; }
+	CString& GetBianHao() { return m_instBianHao; }
+
 private:
 	
 public:
 	Adesk::Int32 m_version;//文件版本 临时存储
 
-	CString m_id;//原型编号
+	CString m_yxid;//原型编号
 	CString m_name;//原型名称
 	bool m_isJiTuan;//是否集团
 	CString m_quyuName;//区域名称
 	CString m_type;//原型类型
 	bool m_isDynamic;//是否动态块
+
+	CString m_filePathName;//本地完整路径
+
+	
+	CString m_instBianHao;//自定义名称 非块名 实例的编号
 };
 
 

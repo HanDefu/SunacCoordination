@@ -1,7 +1,7 @@
 #pragma once
 #include "GridCtrlWithPreview.h"
 #include "afxwin.h"
-
+#include "../Object/AttrWindow.h"
 // CWindowDlg ¶Ô»°¿ò
 
 class CWindowDlg : public CDialogEx
@@ -34,9 +34,10 @@ public:
 	CEdit m_width;
 	CEdit m_height;
 	afx_msg void OnBnClickedMfcbuttonInsert();
-	afx_msg void OnBnClickedMfcbuttonSearch();
+
 	CEdit m_H2;
 	CEdit m_cengShu;
 	CEdit m_cengGao;
 	afx_msg void OnBnClickedButtonSearchwindow();
+	std::vector<AttrWindow *> m_allWindws;
 };

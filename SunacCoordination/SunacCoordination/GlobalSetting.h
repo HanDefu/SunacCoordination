@@ -11,14 +11,14 @@ public:
 		return &instance;
 	}
 
-	int InitLocalFiles();
-
+	
 	//本地是否含有这个文件,如果存在给出本地的全路径地址到filePathName
-	bool HasLocalFile(CString fileName,CString &filePathName);
+	bool GetLocalFile(CString fileName,CString &filePathName);
 
 private:
 	GlobalSetting();
 	~GlobalSetting();
+	int InitLocalFiles();
 
 public:
 	bool m_syncOK;

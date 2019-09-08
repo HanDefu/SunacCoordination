@@ -6,8 +6,8 @@
 #include "afxdialogex.h"
 #include "../Common/ComFun_Sunac.h"
 #include "../Object/RCWindow.h"
-#include "../Object/AttrWindow.h"
-
+#include "../WebIO.h"
+#include "../GlobalSetting.h"
 
 // CWindowDlg 对话框
 
@@ -66,7 +66,6 @@ void CWindowDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CWindowDlg, CDialogEx)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
 	ON_BN_CLICKED(IDC_MFCBUTTON_SELECTLINE, &CWindowDlg::OnBnClickedMfcbuttonInsert)
-	ON_BN_CLICKED(IDC_MFCBUTTON_SEARCH, &CWindowDlg::OnBnClickedMfcbuttonSearch)
 	ON_BN_CLICKED(IDC_BUTTON_SEARCHWINDOW, &CWindowDlg::OnBnClickedButtonSearchwindow)
 END_MESSAGE_MAP()
 
@@ -112,9 +111,6 @@ void CWindowDlg::OnBnClickedMfcbuttonInsert()
 	ShowWindow(FALSE);
 
 	// TODO: 在此添加控件通知处理程序代码
-	vCString allWindowFiles;
-	TY_GetAllWindowFiles(allWindowFiles);
-
 	AcGePoint3d origin = TY_GetPoint();
 
 	double width = 0, height = 0;
@@ -144,15 +140,9 @@ void CWindowDlg::OnBnClickedMfcbuttonInsert()
 		{
 			RCWindow oneWindow;
 			
-			if (sels[0] == 0)
-				oneWindow.Insert(allWindowFiles[0], origin, 0, L"0", 256);
-			else if (sels[0] == 1)
-				oneWindow.Insert(allWindowFiles[1], origin, 0, L"0", 256);
-			else if (sels[0] == 2)
-				oneWindow.Insert(allWindowFiles[2], origin, 0, L"0", 256);
-			//else
-				//oneWindow.Insert(allWindowFiles[2], origin, 0, L"0", 256);
-			oneWindow.InitParametersFromDynamicBlock();
+			oneWindow.Insert(m_allWindws[sels[0]]->m_filePathName, origin, 0, L"0", 256);
+
+			oneWindow.InitParameters();
 			oneWindow.SetParameter(L"H", height);
 			oneWindow.SetParameter(L"W", width);
 
@@ -162,18 +152,13 @@ void CWindowDlg::OnBnClickedMfcbuttonInsert()
 			oneWindow.RunParameters();
 			origin.y += cengGao;
 
-
+			str.Format(L"%d_%d",(int)(oneWindow.GetW()), (int)(oneWindow.GetH()));
+			
 			//把UI的数据记录在图框的扩展字典中
-			AttrWindow *pAttribute = new AttrWindow();
-			if (sels[0] == 0)
-			    pAttribute->m_id = L"CA";
-			else if (sels[0] == 1)
-				pAttribute->m_id = L"CB";
-			else
-				pAttribute->m_id = L"CC";
+			oneWindow.AddAttribute(m_allWindws[sels[0]]);
+			m_allWindws[sels[0]]->close();
 
-			oneWindow.AddAttribute(pAttribute);
-			pAttribute->close();
+			oneWindow.SetBianHao(m_allWindws[sels[0]]->m_yxid + str); 
 		}
 		
 	}
@@ -182,19 +167,13 @@ void CWindowDlg::OnBnClickedMfcbuttonInsert()
 }
 
 
-void CWindowDlg::OnBnClickedMfcbuttonSearch()//搜索
-{
-	// TODO: 在此添加控件通知处理程序代码
-}
-
-
 void CWindowDlg::OnBnClickedButtonSearchwindow()
 {
-	vCString allWindowFiles;
-	TY_GetAllWindowFiles(allWindowFiles);
-	for (int i = 0; i < allWindowFiles.size(); i++)
+	m_allWindws = WebIO::GetAllWindows();
+
+	for (int i = 0; i < m_allWindws.size(); i++)
 	{
-		m_preWindow.AddPreview(i, 0, allWindowFiles[i]); 
+		m_preWindow.AddPreview(i, 0, m_allWindws[i]->m_filePathName); 
 		m_preWindow.SetContentItemText(i, 1, _T("窗类型:双扇单开\n窗户面积:2.1\n通风量:1.6"));
 	}
 

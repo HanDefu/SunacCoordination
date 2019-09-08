@@ -15,13 +15,16 @@ ACRX_DXF_DEFINE_MEMBERS(AttrWindow, AcDbObject,
 						 ZFFDWGSCALEWINDOW, ZffCustomObjectDBWINDOW);
 AttrWindow::AttrWindow()
 {
-	m_openType = L"testopentype";
+	m_openType = L"";
 	m_openQty = 0;
 	m_isZhuanJiao = false;//是否转角窗
-	m_minWid = 11;//宽度尺寸最小值
-	m_maxWid = 22;//宽度尺寸最大值
-	m_tongFengFormula = L"acbc";//通风量计算公式
+	m_minWid = 0;//宽度尺寸最小值
+	m_maxWid = 0;//宽度尺寸最大值
+	m_tongFengFormula = L"";//通风量计算公式
 	m_tongFengQty = 0.0;
+	m_wallDis = 0.0;
+	m_isMirror = false;
+	m_viewDir = LIMINAN;
 }
 
 AttrWindow::~AttrWindow()

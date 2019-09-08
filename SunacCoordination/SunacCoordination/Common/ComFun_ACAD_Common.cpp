@@ -450,7 +450,7 @@ AcDbObjectId MD2010_GetLayerID(CString layerName)
 
 	// 获得指定层表记录的指针
 	AcDbLayerTableRecord *pLayerTblRcd;
-	pLayerTbl->getAt(layerName, pLayerTblRcd, AcDb::kForWrite);
+	pLayerTbl->getAt(layerName, pLayerTblRcd, AcDb::kForRead);
 
 	AcDbObjectId ids = pLayerTblRcd->objectId();
 	pLayerTblRcd->close();
@@ -527,6 +527,8 @@ int MD2010_GetLayerCount()
 int MD2010_SetCurrentLayer(CString name)
 {
 	AcDbObjectId id = MD2010_GetLayerID(name);
+	if (id == 0)
+		return -1;
 	Acad::ErrorStatus es = acdbHostApplicationServices()->workingDatabase()->setClayer(id);
 	return 0;
 }
@@ -2057,10 +2059,6 @@ AcDbObjectId MD2010_InsertBlockDefineFromPathName(const WCHAR *pathname,CString 
 
 int MD2010_InsertBlockFromPathName(const WCHAR *layoutname,const WCHAR *pathname, CString &blockDefineName, AcDbObjectId &entId, AcGePoint3d origin, double angle, AcGeScale3d scale, const WCHAR *layername, int color)
 {
-	WCHAR blockname[256] = L"";
-	CF_STR_get_file_name(pathname, blockname);
-	CF_STR_get_file_name_2(blockname, blockname);
-
 	CString name;
 	MD2010_GetCurrentLayer(name);
 	MD2010_SetCurrentLayer(layername);

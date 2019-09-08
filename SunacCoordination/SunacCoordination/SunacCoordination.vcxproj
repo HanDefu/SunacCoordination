@@ -134,7 +134,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Command\Command.cpp" />
-    <ClCompile Include="Command\CommandWindowDoorTable.cpp" />
+    <ClCompile Include="Command\CommandWindowDetail.cpp" />
+    <ClCompile Include="Command\CommandWindowTable.cpp" />
     <ClCompile Include="Common\AcessDatabase.cpp" />
     <ClCompile Include="Common\ComFun_ACad.cpp" />
     <ClCompile Include="Common\ComFun_ACAD_Common.cpp" />
@@ -213,7 +214,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command\Command.h" />
-    <ClInclude Include="Command\CommandWindowDoorTable.h" />
+    <ClInclude Include="Command\CommandWindowDetail.h" />
+    <ClInclude Include="Command\CommandWindowTable.h" />
     <ClInclude Include="Common\AcessDatabase.h" />
     <ClInclude Include="Common\ComFun_ACad.h" />
     <ClInclude Include="Common\ComFun_ACAD_Common.h" />
@@ -254,6 +256,7 @@
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="Sunac_def.h" />
+    <ClInclude Include="Tool\DocLock.h" />
     <ClInclude Include="Tool\Excel\CApplication.h" />
     <ClInclude Include="Tool\Excel\CBorder.h" />
     <ClInclude Include="Tool\Excel\CBorders.h" />

@@ -38,7 +38,7 @@ public:
 	int GetParameter(CString key, int &value);
 	int GetParameter(CString key, CString &value);
 
-	virtual int InitParametersFromDynamicBlock();
+	virtual int InitParameters();
 
 	//Çý¶¯²ÎÊý
 	int RunParameters();

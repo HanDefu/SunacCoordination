@@ -28,6 +28,7 @@ RCBlock::RCBlock()
 //Copy constructor
 RCBlock::RCBlock(const RCBlock &other):RCObject(other)
 {
+	m_blockRecordName = other.m_blockRecordName;
 }
 
 //Destructor
@@ -36,8 +37,9 @@ RCBlock::~RCBlock(void)
 }
 
 //Operator = 
-RCBlock & RCBlock::operator=(const RCBlock &rhs)
+RCBlock & RCBlock::operator=(const RCBlock &other)
 {
+	m_blockRecordName = other.m_blockRecordName;
     return *this;
 } 
 
@@ -46,11 +48,23 @@ AcDbObjectId RCBlock::Insert(CString fileName, AcGePoint3d origin, double angle,
 	WCHAR blockname[256] = L"";
 	CF_STR_get_file_name(fileName, blockname);
 	CF_STR_get_file_name_2(blockname, blockname);
-	CString blockDefName(blockname);
+	m_blockRecordName = CString(blockname);
 	acDocManager->lockDocument(curDoc());
-	MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, fileName, blockDefName,  m_id, origin, angle, AcGeScale3d(1), layerName, color);
+	MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, fileName, m_blockRecordName,  m_id, origin, angle, AcGeScale3d(1), layerName, color);
 	acDocManager->unlockDocument(curDoc());
 	return 0;
+}
+
+//对于已经存在的图块定义的插入
+AcDbObjectId RCBlock::Insert(CString layoutname, CString blockDefineName, 
+	AcGePoint3d origin, double angle, CString layerName, int color)
+{
+	CString name;
+	MD2010_GetCurrentLayer(name);
+	MD2010_SetCurrentLayer(layerName);
+	MD2010_InsertBlockReference_Layout(layoutname, blockDefineName,m_id, origin, angle, AcGeScale3d(1,1,1),color);
+	MD2010_SetCurrentLayer(name);
+	return m_id;
 }
 
 bool RCBlock::isEqualTo(RCObject*other)
@@ -63,6 +77,9 @@ bool RCBlock::isEqualTo(RCObject*other)
 		return false;
 
 	if (!RCObject::isEqualTo(other))
+		return false;
+
+	if (m_blockRecordName != pObj->m_blockRecordName)
 		return false;
 
 	return true;

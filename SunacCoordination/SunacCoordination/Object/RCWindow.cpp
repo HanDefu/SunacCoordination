@@ -39,8 +39,9 @@ RCWindow::RCWindow(const RCWindow &other):RCDynamicBlock(other)
 }
 
 //Operator = 
-RCWindow & RCWindow::operator=(const RCWindow &rhs)
+RCWindow & RCWindow::operator=(const RCWindow &other)
 {
+	m_pAttribute = other.m_pAttribute;
 	return *this;
 }
 
@@ -173,4 +174,25 @@ bool RCWindow::isEqualTo(RCObject*other)
 		return false;
 
 	return true;
+}
+
+//门窗面积
+double RCWindow::GetWindowArea()
+{
+    return GetH() * GetW();
+}
+
+//开启面积
+double RCWindow::GetOpenArea()
+{
+	return GetW1() * GetH1();
+}
+
+void RCWindow::SetBianHao(CString str)
+{
+	GetAttribute()->SetBianHao(str);
+}
+CString RCWindow::GetBianHao()
+{
+	return GetAttribute()->GetBianHao();
 }

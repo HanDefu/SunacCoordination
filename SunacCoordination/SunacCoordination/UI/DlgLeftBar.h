@@ -30,6 +30,7 @@ protected:
 	HTREEITEM m_treeItemDoor; //门窗
 	HTREEITEM m_treeItemDoorQuantity; //门算量
 	HTREEITEM m_treeItemWindowTable; //门窗表
+	HTREEITEM m_treeItemWindowDetail; //门窗详图
 
 	HTREEITEM m_treeItemKitchen; //厨卫
 	HTREEITEM m_treeItemKitchenQuantity; //厨卫

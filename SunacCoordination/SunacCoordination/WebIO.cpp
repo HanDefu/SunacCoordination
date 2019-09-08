@@ -46,15 +46,17 @@ std::vector<AttrWindow *>  WebIO::GetWindows
 
 #ifdef WORK_LOCAL//本地模式
 	CString localWindowPath = TY_GetLocalFilePath();
-	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"*.dwg",localWindowPath);
+	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"*_Window.dwg",localWindowPath);
 	for (int i = 0; i < localFiles.size(); i++)
 	{
 		AttrWindow *pAttribute = new AttrWindow();
 		CString strid;
-		strid.Format(L"%s_%d", L"L_WINDOW_",i+1);
-		pAttribute->m_id = strid;
+		strid.Format(L"%s%d_", L"C",i+1);
+		pAttribute->m_yxid = strid;
 		pAttribute->m_name = localFiles[i].first;
-		pAttribute->m_name.TrimRight(L".dwg");
+		pAttribute->m_filePathName = localFiles[i].second;
+		int len = pAttribute->m_name.GetLength();
+		pAttribute->m_name.Delete(len - 4, 4);
 		pAttribute->m_isJiTuan = true;
 		pAttribute->m_isDynamic = true;
 		pAttribute->m_type = L"外窗";
@@ -96,7 +98,7 @@ std::vector<AttrDoor *> WebIO::GetDoors
 		AttrDoor *pAttribute = new AttrDoor();
 		CString strid;
 		strid.Format(L"%s_%d", L"L_DOOR_",i+1);
-		pAttribute->m_id = strid;
+		pAttribute->m_yxid = strid;
 		pAttribute->m_name = localFiles[i].first;
 		pAttribute->m_name.TrimRight(L".dwg");
 		pAttribute->m_isJiTuan = true;
@@ -135,13 +137,13 @@ std::vector<AttrKitchen *> WebIO::GetKitchens
 	std::vector<AttrKitchen *> result;
 #ifdef WORK_LOCAL//本地模式
 	CString localWindowPath = TY_GetLocalFilePath();
-	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"*.dwg",localWindowPath);
+	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"*_Kitchen.dwg",localWindowPath);
 	for (int i = 0; i < localFiles.size(); i++)
 	{
 		AttrKitchen *pAttribute = new AttrKitchen();
 		CString strid;
 		strid.Format(L"%s_%d", L"L_KITCHEN_",i+1);
-		pAttribute->m_id = strid;
+		pAttribute->m_yxid = strid;
 		pAttribute->m_name = localFiles[i].first;
 		pAttribute->m_name.TrimRight(L".dwg");
 		pAttribute->m_isJiTuan = true;
@@ -180,13 +182,13 @@ std::vector<AttrToilet *>  WebIO::GetToilets
 	std::vector<AttrToilet *> result;
 #ifdef WORK_LOCAL//本地模式
 	CString localWindowPath = TY_GetLocalFilePath();
-	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"*.dwg",localWindowPath);
+	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"*_Toilet.dwg",localWindowPath);
 	for (int i = 0; i < localFiles.size(); i++)
 	{
 		AttrToilet *pAttribute = new AttrToilet();
 		CString strid;
 		strid.Format(L"%s_%d", L"L_TOILETN_",i+1);
-		pAttribute->m_id = strid;
+		pAttribute->m_yxid = strid;
 		pAttribute->m_name = localFiles[i].first;
 		pAttribute->m_name.TrimRight(L".dwg");
 		pAttribute->m_isJiTuan = true;
@@ -229,7 +231,7 @@ std::vector<AttrAirCon *> WebIO::GetAirCons
 		AttrAirCon *pAttribute = new AttrAirCon();
 		CString strid;
 		strid.Format(L"%s_%d", L"L_AIRCON_",i+1);
-		pAttribute->m_id = strid;
+		pAttribute->m_yxid = strid;
 		pAttribute->m_name = localFiles[i].first;
 		pAttribute->m_name.TrimRight(L".dwg");
 		pAttribute->m_isJiTuan = true;
@@ -261,13 +263,13 @@ std::vector<AttrRailing *> WebIO::GetRailings(eRailingType type)//一次搜索所有的
 	std::vector<AttrRailing *> result;
 #ifdef WORK_LOCAL//本地模式
 	CString localWindowPath = TY_GetLocalFilePath();
-	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"*.dwg",localWindowPath);
+	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"_Railing1.dwg",localWindowPath);
 	for (int i = 0; i < localFiles.size(); i++)
 	{
 		AttrRailing *pAttribute = new AttrRailing();
 		CString strid;
 		strid.Format(L"%s_%d", L"L_AIRCON_",i+1);
-		pAttribute->m_id = strid;
+		pAttribute->m_yxid = strid;
 		pAttribute->m_name = localFiles[i].first;
 		pAttribute->m_name.TrimRight(L".dwg");
 		pAttribute->m_isJiTuan = true;
@@ -495,7 +497,7 @@ SRCDimData WebIO::Window_GetDim(CString yuanXingBianHao, CString dimStr, CString
 {
 	SRCDimData value;
 #ifdef WORK_LOCAL//本地模式
-	if (fileName == L"Window_N_7_0.dwg")
+	if (fileName == L"C_N_7_0_Window.dwg")
 	{
 		if (dimStr == L"W")
 		{
@@ -525,7 +527,7 @@ SRCDimData WebIO::Window_GetDim(CString yuanXingBianHao, CString dimStr, CString
 		}
 	}
 
-	if (fileName == L"Window_N_7_1.dwg")
+	if (fileName == L"C_N_7_1_Window.dwg")
 	{
 		if (dimStr == L"W")
 		{
@@ -560,7 +562,7 @@ SRCDimData WebIO::Window_GetDim(CString yuanXingBianHao, CString dimStr, CString
 			value.prompt = L"卧室凸窗推荐值950;卧室非凸窗推荐值500;厨房卫生间推荐值400;";
 		}
 	}
-	if (fileName == L"Window_N_9_0.dwg")
+	if (fileName == L"C_N_9_0_Window.dwg")
 	{
 		if (dimStr == L"W")
 		{
@@ -592,7 +594,7 @@ SRCDimData WebIO::Window_GetDim(CString yuanXingBianHao, CString dimStr, CString
 			value.prompt = L"卧室凸窗推荐值950;卧室非凸窗推荐值500;厨房卫生间推荐值400;";
 		}
 	}
-	if (fileName == L"Window_N_9_1.dwg")
+	if (fileName == L"C_N_9_1_Window.dwg")
 	{
 		if (dimStr == L"W")
 		{
@@ -625,7 +627,7 @@ SRCDimData WebIO::Window_GetDim(CString yuanXingBianHao, CString dimStr, CString
 			value.prompt = L"卧室凸窗推荐值950;卧室非凸窗推荐值500;厨房卫生间推荐值400;";
 		}
 	}
-	if (fileName == L"Window_N_9_2.dwg")
+	if (fileName == L"C_N_9_2_Window.dwg")
 	{
 		if (dimStr == L"W")
 		{

@@ -24,7 +24,6 @@ RCObject::RCObject(void)
 
 RCObject::RCObject(const RCObject&other)
 {
-	m_name = other.m_name;
 	m_userData = other.m_userData;
 	m_sameTypeIds = other.m_sameTypeIds;
 	m_id = other.m_id;
@@ -39,11 +38,11 @@ bool RCObject::isEqualToAll(RCObject*other)
 	if (other == 0)
 		return false;
 
-	return (m_name == other->m_name)&&(m_id == other->m_id);
+	return (m_id == other->m_id);
 }
 
 bool RCObject::isEqualTo(RCObject*other)
 {
-	return (m_name == other->m_name);
+	return true;
 }
 

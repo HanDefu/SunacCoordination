@@ -47,7 +47,7 @@ BOOL DlgLogin::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	m_name.SetWindowText(L"ÕÅÒ»Ã÷");
+	m_name.SetWindowText(L"13621367728");
 	m_password.SetWindowText(L"111111");
 
 	return TRUE;  // return TRUE unless you set the focus to a control

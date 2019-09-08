@@ -51,6 +51,14 @@ public:
 	int SetW3(double newValue);
 	int SetA(double newValue);
 
+	//门窗面积
+	double GetWindowArea();
+	//开启面积
+	double GetOpenArea();
+
+	void SetBianHao(CString str);
+	CString GetBianHao();
+
 	AttrWindow * GetAttribute();
 	void AddAttribute(AttrWindow * attr);
 

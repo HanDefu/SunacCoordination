@@ -205,9 +205,6 @@
     <ClCompile Include="Command\Command.cpp">
       <Filter>Command</Filter>
     </ClCompile>
-    <ClCompile Include="Command\CommandWindowDoorTable.cpp">
-      <Filter>Command</Filter>
-    </ClCompile>
     <ClCompile Include="GlobalSetting.cpp">
       <Filter>Source</Filter>
     </ClCompile>
@@ -216,6 +213,12 @@
     </ClCompile>
     <ClCompile Include="Tool\Regedit.cpp">
       <Filter>Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="Command\CommandWindowTable.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="Command\CommandWindowDetail.cpp">
+      <Filter>Command</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -492,9 +495,6 @@
     <ClInclude Include="Command\Command.h">
       <Filter>Command</Filter>
     </ClInclude>
-    <ClInclude Include="Command\CommandWindowDoorTable.h">
-      <Filter>Command</Filter>
-    </ClInclude>
     <ClInclude Include="Sunac_def.h">
       <Filter>Source</Filter>
     </ClInclude>
@@ -505,6 +505,15 @@
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Tool\Regedit.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Command\CommandWindowTable.h">
+      <Filter>Command</Filter>
+    </ClInclude>
+    <ClInclude Include="Command\CommandWindowDetail.h">
+      <Filter>Command</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\DocLock.h">
       <Filter>Tool</Filter>
     </ClInclude>
   </ItemGroup>

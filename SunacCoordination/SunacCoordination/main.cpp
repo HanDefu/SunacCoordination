@@ -30,9 +30,10 @@
 #include "object\AttrKitchen.h"
 #include "object\AttrToilet.h"
 #include "object\AttrRailing.h"
-#include "Command\CommandWindowDoorTable.h"
+#include "Command\CommandWindowTable.h"
 #include "Command\Command.h"
 #include "GlobalSetting.h"
+#include "command\CommandWindowDetail.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -48,73 +49,6 @@ static HANDLE mThreadHandle = 0;
 static void SyncDataWithService(void * ptr);
 
 AC_IMPLEMENT_EXTENSION_MODULE(theArxDLL);
-
-void AddSubMenu_Old(CAcadPopupMenu&IPopUpMenu, UINT MenuStartIndex)
-{
-	VARIANT index;
-
-	VariantInit(&index);
-	V_VT(&index) = VT_I4;
-	V_I4(&index) = MenuStartIndex++;
-
-
-	VariantInit(&index);
-	V_VT(&index) = VT_I4;
-	V_I4(&index) = MenuStartIndex++;
-	IPopUpMenu.AddMenuItem(index, _T("窗"), _T("_SUNACWINDOW ")); //命令的前面的下划线_ 和最后的空格都不能少
-
-
-	VariantInit(&index);
-	V_VT(&index) = VT_I4;
-	V_I4(&index) = MenuStartIndex++;
-	IPopUpMenu.AddMenuItem(index, _T("厨房"), _T("_SUNACKITCHEN "));
-
-	VariantInit(&index);
-	V_VT(&index) = VT_I4;
-	V_I4(&index) = MenuStartIndex++;
-	IPopUpMenu.AddMenuItem(index, _T("卫生间"), _T("_SUNACBATHROOM "));
-
-	VariantInit(&index);
-	V_VT(&index) = VT_I4;
-	V_I4(&index) = MenuStartIndex++;
-	IPopUpMenu.AddMenuItem(index, _T("门"), _T("_SUNACDOOR "));
-
-	VariantInit(&index);
-	V_VT(&index) = VT_I4;
-	V_I4(&index) = MenuStartIndex++;
-	IPopUpMenu.AddMenuItem(index, _T("栏杆"), _T("_SUNACRAILING "));
-
-	VariantInit(&index);
-	V_VT(&index) = VT_I4;
-	V_I4(&index) = MenuStartIndex++;
-	IPopUpMenu.AddMenuItem(index, _T("线脚"), _T("_SUNACMOLDINGS "));
-
-	VariantInit(&index);
-	V_VT(&index) = VT_I4;
-	V_I4(&index) = MenuStartIndex++;
-	IPopUpMenu.AddMenuItem(index, _T("填充材质"), _T("_SUNACFILLING "));
-
-	VariantInit(&index);
-	V_VT(&index) = VT_I4;
-	V_I4(&index) = MenuStartIndex++;
-	IPopUpMenu.AddMenuItem(index, _T("空调"), _T("_SUNACAIRCONDITIONER "));
-
-	VariantInit(&index);
-	V_VT(&index) = VT_I4;
-	V_I4(&index) = MenuStartIndex++;
-	IPopUpMenu.AddMenuItem(index, _T("标准立面"), _T("_SUNACFACADE "));
-
-	VariantInit(&index);
-	V_VT(&index) = VT_I4;
-	V_I4(&index) = MenuStartIndex++;
-	IPopUpMenu.AddMenuItem(index, _T("防水构造"), _T("_SUNACWATERPROOF "));
-
-	VariantInit(&index);
-	V_VT(&index) = VT_I4;
-	V_I4(&index) = MenuStartIndex++;
-	IPopUpMenu.AddMenuItem(index, _T("统计算量"), _T("_SUNACSTATISTICS "));
-
-}
 
 void AddSubMenu(CAcadPopupMenu&IPopUpMenu, UINT MenuStartIndex)
 {
@@ -199,7 +133,6 @@ void InitMenu()
 static void initApp()
 {
 	CAcModuleResourceOverride resOverride;
-	////----------------提取数据-------------------//
 
 	acedRegCmds->addCommand(_T("SUNAC"),
 		_T("SLOGIN"),
@@ -318,6 +251,15 @@ static void initApp()
 		-1,
 		theArxDLL.ModuleResourceInstance());
 
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("mcxt"),
+		_T("mcxt"),
+		ACRX_CMD_MODAL,
+		CMD_SUNACWINDOWDetail,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
 	AttrObject::rxInit();
 	acrxBuildClassHierarchy();
 	acrxRegisterService(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_OBJECT));
@@ -347,7 +289,6 @@ static void initApp()
 	acrxRegisterService(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_RAILING));
 
 	mThreadHandle = (HANDLE)_beginthread(&SyncDataWithService, 0, 0);
-	GSINST->InitLocalFiles();
 }
 
 

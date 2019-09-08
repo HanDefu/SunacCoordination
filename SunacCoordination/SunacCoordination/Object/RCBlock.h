@@ -31,9 +31,12 @@ public:
 	RCBlock & operator=(const RCBlock &rhs);
 
 	AcDbObjectId Insert(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color);
+	AcDbObjectId RCBlock::Insert(CString layoutname, CString blockDefineName, 
+		AcGePoint3d origin, double angle, CString layerName, int color);
 
+	CString GetBlockRecordName(){return m_blockRecordName;}
 public:
-	
+	CString m_blockRecordName;//
 };
 
 

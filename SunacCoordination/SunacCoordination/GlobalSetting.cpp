@@ -19,8 +19,8 @@ GlobalSetting::~GlobalSetting()
 
 int GlobalSetting::InitLocalFiles()
 {
-	if (m_localFiles.size() > 0)
-		return 0;
+	//if (m_localFiles.size() > 0)
+		//return 0;
 
 	CString localFilePath = TY_GetLocalFilePath();
 	//CTime curTime1 = GetTickCount();
@@ -31,8 +31,10 @@ int GlobalSetting::InitLocalFiles()
 	return 0;
 }
 
-bool GlobalSetting::HasLocalFile(CString fileName,CString &filePathName)
+bool GlobalSetting::GetLocalFile(CString fileName,CString &filePathName)
 {
+	InitLocalFiles();
+
 	std::pair<CString,CString> filePair;
 	filePair.first = fileName;
 	filePair.second = TY_GetLocalFilePath() + fileName;

@@ -125,7 +125,7 @@ void CKitchenDlg::OnBnClickedMfcbuttonInsert()
 			oneKitchen.Insert(allFiles[0], origin, 0, L"0", 256);
 		else
 			oneKitchen.Insert(allFiles[1], origin, 0, L"0", 256);
-		oneKitchen.InitParametersFromDynamicBlock();
+		oneKitchen.InitParameters();
 		oneKitchen.SetParameter(L"进深", height);
 		oneKitchen.SetParameter(L"开间", width);
 		oneKitchen.RunParameters();
@@ -133,11 +133,11 @@ void CKitchenDlg::OnBnClickedMfcbuttonInsert()
 		//把UI的数据记录在图框的扩展字典中
 		AttrKitchen *pAttribute = new AttrKitchen();
 		if (sels[0] == 0)
-			pAttribute->m_id = L"KUA";
+			pAttribute->m_yxid = L"KUA";
 		else if (sels[0] == 1)
-			pAttribute->m_id = L"KUB";
+			pAttribute->m_yxid = L"KUB";
 		else
-			pAttribute->m_id = L"KUC";
+			pAttribute->m_yxid = L"KUC";
 
 		oneKitchen.AddAttribute(pAttribute);
 		pAttribute->close();

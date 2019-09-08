@@ -28,6 +28,7 @@ enum RCTYPE {
 	T_AIRCONDITION, //空调
 	T_LANGAN,//栏杆
 	T_XIANJIAO,//线脚
+	T_TYPE_NUM
 };
 
 class RCObject
@@ -37,19 +38,16 @@ public:
 	RCObject(const RCObject&other);
 	~RCObject(void);
 
-	void SetName(CString  name) { m_name = name; }
-	CString& GetName() { return m_name; }
-
 	void SetUserData(void * userData){m_userData = userData;}
 	void *GetUserData(){return m_userData;}
 
 	virtual bool isEqualToAll(RCObject*other = 0);//所有数据完全一致
 	virtual bool isEqualTo(RCObject*other = 0);//基础数据一致
 
-	virtual RCTYPE GetType()const = 0;
+	virtual RCTYPE GetType(){return T_TYPE_NUM;}
 
 public:
-	CString m_name;
+	
 	void * m_userData;
 	AcDbObjectId m_id;
 

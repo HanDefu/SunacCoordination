@@ -29,7 +29,7 @@ public:
 		double tongFengLiang//通风量
 	);
 	//注意外部需要释放返回的内存
-	std::vector<AttrWindow *>  GetAllWindows();
+	static std::vector<AttrWindow *>  GetAllWindows();
 
 	//门窗读取尺寸值
 	SRCDimData Window_GetDim

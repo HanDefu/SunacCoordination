@@ -42,8 +42,11 @@ RCDynamicBlock::RCDynamicBlock(const RCDynamicBlock &other):RCBlock(other)
 }
 
 //Operator = 
-RCDynamicBlock & RCDynamicBlock::operator=(const RCDynamicBlock &rhs)
+RCDynamicBlock & RCDynamicBlock::operator=(const RCDynamicBlock &other)
 {
+	m_dKeyValues = other.m_dKeyValues;
+	m_iKeyValues = other.m_iKeyValues;
+	m_strKeyValues = other.m_strKeyValues;
 	return *this;
 }
 
@@ -139,7 +142,7 @@ int RCDynamicBlock::SetParameter(CString key, CString value)
 	return error;
 }
 
-int RCDynamicBlock::InitParametersFromDynamicBlock()
+int RCDynamicBlock::InitParameters()
 {
 	Acad::ErrorStatus es = acDocManager->lockDocument(curDoc());
 	
@@ -184,6 +187,10 @@ int RCDynamicBlock::InitParametersFromDynamicBlock()
 	{
 		return 1;
 	}
+
+	ACHAR *pName = 0;
+	pBlkTblRcd11->getName(pName);
+	m_blockRecordName = pName;
 
 	bool noValue = true;
 	if (pDynBlkRef)

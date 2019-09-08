@@ -1,0 +1,6 @@
+#pragma once
+
+//√≈¥∞œÍÕº
+void CMD_SUNACWINDOWDetail();
+
+

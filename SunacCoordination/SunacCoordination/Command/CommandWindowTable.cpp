@@ -29,9 +29,9 @@
 //门窗表
 void CMD_SUNACWINDOWTable()
 {
-	//第二：选择钢筋对象
+	//第一步：选择需要统计的门窗
 	vAcDbObjectId m_vids;//当前选择的ids
-	acutPrintf(L"请选择需要统计的门窗");
+	acutPrintf(L"请选择需要计算门窗表的门窗");
 	ads_name sset;
 	acedSSGet(NULL,NULL,NULL,NULL,sset);
 	long length = 0;
@@ -50,13 +50,12 @@ void CMD_SUNACWINDOWTable()
 	acedSSFree(sset);
 
 	CString info,str;
-	info.Format(L"共选择了%d个外门窗\n",m_vids.size());
-	acutPrintf(L"请选择需要统计的门窗\n");
+	info.Format(L"共选择了%d个门窗\n",m_vids.size());
 
 	if (m_vids.size() == 0)
 		return;
 
-	//第二步选择门窗表插入点--开始绘图
+	//第二步  选择门窗表插入点
 	AcGePoint3d pnt = TY_GetPoint(L"请选择门窗表插入点");
 
 	//第三步：读取门窗数据并且分类汇总
@@ -65,7 +64,7 @@ void CMD_SUNACWINDOWTable()
 	{
 		RCWindow oneWindow;
 		oneWindow.m_id = m_vids[i];
-		oneWindow.InitParametersFromDynamicBlock();
+		oneWindow.InitParameters();
 		oneWindow.GetAttribute();
 		int index = vFind(oneWindow,allWindowsTypes);
 		if (index == -1)
@@ -80,6 +79,7 @@ void CMD_SUNACWINDOWTable()
 		
 	}
 
+	//第四步 开始输出数据
 	int numWindow = (int)allWindowsTypes.size();
 	Acad::ErrorStatus es;
 	AcDbTable *table = new AcDbTable();
@@ -183,7 +183,7 @@ void CMD_SUNACWINDOWTable()
 			table->setTextString(dataStartRow+i,1,str);
 
 			//门窗编号
-			str.Format(L"%s%dX%d",allWindowsTypes[i].GetAttribute()->m_id, 
+			str.Format(L"%s%dX%d",allWindowsTypes[i].GetAttribute()->m_yxid, 
 				                  (int)(allWindowsTypes[i].GetW()),
 								  (int)(allWindowsTypes[i].GetH()));
 			table->setTextString(dataStartRow+i,2,str);
