@@ -155,8 +155,9 @@ void CWindowDlg::OnBnClickedMfcbuttonInsert()
 			str.Format(L"%d_%d",(int)(oneWindow.GetW()), (int)(oneWindow.GetH()));
 			
 			//把UI的数据记录在图框的扩展字典中
-			oneWindow.AddAttribute(m_allWindws[sels[0]]);
-			m_allWindws[sels[0]]->close();
+			AttrWindow * pWindow = new AttrWindow(*m_allWindws[sels[0]]);
+			oneWindow.AddAttribute(pWindow);
+			pWindow->close();
 
 			oneWindow.SetBianHao(m_allWindws[sels[0]]->m_yxid + str); 
 		}
