@@ -35,6 +35,7 @@ public:
 		AcGePoint3d origin, double angle, CString layerName, int color);
 
 	CString GetBlockRecordName(){return m_blockRecordName;}
+
 public:
 	CString m_blockRecordName;//
 };

@@ -64,6 +64,7 @@ public:
 
 	virtual RCWindow * Clone();
 	virtual void Draw();
+    int CreateDims();
 
 	virtual bool isEqualTo(RCObject*other = 0);//基础数据一致
 

@@ -219,10 +219,12 @@ void CMD_SUNACWINDOWDetail()
 			120, 0, 
 			str);
 	}
-	return;
-
 
 	//第四步 开始输出数据
+	for (int i = 0; i < allWindowsTypes.size(); i++)
+	{
+		allWindowsTypes[i].CreateDims();
+	}
 
 	return;
 }
