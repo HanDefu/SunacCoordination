@@ -267,8 +267,25 @@ AcDbObjectId MD2010_AddAlignedDimension(AcGePoint3d start,AcGePoint3d end, AcGeP
 	AcDbAlignedDimension  *pDim = new AcDbAlignedDimension(start,end,dimlinpnt);
 	
 	//pDim->setColorIndex(color);extend
+	AcDbObjectId dimID = MD2010_PostModalToBlockTable(entryname, pDim);
+	pDim->setLayer(newLayer);
+	pDim->close();
+	return dimID;
+}
+
+AcDbObjectId MD2010_AddAlignedDimension2(AcGePoint3d start,AcGePoint3d end, AcGePoint3d dimlinpnt, const ACHAR* newLayer, int colorIndex, double textHeight)
+{
+	//AcGePoint3d aas =AcGePoint3d(0,0,0);
+	if (JHCOM_PointDistance(start, end) <= TOL*10000)//小于1的不标注
+		return 0;
+
+	AcDbAlignedDimension  *pDim = new AcDbAlignedDimension(start,end,dimlinpnt);
+
+	//pDim->setColorIndex(color);extend
 	AcDbObjectId dimID = MD2010_PostModalToBlockTable(ACDB_MODEL_SPACE, pDim);
 	pDim->setLayer(newLayer);
+	pDim->setColorIndex(colorIndex);
+	pDim->setDimtxt(textHeight);//设置文字高度
 	pDim->close();
 	return dimID;
 }
