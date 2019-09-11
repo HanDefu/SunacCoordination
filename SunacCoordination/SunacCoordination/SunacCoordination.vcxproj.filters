@@ -220,6 +220,9 @@
     <ClCompile Include="Command\CommandWindowDetail.cpp">
       <Filter>Command</Filter>
     </ClCompile>
+    <ClCompile Include="UI\TreeCtrlEx.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -515,6 +518,9 @@
     </ClInclude>
     <ClInclude Include="Tool\DocLock.h">
       <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\TreeCtrlEx.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

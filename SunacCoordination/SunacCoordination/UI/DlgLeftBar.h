@@ -2,6 +2,7 @@
 
 #include "../res/resource.h"
 #include "afxcmn.h"
+#include "TreeCtrlEx.h"
 // DlgLeftBar dialog
 
 class DlgLeftBar : public CAcUiDialog
@@ -20,9 +21,9 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 
-	int InitTreeCtrl();
 	int FillTreeItem();
-	CTreeCtrl m_treeCtrlMenu;
+	CTreeCtrlEx m_treeCtrlMenu;
+/*
 
 
 	HTREEITEM m_treeItemWindows; //√≈¥∞
@@ -43,9 +44,11 @@ protected:
 	HTREEITEM m_treeItemFilling; //ÃÓ≥‰
 	HTREEITEM m_treeItemfacade; //¡¢√Ê
 
+*/
 
 public:
-	afx_msg void OnTvnSelchangedTreeMenu(NMHDR *pNMHDR, LRESULT *pResult);
-	afx_msg void OnNMRClickTreeMenu(NMHDR *pNMHDR, LRESULT *pResult);
+	//afx_msg void OnTvnSelchangedTreeMenu(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg LRESULT OnClickedPopupMenu(WPARAM mID, LPARAM notUsed);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 	virtual BOOL OnInitDialog();
 };

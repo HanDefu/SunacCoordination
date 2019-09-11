@@ -208,6 +208,7 @@
     <ClCompile Include="UI\MyPaletteSet.cpp" />
     <ClCompile Include="UI\RailingBaseDlg.cpp" />
     <ClCompile Include="UI\RailingDlg.cpp" />
+    <ClCompile Include="UI\TreeCtrlEx.cpp" />
     <ClCompile Include="UI\WaterproofDlg.cpp" />
     <ClCompile Include="UI\WindowDlg.cpp" />
     <ClCompile Include="WebIO.cpp" />
@@ -308,6 +309,7 @@
     <ClInclude Include="UI\MyPaletteSet.h" />
     <ClInclude Include="UI\RailingBaseDlg.h" />
     <ClInclude Include="UI\RailingDlg.h" />
+    <ClInclude Include="UI\TreeCtrlEx.h" />
     <ClInclude Include="UI\WaterproofDlg.h" />
     <ClInclude Include="UI\WindowDlg.h" />
     <ClInclude Include="WebIO.h" />

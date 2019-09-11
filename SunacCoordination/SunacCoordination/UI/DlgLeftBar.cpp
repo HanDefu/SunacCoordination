@@ -31,85 +31,74 @@ void DlgLeftBar::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(DlgLeftBar, CAcUiDialog)
-	ON_NOTIFY(TVN_SELCHANGED, IDC_TREE_MENU, &DlgLeftBar::OnTvnSelchangedTreeMenu)
-	ON_NOTIFY(NM_RCLICK, IDC_TREE_MENU, &DlgLeftBar::OnNMRClickTreeMenu)
+	ON_WM_SIZE()
+	ON_MESSAGE(WM_MENU_CLICKED, OnClickedPopupMenu)
 END_MESSAGE_MAP()
 
 
 // DlgLeftBar message handlers
 
 
-int DlgLeftBar::InitTreeCtrl()
-{
-	const DWORD dwViewStyle = WS_CHILD | WS_VISIBLE | TVS_HASLINES | TVS_LINESATROOT | TVS_HASBUTTONS;
-	m_treeCtrlMenu.ModifyStyle(1, dwViewStyle);
-
-
-	//设置图标
-	//UINT uiBmpId = IDB_BITMAP3;
-	//CBitmap bmp;
-	//if (!bmp.LoadBitmap(uiBmpId))
-	//{
-	//	TRACE(_T("Can't load bitmap: %x\n"), uiBmpId);
-	//	ASSERT(FALSE);
-	//	return false;
-	//}
-
-	//BITMAP bmpObj;
-	//bmp.GetBitmap(&bmpObj);
-
-	//m_treeImages.Create(16, bmpObj.bmHeight, ILC_MASK | ILC_COLOR24, 0, 0);
-	//m_treeImages.Add(&bmp, RGB(255, 0, 255));
-	//m_treeCtrlMenu.SetImageList(&m_treeImages, TVSIL_NORMAL);
-
-	return true;
-}
-
 int DlgLeftBar::FillTreeItem()
 {
-	HTREEITEM  hItem= m_treeCtrlMenu.InsertItem(_T("门窗"), 12, 12);
-	//m_treeCtrlMenu.SetItemState(hItem, TVIS_BOLD, TVIS_BOLD);
+	/*HTREEITEM  hItem= m_treeCtrlMenu.InsertItem(_T("门窗"));
 
-	m_treeItemWindows = m_treeCtrlMenu.InsertItem(_T("外窗"), 12, 12, hItem);
-	m_treeItemWindowsQuantity = m_treeCtrlMenu.InsertItem(_T("外窗算量"), 12, 12, hItem);
+	m_treeItemWindows = m_treeCtrlMenu.InsertItem(_T("外窗"), hItem);
+	m_treeItemWindowsQuantity = m_treeCtrlMenu.InsertItem(_T("外窗算量"), hItem);
 
-	m_treeItemDoor = m_treeCtrlMenu.InsertItem(_T("门"), 12, 12, hItem);
-	m_treeItemDoorQuantity = m_treeCtrlMenu.InsertItem(_T("门算量"), 12, 12, hItem);
-	m_treeItemWindowTable = m_treeCtrlMenu.InsertItem(_T("门窗表"), 12, 12, hItem);
-	m_treeItemWindowDetail = m_treeCtrlMenu.InsertItem(_T("门窗详图"), 12, 12, hItem);
+	m_treeItemDoor = m_treeCtrlMenu.InsertItem(_T("门"), hItem);
+	m_treeItemDoorQuantity = m_treeCtrlMenu.InsertItem(_T("门算量"), hItem);
+	m_treeItemWindowTable = m_treeCtrlMenu.InsertItem(_T("门窗表"), hItem);
+	m_treeItemWindowDetail = m_treeCtrlMenu.InsertItem(_T("门窗详图"), hItem);
 
 
 	//////////////////////////////////////////////////////////////////////////
-	hItem = m_treeCtrlMenu.InsertItem(_T("厨卫"), 12, 12);
-	//m_treeCtrlMenu.SetItemState(hItem, TVIS_BOLD, TVIS_BOLD);
+	hItem = m_treeCtrlMenu.InsertItem(_T("厨卫"));
 
-	m_treeItemKitchen = m_treeCtrlMenu.InsertItem(_T("厨房"), 12, 12, hItem);
-	m_treeItemKitchenQuantity = m_treeCtrlMenu.InsertItem(_T("厨房算量"), 12, 12, hItem);
-	m_treeItemBathroom = m_treeCtrlMenu.InsertItem(_T("卫生间"), 12, 12, hItem);
-	m_treeItemBathroomQuantity = m_treeCtrlMenu.InsertItem(_T("卫生间算量"), 12, 12, hItem);
+	m_treeItemKitchen = m_treeCtrlMenu.InsertItem(_T("厨房"), hItem);
+	m_treeItemKitchenQuantity = m_treeCtrlMenu.InsertItem(_T("厨房算量"), hItem);
+	m_treeItemBathroom = m_treeCtrlMenu.InsertItem(_T("卫生间"), hItem);
+	m_treeItemBathroomQuantity = m_treeCtrlMenu.InsertItem(_T("卫生间算量"), hItem);
 
 	//////////////////////////////////////////////////////////////////////////
-	m_treeItemRailing = m_treeCtrlMenu.InsertItem(_T("栏杆"), 12, 12);
-	//m_treeCtrlMenu.SetItemState(m_treeItemRailing, TVIS_BOLD, TVIS_BOLD);
+	m_treeItemRailing = m_treeCtrlMenu.InsertItem(_T("栏杆"));
 
-	hItem = m_treeCtrlMenu.InsertItem(_T("空调"), 12, 12);
-	//m_treeCtrlMenu.SetItemState(hItem, TVIS_BOLD, TVIS_BOLD);
+	hItem = m_treeCtrlMenu.InsertItem(_T("空调"));
 
-	hItem = m_treeCtrlMenu.InsertItem(_T("防水"), 12, 12);
-	//m_treeCtrlMenu.SetItemState(hItem, TVIS_BOLD, TVIS_BOLD);
+	hItem = m_treeCtrlMenu.InsertItem(_T("防水"));
 
-	hItem = m_treeCtrlMenu.InsertItem(_T("填充"), 12, 12);
-	//m_treeCtrlMenu.SetItemState(hItem, TVIS_BOLD, TVIS_BOLD);
+	hItem = m_treeCtrlMenu.InsertItem(_T("填充"));
 
-	hItem = m_treeCtrlMenu.InsertItem(_T("立面"), 12, 12);
-	//m_treeCtrlMenu.SetItemState(hItem, TVIS_BOLD, TVIS_BOLD);
+	hItem = m_treeCtrlMenu.InsertItem(_T("立面"));*/
 
+	m_treeCtrlMenu.SetItemHeight(30);
+	m_treeCtrlMenu.InsertItem(_T("标准化平面库"));
+	m_treeCtrlMenu.InsertItem(_T("标准化立面库"));
 
+	HTREEITEM hItem = m_treeCtrlMenu.InsertItem(_T("标准部品库"));
+	m_treeCtrlMenu.InsertItem(_T("门窗"), hItem);
+	m_treeCtrlMenu.InsertItem(_T("栏杆"), hItem);
+	m_treeCtrlMenu.InsertItem(_T("外墙涂料"), hItem);
+	m_treeCtrlMenu.InsertItem(_T("屋面瓦"), hItem);
+
+	hItem = m_treeCtrlMenu.InsertItem(_T("标准空间模块库"));
+	m_treeCtrlMenu.InsertItem(_T("厨卫"), hItem);
+	m_treeCtrlMenu.InsertItem(_T("空调"), hItem);
+	m_treeCtrlMenu.InsertItem(_T("大堂"), hItem);
+	m_treeCtrlMenu.InsertItem(_T("玄关"), hItem);
+
+	m_treeCtrlMenu.InsertItem(_T("标准构造"));
+	m_treeCtrlMenu.InsertItem(_T("标准审图"));
+
+	//绑定弹出菜单
+	m_treeCtrlMenu.SetMenuID(IDR_LEFTBAR_MENU);
+	m_treeCtrlMenu.SetMenuWidth(150);
 
 	return 0;
 }
 
 
+/*
 
 void DlgLeftBar::OnTvnSelchangedTreeMenu(NMHDR *pNMHDR, LRESULT *pResult)
 {
@@ -149,20 +138,56 @@ void DlgLeftBar::OnTvnSelchangedTreeMenu(NMHDR *pNMHDR, LRESULT *pResult)
 
 	*pResult = 0;
 }
+*/
 
-
-void DlgLeftBar::OnNMRClickTreeMenu(NMHDR *pNMHDR, LRESULT *pResult)
+LRESULT DlgLeftBar::OnClickedPopupMenu(WPARAM mID, LPARAM notUsed)
 {
-	// TODO:  在此添加控件通知处理程序代码
-	*pResult = 0;
+	switch (mID)
+	{
+	case ID_COMMAND_WINDOW:
+		CMD_SUNACWINDOW();
+		break;
+	case ID_COMMAND_WINDOWQUANTITY:
+		CMD_SUNACSTATISTICS();
+		break;
+	case ID_COMMAND_WINDOWTABLE:
+		CMD_SUNACWINDOWTable();
+		break;
+	case ID_COMMAND_WINDOWDETAIL:
+		CMD_SUNACWINDOWDetail();
+		break;
+	case ID_COMMAND_KITCHEN:
+		CMD_SUNACKITCHEN();
+		break;
+	case ID_COMMAND_KITCHENQUANTITY:
+		CMD_SUNACSTATISTICS();
+		break;
+	case ID_COMMAND_RAILING:
+		CMD_SUNACRAILING();
+		break;
+	default:
+		break;
+	}
+
+	return 0;
 }
 
+void DlgLeftBar::OnSize(UINT nType, int cx, int cy)
+{
+	CAcUiDialog::OnSize(nType, cx, cy);
+	CRect rect;
+	GetWindowRect(rect);
+	ScreenToClient(rect);
+	rect.DeflateRect(5, 5);
+	m_treeCtrlMenu.MoveWindow(rect);
+}
 
 BOOL DlgLeftBar::OnInitDialog()
 {
 	CAcUiDialog::OnInitDialog();
 
-	InitTreeCtrl();
+	m_treeCtrlMenu.SetItemHeight(40);
+
 	FillTreeItem();
 
 	return TRUE;  // return TRUE unless you set the focus to a control

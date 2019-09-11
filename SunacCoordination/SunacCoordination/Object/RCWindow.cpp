@@ -313,4 +313,6 @@ int RCWindow::CreateDims()
 	mid.x += W/2;
 	mid.y += offset*2;
 	MD2010_AddAlignedDimension2(start,end, mid);
+
+	return 0;
 }
