@@ -26,18 +26,28 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
+	afx_msg void OnBnClickedMfcbuttonInsert();
+	afx_msg void OnBnClickedButtonSearchwindow();
+	afx_msg void OnBnClickedRadioDoor();
+
+	void SetRadioDoor(int radioDoor);
+
 	CGridCtrlWithPreview m_preWindow;
+
+	CComboBox m_doorType;
 	CComboBox m_areaType;
 	CComboBox m_openType;
 	CComboBox m_openAmount;
 	CComboBox m_openWidth;
+	CComboBox m_H2;
+	CComboBox m_distance;
 	CEdit m_width;
 	CEdit m_height;
-	afx_msg void OnBnClickedMfcbuttonInsert();
+	CEdit m_ventilation;
+	CEdit m_number;
+	
+	vector<AttrWindow *> m_allWindws;
 
-	CEdit m_H2;
-	CEdit m_cengShu;
-	CEdit m_cengGao;
-	afx_msg void OnBnClickedButtonSearchwindow();
-	std::vector<AttrWindow *> m_allWindws;
+	int m_radioDoor;
+	int m_radioYes;
 };

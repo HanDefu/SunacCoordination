@@ -15,6 +15,8 @@ IMPLEMENT_DYNAMIC(CWindowDlg, CDialogEx)
 
 CWindowDlg::CWindowDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CWindowDlg::IDD, pParent)
+	, m_radioDoor(0)
+	, m_radioYes(0)
 {
 
 }
@@ -51,22 +53,28 @@ void CWindowDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_PREVIEW_WINDOW, m_preWindow);
+	DDX_Control(pDX, IDC_COMBO_DOORTYPE, m_doorType);
 	DDX_Control(pDX, IDC_COMBO_AREATYPE, m_areaType);
 	DDX_Control(pDX, IDC_COMBO_OPENTYPE, m_openType);
 	DDX_Control(pDX, IDC_COMBO_OPENAMOUNT, m_openAmount);
+	DDX_Control(pDX, IDC_EDIT_VENTILATION, m_ventilation);
 	DDX_Control(pDX, IDC_COMBO_OPENWIDTH, m_openWidth);
+	DDX_Control(pDX, IDC_COMBO_FIXEDVALUE, m_H2);
+	DDX_Control(pDX, IDC_COMBO_DISTANCE, m_distance);
 	DDX_Control(pDX, IDC_EDIT_WIDTH, m_width);
 	DDX_Control(pDX, IDC_EDIT_HEIGHT, m_height);
-	DDX_Control(pDX, IDC_EDIT_FIXEDVALUE, m_H2);
-	DDX_Control(pDX, IDC_EDIT_FIXEDVALUE2, m_cengShu);
-	DDX_Control(pDX, IDC_EDIT_FIXEDVALUE3, m_cengGao);
+	DDX_Control(pDX, IDC_EDIT_NUMBER, m_number);
+	DDX_Radio(pDX, IDC_RADIO_DOOR, m_radioDoor);
+	DDX_Radio(pDX, IDC_RADIO_YES, m_radioYes);
 }
 
 
 BEGIN_MESSAGE_MAP(CWindowDlg, CDialogEx)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
-	ON_BN_CLICKED(IDC_MFCBUTTON_SELECTLINE, &CWindowDlg::OnBnClickedMfcbuttonInsert)
+	ON_BN_CLICKED(IDC_BUTTON_INSERTWINDOW, &CWindowDlg::OnBnClickedMfcbuttonInsert)
 	ON_BN_CLICKED(IDC_BUTTON_SEARCHWINDOW, &CWindowDlg::OnBnClickedButtonSearchwindow)
+	ON_BN_CLICKED(IDC_RADIO_DOOR, &CWindowDlg::OnBnClickedRadioDoor)
+	ON_BN_CLICKED(IDC_RADIO_WINDOW, &CWindowDlg::OnBnClickedRadioDoor)
 END_MESSAGE_MAP()
 
 
@@ -100,8 +108,7 @@ BOOL CWindowDlg::OnInitDialog()
 	m_height.SetWindowText(L"2000");
 	m_H2.SetWindowText(L"450");
 
-	m_cengShu.SetWindowText(L"1");
-	m_cengGao.SetWindowText(L"3000");
+	SetRadioDoor(0);
 
 	return TRUE;
 }
@@ -128,42 +135,31 @@ void CWindowDlg::OnBnClickedMfcbuttonInsert()
 	m_H2.GetWindowText(str);
 	double H2 = _wtof(str.GetBuffer());
 
-	m_cengShu.GetWindowText(str);
-	int cengShu = _wtoi(str.GetBuffer());
-
-	m_cengGao.GetWindowText(str);
-	double cengGao = _wtof(str.GetBuffer());
-
 	if (sels.size() > 0)
 	{
-		for (int i = 0; i < cengShu; i++)
-		{
-			RCWindow oneWindow;
+		RCWindow oneWindow;
 			
-			oneWindow.Insert(m_allWindws[sels[0]]->m_filePathName, origin, 0, L"0", 256);
+		oneWindow.Insert(m_allWindws[sels[0]]->m_filePathName, origin, 0, L"0", 256);
 
-			oneWindow.InitParameters();
-			oneWindow.SetParameter(L"H", height);
-			oneWindow.SetParameter(L"W", width);
+		oneWindow.InitParameters();
+		oneWindow.SetParameter(L"H", height);
+		oneWindow.SetParameter(L"W", width);
 
-			oneWindow.SetParameter(L"W1", W1);
-			oneWindow.SetParameter(L"H2", H2);
+		oneWindow.SetParameter(L"W1", W1);
+		oneWindow.SetParameter(L"H2", H2);
 
-			oneWindow.RunParameters();
-			origin.y += cengGao;
+		oneWindow.RunParameters();
 
-			str.Format(L"%d_%d",(int)(oneWindow.GetW()), (int)(oneWindow.GetH()));
+		str.Format(L"%d_%d",(int)(oneWindow.GetW()), (int)(oneWindow.GetH()));
 			
-			//把UI的数据记录在图框的扩展字典中
-			AttrWindow * pWindow = new AttrWindow(*m_allWindws[sels[0]]);
-			oneWindow.AddAttribute(pWindow);
-			pWindow->close();
+		//把UI的数据记录在图框的扩展字典中
+		AttrWindow * pWindow = new AttrWindow(*m_allWindws[sels[0]]);
+		oneWindow.AddAttribute(pWindow);
+		pWindow->close();
 
-			oneWindow.SetBianHao(m_allWindws[sels[0]]->m_yxid + str); 
-		}
-		
+		oneWindow.SetBianHao(m_allWindws[sels[0]]->m_yxid + str);
 	}
-	ShowWindow(true);
+	//ShowWindow(true);
 	OnOK();
 }
 
@@ -178,7 +174,38 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 		m_preWindow.SetContentItemText(i, 1, _T("窗类型:双扇单开\n窗户面积:2.1\n通风量:1.6"));
 	}
 
-
 	m_preWindow.ShowPreviews();
+}
+
+void CWindowDlg::OnBnClickedRadioDoor()
+{
+	UpdateData(TRUE);
+	SetRadioDoor(m_radioDoor);
+}
+
+void CWindowDlg::SetRadioDoor(int radioDoor)
+{
+	if (radioDoor < 0 || radioDoor > 1)
+		return;
+	m_radioDoor = radioDoor;
+
+	if (radioDoor == 0)
+	{
+		m_doorType.EnableWindow(TRUE);
+		m_openType.EnableWindow(FALSE);
+		m_openAmount.EnableWindow(FALSE);
+		m_openWidth.EnableWindow(FALSE);
+		GetDlgItem(IDC_RADIO_YES)->EnableWindow(FALSE);
+		GetDlgItem(IDC_RADIO_NO)->EnableWindow(FALSE);
+	}
+	else
+	{
+		m_openType.EnableWindow(TRUE);
+		m_openAmount.EnableWindow(TRUE);
+		m_openWidth.EnableWindow(TRUE);
+		GetDlgItem(IDC_RADIO_YES)->EnableWindow(TRUE);
+		GetDlgItem(IDC_RADIO_NO)->EnableWindow(TRUE);
+		m_doorType.EnableWindow(FALSE);
+	}
 }
 

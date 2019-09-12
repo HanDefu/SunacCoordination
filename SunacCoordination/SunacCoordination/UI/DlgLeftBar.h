@@ -23,32 +23,11 @@ protected:
 
 	int FillTreeItem();
 	CTreeCtrlEx m_treeCtrlMenu;
-/*
-
-
-	HTREEITEM m_treeItemWindows; //门窗
-	HTREEITEM m_treeItemWindowsQuantity; //门窗算量Quantitysurvey
-	HTREEITEM m_treeItemDoor; //门窗
-	HTREEITEM m_treeItemDoorQuantity; //门算量
-	HTREEITEM m_treeItemWindowTable; //门窗表
-	HTREEITEM m_treeItemWindowDetail; //门窗详图
-
-	HTREEITEM m_treeItemKitchen; //厨卫
-	HTREEITEM m_treeItemKitchenQuantity; //厨卫
-	HTREEITEM m_treeItemBathroom; //厨卫
-	HTREEITEM m_treeItemBathroomQuantity; //厨卫
-
-	HTREEITEM m_treeItemRailing;//栏杆
-	HTREEITEM m_treeItemAircondition; //空调
-	HTREEITEM m_treeItemWaterproof; //防水
-	HTREEITEM m_treeItemFilling; //填充
-	HTREEITEM m_treeItemfacade; //立面
-
-*/
 
 public:
-	//afx_msg void OnTvnSelchangedTreeMenu(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg LRESULT OnClickedPopupMenu(WPARAM mID, LPARAM notUsed);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnTabSelChanged(NMHDR *pNMHDR, LRESULT *pResult);
 	virtual BOOL OnInitDialog();
+	CTabCtrl m_tab;
 };

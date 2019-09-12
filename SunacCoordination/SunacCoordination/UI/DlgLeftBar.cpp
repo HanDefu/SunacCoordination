@@ -27,12 +27,14 @@ void DlgLeftBar::DoDataExchange(CDataExchange* pDX)
 {
 	CAcUiDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_TREE_MENU, m_treeCtrlMenu);
+	DDX_Control(pDX, IDC_TAB_LEFTBAR, m_tab);
 }
 
 
 BEGIN_MESSAGE_MAP(DlgLeftBar, CAcUiDialog)
 	ON_WM_SIZE()
 	ON_MESSAGE(WM_MENU_CLICKED, OnClickedPopupMenu)
+	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB_LEFTBAR, OnTabSelChanged)
 END_MESSAGE_MAP()
 
 
@@ -41,37 +43,6 @@ END_MESSAGE_MAP()
 
 int DlgLeftBar::FillTreeItem()
 {
-	/*HTREEITEM  hItem= m_treeCtrlMenu.InsertItem(_T("门窗"));
-
-	m_treeItemWindows = m_treeCtrlMenu.InsertItem(_T("外窗"), hItem);
-	m_treeItemWindowsQuantity = m_treeCtrlMenu.InsertItem(_T("外窗算量"), hItem);
-
-	m_treeItemDoor = m_treeCtrlMenu.InsertItem(_T("门"), hItem);
-	m_treeItemDoorQuantity = m_treeCtrlMenu.InsertItem(_T("门算量"), hItem);
-	m_treeItemWindowTable = m_treeCtrlMenu.InsertItem(_T("门窗表"), hItem);
-	m_treeItemWindowDetail = m_treeCtrlMenu.InsertItem(_T("门窗详图"), hItem);
-
-
-	//////////////////////////////////////////////////////////////////////////
-	hItem = m_treeCtrlMenu.InsertItem(_T("厨卫"));
-
-	m_treeItemKitchen = m_treeCtrlMenu.InsertItem(_T("厨房"), hItem);
-	m_treeItemKitchenQuantity = m_treeCtrlMenu.InsertItem(_T("厨房算量"), hItem);
-	m_treeItemBathroom = m_treeCtrlMenu.InsertItem(_T("卫生间"), hItem);
-	m_treeItemBathroomQuantity = m_treeCtrlMenu.InsertItem(_T("卫生间算量"), hItem);
-
-	//////////////////////////////////////////////////////////////////////////
-	m_treeItemRailing = m_treeCtrlMenu.InsertItem(_T("栏杆"));
-
-	hItem = m_treeCtrlMenu.InsertItem(_T("空调"));
-
-	hItem = m_treeCtrlMenu.InsertItem(_T("防水"));
-
-	hItem = m_treeCtrlMenu.InsertItem(_T("填充"));
-
-	hItem = m_treeCtrlMenu.InsertItem(_T("立面"));*/
-
-	m_treeCtrlMenu.SetItemHeight(30);
 	m_treeCtrlMenu.InsertItem(_T("标准化平面库"));
 	m_treeCtrlMenu.InsertItem(_T("标准化立面库"));
 
@@ -96,49 +67,6 @@ int DlgLeftBar::FillTreeItem()
 
 	return 0;
 }
-
-
-/*
-
-void DlgLeftBar::OnTvnSelchangedTreeMenu(NMHDR *pNMHDR, LRESULT *pResult)
-{
-	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
-	
-	HTREEITEM curHItem = pNMTreeView->itemNew.hItem;
-
-	if (m_treeItemWindows==curHItem)
-	{
-		CMD_SUNACWINDOW();
-	}
-	else if (m_treeItemWindowsQuantity==curHItem)
-	{
-		CMD_SUNACSTATISTICS();
-	}
-	else if (m_treeItemKitchen == curHItem)
-	{
-		CMD_SUNACKITCHEN();
-	}
-	else if (m_treeItemKitchenQuantity == curHItem)
-	{
-		CMD_SUNACSTATISTICS();
-	}
-	else if (m_treeItemRailing == curHItem)
-	{
-		CMD_SUNACRAILING();
-	}
-	else if (m_treeItemWindowTable == curHItem)
-	{
-		CMD_SUNACWINDOWTable();
-	}
-	else if (m_treeItemWindowDetail == curHItem)
-	{
-		CMD_SUNACWINDOWDetail();
-	}
-
-
-	*pResult = 0;
-}
-*/
 
 LRESULT DlgLeftBar::OnClickedPopupMenu(WPARAM mID, LPARAM notUsed)
 {
@@ -179,15 +107,29 @@ void DlgLeftBar::OnSize(UINT nType, int cx, int cy)
 	GetWindowRect(rect);
 	ScreenToClient(rect);
 	rect.DeflateRect(5, 5);
+	m_tab.SetItemSize(CSize(rect.Width()/2 - 2, 30));
+	m_tab.MoveWindow(rect.left, rect.top, rect.Width(), 30);
+	rect.top += 30;
 	m_treeCtrlMenu.MoveWindow(rect);
+}
+
+void DlgLeftBar::OnTabSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	*pResult = 0;
+
+	if (m_tab.GetCurSel() == 0)
+		m_treeCtrlMenu.ShowWindow(SW_SHOW);
+	else
+		m_treeCtrlMenu.ShowWindow(SW_HIDE);
 }
 
 BOOL DlgLeftBar::OnInitDialog()
 {
 	CAcUiDialog::OnInitDialog();
-
-	m_treeCtrlMenu.SetItemHeight(40);
-
+	m_tab.InsertItem(0, _T("标准库"));
+	m_tab.InsertItem(1, _T("项目管理"));
+	m_tab.SetCurSel(0);
+	m_treeCtrlMenu.SetItemHeight(30);
 	FillTreeItem();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
