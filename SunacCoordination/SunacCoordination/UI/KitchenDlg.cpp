@@ -54,13 +54,12 @@ void CKitchenDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_BASINTYPE, m_basinType);
 	DDX_Control(pDX, IDC_COMBO_BENCHWIDTH, m_benchWidth);
 	DDX_Control(pDX, IDC_COMBO_FRIDGETYPE, m_frigeType);
-	DDX_Control(pDX, IDC_COMBO_PROJECTLEVEL, m_projectLevel);
 }
 
 BEGIN_MESSAGE_MAP(CKitchenDlg, CDialogEx)
 	ON_BN_CLICKED(IDOK, &CKitchenDlg::OnBnClickedOk)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
-	ON_BN_CLICKED(IDC_MFCBUTTON_INSERT, &CKitchenDlg::OnBnClickedMfcbuttonInsert)
+	ON_BN_CLICKED(IDC_BUTTON_INSERTKITCHEN, &CKitchenDlg::OnBnClickedMfcbuttonInsert)
 	ON_BN_CLICKED(IDC_MFCBUTTON_RANGE, &CKitchenDlg::OnBnClickedMfcbuttonRange)
 	ON_BN_CLICKED(IDC_MFCBUTTON_DOOR_DIR, &CKitchenDlg::OnBnClickedMfcbuttonDoorDir)
 	ON_BN_CLICKED(IDC_MFCBUTTON_WINDOW_DIR, &CKitchenDlg::OnBnClickedMfcbuttonWindowDir)

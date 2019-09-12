@@ -96,7 +96,7 @@ static int InsertTemplates(vRCWindow &allWindowsTypes, AcGePoint3d pnt, vSWindow
 	int columnNum = 3;
 
 	int rowIndex = 0, columnIndex = 0;
-	int size = allWindowsTypes.size();
+	int size = (int)allWindowsTypes.size();
 	for (int i = 0; i < size; i++)
 	{
 		rowIndex = (int)(i/3);

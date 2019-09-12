@@ -1954,7 +1954,7 @@ HBITMAP MD2010_BlockIconToBMP(const AcDbObjectId &blkId, HDC hdc)
 	// 由icon数组获得可显示的位图
 	BITMAPINFOHEADER ih; // 位图信息头
 	memcpy(&ih, icon.asArrayPtr(), sizeof(ih));
-	size_t memsize = sizeof(BITMAPINFOHEADER) + ((1<<ih.biBitCount)
+	size_t memsize = sizeof(BITMAPINFOHEADER) + ((size_t)(1<<ih.biBitCount)
 		* sizeof(RGBQUAD));
 	LPBITMAPINFO bi = (LPBITMAPINFO)malloc(memsize); // 位图信息
 	memcpy(bi, icon.asArrayPtr(), memsize);
