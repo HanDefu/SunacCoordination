@@ -1,4 +1,5 @@
 #pragma once
+/*
 #include "gridctrlwithpreview.h"
 #include "afxcmn.h"
 
@@ -50,3 +51,4 @@ private:
 public:
 	afx_msg void OnNMClickTreeRailingbase(NMHDR *pNMHDR, LRESULT *pResult);
 };
+*/

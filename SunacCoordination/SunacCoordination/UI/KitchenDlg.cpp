@@ -5,7 +5,6 @@
 #include "KitchenDlg.h"
 #include "afxdialogex.h"
 #include "../Common/ComFun_Sunac.h"
-#include "../Common/ComFun_Sunac.h"
 #include "../Object/RCKitchen.h"
 #include "../Object/AttrKitchen.h"
 // CKitchenDlg ¶Ô»°¿ò
