@@ -6,7 +6,7 @@
 #include "afxdialogex.h"
 #include "../Common/ComFun_Sunac.h"
 #include "../Object/RCWindow.h"
-#include "../WebIO.h"
+#include "../WebIO/WebIO.h"
 #include "../GlobalSetting.h"
 
 // CWindowDlg ¶Ô»°¿ò

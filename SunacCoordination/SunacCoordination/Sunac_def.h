@@ -8,6 +8,7 @@
 #define  WORK_LOCAL//是否本地工作模式
 #define CHECK_USE//是否检测权限
 
+//模块类型
 typedef enum eRCType
 {
     WINDOW,//外窗
@@ -19,14 +20,15 @@ typedef enum eRCType
 	TYPENUM
 }eRCType;
 
+//门窗取值参数类型
 typedef enum eWindowDimType
 {
-	SINGLE,//单个值
-	MULTI,//多个值
-	SCOPE,//范围值
-	UNLIMIT,//不限值
-	CALC,//公式计算值
-	NOVALUE
+	SINGLE,//固定值
+	MULTI,//值系列
+	SCOPE,//范围
+	UNLIMIT,//不限
+	CALC,//公式
+	NOVALUE //无
 }eWindowDimType;
 
 typedef enum eViewDir
@@ -42,6 +44,11 @@ typedef enum eRailingType
 	BOLI,//玻璃
 }eRailingType;
 
+enum E_Prototype_Type
+{
+	E_DYNAMIC_PROTOTYPE,	//动态原型
+	E_STATIC_PROTOTYPE,		//静态原型
+};
 
 typedef enum eWindowDoorPos//门窗位置关系
 {
@@ -74,12 +81,9 @@ typedef std::vector<eWindowCalcType> vSCalcData;
 
 typedef struct RCDimData
 {
-	eWindowDimType type;//值类型，单个值
-	//如果是单个值 就取第一个，
-	//如果是范围值 最小值是第一个 最大值是第二个
-	//如果是系列值 逐个读取
-	//不限 没有
-	vdouble values;
+	CString sCodeName; //代号
+	eWindowDimType type;//值类型
+	vdouble values;  //根据值类型，可存储单个值、系列、取值最小值、最大值
 	double defaultValue;
 	CString prompt;
 }SRCDimData;

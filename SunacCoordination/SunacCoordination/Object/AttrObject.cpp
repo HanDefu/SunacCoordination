@@ -7,7 +7,7 @@
 #include "AttrObject.h"
 #include "../Common/ComFun_Sunac.h"
 #include "../GlobalSetting.h"
-#include "../WebIO.h"
+#include "../WebIO/WebIO.h"
 
 
 //{{AFX_ARX_MACRO

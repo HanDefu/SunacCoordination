@@ -1,11 +1,11 @@
 #include "StdAfx.h"
 #include "WebIO.h"
-#include "float.h"
+#include <float.h>
 #include <acdocman.h>
 #include <dbxutil.h>
-#include "Common/ComFun_Str.h"
 #include <utility>
-#include "Common/ComFun_Sunac.h"
+#include "../Common/ComFun_Str.h"
+#include "../Common/ComFun_Sunac.h"
 
 using namespace std;
 
@@ -219,7 +219,8 @@ std::vector<AttrAirCon *> WebIO::GetAirCons
 (
     double piShu,
 	CString weiZhi,//冷凝水管位置
-	bool hasYuShuiGuan
+	bool hasYuShuiGuan,
+	CString yuShuiGuanWeizhi
 )
 {
 	std::vector<AttrAirCon *> result;
@@ -251,7 +252,7 @@ std::vector<AttrAirCon *> WebIO::GetAllAirCons()
 {
 	std::vector<AttrAirCon *> result;
 #ifdef WORK_LOCAL//本地模式
-	result = GetAirCons(0,L"",0);
+	result = GetAirCons(0,L"",0,L"");
 #else
 
 #endif
@@ -317,6 +318,7 @@ vCString WebIO::GetGongNengQus()
 {
 	vCString strs;
 #ifdef WORK_LOCAL//本地模式
+	strs.push_back(L"不限");
 	strs.push_back(L"厨房");
 	strs.push_back(L"卫生间");
 	strs.push_back(L"阳台");
@@ -342,6 +344,7 @@ vCString WebIO::Window_GetOpenTypes()
 {
 	vCString strs;
 #ifdef WORK_LOCAL//本地模式
+	strs.push_back(L"不限");
 	strs.push_back(L"内开");
 	strs.push_back(L"外开");
 	strs.push_back(L"推拉");
@@ -356,6 +359,7 @@ vCString WebIO::Door_GetTypes()
 {
 	vCString strs;
 #ifdef WORK_LOCAL//本地模式
+	strs.push_back(L"不限");
 	strs.push_back(L"推拉");
 #else
 
@@ -497,7 +501,7 @@ SRCDimData WebIO::Window_GetDim(CString yuanXingBianHao, CString dimStr, CString
 {
 	SRCDimData value;
 #ifdef WORK_LOCAL//本地模式
-	if (fileName == L"C_N_7_0_Window.dwg")
+	if (fileName == L"Window_N_7_0.dwg")
 	{
 		if (dimStr == L"W")
 		{
@@ -527,7 +531,7 @@ SRCDimData WebIO::Window_GetDim(CString yuanXingBianHao, CString dimStr, CString
 		}
 	}
 
-	if (fileName == L"C_N_7_1_Window.dwg")
+	if (fileName == L"Window_N_7_1.dwg")
 	{
 		if (dimStr == L"W")
 		{
@@ -537,8 +541,7 @@ SRCDimData WebIO::Window_GetDim(CString yuanXingBianHao, CString dimStr, CString
 		}
 		else if (dimStr == L"W1")
 		{
-			value.type = MULTI;
-			value.values.push_back(600);
+			value.type = SINGLE;
 			value.values.push_back(750);
 		}
 		else if (dimStr == L"W2")
@@ -562,7 +565,7 @@ SRCDimData WebIO::Window_GetDim(CString yuanXingBianHao, CString dimStr, CString
 			value.prompt = L"卧室凸窗推荐值950;卧室非凸窗推荐值500;厨房卫生间推荐值400;";
 		}
 	}
-	if (fileName == L"C_N_9_0_Window.dwg")
+	if (fileName == L"Window_N_9_0.dwg")
 	{
 		if (dimStr == L"W")
 		{
@@ -594,7 +597,7 @@ SRCDimData WebIO::Window_GetDim(CString yuanXingBianHao, CString dimStr, CString
 			value.prompt = L"卧室凸窗推荐值950;卧室非凸窗推荐值500;厨房卫生间推荐值400;";
 		}
 	}
-	if (fileName == L"C_N_9_1_Window.dwg")
+	if (fileName == L"Window_N_9_1.dwg")
 	{
 		if (dimStr == L"W")
 		{
@@ -627,7 +630,7 @@ SRCDimData WebIO::Window_GetDim(CString yuanXingBianHao, CString dimStr, CString
 			value.prompt = L"卧室凸窗推荐值950;卧室非凸窗推荐值500;厨房卫生间推荐值400;";
 		}
 	}
-	if (fileName == L"C_N_9_2_Window.dwg")
+	if (fileName == L"Window_N_9_2.dwg")
 	{
 		if (dimStr == L"W")
 		{

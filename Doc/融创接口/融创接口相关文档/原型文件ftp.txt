@@ -1,0 +1,4 @@
+Cad协同系统测试ftp信息：
+ftp://192.168.2.115:2121
+cad协同系统ftp账户：cadftp，密码：Cad@1234
+bpm系统ftp账号（bpmftp）有只读权限

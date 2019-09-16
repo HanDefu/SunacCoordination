@@ -67,7 +67,6 @@ public:
 	bool m_isDynamic;//是否动态块
 
 	CString m_filePathName;//本地完整路径
-
 	
 	CString m_instBianHao;//自定义名称 非块名 实例的编号
 };
