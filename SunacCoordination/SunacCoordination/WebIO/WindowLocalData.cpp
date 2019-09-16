@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "WindowLocalData.h"
-#include "..\Common\Excel\Excel.h"
+#include "..\Tool\Excel\Excel.h"
 
 CWindowLocalData::CWindowLocalData()
 {

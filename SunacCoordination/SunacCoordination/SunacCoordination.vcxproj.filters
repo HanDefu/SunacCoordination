@@ -220,12 +220,6 @@
     <ClCompile Include="UI\TreeCtrlEx.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="Common\Excel\CExcel.cpp">
-      <Filter>Common\excel</Filter>
-    </ClCompile>
-    <ClCompile Include="Common\Excel\Excel.cpp">
-      <Filter>Common\excel</Filter>
-    </ClCompile>
     <ClCompile Include="WebIO\WebIO.cpp">
       <Filter>WebIO</Filter>
     </ClCompile>
@@ -528,45 +522,6 @@
     <ClInclude Include="UI\TreeCtrlEx.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="Common\Excel\CApplication.h">
-      <Filter>Common\excel</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\CBorder.h">
-      <Filter>Common\excel</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\CBorders.h">
-      <Filter>Common\excel</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\CExcel.h">
-      <Filter>Common\excel</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\CFont0.h">
-      <Filter>Common\excel</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\Cnterior.h">
-      <Filter>Common\excel</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\CRange.h">
-      <Filter>Common\excel</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\CRanges.h">
-      <Filter>Common\excel</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\CWorkbook.h">
-      <Filter>Common\excel</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\CWorkbooks.h">
-      <Filter>Common\excel</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\CWorksheet.h">
-      <Filter>Common\excel</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\CWorksheets.h">
-      <Filter>Common\excel</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\Excel\Excel.h">
-      <Filter>Common\excel</Filter>
-    </ClInclude>
     <ClInclude Include="WebIO\WebIO.h">
       <Filter>WebIO</Filter>
     </ClInclude>
@@ -607,9 +562,6 @@
     </Filter>
     <Filter Include="Command">
       <UniqueIdentifier>{1820d1ff-4187-4dca-8f46-376bd45f8b92}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Common\excel">
-      <UniqueIdentifier>{0ad313a8-c3b8-47cf-84b8-5bb6bdd07da7}</UniqueIdentifier>
     </Filter>
     <Filter Include="WebIO">
       <UniqueIdentifier>{e2817748-4c58-4960-b20c-9d3102f58b33}</UniqueIdentifier>
