@@ -5,7 +5,7 @@
 #include "RailingDlg.h"
 #include "afxdialogex.h"
 #include "../Common/ComFun_Sunac.h"
-#include "RailingBaseDlg.h"
+//#include "RailingBaseDlg.h"
 #include "../Object/RCRailing.h"
 
 
@@ -26,16 +26,16 @@ CRailingDlg::~CRailingDlg()
 void CRailingDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_EDIT_RAILINGINFO, m_railingInfo);
+	//DDX_Control(pDX, IDC_EDIT_RAILINGINFO, m_railingInfo);
 	DDX_Control(pDX, IDC_EDIT_HOLEWIDTH, m_width);
 	DDX_Control(pDX, IDC_EDIT_RAILINGHEIGHT, m_height);
 	DDX_Control(pDX, IDC_EDIT_REVERSERIDGE_HEIGHT, m_reverse);
 }
 
 BEGIN_MESSAGE_MAP(CRailingDlg, CDialogEx)
-	ON_BN_CLICKED(IDC_MFCBUTTON_LIB, &CRailingDlg::OnBnClickedMfcbuttonLib)
+	//ON_BN_CLICKED(IDC_MFCBUTTON_LIB, &CRailingDlg::OnBnClickedMfcbuttonLib)
 	ON_BN_CLICKED(IDC_MFCBUTTON_SELECTLINE, &CRailingDlg::OnBnClickedMfcbuttonSelectline)
-	ON_BN_CLICKED(IDC_MFCBUTTON_CLOSE, &CRailingDlg::OnBnClickedMfcbuttonClose)
+	//ON_BN_CLICKED(IDC_MFCBUTTON_CLOSE, &CRailingDlg::OnBnClickedMfcbuttonClose)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
 END_MESSAGE_MAP()
 
@@ -56,11 +56,11 @@ BOOL CRailingDlg::OnInitDialog()
 	TY_GetAllTieYiLanGanFiles(allRailingFiles);
 	m_selectedFile = allRailingFiles[0];
 
-	m_preStyle.SubclassDlgItem(IDC_STATIC_STYLE, this);
-	m_preStyle.Init(theArxDLL.ModuleResourceInstance(), true);
-	m_preStyle.SetDwgFile(m_selectedFile);
+	//m_preStyle.SubclassDlgItem(IDC_STATIC_STYLE, this);
+	//m_preStyle.Init(theArxDLL.ModuleResourceInstance(), true);
+	//m_preStyle.SetDwgFile(m_selectedFile);
 
-	m_railingInfo.SetWindowText(_T("栏杆信息说明:\r\n栏杆间距:\r\n单元尺寸:\r\n栏杆类型："));
+	//m_railingInfo.SetWindowText(_T("栏杆信息说明:\r\n栏杆间距:\r\n单元尺寸:\r\n栏杆类型："));
 
 	m_width.SetWindowTextW(_T("2600"));
 	m_height.SetWindowTextW(_T("1200"));
@@ -71,6 +71,7 @@ BOOL CRailingDlg::OnInitDialog()
 	return TRUE;
 }
 
+/*
 void CRailingDlg::OnBnClickedMfcbuttonLib()
 {
 	CAcModuleResourceOverride resOverride;
@@ -80,7 +81,8 @@ void CRailingDlg::OnBnClickedMfcbuttonLib()
 	pDlg->Create(IDD_DIALOG_RAILINGBASE);
 	pDlg->SetParent(this);
 	pDlg->ShowWindow(SW_SHOW);
-}
+}*/
+/*
 
 void CRailingDlg::UpdateSelectFile(CString selectFile)
 {
@@ -90,6 +92,7 @@ void CRailingDlg::UpdateSelectFile(CString selectFile)
 		m_selectedFile = selectFile;
 	}
 }
+*/
 
 void CRailingDlg::OnBnClickedMfcbuttonSelectline()
 {
@@ -107,7 +110,8 @@ void CRailingDlg::OnBnClickedMfcbuttonSelectline()
 }
 
 
+/*
 void CRailingDlg::OnBnClickedMfcbuttonClose()
 {
 	OnOK();
-}
+}*/

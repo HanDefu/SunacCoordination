@@ -23,13 +23,13 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 public:
-	afx_msg void OnBnClickedMfcbuttonLib();
+	//afx_msg void OnBnClickedMfcbuttonLib();
 	afx_msg void OnBnClickedMfcbuttonSelectline();
-	afx_msg void OnBnClickedMfcbuttonClose();
-	void UpdateSelectFile(CString selectFile);
+	//afx_msg void OnBnClickedMfcbuttonClose();
+	//void UpdateSelectFile(CString selectFile);
 
-	CGsPreviewCtrl m_preStyle; //花样选择预览图
-	CEdit m_railingInfo;
+	//CGsPreviewCtrl m_preStyle; //花样选择预览图
+	//CEdit m_railingInfo;
 	CEdit m_width; //洞口宽度
 	CEdit m_height; //栏杆总高
 	CEdit m_reverse; //反坎高度

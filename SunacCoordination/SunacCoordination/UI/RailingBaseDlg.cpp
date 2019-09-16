@@ -2,6 +2,7 @@
 //
 
 #include "stdafx.h"
+/*
 #include "RailingBaseDlg.h"
 #include "afxdialogex.h"
 #include "../Common/ComFun_Sunac.h"
@@ -10,7 +11,7 @@
 
 IMPLEMENT_DYNAMIC(CRailingBaseDlg, CDialogEx)
 
-CRailingBaseDlg::CRailingBaseDlg(CWnd* pParent /*=NULL*/)
+CRailingBaseDlg::CRailingBaseDlg(CWnd* pParent / *=NULL* /)
 	: CDialogEx(CRailingBaseDlg::IDD, pParent)
 {
 	m_parent = 0;
@@ -193,3 +194,4 @@ void CRailingBaseDlg::OnNMClickTreeRailingbase(NMHDR *pNMHDR, LRESULT *pResult)
 	}
 	*pResult = 0;
 }
+*/
