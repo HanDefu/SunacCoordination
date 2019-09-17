@@ -8,10 +8,10 @@
 
 // CDoorDlg ¶Ô»°¿ò
 
-IMPLEMENT_DYNAMIC(CDoorDlg, CDialogEx)
+IMPLEMENT_DYNAMIC(CDoorDlg, CAcUiDialog)
 
 CDoorDlg::CDoorDlg(CWnd* pParent /*=NULL*/)
-	: CDialogEx(CDoorDlg::IDD, pParent)
+	: CAcUiDialog(CDoorDlg::IDD, pParent)
 {
 
 }
@@ -22,11 +22,11 @@ CDoorDlg::~CDoorDlg()
 
 void CDoorDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+	CAcUiDialog::DoDataExchange(pDX);
 }
 
 
-BEGIN_MESSAGE_MAP(CDoorDlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CDoorDlg, CAcUiDialog)
 END_MESSAGE_MAP()
 
 
@@ -35,6 +35,6 @@ END_MESSAGE_MAP()
 
 BOOL CDoorDlg::OnInitDialog()
 {
-	CDialogEx::OnInitDialog();
+	CAcUiDialog::OnInitDialog();
 	return TRUE;
 }

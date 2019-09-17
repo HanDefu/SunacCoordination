@@ -4,7 +4,7 @@
 
 // DlgLogin dialog
 
-class DlgLogin : public CDialogEx
+class DlgLogin : public CAcUiDialog
 {
 	DECLARE_DYNAMIC(DlgLogin)
 

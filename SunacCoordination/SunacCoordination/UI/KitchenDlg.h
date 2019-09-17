@@ -5,7 +5,7 @@
 
 // CKitchenDlg ¶Ô»°¿ò
 
-class CKitchenDlg : public CDialogEx
+class CKitchenDlg : public CAcUiDialog
 {
 	DECLARE_DYNAMIC(CKitchenDlg)
 

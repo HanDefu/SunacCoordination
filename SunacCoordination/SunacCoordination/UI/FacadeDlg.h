@@ -3,7 +3,7 @@
 
 // CFacadeDlg ¶Ô»°¿ò
 
-class CFacadeDlg : public CDialogEx
+class CFacadeDlg : public CAcUiDialog
 {
 	DECLARE_DYNAMIC(CFacadeDlg)
 

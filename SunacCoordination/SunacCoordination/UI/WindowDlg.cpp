@@ -11,10 +11,10 @@
 
 // CWindowDlg ¶Ô»°¿ò
 
-IMPLEMENT_DYNAMIC(CWindowDlg, CDialogEx)
+IMPLEMENT_DYNAMIC(CWindowDlg, CAcUiDialog)
 
 CWindowDlg::CWindowDlg(CWnd* pParent /*=NULL*/)
-	: CDialogEx(CWindowDlg::IDD, pParent)
+	: CAcUiDialog(CWindowDlg::IDD, pParent)
 	, m_radioDoor(0)
 	, m_radioYes(0)
 {
@@ -33,25 +33,25 @@ LRESULT CWindowDlg::onAcadKeepFocus(WPARAM, LPARAM)
 
 void CWindowDlg::OnOK()
 {
-	CDialogEx::OnOK();
+	CAcUiDialog::OnOK();
 	DestroyWindow();
 }
 
 void CWindowDlg::OnCancel()
 {
-	CDialogEx::OnCancel();
+	CAcUiDialog::OnCancel();
 	DestroyWindow();
 }
 
 void CWindowDlg::PostNcDestroy()
 {
-	CDialogEx::PostNcDestroy();
+	CAcUiDialog::PostNcDestroy();
 	delete this;
 }
 
 void CWindowDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+	CAcUiDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_PREVIEW_WINDOW, m_preWindow);
 	DDX_Control(pDX, IDC_COMBO_DOORTYPE, m_doorType);
 	DDX_Control(pDX, IDC_COMBO_AREATYPE, m_areaType);
@@ -69,7 +69,7 @@ void CWindowDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CWindowDlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CWindowDlg, CAcUiDialog)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
 	ON_BN_CLICKED(IDC_BUTTON_INSERTWINDOW, &CWindowDlg::OnBnClickedMfcbuttonInsert)
 	ON_BN_CLICKED(IDC_BUTTON_SEARCHWINDOW, &CWindowDlg::OnBnClickedButtonSearchwindow)
@@ -83,7 +83,7 @@ END_MESSAGE_MAP()
 
 BOOL CWindowDlg::OnInitDialog()
 {
-	CDialogEx::OnInitDialog();
+	CAcUiDialog::OnInitDialog();
 
 	m_preWindow.LoadDefaltSettings();
 

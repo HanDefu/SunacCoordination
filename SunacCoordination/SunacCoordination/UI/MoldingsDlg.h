@@ -4,7 +4,7 @@
 
 // CMoldingsDlg ¶Ô»°¿ò
 
-class CMoldingsDlg : public CDialogEx
+class CMoldingsDlg : public CAcUiDialog
 {
 	DECLARE_DYNAMIC(CMoldingsDlg)
 

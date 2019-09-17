@@ -4,7 +4,7 @@
 #include "../Object/AttrWindow.h"
 // CWindowDlg ¶Ô»°¿ò
 
-class CWindowDlg : public CDialogEx
+class CWindowDlg : public CAcUiDialog
 {
 	DECLARE_DYNAMIC(CWindowDlg)
 

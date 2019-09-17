@@ -8,10 +8,10 @@
 
 // CMoldingsDlg ¶Ô»°¿ò
 
-IMPLEMENT_DYNAMIC(CMoldingsDlg, CDialogEx)
+IMPLEMENT_DYNAMIC(CMoldingsDlg, CAcUiDialog)
 
 CMoldingsDlg::CMoldingsDlg(CWnd* pParent /*=NULL*/)
-	: CDialogEx(CMoldingsDlg::IDD, pParent)
+	: CAcUiDialog(CMoldingsDlg::IDD, pParent)
 {
 
 }
@@ -22,12 +22,12 @@ CMoldingsDlg::~CMoldingsDlg()
 
 void CMoldingsDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+	CAcUiDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_PREVIEW_MOLDINGS, m_preMoldings);
 }
 
 
-BEGIN_MESSAGE_MAP(CMoldingsDlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CMoldingsDlg, CAcUiDialog)
 END_MESSAGE_MAP()
 
 
@@ -36,6 +36,6 @@ END_MESSAGE_MAP()
 
 BOOL CMoldingsDlg::OnInitDialog()
 {
-	CDialogEx::OnInitDialog();
+	CAcUiDialog::OnInitDialog();
 	return TRUE;
 }

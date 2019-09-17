@@ -3,7 +3,7 @@
 
 // CAirconditionerDlg ¶Ô»°¿ò
 
-class CAirconditionerDlg : public CDialogEx
+class CAirconditionerDlg : public CAcUiDialog
 {
 	DECLARE_DYNAMIC(CAirconditionerDlg)
 
