@@ -8,10 +8,10 @@
 
 // CAirconditionerDlg ¶Ô»°¿ò
 
-IMPLEMENT_DYNAMIC(CAirconditionerDlg, CDialogEx)
+IMPLEMENT_DYNAMIC(CAirconditionerDlg, CAcUiDialog)
 
 CAirconditionerDlg::CAirconditionerDlg(CWnd* pParent /*=NULL*/)
-	: CDialogEx(CAirconditionerDlg::IDD, pParent)
+	: CAcUiDialog(CAirconditionerDlg::IDD, pParent)
 {
 
 }
@@ -22,11 +22,11 @@ CAirconditionerDlg::~CAirconditionerDlg()
 
 void CAirconditionerDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+	CAcUiDialog::DoDataExchange(pDX);
 }
 
 
-BEGIN_MESSAGE_MAP(CAirconditionerDlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CAirconditionerDlg, CAcUiDialog)
 END_MESSAGE_MAP()
 
 
@@ -35,6 +35,6 @@ END_MESSAGE_MAP()
 
 BOOL CAirconditionerDlg::OnInitDialog()
 {
-	CDialogEx::OnInitDialog();
+	CAcUiDialog::OnInitDialog();
 	return TRUE;
 }

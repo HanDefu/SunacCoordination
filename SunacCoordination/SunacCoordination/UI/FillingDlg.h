@@ -4,7 +4,7 @@
 
 // CFillingDlg ¶Ô»°¿ò
 
-class CFillingDlg : public CDialogEx
+class CFillingDlg : public CAcUiDialog
 {
 	DECLARE_DYNAMIC(CFillingDlg)
 

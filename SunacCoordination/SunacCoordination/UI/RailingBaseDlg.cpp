@@ -9,10 +9,10 @@
 #include "RailingDlg.h"
 // CRailingBaseDlg ¶Ô»°¿ò
 
-IMPLEMENT_DYNAMIC(CRailingBaseDlg, CDialogEx)
+IMPLEMENT_DYNAMIC(CRailingBaseDlg, CAcUiDialog)
 
 CRailingBaseDlg::CRailingBaseDlg(CWnd* pParent / *=NULL* /)
-	: CDialogEx(CRailingBaseDlg::IDD, pParent)
+	: CAcUiDialog(CRailingBaseDlg::IDD, pParent)
 {
 	m_parent = 0;
 }
@@ -23,7 +23,7 @@ CRailingBaseDlg::~CRailingBaseDlg()
 
 void CRailingBaseDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+	CAcUiDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_PREVIEW_RAILINGBASE, m_libPreview);
 	DDX_Control(pDX, IDC_TREE_RAILINGBASE, m_category);
 }
@@ -34,7 +34,7 @@ LRESULT CRailingBaseDlg::onAcadKeepFocus(WPARAM, LPARAM)
 	return TRUE;
 }
 
-BEGIN_MESSAGE_MAP(CRailingBaseDlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CRailingBaseDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDC_MFCBUTTON_LIB, &CRailingBaseDlg::OnBnClickedMfcbuttonOK)
 	ON_NOTIFY(NM_CLICK, IDC_TREE_RAILINGBASE, &CRailingBaseDlg::OnNMClickTreeRailingbase)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
@@ -46,7 +46,7 @@ END_MESSAGE_MAP()
 
 BOOL CRailingBaseDlg::OnInitDialog()
 {
-	CDialogEx::OnInitDialog();
+	CAcUiDialog::OnInitDialog();
 
 	InitTree();
 	FillTreeItem();

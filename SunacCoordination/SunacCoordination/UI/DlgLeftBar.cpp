@@ -84,6 +84,9 @@ LRESULT DlgLeftBar::OnClickedPopupMenu(WPARAM mID, LPARAM notUsed)
 	case ID_COMMAND_WINDOWDETAIL:
 		CMD_SUNACWINDOWDetail();
 		break;
+	case ID_COMMAND_BATHROOM:
+		CMD_SUNACBATHROOM();
+		break;
 	case ID_COMMAND_KITCHEN:
 		CMD_SUNACKITCHEN();
 		break;
@@ -92,6 +95,9 @@ LRESULT DlgLeftBar::OnClickedPopupMenu(WPARAM mID, LPARAM notUsed)
 		break;
 	case ID_COMMAND_RAILING:
 		CMD_SUNACRAILING();
+		break;
+	case ID_COMMAND_AIRCONDITIONER:
+		CMD_SUNACAIRCONDITIONER();
 		break;
 	default:
 		break;

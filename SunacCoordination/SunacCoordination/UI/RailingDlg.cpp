@@ -11,10 +11,10 @@
 
 // CRailingDlg ¶Ô»°¿ò
 
-IMPLEMENT_DYNAMIC(CRailingDlg, CDialogEx)
+IMPLEMENT_DYNAMIC(CRailingDlg, CAcUiDialog)
 
 CRailingDlg::CRailingDlg(CWnd* pParent /*=NULL*/)
-	: CDialogEx(CRailingDlg::IDD, pParent)
+	: CAcUiDialog(CRailingDlg::IDD, pParent)
 {
 
 }
@@ -25,16 +25,17 @@ CRailingDlg::~CRailingDlg()
 
 void CRailingDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+	CAcUiDialog::DoDataExchange(pDX);
 	//DDX_Control(pDX, IDC_EDIT_RAILINGINFO, m_railingInfo);
 	DDX_Control(pDX, IDC_EDIT_HOLEWIDTH, m_width);
 	DDX_Control(pDX, IDC_EDIT_RAILINGHEIGHT, m_height);
 	DDX_Control(pDX, IDC_EDIT_REVERSERIDGE_HEIGHT, m_reverse);
+	DDX_Control(pDX, IDC_PREVIEW_RAILING, m_preRailing);
 }
 
-BEGIN_MESSAGE_MAP(CRailingDlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CRailingDlg, CAcUiDialog)
 	//ON_BN_CLICKED(IDC_MFCBUTTON_LIB, &CRailingDlg::OnBnClickedMfcbuttonLib)
-	ON_BN_CLICKED(IDC_MFCBUTTON_SELECTLINE, &CRailingDlg::OnBnClickedMfcbuttonSelectline)
+	ON_BN_CLICKED(IDC_BUTTON_INSERTRAILING, &CRailingDlg::OnBnClickedMfcbuttonSelectline)
 	//ON_BN_CLICKED(IDC_MFCBUTTON_CLOSE, &CRailingDlg::OnBnClickedMfcbuttonClose)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
 END_MESSAGE_MAP()
@@ -50,7 +51,7 @@ LRESULT CRailingDlg::onAcadKeepFocus(WPARAM, LPARAM)
 
 BOOL CRailingDlg::OnInitDialog()
 {
-	CDialogEx::OnInitDialog();
+	CAcUiDialog::OnInitDialog();
 
 	vCString allRailingFiles;
 	TY_GetAllTieYiLanGanFiles(allRailingFiles);

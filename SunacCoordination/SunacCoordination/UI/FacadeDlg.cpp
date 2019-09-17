@@ -8,10 +8,10 @@
 
 // CFacadeDlg ¶Ô»°¿ò
 
-IMPLEMENT_DYNAMIC(CFacadeDlg, CDialogEx)
+IMPLEMENT_DYNAMIC(CFacadeDlg, CAcUiDialog)
 
 CFacadeDlg::CFacadeDlg(CWnd* pParent /*=NULL*/)
-	: CDialogEx(CFacadeDlg::IDD, pParent)
+	: CAcUiDialog(CFacadeDlg::IDD, pParent)
 {
 
 }
@@ -22,12 +22,12 @@ CFacadeDlg::~CFacadeDlg()
 
 void CFacadeDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+	CAcUiDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_TABLE_FACADE, m_tFacade);
 }
 
 
-BEGIN_MESSAGE_MAP(CFacadeDlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CFacadeDlg, CAcUiDialog)
 END_MESSAGE_MAP()
 
 
@@ -36,6 +36,6 @@ END_MESSAGE_MAP()
 
 BOOL CFacadeDlg::OnInitDialog()
 {
-	CDialogEx::OnInitDialog();
+	CAcUiDialog::OnInitDialog();
 	return TRUE;
 }

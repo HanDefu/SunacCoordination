@@ -4,7 +4,7 @@
 
 // CRailingDlg 对话框
 
-class CRailingDlg : public CDialogEx
+class CRailingDlg : public CAcUiDialog
 {
 	DECLARE_DYNAMIC(CRailingDlg)
 
@@ -30,6 +30,7 @@ public:
 
 	//CGsPreviewCtrl m_preStyle; //花样选择预览图
 	//CEdit m_railingInfo;
+	CGridCtrlWithPreview m_preRailing;
 	CEdit m_width; //洞口宽度
 	CEdit m_height; //栏杆总高
 	CEdit m_reverse; //反坎高度

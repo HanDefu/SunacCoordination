@@ -8,10 +8,10 @@
 
 // DlgLogin dialog
 
-IMPLEMENT_DYNAMIC(DlgLogin, CDialogEx)
+IMPLEMENT_DYNAMIC(DlgLogin, CAcUiDialog)
 
 DlgLogin::DlgLogin(CWnd* pParent /*=NULL*/)
-	: CDialogEx(DlgLogin::IDD, pParent)
+	: CAcUiDialog(DlgLogin::IDD, pParent)
 {
 
 }
@@ -22,13 +22,13 @@ DlgLogin::~DlgLogin()
 
 void DlgLogin::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+	CAcUiDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_EDIT1, m_name);
 	DDX_Control(pDX, IDC_EDIT2, m_password);
 }
 
 
-BEGIN_MESSAGE_MAP(DlgLogin, CDialogEx)
+BEGIN_MESSAGE_MAP(DlgLogin, CAcUiDialog)
 	ON_BN_CLICKED(IDOK, &DlgLogin::OnBnClickedOk)
 END_MESSAGE_MAP()
 
@@ -39,13 +39,13 @@ END_MESSAGE_MAP()
 void DlgLogin::OnBnClickedOk()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	CDialogEx::OnOK();
+	CAcUiDialog::OnOK();
 }
 
 
 BOOL DlgLogin::OnInitDialog()
 {
-	CDialogEx::OnInitDialog();
+	CAcUiDialog::OnInitDialog();
 
 	m_name.SetWindowText(L"13621367728");
 	m_password.SetWindowText(L"111111");
