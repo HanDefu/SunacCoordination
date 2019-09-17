@@ -1,21 +1,24 @@
 #pragma once
-#include "Sunac_def.h"
-#include "Object/AttrAirCon.h"
-#include "Object/AttrDoor.h"
-#include "Object/AttrKitchen.h"
-#include "Object/AttrRailing.h"
-#include "Object/AttrToilet.h"
-#include "Object/AttrWindow.h"
+#include "../Sunac_def.h"
+#include "../Object/AttrAirCon.h"
+#include "../Object/AttrDoor.h"
+#include "../Object/AttrKitchen.h"
+#include "../Object/AttrRailing.h"
+#include "../Object/AttrToilet.h"
+#include "../Object/AttrWindow.h"
+
+
 class WebIO
 {
+	WebIO();
 public:
+	~WebIO();
+
 	static WebIO *GetInstance()
 	{
 		static WebIO instance;
 		return &instance;
 	}
-	WebIO();
-	~WebIO();
 
 public:
 	//-----------------原型搜索函数--------------//
@@ -31,13 +34,12 @@ public:
 	//注意外部需要释放返回的内存
 	static std::vector<AttrWindow *>  GetAllWindows();
 
-	//门窗读取尺寸值
-	SRCDimData Window_GetDim
-	(
-		CString yuanXingBianHao, 
-		CString dimStr,//L"H2"
-		CString fileName//本地状态根据文件名定义尺寸类型
-	);//读取尺寸取值
+	//门窗读取尺寸值， yuanXingBianHao原型编号， dimStr字符串类(如"H2")，fileName文件名,本地状态根据文件名定义尺寸类型读取尺寸取值
+	SRCDimData Window_GetDim(CString yuanXingBianHao, CString dimStr, CString fileName);
+
+
+
+	//////////////////////////////////////////////////////////////////////////
 	//注意外部需要释放返回的内存
 	static std::vector<AttrDoor *> GetDoors
 	(
@@ -69,12 +71,10 @@ public:
 	//注意外部需要释放返回的内存
 	static std::vector<AttrToilet *> GetAllToilets();
 	//注意外部需要释放返回的内存
-	static std::vector<AttrAirCon *> GetAirCons
-	(
-		double piShu,
-		CString weiZhi,//冷凝水管位置
-		bool hasYuShuiGuan
-	);
+	static std::vector<AttrAirCon *> GetAirCons(double piShu,
+												CString weiZhi,//冷凝水管位置
+												bool hasYuShuiGuan,
+												CString yuShuiGuanWeizhi);
 	//注意外部需要释放返回的内存
 	static std::vector<AttrAirCon *> GetAllAirCons();
 	//注意外部需要释放返回的内存

@@ -1,12 +1,5 @@
-/////////////////////////////////////////////
-// ZffDwgScale custom object.
 
-#if !defined(ARX__ZFFDWGSCALE_H__20140205_113541_WINDOW)
-#define ARX__ZFFDWGSCALE_H__20140205_113541_WINDOW
-
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 #include "dbmain.h"
 #include "AttrObject.h"
@@ -23,10 +16,10 @@
 #define ZFFCUSTOMOBJECTDB_DBXSERVICE_WINDOW "ZFFCUSTOMOBJECTDB_DBXSERVICE_WINDOW"
 #endif
 
+
 class DLLIMPEXP  AttrWindow : public AttrObject
 {
 public:
-
 	ACRX_DECLARE_MEMBERS(AttrWindow);
 
 	// Constructor / Destructor
@@ -39,6 +32,7 @@ public:
 	virtual Acad::ErrorStatus dwgOutFields(AcDbDwgFiler* pFiler) const;
 	virtual Acad::ErrorStatus dwgInFields(AcDbDwgFiler* pFiler);
 	//}}AFX_ARX_METHODS
+
 	virtual eRCType GetType() {return WINDOW;}
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
 private:
@@ -46,19 +40,36 @@ private:
 public:
 	CString m_openType;//开启类型
 	Adesk::Int32 m_openQty;//开启扇数量
+
 	bool m_isZhuanJiao;//是否转角窗
+	bool m_isMirrorWindow; //是否对称窗型		//TODO 新增
+
+	//动态窗型属性
 	double m_minWid;//宽度尺寸最小值
 	double m_maxWid;//宽度尺寸最大值
 	CString m_tongFengFormula;//通风量计算公式
-	double m_tongFengQty;
-	vSCalcData m_calFormulas;
 
+	RCDimData m_dimData[6]; //w1,w2,w3,h1,h2,h3
+
+	//静态窗型属性
+	double m_tongFengQty; //通风量
+	double m_width;					//TODO 新增
+	double m_height;				//TODO 新增
+
+
+	//算量相关
+	vSCalcData m_calFormulas;
+	
+	//////////////////////////////////////////////////////////////////////////
+	//以下属性为具体外窗插入时才设置
+	//视图属性
 	bool m_isMirror;//是否镜像
 	eViewDir m_viewDir;//视图方向
+
+	bool m_isBayWindow; //是否凸窗
+	double m_openWindowSize; //开启扇宽度
+	double m_windowH2;  //下固定值（若存在下固定时）
 	double m_wallDis;//外墙距离
 };
 
 typedef std::vector<AttrWindow> vAttrWindow;
-
-
-#endif // !defined(ARX__ZFFDWGSCALE_H__20140205_113541_WINDOW)
