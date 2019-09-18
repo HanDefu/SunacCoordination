@@ -29,7 +29,7 @@ public:
 	//openNum,//开启扇数量
 	//gongNengQu,//功能区
 	//tongFengLiang//通风量
-	std::vector<AttrWindow *>  GetWindows(double width, CString openType, int openNum, CString gongNengQu, double tongFengLiang	);
+	std::vector<AttrWindow >  GetWindows(double width, CString openType, int openNum, CString gongNengQu, double tongFengLiang);
 
 	//从excel内读出一条尺寸的6个CString转换成dimdata
 	RCDimData ConvertStringToDimData
@@ -41,8 +41,14 @@ public:
 		CString state
 	);
 
-	vector<AttrWindow> GetAllWindows();
+	vector<AttrWindow> GetAllWindows(); //获取所有窗户
+
+	vector<AttrWindow> GetAllDoors();  //获取所有门
+
 protected:
-	vector<AttrWindow> m_windows;
+	vector<AttrWindow> m_windows; //所有门窗
+	vector<AttrWindow> m_wins;   //所有窗
+	vector<AttrWindow> m_doors;  //所有门
+
 };
 
