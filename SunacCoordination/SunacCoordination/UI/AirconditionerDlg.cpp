@@ -36,5 +36,11 @@ END_MESSAGE_MAP()
 BOOL CAirconditionerDlg::OnInitDialog()
 {
 	CAcUiDialog::OnInitDialog();
+	//≤‚ ‘”√
+	m_preAC.SubclassDlgItem(IDC_STATIC_AC, this);
+	m_preAC.SetLayoutMode(PREVIEW_LAYOUT_HORIZONTAL);
+	m_preAC.SetPreview(_T("D:\\Projects\\Sunac\\Support\\Sunac2019\\LocalMode\\Window_N_7_0.dwg"));
+	m_preAC.SetText(_T("‘§¿¿Õº"));
+	m_preAC.Invalidate();
 	return TRUE;
 }

@@ -1,5 +1,5 @@
 #pragma once
-
+#include "PreviewWithDetail.h"
 
 // CAirconditionerDlg ¶Ô»°¿ò
 
@@ -20,4 +20,6 @@ protected:
 	virtual BOOL OnInitDialog();
 
 	DECLARE_MESSAGE_MAP()
+
+	CPreviewWithDetail m_preAC;
 };

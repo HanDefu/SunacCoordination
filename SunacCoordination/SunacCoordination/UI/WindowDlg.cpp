@@ -87,18 +87,6 @@ BOOL CWindowDlg::OnInitDialog()
 
 	m_preWindow.LoadDefaltSettings();
 
-	m_preWindow.SetRowCount(8);
-	m_preWindow.SetColumnCount(2);
-
-	//设置预览图显示区域为3行1列
-	m_preWindow.SetDisplayRows(3);
-	m_preWindow.SetDisplayColumns(1);
-
-	//设置第一列占60%，其余部分为第二列
-	m_preWindow.SetHeaderWidth(_T("60;+"));
-
-
-
 	m_areaType.SetCurSel(0);
 	m_openType.SetCurSel(0);
 	m_openAmount.SetCurSel(0);
@@ -159,7 +147,6 @@ void CWindowDlg::OnBnClickedMfcbuttonInsert()
 
 		oneWindow.SetBianHao(m_allWindws[sels[0]]->m_yxid + str);
 	}
-	//ShowWindow(true);
 	OnOK();
 }
 
@@ -167,14 +154,13 @@ void CWindowDlg::OnBnClickedMfcbuttonInsert()
 void CWindowDlg::OnBnClickedButtonSearchwindow()
 {
 	m_allWindws = WebIO::GetAllWindows();
-
+	m_preWindow.ClearAllPreviews();
+	m_preWindow.SetRowCount((int)m_allWindws.size());
+	m_preWindow.SetColumnCount(1);
+	m_preWindow.SetDisplayRows(3);
+	m_preWindow.SetDisplayColumns(1);
 	for (int i = 0; i < m_allWindws.size(); i++)
-	{
-		m_preWindow.AddPreview(i, 0, m_allWindws[i]->m_filePathName); 
-		m_preWindow.SetContentItemText(i, 1, _T("窗类型:双扇单开\n窗户面积:2.1\n通风量:1.6"));
-	}
-
-	m_preWindow.ShowPreviews();
+		m_preWindow.AddPreview(i, 0, m_allWindws[i]->m_filePathName, _T("窗类型:双扇单开\n窗户面积:2.1\n通风量:1.6"));
 }
 
 void CWindowDlg::OnBnClickedRadioDoor()

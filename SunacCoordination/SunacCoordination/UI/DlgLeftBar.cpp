@@ -11,7 +11,7 @@
 
 // DlgLeftBar dialog
 
-IMPLEMENT_DYNAMIC(DlgLeftBar, CDialog)
+IMPLEMENT_DYNAMIC(DlgLeftBar, CAcUiDialog)
 
 DlgLeftBar::DlgLeftBar(CWnd* pParent /*=NULL*/)
 	: CAcUiDialog(DlgLeftBar::IDD, pParent)

@@ -185,12 +185,8 @@ void CKitchenDlg::OnBnClickedButtonSearch()
 	vCString allFiles;
 	TY_GetAllKitchenFiles(allFiles);
 	for (int i = 0; i < allFiles.size(); i++)
-	{
-		m_preKitchen.AddPreview(i, 0, allFiles[i]); 
-		m_preKitchen.SetContentItemText(i, 1, _T("厨房类型：KU\n厨房面积：2.1\n通风量：1.6"));
-	}
+		m_preKitchen.AddPreview(i, 0, allFiles[i], _T("厨房类型：KU\n厨房面积：2.1\n通风量：1.6"));
 
-
-	m_preKitchen.ShowPreviews();
+	//m_preKitchen.ShowPreviews();
 
 }
