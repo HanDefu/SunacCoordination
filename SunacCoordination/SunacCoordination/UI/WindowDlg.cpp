@@ -8,6 +8,8 @@
 #include "../Object/RCWindow.h"
 #include "../WebIO/WebIO.h"
 #include "../GlobalSetting.h"
+#include "../WebIO/WindowLocalData.h"
+#include "../Object/AttrWindow.h"
 
 // CWindowDlg ¶Ô»°¿ò
 

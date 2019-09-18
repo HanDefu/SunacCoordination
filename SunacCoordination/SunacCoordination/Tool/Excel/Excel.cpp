@@ -260,7 +260,7 @@ int CExcelUtil::GetSheetNum()
 /// <returns>成功0，否则其他</returns>
 int CExcelUtil::SetActiveSheet(long iSheetName)
 {
-	CWorksheets sheets = m_excelBook.get_Worksheets();
+	CWorksheets sheets = m_excelBook.get_Worksheets();  //获得excel表里的所有表单的集合
 
 	m_excelSheet =sheets.get_Item(COleVariant(iSheetName));
 	m_excelSheet.Activate();

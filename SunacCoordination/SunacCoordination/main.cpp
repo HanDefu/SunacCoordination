@@ -34,6 +34,8 @@
 #include "Command\Command.h"
 #include "GlobalSetting.h"
 #include "command\CommandWindowDetail.h"
+#include "Common/ComFun_Sunac.h"
+#include "webIO\WindowLocalData.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -289,6 +291,13 @@ static void initApp()
 	acrxRegisterService(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_RAILING));
 
 	mThreadHandle = (HANDLE)_beginthread(&SyncDataWithService, 0, 0);
+
+#ifdef WORK_LOCAL
+	CString localWindowPath = TY_GetLocalFilePath();
+
+	//+("外窗数据") 
+	CWindowLocalData::GetInstance()->LoadFromExcel((localWindowPath+("外窗数据.xlsx") ));
+#endif
 }
 
 

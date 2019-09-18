@@ -81,7 +81,7 @@ typedef std::vector<eWindowCalcType> vSCalcData;
 
 typedef struct RCDimData
 {
-	CString sCodeName; //代号
+	CString sCodeName; //代号 W W1 W2 W3 H H1 H2 H3
 	eWindowDimType type;//值类型
 	vdouble values;  //根据值类型，可存储单个值、系列、取值最小值、最大值
 	double defaultValue;

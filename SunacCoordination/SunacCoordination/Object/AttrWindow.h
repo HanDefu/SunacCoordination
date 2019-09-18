@@ -49,8 +49,6 @@ public:
 	double m_maxWid;//宽度尺寸最大值
 	CString m_tongFengFormula;//通风量计算公式
 
-	RCDimData m_dimData[6]; //w1,w2,w3,h1,h2,h3
-
 	//静态窗型属性
 	double m_tongFengQty; //通风量
 	double m_width;					//TODO 新增
@@ -70,6 +68,24 @@ public:
 	double m_openWindowSize; //开启扇宽度
 	double m_windowH2;  //下固定值（若存在下固定时）
 	double m_wallDis;//外墙距离
+
+public:
+	CString id;					//序号
+	CString	prototypeId;		//原型编号
+	CString	prototypeFile;		//原型文件
+	CString	scopeOfApplication;	//适用范围
+	CString	isDynamic;			//是否动态
+	CString	functionType;		//功能区类型
+	CString	openType;			//开启类型
+	CString	openNum;			//开启数量
+	
+	CString	ventilationFormula;	//通风量公式	
+	CString	staticWidth;		//静态宽度	
+	CString	staticHeigth;		//静态高度	
+	CString	staticVentilation;	//静态通风量	
+	
+	
+	vSRCDimData m_dimData;
 };
 
 typedef std::vector<AttrWindow> vAttrWindow;

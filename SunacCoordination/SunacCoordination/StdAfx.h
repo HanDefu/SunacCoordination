@@ -66,7 +66,8 @@
 #include "acui.h"
 #include "acuiComboBox.h"
 #include "acuiDialog.h"
-
+#include "string"
+#include "afx.h" 
 
 #include "res\resource.h"
 

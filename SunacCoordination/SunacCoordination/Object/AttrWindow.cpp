@@ -45,6 +45,24 @@ AttrWindow::AttrWindow(const AttrWindow &other) : AttrObject(other)
 	m_isMirror = other.m_isMirror;
 	m_viewDir = other.m_viewDir;
 	m_wallDis = other.m_wallDis;
+
+	////////////////////////////
+	id = other.id;					//序号
+	prototypeId = other.prototypeId;		//原型编号
+	prototypeFile = other.prototypeFile;		//原型文件
+	scopeOfApplication = other.scopeOfApplication;	//适用范围
+	isDynamic = other.isDynamic;			//是否动态
+	functionType = other.functionType;		//功能区类型
+	openType = other.openType;			//开启类型
+	openNum = other.openNum;			//开启数量
+	//widthMin = other.widthMin;			//宽度最小值
+	//widthMax = other.widthMax;			//宽度最大值
+	ventilationFormula = other.ventilationFormula;	//通风量公式	
+	staticWidth = other.staticWidth;		//静态宽度	
+	staticHeigth = other.staticHeigth;		//静态高度	
+	staticVentilation = other.staticVentilation;	//静态通风量	
+	
+	m_dimData = other.m_dimData;
 }
 
 AttrWindow & AttrWindow::operator=(const AttrWindow &rhs)
