@@ -6,7 +6,7 @@
 
 // CRailingBaseDlg ¶Ô»°¿ò
 
-class CRailingBaseDlg : public CDialogEx
+class CRailingBaseDlg : public CAcUiDialog
 {
 	DECLARE_DYNAMIC(CRailingBaseDlg)
 

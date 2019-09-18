@@ -46,7 +46,7 @@ ON_WM_MOUSEWHEEL()
 //ON_WM_MOUSEMOVE()
 ON_WM_NCHITTEST()
 //ON_WM_SETFOCUS()
-ON_WM_LBUTTONDOWN()
+//ON_WM_LBUTTONDOWN()
 //ON_WM_LBUTTONDBLCLK()
 END_MESSAGE_MAP()
 
@@ -55,9 +55,10 @@ END_MESSAGE_MAP()
 
 void CGsPreviewCtrl::OnPaint() 
 {
+	CStatic::OnPaint();
 	if (mpView == NULL)
 		return;
-	CPaintDC dc(this); 
+	//CPaintDC dc(this); 
 	//update the gs view
 	mpView->invalidate(); 
 	mpView->update();
@@ -317,7 +318,7 @@ void CGsPreviewCtrl::OnMouseMove(UINT nFlags, CPoint point)
 void CGsPreviewCtrl::OnLButtonDown(UINT nFlags, CPoint point)
 {
 	ClientToScreen(&point);
-	GetParent()->PostMessage(WM_PREVIEW_SELECTED, point.x, point.y);
+	GetParent()->SendMessage(WM_PREVIEW_SELECTED, point.x, point.y);
 }
 
 

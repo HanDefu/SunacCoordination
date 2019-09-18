@@ -193,6 +193,7 @@
     <ClCompile Include="UI\DoorDlg.cpp" />
     <ClCompile Include="UI\FacadeDlg.cpp" />
     <ClCompile Include="UI\FillingDlg.cpp" />
+    <ClCompile Include="UI\GridCellForPreview.cpp" />
     <ClCompile Include="UI\GridCtrlEx.cpp" />
     <ClCompile Include="UI\GridCtrlWithPreview.cpp" />
     <ClCompile Include="UI\GridCtrl_src\GridCell.cpp" />
@@ -211,6 +212,7 @@
     <ClCompile Include="UI\MoldingsDlg.cpp" />
     <ClCompile Include="UI\MyPalette.cpp" />
     <ClCompile Include="UI\MyPaletteSet.cpp" />
+    <ClCompile Include="UI\PreviewWithDetail.cpp" />
     <ClCompile Include="UI\RailingBaseDlg.cpp" />
     <ClCompile Include="UI\RailingDlg.cpp" />
     <ClCompile Include="UI\TreeCtrlEx.cpp" />
@@ -285,6 +287,7 @@
     <ClInclude Include="UI\DoorDlg.h" />
     <ClInclude Include="UI\FacadeDlg.h" />
     <ClInclude Include="UI\FillingDlg.h" />
+    <ClInclude Include="UI\GridCellForPreview.h" />
     <ClInclude Include="UI\GridCtrlEx.h" />
     <ClInclude Include="UI\GridCtrlWithPreview.h" />
     <ClInclude Include="UI\GridCtrl_src\CellRange.h" />
@@ -313,6 +316,7 @@
     <ClInclude Include="UI\MoldingsDlg.h" />
     <ClInclude Include="UI\MyPalette.h" />
     <ClInclude Include="UI\MyPaletteSet.h" />
+    <ClInclude Include="UI\PreviewWithDetail.h" />
     <ClInclude Include="UI\RailingBaseDlg.h" />
     <ClInclude Include="UI\RailingDlg.h" />
     <ClInclude Include="UI\TreeCtrlEx.h" />

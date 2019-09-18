@@ -1,9 +1,9 @@
 #pragma once
-
+#include "PreviewWithDetail.h"
 
 // CAirconditionerDlg ¶Ô»°¿ò
 
-class CAirconditionerDlg : public CDialogEx
+class CAirconditionerDlg : public CAcUiDialog
 {
 	DECLARE_DYNAMIC(CAirconditionerDlg)
 
@@ -20,4 +20,6 @@ protected:
 	virtual BOOL OnInitDialog();
 
 	DECLARE_MESSAGE_MAP()
+
+	CPreviewWithDetail m_preAC;
 };

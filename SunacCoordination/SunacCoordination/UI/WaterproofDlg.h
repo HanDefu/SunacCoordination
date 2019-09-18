@@ -3,7 +3,7 @@
 
 // CWaterproofDlg ¶Ô»°¿ò
 
-class CWaterproofDlg : public CDialogEx
+class CWaterproofDlg : public CAcUiDialog
 {
 	DECLARE_DYNAMIC(CWaterproofDlg)
 

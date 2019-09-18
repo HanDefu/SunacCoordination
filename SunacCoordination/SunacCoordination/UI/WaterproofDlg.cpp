@@ -8,10 +8,10 @@
 
 // CWaterproofDlg ¶Ô»°¿ò
 
-IMPLEMENT_DYNAMIC(CWaterproofDlg, CDialogEx)
+IMPLEMENT_DYNAMIC(CWaterproofDlg, CAcUiDialog)
 
 CWaterproofDlg::CWaterproofDlg(CWnd* pParent /*=NULL*/)
-	: CDialogEx(CWaterproofDlg::IDD, pParent)
+	: CAcUiDialog(CWaterproofDlg::IDD, pParent)
 {
 
 }
@@ -22,11 +22,11 @@ CWaterproofDlg::~CWaterproofDlg()
 
 void CWaterproofDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+	CAcUiDialog::DoDataExchange(pDX);
 }
 
 
-BEGIN_MESSAGE_MAP(CWaterproofDlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CWaterproofDlg, CAcUiDialog)
 END_MESSAGE_MAP()
 
 
@@ -35,6 +35,6 @@ END_MESSAGE_MAP()
 
 BOOL CWaterproofDlg::OnInitDialog()
 {
-	CDialogEx::OnInitDialog();
+	CAcUiDialog::OnInitDialog();
 	return TRUE;
 }

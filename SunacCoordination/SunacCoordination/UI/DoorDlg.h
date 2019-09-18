@@ -3,7 +3,7 @@
 
 // CDoorDlg ¶Ô»°¿ò
 
-class CDoorDlg : public CDialogEx
+class CDoorDlg : public CAcUiDialog
 {
 	DECLARE_DYNAMIC(CDoorDlg)
 

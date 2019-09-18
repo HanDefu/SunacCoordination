@@ -8,10 +8,10 @@
 
 // CBathroomDlg ¶Ô»°¿ò
 
-IMPLEMENT_DYNAMIC(CBathroomDlg, CDialogEx)
+IMPLEMENT_DYNAMIC(CBathroomDlg, CAcUiDialog)
 
 CBathroomDlg::CBathroomDlg(CWnd* pParent /*=NULL*/)
-	: CDialogEx(CBathroomDlg::IDD, pParent)
+	: CAcUiDialog(CBathroomDlg::IDD, pParent)
 {
 
 }
@@ -22,11 +22,12 @@ CBathroomDlg::~CBathroomDlg()
 
 void CBathroomDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+	CAcUiDialog::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_PREVIEW_BATHROOM, m_preBathroom);
 }
 
 
-BEGIN_MESSAGE_MAP(CBathroomDlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CBathroomDlg, CAcUiDialog)
 END_MESSAGE_MAP()
 
 
@@ -35,6 +36,6 @@ END_MESSAGE_MAP()
 
 BOOL CBathroomDlg::OnInitDialog()
 {
-	CDialogEx::OnInitDialog();
+	CAcUiDialog::OnInitDialog();
 	return TRUE;
 }

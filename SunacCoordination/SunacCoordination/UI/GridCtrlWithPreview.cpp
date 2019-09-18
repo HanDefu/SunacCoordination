@@ -1,18 +1,14 @@
 #include "stdafx.h"
 #include "GridCtrlWithPreview.h"
 
-
-CGridCtrlWithPreview::CGridCtrlWithPreview() : m_nVPos(0), m_nHPos(0), m_nMargin(0)
+CGridCtrlWithPreview::CGridCtrlWithPreview()
 {
 }
 
 
 CGridCtrlWithPreview::~CGridCtrlWithPreview()
 {
-	for (UINT i = 0; i < m_pPreviews.size(); i++)
-		for (UINT j = 0; j < m_pPreviews[i].size(); j++)
-			if (m_pPreviews[i][j] != NULL)
-				delete m_pPreviews[i][j];
+	ClearAllPreviews();
 }
 
 void CGridCtrlWithPreview::LoadDefaltSettings()
@@ -20,27 +16,34 @@ void CGridCtrlWithPreview::LoadDefaltSettings()
 	EnableDragAndDrop(FALSE);
 	SetEditable(FALSE);
 	EnableTitleTips(FALSE);
-	m_dStyle = DT_LEFT;
 	SetGridLines(0);
-	SetMargin(10);
 }
 
 BEGIN_MESSAGE_MAP(CGridCtrlWithPreview, CGridCtrlEx)
-	ON_WM_VSCROLL()
-	ON_WM_HSCROLL()
-	ON_MESSAGE(WM_PREVIEW_SELECTED, &CGridCtrlWithPreview::OnPreviewSelected)
+	ON_WM_PAINT()
 END_MESSAGE_MAP()
 
 int CGridCtrlWithPreview::SetRowCount(int nRows)
 {
-	m_pPreviews.resize(nRows);
+	for (int i = nRows; i < GetRowCount(); i++)
+		for (int j = 0; j < GetColumnCount(); j++)
+		{
+			CGridCellForPreview* pCell = GetPreviewCell(i, j);
+			if (pCell != NULL)
+				pCell->DeletePreview();
+		}
 	return CGridCtrlEx::SetRowCount(nRows);
 }
 
 int CGridCtrlWithPreview::SetColumnCount(int nCols)
 {
-	for (UINT i = 0; i < m_pPreviews.size(); i++)
-		m_pPreviews[i].resize(nCols);
+	for (int i = 0; i < GetRowCount(); i++)
+		for (int j = nCols; j < GetColumnCount(); j++)
+		{
+			CGridCellForPreview* pCell = GetPreviewCell(i, j);
+			if (pCell != NULL)
+				pCell->DeletePreview();
+		}
 	return CGridCtrlEx::SetColumnCount(nCols);
 }
 
@@ -64,118 +67,96 @@ void CGridCtrlWithPreview::SetDisplayColumns(int nCols)
 		SetColumnWidth(i, width);
 }
 
-void CGridCtrlWithPreview::SetMargin(int nMargin)
+bool CGridCtrlWithPreview::AddPreview(int nRow, int nCol, CString sPath, CString sText, PREVIEW_LAYOUT_DIR dir)
 {
-	SetDefCellMargin(nMargin);
-	m_nMargin = nMargin;
-}
+	if (nRow >= GetRowCount() || nCol >= GetColumnCount())
+		return false;
 
-bool CGridCtrlWithPreview::AddPreview(int nRow, int nCol, CString sPath)
-{
-	if (nRow >= m_pPreviews.size() || nCol >= m_pPreviews[nRow].size())
-		return false;
-	if (m_pPreviews[nRow][nCol] != NULL)
-		return false;
+	if (GetPreviewCell(nRow, nCol) == NULL)
+		SetCellType(nRow, nCol, RUNTIME_CLASS(CGridCellForPreview));
+	CGridCellForPreview* pCell = GetPreviewCell(nRow, nCol);
 
 	CRect gridRect;
-	GetCellRect(0, 0, gridRect);
-	gridRect.DeflateRect(m_nMargin, m_nMargin);
-	CGsPreviewCtrl* pPreview = new CGsPreviewCtrl;
+	GetCellRect(nRow, nCol, gridRect);
+	CPreviewWithDetail* pPreview = new CPreviewWithDetail;
 	pPreview->Create(_T(""), WS_CHILD, gridRect, this);
-	pPreview->Init(theArxDLL.ModuleResourceInstance(), true);
-	pPreview->SetDwgFile(sPath);
-	m_pPreviews[nRow][nCol] = pPreview;
+	pPreview->SetLayoutMode(dir);
+	pPreview->SetPreview(sPath);
+	pPreview->SetText(sText);
 
+	pCell->SetPreview(pPreview);
 	return true;
 }
 
-bool CGridCtrlWithPreview::ClearAllPreviews()
+void CGridCtrlWithPreview::ClearAllPreviews()
 {
-	
-	for (int i = 0; i < m_pPreviews.size(); i++)
-	{
-		for (int j = 0; j < m_pPreviews[i].size(); j++)
-		{
-            delete m_pPreviews[i][j];
-			m_pPreviews[i][j] = NULL;
-		}
-	}
-	return true;
-}
-
-void CGridCtrlWithPreview::ShowPreviews()
-{
-	if (m_nVPos >= m_pPreviews.size() || m_nHPos >= m_pPreviews[m_nVPos].size())
-		return;
-
-	for (UINT i = 0; i < m_pPreviews.size(); i++)
-		for (UINT j = 0; j < m_pPreviews[i].size(); j++)
-			if (m_pPreviews[i][j] != NULL)
-			m_pPreviews[i][j]->ShowWindow(SW_HIDE);
-
-	CRect gridRect;
-	for (int i = m_nVPos; i < min(m_nDisplayRows + m_nVPos, GetRowCount()); i++)
-		for (int j = m_nHPos; j < min(m_nDisplayCols + m_nHPos, GetColumnCount()); j++)
-		{
-			if (m_pPreviews[i][j] == NULL)
-				continue;
-			GetCellRect(i, j, gridRect);
-			gridRect.DeflateRect(m_nMargin, m_nMargin);
-			m_pPreviews[i][j]->MoveWindow(gridRect, FALSE);
-			m_pPreviews[i][j]->ShowWindow(SW_SHOW);
-		}
-
-	Invalidate();
-}
-
-void CGridCtrlWithPreview::UpdatePreviews()
-{
-	CRect gridRect;
 	for (int i = 0; i < GetRowCount(); i++)
 		for (int j = 0; j < GetColumnCount(); j++)
 		{
-			GetCellRect(i, j, gridRect);
-			if (!gridRect.IsRectEmpty())
-			{
-				if (i != m_nVPos || j != m_nHPos)
-				{
-					m_nVPos = i;
-					m_nHPos = j;
-					ShowPreviews();
-				}
-				return;
-			}
+			CGridCellForPreview* pCell = GetPreviewCell(i, j);
+			if (pCell != NULL)
+				pCell->DeletePreview();
 		}
 }
 
-void CGridCtrlWithPreview::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+void CGridCtrlWithPreview::SelectPreview(int nRow, int nCol)
 {
-	CGridCtrlEx::OnVScroll(nSBCode, nPos, pScrollBar);
-	UpdatePreviews();
-}
-
-void CGridCtrlWithPreview::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
-{
-	CGridCtrlEx::OnHScroll(nSBCode, nPos, pScrollBar);
-	UpdatePreviews();
-}
-
-LRESULT CGridCtrlWithPreview::OnPreviewSelected(WPARAM wParam,LPARAM lParam)
-{
-	CPoint point((int)wParam, (int)lParam);
-	ScreenToClient(&point);
-	CCellID cellID = GetCellFromPt(point);
-	
 	UINT state;
 	for (int i = 0; i < GetRowCount(); i++)
 		for (int j = 0; j < GetColumnCount(); j++)
 		{
 			state = GetContentItemState(i, j);
 			SetContentItemState(i, j, state & ~GVIS_SELECTED & ~GVIS_FOCUSED);
+			CGridCellForPreview* pCell = GetPreviewCell(i, j);
+			if (pCell != NULL)
+				pCell->SetSelected(false);
 		}
 
-	state = GetContentItemState(cellID.row, cellID.col);
-	SetContentItemState(cellID.row, cellID.col, state | GVIS_SELECTED | GVIS_FOCUSED);
-
-	return 0;
+		state = GetContentItemState(nRow, nCol);
+		SetContentItemState(nRow, nCol, state | GVIS_SELECTED | GVIS_FOCUSED);
+		CGridCellForPreview* pCell = GetPreviewCell(nRow, nCol);
+		if (pCell != NULL)
+			pCell->SetSelected(true);
 }
+
+CGridCellForPreview* CGridCtrlWithPreview::GetPreviewCell(int nRow, int nCol)
+{
+	CGridCellForPreview *pCell = dynamic_cast<CGridCellForPreview *>(GetCell(nRow, nCol));
+	return pCell;
+}
+
+void CGridCtrlWithPreview::OnPaint()
+{
+	CRect clientRect;
+	GetClientRect(&clientRect);
+	CPaintDC dc(this);
+	for (int i = 0; i < GetRowCount(); i++)
+		for (int j = 0; j < GetColumnCount(); j++)
+		{
+			CRect cellRect;
+			GetCellRect(i, j, &cellRect);
+			if (!clientRect.PtInRect(cellRect.BottomRight()) || !clientRect.PtInRect(cellRect.TopLeft()))
+				cellRect.SetRectEmpty();
+			CGridCellForPreview* pCell = GetPreviewCell(i, j);
+			if (pCell != NULL)
+				pCell->Draw(&dc, i, j, cellRect, 0);
+		}
+}
+
+BOOL CGridCtrlWithPreview::PreTranslateMessage(MSG* pMsg)
+{
+	if (pMsg->message == WM_LBUTTONDOWN)
+	{
+		CPoint point(pMsg->pt);
+		ScreenToClient(&point);
+		CCellID cellID = GetCellFromPt(point);
+		SelectPreview(cellID.row, cellID.col);
+		return TRUE;
+	}
+	else if (pMsg->message == WM_LBUTTONUP)
+	{
+		return TRUE;
+	}
+	return FALSE;
+}
+

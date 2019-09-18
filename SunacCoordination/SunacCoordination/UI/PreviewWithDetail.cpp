@@ -1,0 +1,115 @@
+#include "StdAfx.h"
+#include "PreviewWithDetail.h"
+
+
+BEGIN_MESSAGE_MAP(CPreviewWithDetail, CStatic)
+	ON_WM_PAINT()
+END_MESSAGE_MAP()
+
+
+CPreviewWithDetail::CPreviewWithDetail() : CStatic(), m_pGsPreviewCtrl(NULL), m_bSelected(false)
+{
+}
+
+CPreviewWithDetail::~CPreviewWithDetail()
+{
+	delete m_pGsPreviewCtrl;
+}
+
+void CPreviewWithDetail::SetLayoutMode(PREVIEW_LAYOUT_DIR dir, double rate)
+{
+	CRect innerRect;
+	GetClientRect(&innerRect);
+	innerRect.DeflateRect(5, 5);
+	if (dir == PREVIEW_LAYOUT_HORIZONTAL)
+	{
+		CRect recPreview(innerRect), recText(innerRect);
+		recText.left += long(innerRect.Width() * rate) + 5;
+		recPreview.right = recText.left - 5;
+		SetPreviewRect(recPreview);
+		SetTextRect(recText);
+	}
+	else
+	{
+		CRect recPreview(innerRect), recText(innerRect);
+		recText.top += long(innerRect.Height() * rate) + 5;
+		recPreview.bottom = recText.top - 5;
+		SetPreviewRect(recPreview);
+		SetTextRect(recText);
+	}
+}
+
+void CPreviewWithDetail::SetPreview(CString sPath)
+{
+	m_pGsPreviewCtrl = new CGsPreviewCtrl;
+	m_pGsPreviewCtrl->Create(_T(""), WS_CHILD | WS_VISIBLE, m_recPreview, this);
+	m_pGsPreviewCtrl->Init(theArxDLL.ModuleResourceInstance(), true);
+	m_pGsPreviewCtrl->SetDwgFile(sPath);
+}
+
+void CPreviewWithDetail::SetSelected(bool bSelected)
+{
+	if (m_bSelected != bSelected)
+	{
+		m_bSelected = bSelected;
+		Invalidate();
+	}
+}
+
+void CPreviewWithDetail::DrawText(CDC* pDC)
+{
+	CRect innerRect(m_recText);
+	int radius = 10;
+	innerRect.DeflateRect(radius, radius);
+
+	//»æÖÆÌî³äÑÕÉ«
+	CBrush brush;
+	if (m_bSelected)
+		brush.CreateSysColorBrush(COLOR_HIGHLIGHT);
+	else
+		brush.CreateSysColorBrush(NULL_BRUSH);
+	pDC->SelectObject(&brush);
+
+	//»æÖÆÔ²½Ç¾ØÐÎ
+	pDC->RoundRect(m_recText, CPoint(radius * 2, radius * 2));
+
+	//»æÖÆÎÄ×Ö
+	pDC->SetBkMode(TRANSPARENT);
+	CFont Font;
+	Font.CreatePointFont(80,_T("Calibri"));
+	pDC->SelectObject(&Font);
+	if (m_bSelected)
+		pDC->SetTextColor(GetSysColor(COLOR_HIGHLIGHTTEXT));
+	else
+		pDC->SetTextColor(RGB(0, 0, 0));
+	pDC->DrawText(m_sText, innerRect, DT_LEFT|DT_TOP);
+}
+
+void CPreviewWithDetail::DrawBackGround(CDC* pDC)
+{
+	CRect clientRect;
+	GetClientRect(&clientRect);
+	if (m_bSelected)
+		pDC->FillSolidRect(clientRect, GetSysColor(COLOR_HIGHLIGHT));
+	else
+		pDC->FillSolidRect(clientRect, RGB(255,255,255));
+}
+
+void CPreviewWithDetail::OnPaint()
+{
+	CPaintDC dc(this);
+	CRect clientRect;
+	GetClientRect(&clientRect);
+	CBitmap bitmap;
+	CDC MemeDc;
+	MemeDc.CreateCompatibleDC(&dc);
+	bitmap.CreateCompatibleBitmap(&dc, clientRect.Width(), clientRect.Height());
+	CBitmap* pOldBmp = MemeDc.SelectObject(&bitmap);
+	DrawBackGround(&MemeDc);
+	DrawText(&MemeDc);
+	dc.BitBlt(clientRect.left, clientRect.top, clientRect.Width(), clientRect.Height(), &MemeDc, 0, 0,SRCCOPY);
+	MemeDc.SelectObject(pOldBmp);
+	MemeDc.DeleteDC();
+
+	m_pGsPreviewCtrl->Invalidate();
+}

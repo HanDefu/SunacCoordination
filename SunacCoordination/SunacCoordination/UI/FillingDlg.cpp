@@ -8,10 +8,10 @@
 
 // CFillingDlg ¶Ô»°¿ò
 
-IMPLEMENT_DYNAMIC(CFillingDlg, CDialogEx)
+IMPLEMENT_DYNAMIC(CFillingDlg, CAcUiDialog)
 
 CFillingDlg::CFillingDlg(CWnd* pParent /*=NULL*/)
-	: CDialogEx(CFillingDlg::IDD, pParent)
+	: CAcUiDialog(CFillingDlg::IDD, pParent)
 {
 
 }
@@ -22,12 +22,12 @@ CFillingDlg::~CFillingDlg()
 
 void CFillingDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+	CAcUiDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_PREVIEW_FILLING, m_preFilling);
 }
 
 
-BEGIN_MESSAGE_MAP(CFillingDlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CFillingDlg, CAcUiDialog)
 END_MESSAGE_MAP()
 
 
@@ -36,6 +36,6 @@ END_MESSAGE_MAP()
 
 BOOL CFillingDlg::OnInitDialog()
 {
-	CDialogEx::OnInitDialog();
+	CAcUiDialog::OnInitDialog();
 	return TRUE;
 }

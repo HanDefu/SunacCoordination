@@ -1,9 +1,9 @@
 #pragma once
-
+#include "GridCtrlWithPreview.h"
 
 // CBathroomDlg ¶Ô»°¿ò
 
-class CBathroomDlg : public CDialogEx
+class CBathroomDlg : public CAcUiDialog
 {
 	DECLARE_DYNAMIC(CBathroomDlg)
 
@@ -20,4 +20,6 @@ protected:
 	virtual BOOL OnInitDialog();
 
 	DECLARE_MESSAGE_MAP()
+
+	CGridCtrlWithPreview m_preBathroom;
 };

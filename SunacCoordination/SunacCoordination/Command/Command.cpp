@@ -44,6 +44,8 @@ static void CADPalette_AddP(void);
 //登录
 void CMD_Login()
 {
+	CAcModuleResourceOverride resOverride;
+
 	DlgLogin dlg;
 	dlg.DoModal();
 	CADPalette_AddP();
@@ -74,6 +76,8 @@ void CMD_SUNACKITCHEN()
 //卫生间
 void CMD_SUNACBATHROOM()
 {
+	CAcModuleResourceOverride resOverride;
+
 	CBathroomDlg dlg;
 	dlg.DoModal();
 }
@@ -81,6 +85,8 @@ void CMD_SUNACBATHROOM()
 //门
 void CMD_SUNACDOOR()
 {
+	CAcModuleResourceOverride resOverride;
+
 	CDoorDlg dlg;
 	dlg.DoModal();
 }
@@ -99,6 +105,8 @@ void CMD_SUNACRAILING()
 //线脚
 void CMD_SUNACMOLDINGS()
 {
+	CAcModuleResourceOverride resOverride;
+
 	CMoldingsDlg dlg;
 	dlg.DoModal();
 }
@@ -106,6 +114,8 @@ void CMD_SUNACMOLDINGS()
 //填充材质
 void CMD_SUNACFILLING()
 {
+	CAcModuleResourceOverride resOverride;
+
 	CFillingDlg dlg;
 	dlg.DoModal();
 }
@@ -113,6 +123,8 @@ void CMD_SUNACFILLING()
 //空调
 void CMD_SUNACAIRCONDITIONER()
 {
+	CAcModuleResourceOverride resOverride;
+
 	CAirconditionerDlg dlg;
 	dlg.DoModal();
 }
@@ -120,6 +132,8 @@ void CMD_SUNACAIRCONDITIONER()
 //标准立面
 void CMD_SUNACFACADE()
 {
+	CAcModuleResourceOverride resOverride;
+
 	CFacadeDlg dlg;
 	dlg.DoModal();
 }
@@ -127,6 +141,8 @@ void CMD_SUNACFACADE()
 //防水构造
 void CMD_SUNACWATERPROOF()
 {
+	CAcModuleResourceOverride resOverride;
+
 	CWaterproofDlg dlg;
 	dlg.DoModal();
 }

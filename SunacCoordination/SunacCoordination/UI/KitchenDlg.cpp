@@ -9,10 +9,10 @@
 #include "../Object/AttrKitchen.h"
 // CKitchenDlg 对话框
 
-IMPLEMENT_DYNAMIC(CKitchenDlg, CDialogEx)
+IMPLEMENT_DYNAMIC(CKitchenDlg, CAcUiDialog)
 
 CKitchenDlg::CKitchenDlg(CWnd* pParent /*=NULL*/)
-	: CDialogEx(CKitchenDlg::IDD, pParent)
+	: CAcUiDialog(CKitchenDlg::IDD, pParent)
 {
 
 }
@@ -29,25 +29,25 @@ LRESULT CKitchenDlg::onAcadKeepFocus(WPARAM, LPARAM)
 
 void CKitchenDlg::OnOK()
 {
-	CDialogEx::OnOK();
+	CAcUiDialog::OnOK();
 	DestroyWindow();
 }
 
 void CKitchenDlg::OnCancel()
 {
-	CDialogEx::OnCancel();
+	CAcUiDialog::OnCancel();
 	DestroyWindow();
 }
 
 void CKitchenDlg::PostNcDestroy()
 {
-	CDialogEx::PostNcDestroy();
+	CAcUiDialog::PostNcDestroy();
 	delete this;
 }
 
 void CKitchenDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+	CAcUiDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_PREVIEW_KITCHEN, m_preKitchen);
 	DDX_Control(pDX, IDC_COMBO_FLOORRANGE, m_floorRange);
 	DDX_Control(pDX, IDC_COMBO_BASINTYPE, m_basinType);
@@ -55,13 +55,13 @@ void CKitchenDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_FRIDGETYPE, m_frigeType);
 }
 
-BEGIN_MESSAGE_MAP(CKitchenDlg, CDialogEx)
+BEGIN_MESSAGE_MAP(CKitchenDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDOK, &CKitchenDlg::OnBnClickedOk)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
 	ON_BN_CLICKED(IDC_BUTTON_INSERTKITCHEN, &CKitchenDlg::OnBnClickedMfcbuttonInsert)
-	ON_BN_CLICKED(IDC_MFCBUTTON_RANGE, &CKitchenDlg::OnBnClickedMfcbuttonRange)
-	ON_BN_CLICKED(IDC_MFCBUTTON_DOOR_DIR, &CKitchenDlg::OnBnClickedMfcbuttonDoorDir)
-	ON_BN_CLICKED(IDC_MFCBUTTON_WINDOW_DIR, &CKitchenDlg::OnBnClickedMfcbuttonWindowDir)
+	ON_BN_CLICKED(IDC_BUTTON_RANGE, &CKitchenDlg::OnBnClickedMfcbuttonRange)
+	ON_BN_CLICKED(IDC_BUTTON_DOORDIR, &CKitchenDlg::OnBnClickedMfcbuttonDoorDir)
+	ON_BN_CLICKED(IDC_BUTTON_WINDOWDIR, &CKitchenDlg::OnBnClickedMfcbuttonWindowDir)
 	ON_BN_CLICKED(IDC_BUTTON_SEARCH, &CKitchenDlg::OnBnClickedButtonSearch)
 END_MESSAGE_MAP()
 
@@ -71,7 +71,7 @@ END_MESSAGE_MAP()
 
 BOOL CKitchenDlg::OnInitDialog()
 {
-	CDialogEx::OnInitDialog();
+	CAcUiDialog::OnInitDialog();
 
 	m_preKitchen.LoadDefaltSettings();
 
@@ -99,7 +99,7 @@ BOOL CKitchenDlg::OnInitDialog()
 void CKitchenDlg::OnBnClickedOk()
 {
 	// TODO: 在此添加控件通知处理程序代码
-	CDialogEx::OnOK();
+	CAcUiDialog::OnOK();
 }
 
 TYRect rect;
@@ -185,12 +185,8 @@ void CKitchenDlg::OnBnClickedButtonSearch()
 	vCString allFiles;
 	TY_GetAllKitchenFiles(allFiles);
 	for (int i = 0; i < allFiles.size(); i++)
-	{
-		m_preKitchen.AddPreview(i, 0, allFiles[i]); 
-		m_preKitchen.SetContentItemText(i, 1, _T("厨房类型：KU\n厨房面积：2.1\n通风量：1.6"));
-	}
+		m_preKitchen.AddPreview(i, 0, allFiles[i], _T("厨房类型：KU\n厨房面积：2.1\n通风量：1.6"));
 
-
-	m_preKitchen.ShowPreviews();
+	//m_preKitchen.ShowPreviews();
 
 }
