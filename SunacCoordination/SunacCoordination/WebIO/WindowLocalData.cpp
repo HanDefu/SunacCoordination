@@ -236,15 +236,65 @@ bool  CWindowLocalData::GetWindowByFileName(CString p_sFileName, AttrWindow&valu
 	return false;
 }
 
-vector<AttrWindow> CWindowLocalData::GetAllWindows()
+vector<AttrWindow> CWindowLocalData::GetAllWindows()  //获取所有窗户
 {
-	return m_windows;
+	for (int i = 0; i < m_windows.size(); i++)
+	{
+		std::vector<CString> strs = YT_SplitCString(m_windows[i].prototypeId, L'_');  //用"_"拆分
+		if (strs[0] == "Window")
+		{
+			m_wins.push_back(m_windows[i]);
+		}
+	}
+	return m_wins;
 }
 
-std::vector<AttrWindow *>  CWindowLocalData::GetWindows(double width, CString openType, int openNum, CString gongNengQu, double tongFengLiang	)
+vector<AttrWindow> CWindowLocalData::GetAllDoors()  //获取所有门
 {
-	std::vector<AttrWindow *> data;
+	for (int i = 0; i < m_windows.size(); i++)
+	{
+		std::vector<CString> strs = YT_SplitCString(m_windows[i].prototypeId, L'_');
+		if (strs[0] == "Door")
+		{
+			m_doors.push_back(m_windows[i]);
+		}
+	}
+	return m_doors;
+}
+
+std::vector<AttrWindow >  CWindowLocalData::GetWindows(double width, CString openType, int openNum, CString gongNengQu, double tongFengLiang)
+{
+	std::vector<AttrWindow> data;
+
+	for (int i =0; i < m_windows.size(); i++)
+	{
+		if (width < m_windows[i].m_dimData[0].values[0] || width > m_windows[i].m_dimData[0].values[1])
+		{
+			continue;
+		}
+
+		if (openType != m_windows[i].openType)
+		{
+			continue;
+		}
+
+		if (openNum != m_windows[i].openNum)
+		{
+			continue;
+		}
+
+		if (gongNengQu != m_windows[i].functionType)
+		{
+			continue;
+		}
+
+		/*if (tongFengLiang != m_windows[i].ventilationFormula)
+		{
+			continue;
+		}*/
+
+		data.push_back(m_windows[i]);
+	}
+
 	return data;
 }
-
-
