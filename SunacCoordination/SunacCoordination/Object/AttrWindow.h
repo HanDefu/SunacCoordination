@@ -83,7 +83,8 @@ public:
 	CString	staticWidth;		//静态宽度	
 	CString	staticHeigth;		//静态高度	
 	CString	staticVentilation;	//静态通风量	
-	
+	CString	prototypeFlatFile;	//原型平面文件
+	CString	prototypeTopViewFile;//原型俯视图文件
 	
 	vSRCDimData m_dimData;
 };
