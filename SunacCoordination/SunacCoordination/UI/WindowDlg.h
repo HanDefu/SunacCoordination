@@ -26,28 +26,33 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnBnClickedMfcbuttonInsert();
+	afx_msg void OnBnClickedButtonInsert();
 	afx_msg void OnBnClickedButtonSearchwindow();
 	afx_msg void OnBnClickedRadioDoor();
 
 	void SetRadioDoor(int radioDoor);
+	void SetCombobox(CComboBox& comboBox, const vCString& options, int nSel = 0);
+	void LoadDefaultValue();
 
 	CGridCtrlWithPreview m_preWindow;
 
-	CComboBox m_doorType;
-	CComboBox m_areaType;
-	CComboBox m_openType;
-	CComboBox m_openAmount;
-	CComboBox m_openWidth;
-	CComboBox m_H2;
-	CComboBox m_distance;
-	CEdit m_width;
-	CEdit m_height;
-	CEdit m_ventilation;
-	CEdit m_number;
-	
-	vector<AttrWindow *> m_allWindws;
+	CEdit m_width; //宽度
+	CEdit m_height; //高度
+	CComboBox m_doorType; //门类型
+	CComboBox m_areaType; //功能区类型
+	CComboBox m_openType; //开启类型
+	CComboBox m_openAmount; //开启扇数量
+	CEdit m_ventilation; //通风量
+	CEdit m_area; //面积
+	CComboBox m_rate; //比值
 
-	int m_radioDoor;
-	int m_radioYes;
+	CEdit m_number; //门窗编号
+	CComboBox m_openWidth; //开启扇宽度
+	CComboBox m_H2; //下固定值
+	CComboBox m_distance; //距外墙距离
+	
+	int m_radioDoor; //门窗单选
+	int m_radioYes; //是否凸窗
+
+	vector<AttrWindow> m_allWindows;
 };

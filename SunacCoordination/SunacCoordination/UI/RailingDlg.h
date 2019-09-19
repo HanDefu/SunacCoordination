@@ -35,4 +35,5 @@ public:
 	CEdit m_height; //栏杆总高
 	CEdit m_reverse; //反坎高度
 	CString m_selectedFile;
+	CComboBox m_type;
 };

@@ -10,7 +10,7 @@
 #include "../GlobalSetting.h"
 #include "../WebIO/WindowLocalData.h"
 #include "../Object/AttrWindow.h"
-
+#include "../WebIO/WindowLocalData.h"
 // CWindowDlg 对话框
 
 IMPLEMENT_DYNAMIC(CWindowDlg, CAcUiDialog)
@@ -68,12 +68,14 @@ void CWindowDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT_NUMBER, m_number);
 	DDX_Radio(pDX, IDC_RADIO_DOOR, m_radioDoor);
 	DDX_Radio(pDX, IDC_RADIO_YES, m_radioYes);
+	DDX_Control(pDX, IDC_EDIT_AREA, m_area);
+	DDX_Control(pDX, IDC_COMBO_RATE, m_rate);
 }
 
 
 BEGIN_MESSAGE_MAP(CWindowDlg, CAcUiDialog)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
-	ON_BN_CLICKED(IDC_BUTTON_INSERTWINDOW, &CWindowDlg::OnBnClickedMfcbuttonInsert)
+	ON_BN_CLICKED(IDC_BUTTON_INSERTWINDOW, &CWindowDlg::OnBnClickedButtonInsert)
 	ON_BN_CLICKED(IDC_BUTTON_SEARCHWINDOW, &CWindowDlg::OnBnClickedButtonSearchwindow)
 	ON_BN_CLICKED(IDC_RADIO_DOOR, &CWindowDlg::OnBnClickedRadioDoor)
 	ON_BN_CLICKED(IDC_RADIO_WINDOW, &CWindowDlg::OnBnClickedRadioDoor)
@@ -89,21 +91,13 @@ BOOL CWindowDlg::OnInitDialog()
 
 	m_preWindow.LoadDefaltSettings();
 
-	m_areaType.SetCurSel(0);
-	m_openType.SetCurSel(0);
-	m_openAmount.SetCurSel(0);
-	m_openWidth.SetCurSel(0);
-
-	m_width.SetWindowText(L"2000");
-	m_height.SetWindowText(L"2000");
-	m_H2.SetWindowText(L"450");
-
+	LoadDefaultValue();
 	SetRadioDoor(0);
 
 	return TRUE;
 }
 
-void CWindowDlg::OnBnClickedMfcbuttonInsert()
+void CWindowDlg::OnBnClickedButtonInsert()
 {
 	ShowWindow(FALSE);
 
@@ -113,23 +107,23 @@ void CWindowDlg::OnBnClickedMfcbuttonInsert()
 	double width = 0, height = 0;
 	CString str;
 	m_width.GetWindowText(str);
-	width = _wtof(str.GetBuffer());
+	width = _wtof(str);
 	m_height.GetWindowText(str);
-	height = _wtof(str.GetBuffer());
+	height = _wtof(str);
 
 	vector<int> sels = m_preWindow.GetSelectedRows();
 
 	m_openWidth.GetWindowText(str);
-	double W1 = _wtof(str.GetBuffer());
+	double W1 = _wtof(str);
 
 	m_H2.GetWindowText(str);
-	double H2 = _wtof(str.GetBuffer());
+	double H2 = _wtof(str);
 
 	if (sels.size() > 0)
 	{
 		RCWindow oneWindow;
 			
-		oneWindow.Insert(m_allWindws[sels[0]]->m_filePathName, origin, 0, L"0", 256);
+		oneWindow.Insert(m_allWindows[sels[0]].m_filePathName, origin, 0, L"0", 256);
 
 		oneWindow.InitParameters();
 		oneWindow.SetParameter(L"H", height);
@@ -143,11 +137,11 @@ void CWindowDlg::OnBnClickedMfcbuttonInsert()
 		str.Format(L"%d_%d",(int)(oneWindow.GetW()), (int)(oneWindow.GetH()));
 			
 		//把UI的数据记录在图框的扩展字典中
-		AttrWindow * pWindow = new AttrWindow(*m_allWindws[sels[0]]);
+		AttrWindow * pWindow = new AttrWindow(m_allWindows[sels[0]]);
 		oneWindow.AddAttribute(pWindow);
 		pWindow->close();
 
-		oneWindow.SetBianHao(m_allWindws[sels[0]]->m_yxid + str);
+		oneWindow.SetBianHao(m_allWindows[sels[0]].m_yxid + str);
 	}
 	OnOK();
 }
@@ -155,14 +149,15 @@ void CWindowDlg::OnBnClickedMfcbuttonInsert()
 
 void CWindowDlg::OnBnClickedButtonSearchwindow()
 {
-	m_allWindws = WebIO::GetAllWindows();
+	m_allWindows = CWindowLocalData::GetInstance()->GetAllWindows();
 	m_preWindow.ClearAllPreviews();
-	m_preWindow.SetRowCount((int)m_allWindws.size());
+	//m_preWindow.SetRowCount((int)m_allWindows.size());
+	m_preWindow.SetRowCount(3);
 	m_preWindow.SetColumnCount(1);
 	m_preWindow.SetDisplayRows(3);
 	m_preWindow.SetDisplayColumns(1);
-	for (int i = 0; i < m_allWindws.size(); i++)
-		m_preWindow.AddPreview(i, 0, m_allWindws[i]->m_filePathName, _T("窗类型:双扇单开\n窗户面积:2.1\n通风量:1.6"));
+	for (int i = 0; i < min(m_allWindows.size(), 3); i++)
+		m_preWindow.AddPreview(i, 0, TY_GetLocalFilePath() + m_allWindows[i].prototypeFile, _T("窗类型:双扇单开\n窗户面积:2.1\n通风量:1.6"));
 }
 
 void CWindowDlg::OnBnClickedRadioDoor()
@@ -195,5 +190,33 @@ void CWindowDlg::SetRadioDoor(int radioDoor)
 		GetDlgItem(IDC_RADIO_NO)->EnableWindow(TRUE);
 		m_doorType.EnableWindow(FALSE);
 	}
+}
+
+void CWindowDlg::SetCombobox(CComboBox& comboBox, const vCString& options, int nSel /*= 0*/)
+{
+	comboBox.ResetContent();
+	for (UINT i = 0; i < options.size(); i++)
+		comboBox.AddString(options[i]);
+	comboBox.SetCurSel(nSel);
+}
+
+void CWindowDlg::LoadDefaultValue()
+{
+	vCString& doorTypes = WebIO::GetInstance()->m_doorTypes;
+	vCString& openTypes = WebIO::GetInstance()->m_windowOpenTypes;
+	vCString& areaTypes = WebIO::GetInstance()->m_gongNengQus;
+	vCString& openAmount = WebIO::GetInstance()->m_windowOpenAmount;
+	vCString& rate = WebIO::GetInstance()->m_rate;
+
+	m_width.SetWindowTextW(_T("1500"));
+	m_height.SetWindowTextW(_T("1200"));
+	m_ventilation.SetWindowTextW(_T("2"));
+	m_area.SetWindowTextW(_T("8"));
+	
+	SetCombobox(m_doorType, doorTypes);
+	SetCombobox(m_openType, openTypes);
+	SetCombobox(m_areaType, areaTypes);
+	SetCombobox(m_openAmount, openAmount);
+	SetCombobox(m_rate, rate);
 }
 

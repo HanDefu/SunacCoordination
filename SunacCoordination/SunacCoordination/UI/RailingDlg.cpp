@@ -31,6 +31,7 @@ void CRailingDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT_RAILINGHEIGHT, m_height);
 	DDX_Control(pDX, IDC_EDIT_REVERSERIDGE_HEIGHT, m_reverse);
 	DDX_Control(pDX, IDC_PREVIEW_RAILING, m_preRailing);
+	DDX_Control(pDX, IDC_COMBO_RAILINGTYPE, m_type);
 }
 
 BEGIN_MESSAGE_MAP(CRailingDlg, CAcUiDialog)
@@ -63,9 +64,10 @@ BOOL CRailingDlg::OnInitDialog()
 
 	//m_railingInfo.SetWindowText(_T("栏杆信息说明:\r\n栏杆间距:\r\n单元尺寸:\r\n栏杆类型："));
 
-	m_width.SetWindowTextW(_T("2600"));
-	m_height.SetWindowTextW(_T("1200"));
-	m_reverse.SetWindowTextW(_T("20"));
+	m_width.SetWindowTextW(_T("2500"));
+	m_height.SetWindowTextW(_T("1100"));
+	m_reverse.SetWindowTextW(_T("200"));
+	m_type.SetCurSel(0);
 
 	//((CMFCButton*)GetDlgItem(IDC_MFCBUTTON_LIB))->SetImage(IDB_BITMAP37);
 	//((CMFCButton*)GetDlgItem(IDC_MFCBUTTON_CANCEL))->SetImage(IDB_BITMAP37);
