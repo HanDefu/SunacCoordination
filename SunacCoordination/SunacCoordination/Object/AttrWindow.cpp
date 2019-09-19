@@ -61,7 +61,9 @@ AttrWindow::AttrWindow(const AttrWindow &other) : AttrObject(other)
 	staticWidth = other.staticWidth;		//静态宽度	
 	staticHeigth = other.staticHeigth;		//静态高度	
 	staticVentilation = other.staticVentilation;	//静态通风量	
-	
+	prototypeFlatFile = other.prototypeFlatFile;	//原型平面文件
+	prototypeTopViewFile = other.prototypeTopViewFile;//原型俯视图文件
+
 	m_dimData = other.m_dimData;
 }
 

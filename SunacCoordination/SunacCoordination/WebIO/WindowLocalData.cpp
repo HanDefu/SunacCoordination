@@ -203,6 +203,9 @@ void CWindowLocalData::LoadFromExcel(CString p_file) //将数据从表格中读取到m_win
 		data = ConvertStringToDimData(L"H3",valueType, value,defaultValue,state);
 		attrwindow.m_dimData.push_back(data);
 
+		attrwindow.prototypeFlatFile = xls.GetCellValue(i, 51);
+		attrwindow.prototypeTopViewFile = xls.GetCellValue(i, 52);
+
 		m_windows.push_back(attrwindow); //将数据添加到vector数组m_windows
 	}
 	xls.CloseExcel();//关闭表格
