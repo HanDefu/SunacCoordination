@@ -271,24 +271,91 @@ std::vector<AttrWindow >  CWindowLocalData::GetWindows(double width, CString ope
 
 	for (int i =0; i < m_windows.size(); i++)
 	{
+		std::vector<CString> strs = YT_SplitCString(m_windows[i].prototypeId, L'_');  //用"_"拆分
+		if (strs[0] != "Window")
+		{
+			continue;
+		}
+
 		if (width < m_windows[i].m_dimData[0].values[0] || width > m_windows[i].m_dimData[0].values[1])
 		{
 			continue;
 		}
 
-		if (openType != m_windows[i].openType)
+		if (openType != L"不限")
+		{
+			if (openType != m_windows[i].openType)
+			{
+				continue;
+			}
+		}
+
+		if (openNum != 0)
+		{
+			if (openNum != m_windows[i].openNum)
+			{
+				continue;
+			}
+		}
+
+		if (gongNengQu != L"不限")
+		{
+			if (gongNengQu != m_windows[i].functionType)
+			{
+				continue;
+			}
+		}
+
+		/*if (tongFengLiang != m_windows[i].ventilationFormula)
+		{
+			continue;
+		}*/
+
+		data.push_back(m_windows[i]);
+	}
+
+	return data;
+}
+
+std::vector<AttrWindow >  CWindowLocalData::GetDoors(double width, CString openType, int openNum, CString gongNengQu)
+{
+	std::vector<AttrWindow> data;
+
+	for (int i =0; i < m_windows.size(); i++)
+	{
+		std::vector<CString> strs = YT_SplitCString(m_windows[i].prototypeId, L'_');  //用"_"拆分
+		if (strs[0] != "Door")
 		{
 			continue;
 		}
 
-		if (openNum != m_windows[i].openNum)
+		if (width < m_windows[i].m_dimData[0].values[0] || width > m_windows[i].m_dimData[0].values[1])
 		{
 			continue;
 		}
 
-		if (gongNengQu != m_windows[i].functionType)
+		if (openType != L"不限")
 		{
-			continue;
+			if (openType != m_windows[i].openType)
+			{
+				continue;
+			}
+		}
+
+		if (openNum != 0)
+		{
+			if (openNum != m_windows[i].openNum)
+			{
+				continue;
+			}
+		}
+
+		if (gongNengQu != L"不限")
+		{
+			if (gongNengQu != m_windows[i].functionType)
+			{
+				continue;
+			}
 		}
 
 		/*if (tongFengLiang != m_windows[i].ventilationFormula)

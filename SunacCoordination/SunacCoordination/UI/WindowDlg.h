@@ -25,6 +25,7 @@ protected:
 	virtual void PostNcDestroy(); //释放非模态对话框内存
 
 	DECLARE_MESSAGE_MAP()
+
 public:
 	afx_msg void OnBnClickedButtonInsert();
 	afx_msg void OnBnClickedButtonSearchwindow();
@@ -33,6 +34,10 @@ public:
 	void SetRadioDoor(int radioDoor);
 	void SetCombobox(CComboBox& comboBox, const vCString& options, int nSel = 0);
 	void LoadDefaultValue();
+
+	CString GetText(const CWnd& pWnd);
+
+protected:
 
 	CGridCtrlWithPreview m_preWindow;
 

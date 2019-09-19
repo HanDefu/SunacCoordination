@@ -362,8 +362,9 @@ vCString WebIO::Window_GetOpenAmount()
 	vCString strs;
 #ifdef WORK_LOCAL//本地模式
 	strs.push_back(L"不限");
-	strs.push_back(L"一扇");
-	strs.push_back(L"两扇");
+	strs.push_back(L"1");
+	strs.push_back(L"2");
+	strs.push_back(L"4");
 #else
 
 #endif

@@ -123,7 +123,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	{
 		RCWindow oneWindow;
 			
-		oneWindow.Insert(m_allWindows[sels[0]].m_filePathName, origin, 0, L"0", 256);
+		oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].prototypeFile, origin, 0, L"0", 256);
 
 		oneWindow.InitParameters();
 		oneWindow.SetParameter(L"H", height);
@@ -141,7 +141,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		oneWindow.AddAttribute(pWindow);
 		pWindow->close();
 
-		oneWindow.SetBianHao(m_allWindows[sels[0]].m_yxid + str);
+		oneWindow.SetBianHao(m_allWindows[sels[0]].prototypeId + str);
 	}
 	OnOK();
 }
@@ -149,14 +149,22 @@ void CWindowDlg::OnBnClickedButtonInsert()
 
 void CWindowDlg::OnBnClickedButtonSearchwindow()
 {
-	m_allWindows = CWindowLocalData::GetInstance()->GetAllWindows();
+	double width = _ttof(GetText(m_width));
+	CString openType = GetText(m_openType);
+	int openNum = _ttoi(GetText(m_openAmount));
+	CString areaType = GetText(m_areaType);
+
+	if (m_radioDoor == 0)
+	    m_allWindows = CWindowLocalData::GetInstance()->GetDoors(width, openType, openNum, areaType);
+	else
+		m_allWindows = CWindowLocalData::GetInstance()->GetWindows(width, openType, openNum, areaType);
 	m_preWindow.ClearAllPreviews();
-	//m_preWindow.SetRowCount((int)m_allWindows.size());
-	m_preWindow.SetRowCount(3);
+	m_preWindow.SetRowCount((int)m_allWindows.size());
+	//m_preWindow.SetRowCount(3);
 	m_preWindow.SetColumnCount(1);
 	m_preWindow.SetDisplayRows(3);
 	m_preWindow.SetDisplayColumns(1);
-	for (int i = 0; i < min(m_allWindows.size(), 3); i++)
+	for (int i = 0; i < m_allWindows.size(); i++)
 		m_preWindow.AddPreview(i, 0, TY_GetLocalFilePath() + m_allWindows[i].prototypeFile, _T("窗类型:双扇单开\n窗户面积:2.1\n通风量:1.6"));
 }
 
@@ -196,7 +204,9 @@ void CWindowDlg::SetCombobox(CComboBox& comboBox, const vCString& options, int n
 {
 	comboBox.ResetContent();
 	for (UINT i = 0; i < options.size(); i++)
-		comboBox.AddString(options[i]);
+	{
+		comboBox.InsertString(i,options[i]);
+	}
 	comboBox.SetCurSel(nSel);
 }
 
@@ -218,5 +228,12 @@ void CWindowDlg::LoadDefaultValue()
 	SetCombobox(m_areaType, areaTypes);
 	SetCombobox(m_openAmount, openAmount);
 	SetCombobox(m_rate, rate);
+}
+
+CString CWindowDlg::GetText(const CWnd& pWnd)
+{
+	CString str;
+	pWnd.GetWindowTextW(str);
+	return str;
 }
 
