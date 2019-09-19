@@ -82,7 +82,7 @@ void CPreviewWithDetail::DrawText(CDC* pDC)
 		pDC->SetTextColor(GetSysColor(COLOR_HIGHLIGHTTEXT));
 	else
 		pDC->SetTextColor(RGB(0, 0, 0));
-	pDC->DrawText(m_sText, innerRect, DT_LEFT|DT_TOP);
+	pDC->DrawText(m_sText, innerRect, DT_EDITCONTROL | DT_WORDBREAK);
 }
 
 void CPreviewWithDetail::DrawBackGround(CDC* pDC)

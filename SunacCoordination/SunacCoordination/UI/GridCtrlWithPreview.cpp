@@ -117,6 +117,8 @@ void CGridCtrlWithPreview::SelectPreview(int nRow, int nCol)
 		CGridCellForPreview* pCell = GetPreviewCell(nRow, nCol);
 		if (pCell != NULL)
 			pCell->SetSelected(true);
+
+		SendMessageToParent(nRow, nCol, GVN_SELCHANGED);
 }
 
 CGridCellForPreview* CGridCtrlWithPreview::GetPreviewCell(int nRow, int nCol)
@@ -151,12 +153,13 @@ BOOL CGridCtrlWithPreview::PreTranslateMessage(MSG* pMsg)
 		ScreenToClient(&point);
 		CCellID cellID = GetCellFromPt(point);
 		SelectPreview(cellID.row, cellID.col);
+
 		return TRUE;
 	}
 	else if (pMsg->message == WM_LBUTTONUP)
 	{
 		return TRUE;
 	}
-	return FALSE;
+	return CGridCtrlEx::PreTranslateMessage(pMsg);
 }
 

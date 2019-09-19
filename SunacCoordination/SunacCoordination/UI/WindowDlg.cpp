@@ -19,6 +19,7 @@ CWindowDlg::CWindowDlg(CWnd* pParent /*=NULL*/)
 	: CAcUiDialog(CWindowDlg::IDD, pParent)
 	, m_radioDoor(0)
 	, m_radioYes(0)
+	, m_autoIndex(FALSE)
 {
 
 }
@@ -70,6 +71,8 @@ void CWindowDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Radio(pDX, IDC_RADIO_YES, m_radioYes);
 	DDX_Control(pDX, IDC_EDIT_AREA, m_area);
 	DDX_Control(pDX, IDC_COMBO_RATE, m_rate);
+	DDX_Check(pDX, IDC_CHECK_AUTOINDEX, m_autoIndex);
+	DDX_Control(pDX, IDC_COMBO_VIEWDIR, m_viewDir);
 }
 
 
@@ -79,6 +82,8 @@ BEGIN_MESSAGE_MAP(CWindowDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDC_BUTTON_SEARCHWINDOW, &CWindowDlg::OnBnClickedButtonSearchwindow)
 	ON_BN_CLICKED(IDC_RADIO_DOOR, &CWindowDlg::OnBnClickedRadioDoor)
 	ON_BN_CLICKED(IDC_RADIO_WINDOW, &CWindowDlg::OnBnClickedRadioDoor)
+	ON_NOTIFY(GVN_SELCHANGED, IDC_PREVIEW_WINDOW, &CWindowDlg::OnSelChanged)
+	ON_BN_CLICKED(IDC_BUTTON_CALCULATE, &CWindowDlg::OnBnClickedCalculate)
 END_MESSAGE_MAP()
 
 
@@ -93,6 +98,10 @@ BOOL CWindowDlg::OnInitDialog()
 
 	LoadDefaultValue();
 	SetRadioDoor(0);
+	m_preWindow.SetRowCount(6);
+	m_preWindow.SetColumnCount(1);
+	m_preWindow.SetDisplayRows(3);
+	m_preWindow.SetDisplayColumns(1);
 
 	return TRUE;
 }
@@ -150,6 +159,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 void CWindowDlg::OnBnClickedButtonSearchwindow()
 {
 	double width = _ttof(GetText(m_width));
+	double height = _ttof(GetText(m_height));
 	CString openType = GetText(m_openType);
 	int openNum = _ttoi(GetText(m_openAmount));
 	CString areaType = GetText(m_areaType);
@@ -160,18 +170,57 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 		m_allWindows = CWindowLocalData::GetInstance()->GetWindows(width, openType, openNum, areaType);
 	m_preWindow.ClearAllPreviews();
 	m_preWindow.SetRowCount((int)m_allWindows.size());
-	//m_preWindow.SetRowCount(3);
 	m_preWindow.SetColumnCount(1);
 	m_preWindow.SetDisplayRows(3);
 	m_preWindow.SetDisplayColumns(1);
+	if (m_allWindows.size() == 0)
+		AfxMessageBox(_T("未找到符合条件的记录"));
 	for (int i = 0; i < m_allWindows.size(); i++)
-		m_preWindow.AddPreview(i, 0, TY_GetLocalFilePath() + m_allWindows[i].prototypeFile, _T("窗类型:双扇单开\n窗户面积:2.1\n通风量:1.6"));
+	{
+		CString str;
+		str.Format(_T("原型编号：%s\n窗户面积：%.2lf\n通风量：0.9\n动态类型：动态\n适用范围：集团"), m_allWindows[i].prototypeId, width * height / 1E6);
+		m_preWindow.AddPreview(i, 0, TY_GetLocalFilePath() + m_allWindows[i].prototypeFile, str);
+	}
 }
 
 void CWindowDlg::OnBnClickedRadioDoor()
 {
 	UpdateData(TRUE);
 	SetRadioDoor(m_radioDoor);
+}
+
+void CWindowDlg::OnBnClickedCalculate()
+{
+	double area = _ttof(GetText(m_area));
+
+	CString sRate = GetText(m_rate);
+	double rate = _ttof(sRate);
+	int pos = sRate.Find(_T('/'));
+	if (pos != -1)
+		rate /= _ttof(sRate.Mid(pos + 1));
+
+	CString ventilation;
+	ventilation.Format(_T("%.2lf"), area * rate);
+	m_ventilation.SetWindowTextW(ventilation);
+}
+
+void CWindowDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	NM_GRIDVIEW* pView = (NM_GRIDVIEW*)pNMHDR;
+	int nSel = pView->iRow;
+	if (nSel >= 0 && nSel < m_allWindows.size())
+	{
+		m_number.SetWindowTextW(m_allWindows[nSel].id);
+		CString str;
+		str.Format(_T("%.0lf"), m_allWindows[nSel].m_openWindowSize);
+		m_openWidth.SetWindowTextW(str);
+		str.Format(_T("%.0lf"), m_allWindows[nSel].m_windowH2);
+		m_H2.SetWindowTextW(str);
+		str.Format(_T("%.0lf"), m_allWindows[nSel].m_wallDis);
+		m_H2.SetWindowTextW(str);
+		m_radioYes = (m_allWindows[nSel].m_isBayWindow ? 0 : 1);
+		UpdateData(FALSE);
+	}
 }
 
 void CWindowDlg::SetRadioDoor(int radioDoor)
@@ -228,6 +277,10 @@ void CWindowDlg::LoadDefaultValue()
 	SetCombobox(m_areaType, areaTypes);
 	SetCombobox(m_openAmount, openAmount);
 	SetCombobox(m_rate, rate);
+
+	m_autoIndex = TRUE;
+	m_viewDir.SetCurSel(0);
+	UpdateData(FALSE);
 }
 
 CString CWindowDlg::GetText(const CWnd& pWnd)

@@ -30,6 +30,8 @@ public:
 	afx_msg void OnBnClickedButtonInsert();
 	afx_msg void OnBnClickedButtonSearchwindow();
 	afx_msg void OnBnClickedRadioDoor();
+	afx_msg void OnBnClickedCalculate();
+	afx_msg void OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult);
 
 	void SetRadioDoor(int radioDoor);
 	void SetCombobox(CComboBox& comboBox, const vCString& options, int nSel = 0);
@@ -60,4 +62,7 @@ protected:
 	int m_radioYes; //ÊÇ·ñÍ¹´°
 
 	vector<AttrWindow> m_allWindows;
+public:
+	BOOL m_autoIndex;
+	CComboBox m_viewDir;
 };
