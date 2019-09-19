@@ -26,6 +26,8 @@ WebIO::WebIO()
 	m_toiletGuanXiWidths =Toilet_GetGuanXiWidths();//盥洗区宽度---是否支持手动输入？？
 	m_airPiShus = Air_GetPiShus();//所有的匹数
 	m_airLengNingShuiGuanPos =  Air_GetLengNingShuiGuanPos();//冷凝水管位置
+	m_windowOpenAmount = Window_GetOpenAmount();//开启扇数量
+	m_rate = Window_GetRate();//比值
 }
 
 WebIO::~WebIO()
@@ -349,6 +351,35 @@ vCString WebIO::Window_GetOpenTypes()
 	strs.push_back(L"外开");
 	strs.push_back(L"推拉");
 	strs.push_back(L"上悬");
+#else
+
+#endif
+	return strs;
+}
+
+vCString WebIO::Window_GetOpenAmount()
+{
+	vCString strs;
+#ifdef WORK_LOCAL//本地模式
+	strs.push_back(L"不限");
+	strs.push_back(L"1");
+	strs.push_back(L"2");
+	strs.push_back(L"4");
+#else
+
+#endif
+	return strs;
+}
+
+vCString WebIO::Window_GetRate()
+{
+	vCString strs;
+#ifdef WORK_LOCAL//本地模式
+	strs.push_back(L"1/4");
+	strs.push_back(L"1/5");
+	strs.push_back(L"1/6");
+	strs.push_back(L"1/8");
+	strs.push_back(L"1/10");
 #else
 
 #endif

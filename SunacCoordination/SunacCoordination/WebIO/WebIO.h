@@ -91,6 +91,8 @@ public:
 	vCString  m_gongNengQus;//功能区
 	vCString  m_windowDoorPoss;//门窗位置关系--厨房卫生间
 	vCString m_windowOpenTypes;//外窗开启类型
+	vCString m_windowOpenAmount;//开启扇数量
+	vCString m_rate;//比值，用于计算通风量
 	vCString m_doorTypes;//门类型
 	vCString m_kitchenTypes;//厨房类型
 	vCString m_kitchenShuiPenTypes;//厨房水盆类型
@@ -110,6 +112,8 @@ protected:
 	vCString GetWindowDoorPoss();//门窗位置关系
 
 	vCString Window_GetOpenTypes();//开启类型
+	vCString Window_GetOpenAmount();//开启扇数量
+	vCString Window_GetRate();//比值，用于计算通风量
 
 	vCString Door_GetTypes();//门类型
 
