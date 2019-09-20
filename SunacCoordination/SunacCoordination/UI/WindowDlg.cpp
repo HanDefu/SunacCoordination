@@ -73,6 +73,7 @@ void CWindowDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_RATE, m_rate);
 	DDX_Check(pDX, IDC_CHECK_AUTOINDEX, m_autoIndex);
 	DDX_Control(pDX, IDC_COMBO_VIEWDIR, m_viewDir);
+	DDX_Control(pDX, IDC_CHECK_IMAGE, m_isMirror);
 }
 
 
@@ -146,6 +147,9 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		CString str;
 		str.Format(L"%d_%d",(int)(oneWindow.GetW()), (int)(oneWindow.GetH()));
 			
+		if (m_isMirror.GetCheck())
+		    TYCOM_MirrorOneObject(oneWindow.m_id, origin, AcGeVector3d(0,1,0));
+
 		//把UI的数据记录在图框的扩展字典中
 		AttrWindow * pWindow = new AttrWindow(m_allWindows[sels[0]]);
 		oneWindow.AddAttribute(pWindow);

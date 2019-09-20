@@ -64,4 +64,5 @@ protected:
 public:
 	BOOL m_autoIndex;
 	CComboBox m_viewDir;
+	CButton m_isMirror;
 };
