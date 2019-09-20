@@ -28,6 +28,7 @@ WebIO::WebIO()
 	m_airLengNingShuiGuanPos =  Air_GetLengNingShuiGuanPos();//冷凝水管位置
 	m_windowOpenAmount = Window_GetOpenAmount();//开启扇数量
 	m_rate = Window_GetRate();//比值
+	m_windowWallDis = Window_GetWallDis();//窗户距外墙距离
 }
 
 WebIO::~WebIO()
@@ -380,6 +381,19 @@ vCString WebIO::Window_GetRate()
 	strs.push_back(L"1/6");
 	strs.push_back(L"1/8");
 	strs.push_back(L"1/10");
+#else
+
+#endif
+	return strs;
+}
+
+vCString WebIO::Window_GetWallDis()
+{
+	vCString strs;
+#ifdef WORK_LOCAL//本地模式
+	strs.push_back(L"0");
+	strs.push_back(L"100");
+	strs.push_back(L"120");
 #else
 
 #endif

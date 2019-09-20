@@ -22,9 +22,6 @@
     <ClCompile Include="UI\RailingDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="UI\GsPreviewCtrl.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
     <ClCompile Include="UI\GridCtrl_src\GridCell.cpp">
       <Filter>UI\GridCtrl</Filter>
     </ClCompile>
@@ -74,12 +71,6 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="UI\WaterproofDlg.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\GridCtrlEx.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\GridCtrlWithPreview.cpp">
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="Object\RCBlock.cpp">
@@ -226,10 +217,22 @@
     <ClCompile Include="WebIO\WindowLocalData.cpp">
       <Filter>WebIO</Filter>
     </ClCompile>
-    <ClCompile Include="UI\PreviewWithDetail.cpp">
-      <Filter>UI</Filter>
+    <ClCompile Include="UI\GsPreviewCtrl.cpp">
+      <Filter>UI\PreviewCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrlWithPreview.cpp">
+      <Filter>UI\PreviewCtrl</Filter>
     </ClCompile>
     <ClCompile Include="UI\GridCellForPreview.cpp">
+      <Filter>UI\PreviewCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\PreviewWithDetail.cpp">
+      <Filter>UI\PreviewCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrlEx.cpp">
+      <Filter>UI\GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ComFun_MFC.cpp">
       <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -280,9 +283,6 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="UI\RailingDlg.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\GsPreviewCtrl.h">
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="UI\GridCtrl_src\CellRange.h">
@@ -340,12 +340,6 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="UI\WaterproofDlg.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\GridCtrlEx.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\GridCtrlWithPreview.h">
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="Object\RCBlock.h">
@@ -534,10 +528,22 @@
     <ClInclude Include="WebIO\WindowLocalData.h">
       <Filter>WebIO</Filter>
     </ClInclude>
-    <ClInclude Include="UI\PreviewWithDetail.h">
-      <Filter>UI</Filter>
+    <ClInclude Include="UI\GsPreviewCtrl.h">
+      <Filter>UI\PreviewCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrlWithPreview.h">
+      <Filter>UI\PreviewCtrl</Filter>
     </ClInclude>
     <ClInclude Include="UI\GridCellForPreview.h">
+      <Filter>UI\PreviewCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\PreviewWithDetail.h">
+      <Filter>UI\PreviewCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrlEx.h">
+      <Filter>UI\GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ComFun_MFC.h">
       <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
@@ -577,6 +583,9 @@
     </Filter>
     <Filter Include="WebIO">
       <UniqueIdentifier>{e2817748-4c58-4960-b20c-9d3102f58b33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\PreviewCtrl">
+      <UniqueIdentifier>{71d3a590-6f0f-47f8-8a31-57c09642b0a2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
