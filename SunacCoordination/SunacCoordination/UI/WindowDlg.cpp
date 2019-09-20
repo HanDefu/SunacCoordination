@@ -108,6 +108,13 @@ BOOL CWindowDlg::OnInitDialog()
 
 void CWindowDlg::OnBnClickedButtonInsert()
 {
+	vector<int> sels = m_preWindow.GetSelectedRows();
+	if (sels.size() == 0)
+	{
+		acutPrintf(_T("没有选择原型，请重新选择或者双击原型\n"));
+		return;
+	}
+
 	ShowWindow(FALSE);
 
 	// TODO: 在此添加控件通知处理程序代码
@@ -119,8 +126,6 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	width = _wtof(str);
 	m_height.GetWindowText(str);
 	height = _wtof(str);
-
-	vector<int> sels = m_preWindow.GetSelectedRows();
 
 	m_openWidth.GetWindowText(str);
 	double W1 = _wtof(str);
@@ -174,13 +179,20 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 	m_preWindow.SetDisplayRows(3);
 	m_preWindow.SetDisplayColumns(1);
 	if (m_allWindows.size() == 0)
-		AfxMessageBox(_T("未找到符合条件的记录"));
+	{
+		m_preWindow.ClearAllPreviews();
+		acutPrintf(_T("未找到符合条件的记录\n"));
+	}
 	for (int i = 0; i < m_allWindows.size(); i++)
 	{
 		CString str;
 		str.Format(_T("原型编号：%s\n窗户面积：%.2lf\n通风量：0.9\n动态类型：动态\n适用范围：集团"), m_allWindows[i].prototypeId, width * height / 1E6);
 		m_preWindow.AddPreview(i, 0, TY_GetLocalFilePath() + m_allWindows[i].prototypeFile, str);
 	}
+	//vector<int> selectedRows;
+	//selectedRows.push_back(0);
+	//m_preWindow.SetSelectedRows(selectedRows);
+	m_preWindow.Invalidate(FALSE);
 }
 
 void CWindowDlg::OnBnClickedRadioDoor()
