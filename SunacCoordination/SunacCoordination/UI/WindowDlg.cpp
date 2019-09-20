@@ -250,10 +250,6 @@ void CWindowDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 		}
 
 		TYUI_SetText(m_number, m_allWindows[nSel].prototypeId);
-		TYUI_SetInt(m_openWidth, (int)m_allWindows[nSel].m_openWindowSize);
-		TYUI_SetInt(m_H2, (int)m_allWindows[nSel].m_windowH2);
-		TYUI_SetInt(m_distance, (int)m_allWindows[nSel].m_wallDis);
-		
 		m_radioYes = (m_allWindows[nSel].m_isBayWindow ? 0 : 1);
 		UpdateData(FALSE);
 	}
