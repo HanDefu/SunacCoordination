@@ -93,7 +93,7 @@ void CWindowLocalData::LoadFromExcel(CString p_file) //将数据从表格中读取到m_win
 	CString	state;			//W1说明
 
 	xls.OpenExcel(p_file); //打开表格
-	xls.SetVisible(true); 
+	xls.SetVisible(false); 
 	xls.SetActiveSheet(1); //打开第一张表
 
 	
