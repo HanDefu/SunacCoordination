@@ -137,7 +137,13 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	{
 		RCWindow oneWindow;
 			
-		oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].prototypeFile, origin, 0, L"0", 256);
+		int sel = m_viewDir.GetCurSel();
+		if (sel == 0)
+		    oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].prototypeFile, origin, 0, L"0", 256);
+		else if (sel == 1)
+            oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].prototypeFlatFile, origin, 0, L"0", 256);
+		else
+			oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].prototypeTopViewFile, origin, 0, L"0", 256);
 
 		oneWindow.InitParameters();
 		oneWindow.SetParameter(L"H", height);
