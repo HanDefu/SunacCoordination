@@ -97,6 +97,8 @@ void CGridCtrlWithPreview::ClearAllPreviews()
 			if (pCell != NULL)
 				pCell->DeletePreview();
 		}
+		SetRowCount(0);
+		SetColumnCount(0);
 }
 
 void CGridCtrlWithPreview::SelectPreview(int nRow, int nCol)
@@ -107,16 +109,10 @@ void CGridCtrlWithPreview::SelectPreview(int nRow, int nCol)
 		{
 			state = GetContentItemState(i, j);
 			SetContentItemState(i, j, state & ~GVIS_SELECTED & ~GVIS_FOCUSED);
-			CGridCellForPreview* pCell = GetPreviewCell(i, j);
-			if (pCell != NULL)
-				pCell->SetSelected(false);
 		}
 
 		state = GetContentItemState(nRow, nCol);
 		SetContentItemState(nRow, nCol, state | GVIS_SELECTED | GVIS_FOCUSED);
-		CGridCellForPreview* pCell = GetPreviewCell(nRow, nCol);
-		if (pCell != NULL)
-			pCell->SetSelected(true);
 
 		SendMessageToParent(nRow, nCol, GVN_SELCHANGED);
 }

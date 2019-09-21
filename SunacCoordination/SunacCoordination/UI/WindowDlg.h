@@ -2,6 +2,7 @@
 #include "GridCtrlWithPreview.h"
 #include "afxwin.h"
 #include "../Object/AttrWindow.h"
+#include "ComFun_MFC.h"
 // CWindowDlg ¶Ô»°¿ò
 
 class CWindowDlg : public CAcUiDialog
@@ -31,13 +32,11 @@ public:
 	afx_msg void OnBnClickedButtonSearchwindow();
 	afx_msg void OnBnClickedRadioDoor();
 	afx_msg void OnBnClickedCalculate();
+	afx_msg void OnBnClickedAutoIndex();
 	afx_msg void OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult);
 
 	void SetRadioDoor(int radioDoor);
-	void SetCombobox(CComboBox& comboBox, const vCString& options, int nSel = 0);
 	void LoadDefaultValue();
-
-	CString GetText(const CWnd& pWnd);
 
 protected:
 

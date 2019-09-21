@@ -82,8 +82,9 @@ BEGIN_MESSAGE_MAP(CWindowDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDC_BUTTON_SEARCHWINDOW, &CWindowDlg::OnBnClickedButtonSearchwindow)
 	ON_BN_CLICKED(IDC_RADIO_DOOR, &CWindowDlg::OnBnClickedRadioDoor)
 	ON_BN_CLICKED(IDC_RADIO_WINDOW, &CWindowDlg::OnBnClickedRadioDoor)
-	ON_NOTIFY(GVN_SELCHANGED, IDC_PREVIEW_WINDOW, &CWindowDlg::OnSelChanged)
 	ON_BN_CLICKED(IDC_BUTTON_CALCULATE, &CWindowDlg::OnBnClickedCalculate)
+	ON_BN_CLICKED(IDC_CHECK_AUTOINDEX, &CWindowDlg::OnBnClickedAutoIndex)
+	ON_NOTIFY(GVN_SELCHANGED, IDC_PREVIEW_WINDOW, &CWindowDlg::OnSelChanged)
 END_MESSAGE_MAP()
 
 
@@ -98,10 +99,6 @@ BOOL CWindowDlg::OnInitDialog()
 
 	LoadDefaultValue();
 	SetRadioDoor(0);
-	m_preWindow.SetRowCount(6);
-	m_preWindow.SetColumnCount(1);
-	m_preWindow.SetDisplayRows(3);
-	m_preWindow.SetDisplayColumns(1);
 
 	return TRUE;
 }
@@ -120,18 +117,10 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	// TODO: 在此添加控件通知处理程序代码
 	AcGePoint3d origin = TY_GetPoint();
 
-	double width = 0, height = 0;
-	CString str;
-	m_width.GetWindowText(str);
-	width = _wtof(str);
-	m_height.GetWindowText(str);
-	height = _wtof(str);
-
-	m_openWidth.GetWindowText(str);
-	double W1 = _wtof(str);
-
-	m_H2.GetWindowText(str);
-	double H2 = _wtof(str);
+	double width = TYUI_GetDouble(m_width);
+	double height = TYUI_GetDouble(m_height);
+	double W1 = TYUI_GetDouble(m_openWidth);
+	double H2 = TYUI_GetDouble(m_H2);
 
 	if (sels.size() > 0)
 	{
@@ -154,6 +143,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 
 		oneWindow.RunParameters();
 
+		CString str;
 		str.Format(L"%d_%d",(int)(oneWindow.GetW()), (int)(oneWindow.GetH()));
 			
 		//把UI的数据记录在图框的扩展字典中
@@ -169,36 +159,35 @@ void CWindowDlg::OnBnClickedButtonInsert()
 
 void CWindowDlg::OnBnClickedButtonSearchwindow()
 {
-	double width = _ttof(GetText(m_width));
-	double height = _ttof(GetText(m_height));
-	CString openType = GetText(m_openType);
-	int openNum = _ttoi(GetText(m_openAmount));
-	CString areaType = GetText(m_areaType);
+	double width = TYUI_GetDouble(m_width);
+	double height = TYUI_GetDouble(m_height);
+	CString openType = TYUI_GetText(m_openType);
+	int openNum = TYUI_GetInt(m_openAmount);
+	CString areaType = TYUI_GetText(m_areaType);
 
 	if (m_radioDoor == 0)
 	    m_allWindows = CWindowLocalData::GetInstance()->GetDoors(width, openType, openNum, areaType);
 	else
 		m_allWindows = CWindowLocalData::GetInstance()->GetWindows(width, openType, openNum, areaType);
+
 	m_preWindow.ClearAllPreviews();
+	if (m_allWindows.empty())
+	{
+		acutPrintf(_T("未找到符合条件的记录\n"));
+		return;
+	}
 	m_preWindow.SetRowCount((int)m_allWindows.size());
 	m_preWindow.SetColumnCount(1);
 	m_preWindow.SetDisplayRows(3);
 	m_preWindow.SetDisplayColumns(1);
-	if (m_allWindows.size() == 0)
-	{
-		m_preWindow.ClearAllPreviews();
-		acutPrintf(_T("未找到符合条件的记录\n"));
-	}
 	for (int i = 0; i < m_allWindows.size(); i++)
 	{
 		CString str;
 		str.Format(_T("原型编号：%s\n窗户面积：%.2lf\n通风量：0.9\n动态类型：动态\n适用范围：集团"), m_allWindows[i].prototypeId, width * height / 1E6);
 		m_preWindow.AddPreview(i, 0, TY_GetLocalFilePath() + m_allWindows[i].prototypeFile, str);
 	}
-	//vector<int> selectedRows;
-	//selectedRows.push_back(0);
-	//m_preWindow.SetSelectedRows(selectedRows);
-	m_preWindow.Invalidate(FALSE);
+
+	m_preWindow.SelectPreview(0, 0);
 }
 
 void CWindowDlg::OnBnClickedRadioDoor()
@@ -209,17 +198,24 @@ void CWindowDlg::OnBnClickedRadioDoor()
 
 void CWindowDlg::OnBnClickedCalculate()
 {
-	double area = _ttof(GetText(m_area));
+	double area = TYUI_GetDouble(m_area);
 
-	CString sRate = GetText(m_rate);
+	CString sRate = TYUI_GetText(m_rate);
 	double rate = _ttof(sRate);
 	int pos = sRate.Find(_T('/'));
 	if (pos != -1)
 		rate /= _ttof(sRate.Mid(pos + 1));
 
-	CString ventilation;
-	ventilation.Format(_T("%.2lf"), area * rate);
-	m_ventilation.SetWindowTextW(ventilation);
+	TYUI_SetDouble(m_ventilation, area * rate);
+}
+
+void CWindowDlg::OnBnClickedAutoIndex()
+{
+	UpdateData(TRUE);
+	if (m_autoIndex)
+		m_number.SetReadOnly(TRUE);
+	else
+		m_number.SetReadOnly(FALSE);
 }
 
 void CWindowDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
@@ -228,14 +224,32 @@ void CWindowDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	int nSel = pView->iRow;
 	if (nSel >= 0 && nSel < m_allWindows.size())
 	{
-		m_number.SetWindowTextW(m_allWindows[nSel].id);
-		CString str;
-		str.Format(_T("%.0lf"), m_allWindows[nSel].m_openWindowSize);
-		m_openWidth.SetWindowTextW(str);
-		str.Format(_T("%.0lf"), m_allWindows[nSel].m_windowH2);
-		m_H2.SetWindowTextW(str);
-		str.Format(_T("%.0lf"), m_allWindows[nSel].m_wallDis);
-		m_H2.SetWindowTextW(str);
+		vSRCDimData& vDimData = m_allWindows[nSel].m_dimData;
+		for (UINT i = 0; i < vDimData.size(); i++)
+		{
+			if (vDimData[i].sCodeName == _T("W1"))
+			{
+				if ((vDimData[i].type == SINGLE) || (vDimData[i].type == MULTI))
+				{
+					TYUI_Enable(m_openWidth);
+					TYUI_InitComboBox(m_openWidth, vDimData[i].values, vDimData[i].defaultValue);
+				}
+				else
+					TYUI_Disable(m_openWidth);
+			}
+			if (vDimData[i].sCodeName == _T("H2"))
+			{
+				if ((vDimData[i].type == SINGLE) || (vDimData[i].type == MULTI))
+				{
+					TYUI_Enable(m_H2);
+					TYUI_InitComboBox(m_H2, vDimData[i].values, vDimData[i].defaultValue);
+				}
+				else
+					TYUI_Disable(m_H2);
+			}
+		}
+
+		TYUI_SetText(m_number, m_allWindows[nSel].prototypeId);
 		m_radioYes = (m_allWindows[nSel].m_isBayWindow ? 0 : 1);
 		UpdateData(FALSE);
 	}
@@ -249,32 +263,24 @@ void CWindowDlg::SetRadioDoor(int radioDoor)
 
 	if (radioDoor == 0)
 	{
-		m_doorType.EnableWindow(TRUE);
-		m_openType.EnableWindow(FALSE);
-		m_openAmount.EnableWindow(FALSE);
-		m_openWidth.EnableWindow(FALSE);
-		GetDlgItem(IDC_RADIO_YES)->EnableWindow(FALSE);
-		GetDlgItem(IDC_RADIO_NO)->EnableWindow(FALSE);
+		TYUI_Enable(m_doorType);
+
+		TYUI_Disable(m_openType);
+		TYUI_Disable(m_openAmount);
+		TYUI_Disable(m_openWidth);
+		TYUI_Disable(*GetDlgItem(IDC_RADIO_YES));
+		TYUI_Disable(*GetDlgItem(IDC_RADIO_NO));
 	}
 	else
 	{
-		m_openType.EnableWindow(TRUE);
-		m_openAmount.EnableWindow(TRUE);
-		m_openWidth.EnableWindow(TRUE);
-		GetDlgItem(IDC_RADIO_YES)->EnableWindow(TRUE);
-		GetDlgItem(IDC_RADIO_NO)->EnableWindow(TRUE);
-		m_doorType.EnableWindow(FALSE);
-	}
-}
+		TYUI_Enable(m_openType);
+		TYUI_Enable(m_openAmount);
+		TYUI_Enable(m_openWidth);
+		TYUI_Enable(*GetDlgItem(IDC_RADIO_YES));
+		TYUI_Enable(*GetDlgItem(IDC_RADIO_NO));
 
-void CWindowDlg::SetCombobox(CComboBox& comboBox, const vCString& options, int nSel /*= 0*/)
-{
-	comboBox.ResetContent();
-	for (UINT i = 0; i < options.size(); i++)
-	{
-		comboBox.InsertString(i,options[i]);
+		TYUI_Disable(m_doorType);
 	}
-	comboBox.SetCurSel(nSel);
 }
 
 void CWindowDlg::LoadDefaultValue()
@@ -284,27 +290,22 @@ void CWindowDlg::LoadDefaultValue()
 	vCString& areaTypes = WebIO::GetInstance()->m_gongNengQus;
 	vCString& openAmount = WebIO::GetInstance()->m_windowOpenAmount;
 	vCString& rate = WebIO::GetInstance()->m_rate;
+	vCString& wallDis = WebIO::GetInstance()->m_windowWallDis;
 
-	m_width.SetWindowTextW(_T("1500"));
-	m_height.SetWindowTextW(_T("1200"));
-	m_ventilation.SetWindowTextW(_T("2"));
-	m_area.SetWindowTextW(_T("8"));
+	TYUI_SetInt(m_width, 1500);
+	TYUI_SetInt(m_height, 1200);
+	TYUI_SetInt(m_ventilation, 2);
+	TYUI_SetInt(m_area, 8);
 	
-	SetCombobox(m_doorType, doorTypes);
-	SetCombobox(m_openType, openTypes);
-	SetCombobox(m_areaType, areaTypes);
-	SetCombobox(m_openAmount, openAmount);
-	SetCombobox(m_rate, rate);
+	TYUI_InitComboBox(m_doorType, doorTypes, doorTypes.empty() ? _T("") : doorTypes[0]);
+	TYUI_InitComboBox(m_openType, openTypes, openTypes.empty()? _T("") : openTypes[0]);
+	TYUI_InitComboBox(m_areaType, areaTypes, areaTypes.empty() ? _T("") : areaTypes[0]);
+	TYUI_InitComboBox(m_openAmount, openAmount, openAmount.empty() ? _T("") : openAmount[0]);
+	TYUI_InitComboBox(m_rate, rate, rate.empty() ? _T("") : rate[0]);
+	TYUI_InitComboBox(m_distance, wallDis, wallDis.empty() ? _T("") : wallDis[0]);
 
-	m_autoIndex = TRUE;
 	m_viewDir.SetCurSel(0);
+	m_autoIndex = TRUE;
+	m_number.SetReadOnly(TRUE);
 	UpdateData(FALSE);
 }
-
-CString CWindowDlg::GetText(const CWnd& pWnd)
-{
-	CString str;
-	pWnd.GetWindowTextW(str);
-	return str;
-}
-

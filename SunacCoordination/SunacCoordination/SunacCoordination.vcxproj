@@ -188,6 +188,7 @@
     <ClCompile Include="Tool\Regedit.cpp" />
     <ClCompile Include="UI\AirconditionerDlg.cpp" />
     <ClCompile Include="UI\BathroomDlg.cpp" />
+    <ClCompile Include="UI\ComFun_MFC.cpp" />
     <ClCompile Include="UI\DlgLeftBar.cpp" />
     <ClCompile Include="UI\DlgLogin.cpp" />
     <ClCompile Include="UI\DoorDlg.cpp" />
@@ -282,6 +283,7 @@
     <ClInclude Include="Tool\Regedit.h" />
     <ClInclude Include="UI\AirconditionerDlg.h" />
     <ClInclude Include="UI\BathroomDlg.h" />
+    <ClInclude Include="UI\ComFun_MFC.h" />
     <ClInclude Include="UI\DlgLeftBar.h" />
     <ClInclude Include="UI\DlgLogin.h" />
     <ClInclude Include="UI\DoorDlg.h" />
