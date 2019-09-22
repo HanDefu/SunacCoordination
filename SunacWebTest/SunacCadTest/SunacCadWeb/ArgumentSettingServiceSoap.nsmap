@@ -6,8 +6,6 @@ SOAP_NMAC struct Namespace namespaces[] = {
         { "SOAP-ENC", "http://www.w3.org/2003/05/soap-encoding", "http://schemas.xmlsoap.org/soap/encoding/", NULL },
         { "xsi", "http://www.w3.org/2001/XMLSchema-instance", "http://www.w3.org/*/XMLSchema-instance", NULL },
         { "xsd", "http://www.w3.org/2001/XMLSchema", "http://www.w3.org/*/XMLSchema", NULL },
-        { "AS2", "http://tempuri.org/ArgumentSettingServiceSoap", NULL, NULL },
-        { "AS", "http://tempuri.org/", NULL, NULL },
-        { "AS3", "http://tempuri.org/ArgumentSettingServiceSoap12", NULL, NULL },
+        { "ns1", "http://tempuri.org/", NULL, NULL },
         { NULL, NULL, NULL, NULL}
     };

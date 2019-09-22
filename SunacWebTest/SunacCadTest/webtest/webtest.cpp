@@ -26,20 +26,23 @@ int _tmain(int argc, _TCHAR* argv[])
 
 void Test()
 {
-	wchar_t attName[32] = _T("area");
+	std::wstring attName = _T("area");
 	ArgumentSettingServiceSoapProxy cadWeb;
 
-	_AS__StandardDesignAttribute desingAtt;
-	desingAtt.AtrributeName = attName;
+	_ns1__StandardDesignAttribute desingAtt;
+	desingAtt.AtrributeName = &attName;
 
-	_AS__StandardDesignAttributeResponse attResult;
+	_ns1__StandardDesignAttributeResponse attResult;
 
 	int nRet = cadWeb.StandardDesignAttribute(&desingAtt, attResult);
 
-	int  len = wcslen(attResult.StandardDesignAttributeResult);
+	UINT  len = (attResult.StandardDesignAttributeResult)->length();
 
-	wprintf(attResult.StandardDesignAttributeResult);
-	wprintf(_T("\r\n"));
+
+	MessageBox(NULL, attResult.StandardDesignAttributeResult->c_str(), _T("·µ»Ø½á¹û"), 0);
+
+	//wprintf(attResult.StandardDesignAttributeResult->c_str());
+	//wprintf(_T("\r\n"));
 	//wcout << attResult.StandardDesignAttributeResult << endl;
 
 	system("pause");
