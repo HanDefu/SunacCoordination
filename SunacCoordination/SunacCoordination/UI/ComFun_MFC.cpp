@@ -92,7 +92,7 @@ void TYUI_InitComboBox(CComboBox& comboBox, vdouble options, double defaultValue
 	for (UINT i = 0; i < options.size(); i++)
 	{
 		vstr[i].Format(_T("%.2lf"), options[i]);
-		if (defaultValue == options[i])
+		if (abs(defaultValue - options[i]) < 1E-3)
 			str = vstr[i];
 	}
 	TYUI_InitComboBox(comboBox, vstr, str);

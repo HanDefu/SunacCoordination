@@ -116,6 +116,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 
 	// TODO: 在此添加控件通知处理程序代码
 	AcGePoint3d origin = TY_GetPoint();
+	acedPostCommandPrompt();
 
 	double width = TYUI_GetDouble(m_width);
 	double height = TYUI_GetDouble(m_height);
