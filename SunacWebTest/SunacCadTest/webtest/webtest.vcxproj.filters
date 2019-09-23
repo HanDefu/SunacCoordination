@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="SunacCADWeb">
+      <UniqueIdentifier>{c5e00d32-dcf6-4a44-ae81-bd4c222b281a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+    <None Include="..\SunacCadWeb\ArgumentSettingServiceSoap.nsmap">
+      <Filter>SunacCADWeb</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SunacCadWeb\soapArgumentSettingServiceSoapProxy.h">
+      <Filter>SunacCADWeb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SunacCadWeb\soapH.h">
+      <Filter>SunacCADWeb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SunacCadWeb\soapStub.h">
+      <Filter>SunacCADWeb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SunacCadWeb\stdsoap2.h">
+      <Filter>SunacCADWeb</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="webtest.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SunacCadWeb\soapArgumentSettingServiceSoapProxy.cpp">
+      <Filter>SunacCADWeb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SunacCadWeb\soapC.cpp">
+      <Filter>SunacCADWeb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SunacCadWeb\stdsoap2.cpp">
+      <Filter>SunacCADWeb</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

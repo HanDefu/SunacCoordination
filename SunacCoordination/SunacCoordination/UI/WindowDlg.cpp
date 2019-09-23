@@ -73,6 +73,7 @@ void CWindowDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_RATE, m_rate);
 	DDX_Check(pDX, IDC_CHECK_AUTOINDEX, m_autoIndex);
 	DDX_Control(pDX, IDC_COMBO_VIEWDIR, m_viewDir);
+	DDX_Control(pDX, IDC_CHECK_IMAGE, m_isMirror);
 }
 
 
@@ -147,6 +148,9 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		CString str;
 		str.Format(L"%d_%d",(int)(oneWindow.GetW()), (int)(oneWindow.GetH()));
 			
+		if (m_isMirror.GetCheck())
+		    TYCOM_MirrorOneObject(oneWindow.m_id, origin, AcGeVector3d(0,1,0));
+
 		//把UI的数据记录在图框的扩展字典中
 		AttrWindow * pWindow = new AttrWindow(m_allWindows[sels[0]]);
 		oneWindow.AddAttribute(pWindow);
@@ -286,12 +290,12 @@ void CWindowDlg::SetRadioDoor(int radioDoor)
 
 void CWindowDlg::LoadDefaultValue()
 {
-	vCString& doorTypes = WebIO::GetInstance()->m_doorTypes;
-	vCString& openTypes = WebIO::GetInstance()->m_windowOpenTypes;
-	vCString& areaTypes = WebIO::GetInstance()->m_gongNengQus;
-	vCString& openAmount = WebIO::GetInstance()->m_windowOpenAmount;
-	vCString& rate = WebIO::GetInstance()->m_rate;
-	vCString& wallDis = WebIO::GetInstance()->m_windowWallDis;
+	const vCString& doorTypes = WebIO::GetConfigDict()->Door_GetTypes();
+	const vCString& openTypes = WebIO::GetConfigDict()->Window_GetOpenTypes();
+	const vCString& areaTypes = WebIO::GetConfigDict()->GetGongNengQus();
+	const vCString& openAmount = WebIO::GetConfigDict()->Window_GetOpenAmount();
+	const vCString& rate = WebIO::GetConfigDict()->Window_GetRate();
+	const vCString& wallDis = WebIO::GetConfigDict()->Window_GetWallDis();
 
 	TYUI_SetInt(m_width, 1500);
 	TYUI_SetInt(m_height, 1200);

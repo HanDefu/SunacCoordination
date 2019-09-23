@@ -235,6 +235,21 @@
     <ClCompile Include="UI\ComFun_MFC.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="WebIO\SunacCadWeb\stdsoap2.cpp">
+      <Filter>WebIO\SunacCadWeb</Filter>
+    </ClCompile>
+    <ClCompile Include="Tool\MarkupXml\Markup.cpp">
+      <Filter>Tool\MarkupXml</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\SunacCadWeb\soapC.cpp">
+      <Filter>WebIO\SunacCadWeb</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.cpp">
+      <Filter>WebIO\SunacCadWeb</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\ConfigDictionary.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -546,6 +561,24 @@
     <ClInclude Include="UI\ComFun_MFC.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="WebIO\SunacCadWeb\stdsoap2.h">
+      <Filter>WebIO\SunacCadWeb</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\MarkupXml\Markup.h">
+      <Filter>Tool\MarkupXml</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\SunacCadWeb\soapH.h">
+      <Filter>WebIO\SunacCadWeb</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\SunacCadWeb\soapStub.h">
+      <Filter>WebIO\SunacCadWeb</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.h">
+      <Filter>WebIO\SunacCadWeb</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\ConfigDictionary.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -586,6 +619,12 @@
     </Filter>
     <Filter Include="UI\PreviewCtrl">
       <UniqueIdentifier>{71d3a590-6f0f-47f8-8a31-57c09642b0a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WebIO\SunacCadWeb">
+      <UniqueIdentifier>{8291efd3-84a8-4691-84d4-e1aa4e0cf166}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tool\MarkupXml">
+      <UniqueIdentifier>{990c504d-77ee-4770-a1ae-8cfb3d110f83}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -647,6 +686,9 @@
     </None>
     <None Include="res\windowdir.bmp">
       <Filter>bmp</Filter>
+    </None>
+    <None Include="WebIO\SunacCadWeb\ArgumentSettingServiceSoap.nsmap">
+      <Filter>WebIO\SunacCadWeb</Filter>
     </None>
   </ItemGroup>
 </Project>

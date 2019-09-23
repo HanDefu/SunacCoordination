@@ -82,3 +82,7 @@ CString TY_GetLocalFilePath();
 
 vector<pair<CString,CString>> TY_FindFilesInDirecotry(CString fileName,CString directory );
 vector<pair<CString,CString>> TY_FindFilesInDirecotryRecursion( CString fileName,CString directory,int recursionCount);
+int TYCOM_MirrorOneObject(AcDbObjectId entId, AcGePoint3d first, AcGeVector3d dir);
+
+
+
