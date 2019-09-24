@@ -148,7 +148,8 @@ void CMD_test()
 
 	//Kitchen_KUq_DuiKai_SetDoorPos(eId, 3600);
 	Kitchen_SelectZaoTai(eId, L"900");
-	Kitchen_KUq_DuiKai_SetZaoTaiPos(eId, 3000, L"900");
+	Kitchen_SelectShuiPen(eId, L"Ë«Åè900");
+	Kitchen_KUq_DuiKai_SetShuiPenPos(eId, 3000);
 	//Kitchen_SelectShuiPen(eId, L"Ë«Åè900");
 	//Kitchen_SelectZaoTai(eId, L"800");
 	//acedRedraw(eId,);
