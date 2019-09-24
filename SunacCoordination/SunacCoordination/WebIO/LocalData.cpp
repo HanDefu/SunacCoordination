@@ -248,7 +248,7 @@ vector<AttrWindow> CLocalData::GetAllDoors()  //获取所有门
 	return m_doors;
 }
 
-std::vector<AttrWindow >  CWindowLocalData::GetWindows(double width, CString openType, int openNum, CString gongNengQu)
+std::vector<AttrWindow >  CLocalData::GetWindows(double width, CString openType, int openNum, CString gongNengQu)
 {
 	std::vector<AttrWindow> data;
 
@@ -300,7 +300,7 @@ std::vector<AttrWindow >  CWindowLocalData::GetWindows(double width, CString ope
 	return data;
 }
 
-std::vector<AttrWindow >  CWindowLocalData::GetDoors(double width, CString openType, int openNum, CString gongNengQu)
+std::vector<AttrWindow >  CLocalData::GetDoors(double width, CString openType, int openNum, CString gongNengQu)
 {
 	std::vector<AttrWindow> data;
 

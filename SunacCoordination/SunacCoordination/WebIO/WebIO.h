@@ -6,6 +6,7 @@
 #include "../Object/AttrRailing.h"
 #include "../Object/AttrToilet.h"
 #include "../Object/AttrWindow.h"
+#include "ConfigDictionary.h"
 
 
 class WebIO
@@ -19,6 +20,8 @@ public:
 		static WebIO instance;
 		return &instance;
 	}
+
+	static const CConfigDictionary* GetConfigDict() {	return &(GetInstance()->m_configDic);	}
 
 public:
 	//-----------------原型搜索函数--------------//
@@ -86,47 +89,12 @@ public:
 	//输入原型编号，下载到固定地址
 	//ok返回0 否则返回-1
 	static int DownLoadFile(CString id, CString filePathName);
-public:
-	vCString m_quyus;//区域
-	vCString  m_gongNengQus;//功能区
-	vCString  m_windowDoorPoss;//门窗位置关系--厨房卫生间
-	vCString m_windowOpenTypes;//外窗开启类型
-	vCString m_doorTypes;//门类型
-	vCString m_kitchenTypes;//厨房类型
-	vCString m_kitchenShuiPenTypes;//厨房水盆类型
-	vCString m_kitchenBingXiangTypes;//厨房冰箱类型
-	vCString m_kitchenZaoTaiWidths;//厨房灶台宽度
-	vCString m_toiletTypes;//卫生间类型
-	vCString m_toiletTaiPenWidths;//卫生间类型
-	vCString m_toiletMaTongTypes;//卫生间类型
-	vCString m_toiletGuanXiWidths;//卫生间盥洗区宽度---是否支持手动输入？？
-	vCString m_airPiShus;//空调所有的匹数
-	vCString m_airLengNingShuiGuanPos;//空调冷凝水管位置
-	vCString m_YuShuiGuanPos; //空调雨水管位置
+
+
 
 protected:
-	//---------------通用查字典-----------------------//
-	vCString GetQuyus();//区域
-	vCString GetGongNengQus();//功能区
-	vCString GetWindowDoorPoss();//门窗位置关系
+	CConfigDictionary m_configDic;
 
-	vCString Window_GetOpenTypes();//开启类型
-
-	vCString Door_GetTypes();//门类型
-
-	vCString Kitchen_GetTypes();//厨房类型
-	vCString Kitchen_GetShuiPenTypes();//水盆类型
-	vCString Kitchen_GetBingXiangTypes();//冰箱类型
-	vCString Kitchen_GetZaoTaiWidths();//灶台宽度
-
-	vCString Toilet_GetTypes();//卫生间类型
-	vCString Toilet_GetTaiPenWidths();//卫生间类型
-	vCString Toilet_GetMaTongTypes();//卫生间类型
-	vCString Toilet_GetGuanXiWidths();//盥洗区宽度---是否支持手动输入？？
-
-	vCString Air_GetPiShus();//所有的匹数
-	vCString Air_GetLengNingShuiGuanPos();//冷凝水管位置
-	vCString Air_GetYuShuiGuanPos();//空调雨水管位置
 }; 
 
 #define WEBINST (WebIO::GetInstance())

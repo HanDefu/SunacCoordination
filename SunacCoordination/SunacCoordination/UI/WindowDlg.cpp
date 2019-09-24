@@ -10,7 +10,7 @@
 #include "../GlobalSetting.h"
 #include "../WebIO/LocalData.h"
 #include "../Object/AttrWindow.h"
-#include "../WebIO/WindowLocalData.h"
+#include "../WebIO/LocalData.h"
 // CWindowDlg ¶Ô»°¿ò
 
 IMPLEMENT_DYNAMIC(CWindowDlg, CAcUiDialog)
@@ -170,9 +170,9 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 	CString areaType = TYUI_GetText(m_areaType);
 
 	if (m_radioDoor == 0)
-	    m_allWindows = CWindowLocalData::GetInstance()->GetDoors(width, openType, openNum, areaType);
+	    m_allWindows = CLocalData::GetInstance()->GetDoors(width, openType, openNum, areaType);
 	else
-		m_allWindows = CWindowLocalData::GetInstance()->GetWindows(width, openType, openNum, areaType);
+		m_allWindows = CLocalData::GetInstance()->GetWindows(width, openType, openNum, areaType);
 
 	m_preWindow.ClearAllPreviews();
 	if (m_allWindows.empty())
