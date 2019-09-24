@@ -226,7 +226,7 @@
     <ClCompile Include="WebIO\SunacCadWeb\soapC.cpp" />
     <ClCompile Include="WebIO\SunacCadWeb\stdsoap2.cpp" />
     <ClCompile Include="WebIO\WebIO.cpp" />
-    <ClCompile Include="WebIO\WindowLocalData.cpp" />
+    <ClCompile Include="WebIO\LocalData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command\Command.h" />
@@ -337,7 +337,7 @@
     <ClInclude Include="WebIO\SunacCadWeb\soapStub.h" />
     <ClInclude Include="WebIO\SunacCadWeb\stdsoap2.h" />
     <ClInclude Include="WebIO\WebIO.h" />
-    <ClInclude Include="WebIO\WindowLocalData.h" />
+    <ClInclude Include="WebIO\LocalData.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\SunacCoordination.rc" />

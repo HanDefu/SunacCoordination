@@ -50,6 +50,7 @@ public:
 	double m_paiQiDaoWid;//排气道宽度
 	bool m_isMirror;//镜像
 	bool m_hasPaiQiDao;//是否含有排气道
+	CString m_kitchenType;//厨房类型
 	CString m_windowDoorPos;//门窗位置关系
 
 	//这些属性体现在图块中--可以从图块直接取出的 就不用从属性记录

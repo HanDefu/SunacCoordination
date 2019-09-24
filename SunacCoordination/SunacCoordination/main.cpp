@@ -35,7 +35,7 @@
 #include "GlobalSetting.h"
 #include "command\CommandWindowDetail.h"
 #include "Common/ComFun_Sunac.h"
-#include "webIO\WindowLocalData.h"
+#include "webIO\LocalData.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -295,8 +295,8 @@ static void initApp()
 #ifdef WORK_LOCAL
 	CString localWindowPath = TY_GetLocalFilePath();
 
-	//+("外窗数据") 
-	CWindowLocalData::GetInstance()->LoadFromExcel((localWindowPath+("外窗数据.xlsx") ));
+	CLocalData::GetInstance()->LoadWindowFromExcel((localWindowPath+("外窗数据.xlsx")));
+	CLocalData::GetInstance()->LoadAirConFromExcel((localWindowPath+("外窗数据.xlsx")));
 #endif
 }
 

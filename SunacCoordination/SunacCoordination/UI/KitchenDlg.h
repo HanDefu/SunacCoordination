@@ -1,9 +1,9 @@
 #pragma once
 #include "gridctrlwithpreview.h"
 #include "afxwin.h"
-#include "../Common/ComFun_Sunac.h"
-#include "../Object/RCKitchen.h"
 #include "../Object/AttrKitchen.h"
+#include "../Common/ComFun_Sunac.h"
+#include "ComFun_MFC.h"
 
 // CKitchenDlg ¶Ô»°¿ò
 
@@ -38,11 +38,11 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	CGridCtrlWithPreview m_preKitchen;
+	CComboBox m_kitchenType;
 	CComboBox m_floorRange;
 	CComboBox m_basinType;
 	CComboBox m_benchWidth;
-	CComboBox m_frigeType;
-	CComboBox m_projectLevel;
+	CComboBox m_fridgeType;
 
 	TYRect m_rect;
 	DIR doorDir;
@@ -55,7 +55,15 @@ public:
 	afx_msg void OnBnClickedMfcbuttonDoorDir();
 	afx_msg void OnBnClickedMfcbuttonWindowDir();
 	afx_msg void OnBnClickedButtonSearch();
+	afx_msg void OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult);
 
 	DIR GetDir(ads_point pt);
+	void LoadDefaultValue();
 	vector<AttrKitchen*> FilterKUq();
+	vector<AttrKitchen*> FilterKUqc();
+	vector<AttrKitchen*> FilterKUs();
+	vector<AttrKitchen*> FilterKL();
+	vector<AttrKitchen*> FilterKI();
+
+	vector<AttrKitchen*> m_allKitchens;
 };

@@ -63,4 +63,5 @@ public:
 
 	vCString Air_GetPiShus()const;//所有的匹数
 	vCString Air_GetLengNingShuiGuanPos()const;//冷凝水管位置
+	vCString Air_GetYuShuiGuanPos();
 };

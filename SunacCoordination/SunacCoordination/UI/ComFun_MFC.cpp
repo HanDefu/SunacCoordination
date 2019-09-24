@@ -98,3 +98,23 @@ void TYUI_InitComboBox(CComboBox& comboBox, vdouble options, double defaultValue
 	TYUI_InitComboBox(comboBox, vstr, str);
 }
 
+void TYUI_InitComboBox(CComboBox& comboBox, CString options, CString defaultValue)
+{
+	comboBox.ResetContent();
+
+	options += _T(";");
+	CString str;
+	int count = 0;
+	for (int pos = options.Find(_T(';')); pos != -1; pos = options.Find(_T(';')))
+	{
+		str = options.Left(pos);
+		options = options.Mid(pos + 1);
+		if (str.IsEmpty())
+			continue;
+		comboBox.InsertString(count, str);
+		if (str == defaultValue)
+			comboBox.SetCurSel(count);
+		count++;
+	}
+}
+

@@ -123,22 +123,71 @@ std::vector<AttrKitchen *> WebIO::GetKitchens
 	std::vector<AttrKitchen *> result;
 #ifdef WORK_LOCAL//本地模式
 	CString localKitchenPath = TY_GetLocalFilePath();
-	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"K*.dwg",localKitchenPath);
-	for (int i = 0; i < localFiles.size(); i++)
-	{
-		AttrKitchen *pAttribute = new AttrKitchen();
-		CString strid;
-		pAttribute->m_yxid = L"KI";
-		pAttribute->m_name = localFiles[i].first;
-		pAttribute->m_isJiTuan = true;
-		pAttribute->m_isDynamic = true;
-		pAttribute->m_type = L"厨房";
-		pAttribute->m_filePathName = localFiles[i].second;
-		result.push_back(pAttribute);
-		pAttribute->close();
+	CString localFile;
+	AttrKitchen *pAttribute = new AttrKitchen();
 
-		result.push_back(pAttribute);
+	if (type == L"Uq")
+	{
+		if (weiZhiGuanXi == L"对开")
+		{
+			if (jinShen >= 2000)
+			{
+				localFile = L"KUq_2600X1700.dwg";
+				pAttribute->m_kitchenType = L"Uq";
+				pAttribute->m_windowDoorPos = L"对开";
+			}
+			else
+			{
+				localFile = L"KUq_2450X2000.dwg";
+				pAttribute->m_kitchenType = L"Uq";
+				pAttribute->m_windowDoorPos = L"对开";
+			}
+		}
+		else
+		{
+			if (jinShen >= 2000)
+			{
+				localFile = L"KUq_2600X1700_c.dwg";
+				pAttribute->m_kitchenType = L"Uq";
+				pAttribute->m_windowDoorPos = L"垂直开";
+			}
+			else
+			{
+				localFile = L"KUq_2450X2000_c.dwg";
+				pAttribute->m_kitchenType = L"Uq";
+				pAttribute->m_windowDoorPos = L"垂直开";
+			}
+		}
 	}
+	else if (type == L"Us")
+	{
+		localFile = L"KUs_2300X2450.dwg";
+		pAttribute->m_kitchenType = L"Us";
+		pAttribute->m_windowDoorPos = L"对开";
+	}
+	else if (type == L"L")
+	{
+		localFile = L"KL_1700X2600.dwg";
+		pAttribute->m_kitchenType = L"L";
+		pAttribute->m_windowDoorPos = L"对开";
+	}
+	else
+	{
+		localFile = L"KI_1700X4100.dwg";
+		pAttribute->m_kitchenType = L"I";
+		pAttribute->m_windowDoorPos = L"对开";
+	}
+	
+	pAttribute->m_yxid = localFile;
+	pAttribute->m_name = localFile;
+	pAttribute->m_isJiTuan = true;
+	pAttribute->m_isDynamic = true;
+	pAttribute->m_type = L"厨房";
+	pAttribute->m_filePathName = localKitchenPath;
+	
+
+	result.push_back(pAttribute);
+	pAttribute->close();
 #else
 
 #endif

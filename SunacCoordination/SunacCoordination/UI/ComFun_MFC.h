@@ -16,3 +16,4 @@ void TYUI_Disable(CWnd& wnd);
 void TYUI_InitComboBox(CComboBox& comboBox, vCString options, CString defaultValue);
 void TYUI_InitComboBox(CComboBox& comboBox, vint options, int defaultValue);
 void TYUI_InitComboBox(CComboBox& comboBox, vdouble options, double defaultValue);
+void TYUI_InitComboBox(CComboBox& comboBox, CString options, CString defaultValue);

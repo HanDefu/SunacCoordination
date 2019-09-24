@@ -24,6 +24,16 @@ AttrAirCon::~AttrAirCon()
 
 AttrAirCon::AttrAirCon(const AttrAirCon &other) : AttrObject(other)
 {
+	//push_back复制
+	m_airConId = other.m_airConId;						//空调序号
+	m_airConPrototypeId = other.m_airConPrototypeId;	//空调原型编号
+	m_airConPrototypeFile = other.m_airConPrototypeFile;//空调原型文件
+	m_airConHorseNumber = other.m_airConHorseNumber;	//空调匹数
+	m_airConPipePos = other.m_airConPipePos;			//空调冷凝水管位置
+	m_airConRainRiser = other.m_airConRainRiser;		//空调是否有雨水立管穿过
+	m_airConRainRiserPos = other.m_airConRainRiserPos;	//空调雨水管位置
+	m_airConInstallNetSize = other.m_airConInstallNetSize;//空调安装净尺寸
+
 
 }
 

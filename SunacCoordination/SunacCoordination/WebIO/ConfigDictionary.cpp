@@ -5,11 +5,15 @@
 #include <atlconv.h>  
 #include "SunacCadWeb\ArgumentSettingServiceSoap.nsmap"
 #include "SunacCadWeb\soapArgumentSettingServiceSoapProxy.h"
+
+
+#include "..\Tool\MarkupXml\Markup.h"
+
 using namespace std;
 
 CConfigDictionary::CConfigDictionary()
 {
-	InitFromWeb();
+	//InitFromWeb();
 	//m_quyus = GetQuyus();//区域
 	//m_gongNengQus = GetGongNengQus();//功能区
 	//m_windowDoorPoss = GetWindowDoorPoss();//门窗位置关系
@@ -35,6 +39,7 @@ CConfigDictionary::~CConfigDictionary()
 
 }
 
+//接口文档 https://docs.qq.com/doc/DUUpaanJLZmlSQ2d4
 bool CConfigDictionary::InitFromWeb()
 {
 	vector<wstring> p_paraOut;
@@ -51,20 +56,57 @@ bool CConfigDictionary::InitFromWeb()
 
 bool CConfigDictionary::GetConfigFromWeb(wstring p_paraTypeName, vector<wstring>& p_paraOut)
 {
-	ArgumentSettingServiceSoapProxy cadWeb;
+	p_paraOut.clear();
 
 	_ns1__StandardDesignAttribute desingAtt;
 	desingAtt.AtrributeName = &p_paraTypeName;
-
 	_ns1__StandardDesignAttributeResponse attResult;
 
+	ArgumentSettingServiceSoapProxy cadWeb;
 	int nRet = cadWeb.StandardDesignAttribute(&desingAtt, attResult);
-
-
-	//todo 解析字符串到
 
 	//UINT  len = (attResult.StandardDesignAttributeResult)->length();
 	//MessageBox(NULL, attResult.StandardDesignAttributeResult->c_str(), _T("返回结果"), 0);
+
+
+	//解析字符串出结果
+	CMarkup xml;
+	xml.SetDoc(*(attResult.StandardDesignAttributeResult));
+	xml.ResetMainPos();
+	xml.FindElem();	//根节点
+	xml.IntoElem();
+	{
+		wstring sCode;
+		if (xml.FindElem(_T("Code")))
+		{
+			sCode = xml.GetData();
+		}
+		wstring sMsg;
+		if (xml.FindElem(_T("Message")))
+		{
+			sMsg = xml.GetData();
+		}
+
+		wstring str;
+		if (false == xml.FindElem(_T("ArgumentSettings")))
+		{
+			return false;
+		}
+
+		xml.IntoElem();
+		while (xml.FindElem(_T("ArgumentSetting")))
+		{
+			xml.IntoElem();
+			if (xml.FindElem(_T("ArgumentText")))
+			{
+				str = xml.GetData();
+				p_paraOut.push_back(str);
+			}
+			xml.OutOfElem();
+		}
+		xml.OutOfElem();
+	}
+	xml.OutOfElem();
 	
 	return true;
 }
@@ -293,12 +335,24 @@ vCString CConfigDictionary::Air_GetPiShus()const
 #endif
 	return strs;
 }
-vCString CConfigDictionary::Air_GetLengNingShuiGuanPos()const
+vCString CConfigDictionary::Air_GetLengNingShuiGuanPos()const//获得冷凝水管位置
 {
 	vCString strs;
 #ifdef WORK_LOCAL//本地模式
 	strs.push_back(L"后边");
 	strs.push_back(L"侧边");
+#else
+
+#endif
+	return strs;
+}
+
+vCString CConfigDictionary::Air_GetYuShuiGuanPos() //获得雨水管位置
+{
+	vCString strs;
+#ifdef WORK_LOCAL//本地模式
+	strs.push_back(L"侧边");
+	strs.push_back(L"后边");
 #else
 
 #endif

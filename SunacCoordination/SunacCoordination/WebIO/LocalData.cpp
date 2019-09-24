@@ -1,5 +1,5 @@
 #include "StdAfx.h"
-#include "WindowLocalData.h"
+#include "LocalData.h"
 #include "..\Tool\Excel\Excel.h"
 #include "string"
 #include "afx.h"
@@ -8,24 +8,23 @@
 using namespace Excel;
 
 
-CWindowLocalData::CWindowLocalData()
+CLocalData::CLocalData()
 {
 }
 
-CWindowLocalData::~CWindowLocalData()
+CLocalData::~CLocalData()
 {
 }
 
-CWindowLocalData* CWindowLocalData::GetInstance()
+CLocalData* CLocalData::GetInstance()
 {
-	static CWindowLocalData instance;
+	static CLocalData instance;
 	return &instance;
 }
 
 
-
-
-RCDimData CWindowLocalData::ConvertStringToDimData
+//ÃÅ´°
+RCDimData CLocalData::ConvertStringToDimData
 (
     CString code,
     CString  valueType,
@@ -69,19 +68,10 @@ RCDimData CWindowLocalData::ConvertStringToDimData
 	return data;
 }
 
-void CWindowLocalData::LoadFromExcel(CString p_file) //½«Êý¾Ý´Ó±í¸ñÖÐ¶ÁÈ¡µ½m_windowsÖÐ
+void CLocalData::LoadWindowFromExcel(CString p_file) //½«Êý¾Ý´Ó±í¸ñÖÐ¶ÁÈ¡µ½m_windowsÖÐ
 {
 	Excel::CExcelUtil xls; 
 
-	/*CString strFilter=_T("Excel Files (*.xlsx)|*.xlsx|All Files (*.*)|*.*||");
-	CFileDialog FileDlg (true, _T("Ñ¡ÔñÐèÒªµ¼ÈëµÄÎÄ¼þ(*.xlsx)"), NULL,
-		OFN_FILEMUSTEXIST| OFN_HIDEREADONLY, strFilter);
-
-	if ( FileDlg.DoModal () != IDOK )
-	{
-		return ;
-	} 
-	CString filename=FileDlg.GetPathName();*/
 	CString	widthMin;			//¿í¶È×îÐ¡Öµ
 	CString	widthMax;			//¿í¶È×î´óÖµ
 
@@ -98,13 +88,14 @@ void CWindowLocalData::LoadFromExcel(CString p_file) //½«Êý¾Ý´Ó±í¸ñÖÐ¶ÁÈ¡µ½m_win
 
 	
 
-	for (int i = 2; i <= 1000000; i++)  //Ñ­»·excel±í¸ñµÄÐÐ
+	for (int i = 2; i <= 1000000; i++)  //Ñ­»·excel±í¸ñ  Íâ´°Êý¾Ý±íµ¥µÄÐÐ
 	{
 		AttrWindow attrwindow;
 		
-		attrwindow.id = xls.GetCellValue(i, 1); //Í¨¹ýÐÐºÍÁÐ»ñÈ¡µ¥Ôª¸ñµÄÖµ£¬²¢½«Öµ¸³¸ø¶ÔÏóattrwindow
+		//Í¨¹ýÐÐºÍÁÐ»ñÈ¡µ¥Ôª¸ñµÄÖµ£¬²¢½«Öµ¸³¸ø¶ÔÏóattrwindow
+		attrwindow.id = xls.GetCellValue(i, 1); 
 		attrwindow.prototypeId = xls.GetCellValue(i, 2);
-		if (attrwindow.prototypeId.GetLength() == 0)
+		if (attrwindow.prototypeId.GetLength() == 0)  //¶ÔÔ­ÐÍ±àºÅµÄ³¤¶È½øÐÐÅÐ¶Ï£¬µ±Ô­ÐÍ±àºÅÎª¿ÕµÄÊ±ºò½áÊøÑ­»·
 			break;
 
 		attrwindow.prototypeFile = xls.GetCellValue(i, 3);
@@ -140,8 +131,6 @@ void CWindowLocalData::LoadFromExcel(CString p_file) //½«Êý¾Ý´Ó±í¸ñÖÐ¶ÁÈ¡µ½m_win
 		//W1
 		valueType = xls.GetCellValue(i, 15);
 		value = xls.GetCellValue(i, 16);
-		//min = xls.GetCellValue(i, 17);
-		//max = xls.GetCellValue(i, 18);
 		defaultValue = xls.GetCellValue(i, 19);
 		state = xls.GetCellValue(i, 20);
 
@@ -152,8 +141,6 @@ void CWindowLocalData::LoadFromExcel(CString p_file) //½«Êý¾Ý´Ó±í¸ñÖÐ¶ÁÈ¡µ½m_win
 		//W2
 		valueType = xls.GetCellValue(i, 21);
 		value = xls.GetCellValue(i, 22);
-		//min = xls.GetCellValue(i, 23);
-		//max = xls.GetCellValue(i, 24);
 		defaultValue = xls.GetCellValue(i, 25);
 		state = xls.GetCellValue(i, 26);
 
@@ -184,8 +171,6 @@ void CWindowLocalData::LoadFromExcel(CString p_file) //½«Êý¾Ý´Ó±í¸ñÖÐ¶ÁÈ¡µ½m_win
 		//H2
 		valueType = xls.GetCellValue(i, 39);
 		value = xls.GetCellValue(i, 40);
-		//min = xls.GetCellValue(i, 23);
-		//max = xls.GetCellValue(i, 24);
 		defaultValue = xls.GetCellValue(i, 43);
 		state = xls.GetCellValue(i, 44);
 
@@ -195,8 +180,6 @@ void CWindowLocalData::LoadFromExcel(CString p_file) //½«Êý¾Ý´Ó±í¸ñÖÐ¶ÁÈ¡µ½m_win
 		//H3
 		valueType = xls.GetCellValue(i, 45);
 		value = xls.GetCellValue(i, 46);
-		//min = xls.GetCellValue(i, 23);
-		//max = xls.GetCellValue(i, 24);
 		defaultValue = xls.GetCellValue(i, 49);
 		state = xls.GetCellValue(i, 50);
 
@@ -212,7 +195,7 @@ void CWindowLocalData::LoadFromExcel(CString p_file) //½«Êý¾Ý´Ó±í¸ñÖÐ¶ÁÈ¡µ½m_win
 }
 
 
-bool CWindowLocalData::GetWindowById(CString p_sId,AttrWindow& value)  //Í¨¹ýÔ­ÐÍ±àºÅ»ñÈ¡´°»§
+bool CLocalData::GetWindowById(CString p_sId,AttrWindow& value)  //Í¨¹ýÔ­ÐÍ±àºÅ»ñÈ¡´°»§
 {
 	for (int i = 0; i < m_windows.size(); i++)
 	{
@@ -226,7 +209,7 @@ bool CWindowLocalData::GetWindowById(CString p_sId,AttrWindow& value)  //Í¨¹ýÔ­Ð
 	return false;
 }
 
-bool  CWindowLocalData::GetWindowByFileName(CString p_sFileName, AttrWindow&value)//Í¨¹ýÎÄ¼þÃû»ñÈ¡´°»§
+bool  CLocalData::GetWindowByFileName(CString p_sFileName, AttrWindow&value)//Í¨¹ýÎÄ¼þÃû»ñÈ¡´°»§
 {
 	for (int i = 0; i < m_windows.size(); i++)
 	{
@@ -239,7 +222,7 @@ bool  CWindowLocalData::GetWindowByFileName(CString p_sFileName, AttrWindow&valu
 	return false;
 }
 
-vector<AttrWindow> CWindowLocalData::GetAllWindows()  //»ñÈ¡ËùÓÐ´°»§
+vector<AttrWindow> CLocalData::GetAllWindows() //»ñÈ¡ËùÓÐ´°»§
 {
 	for (int i = 0; i < m_windows.size(); i++)
 	{
@@ -252,7 +235,7 @@ vector<AttrWindow> CWindowLocalData::GetAllWindows()  //»ñÈ¡ËùÓÐ´°»§
 	return m_wins;
 }
 
-vector<AttrWindow> CWindowLocalData::GetAllDoors()  //»ñÈ¡ËùÓÐÃÅ
+vector<AttrWindow> CLocalData::GetAllDoors()  //»ñÈ¡ËùÓÐÃÅ
 {
 	for (int i = 0; i < m_windows.size(); i++)
 	{
@@ -265,7 +248,7 @@ vector<AttrWindow> CWindowLocalData::GetAllDoors()  //»ñÈ¡ËùÓÐÃÅ
 	return m_doors;
 }
 
-std::vector<AttrWindow >  CWindowLocalData::GetWindows(double width, CString openType, int openNum, CString gongNengQu)
+std::vector<AttrWindow >  CLocalData::GetWindows(double width, CString openType, int openNum, CString gongNengQu)
 {
 	std::vector<AttrWindow> data;
 
@@ -317,7 +300,7 @@ std::vector<AttrWindow >  CWindowLocalData::GetWindows(double width, CString ope
 	return data;
 }
 
-std::vector<AttrWindow >  CWindowLocalData::GetDoors(double width, CString openType, int openNum, CString gongNengQu)
+std::vector<AttrWindow >  CLocalData::GetDoors(double width, CString openType, int openNum, CString gongNengQu)
 {
 	std::vector<AttrWindow> data;
 
@@ -368,3 +351,69 @@ std::vector<AttrWindow >  CWindowLocalData::GetDoors(double width, CString openT
 
 	return data;
 }
+
+
+
+//¿Õµ÷
+void CLocalData::LoadAirConFromExcel(CString p_file)  //´Ó±í¸ñÖÐ°ÑÊý¾Ý´«µ½m_airconÖÐ
+{
+	Excel::CExcelUtil xls; 
+
+	xls.OpenExcel(p_file); //´ò¿ª±í¸ñ
+	xls.SetVisible(false); 
+	xls.SetActiveSheet(2); //´ò¿ªµÚÒ»ÕÅ±í
+
+
+	for (int i = 2; i <= 1000000; i++)  //Ñ­»·excel±í¸ñ  ¿Õµ÷Êý¾Ý±íµ¥µÄÐÐ
+	{
+		AttrAirCon attrAirCon;
+
+		attrAirCon.m_airConId = xls.GetCellValue(i, 1); //Í¨¹ýÐÐºÍÁÐ»ñÈ¡µ¥Ôª¸ñµÄÖµ£¬²¢½«Öµ¸³¸ø¶ÔÏóattrwindow
+		attrAirCon.m_airConPrototypeId = xls.GetCellValue(i, 2);
+		if (attrAirCon.m_airConPrototypeId.GetLength() == 0)
+			break;
+
+		attrAirCon.m_airConPrototypeFile = xls.GetCellValue(i, 3);
+		attrAirCon.m_airConHorseNumber = xls.GetCellValue(i, 4);
+		attrAirCon.m_airConPipePos = xls.GetCellValue(i, 5);
+		attrAirCon.m_airConRainRiser = xls.GetCellValue(i, 6);
+		attrAirCon.m_airConRainRiserPos = xls.GetCellValue(i, 7);
+		attrAirCon.m_airConInstallNetSize = xls.GetCellValue(i, 8);
+		
+		m_aircon.push_back(attrAirCon); //½«Êý¾ÝÌí¼Óµ½vectorÊý×ém_windows
+	}
+	xls.CloseExcel();//¹Ø±Õ±í¸ñ
+}
+
+bool CLocalData::GetAirConById(CString p_sId,AttrAirCon& value)   //Í¨¹ýÔ­ÐÍ±àºÅ´Óm_airconÖÐ»ñÈ¡¿Õµ÷
+{
+	for (int i = 0; i < m_aircon.size(); i++)
+	{
+		if (m_aircon[i].m_airConPrototypeId == p_sId)
+		{
+			value = m_aircon[i];
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool CLocalData::GetAirConByFileName(CString p_sFileName, AttrAirCon&value)   //Í¨¹ýÎÄ¼þÃû´Óm_airconÖÐ»ñÈ¡¿Õµ÷
+{
+	for (int i = 0; i < m_aircon.size(); i++)
+	{
+		if (m_aircon[i].m_airConPrototypeFile == p_sFileName)
+		{
+			value = m_aircon[i];
+			return true;
+		}
+	}
+	return false;
+}
+
+vector<AttrAirCon> CLocalData::GetAllAirCon()   //»ñÈ¡ËùÓÐ¿Õµ÷
+{
+	return m_aircon;
+}
+
