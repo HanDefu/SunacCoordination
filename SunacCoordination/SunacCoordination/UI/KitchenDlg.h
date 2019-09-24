@@ -43,27 +43,32 @@ public:
 	CComboBox m_basinType;
 	CComboBox m_benchWidth;
 	CComboBox m_fridgeType;
+	CEdit m_number;
+	BOOL m_bHasAirOut;
+	BOOL m_bAutoIndex;
 
 	TYRect m_rect;
-	DIR doorDir;
-	DIR windowDir;
+	DIR m_doorDir;
+	DIR m_windowDir;
+	vector<AttrKitchen*> m_allKitchens;
 
 	afx_msg void OnBnClickedOk();
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);///---01
-	afx_msg void OnBnClickedMfcbuttonInsert();
-	afx_msg void OnBnClickedMfcbuttonRange();
-	afx_msg void OnBnClickedMfcbuttonDoorDir();
-	afx_msg void OnBnClickedMfcbuttonWindowDir();
+	afx_msg void OnBnClickedButtonInsert();
+	afx_msg void OnBnClickedButtonRange();
+	afx_msg void OnBnClickedButtonDoorDir();
+	afx_msg void OnBnClickedButtonWindowDir();
 	afx_msg void OnBnClickedButtonSearch();
 	afx_msg void OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnBnClickedAirOut();
+	afx_msg void OnBnClickedAutoIndex();
 
 	DIR GetDir(ads_point pt);
 	void LoadDefaultValue();
+	vector<AttrKitchen*> FilterKU();
 	vector<AttrKitchen*> FilterKUq();
 	vector<AttrKitchen*> FilterKUqc();
 	vector<AttrKitchen*> FilterKUs();
 	vector<AttrKitchen*> FilterKL();
 	vector<AttrKitchen*> FilterKI();
-
-	vector<AttrKitchen*> m_allKitchens;
 };

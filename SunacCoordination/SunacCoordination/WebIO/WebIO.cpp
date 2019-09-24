@@ -131,27 +131,31 @@ std::vector<AttrKitchen *> WebIO::GetKitchens
 		if (weiZhiGuanXi == L"对开")
 		{
 			if (jinShen < 2000)
-				localFile = L"KUq_2600X1700.dwg";
+				localFile = L"KUq_Dui.dwg";
 			else
-				localFile = L"KUq_2450X2000.dwg";
+				localFile = L"KUq_Dui_ZhuanJIao.dwg";
 		}
 		else
 		{
 			if (jinShen < 2000)
-				localFile = L"KUq_2600X1700_c.dwg";
+				localFile = L"KUq_Chui.dwg";
 			else
-				localFile = L"KUq_2450X2000_c.dwg";
+				localFile = L"KUq_Chui_ZhuanJIao.dwg";
 		}
 	}
 	else if (type == L"Us")
-		localFile = L"KUs_2300X2450.dwg";
+		localFile = L"KUs.dwg";
 	else if (type == L"L")
-		localFile = L"KL_1700X2600.dwg";
+		localFile = L"KL.dwg";
 	else
-		localFile = L"KI_1700X4100.dwg";
+		localFile = L"KI.dwg";
+	if (hasPaiQiDao)
+		localFile.Replace(_T(".dwg"), _T("_P.dwg"));
 
 	AttrKitchen *pAttribute = new AttrKitchen();
-	pAttribute->m_yxid = localFile;
+	pAttribute->m_yxid.Format(L"K%s_%.0lf×%.0lf", type, kaiJian, jinShen);
+	if (weiZhiGuanXi == L"垂直开")
+		pAttribute->m_yxid += L"_c";
 	pAttribute->m_name = localFile;
 	pAttribute->m_isJiTuan = true;
 	pAttribute->m_isDynamic = true;

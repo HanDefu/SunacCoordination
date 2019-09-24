@@ -12,11 +12,13 @@ IMPLEMENT_DYNAMIC(CKitchenDlg, CAcUiDialog)
 
 CKitchenDlg::CKitchenDlg(CWnd* pParent /*=NULL*/)
 	: CAcUiDialog(CKitchenDlg::IDD, pParent)
+	, m_bHasAirOut(FALSE)
+	, m_bAutoIndex(FALSE)
 {
 	m_rect.SetLB(AcGePoint3d(0, 0, 0));
 	m_rect.SetRT(AcGePoint3d(0, 0, 0));
-	doorDir = DIR_UNKNOWN;
-	windowDir = DIR_UNKNOWN;
+	m_doorDir = DIR_UNKNOWN;
+	m_windowDir = DIR_UNKNOWN;
 }
 
 CKitchenDlg::~CKitchenDlg()
@@ -60,16 +62,21 @@ void CKitchenDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_BENCHWIDTH, m_benchWidth);
 	DDX_Control(pDX, IDC_COMBO_FRIDGETYPE, m_fridgeType);
 	DDX_Control(pDX, IDC_COMBO_KITCHENTYPE, m_kitchenType);
+	DDX_Check(pDX, IDC_CHECK_AIROUT, m_bHasAirOut);
+	DDX_Check(pDX, IDC_CHECK_AUTOINDEX, m_bAutoIndex);
+	DDX_Control(pDX, IDC_EDIT_KITCHENNUMBER, m_number);
 }
 
 BEGIN_MESSAGE_MAP(CKitchenDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDOK, &CKitchenDlg::OnBnClickedOk)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
-	ON_BN_CLICKED(IDC_BUTTON_INSERTKITCHEN, &CKitchenDlg::OnBnClickedMfcbuttonInsert)
-	ON_BN_CLICKED(IDC_BUTTON_RANGE, &CKitchenDlg::OnBnClickedMfcbuttonRange)
-	ON_BN_CLICKED(IDC_BUTTON_DOORDIR, &CKitchenDlg::OnBnClickedMfcbuttonDoorDir)
-	ON_BN_CLICKED(IDC_BUTTON_WINDOWDIR, &CKitchenDlg::OnBnClickedMfcbuttonWindowDir)
+	ON_BN_CLICKED(IDC_BUTTON_INSERTKITCHEN, &CKitchenDlg::OnBnClickedButtonInsert)
+	ON_BN_CLICKED(IDC_BUTTON_RANGE, &CKitchenDlg::OnBnClickedButtonRange)
+	ON_BN_CLICKED(IDC_BUTTON_DOORDIR, &CKitchenDlg::OnBnClickedButtonDoorDir)
+	ON_BN_CLICKED(IDC_BUTTON_WINDOWDIR, &CKitchenDlg::OnBnClickedButtonWindowDir)
 	ON_BN_CLICKED(IDC_BUTTON_SEARCH, &CKitchenDlg::OnBnClickedButtonSearch)
+	ON_BN_CLICKED(IDC_CHECK_AIROUT, &CKitchenDlg::OnBnClickedAirOut)
+	ON_BN_CLICKED(IDC_CHECK_AUTOINDEX, &CKitchenDlg::OnBnClickedAutoIndex)
 	ON_NOTIFY(GVN_SELCHANGED, IDC_PREVIEW_KITCHEN, CKitchenDlg::OnSelChanged)
 END_MESSAGE_MAP()
 
@@ -94,7 +101,7 @@ void CKitchenDlg::OnBnClickedOk()
 	CAcUiDialog::OnOK();
 }
 
-void CKitchenDlg::OnBnClickedMfcbuttonInsert()
+void CKitchenDlg::OnBnClickedButtonInsert()
 {
 	ShowWindow(FALSE);
 
@@ -135,27 +142,34 @@ void CKitchenDlg::OnBnClickedMfcbuttonInsert()
 }
 
 
-void CKitchenDlg::OnBnClickedMfcbuttonRange()
+void CKitchenDlg::OnBnClickedButtonRange()
 {
 	ShowWindow(false);
-	m_rect = TY_GetOneRect();
-	if (m_rect.GetWidth() < 1E-4 || m_rect.GetHeight() < 1E-4)
+	TYRect rect = TY_GetOneRect();
+	ShowWindow(true);
+
+	if (m_rect.IsSame(rect, 1E-4))
+		return;
+	if (rect.GetWidth() < 1E-4 || rect.GetHeight() < 1E-4)
 	{
 		acutPrintf(_T("所选厨房范围无效\n"));
-		ShowWindow(true);
 		return;
 	}
-	ShowWindow(true);
+	m_rect = rect;
+
+	//更新范围后清空原有搜索列表
+	m_preKitchen.ClearAllPreviews();
 }
 
 
-void CKitchenDlg::OnBnClickedMfcbuttonDoorDir()//门方向
+void CKitchenDlg::OnBnClickedButtonDoorDir()//门方向
 {
 	if (m_rect.GetWidth() < 1E-4 || m_rect.GetHeight() < 1E-4)
 	{
 		acutPrintf(_T("请先选择厨房范围\n"));
 		return;
 	}
+
 	ShowWindow(false);
 	ads_point pt;
 	acedInitGet(32,NULL);
@@ -165,29 +179,34 @@ void CKitchenDlg::OnBnClickedMfcbuttonDoorDir()//门方向
 		return;
 	}
 	ShowWindow(true);
-	doorDir = GetDir(pt);
-	if (windowDir == DIR_UNKNOWN)
+
+	DIR temp = GetDir(pt);
+	if (m_doorDir == temp) //未修改，直接跳过
 		return;
-	if (windowDir == doorDir)
+	if (m_windowDir == temp)
 	{
-		doorDir = DIR_UNKNOWN;
 		acutPrintf(_T("门窗方向不能相同\n"));
-		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系："));
 		return;
 	}
-	if (abs(windowDir - doorDir) == 2)
+	m_doorDir = temp;
+	if (m_windowDir == DIR_UNKNOWN)
+		return;
+	//更新方向后清空原有搜索列表
+	m_preKitchen.ClearAllPreviews();
+	if (abs(m_windowDir - m_doorDir) == 2)
 		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗对开"));
 	else
 		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗垂直开"));
 }
 
-void CKitchenDlg::OnBnClickedMfcbuttonWindowDir()//窗方向
+void CKitchenDlg::OnBnClickedButtonWindowDir()//窗方向
 {
 	if (m_rect.GetWidth() < 1E-4 || m_rect.GetHeight() < 1E-4)
 	{
 		acutPrintf(_T("请先选择厨房范围\n"));
 		return;
 	}
+
 	ShowWindow(false);
 	ads_point pt;
 	acedInitGet(32,NULL);
@@ -197,17 +216,21 @@ void CKitchenDlg::OnBnClickedMfcbuttonWindowDir()//窗方向
 		return;
 	}
 	ShowWindow(true);
-	windowDir = GetDir(pt);
-	if (doorDir == DIR_UNKNOWN)
+
+	DIR temp = GetDir(pt);
+	if (m_windowDir == temp) //未修改，直接跳过
 		return;
-	if (windowDir == doorDir)
+	if (m_doorDir == temp)
 	{
-		windowDir = DIR_UNKNOWN;
 		acutPrintf(_T("门窗方向不能相同\n"));
-		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系："));
 		return;
 	}
-	if (abs(windowDir - doorDir) == 2)
+	m_windowDir = temp;
+	if (m_doorDir == DIR_UNKNOWN)
+		return;
+	//更新方向后清空原有搜索列表
+	m_preKitchen.ClearAllPreviews();
+	if (abs(m_windowDir - m_doorDir) == 2)
 		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗对开"));
 	else
 		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗垂直开"));
@@ -221,19 +244,14 @@ void CKitchenDlg::OnBnClickedButtonSearch()
 		acutPrintf(_T("请先选择厨房范围\n"));
 		return;
 	}
-	if (doorDir == DIR_UNKNOWN || windowDir == DIR_UNKNOWN)
+	if (m_doorDir == DIR_UNKNOWN || m_windowDir == DIR_UNKNOWN)
 	{
 		acutPrintf(_T("请先选择门窗方向\n"));
 		return;
 	}
 	CString type = TYUI_GetText(m_kitchenType);
-	if (type == _T("浅U型"))
-		if (abs(windowDir - doorDir) == 2)
-			m_allKitchens = FilterKUq();
-		else
-			m_allKitchens = FilterKUqc();
-	else if (type == _T("深U型"))
-		m_allKitchens = FilterKUs();
+	if (type == _T("U型"))
+		m_allKitchens = FilterKU();
 	else if (type == _T("L型"))
 		m_allKitchens = FilterKL();
 	else if (type == _T("I型"))
@@ -266,13 +284,15 @@ void CKitchenDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 
 	int kaiJian = int(m_rect.GetWidth() + 0.5);
 	int jinShen = int(m_rect.GetHeight() + 0.5);
-	if (doorDir == DIR_LEFT || doorDir == DIR_RIGHT)
+	if (m_doorDir == DIR_LEFT || m_doorDir == DIR_RIGHT)
 		swap(kaiJian, jinShen);
 
 	if (nSel >= 0 && nSel < m_allKitchens.size())
 	{
 		CString type = m_allKitchens[nSel]->m_kitchenType;
 		CString pos = m_allKitchens[nSel]->m_windowDoorPos;
+
+		TYUI_SetText(m_number, m_allKitchens[nSel]->m_yxid);
 		if (type == _T("Uq") && pos == _T("对开"))
 		{
 			if (kaiJian < 2900)
@@ -327,6 +347,17 @@ void CKitchenDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	}
 }
 
+void CKitchenDlg::OnBnClickedAirOut()
+{
+	UpdateData(TRUE);
+}
+
+void CKitchenDlg::OnBnClickedAutoIndex()
+{
+	UpdateData(TRUE);
+	m_number.SetReadOnly(m_bAutoIndex);
+}
+
 DIR CKitchenDlg::GetDir(ads_point pt)
 {
 	double minDis = abs(pt[X] - m_rect.GetLB().x);
@@ -353,6 +384,25 @@ void CKitchenDlg::LoadDefaultValue()
 {
 	const vCString& kitchenTypes = WebIO::GetConfigDict()->Kitchen_GetTypes();
 	TYUI_InitComboBox(m_kitchenType, kitchenTypes, kitchenTypes.empty() ? _T("") : kitchenTypes[0]);
+	m_bAutoIndex = TRUE;
+	m_number.SetReadOnly(TRUE);
+	UpdateData(FALSE);
+}
+
+vector<AttrKitchen*> CKitchenDlg::FilterKU()
+{
+	vector<AttrKitchen*> attrKitchen;
+	int kaiJian = int(m_rect.GetWidth() + 0.5);
+	int jinShen = int(m_rect.GetHeight() + 0.5);
+	if (m_doorDir == DIR_LEFT || m_doorDir == DIR_RIGHT)
+		swap(kaiJian, jinShen);
+
+	if ((kaiJian <= jinShen) && (abs(m_windowDir - m_doorDir) == 2))
+		return FilterKUq();
+	else if (kaiJian <= jinShen)
+		return FilterKUqc();
+	else
+		return FilterKUs();
 }
 
 vector<AttrKitchen*> CKitchenDlg::FilterKUq()
@@ -360,7 +410,7 @@ vector<AttrKitchen*> CKitchenDlg::FilterKUq()
 	vector<AttrKitchen*> attrKitchen;
 	int kaiJian = int(m_rect.GetWidth() + 0.5);
 	int jinShen = int(m_rect.GetHeight() + 0.5);
-	if (doorDir == DIR_LEFT || doorDir == DIR_RIGHT)
+	if (m_doorDir == DIR_LEFT || m_doorDir == DIR_RIGHT)
 		swap(kaiJian, jinShen);
 
 	//限定开间与进深的范围
@@ -381,7 +431,7 @@ vector<AttrKitchen*> CKitchenDlg::FilterKUq()
 	if ((jinShen - 1700) % 150 != 0)
 		return attrKitchen;
 
-	return WebIO::GetInstance()->GetKitchens(kaiJian, jinShen, _T("对开"), _T("Uq"), true);
+	return WebIO::GetInstance()->GetKitchens(kaiJian, jinShen, _T("对开"), _T("Uq"), (m_bHasAirOut == FALSE));
 }
 
 vector<AttrKitchen*> CKitchenDlg::FilterKUqc()
@@ -389,7 +439,7 @@ vector<AttrKitchen*> CKitchenDlg::FilterKUqc()
 	vector<AttrKitchen*> attrKitchen;
 	int kaiJian = int(m_rect.GetWidth() + 0.5);
 	int jinShen = int(m_rect.GetHeight() + 0.5);
-	if (doorDir == DIR_LEFT || doorDir == DIR_RIGHT)
+	if (m_doorDir == DIR_LEFT || m_doorDir == DIR_RIGHT)
 		swap(kaiJian, jinShen);
 
 	//限定开间与进深的范围
@@ -410,7 +460,7 @@ vector<AttrKitchen*> CKitchenDlg::FilterKUqc()
 	if ((jinShen - 1700) % 150 != 0)
 		return attrKitchen;
 
-	return WebIO::GetInstance()->GetKitchens(kaiJian, jinShen, _T("垂直开"), _T("Uq"), true);
+	return WebIO::GetInstance()->GetKitchens(kaiJian, jinShen, _T("垂直开"), _T("Uq"), (m_bHasAirOut == FALSE));
 }
 
 vector<AttrKitchen*> CKitchenDlg::FilterKUs()
@@ -418,7 +468,7 @@ vector<AttrKitchen*> CKitchenDlg::FilterKUs()
 	vector<AttrKitchen*> attrKitchen;
 	int kaiJian = int(m_rect.GetWidth() + 0.5);
 	int jinShen = int(m_rect.GetHeight() + 0.5);
-	if (doorDir == DIR_LEFT || doorDir == DIR_RIGHT)
+	if (m_doorDir == DIR_LEFT || m_doorDir == DIR_RIGHT)
 		swap(kaiJian, jinShen);
 
 	//限定开间与进深的范围
@@ -436,10 +486,10 @@ vector<AttrKitchen*> CKitchenDlg::FilterKUs()
 		return attrKitchen;
 
 	//只能对开
-	if (abs(windowDir - doorDir) != 2)
+	if (abs(m_windowDir - m_doorDir) != 2)
 		return attrKitchen;
 
-	return WebIO::GetInstance()->GetKitchens(kaiJian, jinShen, _T("对开"), _T("Us"), true);
+	return WebIO::GetInstance()->GetKitchens(kaiJian, jinShen, _T("对开"), _T("Us"), (m_bHasAirOut == FALSE));
 }
 
 vector<AttrKitchen*> CKitchenDlg::FilterKL()
@@ -447,7 +497,7 @@ vector<AttrKitchen*> CKitchenDlg::FilterKL()
 	vector<AttrKitchen*> attrKitchen;
 	int kaiJian = int(m_rect.GetWidth() + 0.5);
 	int jinShen = int(m_rect.GetHeight() + 0.5);
-	if (doorDir == DIR_LEFT || doorDir == DIR_RIGHT)
+	if (m_doorDir == DIR_LEFT || m_doorDir == DIR_RIGHT)
 		swap(kaiJian, jinShen);
 
 	//限定开间与进深的范围
@@ -463,10 +513,10 @@ vector<AttrKitchen*> CKitchenDlg::FilterKL()
 		return attrKitchen;
 
 	//只能对开
-	if (abs(windowDir - doorDir) != 2)
+	if (abs(m_windowDir - m_doorDir) != 2)
 		return attrKitchen;
 
-	return WebIO::GetInstance()->GetKitchens(kaiJian, jinShen, _T("对开"), _T("L"), true);
+	return WebIO::GetInstance()->GetKitchens(kaiJian, jinShen, _T("对开"), _T("L"), (m_bHasAirOut == FALSE));
 }
 
 vector<AttrKitchen*> CKitchenDlg::FilterKI()
@@ -474,7 +524,7 @@ vector<AttrKitchen*> CKitchenDlg::FilterKI()
 	vector<AttrKitchen*> attrKitchen;
 	int kaiJian = int(m_rect.GetWidth() + 0.5);
 	int jinShen = int(m_rect.GetHeight() + 0.5);
-	if (doorDir == DIR_LEFT || doorDir == DIR_RIGHT)
+	if (m_doorDir == DIR_LEFT || m_doorDir == DIR_RIGHT)
 		swap(kaiJian, jinShen);
 
 	//限定开间与进深的范围
@@ -488,8 +538,8 @@ vector<AttrKitchen*> CKitchenDlg::FilterKI()
 		return attrKitchen;
 
 	//只能对开
-	if (abs(windowDir - doorDir) != 2)
+	if (abs(m_windowDir - m_doorDir) != 2)
 		return attrKitchen;
 
-	return WebIO::GetInstance()->GetKitchens(kaiJian, jinShen, _T("对开"), _T("I"), true);
+	return WebIO::GetInstance()->GetKitchens(kaiJian, jinShen, _T("对开"), _T("I"), (m_bHasAirOut == FALSE));
 }
