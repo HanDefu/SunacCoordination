@@ -213,7 +213,7 @@ vCString CConfigDictionary::Kitchen_GetBingXiangTypes()const
 	vCString strs;
 #ifdef WORK_LOCAL//本地模式
 	strs.push_back(L"单开门700");
-	strs.push_back(L"双开门800");
+	strs.push_back(L"对开门800");
 	strs.push_back(L"对开门1000");
 #else
 

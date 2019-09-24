@@ -4,9 +4,6 @@
 #include "stdafx.h"
 #include "KitchenDlg.h"
 #include "afxdialogex.h"
-#include "../Common/ComFun_Sunac.h"
-#include "../Object/RCKitchen.h"
-#include "../Object/AttrKitchen.h"
 // CKitchenDlg 对话框
 
 IMPLEMENT_DYNAMIC(CKitchenDlg, CAcUiDialog)
@@ -14,7 +11,10 @@ IMPLEMENT_DYNAMIC(CKitchenDlg, CAcUiDialog)
 CKitchenDlg::CKitchenDlg(CWnd* pParent /*=NULL*/)
 	: CAcUiDialog(CKitchenDlg::IDD, pParent)
 {
-
+	m_rect.SetLB(AcGePoint3d(0, 0, 0));
+	m_rect.SetRT(AcGePoint3d(0, 0, 0));
+	doorDir = DIR_UNKNOWN;
+	windowDir = DIR_UNKNOWN;
 }
 
 CKitchenDlg::~CKitchenDlg()
@@ -102,8 +102,6 @@ void CKitchenDlg::OnBnClickedOk()
 	CAcUiDialog::OnOK();
 }
 
-TYRect rect;
-
 void CKitchenDlg::OnBnClickedMfcbuttonInsert()
 {
 	ShowWindow(FALSE);
@@ -112,8 +110,8 @@ void CKitchenDlg::OnBnClickedMfcbuttonInsert()
 	vCString allFiles;
 	TY_GetAllKitchenFiles(allFiles);
 
-	double width = rect.GetWidth(), height = rect.GetHeight();
-	AcGePoint3d origin = rect.GetLB();
+	double width = m_rect.GetWidth(), height = m_rect.GetHeight();
+	AcGePoint3d origin = m_rect.GetLB();
 
 	vector<int> sels = m_preKitchen.GetSelectedRows();
 	if (sels.size() > 0)
@@ -148,35 +146,79 @@ void CKitchenDlg::OnBnClickedMfcbuttonInsert()
 void CKitchenDlg::OnBnClickedMfcbuttonRange()
 {
 	ShowWindow(false);
-	rect = TY_GetOneRect();
+	m_rect = TY_GetOneRect();
+	if (m_rect.GetWidth() < 1E-4 || m_rect.GetHeight() < 1E-4)
+	{
+		acutPrintf(_T("所选厨房范围无效\n"));
+		ShowWindow(true);
+		return;
+	}
 	ShowWindow(true);
 }
 
 
 void CKitchenDlg::OnBnClickedMfcbuttonDoorDir()//门方向
 {
-	// TODO: 在此添加控件通知处理程序代码
+	if (m_rect.GetWidth() < 1E-4 || m_rect.GetHeight() < 1E-4)
+	{
+		acutPrintf(_T("请先选择厨房范围\n"));
+		return;
+	}
 	ShowWindow(false);
 	ads_point pt;
 	acedInitGet(32,NULL);
 	if(acedGetPoint(NULL,L"\n选择门的位置\n",pt)!=RTNORM) //第一角点选择
 	{
+		ShowWindow(true);
 		return;
 	}
 	ShowWindow(true);
+	doorDir = GetDir(pt);
+	if (windowDir == DIR_UNKNOWN)
+		return;
+	if (windowDir == doorDir)
+	{
+		doorDir = DIR_UNKNOWN;
+		acutPrintf(_T("门窗方向不能相同\n"));
+		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系："));
+		return;
+	}
+	if (abs(windowDir - doorDir) == 2)
+		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗对开"));
+	else
+		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗垂直开"));
 }
 
 void CKitchenDlg::OnBnClickedMfcbuttonWindowDir()//窗方向
 {
-	// TODO: 在此添加控件通知处理程序代码
+	if (m_rect.GetWidth() < 1E-4 || m_rect.GetHeight() < 1E-4)
+	{
+		acutPrintf(_T("请先选择厨房范围\n"));
+		return;
+	}
 	ShowWindow(false);
 	ads_point pt;
 	acedInitGet(32,NULL);
 	if(acedGetPoint(NULL,L"\n选择窗的位置\n",pt)!=RTNORM) //第一角点选择
 	{
+		ShowWindow(true);
 		return;
 	}
 	ShowWindow(true);
+	windowDir = GetDir(pt);
+	if (doorDir == DIR_UNKNOWN)
+		return;
+	if (windowDir == doorDir)
+	{
+		windowDir = DIR_UNKNOWN;
+		acutPrintf(_T("门窗方向不能相同\n"));
+		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系："));
+		return;
+	}
+	if (abs(windowDir - doorDir) == 2)
+		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗对开"));
+	else
+		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗垂直开"));
 }
 
 
@@ -188,5 +230,56 @@ void CKitchenDlg::OnBnClickedButtonSearch()
 		m_preKitchen.AddPreview(i, 0, allFiles[i], _T("厨房类型：KU\n厨房面积：2.1\n通风量：1.6"));
 
 	//m_preKitchen.ShowPreviews();
+
+}
+
+DIR CKitchenDlg::GetDir(ads_point pt)
+{
+	double minDis = abs(pt[X] - m_rect.GetLB().x);
+	DIR dir = DIR_LEFT;
+	if (abs(pt[X] - m_rect.GetRT().x) < minDis)
+	{
+		minDis = abs(pt[X] - m_rect.GetRT().x);
+		dir = DIR_RIGHT;
+	}
+	if (abs(pt[Y] - m_rect.GetLB().y) < minDis)
+	{
+		minDis = abs(pt[Y] - m_rect.GetLB().y);
+		dir = DIR_BOTTOM;
+	}
+	if (abs(pt[Y] - m_rect.GetRT().y) < minDis)
+	{
+		minDis = abs(pt[Y] - m_rect.GetRT().y);
+		dir = DIR_TOP;
+	}
+	return dir;
+}
+
+vector<AttrKitchen*> CKitchenDlg::FilterKUq()
+{
+	vector<AttrKitchen*> attrKitchen;
+	int width = int(m_rect.GetWidth() + 0.5);
+	int height = int(m_rect.GetHeight() + 0.5);
+
+	//限定开间与进深的范围
+	if (width < 2450 || width > 3500)
+		return attrKitchen;
+	if (height < 1700 || height > 2600)
+		return attrKitchen;
+	if (width < height)
+		return attrKitchen;
+
+	//不支持2450*1700
+	if (width == 2450 && height == 1700)
+		return attrKitchen;
+
+	//以150递增尺寸
+	if ((width - 2450) % 150 != 0)
+		return attrKitchen;
+	if ((height - 1700) % 150 != 0)
+		return attrKitchen;
+
+	//进深>=2000时包含转角橱柜
+	//if (height >= 2000)
 
 }

@@ -86,7 +86,7 @@ std::vector<AttrDoor *> WebIO::GetDoors
 		strid.Format(L"%s_%d", L"L_DOOR_",i+1);
 		pAttribute->m_yxid = strid;
 		pAttribute->m_name = localFiles[i].first;
-		pAttribute->m_name.TrimRight(L".dwg");
+		pAttribute->m_name = pAttribute->m_name.Left(pAttribute->m_name.GetLength() - 4);
 		pAttribute->m_isJiTuan = true;
 		pAttribute->m_isDynamic = true;
 		pAttribute->m_type = L"门";
@@ -122,22 +122,22 @@ std::vector<AttrKitchen *> WebIO::GetKitchens
 {
 	std::vector<AttrKitchen *> result;
 #ifdef WORK_LOCAL//本地模式
-	CString localWindowPath = TY_GetLocalFilePath();
-	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"*_Kitchen.dwg",localWindowPath);
+	CString localKitchenPath = TY_GetLocalFilePath();
+	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"K*.dwg",localKitchenPath);
 	for (int i = 0; i < localFiles.size(); i++)
 	{
 		AttrKitchen *pAttribute = new AttrKitchen();
 		CString strid;
-		strid.Format(L"%s_%d", L"L_KITCHEN_",i+1);
-		pAttribute->m_yxid = strid;
+		pAttribute->m_yxid = L"KI";
 		pAttribute->m_name = localFiles[i].first;
-		pAttribute->m_name.TrimRight(L".dwg");
 		pAttribute->m_isJiTuan = true;
 		pAttribute->m_isDynamic = true;
 		pAttribute->m_type = L"厨房";
-
+		pAttribute->m_filePathName = localFiles[i].second;
 		result.push_back(pAttribute);
 		pAttribute->close();
+
+		result.push_back(pAttribute);
 	}
 #else
 
