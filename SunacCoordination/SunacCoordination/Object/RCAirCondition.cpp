@@ -17,6 +17,7 @@ File description:
 #include "RCAirCondition.h"
 #include "float.h"
 #include <algorithm>
+#include "../Common/ComFun_Sunac.h"
 
 //Constructor
 RCAirCondition::RCAirCondition(void)
@@ -55,3 +56,8 @@ RCAirCondition * RCAirCondition::Clone()
 	return newObj;
 }
 
+void RCAirCondition::AddAttribute(AttrAirCon * attr)
+{
+	if (attr != 0)
+		TY_AddAttributeData(m_id, attr);
+}

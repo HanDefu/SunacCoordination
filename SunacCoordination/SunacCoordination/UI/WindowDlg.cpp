@@ -10,7 +10,7 @@
 #include "../GlobalSetting.h"
 #include "../WebIO/LocalData.h"
 #include "../Object/AttrWindow.h"
-#include "../WebIO/LocalData.h"
+
 // CWindowDlg ¶Ô»°¿ò
 
 IMPLEMENT_DYNAMIC(CWindowDlg, CAcUiDialog)

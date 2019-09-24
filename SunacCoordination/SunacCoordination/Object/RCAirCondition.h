@@ -16,6 +16,7 @@ File description:
 
 #include <vector>
 #include "RCStandBlock.h"
+#include "AttrAirCon.h"
 
 class RCAirCondition : public RCStandBlock
 {
@@ -31,6 +32,8 @@ public:
 	RCAirCondition & operator=(const RCAirCondition &rhs);
 
 	virtual RCTYPE GetType()const{return T_AIRCONDITION;}
+
+	void AddAttribute(AttrAirCon * attr);
 
 	virtual RCAirCondition * Clone();
 	virtual void Draw();

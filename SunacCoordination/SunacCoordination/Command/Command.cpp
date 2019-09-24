@@ -125,8 +125,9 @@ void CMD_SUNACAIRCONDITIONER()
 {
 	CAcModuleResourceOverride resOverride;
 
-	CAirconditionerDlg dlg;
-	dlg.DoModal();
+	CAirconditionerDlg * pDlg = new CAirconditionerDlg(acedGetAcadFrame());
+	pDlg->Create(IDD_DIALOG_AIRCONDITIONER);
+	pDlg->ShowWindow(SW_SHOW);
 }
 
 //标准立面

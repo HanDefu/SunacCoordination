@@ -18,7 +18,7 @@ private:
 
 //门窗
 public:
-	void LoadWindowFromExcel(CString p_file); //从表格中把数据传到m_windows中
+	void LoadDataFromExcel(CString p_file); //从表格中把数据传到m_windows中
 
 	bool GetWindowById(CString p_sId,AttrWindow& value);  //通过原型编号从m_windows中获取窗户
 	bool GetWindowByFileName(CString p_sFileName, AttrWindow&value);//通过文件名从m_windows中获取窗户
@@ -54,12 +54,11 @@ protected:
 
 //空调
 public:
-	void LoadAirConFromExcel(CString p_file); //从表格中把数据传到m_aircon中
-
 	bool GetAirConById(CString p_sId,AttrAirCon& value);  //通过原型编号从m_aircon中获取空调
 	bool GetAirConByFileName(CString p_sFileName, AttrAirCon&value);//通过文件名从m_aircon中获取空调
 
 	vector<AttrAirCon> GetAllAirCon(); //获取所有空调
+	std::vector<AttrAirCon >  GetAirCon(CString p_airConHorseNumber, CString p_airConPipePos, CString p_airConRainRiser, CString p_airConRainRiserPos);
 
 protected:
 	vector<AttrAirCon> m_aircon; //所有空调

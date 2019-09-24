@@ -71,7 +71,7 @@
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>C:\Program Files\Autodesk\AutoCAD 2014\Support\</OutDir>
+    <OutDir>C:\Autodesk\AutoCAD 2014\Support\</OutDir>
     <IntDir>$(SolutionDir)\Temp\$(Platform)\$(Configuration)\</IntDir>
     <IncludePath>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-x64;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-x64;$(LibraryPath)</LibraryPath>
@@ -112,7 +112,7 @@
       <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>.\props\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
-      <OutputFile>$(OutDir)$(TargetName).arx</OutputFile>
+      <OutputFile>C:\Autodesk\AutoCAD 2014\Support\Sunac2019.arx</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -223,11 +223,11 @@
     <ClCompile Include="UI\WaterproofDlg.cpp" />
     <ClCompile Include="UI\WindowDlg.cpp" />
     <ClCompile Include="WebIO\ConfigDictionary.cpp" />
+    <ClCompile Include="WebIO\LocalData.cpp" />
     <ClCompile Include="WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.cpp" />
     <ClCompile Include="WebIO\SunacCadWeb\soapC.cpp" />
     <ClCompile Include="WebIO\SunacCadWeb\stdsoap2.cpp" />
     <ClCompile Include="WebIO\WebIO.cpp" />
-    <ClCompile Include="WebIO\LocalData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command\Command.h" />
@@ -334,12 +334,12 @@
     <ClInclude Include="UI\WaterproofDlg.h" />
     <ClInclude Include="UI\WindowDlg.h" />
     <ClInclude Include="WebIO\ConfigDictionary.h" />
+    <ClInclude Include="WebIO\LocalData.h" />
     <ClInclude Include="WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.h" />
     <ClInclude Include="WebIO\SunacCadWeb\soapH.h" />
     <ClInclude Include="WebIO\SunacCadWeb\soapStub.h" />
     <ClInclude Include="WebIO\SunacCadWeb\stdsoap2.h" />
     <ClInclude Include="WebIO\WebIO.h" />
-    <ClInclude Include="WebIO\LocalData.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\SunacCoordination.rc" />

@@ -342,15 +342,16 @@ vCString CConfigDictionary::Air_GetLengNingShuiGuanPos()const//获得冷凝水管位置
 {
 	vCString strs;
 #ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"侧面");
+
 	strs.push_back(L"后面");
+	strs.push_back(L"侧面");
 #else
 
 #endif
 	return strs;
 }
 
-vCString CConfigDictionary::Air_GetYuShuiGuanPos() //获得雨水管位置
+vCString CConfigDictionary::Air_GetYuShuiGuanPos()const//获得雨水管位置
 {
 	vCString strs;
 #ifdef WORK_LOCAL//本地模式

@@ -148,7 +148,8 @@ void CMD_test()
 
 	//Kitchen_KUq_DuiKai_SetDoorPos(eId, 3600);
 	Kitchen_SelectZaoTai(eId, L"900");
-	Kitchen_KUq_DuiKai_SetZaoTaiPos(eId, 3000, L"900");
+	Kitchen_SelectShuiPen(eId, L"双盆900");
+	Kitchen_KUq_DuiKai_SetShuiPenPos(eId, 3000);
 	//Kitchen_SelectShuiPen(eId, L"双盆900");
 	//Kitchen_SelectZaoTai(eId, L"800");
 	//acedRedraw(eId,);
@@ -326,8 +327,7 @@ static void initApp()
 #ifdef WORK_LOCAL
 	CString localWindowPath = TY_GetLocalFilePath();
 
-	CLocalData::GetInstance()->LoadWindowFromExcel((localWindowPath+("外窗数据.xlsx")));
-	CLocalData::GetInstance()->LoadAirConFromExcel((localWindowPath+("外窗数据.xlsx")));
+	CLocalData::GetInstance()->LoadDataFromExcel((localWindowPath+("外窗数据.xlsx")));
 #endif
 }
 

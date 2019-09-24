@@ -22,9 +22,6 @@
     <ClCompile Include="UI\RailingDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="UI\GsPreviewCtrl.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
     <ClCompile Include="UI\GridCtrl_src\GridCell.cpp">
       <Filter>UI\GridCtrl</Filter>
     </ClCompile>
@@ -74,12 +71,6 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="UI\WaterproofDlg.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\GridCtrlEx.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\GridCtrlWithPreview.cpp">
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="Object\RCBlock.cpp">
@@ -223,11 +214,38 @@
     <ClCompile Include="WebIO\WebIO.cpp">
       <Filter>WebIO</Filter>
     </ClCompile>
-    <ClCompile Include="UI\PreviewWithDetail.cpp">
-      <Filter>UI</Filter>
+    <ClCompile Include="UI\GsPreviewCtrl.cpp">
+      <Filter>UI\PreviewCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrlWithPreview.cpp">
+      <Filter>UI\PreviewCtrl</Filter>
     </ClCompile>
     <ClCompile Include="UI\GridCellForPreview.cpp">
+      <Filter>UI\PreviewCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\PreviewWithDetail.cpp">
+      <Filter>UI\PreviewCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrlEx.cpp">
+      <Filter>UI\GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ComFun_MFC.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\SunacCadWeb\stdsoap2.cpp">
+      <Filter>WebIO\SunacCadWeb</Filter>
+    </ClCompile>
+    <ClCompile Include="Tool\MarkupXml\Markup.cpp">
+      <Filter>Tool\MarkupXml</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\SunacCadWeb\soapC.cpp">
+      <Filter>WebIO\SunacCadWeb</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.cpp">
+      <Filter>WebIO\SunacCadWeb</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\ConfigDictionary.cpp">
+      <Filter>WebIO</Filter>
     </ClCompile>
     <ClCompile Include="WebIO\LocalData.cpp">
       <Filter>WebIO</Filter>
@@ -289,9 +307,6 @@
     <ClInclude Include="UI\RailingDlg.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="UI\GsPreviewCtrl.h">
-      <Filter>UI</Filter>
-    </ClInclude>
     <ClInclude Include="UI\GridCtrl_src\CellRange.h">
       <Filter>UI\GridCtrl</Filter>
     </ClInclude>
@@ -347,12 +362,6 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="UI\WaterproofDlg.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\GridCtrlEx.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\GridCtrlWithPreview.h">
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="Object\RCBlock.h">
@@ -538,11 +547,41 @@
     <ClInclude Include="WebIO\WebIO.h">
       <Filter>WebIO</Filter>
     </ClInclude>
-    <ClInclude Include="UI\PreviewWithDetail.h">
-      <Filter>UI</Filter>
+    <ClInclude Include="UI\GsPreviewCtrl.h">
+      <Filter>UI\PreviewCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrlWithPreview.h">
+      <Filter>UI\PreviewCtrl</Filter>
     </ClInclude>
     <ClInclude Include="UI\GridCellForPreview.h">
+      <Filter>UI\PreviewCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\PreviewWithDetail.h">
+      <Filter>UI\PreviewCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrlEx.h">
+      <Filter>UI\GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ComFun_MFC.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\SunacCadWeb\stdsoap2.h">
+      <Filter>WebIO\SunacCadWeb</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\MarkupXml\Markup.h">
+      <Filter>Tool\MarkupXml</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\SunacCadWeb\soapH.h">
+      <Filter>WebIO\SunacCadWeb</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\SunacCadWeb\soapStub.h">
+      <Filter>WebIO\SunacCadWeb</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.h">
+      <Filter>WebIO\SunacCadWeb</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\ConfigDictionary.h">
+      <Filter>WebIO</Filter>
     </ClInclude>
     <ClInclude Include="WebIO\LocalData.h">
       <Filter>WebIO</Filter>
@@ -592,6 +631,15 @@
     </Filter>
     <Filter Include="WebIO">
       <UniqueIdentifier>{e2817748-4c58-4960-b20c-9d3102f58b33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI\PreviewCtrl">
+      <UniqueIdentifier>{71d3a590-6f0f-47f8-8a31-57c09642b0a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WebIO\SunacCadWeb">
+      <UniqueIdentifier>{8291efd3-84a8-4691-84d4-e1aa4e0cf166}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tool\MarkupXml">
+      <UniqueIdentifier>{990c504d-77ee-4770-a1ae-8cfb3d110f83}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

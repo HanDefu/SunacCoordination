@@ -112,3 +112,21 @@ int Kitchen_KUq_DuiKai_SetZaoTaiPos(AcDbObjectId kitchenId, double jinshen, CStr
 
 	return 0;
 }
+
+//kuq 对开 自动设置门的位置
+int Kitchen_KUq_DuiKai_SetShuiPenPos(AcDbObjectId kitchenId, double kaiJian)
+{
+	double qt = 0;
+	TYCOM_GetDynamicBlockData(kitchenId, L"墙厚", qt);
+
+	double zxt = 0;
+	TYCOM_GetDynamicBlockData(kitchenId, L"装修厚度", zxt);
+
+	double lgx = 0;
+	TYCOM_GetDynamicBlockData(kitchenId, L"立管X尺寸", lgx);
+
+
+	double value  = (kaiJian - 350)/2;
+	TYCOM_SetDynamicBlockValue(kitchenId, L"水盆距墙X", value-qt-zxt-lgx);
+	return 0;
+}

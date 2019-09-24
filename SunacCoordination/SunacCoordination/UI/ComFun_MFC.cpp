@@ -118,3 +118,11 @@ void TYUI_InitComboBox(CComboBox& comboBox, CString options, CString defaultValu
 	}
 }
 
+CString TYUI_GetComboBoxText(CComboBox& comboBox)
+{
+	CString str;
+	int sel = comboBox.GetCurSel();
+	comboBox.GetLBText(sel, str);
+	return str;
+}
+
