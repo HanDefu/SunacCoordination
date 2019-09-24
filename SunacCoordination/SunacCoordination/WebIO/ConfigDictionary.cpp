@@ -176,6 +176,7 @@ vCString CConfigDictionary::Window_GetOpenAmount()const
 	strs.push_back(L"不限");
 	strs.push_back(L"1");
 	strs.push_back(L"2");
+	strs.push_back(L"3");
 	strs.push_back(L"4");
 #else
 
@@ -203,8 +204,10 @@ vCString CConfigDictionary::Window_GetWallDis()const
 	vCString strs;
 #ifdef WORK_LOCAL//本地模式
 	strs.push_back(L"0");
+	strs.push_back(L"50");
 	strs.push_back(L"100");
-	strs.push_back(L"120");
+	strs.push_back(L"150");
+	strs.push_back(L"200");
 #else
 
 #endif
@@ -217,6 +220,7 @@ vCString CConfigDictionary::Door_GetTypes()const
 #ifdef WORK_LOCAL//本地模式
 	strs.push_back(L"不限");
 	strs.push_back(L"推拉");
+	strs.push_back(L"外开");
 #else
 
 #endif
@@ -226,8 +230,7 @@ vCString CConfigDictionary::Kitchen_GetTypes()const
 {
 	vCString strs;
 #ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"深U型");
-	strs.push_back(L"浅U型");
+	strs.push_back(L"U型");
 	strs.push_back(L"L型");
 	strs.push_back(L"I型");
 #else
@@ -240,7 +243,7 @@ vCString CConfigDictionary::Kitchen_GetShuiPenTypes()const
 	vCString strs;
 #ifdef WORK_LOCAL//本地模式
 	strs.push_back(L"单盆600");
-	strs.push_back(L"单盆700");
+	strs.push_back(L"单盆800");
 	strs.push_back(L"双盆900");
 	strs.push_back(L"双盆1000");
 	strs.push_back(L"双盆1200");
@@ -290,11 +293,11 @@ vCString CConfigDictionary::Toilet_GetTaiPenWidths()const
 {
 	vCString strs;
 #ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"单盆600");
-	strs.push_back(L"单盆700");
-	strs.push_back(L"双盆900");
-	strs.push_back(L"双盆1000");
-	strs.push_back(L"双盆1200");
+	strs.push_back(L"650");
+	strs.push_back(L"750");
+	strs.push_back(L"800");
+	strs.push_back(L"900");
+	strs.push_back(L"1000");
 #else
 
 #endif
@@ -304,8 +307,8 @@ vCString CConfigDictionary::Toilet_GetMaTongTypes()const
 {
 	vCString strs;
 #ifdef WORK_LOCAL//本地模式
+	strs.push_back(L"750");
 	strs.push_back(L"800");
-	strs.push_back(L"900");
 #else
 
 #endif
@@ -326,10 +329,10 @@ vCString CConfigDictionary::Air_GetPiShus()const
 {
 	vCString strs;
 #ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"1.0");
-	strs.push_back(L"1.5");
-	strs.push_back(L"2.0");
-	strs.push_back(L"3.0");
+	strs.push_back(L"1.0P");
+	strs.push_back(L"1.5P");
+	strs.push_back(L"2.0P");
+	strs.push_back(L"3.0P");
 #else
 
 #endif
@@ -339,8 +342,8 @@ vCString CConfigDictionary::Air_GetLengNingShuiGuanPos()const//获得冷凝水管位置
 {
 	vCString strs;
 #ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"后边");
-	strs.push_back(L"侧边");
+	strs.push_back(L"侧面");
+	strs.push_back(L"后面");
 #else
 
 #endif
@@ -351,8 +354,20 @@ vCString CConfigDictionary::Air_GetYuShuiGuanPos() //获得雨水管位置
 {
 	vCString strs;
 #ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"侧边");
-	strs.push_back(L"后边");
+	strs.push_back(L"侧面");
+	strs.push_back(L"后面");
+#else
+
+#endif
+	return strs;
+}
+
+vCString CConfigDictionary::Railing_GetTypes()
+{
+	vCString strs;
+#ifdef WORK_LOCAL//本地模式
+	strs.push_back(L"玻璃栏杆");
+	strs.push_back(L"铁艺栏杆");
 #else
 
 #endif
