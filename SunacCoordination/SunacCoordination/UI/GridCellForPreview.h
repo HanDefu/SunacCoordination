@@ -11,7 +11,6 @@ public:
 	virtual BOOL Draw(CDC* pDC, int nRow, int nCol, CRect rect, BOOL bEraseBkgnd = TRUE);
 	void SetPreview(CPreviewWithDetail* preview);
 	void DeletePreview();
-	void SetSelected(bool bSelected);
 
 protected:
 	CPreviewWithDetail* m_pPreview;

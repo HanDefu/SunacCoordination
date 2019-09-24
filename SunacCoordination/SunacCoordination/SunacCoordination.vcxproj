@@ -71,10 +71,11 @@
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>C:\Program Files\Autodesk\AutoCAD 2014\Support\</OutDir>
     <IntDir>$(SolutionDir)\Temp\$(Platform)\$(Configuration)\</IntDir>
     <IncludePath>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-x64;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-x64;$(LibraryPath)</LibraryPath>
+    <TargetName>Sunac2019</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
@@ -111,7 +112,7 @@
       <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>.\props\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
-      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <OutputFile>$(OutDir)$(TargetName).arx</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -185,9 +186,11 @@
     </ClCompile>
     <ClCompile Include="Tool\Excel\CExcel.cpp" />
     <ClCompile Include="Tool\Excel\Excel.cpp" />
+    <ClCompile Include="Tool\MarkupXml\Markup.cpp" />
     <ClCompile Include="Tool\Regedit.cpp" />
     <ClCompile Include="UI\AirconditionerDlg.cpp" />
     <ClCompile Include="UI\BathroomDlg.cpp" />
+    <ClCompile Include="UI\ComFun_MFC.cpp" />
     <ClCompile Include="UI\DlgLeftBar.cpp" />
     <ClCompile Include="UI\DlgLogin.cpp" />
     <ClCompile Include="UI\DoorDlg.cpp" />
@@ -218,6 +221,10 @@
     <ClCompile Include="UI\TreeCtrlEx.cpp" />
     <ClCompile Include="UI\WaterproofDlg.cpp" />
     <ClCompile Include="UI\WindowDlg.cpp" />
+    <ClCompile Include="WebIO\ConfigDictionary.cpp" />
+    <ClCompile Include="WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.cpp" />
+    <ClCompile Include="WebIO\SunacCadWeb\soapC.cpp" />
+    <ClCompile Include="WebIO\SunacCadWeb\stdsoap2.cpp" />
     <ClCompile Include="WebIO\WebIO.cpp" />
     <ClCompile Include="WebIO\LocalData.cpp" />
   </ItemGroup>
@@ -279,9 +286,11 @@
     <ClInclude Include="Tool\Excel\CWorksheet.h" />
     <ClInclude Include="Tool\Excel\CWorksheets.h" />
     <ClInclude Include="Tool\Excel\Excel.h" />
+    <ClInclude Include="Tool\MarkupXml\Markup.h" />
     <ClInclude Include="Tool\Regedit.h" />
     <ClInclude Include="UI\AirconditionerDlg.h" />
     <ClInclude Include="UI\BathroomDlg.h" />
+    <ClInclude Include="UI\ComFun_MFC.h" />
     <ClInclude Include="UI\DlgLeftBar.h" />
     <ClInclude Include="UI\DlgLogin.h" />
     <ClInclude Include="UI\DoorDlg.h" />
@@ -322,6 +331,11 @@
     <ClInclude Include="UI\TreeCtrlEx.h" />
     <ClInclude Include="UI\WaterproofDlg.h" />
     <ClInclude Include="UI\WindowDlg.h" />
+    <ClInclude Include="WebIO\ConfigDictionary.h" />
+    <ClInclude Include="WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.h" />
+    <ClInclude Include="WebIO\SunacCadWeb\soapH.h" />
+    <ClInclude Include="WebIO\SunacCadWeb\soapStub.h" />
+    <ClInclude Include="WebIO\SunacCadWeb\stdsoap2.h" />
     <ClInclude Include="WebIO\WebIO.h" />
     <ClInclude Include="WebIO\LocalData.h" />
   </ItemGroup>
@@ -346,6 +360,7 @@
     <None Include="res\windowdir.bmp" />
     <None Include="search.bmp" />
     <None Include="selOne.bmp" />
+    <None Include="WebIO\SunacCadWeb\ArgumentSettingServiceSoap.nsmap" />
     <None Include="windowdir.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

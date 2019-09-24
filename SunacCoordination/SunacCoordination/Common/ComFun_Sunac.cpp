@@ -15,6 +15,7 @@
 #include "../Object\AttrKitchen.h"
 #include "../Object\AttrToilet.h"
 #include "../Object\AttrRailing.h"
+#include "../Tool/DocLock.h"
 
 bool DQ_IsALine(AcDbObjectId entId)
 {
@@ -875,4 +876,23 @@ vector<pair<CString,CString>> TY_FindFilesInDirecotryRecursion( CString fileName
     }
     finder.Close();
     return files;
+}
+
+int TYCOM_MirrorOneObject(AcDbObjectId entId, AcGePoint3d first, AcGeVector3d dir)
+{
+	CDocLock docLock;
+	AcDbEntity *pEntity = 0;
+	// 打开图形数据库中的对象
+	Acad::ErrorStatus  es = acdbOpenObject(pEntity, entId, AcDb::kForWrite);
+	if (pEntity == 0)
+		return es;
+
+	AcGeMatrix3d mx;
+	mx.setToMirroring(AcGeLine3d(first,dir));
+
+	AcDbEntity *newEnt = 0;
+	pEntity->transformBy(mx);
+
+	pEntity->close();
+	return 0;
 }

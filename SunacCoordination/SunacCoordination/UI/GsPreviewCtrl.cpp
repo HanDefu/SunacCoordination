@@ -55,10 +55,9 @@ END_MESSAGE_MAP()
 
 void CGsPreviewCtrl::OnPaint() 
 {
-	CStatic::OnPaint();
 	if (mpView == NULL)
 		return;
-	//CPaintDC dc(this); 
+	CPaintDC dc(this); 
 	//update the gs view
 	mpView->invalidate(); 
 	mpView->update();

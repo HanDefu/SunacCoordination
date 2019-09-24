@@ -1,0 +1,11 @@
+方案一（多接口情况）：
+1. 执行ToHfile.bat
+2. 手动将两个文件的内容合在一个文件中all.h，对照着很容易看出不同，把命名空间，类声明等合在一起就行了
+3. 执行toCpp.bat
+
+若要支持宽字符，可调用xsdString.bat
+
+
+方案二：
+1. 执行soap.bat
+2. 拷贝SuncCadWeb2的文件到测试工程下的SuncCadWeb目录

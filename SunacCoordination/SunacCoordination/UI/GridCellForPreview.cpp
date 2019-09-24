@@ -18,6 +18,7 @@ BOOL CGridCellForPreview::Draw(CDC* pDC, int nRow, int nCol, CRect rect, BOOL bE
 	else
 	{
 		m_pPreview->MoveWindow(rect, FALSE);
+		m_pPreview->SetSelected(IsSelected() != FALSE);
 		m_pPreview->ShowWindow(SW_SHOW);
 	}
 
@@ -35,11 +36,4 @@ void CGridCellForPreview::DeletePreview()
 {
 	delete m_pPreview;
 	m_pPreview = NULL;
-}
-
-void CGridCellForPreview::SetSelected(bool bSelected)
-{
-	if (m_pPreview == NULL)
-		return;
-	m_pPreview->SetSelected(bSelected);
 }
