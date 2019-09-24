@@ -22,4 +22,9 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 	CPreviewWithDetail m_preAC;
+public:
+	CComboBox m_pNum;		//匹数
+	CComboBox m_lNTubePos;	//冷凝水管位置
+	CButton m_hasRainTube;	//是否有雨水立管穿过
+	CComboBox m_rainTubePos;//雨水管位置
 };

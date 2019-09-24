@@ -455,7 +455,7 @@ vCString WebIO::Toilet_GetMaTongTypes()
 #endif
 	return strs;
 }
-vCString WebIO::Toilet_GetGuanXiWidths()
+vCString WebIO::Toilet_GetGuanXiWidths() 
 {
 	vCString strs;
 #ifdef WORK_LOCAL//本地模式
@@ -466,25 +466,35 @@ vCString WebIO::Toilet_GetGuanXiWidths()
 #endif
 	return strs;
 }
-vCString WebIO::Air_GetPiShus()
+vCString WebIO::Air_GetPiShus()  //获得匹数
 {
 	vCString strs;
 #ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"1.0");
-	strs.push_back(L"1.5");
-	strs.push_back(L"2.0");
-	strs.push_back(L"3.0");
+	strs.push_back(L"1.0P/1.5P");
+	strs.push_back(L"2.0P/3.0P");
 #else
 
 #endif
 	return strs;
 }
-vCString WebIO::Air_GetLengNingShuiGuanPos()
+vCString WebIO::Air_GetLengNingShuiGuanPos() //获得冷凝水管位置
 {
 	vCString strs;
 #ifdef WORK_LOCAL//本地模式
 	strs.push_back(L"后边");
 	strs.push_back(L"侧边");
+#else
+
+#endif
+	return strs;
+}
+
+vCString WebIO::Air_GetYuShuiGuanPos() //获得雨水管位置
+{
+	vCString strs;
+#ifdef WORK_LOCAL//本地模式
+	strs.push_back(L"前侧");
+	strs.push_back(L"后侧");
 #else
 
 #endif

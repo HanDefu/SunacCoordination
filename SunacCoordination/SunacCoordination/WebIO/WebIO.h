@@ -102,6 +102,7 @@ public:
 	vCString m_toiletGuanXiWidths;//卫生间盥洗区宽度---是否支持手动输入？？
 	vCString m_airPiShus;//空调所有的匹数
 	vCString m_airLengNingShuiGuanPos;//空调冷凝水管位置
+	vCString m_YuShuiGuanPos; //空调雨水管位置
 
 protected:
 	//---------------通用查字典-----------------------//
@@ -125,6 +126,7 @@ protected:
 
 	vCString Air_GetPiShus();//所有的匹数
 	vCString Air_GetLengNingShuiGuanPos();//冷凝水管位置
+	vCString Air_GetYuShuiGuanPos();//空调雨水管位置
 }; 
 
 #define WEBINST (WebIO::GetInstance())

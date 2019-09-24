@@ -223,14 +223,14 @@
     <ClCompile Include="WebIO\WebIO.cpp">
       <Filter>WebIO</Filter>
     </ClCompile>
-    <ClCompile Include="WebIO\WindowLocalData.cpp">
-      <Filter>WebIO</Filter>
-    </ClCompile>
     <ClCompile Include="UI\PreviewWithDetail.cpp">
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="UI\GridCellForPreview.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\LocalData.cpp">
+      <Filter>WebIO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -531,14 +531,14 @@
     <ClInclude Include="WebIO\WebIO.h">
       <Filter>WebIO</Filter>
     </ClInclude>
-    <ClInclude Include="WebIO\WindowLocalData.h">
-      <Filter>WebIO</Filter>
-    </ClInclude>
     <ClInclude Include="UI\PreviewWithDetail.h">
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="UI\GridCellForPreview.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\LocalData.h">
+      <Filter>WebIO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -23,6 +23,10 @@ CAirconditionerDlg::~CAirconditionerDlg()
 void CAirconditionerDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CAcUiDialog::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_COMBO_PNUM, m_pNum);
+	DDX_Control(pDX, IDC_COMBO_LNTUBEPOS, m_lNTubePos);
+	DDX_Control(pDX, IDC_CHECK_HASRAINTUBE, m_hasRainTube);
+	DDX_Control(pDX, IDC_COMBO_RAINTUBEPOS, m_rainTubePos);
 }
 
 
@@ -42,5 +46,7 @@ BOOL CAirconditionerDlg::OnInitDialog()
 	m_preAC.SetPreview(_T("D:\\Projects\\Sunac\\Support\\Sunac2019\\LocalMode\\Window_N_7_0.dwg"));
 	m_preAC.SetText(_T("‘§¿¿Õº"));
 	m_preAC.Invalidate();
+
+   // Air_GetPiShus();
 	return TRUE;
 }

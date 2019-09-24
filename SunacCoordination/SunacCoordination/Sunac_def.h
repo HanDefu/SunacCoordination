@@ -57,7 +57,7 @@ typedef enum eWindowDoorPos//门窗位置关系
 } eWindowDoorPos;
 
 
-typedef enum eLingNingShuiGuanPos//冷凝水管位置
+typedef enum eLengNingShuiGuanPos//冷凝水管位置
 {
 	AIRCON_CEBIAN,//侧边
 	AIRCON_HOUBIAN//后边

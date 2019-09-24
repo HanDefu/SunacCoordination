@@ -219,7 +219,7 @@
     <ClCompile Include="UI\WaterproofDlg.cpp" />
     <ClCompile Include="UI\WindowDlg.cpp" />
     <ClCompile Include="WebIO\WebIO.cpp" />
-    <ClCompile Include="WebIO\WindowLocalData.cpp" />
+    <ClCompile Include="WebIO\LocalData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command\Command.h" />
@@ -323,7 +323,7 @@
     <ClInclude Include="UI\WaterproofDlg.h" />
     <ClInclude Include="UI\WindowDlg.h" />
     <ClInclude Include="WebIO\WebIO.h" />
-    <ClInclude Include="WebIO\WindowLocalData.h" />
+    <ClInclude Include="WebIO\LocalData.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\SunacCoordination.rc" />
