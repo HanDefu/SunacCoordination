@@ -243,7 +243,7 @@ vCString CConfigDictionary::Kitchen_GetShuiPenTypes()const
 	vCString strs;
 #ifdef WORK_LOCAL//本地模式
 	strs.push_back(L"单盆600");
-	strs.push_back(L"单盆700");
+	strs.push_back(L"单盆800");
 	strs.push_back(L"双盆900");
 	strs.push_back(L"双盆1000");
 	strs.push_back(L"双盆1200");
