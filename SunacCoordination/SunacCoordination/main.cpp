@@ -327,8 +327,7 @@ static void initApp()
 #ifdef WORK_LOCAL
 	CString localWindowPath = TY_GetLocalFilePath();
 
-	CLocalData::GetInstance()->LoadWindowFromExcel((localWindowPath+("外窗数据.xlsx")));
-	CLocalData::GetInstance()->LoadAirConFromExcel((localWindowPath+("外窗数据.xlsx")));
+	CLocalData::GetInstance()->LoadDataFromExcel((localWindowPath+("外窗数据.xlsx")));
 #endif
 }
 

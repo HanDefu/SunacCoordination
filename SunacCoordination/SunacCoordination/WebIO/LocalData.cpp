@@ -68,7 +68,7 @@ RCDimData CLocalData::ConvertStringToDimData
 	return data;
 }
 
-void CLocalData::LoadWindowFromExcel(CString p_file) //将数据从表格中读取到m_windows中
+void CLocalData::LoadDataFromExcel(CString p_file) 
 {
 	Excel::CExcelUtil xls; 
 
@@ -84,9 +84,10 @@ void CLocalData::LoadWindowFromExcel(CString p_file) //将数据从表格中读取到m_win
 
 	xls.OpenExcel(p_file); //打开表格
 	xls.SetVisible(false); 
-	xls.SetActiveSheet(1); //打开第一张表
 
-	
+
+	//将数据从表格中读取到m_windows中，读取外窗数据表单
+	xls.SetActiveSheet(1); //打开第一张表
 
 	for (int i = 2; i <= 1000000; i++)  //循环excel表格  外窗数据表单的行
 	{
@@ -137,7 +138,6 @@ void CLocalData::LoadWindowFromExcel(CString p_file) //将数据从表格中读取到m_win
 		data = ConvertStringToDimData(L"W1",valueType, value,defaultValue,state);
 		attrwindow.m_dimData.push_back(data);
 
-
 		//W2
 		valueType = xls.GetCellValue(i, 21);
 		value = xls.GetCellValue(i, 22);
@@ -146,7 +146,6 @@ void CLocalData::LoadWindowFromExcel(CString p_file) //将数据从表格中读取到m_win
 
 		data = ConvertStringToDimData(L"W2",valueType, value,defaultValue,state);
 		attrwindow.m_dimData.push_back(data);
-
 
 		//W3
 		valueType = xls.GetCellValue(i, 27);
@@ -165,8 +164,6 @@ void CLocalData::LoadWindowFromExcel(CString p_file) //将数据从表格中读取到m_win
 
 		data = ConvertStringToDimData(L"H1",valueType, value,defaultValue,state);
 		attrwindow.m_dimData.push_back(data);
-
-
 
 		//H2
 		valueType = xls.GetCellValue(i, 39);
@@ -191,6 +188,29 @@ void CLocalData::LoadWindowFromExcel(CString p_file) //将数据从表格中读取到m_win
 
 		m_windows.push_back(attrwindow); //将数据添加到vector数组m_windows
 	}
+
+	//读取空调数据表单的空调数据
+	xls.SetActiveSheet(2); //打开第二张表单
+
+	for (int i = 2; i <= 1000000; i++)  //循环excel表格  空调数据表单的行
+	{
+		AttrAirCon attrAirCon;
+
+		attrAirCon.m_airConId = xls.GetCellValue(i, 1); //通过行和列获取单元格的值，并将值赋给对象attrAirCon
+		attrAirCon.m_airConPrototypeId = xls.GetCellValue(i, 2);
+		if (attrAirCon.m_airConPrototypeId.GetLength() == 0)
+			break;
+
+		attrAirCon.m_airConPrototypeFile = xls.GetCellValue(i, 3);
+		attrAirCon.m_airConHorseNumber = xls.GetCellValue(i, 4);
+		attrAirCon.m_airConPipePos = xls.GetCellValue(i, 5);
+		attrAirCon.m_airConRainRiser = xls.GetCellValue(i, 6);
+		attrAirCon.m_airConRainRiserPos = xls.GetCellValue(i, 7);
+		attrAirCon.m_airConInstallNetSize = xls.GetCellValue(i, 8);
+		
+		m_aircon.push_back(attrAirCon); //将数据添加到vector数组m_aircon
+	}
+
 	xls.CloseExcel();//关闭表格
 }
 
@@ -353,38 +373,6 @@ std::vector<AttrWindow >  CLocalData::GetDoors(double width, CString openType, i
 }
 
 
-
-//空调
-void CLocalData::LoadAirConFromExcel(CString p_file)  //从表格中把数据传到m_aircon中
-{
-	Excel::CExcelUtil xls; 
-
-	xls.OpenExcel(p_file); //打开表格
-	xls.SetVisible(false); 
-	xls.SetActiveSheet(2); //打开第一张表
-
-
-	for (int i = 2; i <= 1000000; i++)  //循环excel表格  空调数据表单的行
-	{
-		AttrAirCon attrAirCon;
-
-		attrAirCon.m_airConId = xls.GetCellValue(i, 1); //通过行和列获取单元格的值，并将值赋给对象attrwindow
-		attrAirCon.m_airConPrototypeId = xls.GetCellValue(i, 2);
-		if (attrAirCon.m_airConPrototypeId.GetLength() == 0)
-			break;
-
-		attrAirCon.m_airConPrototypeFile = xls.GetCellValue(i, 3);
-		attrAirCon.m_airConHorseNumber = xls.GetCellValue(i, 4);
-		attrAirCon.m_airConPipePos = xls.GetCellValue(i, 5);
-		attrAirCon.m_airConRainRiser = xls.GetCellValue(i, 6);
-		attrAirCon.m_airConRainRiserPos = xls.GetCellValue(i, 7);
-		attrAirCon.m_airConInstallNetSize = xls.GetCellValue(i, 8);
-		
-		m_aircon.push_back(attrAirCon); //将数据添加到vector数组m_windows
-	}
-	xls.CloseExcel();//关闭表格
-}
-
 bool CLocalData::GetAirConById(CString p_sId,AttrAirCon& value)   //通过原型编号从m_aircon中获取空调
 {
 	for (int i = 0; i < m_aircon.size(); i++)
@@ -417,3 +405,34 @@ vector<AttrAirCon> CLocalData::GetAllAirCon()   //获取所有空调
 	return m_aircon;
 }
 
+//获取满足筛选条件的空调
+std::vector<AttrAirCon >  CLocalData::GetAirCon(CString p_airConHorseNumber, CString p_airConPipePos, CString p_airConRainRiser, CString p_airConRainRiserPos)
+{
+	std::vector<AttrAirCon> data;
+
+	for (int i =0; i < m_aircon.size(); i++)
+	{
+		if (p_airConHorseNumber != m_aircon[i].m_airConHorseNumber)
+		{
+			continue;
+		}
+
+		if (p_airConPipePos != m_aircon[i].m_airConPipePos)
+		{
+			continue;
+		}
+
+		if (p_airConRainRiser != L"无")
+		{
+			if (p_airConRainRiserPos !=  m_aircon[i].m_airConRainRiserPos)
+			{
+				continue;
+			}
+		}
+		
+		data.push_back(m_aircon[i]);
+	}
+
+	return data;
+
+}
