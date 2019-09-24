@@ -22,6 +22,7 @@ WebIO::~WebIO()
 std::vector<AttrWindow *>  WebIO::GetWindows
 (
    double width,//宽度值，注意高度值不作为搜索条件 
+   double height,
    CString openType, //开启类型
    int openNum,//开启扇数量
    CString gongNengQu,//功能区
@@ -61,7 +62,7 @@ std::vector<AttrWindow *>  WebIO::GetAllWindows()
 	std::vector<AttrWindow *> result;
 
 #ifdef WORK_LOCAL//本地模式
-	result = GetWindows(0,L"",0,L"",0);
+	result = GetWindows(0,0,L"",0,L"",0);
 #else
 
 #endif
@@ -282,6 +283,7 @@ std::vector<AttrRailing *> WebIO::GetAllRailings()
 #endif
 	return result;
 }
+
 
 int WebIO::DownLoadFile(CString id, CString filePathName)
 {

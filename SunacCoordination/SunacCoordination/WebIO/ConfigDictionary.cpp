@@ -13,7 +13,7 @@ using namespace std;
 
 CConfigDictionary::CConfigDictionary()
 {
-	InitFromWeb();
+	//InitFromWeb();
 	//m_quyus = GetQuyus();//区域
 	//m_gongNengQus = GetGongNengQus();//功能区
 	//m_windowDoorPoss = GetWindowDoorPoss();//门窗位置关系

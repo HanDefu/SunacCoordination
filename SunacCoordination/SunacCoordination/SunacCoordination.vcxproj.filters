@@ -232,6 +232,27 @@
     <ClCompile Include="WebIO\LocalData.cpp">
       <Filter>WebIO</Filter>
     </ClCompile>
+    <ClCompile Include="Tool\MarkupXml\Markup.cpp">
+      <Filter>Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.cpp">
+      <Filter>Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\SunacCadWeb\soapC.cpp">
+      <Filter>Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\SunacCadWeb\stdsoap2.cpp">
+      <Filter>Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ComFun_MFC.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\ConfigDictionary.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="KitchenCom.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -540,6 +561,30 @@
     <ClInclude Include="WebIO\LocalData.h">
       <Filter>WebIO</Filter>
     </ClInclude>
+    <ClInclude Include="WebIO\SunacCadWeb\stdsoap2.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\MarkupXml\Markup.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\SunacCadWeb\soapH.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\SunacCadWeb\soapStub.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ComFun_MFC.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\ConfigDictionary.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="KitchenCom.h">
+      <Filter>Source</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -638,6 +683,9 @@
     </None>
     <None Include="res\windowdir.bmp">
       <Filter>bmp</Filter>
+    </None>
+    <None Include="WebIO\SunacCadWeb\ArgumentSettingServiceSoap.nsmap">
+      <Filter>Tool</Filter>
     </None>
   </ItemGroup>
 </Project>
