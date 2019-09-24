@@ -91,30 +91,39 @@ bool CGridCtrlWithPreview::AddPreview(int nRow, int nCol, CString sPath, CString
 void CGridCtrlWithPreview::ClearAllPreviews()
 {
 	for (int i = 0; i < GetRowCount(); i++)
+	{
 		for (int j = 0; j < GetColumnCount(); j++)
 		{
 			CGridCellForPreview* pCell = GetPreviewCell(i, j);
 			if (pCell != NULL)
 				pCell->DeletePreview();
 		}
-		SetRowCount(0);
-		SetColumnCount(0);
+	}
+	SetRowCount(0);
+	SetColumnCount(0);
 }
 
 void CGridCtrlWithPreview::SelectPreview(int nRow, int nCol)
 {
+	if (nRow < 0 || nRow >= GetRowCount())
+		return;
+	if (nCol < 0 || nCol >= GetColumnCount())
+		return;
+
 	UINT state;
 	for (int i = 0; i < GetRowCount(); i++)
+	{
 		for (int j = 0; j < GetColumnCount(); j++)
 		{
 			state = GetContentItemState(i, j);
 			SetContentItemState(i, j, state & ~GVIS_SELECTED & ~GVIS_FOCUSED);
 		}
+	}
 
-		state = GetContentItemState(nRow, nCol);
-		SetContentItemState(nRow, nCol, state | GVIS_SELECTED | GVIS_FOCUSED);
+	state = GetContentItemState(nRow, nCol);
+	SetContentItemState(nRow, nCol, state | GVIS_SELECTED | GVIS_FOCUSED);
 
-		SendMessageToParent(nRow, nCol, GVN_SELCHANGED);
+	SendMessageToParent(nRow, nCol, GVN_SELCHANGED);
 }
 
 CGridCellForPreview* CGridCtrlWithPreview::GetPreviewCell(int nRow, int nCol)
@@ -128,6 +137,7 @@ void CGridCtrlWithPreview::OnPaint()
 	CRect clientRect;
 	GetClientRect(&clientRect);
 	CPaintDC dc(this);
+	EraseBkgnd(&dc);
 	for (int i = 0; i < GetRowCount(); i++)
 		for (int j = 0; j < GetColumnCount(); j++)
 		{

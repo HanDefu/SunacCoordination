@@ -29,11 +29,13 @@ public:
 	static std::vector<AttrWindow *>  GetWindows
 	(
 		double width,//宽度值，注意高度值不作为搜索条件 
+		double height,
 		CString openType, //开启类型
 		int openNum,//开启扇数量
 		CString gongNengQu,//功能区
 		double tongFengLiang//通风量
 	);
+
 	//注意外部需要释放返回的内存
 	static std::vector<AttrWindow *>  GetAllWindows();
 

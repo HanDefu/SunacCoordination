@@ -255,6 +255,8 @@ void CKitchenDlg::OnBnClickedButtonSearch()
 		str.Format(_T("原型编号：%s\n厨房面积：%.2lf\n通风量要求：1.5\n动态类型：动态\n适用范围：集团"), m_allKitchens[i]->m_yxid, m_rect.GetWidth() * m_rect.GetHeight() / 1E6);
 		m_preKitchen.AddPreview(i, 0, TY_GetLocalFilePath() + m_allKitchens[i]->m_name, str);
 	}
+
+	m_preKitchen.SelectPreview(0, 0);
 }
 
 void CKitchenDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
@@ -273,16 +275,54 @@ void CKitchenDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 		CString pos = m_allKitchens[nSel]->m_windowDoorPos;
 		if (type == _T("Uq") && pos == _T("对开"))
 		{
-			if (kaiJian <2900)
+			if (kaiJian < 2900)
 				TYUI_InitComboBox(m_basinType, _T("单盆600;单盆800"), _T("单盆600"));
 			else
 				TYUI_InitComboBox(m_basinType, _T("双盆900;双盆1000;双盆1200"), _T("双盆900"));
+
 			TYUI_InitComboBox(m_fridgeType, _T("对开门800;对开门1000"), _T("对开门800"));
 			TYUI_InitComboBox(m_benchWidth, _T("800;900"), _T("800"));
 		}
 		else if (type == _T("Uq"))
 		{
+			if (jinShen < 2150)
+				TYUI_InitComboBox(m_basinType, _T("单盆600;单盆800"), _T("单盆600"));
+			else
+				TYUI_InitComboBox(m_basinType, _T("双盆900;双盆1000;双盆1200"), _T("双盆900"));
 
+			TYUI_InitComboBox(m_fridgeType, _T("对开门800;对开门1000"), _T("对开门800"));
+			TYUI_InitComboBox(m_benchWidth, _T("800;900"), _T("800"));
+		}
+		else if (type == _T("Us"))
+		{
+			TYUI_InitComboBox(m_basinType, _T("单盆600;单盆800;双盆900;双盆1000;双盆1200"), _T("单盆600"));
+			TYUI_InitComboBox(m_fridgeType, _T("对开门800;对开门1000"), _T("对开门800"));
+			TYUI_InitComboBox(m_benchWidth, _T("800;900"), _T("800"));
+		}
+		else if (type == _T("L"))
+		{
+			TYUI_InitComboBox(m_basinType, _T("单盆600;单盆800;双盆900;双盆1000;双盆1200"), _T("单盆600"));
+
+			if (jinShen < 3200)
+				TYUI_InitComboBox(m_fridgeType, _T("单开门700"), _T("单开门700"));
+			else
+				TYUI_InitComboBox(m_fridgeType, _T("对开门800;对开门1000"), _T("对开门800"));
+
+			TYUI_InitComboBox(m_benchWidth, _T("800;900"), _T("800"));
+		}
+		else if (type == _T("I"))
+		{
+			if (kaiJian < 3350)
+				TYUI_InitComboBox(m_basinType, _T("单盆600;单盆800"), _T("单盆600"));
+			else
+				TYUI_InitComboBox(m_basinType, _T("双盆900;双盆1000;双盆1200"), _T("双盆900"));
+
+			TYUI_InitComboBox(m_fridgeType, _T("单开门700;对开门800;对开门1000"), _T("单开门700"));
+
+			if (kaiJian <= 3350)
+				TYUI_InitComboBox(m_benchWidth, _T("800"), _T("800"));
+			else
+				TYUI_InitComboBox(m_benchWidth, _T("900"), _T("900"));
 		}
 	}
 }
@@ -426,7 +466,7 @@ vector<AttrKitchen*> CKitchenDlg::FilterKL()
 	if (abs(windowDir - doorDir) != 2)
 		return attrKitchen;
 
-	return WebIO::GetInstance()->GetKitchens(kaiJian, jinShen, _T("对开"), _T("Us"), true);
+	return WebIO::GetInstance()->GetKitchens(kaiJian, jinShen, _T("对开"), _T("L"), true);
 }
 
 vector<AttrKitchen*> CKitchenDlg::FilterKI()
@@ -451,5 +491,5 @@ vector<AttrKitchen*> CKitchenDlg::FilterKI()
 	if (abs(windowDir - doorDir) != 2)
 		return attrKitchen;
 
-	return WebIO::GetInstance()->GetKitchens(kaiJian, jinShen, _T("对开"), _T("Us"), true);
+	return WebIO::GetInstance()->GetKitchens(kaiJian, jinShen, _T("对开"), _T("I"), true);
 }

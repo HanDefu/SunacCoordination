@@ -22,6 +22,7 @@ WebIO::~WebIO()
 std::vector<AttrWindow *>  WebIO::GetWindows
 (
    double width,//宽度值，注意高度值不作为搜索条件 
+   double height,
    CString openType, //开启类型
    int openNum,//开启扇数量
    CString gongNengQu,//功能区
@@ -61,7 +62,7 @@ std::vector<AttrWindow *>  WebIO::GetAllWindows()
 	std::vector<AttrWindow *> result;
 
 #ifdef WORK_LOCAL//本地模式
-	result = GetWindows(0,L"",0,L"",0);
+	result = GetWindows(0,0,L"",0,L"",0);
 #else
 
 #endif
@@ -124,67 +125,40 @@ std::vector<AttrKitchen *> WebIO::GetKitchens
 #ifdef WORK_LOCAL//本地模式
 	CString localKitchenPath = TY_GetLocalFilePath();
 	CString localFile;
-	AttrKitchen *pAttribute = new AttrKitchen();
 
 	if (type == L"Uq")
 	{
 		if (weiZhiGuanXi == L"对开")
 		{
-			if (jinShen >= 2000)
-			{
+			if (jinShen < 2000)
 				localFile = L"KUq_2600X1700.dwg";
-				pAttribute->m_kitchenType = L"Uq";
-				pAttribute->m_windowDoorPos = L"对开";
-			}
 			else
-			{
 				localFile = L"KUq_2450X2000.dwg";
-				pAttribute->m_kitchenType = L"Uq";
-				pAttribute->m_windowDoorPos = L"对开";
-			}
 		}
 		else
 		{
-			if (jinShen >= 2000)
-			{
+			if (jinShen < 2000)
 				localFile = L"KUq_2600X1700_c.dwg";
-				pAttribute->m_kitchenType = L"Uq";
-				pAttribute->m_windowDoorPos = L"垂直开";
-			}
 			else
-			{
 				localFile = L"KUq_2450X2000_c.dwg";
-				pAttribute->m_kitchenType = L"Uq";
-				pAttribute->m_windowDoorPos = L"垂直开";
-			}
 		}
 	}
 	else if (type == L"Us")
-	{
 		localFile = L"KUs_2300X2450.dwg";
-		pAttribute->m_kitchenType = L"Us";
-		pAttribute->m_windowDoorPos = L"对开";
-	}
 	else if (type == L"L")
-	{
 		localFile = L"KL_1700X2600.dwg";
-		pAttribute->m_kitchenType = L"L";
-		pAttribute->m_windowDoorPos = L"对开";
-	}
 	else
-	{
 		localFile = L"KI_1700X4100.dwg";
-		pAttribute->m_kitchenType = L"I";
-		pAttribute->m_windowDoorPos = L"对开";
-	}
-	
+
+	AttrKitchen *pAttribute = new AttrKitchen();
 	pAttribute->m_yxid = localFile;
 	pAttribute->m_name = localFile;
 	pAttribute->m_isJiTuan = true;
 	pAttribute->m_isDynamic = true;
 	pAttribute->m_type = L"厨房";
 	pAttribute->m_filePathName = localKitchenPath;
-	
+	pAttribute->m_kitchenType = type;
+	pAttribute->m_windowDoorPos = weiZhiGuanXi;
 
 	result.push_back(pAttribute);
 	pAttribute->close();
@@ -331,6 +305,7 @@ std::vector<AttrRailing *> WebIO::GetAllRailings()
 #endif
 	return result;
 }
+
 
 int WebIO::DownLoadFile(CString id, CString filePathName)
 {

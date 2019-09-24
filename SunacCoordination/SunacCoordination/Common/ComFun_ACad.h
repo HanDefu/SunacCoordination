@@ -618,3 +618,6 @@ int JHCOM_SetEntityType(AcDbObjectId id, CString type);
 
 int MD2010_OpenAndCloseRecord(const WCHAR * blockname);
 
+//单个刷新对象（特别是图块）的显示，不用整个发送regen命令或者flush了
+int TYCOM_FlushBlockDisplay(AcDbObjectId blkId);
+

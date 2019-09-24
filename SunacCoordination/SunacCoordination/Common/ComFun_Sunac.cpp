@@ -896,3 +896,78 @@ int TYCOM_MirrorOneObject(AcDbObjectId entId, AcGePoint3d first, AcGeVector3d di
 	pEntity->close();
 	return 0;
 }
+
+double GePlineLength(AcDbObjectId eId)
+{
+
+	AcDbEntity* pEnt = NULL;
+	if (acdbOpenObject(pEnt, eId, AcDb::kForRead) != Acad::eOk)
+	{
+		acutPrintf(L"\nError opening entity.");
+		if (pEnt)
+			pEnt->close();
+		return 0;
+	}
+	if (pEnt->isA() != AcDbBlockReference::desc())
+	{
+		acutPrintf(L"\nMust select a block insert.");
+		pEnt->close();
+		return 0;
+	}
+
+	double lem = 0;
+	AcDbBlockReference *pBlkRef = AcDbBlockReference::cast(pEnt);
+	AcDbVoidPtrArray entitySet;
+	pBlkRef->explode(entitySet);
+	vAcDbObjectId arrayids111,arrayids222;
+	for(int i = 0; i < entitySet.length(); i++)
+	{
+		AcDbEntity *pent = AcDbEntity::cast((AcRxObject*)entitySet[i]);
+		AcDb::Visibility  vv = pent->visibility();
+		if(vv == AcDb::kVisible)
+		{
+			AcDbPolyline *ppline = AcDbPolyline ::cast((AcRxObject*)entitySet[i]);
+			//UINT color = ppline->entityColor();
+			if(ppline!=NULL)
+			{
+				double endParm = 0;
+				Acad::ErrorStatus es = ppline->getEndParam(endParm);
+				if(es == Acad::eOk)
+				{
+					double temp = 0;
+					ppline->getDistAtParam(endParm, temp);
+					if(temp > lem)
+						lem = temp;
+				}
+			}
+		}
+	}
+	pEnt->close();
+	return lem;
+}
+
+int TY_HideBlockReferencesInBlockReference(AcDbObjectId blkRefId, vCString &hideBlockRecordNames)
+{
+	vAcDbObjectId vids;
+	ACHAR *brecname = L"";
+	MD2010_GetBlockReference_Record_name(blkRefId, brecname);
+	MD2010_CycleBlockEntites(brecname, vids);
+
+	vAcDbObjectId blkrefs;
+	for (int i = 0; i < vids.size(); i++)
+	{
+		if(MD2010_GetBlockReference_Record_name(vids[i], brecname) == 0)
+		{
+			CString internalRecordName(brecname);
+			int index =JHCOM_vFind(internalRecordName,hideBlockRecordNames);
+			if (index >= 0)
+			{
+				JHCOM_ShowObject(vids[i],false,false);
+			}
+		}
+	}
+
+	TYCOM_FlushBlockDisplay(blkRefId);
+	return 0;
+}
+

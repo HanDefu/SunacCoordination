@@ -132,9 +132,40 @@ void InitMenu()
 	}
 	END_CATCH;
 }
+
+#include "KitchenCom.h"
+void CMD_test()
+{
+	ads_name ename;
+	ads_point pt;
+	if (acedEntSel(L"\nSelect a dynamic block reference: ", ename, pt) != RTNORM)
+	{
+		acutPrintf(L"\nError selecting entity.");
+		return;
+	}
+	AcDbObjectId eId;
+	acdbGetObjectId(eId, ename);
+
+	//Kitchen_KUq_DuiKai_SetDoorPos(eId, 3600);
+	Kitchen_SelectZaoTai(eId, L"900");
+	Kitchen_KUq_DuiKai_SetZaoTaiPos(eId, 3000, L"900");
+	//Kitchen_SelectShuiPen(eId, L"Ë«Åè900");
+	//Kitchen_SelectZaoTai(eId, L"800");
+	//acedRedraw(eId,);
+}
+
 static void initApp()
 {
 	CAcModuleResourceOverride resOverride;
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("test"),
+		_T("test"),
+		ACRX_CMD_MODAL,
+		CMD_test,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
 		_T("SLOGIN"),

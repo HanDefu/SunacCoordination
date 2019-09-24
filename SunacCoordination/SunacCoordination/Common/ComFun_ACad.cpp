@@ -1405,3 +1405,18 @@ int MD2010_OpenAndCloseRecord(const WCHAR * blockname)
 
 	return 0;
 }
+
+int TYCOM_FlushBlockDisplay(AcDbObjectId blkId)
+{
+	AcDbEntity *pEnt = 0;
+	acDocManager->lockDocument(curDoc());
+	if (acdbOpenObject(pEnt,blkId,AcDb::kForWrite)==Acad::eOk)
+	{
+		pEnt->recordGraphicsModified();
+		pEnt->downgradeOpen();
+		pEnt->draw();
+		pEnt->close();
+	}
+	acDocManager->unlockDocument(curDoc());
+	return 0;
+}

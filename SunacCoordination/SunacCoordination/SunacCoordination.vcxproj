@@ -156,6 +156,7 @@
     <ClCompile Include="Common\ComFun_Sunac.cpp" />
     <ClCompile Include="Common\TYRect.cpp" />
     <ClCompile Include="GlobalSetting.cpp" />
+    <ClCompile Include="KitchenCom.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object\AttrAirCon.cpp" />
     <ClCompile Include="Object\AttrDoor.cpp" />
@@ -247,6 +248,7 @@
     <ClInclude Include="Common\ComFun_Sunac.h" />
     <ClInclude Include="Common\TYRect.h" />
     <ClInclude Include="GlobalSetting.h" />
+    <ClInclude Include="KitchenCom.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Object\AttrAirCon.h" />
     <ClInclude Include="Object\AttrDoor.h" />
