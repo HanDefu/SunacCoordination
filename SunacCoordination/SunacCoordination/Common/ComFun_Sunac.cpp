@@ -897,6 +897,28 @@ int TYCOM_MirrorOneObject(AcDbObjectId entId, AcGePoint3d first, AcGeVector3d di
 	return 0;
 }
 
+//上下左右镜像
+int TYCOM_MirrorRotate(AcDbObjectId entId, AcGePoint3d ptBase, double rotation)
+{
+	CDocLock docLock;
+	AcDbEntity *pEntity = 0;
+	// 打开图形数据库中的对象
+	Acad::ErrorStatus  es = acdbOpenObject(pEntity, entId, AcDb::kForWrite);
+	if (pEntity == 0)
+		return es;
+
+	AcGeMatrix3d xform;
+	AcGeVector3d vec(0, 0, 0);
+	xform.setToRotation(rotation, vec, ptBase);
+
+	AcDbEntity *newEnt = 0;
+	pEntity->transformBy(xform);
+
+	pEntity->close();
+
+	return 0;
+}
+
 double GePlineLength(AcDbObjectId eId)
 {
 

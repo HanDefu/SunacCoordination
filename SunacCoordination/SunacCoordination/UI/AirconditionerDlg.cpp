@@ -51,6 +51,8 @@ void CAirconditionerDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_RAINTUBEPOS, m_rainTubePos);
 	//DDX_Control(pDX, IDC_STATIC_AC, m_preAirCon);
 	DDX_Control(pDX, IDC_BUTTON_INSERTAC, m_btnInbsert);
+	DDX_Control(pDX, IDC_CHECK_UPDOWNIMAGE, m_upDownImage);
+	DDX_Control(pDX, IDC_CHECK_LEFTRIGHTIMAGE, m_leftRightImage);
 }
 
 
@@ -128,17 +130,21 @@ void CAirconditionerDlg::OnBnClickedCheckHasraintube()
 	UpdatePreview();
 }
 
-void CAirconditionerDlg::UpdatePreview()
+void CAirconditionerDlg::UpdatePreview() //当空调对话框中的控件的值发生变化时，图形也要根据控件的值来筛选、变化
 {
 	UpdateData(FALSE);
 
+	//获取控件ComboBox中选的值
 	CString pNum = TYUI_GetComboBoxText(m_pNum);
 	CString lNTubePos = TYUI_GetComboBoxText(m_lNTubePos);
 	CString rainTubePos = TYUI_GetComboBoxText(m_rainTubePos);
 	int hasRainTube = m_hasRainTube.GetCheck();
 	CString strHasTube = hasRainTube > 0 ? L"有" : L"无";
+
+	//调用GetAirCon()函数来筛选符合条件的空调
 	m_allAirCons = CLocalData::GetInstance()->GetAirCon(pNum, lNTubePos, strHasTube, rainTubePos);
 
+	//当未查找到符合条件的空调时，对话框右侧图形为空，并且插入按钮变灰
 	if (m_allAirCons.empty())
 	{
 		acutPrintf(_T("未找到符合条件的记录\n"));
@@ -149,6 +155,7 @@ void CAirconditionerDlg::UpdatePreview()
 
 	Acad::ErrorStatus es=acDocManager->lockDocument(curDoc());
 	AcDbDatabase *pDatabase = new AcDbDatabase();
+	//图形文件路径
 	m_filePathName = MD2010_GetAppPath() + L"\\support\\Sunac2019\\LocalMode\\" + m_allAirCons[0].m_airConPrototypeFile;
 	es = pDatabase->readDwgFile(m_filePathName);
 	//DrawSolid(zhu, pDatabase,false);
@@ -159,16 +166,13 @@ void CAirconditionerDlg::UpdatePreview()
 
 void CAirconditionerDlg::OnCbnSelchangeComboPnum()
 {
-	// TODO: 在此添加控件通知处理程序代码
 	UpdatePreview();
-	
 }
 
 void CAirconditionerDlg::OnCbnSelchangeComboLntubepos()
 {
 	UpdatePreview();
 }
-
 
 void CAirconditionerDlg::OnCbnSelchangeComboRaintubepos()
 {
@@ -179,19 +183,32 @@ void CAirconditionerDlg::OnCbnSelchangeComboRaintubepos()
 void CAirconditionerDlg::OnBnClickedButtonInsertac()
 {
 	ShowWindow(FALSE);
-
+	
+	//获取插入点
 	AcGePoint3d pnt = TY_GetPoint();
 
 	RCAirCondition blockAirCon;
+	//将块插入图形空间
 	blockAirCon.Insert(m_filePathName, pnt, 0, L"0", 256);
+
+	//上下镜像
+	if (m_upDownImage.GetCheck())
+		TYCOM_MirrorOneObject(blockAirCon.m_id, pnt, AcGeVector3d(1,0,0));
+	//左右镜像
+	if (m_leftRightImage.GetCheck())
+		TYCOM_MirrorOneObject(blockAirCon.m_id, pnt, AcGeVector3d(0,1,0));
+	//上下左右镜像
+	if (m_upDownImage.GetCheck() && m_leftRightImage.GetCheck())
+	{
+		TYCOM_MirrorRotate(blockAirCon.m_id, pnt, 3.1415926);
+	}
 
 	//把UI的数据记录在图框的扩展字典中
 	AttrAirCon * pAirCon = new AttrAirCon(m_allAirCons[0]);
 	blockAirCon.AddAttribute(pAirCon);
 
-
 	pAirCon->close();
-
+	  
 	ShowWindow(TRUE);
 }
 
