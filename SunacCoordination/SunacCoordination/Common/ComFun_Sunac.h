@@ -84,6 +84,8 @@ vector<pair<CString,CString>> TY_FindFilesInDirecotry(CString fileName,CString d
 vector<pair<CString,CString>> TY_FindFilesInDirecotryRecursion( CString fileName,CString directory,int recursionCount);
 int TYCOM_MirrorOneObject(AcDbObjectId entId, AcGePoint3d first, AcGeVector3d dir);
 
+int TYCOM_MirrorRotate(AcDbObjectId entId, AcGePoint3d ptBase, double rotation);
+
 //从一个块参照或者动态块参照种隐藏所有的blockrecordname在hideBlockRecordNames中的块
 int TY_HideBlockReferencesInBlockReference(AcDbObjectId blkRefId, vCString &hideBlockRecordNames);
 
