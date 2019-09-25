@@ -186,6 +186,25 @@ vector<int> CGridCtrlEx::GetSelectedRows()
 	return ret;
 }
 
+vector<CCellID> CGridCtrlEx::GetSelectedCells()
+{
+	vector<CCellID> cells;
+	CCellID cellID;
+	for (int i = 0; i < GetContentRowCount(); i++)
+	{
+		for (int j = 0; j < GetColumnCount(); j++)
+		{
+			if (GetItemState(i + GetFixedRowCount(), j) & GVIS_SELECTED)
+			{
+				cellID.row = i;
+				cellID.col = j;
+				cells.push_back(cellID);
+			}
+		}
+	}
+	return cells;
+}
+
 vector<int> CGridCtrlEx::GetUnselectedRows()
 {
 	vector<int> ret;

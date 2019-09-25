@@ -8,6 +8,7 @@ class CGridCellForPreview : public CGridCell
 
 public:
 	CGridCellForPreview();
+	virtual ~CGridCellForPreview();
 	virtual BOOL Draw(CDC* pDC, int nRow, int nCol, CRect rect, BOOL bEraseBkgnd = TRUE);
 	void SetPreview(CPreviewWithDetail* preview);
 	void DeletePreview();

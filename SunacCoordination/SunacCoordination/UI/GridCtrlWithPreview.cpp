@@ -23,30 +23,6 @@ BEGIN_MESSAGE_MAP(CGridCtrlWithPreview, CGridCtrlEx)
 	ON_WM_PAINT()
 END_MESSAGE_MAP()
 
-int CGridCtrlWithPreview::SetRowCount(int nRows)
-{
-	for (int i = nRows; i < GetRowCount(); i++)
-		for (int j = 0; j < GetColumnCount(); j++)
-		{
-			CGridCellForPreview* pCell = GetPreviewCell(i, j);
-			if (pCell != NULL)
-				pCell->DeletePreview();
-		}
-	return CGridCtrlEx::SetRowCount(nRows);
-}
-
-int CGridCtrlWithPreview::SetColumnCount(int nCols)
-{
-	for (int i = 0; i < GetRowCount(); i++)
-		for (int j = nCols; j < GetColumnCount(); j++)
-		{
-			CGridCellForPreview* pCell = GetPreviewCell(i, j);
-			if (pCell != NULL)
-				pCell->DeletePreview();
-		}
-	return CGridCtrlEx::SetColumnCount(nCols);
-}
-
 void CGridCtrlWithPreview::SetDisplayRows(int nRows)
 {
 	m_nDisplayRows = nRows;
@@ -90,17 +66,7 @@ bool CGridCtrlWithPreview::AddPreview(int nRow, int nCol, CString sPath, CString
 
 void CGridCtrlWithPreview::ClearAllPreviews()
 {
-	for (int i = 0; i < GetRowCount(); i++)
-	{
-		for (int j = 0; j < GetColumnCount(); j++)
-		{
-			CGridCellForPreview* pCell = GetPreviewCell(i, j);
-			if (pCell != NULL)
-				pCell->DeletePreview();
-		}
-	}
 	SetRowCount(0);
-	SetColumnCount(0);
 }
 
 void CGridCtrlWithPreview::SelectPreview(int nRow, int nCol)

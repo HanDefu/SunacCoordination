@@ -8,6 +8,11 @@ CGridCellForPreview::CGridCellForPreview() : CGridCell()
 	m_pPreview = NULL;
 }
 
+CGridCellForPreview::~CGridCellForPreview()
+{
+	DeletePreview();
+}
+
 BOOL CGridCellForPreview::Draw(CDC* pDC, int nRow, int nCol, CRect rect, BOOL bEraseBkgnd /*= TRUE*/)
 {
 	if (m_pPreview == NULL)

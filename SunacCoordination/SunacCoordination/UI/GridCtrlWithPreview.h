@@ -6,11 +6,9 @@ class CGridCtrlWithPreview : public CGridCtrlEx
 {
 public:
 	CGridCtrlWithPreview();
-	~CGridCtrlWithPreview();
+	virtual ~CGridCtrlWithPreview();
 
 	void LoadDefaltSettings();
-	int SetRowCount(int nRows);
-	int SetColumnCount(int nCols);
 	void SetDisplayRows(int nRows); //设置显示区域内的行数
 	void SetDisplayColumns(int nCols); //设置显示区域内的列数
 
