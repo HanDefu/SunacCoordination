@@ -37,3 +37,30 @@ int Kitchen_KUq_ChuiZhiKai_SetDoorPos(AcDbObjectId kitchenId, double kaiJian);
 int Kitchen_KUq_ChuiZhiKai_SetZaoTaiPos(AcDbObjectId kitchenId, double kaiJian);
 //KUq门窗垂直开设置水盆的位置
 int Kitchen_KUq_ChuiZhiKai_SetShuiPenPos(AcDbObjectId kitchenId, double jinshen);
+
+
+//-------------KUs对开函数-----//
+//KUs门窗对开设置水盆的位置
+int Kitchen_KUs_DuiKai_SetShuiPenPos(AcDbObjectId kitchenId, double kaiJian);
+
+//KUs门窗对开设置灶台的位置 
+int Kitchen_KUs_DuiKai_SetZaoTaiPos(AcDbObjectId kitchenId, double jinShen);
+
+
+//-------------KL对开函数-----//
+//KL门窗对开设置水盆的位置
+int Kitchen_KL_DuiKai_SetShuiPenPos(AcDbObjectId kitchenId, double kaiJian);
+
+//KL门窗对开设置灶台的位置 
+//zaoTaiType "800"/"900"
+int Kitchen_KL_DuiKai_SetZaoTaiPos(AcDbObjectId kitchenId, double jinShen, CString zaoTaiType);
+
+
+//-------------KI对开函数-----//
+//KI门窗对开设置水盆的位置
+//shuiPen:"单盆600"/"单盆800"/双盆900/双盆1000/双盆1200
+int Kitchen_KI_DuiKai_SetShuiPenPos(AcDbObjectId kitchenId, double jinShen, CString shuiPenType);
+
+//KI门窗对开设置灶台的位置 
+//zaoTaiType "800"/"900"
+int Kitchen_KI_DuiKai_SetZaoTaiPos(AcDbObjectId kitchenId, CString zaoTaiType);
