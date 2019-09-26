@@ -17,6 +17,9 @@ int Kitchen_SelectBingXiang(AcDbObjectId kitchenId, CString bingXiang);
 //shuiPen:"800"/"900"
 int Kitchen_SelectZaoTai(AcDbObjectId kitchenId, CString zaoTai);
 
+//kitchenId厨房块参照的id
+//shuiPen:"冰箱_单开门_700"/"冰箱_对开门_800"/"冰箱_对开门_1000"
+int Kitchen_SelectBingXiang(AcDbObjectId kitchenId, CString bingXiang);
 
 
 //-------------KUq对开函数-----//
