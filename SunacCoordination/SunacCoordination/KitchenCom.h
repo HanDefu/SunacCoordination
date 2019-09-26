@@ -10,15 +10,11 @@
 int Kitchen_SelectShuiPen(AcDbObjectId kitchenId, CString shuiPen);
 
 //kitchenId厨房块参照的id
-//bingXiang:单开门700;对开门800;对开门1000
-int Kitchen_SelectBingXiang(AcDbObjectId kitchenId, CString bingXiang);
-
-//kitchenId厨房块参照的id
 //shuiPen:"800"/"900"
 int Kitchen_SelectZaoTai(AcDbObjectId kitchenId, CString zaoTai);
 
 //kitchenId厨房块参照的id
-//shuiPen:"冰箱_单开门_700"/"冰箱_对开门_800"/"冰箱_对开门_1000"
+//bingXiang:"冰箱_单开门_700"/"冰箱_对开门_800"/"冰箱_对开门_1000"
 int Kitchen_SelectBingXiang(AcDbObjectId kitchenId, CString bingXiang);
 
 

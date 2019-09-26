@@ -13,7 +13,6 @@ IMPLEMENT_DYNAMIC(CKitchenDlg, CAcUiDialog)
 
 CKitchenDlg::CKitchenDlg(CWnd* pParent /*=NULL*/)
 	: CAcUiDialog(CKitchenDlg::IDD, pParent)
-	, m_bHasAirOut(FALSE)
 	, m_bAutoIndex(FALSE)
 {
 	m_rect.SetLB(AcGePoint3d(0, 0, 0));
@@ -63,9 +62,10 @@ void CKitchenDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_BENCHWIDTH, m_benchWidth);
 	DDX_Control(pDX, IDC_COMBO_FRIDGETYPE, m_fridgeType);
 	DDX_Control(pDX, IDC_COMBO_KITCHENTYPE, m_kitchenType);
-	DDX_Check(pDX, IDC_CHECK_AIROUT, m_bHasAirOut);
 	DDX_Check(pDX, IDC_CHECK_AUTOINDEX, m_bAutoIndex);
 	DDX_Control(pDX, IDC_EDIT_KITCHENNUMBER, m_number);
+	DDX_Control(pDX, IDC_CHECK_IMAGE, m_isMirror);
+	DDX_Control(pDX, IDC_CHECK_AIROUT, m_noAirOut);
 }
 
 BEGIN_MESSAGE_MAP(CKitchenDlg, CAcUiDialog)
@@ -76,7 +76,6 @@ BEGIN_MESSAGE_MAP(CKitchenDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDC_BUTTON_DOORDIR, &CKitchenDlg::OnBnClickedButtonDoorDir)
 	ON_BN_CLICKED(IDC_BUTTON_WINDOWDIR, &CKitchenDlg::OnBnClickedButtonWindowDir)
 	ON_BN_CLICKED(IDC_BUTTON_SEARCH, &CKitchenDlg::OnBnClickedButtonSearch)
-	ON_BN_CLICKED(IDC_CHECK_AIROUT, &CKitchenDlg::OnBnClickedAirOut)
 	ON_BN_CLICKED(IDC_CHECK_AUTOINDEX, &CKitchenDlg::OnBnClickedAutoIndex)
 	ON_NOTIFY(GVN_SELCHANGED, IDC_PREVIEW_KITCHEN, CKitchenDlg::OnSelChanged)
 END_MESSAGE_MAP()
@@ -135,6 +134,7 @@ void CKitchenDlg::OnBnClickedButtonInsert()
 	CString bench = TYUI_GetComboBoxText(m_benchWidth);
 
 	Kitchen_SelectShuiPen(id, basin);
+	Kitchen_SelectBingXiang(id, fridge);
 	Kitchen_SelectZaoTai(id, bench);
 
 	if (m_allKitchens[nSel]->m_kitchenType == _T("Uq"))
@@ -149,6 +149,24 @@ void CKitchenDlg::OnBnClickedButtonInsert()
 		Kitchen_KUq_ChuiZhiKai_SetZaoTaiPos(id, kaiJian);
 		Kitchen_KUq_ChuiZhiKai_SetShuiPenPos(id, jinShen);
 	}
+	else if (m_allKitchens[nSel]->m_kitchenType == _T("Us"))
+	{
+		Kitchen_KUs_DuiKai_SetShuiPenPos(id, kaiJian);
+		Kitchen_KUs_DuiKai_SetZaoTaiPos(id, jinShen);
+	}
+	else if (m_allKitchens[nSel]->m_kitchenType == _T("L"))
+	{
+		Kitchen_KL_DuiKai_SetShuiPenPos(id, kaiJian);
+		Kitchen_KL_DuiKai_SetZaoTaiPos(id, jinShen, bench);
+	}
+	else
+	{
+		Kitchen_KI_DuiKai_SetShuiPenPos(id, jinShen, basin);
+		Kitchen_KI_DuiKai_SetZaoTaiPos(id, bench);
+	}
+
+	if (m_isMirror.GetCheck())
+		TYCOM_MirrorOneObject(oneKitchen.m_id, origin, AcGeVector3d(0,1,0));
 
 	//把UI的数据记录在图框的扩展字典中
 	AttrKitchen *pAttribute = new AttrKitchen(*m_allKitchens[nSel]);
@@ -349,24 +367,19 @@ void CKitchenDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 		}
 		else if (type == _T("I"))
 		{
-			if (kaiJian < 3350)
+			if (jinShen < 3350)
 				TYUI_InitComboBox(m_basinType, _T("单盆600;单盆800"), _T("单盆600"));
 			else
 				TYUI_InitComboBox(m_basinType, _T("双盆900;双盆1000;双盆1200"), _T("双盆900"));
 
 			TYUI_InitComboBox(m_fridgeType, _T("单开门700;对开门800;对开门1000"), _T("单开门700"));
 
-			if (kaiJian <= 3350)
+			if (jinShen <= 3350)
 				TYUI_InitComboBox(m_benchWidth, _T("800"), _T("800"));
 			else
 				TYUI_InitComboBox(m_benchWidth, _T("900"), _T("900"));
 		}
 	}
-}
-
-void CKitchenDlg::OnBnClickedAirOut()
-{
-	UpdateData(TRUE);
 }
 
 void CKitchenDlg::OnBnClickedAutoIndex()
@@ -448,7 +461,8 @@ vector<AttrKitchen*> CKitchenDlg::FilterKUq()
 	if ((jinShen - 1700) % 150 != 0)
 		return attrKitchen;
 
-	return WebIO::GetInstance()->GetKitchens(kaiJian, jinShen, _T("对开"), _T("Uq"), (m_bHasAirOut == FALSE));
+	angle = (m_doorDir - DIR_BOTTOM) * 90;
+	return WebIO::GetInstance()->GetKitchens(kaiJian, jinShen, _T("对开"), _T("Uq"), (m_noAirOut.GetCheck() == 0));
 }
 
 vector<AttrKitchen*> CKitchenDlg::FilterKUqc()
@@ -477,7 +491,8 @@ vector<AttrKitchen*> CKitchenDlg::FilterKUqc()
 	if ((jinShen - 1700) % 150 != 0)
 		return attrKitchen;
 
-	return WebIO::GetInstance()->GetKitchens(kaiJian, jinShen, _T("垂直开"), _T("Uq"), (m_bHasAirOut == FALSE));
+	angle = (m_doorDir - DIR_BOTTOM) * 90;
+	return WebIO::GetInstance()->GetKitchens(kaiJian, jinShen, _T("垂直开"), _T("Uq"), (m_noAirOut.GetCheck() == 0));
 }
 
 vector<AttrKitchen*> CKitchenDlg::FilterKUs()
@@ -506,7 +521,8 @@ vector<AttrKitchen*> CKitchenDlg::FilterKUs()
 	if (abs(m_windowDir - m_doorDir) != 2)
 		return attrKitchen;
 
-	return WebIO::GetInstance()->GetKitchens(kaiJian, jinShen, _T("对开"), _T("Us"), (m_bHasAirOut == FALSE));
+	angle = (m_doorDir - DIR_BOTTOM) * 90;
+	return WebIO::GetInstance()->GetKitchens(kaiJian, jinShen, _T("对开"), _T("Us"), (m_noAirOut.GetCheck() == 0));
 }
 
 vector<AttrKitchen*> CKitchenDlg::FilterKL()
@@ -533,7 +549,8 @@ vector<AttrKitchen*> CKitchenDlg::FilterKL()
 	if (abs(m_windowDir - m_doorDir) != 2)
 		return attrKitchen;
 
-	return WebIO::GetInstance()->GetKitchens(kaiJian, jinShen, _T("对开"), _T("L"), (m_bHasAirOut == FALSE));
+	angle = (m_doorDir - DIR_LEFT) * 90;
+	return WebIO::GetInstance()->GetKitchens(kaiJian, jinShen, _T("对开"), _T("L"), (m_noAirOut.GetCheck() == 0));
 }
 
 vector<AttrKitchen*> CKitchenDlg::FilterKI()
@@ -558,5 +575,6 @@ vector<AttrKitchen*> CKitchenDlg::FilterKI()
 	if (abs(m_windowDir - m_doorDir) != 2)
 		return attrKitchen;
 
-	return WebIO::GetInstance()->GetKitchens(kaiJian, jinShen, _T("对开"), _T("I"), (m_bHasAirOut == FALSE));
+	angle = (m_doorDir - DIR_LEFT) * 90;
+	return WebIO::GetInstance()->GetKitchens(kaiJian, jinShen, _T("对开"), _T("I"), (m_noAirOut.GetCheck() == 0));
 }
