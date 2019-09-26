@@ -50,32 +50,6 @@ int Kitchen_SelectShuiPen(AcDbObjectId kitchenId, CString shuiPen)
 	return 0;
 }
 
-int Kitchen_SelectBingXiang(AcDbObjectId kitchenId, CString bingXiang)
-{
-	vCString hideBlockRecordNames;
-	if (bingXiang == L"单开门700")
-	{
-		//hideBlockRecordNames.push_back(L"灶台_900");
-		//hideBlockRecordNames.push_back(L"灶台_900");
-	}
-	else if (bingXiang == L"对开门800")
-	{
-		//hideBlockRecordNames.push_back(L"灶台_800");
-		//hideBlockRecordNames.push_back(L"灶台_900");
-	}
-	else if (bingXiang == L"对开门1000")
-	{
-		//hideBlockRecordNames.push_back(L"灶台_800");
-		//hideBlockRecordNames.push_back(L"灶台_900");
-	}
-	else
-		return -1;
-
-	TY_HideBlockReferencesInBlockReference(kitchenId, hideBlockRecordNames);
-
-	return 0;
-}
-
 int Kitchen_SelectZaoTai(AcDbObjectId kitchenId, CString zaoTai)
 {
 	vCString hideBlockRecordNames;
@@ -94,6 +68,30 @@ int Kitchen_SelectZaoTai(AcDbObjectId kitchenId, CString zaoTai)
 	TY_HideBlockReferencesInBlockReference(kitchenId, hideBlockRecordNames);
 
 	return 0;
+}
+
+int Kitchen_SelectBingXiang(AcDbObjectId kitchenId, CString bingXiang)
+{
+	vCString hideBlockRecordNames;
+	if (bingXiang == L"冰箱_单开门_700")
+	{
+		hideBlockRecordNames.push_back(L"冰箱_对开门_800");
+		hideBlockRecordNames.push_back(L"冰箱_对开门_1000");
+	}
+	else if (bingXiang == L"冰箱_对开门_800")
+	{
+		hideBlockRecordNames.push_back(L"冰箱_单开门_700");
+		hideBlockRecordNames.push_back(L"冰箱_对开门_1000");
+	}
+	else if (bingXiang == L"冰箱_对开门_1000")
+	{
+		hideBlockRecordNames.push_back(L"冰箱_单开门_700");
+		hideBlockRecordNames.push_back(L"冰箱_对开门_800");
+	}
+	else
+		return -1;
+
+	TY_HideBlockReferencesInBlockReference(kitchenId, hideBlockRecordNames);
 }
 
 //kuq 对开 自动设置门的位置
