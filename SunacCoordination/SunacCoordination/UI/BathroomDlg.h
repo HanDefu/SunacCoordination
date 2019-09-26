@@ -1,7 +1,23 @@
 #pragma once
 #include "GridCtrlWithPreview.h"
+#include "afxwin.h"
+#include "../Object/AttrToilet.h"
+#include "../Common/ComFun_Sunac.h"
+#include "ComFun_MFC.h"
 
 // CBathroomDlg 对话框
+
+#ifndef TYPE_DIR
+#define TYPE_DIR
+enum DIR
+{
+	DIR_TOP,
+	DIR_LEFT,
+	DIR_BOTTOM,
+	DIR_RIGHT,
+	DIR_UNKNOWN
+};
+#endif
 
 class CBathroomDlg : public CAcUiDialog
 {
@@ -18,8 +34,38 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	virtual BOOL OnInitDialog();
+	virtual void OnOK();
+	virtual void OnCancel();
+	virtual void PostNcDestroy(); //释放非模态对话框内存
 
 	DECLARE_MESSAGE_MAP()
 
 	CGridCtrlWithPreview m_preBathroom;
+	TYRect m_rect;
+	DIR m_doorDir;
+	DIR m_windowDir;
+
+	vector<AttrToilet*> m_allBathrooms;
+
+public:
+	CComboBox m_bathroomType;
+	CButton m_noAirOut;
+	CEdit m_number;
+	CComboBox m_basinWidth;
+	CComboBox m_toiletWidth;
+	CComboBox m_washWidth;
+	CButton m_isMirror;
+	CButton m_autoIndex;
+
+	DIR GetDir(ads_point pt);
+	void LoadDefaultValue();
+	vector<AttrToilet*> FilterTI();
+	vector<AttrToilet*> FilterTL();
+	vector<AttrToilet*> FilterTU();
+	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);///---01
+	afx_msg void OnBnClickedButtonInsert();
+	afx_msg void OnBnClickedButtonRange();
+	afx_msg void OnBnClickedButtonDoorDir();
+	afx_msg void OnBnClickedButtonWindowDir();
+	afx_msg void OnBnClickedButtonSearch();
 };
