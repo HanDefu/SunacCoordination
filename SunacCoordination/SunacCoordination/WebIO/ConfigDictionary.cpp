@@ -5,7 +5,7 @@
 #include <atlconv.h>  
 #include "SunacCadWeb\ArgumentSettingServiceSoap.nsmap"
 #include "SunacCadWeb\soapArgumentSettingServiceSoapProxy.h"
-
+#include "../Common\ComFun_Str.h"
 
 #include "..\Tool\MarkupXml\Markup.h"
 
@@ -71,7 +71,7 @@ bool CConfigDictionary::GetConfigFromWeb(wstring p_paraTypeName, vector<wstring>
 
 	//解析字符串出结果
 	CMarkup xml;
-	xml.SetDoc(*(attResult.StandardDesignAttributeResult));
+	xml.SetDoc((*(attResult.StandardDesignAttributeResult)).c_str());
 	xml.ResetMainPos();
 	xml.FindElem();	//根节点
 	xml.IntoElem();

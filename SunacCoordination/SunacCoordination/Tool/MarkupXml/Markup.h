@@ -1,7 +1,7 @@
 // Markup.h: interface for the CMarkup class.
 //
-// Markup Release 11.2
-// Copyright (C) 2009 First Objective Software, Inc. All rights reserved
+// Markup Release 11.5
+// Copyright (C) 2011 First Objective Software, Inc. All rights reserved
 // Go to www.firstobject.com for the latest CMarkup and EDOM documentation
 // Use in commercial applications requires written permission
 // This software is provided "as is", with no warranty.
@@ -12,11 +12,6 @@
 #include <stdlib.h>
 #include <string.h> // memcpy, memset, strcmp...
 
-
-#ifndef MARKUP_STL
-#define  MARKUP_STL
-#endif
-
 // Major build options
 // MARKUP_WCHAR wide char (2-byte UTF-16 on Windows, 4-byte UTF-32 on Linux and OS X)
 // MARKUP_MBCS ANSI/double-byte strings on Windows
@@ -26,6 +21,11 @@
 // MARKUP_ICONV (default for GNU) for character conversion on Linux and OS X and other platforms
 // MARKUP_STDCONV to use neither WINCONV or ICONV, falls back to setlocale based conversion for ANSI
 //
+#if ! defined(MARKUP_WINDOWS)
+#if defined(_WIN32) || defined(WIN32)
+#define MARKUP_WINDOWS
+#endif // WIN32 or _WIN32
+#endif // not MARKUP_WINDOWS
 #if _MSC_VER > 1000 // VC++
 #pragma once
 #if ! defined(MARKUP_SAFESTR) // not VC++ safe strings
@@ -39,7 +39,9 @@
 #define MARKUP_STL
 #endif // not STL
 #if defined(__GNUC__) && ! defined(MARKUP_ICONV) && ! defined(MARKUP_STDCONV) && ! defined(MARKUP_WINCONV)
+#if ! defined(MARKUP_WINDOWS)
 #define MARKUP_ICONV
+#endif // not Windows
 #endif // GNUC and not ICONV not STDCONV not WINCONV
 #endif // not VC++
 #if (defined(_UNICODE) || defined(UNICODE)) && ! defined(MARKUP_WCHAR)
@@ -75,23 +77,20 @@
 #define MCD_PSZCHR wcschr
 #define MCD_PSZSTR wcsstr
 #define MCD_PSZTOL wcstol
-#define MCD_PSZNCMP wcsncmp
 #if defined(MARKUP_SAFESTR) // VC++ safe strings
 #define MCD_SSZ(sz) sz,(sizeof(sz)/sizeof(MCD_CHAR))
 #define MCD_PSZCPY(sz,p) wcscpy_s(MCD_SSZ(sz),p)
 #define MCD_PSZNCPY(sz,p,n) wcsncpy_s(MCD_SSZ(sz),p,n)
-#define MCD_PSZCAT(sz,p) wcscat_s(MCD_SSZ(sz),p)
 #define MCD_SPRINTF swprintf_s
 #define MCD_FOPEN(f,n,m) {if(_wfopen_s(&f,n,m)!=0)f=NULL;}
 #else // not VC++ safe strings
-#if defined(__GNUC__)
+#if defined(__GNUC__) && ! defined(MARKUP_WINDOWS) // non-Windows GNUC
 #define MCD_SSZ(sz) sz,(sizeof(sz)/sizeof(MCD_CHAR))
-#else // not GNUC
+#else // not non-Windows GNUC
 #define MCD_SSZ(sz) sz
-#endif // not GNUC
+#endif // not non-Windows GNUC
 #define MCD_PSZCPY wcscpy
 #define MCD_PSZNCPY wcsncpy
-#define MCD_PSZCAT wcscat
 #define MCD_SPRINTF swprintf
 #define MCD_FOPEN(f,n,m) f=_wfopen(n,m)
 #endif // not VC++ safe strings
@@ -109,19 +108,16 @@
 #define MCD_PSZCHR strchr
 #define MCD_PSZSTR strstr
 #define MCD_PSZTOL strtol
-#define MCD_PSZNCMP strncmp
 #if defined(MARKUP_SAFESTR) // VC++ safe strings
 #define MCD_SSZ(sz) sz,(sizeof(sz)/sizeof(MCD_CHAR))
 #define MCD_PSZCPY(sz,p) strcpy_s(MCD_SSZ(sz),p)
 #define MCD_PSZNCPY(sz,p,n) strncpy_s(MCD_SSZ(sz),p,n)
-#define MCD_PSZCAT(sz,p) strcat_s(MCD_SSZ(sz),p)
 #define MCD_SPRINTF sprintf_s
 #define MCD_FOPEN(f,n,m) {if(fopen_s(&f,n,m)!=0)f=NULL;}
 #else // not VC++ safe strings
 #define MCD_SSZ(sz) sz
 #define MCD_PSZCPY strcpy
 #define MCD_PSZNCPY strncpy
-#define MCD_PSZCAT strcat
 #define MCD_SPRINTF sprintf
 #define MCD_FOPEN(f,n,m) f=fopen(n,m)
 #endif // not VC++ safe strings
@@ -161,15 +157,18 @@
 #define MCD_STRASSIGN(s,p,n) s.assign(p,n)
 #define MCD_STRCAPACITY(s) (int)s.capacity()
 #define MCD_STRINSERTREPLACE(d,i,r,s) d.replace(i,r,s)
-#define MCD_GETBUFFER(s,n) new MCD_CHAR[n+1]; s.reserve(n)
-#define MCD_RELEASEBUFFER(s,p,n) s.assign(p,n); delete[]p
+#define MCD_GETBUFFER(s,n) new MCD_CHAR[n+1]; if ((int)s.capacity()<(int)n) s.reserve(n)
+#define MCD_RELEASEBUFFER(s,p,n) s.replace(0,s.size(),p,n); delete[]p
 #define MCD_BLDRESERVE(s,n) s.reserve(n)
 #define MCD_BLDCHECK(s,n,d) ;
 #define MCD_BLDRELEASE(s) ;
 #define MCD_BLDAPPENDN(s,p,n) s.append(p,n)
 #define MCD_BLDAPPEND(s,p) s.append(p)
 #define MCD_BLDAPPEND1(s,c) s+=(MCD_CHAR)(c)
+#define MCD_BLDLEN(s) (int)s.size()
+#define MCD_BLDTRUNC(s,n) s.resize(n)
 #else // not STL, i.e. MFC
+// afx.h provides CString, to avoid "WINVER not defined" #include stdafh.x in Markup.cpp
 #include <afx.h>
 #define MCD_STR CString
 #define MCD_2PCSZ(s) ((MCD_PCSZ)s)
@@ -188,6 +187,8 @@
 #define MCD_BLDAPPENDN(s,p,n) MCD_PSZNCPY(&pD[nL],p,n);nL+=n
 #define MCD_BLDAPPEND(s,p) MCD_PSZCPY(&pD[nL],p);nL+=MCD_PSZLEN(p)
 #define MCD_BLDAPPEND1(s,c) pD[nL++]=(MCD_CHAR)(c)
+#define MCD_BLDLEN(s) nL
+#define MCD_BLDTRUNC(s,n) nL=n
 #endif // not STL
 #define MCD_STRTOINT(s) MCD_PSZTOL(MCD_2PCSZ(s),NULL,10)
 
@@ -221,7 +222,8 @@ struct MCD_CSTR_FILENAME
 #define MCD_PCSZ_FILENAME MCD_PCSZ
 #endif // not WCHAR GNUC
 
-#if defined(__GNUC__)
+// File fseek, ftell and offset type
+#if defined(__GNUC__) && ! defined(MARKUP_WINDOWS) // non-Windows GNUC
 #define MCD_FSEEK fseeko
 #define MCD_FTELL ftello
 #define MCD_INTFILEOFFSET off_t
@@ -233,11 +235,25 @@ extern "C" __int64 __cdecl _ftelli64(FILE *);
 #define MCD_FSEEK _fseeki64
 #define MCD_FTELL _ftelli64
 #define MCD_INTFILEOFFSET __int64
-#else // not GNU or VC++ HUGEFILE
+#else // not non-Windows GNUC or VC++ HUGEFILE
 #define MCD_FSEEK fseek
 #define MCD_FTELL ftell
 #define MCD_INTFILEOFFSET long
-#endif // not GNU or VC++ HUGEFILE
+#endif // not non-Windows GNUC or VC++ HUGEFILE
+
+// End of line choices: none, return, newline, or CRLF
+#if defined(MARKUP_EOL_NONE)
+#define MCD_EOL MCD_T("")
+#elif defined(MARKUP_EOL_RETURN) // rare; only used on some old operating systems
+#define MCD_EOL MCD_T("\r")
+#elif defined(MARKUP_EOL_NEWLINE) // Unix standard
+#define MCD_EOL MCD_T("\n")
+#elif defined(MARKUP_EOL_CRLF) || defined(MARKUP_WINDOWS) // Windows standard
+#define MCD_EOL MCD_T("\r\n")
+#else // not Windows and not otherwise specified
+#define MCD_EOL MCD_T("\n")
+#endif // not Windows and not otherwise specified
+#define MCD_EOLLEN (sizeof(MCD_EOL)/sizeof(MCD_CHAR)-1) // string length of MCD_EOL
 
 struct FilePos;
 struct TokenPos;
@@ -275,6 +291,7 @@ public:
 	MCD_STR GetElemContent() const { return x_GetElemContent(m_iPos); };
 	MCD_STR GetAttrib( MCD_CSTR szAttrib ) const { return x_GetAttrib(m_iPos,szAttrib); };
 	MCD_STR GetChildAttrib( MCD_CSTR szAttrib ) const { return x_GetAttrib(m_iPosChild,szAttrib); };
+	bool GetNthAttrib( int n, MCD_STR& strAttrib, MCD_STR& strValue ) const;
 	MCD_STR GetAttribName( int n ) const;
 	int FindNode( int nType=0 );
 	int GetNodeType() { return m_nNodeType; };
@@ -293,7 +310,9 @@ public:
 		MDF_READFILE = 16,
 		MDF_WRITEFILE = 32,
 		MDF_APPENDFILE = 64,
-		MDF_UTF16BEFILE = 128
+		MDF_UTF16BEFILE = 128,
+		MDF_TRIMWHITESPACE = 256,
+		MDF_COLLAPSEWHITESPACE = 512
 	};
 	enum MarkupNodeFlags
 	{
@@ -322,7 +341,9 @@ public:
 	};
 
 	// Create
-	bool Save( MCD_CSTR_FILENAME szFileName );
+	
+	bool SaveIndent( MCD_CSTR_FILENAME szFileName );//支持保存缩进
+	bool Save( MCD_CSTR_FILENAME szFileName );//保存不缩进
 	const MCD_STR& GetDoc() const { return m_strDoc; };
 	bool AddElem( MCD_CSTR szName, MCD_CSTR szData=NULL, int nFlags=0 ) { return x_AddElem(szName,szData,nFlags); };
 	bool InsertElem( MCD_CSTR szName, MCD_CSTR szData=NULL, int nFlags=0 ) { return x_AddElem(szName,szData,nFlags|MNF_INSERT); };
@@ -364,7 +385,7 @@ public:
 	static bool ReadTextFile( MCD_CSTR_FILENAME szFileName, MCD_STR& strDoc, MCD_STR* pstrResult=NULL, int* pnDocFlags=NULL, MCD_STR* pstrEncoding=NULL );
 	static bool WriteTextFile( MCD_CSTR_FILENAME szFileName, const MCD_STR& strDoc, MCD_STR* pstrResult=NULL, int* pnDocFlags=NULL, MCD_STR* pstrEncoding=NULL );
 	static MCD_STR EscapeText( MCD_CSTR szText, int nFlags = 0 );
-	static MCD_STR UnescapeText( MCD_CSTR szText, int nTextLength = -1 );
+	static MCD_STR UnescapeText( MCD_CSTR szText, int nTextLength = -1, int nFlags = 0 );
 	static int UTF16To8( char *pszUTF8, const unsigned short* pwszUTF16, int nUTF8Count );
 	static int UTF8To16( unsigned short* pwszUTF16, const char* pszUTF8, int nUTF8Count );
 	static MCD_STR UTF8ToA( MCD_CSTR pszUTF8, int* pnFailed = NULL );
@@ -377,6 +398,7 @@ public:
 	static MCD_STR GetDeclaredEncoding( MCD_CSTR szDoc );
 	static int GetEncodingCodePage( MCD_CSTR pszEncoding );
 
+	MCD_STR GetIndentDoc();
 protected:
 
 #if defined(_DEBUG)
@@ -452,5 +474,8 @@ protected:
 	bool x_SetElemContent( MCD_PCSZ szContent );
 	void x_DocChange( int nLeft, int nReplace, const MCD_STR& strInsert );
 };
+
+bool AddElemDouble(CMarkup& xml, CString p_sName, double value);
+bool AddAttribDouble(CMarkup& xml, CString p_sName, double value);
 
 #endif // !defined(_MARKUP_H_INCLUDED_)
