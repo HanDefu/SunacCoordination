@@ -73,16 +73,16 @@ int Toilet_SelectBingXiang(AcDbObjectId toiletId, CString maTong)
 int TI3_SetMaTongPos(AcDbObjectId toiletId, double yLen)
 {
 	if (yLen > 2600)
-		TYCOM_GetDynamicBlockData(toiletId, L"马桶距墙Y", 450);
+		TYCOM_SetDynamicBlockValue(toiletId, L"马桶距墙Y", 450.0);
 	else
-		TYCOM_GetDynamicBlockData(toiletId, L"马桶距墙Y", 400);
+		TYCOM_SetDynamicBlockValue(toiletId, L"马桶距墙Y", 400.0);
 
 	return 0;
 }
 
 vCString TI3_GetTaiPens(AcDbObjectId toiletId, double yLen, double maTongWidth)
 {
-	if (maTongWidth =<= 0)
+	if (maTongWidth <= 0)
 		maTongWidth = 750;
 
 	double y1 = 0;
@@ -129,9 +129,11 @@ int TI3_G_SetHuanXiQuY(AcDbObjectId toiletId, double yLen)
 int TI4_SetMaTongPos(AcDbObjectId toiletId, double yLen)
 {
 	if (yLen > 3200)
-		TYCOM_GetDynamicBlockData(toiletId, L"马桶距墙Y", 450);
+		TYCOM_SetDynamicBlockValue(toiletId, L"马桶距墙Y", 450.0);
 	else
-		TYCOM_GetDynamicBlockData(toiletId, L"马桶距墙Y", 400);
+		TYCOM_SetDynamicBlockValue(toiletId, L"马桶距墙Y", 400.0);
+
+	return 0;
 }
 
 vCString TI4_GetTaiPens(AcDbObjectId toiletId, double yLen, double maTongWidth)
