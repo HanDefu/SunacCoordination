@@ -133,9 +133,6 @@
     <ClCompile Include="Object\RCDoor.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Object\RCKitchen.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="Object\RCToilet.cpp">
       <Filter>Object</Filter>
     </ClCompile>
@@ -176,9 +173,6 @@
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="Object\AttrDoor.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\AttrKitchen.cpp">
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="Object\AttrRailing.cpp">
@@ -256,13 +250,16 @@
     <ClCompile Include="WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.cpp" />
     <ClCompile Include="WebIO\SunacCadWeb\soapC.cpp" />
     <ClCompile Include="WebIO\SunacCadWeb\stdsoap2.cpp" />
-    <ClCompile Include="KitchenCom.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="ToiletCom.cpp">
       <Filter>Source</Filter>
     </ClCompile>
     <ClCompile Include="Object\Kitchen\KitchenGen.cpp">
+      <Filter>Object\Kitchen</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Kitchen\AttrKitchen.cpp">
+      <Filter>Object\Kitchen</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Kitchen\RCKitchen.cpp">
       <Filter>Object\Kitchen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -468,9 +465,6 @@
     <ClInclude Include="Object\RCDoor.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Object\RCKitchen.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="Object\RCToilet.h">
       <Filter>Object</Filter>
     </ClInclude>
@@ -511,9 +505,6 @@
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Object\AttrDoor.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\AttrKitchen.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Object\AttrRailing.h">
@@ -601,13 +592,19 @@
     <ClInclude Include="WebIO\SunacCadWeb\soapH.h" />
     <ClInclude Include="WebIO\SunacCadWeb\soapStub.h" />
     <ClInclude Include="WebIO\SunacCadWeb\stdsoap2.h" />
-    <ClInclude Include="KitchenCom.h">
-      <Filter>Source</Filter>
-    </ClInclude>
     <ClInclude Include="ToiletCom.h">
       <Filter>Source</Filter>
     </ClInclude>
     <ClInclude Include="Object\Kitchen\KitchenGen.h">
+      <Filter>Object\Kitchen</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\PrototypeCommonDef.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Kitchen\AttrKitchen.h">
+      <Filter>Object\Kitchen</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Kitchen\RCKitchen.h">
       <Filter>Object\Kitchen</Filter>
     </ClInclude>
   </ItemGroup>

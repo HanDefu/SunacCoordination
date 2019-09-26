@@ -15,8 +15,8 @@ File description:
 #pragma once
 
 #include <vector>
-#include "RCDynamicBlock.h"
-#include "../Object/AttrKitchen.h"
+#include "..\RCDynamicBlock.h"
+#include "AttrKitchen.h"
 
 class RCKitchen : public RCDynamicBlock
 {

@@ -2,22 +2,12 @@
 #include "GridCtrlWithPreview.h"
 #include "afxwin.h"
 #include "../Object/AttrToilet.h"
+#include "../Object/PrototypeCommonDef.h"
 #include "../Common/ComFun_Sunac.h"
 #include "ComFun_MFC.h"
 
 // CBathroomDlg ¶Ô»°¿ò
 
-#ifndef TYPE_DIR
-#define TYPE_DIR
-enum DIR
-{
-	DIR_TOP,
-	DIR_LEFT,
-	DIR_BOTTOM,
-	DIR_RIGHT,
-	DIR_UNKNOWN
-};
-#endif
 
 class CBathroomDlg : public CAcUiDialog
 {
@@ -42,8 +32,8 @@ protected:
 
 	CGridCtrlWithPreview m_preBathroom;
 	TYRect m_rect;
-	DIR m_doorDir;
-	DIR m_windowDir;
+	E_DIRECTION m_doorDir;
+	E_DIRECTION m_windowDir;
 
 	vector<AttrToilet*> m_allBathrooms;
 
@@ -57,7 +47,7 @@ public:
 	CButton m_isMirror;
 	CButton m_autoIndex;
 
-	DIR GetDir(ads_point pt);
+	E_DIRECTION GetDir(ads_point pt);
 	void LoadDefaultValue();
 	vector<AttrToilet*> FilterTI();
 	vector<AttrToilet*> FilterTL();

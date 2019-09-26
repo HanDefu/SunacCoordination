@@ -118,43 +118,57 @@ std::vector<AttrKitchen *> WebIO::GetKitchens
   double jinShen,//进深
   CString weiZhiGuanXi,//门窗位置关系
   CString type,//厨房类型
-  bool hasPaiQiDao//是否含有排气道
+  bool hasPaiQiDao,//是否含有排气道
+  bool bDynatic
 )
 {
 	std::vector<AttrKitchen *> result;
+
 #ifdef WORK_LOCAL//本地模式
+	if (bDynatic==false)
+	{
+		return result;
+	}
 	CString localKitchenPath = TY_GetLocalFilePath();
 	CString localFile;
 
-	if (type == L"Uq")
+	if (type == L"U型")
 	{
-		if (weiZhiGuanXi == L"对开")
+		if (kaiJian>jinShen)
 		{
-			if (jinShen < 2000)
-				localFile = L"KUq_Dui.dwg";
+			if (weiZhiGuanXi == L"门窗对开")
+			{
+				if (jinShen < 2000)
+					localFile = L"KUq_Dui.dwg";
+				else
+					localFile = L"KUq_Dui_ZhuanJIao.dwg";
+			}
 			else
-				localFile = L"KUq_Dui_ZhuanJIao.dwg";
+			{
+				if (jinShen < 2000)
+					localFile = L"KUq_Chui.dwg";
+				else
+					localFile = L"KUq_Chui_ZhuanJIao.dwg";
+			}
 		}
 		else
 		{
-			if (jinShen < 2000)
-				localFile = L"KUq_Chui.dwg";
-			else
-				localFile = L"KUq_Chui_ZhuanJIao.dwg";
+			localFile = L"KUs.dwg";
 		}
 	}
-	else if (type == L"Us")
-		localFile = L"KUs.dwg";
-	else if (type == L"L")
+	else if (type == L"L型")
 		localFile = L"KL.dwg";
-	else
+	else if (type == L"L型")
 		localFile = L"KI.dwg";
+	else
+		return result;
+
 	if (hasPaiQiDao)
 		localFile.Replace(_T(".dwg"), _T("_P.dwg"));
 
 	AttrKitchen *pAttribute = new AttrKitchen();
 	pAttribute->m_yxid.Format(L"K%s_%.0lf×%.0lf", type, kaiJian, jinShen);
-	if (weiZhiGuanXi == L"垂直开")
+	if (weiZhiGuanXi == L"门窗垂直")
 		pAttribute->m_yxid += L"_c";
 	pAttribute->m_name = localFile;
 	pAttribute->m_isJiTuan = true;
@@ -176,7 +190,11 @@ std::vector<AttrKitchen *> WebIO::GetAllKitchens()
 {
 	std::vector<AttrKitchen *> result;
 #ifdef WORK_LOCAL//本地模式
-	result = GetKitchens(0,0,L"",L"",0);
+	std::vector<AttrKitchen *> result1 = GetKitchens(0, 0, L"", L"", 0, false);
+	result.insert(result.end(), result1.begin(), result1.end());
+
+	std::vector<AttrKitchen *> result2 = GetKitchens(0, 0, L"", L"", 0, true);
+	result.insert(result.end(), result2.begin(), result2.end());
 #else
 
 #endif

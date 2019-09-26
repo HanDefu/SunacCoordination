@@ -17,7 +17,7 @@ File description:
 #include "RCKitchen.h"
 #include "float.h"
 #include <algorithm>
-#include "../Common/ComFun_Sunac.h"
+#include "../../Common/ComFun_Sunac.h"
 
 //Constructor
 RCKitchen::RCKitchen(void)

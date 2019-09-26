@@ -30,8 +30,6 @@ AttrObject::AttrObject()
 
 AttrObject::~AttrObject()
 {
-	// TODO: clean up.
-
 }
 
 AttrObject::AttrObject(const AttrObject &other)
@@ -43,6 +41,7 @@ AttrObject::AttrObject(const AttrObject &other)
 	m_quyuName = other.m_quyuName;
 	m_type = other.m_type; 
 	m_isDynamic = other.m_isDynamic;
+	m_filePathName = other.m_filePathName;
 	m_instBianHao = other.m_instBianHao;
 }
 
@@ -55,6 +54,7 @@ AttrObject & AttrObject::operator=(const AttrObject &rhs)
 	m_quyuName = rhs.m_quyuName;
 	m_type = rhs.m_type; 
 	m_isDynamic = rhs.m_isDynamic;
+	m_filePathName = rhs.m_filePathName;
 	m_instBianHao = rhs.m_instBianHao;
 	return *this;
 }
@@ -93,6 +93,11 @@ Acad::ErrorStatus AttrObject::dwgInFields(AcDbDwgFiler* filer)
 
 	filer->readItem(&m_isDynamic);
 
+	filer->readItem(&tempStr);
+	m_filePathName = CString(tempStr);
+	filer->readItem(&tempStr);
+	m_instBianHao = CString(tempStr);
+
 	delete [] tempStr;
 	return filer->filerStatus();
 }
@@ -116,6 +121,8 @@ Acad::ErrorStatus AttrObject::dwgOutFields(AcDbDwgFiler* filer) const
 	filer->writeItem(m_quyuName);
 	filer->writeItem(m_type);
 	filer->writeItem(m_isDynamic);
+	filer->writeItem(m_filePathName);
+	filer->writeItem(m_instBianHao);
 
 	return filer->filerStatus();
 }

@@ -1,23 +1,14 @@
 #pragma once
 #include "gridctrlwithpreview.h"
 #include "afxwin.h"
-#include "../Object/AttrKitchen.h"
+#include "../Object/Kitchen/AttrKitchen.h"
 #include "../Common/ComFun_Sunac.h"
+#include "../Object/Kitchen/KitchenGen.h"
 #include "ComFun_MFC.h"
 
 // CKitchenDlg 对话框
 
-#ifndef TYPE_DIR
-#define TYPE_DIR
-enum DIR
-{
-	DIR_TOP,
-	DIR_LEFT,
-	DIR_BOTTOM,
-	DIR_RIGHT,
-	DIR_UNKNOWN
-};
-#endif
+
 
 class CKitchenDlg : public CAcUiDialog
 {
@@ -39,6 +30,8 @@ protected:
 	virtual void PostNcDestroy(); //释放非模态对话框内存
 
 	DECLARE_MESSAGE_MAP()
+
+	bool IsKitchRectValid(TYRect rect);
 public:
 	CGridCtrlWithPreview m_preKitchen;
 	CComboBox m_kitchenType;
@@ -46,16 +39,21 @@ public:
 	CComboBox m_basinType;
 	CComboBox m_benchWidth;
 	CComboBox m_fridgeType;
-	CButton m_noAirOut;
 	CButton m_isMirror;
 	CEdit m_number;
 	BOOL m_bAutoIndex;
 
+	//////////////////////////////////////////////////////////////////////////
 	TYRect m_rect;
-	DIR m_doorDir;
-	DIR m_windowDir;
+	E_DIRECTION m_doorDir;
+	E_DIRECTION m_windowDir;
+	BOOL m_bHasAirOut;// 是否含排气道
+
 	double angle; //插入时旋转角度
 	vector<AttrKitchen*> m_allKitchens;
+
+	CKitchGen* m_pKitchGen;
+
 
 	afx_msg void OnBnClickedOk();
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);///---01
@@ -67,12 +65,6 @@ public:
 	afx_msg void OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedAutoIndex();
 
-	DIR GetDir(ads_point pt);
+	E_DIRECTION GetDir(ads_point pt);
 	void LoadDefaultValue();
-	vector<AttrKitchen*> FilterKU();
-	vector<AttrKitchen*> FilterKUq();
-	vector<AttrKitchen*> FilterKUqc();
-	vector<AttrKitchen*> FilterKUs();
-	vector<AttrKitchen*> FilterKL();
-	vector<AttrKitchen*> FilterKI();
 };

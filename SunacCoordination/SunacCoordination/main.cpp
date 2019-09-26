@@ -27,7 +27,7 @@
 #include "object\AttrWindow.h"
 #include "object\AttrAirCon.h"
 #include "object\AttrDoor.h"
-#include "object\AttrKitchen.h"
+#include "object\Kitchen\AttrKitchen.h"
 #include "object\AttrToilet.h"
 #include "object\AttrRailing.h"
 #include "Command\CommandWindowTable.h"
@@ -133,7 +133,6 @@ void InitMenu()
 	END_CATCH;
 }
 
-#include "KitchenCom.h"
 void CMD_test()
 {
 	ads_name ename;
@@ -146,13 +145,13 @@ void CMD_test()
 	AcDbObjectId eId;
 	acdbGetObjectId(eId, ename);
 
-	//Kitchen_KUq_DuiKai_SetDoorPos(eId, 3600);
-	Kitchen_SelectZaoTai(eId, L"900");
-	Kitchen_SelectShuiPen(eId, L"Ë«Åè900");
-	Kitchen_KUq_DuiKai_SetShuiPenPos(eId, 3000);
-	//Kitchen_SelectShuiPen(eId, L"Ë«Åè900");
-	//Kitchen_SelectZaoTai(eId, L"800");
-	//acedRedraw(eId,);
+	////SetDoorPos(eId, 3600);
+	//SelectZaoTai(eId, L"900");
+	//SelectShuiPen(eId, L"Ë«Åè900");
+	//SetShuiPenPos(eId, 3000);
+	////SelectShuiPen(eId, L"Ë«Åè900");
+	////SelectZaoTai(eId, L"800");
+	////acedRedraw(eId,);
 }
 
 static void initApp()

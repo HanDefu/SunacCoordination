@@ -15,8 +15,8 @@ CBathroomDlg::CBathroomDlg(CWnd* pParent /*=NULL*/)
 {
 	m_rect.SetLB(AcGePoint3d(0, 0, 0));
 	m_rect.SetRT(AcGePoint3d(0, 0, 0));
-	m_doorDir = DIR_UNKNOWN;
-	m_windowDir = DIR_UNKNOWN;
+	m_doorDir = E_DIR_UNKNOWN;
+	m_windowDir = E_DIR_UNKNOWN;
 }
 
 CBathroomDlg::~CBathroomDlg()
@@ -81,24 +81,24 @@ void CBathroomDlg::PostNcDestroy()
 	delete this;
 }
 
-DIR CBathroomDlg::GetDir(ads_point pt)
+E_DIRECTION CBathroomDlg::GetDir(ads_point pt)
 {
 	double minDis = abs(pt[X] - m_rect.GetLB().x);
-	DIR dir = DIR_LEFT;
+	E_DIRECTION dir = E_DIR_LEFT;
 	if (abs(pt[X] - m_rect.GetRT().x) < minDis)
 	{
 		minDis = abs(pt[X] - m_rect.GetRT().x);
-		dir = DIR_RIGHT;
+		dir = E_DIR_RIGHT;
 	}
 	if (abs(pt[Y] - m_rect.GetLB().y) < minDis)
 	{
 		minDis = abs(pt[Y] - m_rect.GetLB().y);
-		dir = DIR_BOTTOM;
+		dir = E_DIR_BOTTOM;
 	}
 	if (abs(pt[Y] - m_rect.GetRT().y) < minDis)
 	{
 		minDis = abs(pt[Y] - m_rect.GetRT().y);
-		dir = DIR_TOP;
+		dir = E_DIR_TOP;
 	}
 	return dir;
 }
@@ -124,7 +124,7 @@ vector<AttrToilet*> CBathroomDlg::FilterTI()
 		return attrToilet;
 	if ((height - 2450) % 150 == 0)
 		return attrToilet;
-	if (abs(m_doorDir - m_windowDir) != 2) //只支持对开
+	if ((abs(m_windowDir - m_doorDir) % 2) == 1) //只支持对开
 		return attrToilet;
 
 	return WebIO::GetInstance()->GetToilets(width, height, _T("对开"), _T("I"), (m_noAirOut.GetCheck() == 0));
@@ -172,7 +172,7 @@ void CBathroomDlg::OnBnClickedButtonDoorDir()
 	}
 	ShowWindow(true);
 
-	DIR temp = GetDir(pt);
+	E_DIRECTION temp = GetDir(pt);
 	if (m_doorDir == temp) //未修改，直接跳过
 		return;
 	if (m_windowDir == temp)
@@ -181,11 +181,11 @@ void CBathroomDlg::OnBnClickedButtonDoorDir()
 		return;
 	}
 	m_doorDir = temp;
-	if (m_windowDir == DIR_UNKNOWN)
+	if (m_windowDir == E_DIR_UNKNOWN)
 		return;
 	//更新方向后清空原有搜索列表
 	m_preBathroom.ClearAllPreviews();
-	if (abs(m_windowDir - m_doorDir) == 2)
+	if ((abs(m_windowDir - m_doorDir) % 2) == 0)
 		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗对开"));
 	else
 		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗垂直开"));
@@ -209,7 +209,7 @@ void CBathroomDlg::OnBnClickedButtonWindowDir()
 	}
 	ShowWindow(true);
 
-	DIR temp = GetDir(pt);
+	E_DIRECTION temp = GetDir(pt);
 	if (m_windowDir == temp) //未修改，直接跳过
 		return;
 	if (m_doorDir == temp)
@@ -218,11 +218,11 @@ void CBathroomDlg::OnBnClickedButtonWindowDir()
 		return;
 	}
 	m_windowDir = temp;
-	if (m_doorDir == DIR_UNKNOWN)
+	if (m_doorDir == E_DIR_UNKNOWN)
 		return;
 	//更新方向后清空原有搜索列表
 	m_preBathroom.ClearAllPreviews();
-	if (abs(m_windowDir - m_doorDir) == 2)
+	if ((abs(m_windowDir - m_doorDir) % 2) == 0)
 		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗对开"));
 	else
 		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗垂直开"));
@@ -235,7 +235,7 @@ void CBathroomDlg::OnBnClickedButtonSearch()
 		acutPrintf(_T("请先选择卫生间范围\n"));
 		return;
 	}
-	if (m_doorDir == DIR_UNKNOWN || m_windowDir == DIR_UNKNOWN)
+	if (m_doorDir == E_DIR_UNKNOWN || m_windowDir == E_DIR_UNKNOWN)
 	{
 		acutPrintf(_T("请先选择门窗方向\n"));
 		return;

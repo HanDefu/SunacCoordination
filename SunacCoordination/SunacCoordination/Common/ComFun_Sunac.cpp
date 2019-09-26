@@ -12,7 +12,7 @@
 #include "../Object\AttrWindow.h"
 #include "../Object\AttrAirCon.h"
 #include "../Object\AttrDoor.h"
-#include "../Object\AttrKitchen.h"
+#include "../Object\Kitchen\AttrKitchen.h"
 #include "../Object\AttrToilet.h"
 #include "../Object\AttrRailing.h"
 #include "../Tool/DocLock.h"
