@@ -7,6 +7,8 @@
 
 // CKitchenDlg 对话框
 
+#ifndef TYPE_DIR
+#define TYPE_DIR
 enum DIR
 {
 	DIR_TOP,
@@ -15,6 +17,7 @@ enum DIR
 	DIR_RIGHT,
 	DIR_UNKNOWN
 };
+#endif
 
 class CKitchenDlg : public CAcUiDialog
 {
@@ -43,13 +46,15 @@ public:
 	CComboBox m_basinType;
 	CComboBox m_benchWidth;
 	CComboBox m_fridgeType;
+	CButton m_noAirOut;
+	CButton m_isMirror;
 	CEdit m_number;
-	BOOL m_bHasAirOut;
 	BOOL m_bAutoIndex;
 
 	TYRect m_rect;
 	DIR m_doorDir;
 	DIR m_windowDir;
+	double angle; //插入时旋转角度
 	vector<AttrKitchen*> m_allKitchens;
 
 	afx_msg void OnBnClickedOk();
@@ -60,7 +65,6 @@ public:
 	afx_msg void OnBnClickedButtonWindowDir();
 	afx_msg void OnBnClickedButtonSearch();
 	afx_msg void OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult);
-	afx_msg void OnBnClickedAirOut();
 	afx_msg void OnBnClickedAutoIndex();
 
 	DIR GetDir(ads_point pt);
