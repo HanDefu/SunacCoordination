@@ -47,6 +47,8 @@ BEGIN_MESSAGE_MAP(CBathroomDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDC_BUTTON_RANGE, &CBathroomDlg::OnBnClickedButtonRange)
 	ON_BN_CLICKED(IDC_BUTTON_DOORDIR, &CBathroomDlg::OnBnClickedButtonDoorDir)
 	ON_BN_CLICKED(IDC_BUTTON_WINDOWDIR, &CBathroomDlg::OnBnClickedButtonWindowDir)
+	ON_BN_CLICKED(IDC_BUTTON_SEARCH, &CBathroomDlg::OnBnClickedButtonSearch)
+	ON_NOTIFY(GVN_SELCHANGED, IDC_PREVIEW_BATHROOM, &CBathroomDlg::OnSelChanged)
 END_MESSAGE_MAP()
 
 
@@ -122,7 +124,7 @@ vector<AttrToilet*> CBathroomDlg::FilterTI()
 		return attrToilet;
 	if (height < 2450 || height > 3650)
 		return attrToilet;
-	if ((height - 2450) % 150 == 0)
+	if ((height - 2450) % 150 != 0)
 		return attrToilet;
 	if (abs(m_doorDir - m_windowDir) != 2) //只支持对开
 		return attrToilet;
@@ -130,9 +132,92 @@ vector<AttrToilet*> CBathroomDlg::FilterTI()
 	return WebIO::GetInstance()->GetToilets(width, height, _T("对开"), _T("I"), (m_noAirOut.GetCheck() == 0));
 }
 
+vector<AttrToilet*> CBathroomDlg::FilterTL()
+{
+	vector<AttrToilet*> attrToilet;
+	int width = int(m_rect.GetWidth() + 0.5);
+	int height = int(m_rect.GetHeight() + 0.5);
+
+	if (width < 1700 || width > 2150)
+		return attrToilet;
+	if (height < 1850 || height > 2750)
+		return attrToilet;
+	if ((width - 1700) % 150 != 0)
+		return attrToilet;
+	if ((height - 1850) % 150 != 0)
+		return attrToilet;
+	//不支持以下尺寸
+	if (width == 1700 && height == 1850)
+		return attrToilet;
+	if (width == 1700 && height == 2000)
+		return attrToilet;
+	if (width == 2000 && height == 2600)
+		return attrToilet;
+	if (width == 2000 && height == 2750)
+		return attrToilet;
+	if (width == 2150 && height == 2600)
+		return attrToilet;
+	if (width == 2150 && height == 2750)
+		return attrToilet;
+
+	//暂不考虑开启方向
+	/*if ((height >= 2450) && abs(m_doorDir - m_windowDir) == 2) //四件套垂直开
+		return attrToilet;
+	if ((height < 2450) && abs(m_doorDir - m_windowDir) != 2) //四件套垂直开
+		return attrToilet;*/
+
+	return WebIO::GetInstance()->GetToilets(width, height, _T("对开"), _T("L"), (m_noAirOut.GetCheck() == 0));
+}
+
+vector<AttrToilet*> CBathroomDlg::FilterTU()
+{
+	vector<AttrToilet*> attrToilet;
+	int width = int(m_rect.GetWidth() + 0.5);
+	int height = int(m_rect.GetHeight() + 0.5);
+
+	//U型尺寸固定且不重复，暂时只考虑尺寸
+	if (width == 1850 && height == 2000)
+		return WebIO::GetInstance()->GetToilets(width, height, _T("对开"), _T("U"), (m_noAirOut.GetCheck() == 0));
+	if (width == 1600 && height == 2450)
+		return WebIO::GetInstance()->GetToilets(width, height, _T("对开"), _T("U"), (m_noAirOut.GetCheck() == 0));
+	if (width == 1850 && height == 2750)
+		return WebIO::GetInstance()->GetToilets(width, height, _T("对开"), _T("U"), (m_noAirOut.GetCheck() == 0));
+	if (width == 2000 && height == 2750)
+		return WebIO::GetInstance()->GetToilets(width, height, _T("对开"), _T("U"), (m_noAirOut.GetCheck() == 0));
+
+	return attrToilet;
+}
+
 LRESULT CBathroomDlg::onAcadKeepFocus(WPARAM, LPARAM)
 {
 	return TRUE;
+}
+
+void CBathroomDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	NM_GRIDVIEW* pView = (NM_GRIDVIEW*)pNMHDR;
+	int nSel = pView->iRow;
+
+	int width = int(m_rect.GetWidth() + 0.5);
+	int height = int(m_rect.GetHeight() + 0.5);
+
+	if (nSel >= 0 && nSel < m_allBathrooms.size())
+	{
+		CString type = m_allBathrooms[nSel]->m_toiletType;
+		bool isG = (m_allBathrooms[nSel]->m_name.Right(6) == _T("_g.dwg"));
+
+		TYUI_InitComboBox(m_basinWidth, _T("650;750;800;900;1000"), _T("650"));
+		TYUI_InitComboBox(m_toiletWidth, _T("750;800"), _T("750"));
+		if (isG)
+		{
+			TYUI_Enable(m_washWidth);
+			TYUI_InitComboBox(m_washWidth, _T("900;1050"), _T("900"));
+		}
+		else
+		{
+			TYUI_Disable(m_washWidth);
+		}
+	}
 }
 
 void CBathroomDlg::OnBnClickedButtonRange()
@@ -240,5 +325,30 @@ void CBathroomDlg::OnBnClickedButtonSearch()
 		acutPrintf(_T("请先选择门窗方向\n"));
 		return;
 	}
-	
+	CString type = TYUI_GetText(m_bathroomType);
+	if (type == _T("U型"))
+		m_allBathrooms = FilterTU();
+	else if (type == _T("L型"))
+		m_allBathrooms = FilterTL();
+	else if (type == _T("I型"))
+		m_allBathrooms = FilterTI();
+
+	m_preBathroom.ClearAllPreviews();
+	if (m_allBathrooms.empty())
+	{
+		acutPrintf(_T("未找到符合条件的记录\n"));
+		return;
+	}
+	m_preBathroom.SetRowCount((int)m_allBathrooms.size());
+	m_preBathroom.SetColumnCount(1);
+	m_preBathroom.SetDisplayRows(3);
+	m_preBathroom.SetDisplayColumns(1);
+	for (int i = 0; i < m_allBathrooms.size(); i++)
+	{
+		CString str;
+		str.Format(_T("原型编号：%s\n卫生间面积：%.2lf\n通风量要求：0.8\n动态类型：动态\n适用范围：集团"), m_allBathrooms[i]->m_yxid, m_rect.GetWidth() * m_rect.GetHeight() / 1E6);
+		m_preBathroom.AddPreview(i, 0, TY_GetLocalFilePath() + m_allBathrooms[i]->m_name, str);
+	}
+
+	m_preBathroom.SelectPreview(0, 0);
 }
