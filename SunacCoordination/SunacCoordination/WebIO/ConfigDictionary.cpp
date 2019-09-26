@@ -343,8 +343,10 @@ vCString CConfigDictionary::Air_GetLengNingShuiGuanPos()const//获得冷凝水管位置
 	vCString strs;
 #ifdef WORK_LOCAL//本地模式
 
-	strs.push_back(L"后面");
 	strs.push_back(L"侧面");
+	strs.push_back(L"后面");
+
+
 #else
 
 #endif

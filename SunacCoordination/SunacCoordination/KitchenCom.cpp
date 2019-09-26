@@ -13,7 +13,7 @@ int Kitchen_SelectShuiPen(AcDbObjectId kitchenId, CString shuiPen)
 		hideBlockRecordNames.push_back(L"水盆_双盆_1000_450");
 		hideBlockRecordNames.push_back(L"水盆_双盆_1200_450");
 	}
-	else if (shuiPen == L"单盆700")
+	else if (shuiPen == L"单盆800")
 	{
 		hideBlockRecordNames.push_back(L"水盆_单盆_600_420");
 		hideBlockRecordNames.push_back(L"水盆_双盆_900_450");
@@ -50,6 +50,32 @@ int Kitchen_SelectShuiPen(AcDbObjectId kitchenId, CString shuiPen)
 	return 0;
 }
 
+int Kitchen_SelectBingXiang(AcDbObjectId kitchenId, CString bingXiang)
+{
+	vCString hideBlockRecordNames;
+	if (bingXiang == L"单开门700")
+	{
+		//hideBlockRecordNames.push_back(L"灶台_900");
+		//hideBlockRecordNames.push_back(L"灶台_900");
+	}
+	else if (bingXiang == L"对开门800")
+	{
+		//hideBlockRecordNames.push_back(L"灶台_800");
+		//hideBlockRecordNames.push_back(L"灶台_900");
+	}
+	else if (bingXiang == L"对开门1000")
+	{
+		//hideBlockRecordNames.push_back(L"灶台_800");
+		//hideBlockRecordNames.push_back(L"灶台_900");
+	}
+	else
+		return -1;
+
+	TY_HideBlockReferencesInBlockReference(kitchenId, hideBlockRecordNames);
+
+	return 0;
+}
+
 int Kitchen_SelectZaoTai(AcDbObjectId kitchenId, CString zaoTai)
 {
 	vCString hideBlockRecordNames;
@@ -73,6 +99,8 @@ int Kitchen_SelectZaoTai(AcDbObjectId kitchenId, CString zaoTai)
 //kuq 对开 自动设置门的位置
 int Kitchen_KUq_DuiKai_SetDoorPos(AcDbObjectId kitchenId, double kaiJian)
 {
+	acDocManager->lockDocument(curDoc());
+
 	if (kaiJian < 3000)
 	{
 		TYCOM_SetDynamicBlockValue(kitchenId, L"门垛右长", 700.0);
@@ -84,12 +112,16 @@ int Kitchen_KUq_DuiKai_SetDoorPos(AcDbObjectId kitchenId, double kaiJian)
 		TYCOM_SetDynamicBlockValue(kitchenId, L"门垛右长", value);
 	}
 
+	acDocManager->unlockDocument(curDoc());
+
 	return 0;
 }
 
 //kuq 对开 自动设置灶台的位置
 int Kitchen_KUq_DuiKai_SetZaoTaiPos(AcDbObjectId kitchenId, double jinshen, CString zaoTaiType)
 {
+	acDocManager->lockDocument(curDoc());
+
 	if (jinshen < 2000)
 	{
 		TYCOM_SetDynamicBlockValue(kitchenId, L"灶台距墙Y", 200.0);
@@ -114,12 +146,16 @@ int Kitchen_KUq_DuiKai_SetZaoTaiPos(AcDbObjectId kitchenId, double jinshen, CStr
 		TYCOM_SetDynamicBlockValue(kitchenId, L"灶台距墙Y", value);
 	}
 
+	acDocManager->unlockDocument(curDoc());
+
 	return 0;
 }
 
 //kuq 对开 自动设置门的位置
 int Kitchen_KUq_DuiKai_SetShuiPenPos(AcDbObjectId kitchenId, double kaiJian)
 {
+	acDocManager->lockDocument(curDoc());
+
 	double qt = 0;
 	TYCOM_GetDynamicBlockData(kitchenId, L"墙厚", qt);
 
@@ -129,9 +165,11 @@ int Kitchen_KUq_DuiKai_SetShuiPenPos(AcDbObjectId kitchenId, double kaiJian)
 	double lgx = 0;
 	TYCOM_GetDynamicBlockData(kitchenId, L"立管X尺寸", lgx);
 
-
 	double value  = (kaiJian - 350)/2;
 	TYCOM_SetDynamicBlockValue(kitchenId, L"水盆距墙X", value-qt-zxt-lgx);
+
+	acDocManager->unlockDocument(curDoc());
+
 	return 0;
 }
 
@@ -140,6 +178,8 @@ int Kitchen_KUq_DuiKai_SetShuiPenPos(AcDbObjectId kitchenId, double kaiJian)
 //kuq 垂直开 自动设置门的位置
 int Kitchen_KUq_ChuiZhiKai_SetDoorPos(AcDbObjectId kitchenId, double kaiJian)
 {
+	acDocManager->lockDocument(curDoc());
+
 	if (kaiJian < 3000)
 	{
 		TYCOM_SetDynamicBlockValue(kitchenId, L"门垛右长", 700.0);
@@ -151,12 +191,16 @@ int Kitchen_KUq_ChuiZhiKai_SetDoorPos(AcDbObjectId kitchenId, double kaiJian)
 		TYCOM_SetDynamicBlockValue(kitchenId, L"门垛右长", value);
 	}
 
+	acDocManager->unlockDocument(curDoc());
+
 	return 0;
 }
 
 //kuq 垂直开 自动设置灶台的位置
 int Kitchen_KUq_ChuiZhiKai_SetZaoTaiPos(AcDbObjectId kitchenId, double kaiJian)
 {
+	acDocManager->lockDocument(curDoc());
+
 	if (kaiJian < 2900)
 	{
 		TYCOM_SetDynamicBlockValue(kitchenId, L"灶台距墙X", 750.0);
@@ -176,12 +220,16 @@ int Kitchen_KUq_ChuiZhiKai_SetZaoTaiPos(AcDbObjectId kitchenId, double kaiJian)
 		TYCOM_SetDynamicBlockValue(kitchenId, L"灶台距墙X", value-qt-zxt-pqdX);
 	}
 
+	acDocManager->unlockDocument(curDoc());
+
 	return 0;
 }
 
 //kuq 垂直开 自动设置水盆的位置
 int Kitchen_KUq_ChuiZhiKai_SetShuiPenPos(AcDbObjectId kitchenId, double jinshen)
 {
+	acDocManager->lockDocument(curDoc());
+
 	double qt = 0;
 	TYCOM_GetDynamicBlockData(kitchenId, L"墙厚", qt);
 
@@ -194,5 +242,8 @@ int Kitchen_KUq_ChuiZhiKai_SetShuiPenPos(AcDbObjectId kitchenId, double jinshen)
 
 	double value  = (jinshen - qt - zxt*2 - lgy)/2;
 	TYCOM_SetDynamicBlockValue(kitchenId, L"水盆距墙Y", value);
+
+	acDocManager->unlockDocument(curDoc());
+
 	return 0;
 }

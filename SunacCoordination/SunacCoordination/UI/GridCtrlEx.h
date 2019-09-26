@@ -38,8 +38,13 @@ public:
 	void SetContentItemBkColor(int nRow, int nCol, COLORREF color);
 
 	CString GetContentItemText(int nRow, int nCol);
+
+	//仅在整行选中模式下有效,非整行选中模式下应使用GetSelectedCells
 	vector<int> GetSelectedRows();
 	vector<int> GetUnselectedRows();
+
+	vector<CCellID> GetSelectedCells();
+
 	int GetContentRowCount();
 	UINT GetContentItemState(int nRow, int nCol);
 	LPARAM GetContentItemData(int nRow, int nCol);

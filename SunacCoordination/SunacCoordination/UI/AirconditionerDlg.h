@@ -51,4 +51,6 @@ public:
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);
 
 	CString m_filePathName;
+	CButton m_upDownImage;
+	CButton m_leftRightImage;
 };

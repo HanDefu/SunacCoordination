@@ -5,6 +5,7 @@
 #include "KitchenDlg.h"
 #include "../WebIO/WebIO.h"
 #include "../Object/RCKitchen.h"
+#include "../KitchenCom.h"
 #include "afxdialogex.h"
 // CKitchenDlg 对话框
 
@@ -103,41 +104,57 @@ void CKitchenDlg::OnBnClickedOk()
 
 void CKitchenDlg::OnBnClickedButtonInsert()
 {
+	vector<CCellID> cells = m_preKitchen.GetSelectedCells();
+	if (cells.empty())
+	{
+		acutPrintf(_T("没有选择原型，请重新选择或者双击原型\n"));
+		return;
+	}
+	int nSel = cells[0].row;
+	
 	ShowWindow(FALSE);
 
-	// TODO: 在此添加控件通知处理程序代码
-	vCString allFiles;
-	TY_GetAllKitchenFiles(allFiles);
+	double kaiJian = m_rect.GetWidth();
+	double jinShen = m_rect.GetHeight();
+	if (m_doorDir == DIR_LEFT || m_doorDir == DIR_RIGHT)
+		swap(kaiJian, jinShen);
 
-	double width = m_rect.GetWidth(), height = m_rect.GetHeight();
-	AcGePoint3d origin = m_rect.GetLB();
+	AcGePoint3d origin = TY_GetPoint();
+	acedPostCommandPrompt();
 
-	vector<int> sels = m_preKitchen.GetSelectedRows();
-	if (sels.size() > 0)
+	RCKitchen oneKitchen;
+	
+	AcDbObjectId id = oneKitchen.Insert(m_allKitchens[nSel]->m_filePathName, origin, 0, L"0", 256);
+	oneKitchen.InitParameters();
+	oneKitchen.SetParameter(L"进深", jinShen);
+	oneKitchen.SetParameter(L"开间", kaiJian);
+	oneKitchen.RunParameters();
+
+	CString basin = TYUI_GetComboBoxText(m_basinType);
+	CString fridge = TYUI_GetComboBoxText(m_fridgeType);
+	CString bench = TYUI_GetComboBoxText(m_benchWidth);
+
+	Kitchen_SelectShuiPen(id, basin);
+	Kitchen_SelectZaoTai(id, bench);
+
+	if (m_allKitchens[nSel]->m_kitchenType == _T("Uq"))
 	{
-		RCKitchen oneKitchen;
-		if (sels[0] == 0)
-			oneKitchen.Insert(allFiles[0], origin, 0, L"0", 256);
-		else
-			oneKitchen.Insert(allFiles[1], origin, 0, L"0", 256);
-		oneKitchen.InitParameters();
-		oneKitchen.SetParameter(L"进深", height);
-		oneKitchen.SetParameter(L"开间", width);
-		oneKitchen.RunParameters();
-
-		//把UI的数据记录在图框的扩展字典中
-		AttrKitchen *pAttribute = new AttrKitchen();
-		if (sels[0] == 0)
-			pAttribute->m_yxid = L"KUA";
-		else if (sels[0] == 1)
-			pAttribute->m_yxid = L"KUB";
-		else
-			pAttribute->m_yxid = L"KUC";
-
-		oneKitchen.AddAttribute(pAttribute);
-		pAttribute->close();
+		Kitchen_KUq_DuiKai_SetDoorPos(id, kaiJian);
+		Kitchen_KUq_DuiKai_SetZaoTaiPos(id, jinShen, bench);
+		Kitchen_KUq_DuiKai_SetShuiPenPos(id, kaiJian);
 	}
-	ShowWindow(true);
+	else if (m_allKitchens[nSel]->m_kitchenType == _T("Uqc"))
+	{
+		Kitchen_KUq_ChuiZhiKai_SetDoorPos(id, kaiJian);
+		Kitchen_KUq_ChuiZhiKai_SetZaoTaiPos(id, kaiJian);
+		Kitchen_KUq_ChuiZhiKai_SetShuiPenPos(id, jinShen);
+	}
+
+	//把UI的数据记录在图框的扩展字典中
+	AttrKitchen *pAttribute = new AttrKitchen(*m_allKitchens[nSel]);
+	oneKitchen.AddAttribute(pAttribute);
+	pAttribute->close();
+
 	OnOK();
 }
 
@@ -397,9 +414,9 @@ vector<AttrKitchen*> CKitchenDlg::FilterKU()
 	if (m_doorDir == DIR_LEFT || m_doorDir == DIR_RIGHT)
 		swap(kaiJian, jinShen);
 
-	if ((kaiJian <= jinShen) && (abs(m_windowDir - m_doorDir) == 2))
+	if ((kaiJian > jinShen) && (abs(m_windowDir - m_doorDir) == 2))
 		return FilterKUq();
-	else if (kaiJian <= jinShen)
+	else if (kaiJian > jinShen)
 		return FilterKUqc();
 	else
 		return FilterKUs();

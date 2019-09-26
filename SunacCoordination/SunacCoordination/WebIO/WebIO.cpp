@@ -160,7 +160,7 @@ std::vector<AttrKitchen *> WebIO::GetKitchens
 	pAttribute->m_isJiTuan = true;
 	pAttribute->m_isDynamic = true;
 	pAttribute->m_type = L"³ø·¿";
-	pAttribute->m_filePathName = localKitchenPath;
+	pAttribute->m_filePathName = localKitchenPath + pAttribute->m_name;
 	pAttribute->m_kitchenType = type;
 	pAttribute->m_windowDoorPos = weiZhiGuanXi;
 

@@ -52,7 +52,7 @@ AcDbObjectId RCBlock::Insert(CString fileName, AcGePoint3d origin, double angle,
 	acDocManager->lockDocument(curDoc());
 	MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, fileName, m_blockRecordName,  m_id, origin, angle, AcGeScale3d(1), layerName, color);
 	acDocManager->unlockDocument(curDoc());
-	return 0;
+	return m_id;
 }
 
 //对于已经存在的图块定义的插入
