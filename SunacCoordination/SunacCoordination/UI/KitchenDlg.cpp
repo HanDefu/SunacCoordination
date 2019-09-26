@@ -31,7 +31,6 @@ CKitchenDlg::~CKitchenDlg()
 
 LRESULT CKitchenDlg::onAcadKeepFocus(WPARAM, LPARAM)
 {
-	//return FALSE;
 	return TRUE;
 }
 

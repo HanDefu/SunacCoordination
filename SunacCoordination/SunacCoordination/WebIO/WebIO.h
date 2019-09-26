@@ -67,8 +67,8 @@ public:
 	//注意外部需要释放返回的内存
 	static std::vector<AttrToilet *> GetToilets
 	(
-		double kaiJian,//开间
-		double jinShen,//进深
+		double width,//宽度，X方向
+		double height,//高度，Y方向
 		CString weiZhiGuanXi,//门窗位置关系
 		CString type,//卫生间类型
 		bool hasPaiQiDao//是否含有排气道

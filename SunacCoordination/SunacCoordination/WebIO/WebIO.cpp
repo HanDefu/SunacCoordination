@@ -185,8 +185,8 @@ std::vector<AttrKitchen *> WebIO::GetAllKitchens()
 
 std::vector<AttrToilet *>  WebIO::GetToilets
 (
-    double kaiJian,//开间
-    double jinShen,//进深
+    double width,//宽度，X方向
+    double height,//高度，Y方向
     CString weiZhiGuanXi,//门窗位置关系
     CString type,//卫生间类型
     bool hasPaiQiDao//是否含有排气道
@@ -194,23 +194,148 @@ std::vector<AttrToilet *>  WebIO::GetToilets
 {
 	std::vector<AttrToilet *> result;
 #ifdef WORK_LOCAL//本地模式
-	CString localWindowPath = TY_GetLocalFilePath();
-	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"*_Toilet.dwg",localWindowPath);
-	for (int i = 0; i < localFiles.size(); i++)
+	CString localKitchenPath = TY_GetLocalFilePath();
+	CString localFile;
+
+	if (type == L"I") //存在多个同时满足的情况，单独处理
 	{
+		if (height < 3200) //三件套
+		{
+			localFile = L"TI3.dwg";
+			type = L"I3";
+			AttrToilet *pAttribute = new AttrToilet();
+			pAttribute->m_yxid.Format(L"T%s_%.0lf×%.0lf", type, width, height);
+			pAttribute->m_name = localFile;
+			pAttribute->m_isJiTuan = true;
+			pAttribute->m_isDynamic = true;
+			pAttribute->m_type = L"卫生间";
+			pAttribute->m_filePathName = localKitchenPath + pAttribute->m_name;
+			pAttribute->m_toiletType = type;
+			pAttribute->m_windowDoorPos = DUIKAI;
+
+			result.push_back(pAttribute);
+			pAttribute->close();
+		}
+		if (height >= 2750 && height <= 3200) //三件套干湿分离
+		{
+			localFile = L"TI3_g.dwg";
+			type = L"I3";
+			AttrToilet *pAttribute = new AttrToilet();
+			pAttribute->m_yxid.Format(L"T%s_%.0lf×%.0lf_g", type, width, height);
+			pAttribute->m_name = localFile;
+			pAttribute->m_isJiTuan = true;
+			pAttribute->m_isDynamic = true;
+			pAttribute->m_type = L"卫生间";
+			pAttribute->m_filePathName = localKitchenPath + pAttribute->m_name;
+			pAttribute->m_toiletType = type;
+			pAttribute->m_windowDoorPos = DUIKAI;
+
+			result.push_back(pAttribute);
+			pAttribute->close();
+		}
+		if (height >= 3050 && height < 3650) //四件套
+		{
+			localFile = L"TI4.dwg";
+			type = L"I4";
+			AttrToilet *pAttribute = new AttrToilet();
+			pAttribute->m_yxid.Format(L"T%s_%.0lf×%.0lf", type, width, height);
+			pAttribute->m_name = localFile;
+			pAttribute->m_isJiTuan = true;
+			pAttribute->m_isDynamic = true;
+			pAttribute->m_type = L"卫生间";
+			pAttribute->m_filePathName = localKitchenPath + pAttribute->m_name;
+			pAttribute->m_toiletType = type;
+			pAttribute->m_windowDoorPos = DUIKAI;
+
+			result.push_back(pAttribute);
+			pAttribute->close();
+		}
+		if (height >= 3500) //四件套干湿分离
+		{
+			localFile = L"TI4_g.dwg";
+			type = L"I4";
+			AttrToilet *pAttribute = new AttrToilet();
+			pAttribute->m_yxid.Format(L"T%s_%.0lf×%.0lf_g", type, width, height);
+			pAttribute->m_name = localFile;
+			pAttribute->m_isJiTuan = true;
+			pAttribute->m_isDynamic = true;
+			pAttribute->m_type = L"卫生间";
+			pAttribute->m_filePathName = localKitchenPath + pAttribute->m_name;
+			pAttribute->m_toiletType = type;
+			pAttribute->m_windowDoorPos = DUIKAI;
+
+			result.push_back(pAttribute);
+			pAttribute->close();
+		}
+	}
+	else 
+	{
+		if (type == L"L")
+		{
+			if (width >= 2000) //标准型
+			{
+				if (height >= 2450) //四件套
+				{
+					localFile = L"TL4_标准淋浴房.dwg";
+					type = L"L4";
+				}
+				else //三件套
+				{
+					localFile = L"TL3_标准淋浴房.dwg";
+					type = L"L3";
+				}
+			}
+			else //经济型
+			{
+				if (height >= 2450) //四件套
+				{
+					localFile = L"TL4.dwg";
+					type = L"L4";
+				}
+				else //三件套
+				{
+					localFile = L"TL3.dwg";
+					type = L"L3";
+				}
+			}
+		}
+		else if (type == L"U")
+		{
+			if (width == 1600 && height == 2450)
+			{
+				localFile = L"TU3-1600X2450.dwg";
+				type = L"U3";
+			}
+			else if (width == 1850 && height == 2000)
+			{
+				localFile = L"TU3-1850X2000.dwg";
+				type = L"U3";
+			}
+			else if (width == 1850 && height == 2750)
+			{
+				localFile = L"TU3-1850X2750.dwg";
+				type = L"U3";
+			}
+			else if (width == 2000 && height == 2000)
+			{
+				localFile = L"TU4-2000X2750.dwg";
+				type = L"U4";
+			}
+		}
 		AttrToilet *pAttribute = new AttrToilet();
-		CString strid;
-		strid.Format(L"%s_%d", L"L_TOILETN_",i+1);
-		pAttribute->m_yxid = strid;
-		pAttribute->m_name = localFiles[i].first;
-		pAttribute->m_name.TrimRight(L".dwg");
+		pAttribute->m_yxid.Format(L"T%s_%.0lf×%.0lf_g", type, width, height);
+		pAttribute->m_name = localFile;
 		pAttribute->m_isJiTuan = true;
 		pAttribute->m_isDynamic = true;
 		pAttribute->m_type = L"卫生间";
+		pAttribute->m_filePathName = localKitchenPath + pAttribute->m_name;
+		pAttribute->m_toiletType = type;
+		pAttribute->m_windowDoorPos = DUIKAI;
 
 		result.push_back(pAttribute);
 		pAttribute->close();
 	}
+	
 #else
 
 #endif
