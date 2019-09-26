@@ -92,6 +92,8 @@ int Kitchen_SelectBingXiang(AcDbObjectId kitchenId, CString bingXiang)
 		return -1;
 
 	TY_HideBlockReferencesInBlockReference(kitchenId, hideBlockRecordNames);
+
+	return 0;
 }
 
 //kuq 对开 自动设置门的位置

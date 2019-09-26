@@ -134,6 +134,7 @@ void CKitchenDlg::OnBnClickedButtonInsert()
 	CString bench = TYUI_GetComboBoxText(m_benchWidth);
 
 	Kitchen_SelectShuiPen(id, basin);
+	Kitchen_SelectBingXiang(id, fridge);
 	Kitchen_SelectZaoTai(id, bench);
 
 	if (m_allKitchens[nSel]->m_kitchenType == _T("Uq"))
