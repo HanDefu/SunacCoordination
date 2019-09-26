@@ -55,6 +55,8 @@ public:
 	eWindowDoorPos m_windowDoorPos;//门窗位置关系
 
 	double m_guanXiWidth;//盥洗区宽度
+
+	CString m_toiletType; //卫生间
 };
 
 

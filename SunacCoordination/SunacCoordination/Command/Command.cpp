@@ -78,8 +78,10 @@ void CMD_SUNACBATHROOM()
 {
 	CAcModuleResourceOverride resOverride;
 
-	CBathroomDlg dlg;
-	dlg.DoModal();
+	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
+	CBathroomDlg * pDlg = new CBathroomDlg(acedGetAcadFrame());
+	pDlg->Create(IDD_DIALOG_BATHROOM);
+	pDlg->ShowWindow(SW_SHOW);
 }
 
 //门

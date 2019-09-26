@@ -185,6 +185,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="ToiletCom.cpp" />
     <ClCompile Include="Tool\Excel\CExcel.cpp" />
     <ClCompile Include="Tool\Excel\Excel.cpp" />
     <ClCompile Include="Tool\MarkupXml\Markup.cpp" />
@@ -275,6 +276,7 @@
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="Sunac_def.h" />
+    <ClInclude Include="ToiletCom.h" />
     <ClInclude Include="Tool\DocLock.h" />
     <ClInclude Include="Tool\Excel\CApplication.h" />
     <ClInclude Include="Tool\Excel\CBorder.h" />
