@@ -164,6 +164,7 @@
     <ClCompile Include="Object\AttrRailing.cpp" />
     <ClCompile Include="Object\AttrToilet.cpp" />
     <ClCompile Include="Object\AttrWindow.cpp" />
+    <ClCompile Include="Object\Kitchen\KitchenGen.cpp" />
     <ClCompile Include="Object\RCAirCondition.cpp" />
     <ClCompile Include="Object\RCBlock.cpp" />
     <ClCompile Include="Object\RCDoor.cpp" />
@@ -256,6 +257,7 @@
     <ClInclude Include="Object\AttrRailing.h" />
     <ClInclude Include="Object\AttrToilet.h" />
     <ClInclude Include="Object\AttrWindow.h" />
+    <ClInclude Include="Object\Kitchen\KitchenGen.h" />
     <ClInclude Include="Object\RCAirCondition.h" />
     <ClInclude Include="Object\RCBlock.h" />
     <ClInclude Include="Object\RCDoor.h" />

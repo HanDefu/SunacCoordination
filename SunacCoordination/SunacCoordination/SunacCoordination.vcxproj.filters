@@ -259,6 +259,9 @@
     <ClCompile Include="KitchenCom.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Object\Kitchen\KitchenGen.cpp">
+      <Filter>Object\Kitchen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -598,6 +601,9 @@
     <ClInclude Include="KitchenCom.h">
       <Filter>Source</Filter>
     </ClInclude>
+    <ClInclude Include="Object\Kitchen\KitchenGen.h">
+      <Filter>Object\Kitchen</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -644,6 +650,12 @@
     </Filter>
     <Filter Include="Tool\MarkupXml">
       <UniqueIdentifier>{990c504d-77ee-4770-a1ae-8cfb3d110f83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Kitchen">
+      <UniqueIdentifier>{6a71ba5b-5f86-4ea6-a1aa-e9f786080fc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Bathroom">
+      <UniqueIdentifier>{d2294c04-ba86-4686-a0b2-675541f408ee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
