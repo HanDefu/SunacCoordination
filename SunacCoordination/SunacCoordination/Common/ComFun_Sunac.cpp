@@ -878,7 +878,7 @@ vector<pair<CString,CString>> TY_FindFilesInDirecotryRecursion( CString fileName
     return files;
 }
 
-int TYCOM_MirrorOneObject(AcDbObjectId entId, AcGePoint3d first, AcGeVector3d dir)
+int TYCOM_Mirror(AcDbObjectId entId, AcGePoint3d first, AcGeVector3d dir)
 {
 	CDocLock docLock;
 	AcDbEntity *pEntity = 0;
@@ -898,7 +898,7 @@ int TYCOM_MirrorOneObject(AcDbObjectId entId, AcGePoint3d first, AcGeVector3d di
 }
 
 //ÉÏÏÂ×óÓÒ¾µÏñ
-int TYCOM_MirrorRotate(AcDbObjectId entId, AcGePoint3d ptBase, double rotation)
+int TYCOM_Rotate(AcDbObjectId entId, AcGePoint3d ptBase, double rotation)
 {
 	CDocLock docLock;
 	AcDbEntity *pEntity = 0;
@@ -908,7 +908,7 @@ int TYCOM_MirrorRotate(AcDbObjectId entId, AcGePoint3d ptBase, double rotation)
 		return es;
 
 	AcGeMatrix3d xform;
-	AcGeVector3d vec(0, 0, 0);
+	AcGeVector3d vec(0, 0, 1);
 	xform.setToRotation(rotation, vec, ptBase);
 
 	AcDbEntity *newEnt = 0;

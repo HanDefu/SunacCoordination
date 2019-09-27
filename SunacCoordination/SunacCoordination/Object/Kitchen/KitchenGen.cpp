@@ -209,6 +209,7 @@ AcDbObjectId CKitchGen::GenKitchen(const AcGePoint3d p_pos)
 
 	RCKitchen oneKitchen;
 
+	//先插入到原点，最后再做镜像和旋转处理
 	AcDbObjectId id = oneKitchen.Insert(m_attr.m_filePathName, p_pos, angle, L"0", 256);
 	oneKitchen.InitParameters();
 	oneKitchen.SetParameter(L"进深", m_attr.m_height);
@@ -244,12 +245,22 @@ AcDbObjectId CKitchGen::GenKitchen(const AcGePoint3d p_pos)
 	SetZaoTaiPos(id, m_attr.m_width, m_attr.m_height, m_attr.m_zaoTaiType);
 	SetShuiPenPos(id, m_attr.m_width, m_attr.m_height,m_attr.m_shuiPenType);
 
-	//镜像处理
+	//////////////////////////////////////////////////////////////////////////
+	//先镜像处理
 	if (m_attr.m_isMirror)
-		TYCOM_MirrorOneObject(oneKitchen.m_id, p_pos, AcGeVector3d(0, 1, 0));
+	{
+		AcGePoint3d basePt(p_pos.x + GetXLength() / 2, 0, 0);
+		TYCOM_Mirror(oneKitchen.m_id, basePt, AcGeVector3d(0, 1, 0));
+	}
 
-	//角度旋转
+	//再角度旋转
+	if (angle!=0)
+	{
+		TYCOM_Rotate(oneKitchen.m_id, p_pos, angle);
+	}
 
+	
+	//////////////////////////////////////////////////////////////////////////
 	//把UI的数据记录在图框的扩展字典中
 	AttrKitchen *pAttribute = new AttrKitchen(m_attr);
 	oneKitchen.AddAttribute(pAttribute);

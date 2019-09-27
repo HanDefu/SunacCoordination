@@ -126,6 +126,9 @@ void CKitchenDlg::OnBnClickedButtonInsert()
 	m_pKitchGen->GetKitchenAtt()->m_zaoTaiType = TYUI_GetComboBoxText(m_benchWidth);
 	m_pKitchGen->GetKitchenAtt()->m_isMirror = m_isMirror.GetCheck()? true : false;
 
+	m_pKitchGen->SetDoorDir(m_doorDir);
+	m_pKitchGen->SetWindowDir(m_windowDir);
+
 
 	
 	//2.—°‘Ò ‰»Îµ„

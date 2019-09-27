@@ -57,6 +57,10 @@ protected:
 	virtual double GetRotateAngle(); //处理旋转及镜像关系
 	virtual void InitMirror(); //主要针对门窗垂直开情况，门窗垂直原型的窗在门的右侧，若实际为左侧则需要对称
 
+
+	virtual double GetXLength(){ return m_attr.m_width; } //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
+	virtual double GetYLength(){ return m_attr.m_height; } //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
+
 protected:
 	AttrKitchen m_attr;
 
@@ -144,6 +148,8 @@ public:
 
 	//virtual vCString GetZhaotaiOptions();// 获取灶台选项
 	//virtual CString GetZhaotaiDefault();
+	virtual double GetXLength(){ return m_attr.m_height; } //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
+	virtual double GetYLength(){ return m_attr.m_width; } //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
 
 protected:
 	int SetShuiPenPos(AcDbObjectId kitchenId, double kaiJian, double jinShen, CString shuiPenType);
@@ -164,6 +170,9 @@ public:
 
 	virtual vCString GetZhaotaiOptions();// 获取灶台选项
 	virtual CString GetZhaotaiDefault();
+
+	virtual double GetXLength(){ return m_attr.m_height; } //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
+	virtual double GetYLength(){ return m_attr.m_width; } //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
 
 protected:
 	int SetShuiPenPos(AcDbObjectId kitchenId, double kaiJian, double jinShen, CString shuiPenType);
