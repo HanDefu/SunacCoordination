@@ -54,7 +54,7 @@ protected:
 	//设置水盆的位置
 	virtual int SetShuiPenPos(AcDbObjectId kitchenId, double kaiJian, double jinShen, CString shuiPenType){ return 0; }
 
-	virtual double GetRotateAngle(); //处理旋转及镜像关系
+	virtual void GetRotateAngle(double &angle, AcGeVector3d &offsetV); //处理旋转关系
 	virtual void InitMirror(); //主要针对门窗垂直开情况，门窗垂直原型的窗在门的右侧，若实际为左侧则需要对称
 
 

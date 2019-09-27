@@ -166,26 +166,34 @@ CString CKitchGen::GetZhaotaiDefault()
 {
 	return _T("800");
 }
-double CKitchGen::GetRotateAngle() //´¦ÀíĞı×ª¼°¾µÏñ¹ØÏµ
+void CKitchGen::GetRotateAngle(double &angle, AcGeVector3d &offsetX) //´¦ÀíĞı×ª¼°¾µÏñ¹ØÏµ
 {
+	angle = 0;
+	offsetX = AcGeVector3d(0, 0, 0);
+	const double xLen = GetXLength();
+	const double yLen = GetYLength();
+
 	switch (m_doorDir)
 	{
 	case E_DIR_TOP:
-		return PI;
+		angle = PI;
+		offsetX = AcGeVector3d(xLen, yLen, 0);
 		break;
 	case E_DIR_LEFT:
-		return -PI/2;
+		angle = -PI / 2;
+		offsetX = AcGeVector3d(0, xLen, 0);
 		break;
 	case E_DIR_BOTTOM:
-		return 0;
+		angle = 0;
+		offsetX = AcGeVector3d(0, 0, 0);
 		break;
 	case E_DIR_RIGHT:
-		return PI / 2;
+		angle = PI / 2;
+		offsetX = AcGeVector3d(yLen, 0, 0);
 		break;
 	default:
 		break;
 	}
-	return 0;
 }
 
 void CKitchGen::InitMirror() //Ö÷ÒªÕë¶ÔÃÅ´°´¹Ö±¿ªÇé¿ö£¬ÃÅ´°´¹Ö±Ô­ĞÍµÄ´°ÔÚÃÅµÄÓÒ²à£¬ÈôÊµ¼ÊÎª×ó²àÔòĞèÒª¶Ô³Æ
@@ -205,12 +213,14 @@ void CKitchGen::InitMirror() //Ö÷ÒªÕë¶ÔÃÅ´°´¹Ö±¿ªÇé¿ö£¬ÃÅ´°´¹Ö±Ô­ĞÍµÄ´°ÔÚÃÅµÄÓÒ²
 AcDbObjectId CKitchGen::GenKitchen(const AcGePoint3d p_pos)
 {
 	InitMirror();
-	const double angle = GetRotateAngle();
+	double angle = 0;
+	AcGeVector3d offsetXY = AcGeVector3d(0, 0, 0);
+	GetRotateAngle(angle, offsetXY);
 
 	RCKitchen oneKitchen;
 
 	//ÏÈ²åÈëµ½Ô­µã£¬×îºóÔÙ×ö¾µÏñºÍĞı×ª´¦Àí
-	AcDbObjectId id = oneKitchen.Insert(m_attr.m_filePathName, p_pos, angle, L"0", 256);
+	AcDbObjectId id = oneKitchen.Insert(m_attr.m_filePathName, p_pos, 0, L"0", 256);
 	oneKitchen.InitParameters();
 	oneKitchen.SetParameter(L"½øÉî", m_attr.m_height);
 	oneKitchen.SetParameter(L"¿ª¼ä", m_attr.m_width);
@@ -250,13 +260,16 @@ AcDbObjectId CKitchGen::GenKitchen(const AcGePoint3d p_pos)
 	if (m_attr.m_isMirror)
 	{
 		AcGePoint3d basePt(p_pos.x + GetXLength() / 2, 0, 0);
-		TYCOM_Mirror(oneKitchen.m_id, basePt, AcGeVector3d(0, 1, 0));
+		TYCOM_Mirror(id, basePt, AcGeVector3d(0, 1, 0));
 	}
 
 	//ÔÙ½Ç¶ÈĞı×ª
 	if (angle!=0)
 	{
-		TYCOM_Rotate(oneKitchen.m_id, p_pos, angle);
+		TYCOM_Rotate(id, p_pos, angle);
+
+		//Ğı×ªºó¶¨Òåµã²»ÔÙÊÇ×óÏÂ½Ç£¬ĞèÒªÆ½ÒÆ
+		TYCOM_Move(id, offsetXY);
 	}
 
 	
