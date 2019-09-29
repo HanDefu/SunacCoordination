@@ -41,15 +41,19 @@ public:
 	CComboBox m_fridgeType;
 	CButton m_isMirror;
 	CEdit m_number;
+	CEdit m_offsetX;
+	CEdit m_offsetY;
+	CEdit m_customX;
+	CEdit m_customY;
 	BOOL m_bAutoIndex;
 
 	//////////////////////////////////////////////////////////////////////////
 	TYRect m_rect;
 	E_DIRECTION m_doorDir;
 	E_DIRECTION m_windowDir;
-	BOOL m_bHasAirOut;// 是否含排气道
+	BOOL m_bNoAirout;// 是否含排气道
+	int m_isStd; //国标/自定义
 
-	double angle; //插入时旋转角度
 	vector<AttrKitchen*> m_allKitchens;
 
 	CKitchGen* m_pKitchGen;
@@ -69,5 +73,7 @@ public:
 	E_DIRECTION GetDir(ads_point pt);
 	void LoadDefaultValue();
 	void EnableSetProperty(bool bEnable);
+	void EnableSetAirout(bool bEnable);
 	void ClearPreviews();
+	bool CheckValid(CString& errMsg); //插入前检验参数合法性
 };

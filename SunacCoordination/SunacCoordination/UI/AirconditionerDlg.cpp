@@ -193,14 +193,14 @@ void CAirconditionerDlg::OnBnClickedButtonInsertac()
 
 	//上下镜像
 	if (m_upDownImage.GetCheck())
-		TYCOM_MirrorOneObject(blockAirCon.m_id, pnt, AcGeVector3d(1,0,0));
+		TYCOM_Mirror(blockAirCon.m_id, pnt, AcGeVector3d(1,0,0));
 	//左右镜像
 	if (m_leftRightImage.GetCheck())
-		TYCOM_MirrorOneObject(blockAirCon.m_id, pnt, AcGeVector3d(0,1,0));
+		TYCOM_Mirror(blockAirCon.m_id, pnt, AcGeVector3d(0,1,0));
 	//上下左右镜像
 	if (m_upDownImage.GetCheck() && m_leftRightImage.GetCheck())
 	{
-		TYCOM_MirrorRotate(blockAirCon.m_id, pnt, 3.1415926);
+		TYCOM_Rotate(blockAirCon.m_id, pnt, 3.1415926);
 	}
 
 	//把UI的数据记录在图框的扩展字典中

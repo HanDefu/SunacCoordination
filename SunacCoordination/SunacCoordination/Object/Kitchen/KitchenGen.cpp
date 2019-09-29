@@ -130,11 +130,6 @@ int CKitchGen::SelectBingXiang(AcDbObjectId kitchenId, CString bingXiang)
 	return 0;
 }
 
-int CKitchGen::SetAirVentSize(double p_width, double p_height )
-{
-	//TODO ÉèÖÃÑÌµÀ¿í¶Èµ½¶¯Ì¬¿é
-	return 0;
-}
 //////////////////////////////////////////////////////////////////////////
 vCString CKitchGen::GetShuipenOptions()// »ñÈ¡Ì¨ÅèÑ¡ÐÍ
 {
@@ -166,28 +161,38 @@ CString CKitchGen::GetZhaotaiDefault()
 {
 	return _T("800");
 }
-double CKitchGen::GetRotateAngle() //´¦ÀíÐý×ª¼°¾µÏñ¹ØÏµ
+void CKitchGen::GetRotateAngle(double &angle, AcGeVector3d &offsetX) //´¦ÀíÐý×ª¼°¾µÏñ¹ØÏµ
 {
+	angle = 0;
+	offsetX = AcGeVector3d(0, 0, 0);
+	const double xLen = GetXLength();
+	const double yLen = GetYLength();
+
 	switch (m_doorDir)
 	{
 	case E_DIR_TOP:
-		return PI;
+		angle = PI;
+		offsetX = AcGeVector3d(xLen, yLen, 0);
 		break;
 	case E_DIR_LEFT:
-		return -PI/2;
+		angle = -PI / 2;
+		offsetX = AcGeVector3d(0, xLen, 0);
 		break;
 	case E_DIR_BOTTOM:
-		return 0;
+		angle = 0;
+		offsetX = AcGeVector3d(0, 0, 0);
 		break;
 	case E_DIR_RIGHT:
-		return PI / 2;
+		angle = PI / 2;
+		offsetX = AcGeVector3d(yLen, 0, 0);
 		break;
 	default:
 		break;
 	}
-	return 0;
 }
 
+//¸ÄÎªÔÚ¶Ô»°¿òÄÚÅÐ¶Ï
+/*
 void CKitchGen::InitMirror() //Ö÷ÒªÕë¶ÔÃÅ´°´¹Ö±¿ªÇé¿ö£¬ÃÅ´°´¹Ö±Ô­ÐÍµÄ´°ÔÚÃÅµÄÓÒ²à£¬ÈôÊµ¼ÊÎª×ó²àÔòÐèÒª¶Ô³Æ
 {
 	if (abs(m_windowDir - m_doorDir)%2 == 1) //ÆæÊý²îÎªÃÅ´°´¹Ö±¿ª
@@ -201,30 +206,27 @@ void CKitchGen::InitMirror() //Ö÷ÒªÕë¶ÔÃÅ´°´¹Ö±¿ªÇé¿ö£¬ÃÅ´°´¹Ö±Ô­ÐÍµÄ´°ÔÚÃÅµÄÓÒ²
 			m_attr.m_isMirror = true;
 		}
 	}
-}
+}*/
+
 AcDbObjectId CKitchGen::GenKitchen(const AcGePoint3d p_pos)
 {
-	InitMirror();
-	const double angle = GetRotateAngle();
+	double angle = 0;
+	AcGeVector3d offsetXY = AcGeVector3d(0, 0, 0);
+	GetRotateAngle(angle, offsetXY);
 
 	RCKitchen oneKitchen;
 
-	AcDbObjectId id = oneKitchen.Insert(m_attr.m_filePathName, p_pos, angle, L"0", 256);
+	//ÏÈ²åÈëµ½Ô­µã£¬×îºóÔÙ×ö¾µÏñºÍÐý×ª´¦Àí
+	AcDbObjectId id = oneKitchen.Insert(m_attr.m_filePathName, p_pos, 0, L"0", 256);
 	oneKitchen.InitParameters();
 	oneKitchen.SetParameter(L"½øÉî", m_attr.m_height);
 	oneKitchen.SetParameter(L"¿ª¼ä", m_attr.m_width);
-	oneKitchen.RunParameters();
-
-	SelectShuiPen(id, m_attr.m_shuiPenType);
-	SelectBingXiang(id, m_attr.m_bingXiangType);
-	SelectZaoTai(id, m_attr.m_zaoTaiType);
-
 	//////////////////////////////////////////////////////////////////////////
 	//ÑÌµÀ
-	double airVentW = 0;
-	double airVentH = 0;
 	if (m_attr.m_hasPaiQiDao)
 	{
+		double airVentW = 0;
+		double airVentH = 0;
 		if (m_attr.m_isGuoBiao) //¹ú±ê
 		{
 			airVentW = m_attr.m_airVentOffsetX + c_airVentSize[m_attr.m_floorRange];
@@ -236,20 +238,39 @@ AcDbObjectId CKitchGen::GenKitchen(const AcGePoint3d p_pos)
 			airVentH = m_attr.m_airVentH;
 		}
 		assert(airVentW > 0 && airVentH > 0);
+		oneKitchen.SetParameter(L"ÅÅÆøµÀX³ß´ç", airVentW);
+		oneKitchen.SetParameter(L"ÅÅÆøµÀY³ß´ç", airVentH);
 	}
-	SetAirVentSize(airVentW, airVentH);
-
 	//////////////////////////////////////////////////////////////////////////
+	oneKitchen.RunParameters();
+
+	SelectShuiPen(id, m_attr.m_shuiPenType);
+	SelectBingXiang(id, m_attr.m_bingXiangType);
+	SelectZaoTai(id, m_attr.m_zaoTaiType);
+
 	SetDoorPos(id, m_attr.m_width);
 	SetZaoTaiPos(id, m_attr.m_width, m_attr.m_height, m_attr.m_zaoTaiType);
 	SetShuiPenPos(id, m_attr.m_width, m_attr.m_height,m_attr.m_shuiPenType);
 
-	//¾µÏñ´¦Àí
+	//////////////////////////////////////////////////////////////////////////
+	//ÏÈ¾µÏñ´¦Àí
 	if (m_attr.m_isMirror)
-		TYCOM_MirrorOneObject(oneKitchen.m_id, p_pos, AcGeVector3d(0, 1, 0));
+	{
+		AcGePoint3d basePt(p_pos.x + GetXLength() / 2, 0, 0);
+		TYCOM_Mirror(id, basePt, AcGeVector3d(0, 1, 0));
+	}
 
-	//½Ç¶ÈÐý×ª
+	//ÔÙ½Ç¶ÈÐý×ª
+	if (angle!=0)
+	{
+		TYCOM_Rotate(id, p_pos, angle);
 
+		//Ðý×ªºó¶¨Òåµã²»ÔÙÊÇ×óÏÂ½Ç£¬ÐèÒªÆ½ÒÆ
+		TYCOM_Move(id, offsetXY);
+	}
+
+	
+	//////////////////////////////////////////////////////////////////////////
 	//°ÑUIµÄÊý¾Ý¼ÇÂ¼ÔÚÍ¼¿òµÄÀ©Õ¹×ÖµäÖÐ
 	AttrKitchen *pAttribute = new AttrKitchen(m_attr);
 	oneKitchen.AddAttribute(pAttribute);
@@ -758,9 +779,7 @@ vector<AttrKitchen*> CKitchMrg::FilterKitch(EKitchType p_type, double p_width, d
 	if (p_doorDir == E_DIR_LEFT || p_doorDir == E_DIR_RIGHT)
 		swap(nWidth, nHeight);
 
-	vector<AttrKitchen*> allKitchOut;
-	vector<AttrKitchen*> kitchenStatic = FilterStatic(nWidth, nHeight, p_doorDir, p_windowDir, p_bHasAirVent);
-	allKitchOut.insert(allKitchOut.end(), kitchenStatic.begin(), kitchenStatic.end());
+	vector<AttrKitchen*> allKitchOut = FilterStatic(nWidth, nHeight, p_doorDir, p_windowDir, p_bHasAirVent);
 
 	if (E_KITCH_ALL==p_type)
 	{

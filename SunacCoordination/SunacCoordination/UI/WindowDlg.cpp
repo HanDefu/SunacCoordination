@@ -149,7 +149,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		str.Format(L"%d_%d",(int)(oneWindow.GetW()), (int)(oneWindow.GetH()));
 			
 		if (m_isMirror.GetCheck())
-		    TYCOM_MirrorOneObject(oneWindow.m_id, origin, AcGeVector3d(0,1,0));
+		    TYCOM_Mirror(oneWindow.m_id, origin, AcGeVector3d(0,1,0));
 
 		//把UI的数据记录在图框的扩展字典中
 		AttrWindow * pWindow = new AttrWindow(m_allWindows[sels[0]]);
