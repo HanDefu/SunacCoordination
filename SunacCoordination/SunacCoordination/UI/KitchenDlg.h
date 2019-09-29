@@ -64,7 +64,10 @@ public:
 	afx_msg void OnBnClickedButtonSearch();
 	afx_msg void OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedAutoIndex();
+	afx_msg void OnBnClickedNoAirout();
 
 	E_DIRECTION GetDir(ads_point pt);
 	void LoadDefaultValue();
+	void EnableSetProperty(bool bEnable);
+	void ClearPreviews();
 };

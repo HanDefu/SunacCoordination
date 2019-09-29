@@ -85,7 +85,9 @@ BEGIN_MESSAGE_MAP(CKitchenDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDC_BUTTON_WINDOWDIR, &CKitchenDlg::OnBnClickedButtonWindowDir)
 	ON_BN_CLICKED(IDC_BUTTON_SEARCH, &CKitchenDlg::OnBnClickedButtonSearch)
 	ON_BN_CLICKED(IDC_CHECK_AUTOINDEX, &CKitchenDlg::OnBnClickedAutoIndex)
-	ON_NOTIFY(GVN_SELCHANGED, IDC_PREVIEW_KITCHEN, CKitchenDlg::OnSelChanged)
+	ON_BN_CLICKED(IDC_CHECK_AIROUT, &CKitchenDlg::OnBnClickedNoAirout)
+	ON_CBN_SELCHANGE(IDC_COMBO_KITCHENTYPE, &CKitchenDlg::ClearPreviews)
+	ON_NOTIFY(GVN_SELCHANGED, IDC_PREVIEW_KITCHEN, &CKitchenDlg::OnSelChanged)
 END_MESSAGE_MAP()
 
 
@@ -99,7 +101,7 @@ BOOL CKitchenDlg::OnInitDialog()
 	m_preKitchen.LoadDefaltSettings();
 	LoadDefaultValue();
 
-	//TODO 把底部属性设置区的空间设为无效，以及插入按钮设为灰色，只有选择了原型才能设置原型属性。
+	EnableSetProperty(false);
 
 	return TRUE;
 }
@@ -121,25 +123,19 @@ void CKitchenDlg::OnBnClickedButtonInsert()
 
 	//1. 更新属性值
 
+	m_pKitchGen->GetKitchenAtt()->m_width = m_rect.GetWidth();
+	m_pKitchGen->GetKitchenAtt()->m_height = m_rect.GetHeight();
+	if (m_doorDir == E_DIR_LEFT || m_doorDir == E_DIR_RIGHT)
+		swap(m_pKitchGen->GetKitchenAtt()->m_width, m_pKitchGen->GetKitchenAtt()->m_height);
 	m_pKitchGen->GetKitchenAtt()->m_shuiPenType = TYUI_GetComboBoxText(m_basinType);
 	m_pKitchGen->GetKitchenAtt()->m_bingXiangType = TYUI_GetComboBoxText(m_fridgeType);
 	m_pKitchGen->GetKitchenAtt()->m_zaoTaiType = TYUI_GetComboBoxText(m_benchWidth);
 	m_pKitchGen->GetKitchenAtt()->m_isMirror = m_isMirror.GetCheck()? true : false;
 
-
-	
-	//2.选择输入点
-	//ShowWindow(FALSE);
-	//AcGePoint3d origin = TY_GetPoint();
-	//acedPostCommandPrompt();
 	AcGePoint3d origin = m_rect.GetLB();
 
 	//生成
 	m_pKitchGen->GenKitchen(origin);
-
-	//////////////////////////////////////////////////////////////////////////
-
-
 
 	OnOK();
 }
@@ -151,19 +147,15 @@ void CKitchenDlg::OnBnClickedButtonRange()
 	TYRect rect = TY_GetOneRect();
 	ShowWindow(true);
 
-	if (m_rect.IsSame(rect, 1E-4))
-		return;
-
 	if (IsKitchRectValid(rect)==false)
 	{
-		acutPrintf(_T("所选厨房范围无效\n")); //TODO 本类中所有提示改为messagebox弹窗提示
+		AfxMessageBox(_T("所选厨房范围无效\n"));
 		return;
 	}
 
 	m_rect = rect;
 
-	//更新范围后清空原有搜索列表
-	m_preKitchen.ClearAllPreviews();
+	ClearPreviews();
 }
 
 bool CKitchenDlg::IsKitchRectValid(TYRect rect)
@@ -180,7 +172,7 @@ void CKitchenDlg::OnBnClickedButtonDoorDir()//门方向
 {
 	if (IsKitchRectValid(m_rect) == false)
 	{
-		acutPrintf(_T("请先选择厨房范围\n"));
+		AfxMessageBox(_T("请先选择厨房范围\n"));
 		return;
 	}
 
@@ -198,12 +190,17 @@ void CKitchenDlg::OnBnClickedButtonDoorDir()//门方向
 	if (m_doorDir == temp) //未修改，直接跳过
 		return;
 
+	if (m_windowDir == temp)
+	{
+		AfxMessageBox(_T("门窗方向不能相同\n"));
+		return;
+	}
+
 	m_doorDir = temp;
 	if (m_windowDir == E_DIR_UNKNOWN)
 		return;
 
-	//更新方向后清空原有搜索列表
-	m_preKitchen.ClearAllPreviews();
+	ClearPreviews();
 
 	if ((abs(m_windowDir - m_doorDir) % 2)==0)
 		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗对开"));
@@ -215,7 +212,7 @@ void CKitchenDlg::OnBnClickedButtonWindowDir()//窗方向
 {
 	if (IsKitchRectValid(m_rect) == false)
 	{
-		acutPrintf(_T("请先选择厨房范围\n"));
+		AfxMessageBox(_T("请先选择厨房范围\n"));
 		return;
 	}
 
@@ -235,14 +232,15 @@ void CKitchenDlg::OnBnClickedButtonWindowDir()//窗方向
 
 	if (m_doorDir == temp)
 	{
-		acutPrintf(_T("门窗方向不能相同\n"));
+		AfxMessageBox(_T("门窗方向不能相同\n"));
 		return;
 	}
 	m_windowDir = temp;
 	if (m_doorDir == E_DIR_UNKNOWN)
 		return;
-	//更新方向后清空原有搜索列表
-	m_preKitchen.ClearAllPreviews();
+
+	ClearPreviews();
+
 	if ((abs(m_windowDir - m_doorDir) % 2) == 0)
 		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗对开"));
 	else
@@ -255,20 +253,17 @@ void CKitchenDlg::OnBnClickedButtonSearch()
 	//1.检查数据
 	if (IsKitchRectValid(m_rect) == false)
 	{
-		//acutPrintf(_T("请先选择厨房范围\n"));
-		::MessageBox(NULL, _T("请先选择厨房范围\n"), NULL, 0);
+		AfxMessageBox(_T("请先选择厨房范围\n"));
 		return;
 	}
 	if (m_doorDir == E_DIR_UNKNOWN || m_windowDir == E_DIR_UNKNOWN)
 	{
-		::MessageBox(NULL, _T("请先选择门窗方向\n"), NULL, 0);
-		//acutPrintf(_T("请先选择门窗方向\n"));
+		AfxMessageBox(_T("请先选择门窗方向\n"));
 		return;
 	}
 	if (m_windowDir == m_doorDir)
 	{
-		::MessageBox(NULL, _T("门窗方向不能相同\n"), NULL, 0);
-		//acutPrintf(_T("门窗方向不能相同\n"));
+		AfxMessageBox(_T("门窗方向不能相同\n"));
 		return;
 	}
 	
@@ -285,14 +280,14 @@ void CKitchenDlg::OnBnClickedButtonSearch()
 
 	double width = m_rect.GetWidth();
 	double height = m_rect.GetHeight();
-	m_allKitchens = CKitchMrg::GetInstance()->FilterKitch(kitchenType, width, height, m_doorDir, m_windowDir, m_bHasAirOut == TRUE);
+	m_allKitchens = CKitchMrg::GetInstance()->FilterKitch(kitchenType, width, height, m_doorDir, m_windowDir, m_bHasAirOut == FALSE);
 	
 	//////////////////////////////////////////////////////////////////////////
 	//3. 显示原型
 	m_preKitchen.ClearAllPreviews();
 	if (m_allKitchens.empty())
 	{
-		acutPrintf(_T("未找到符合条件的记录\n"));
+		AfxMessageBox(_T("未找到符合条件的记录\n"));
 		return;
 	}
 	m_preKitchen.SetRowCount((int)m_allKitchens.size());
@@ -320,7 +315,10 @@ void CKitchenDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 		swap(kaiJian, jinShen);
 
 	if (nSel < 0 || nSel >= m_allKitchens.size())
+	{
+		EnableSetProperty(false);
 		return;
+	}
 
 	AttrKitchen* curSecKitchen = m_allKitchens[nSel];
 
@@ -333,6 +331,7 @@ void CKitchenDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	if (m_pKitchGen==NULL)
 	{
 		MessageBox(_T("原型无法创建KitchGen"));
+		EnableSetProperty(false);
 		return;
 	}
 
@@ -343,14 +342,21 @@ void CKitchenDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	TYUI_InitComboBox(m_basinType, m_pKitchGen->GetShuipenOptions(), m_pKitchGen->GetShuipenDefault());
 	TYUI_InitComboBox(m_fridgeType, m_pKitchGen->GetBinxiangOptions(), m_pKitchGen->GetBinxiangDefault());
 	TYUI_InitComboBox(m_benchWidth, m_pKitchGen->GetZhaotaiOptions(), m_pKitchGen->GetZhaotaiDefault());
-
-	//TODO 属性设置区设置为可编辑状态
+	EnableSetProperty(true);
 }
 
 void CKitchenDlg::OnBnClickedAutoIndex()
 {
 	UpdateData(TRUE);
 	m_number.SetReadOnly(m_bAutoIndex);
+}
+
+void CKitchenDlg::OnBnClickedNoAirout()
+{
+	UpdateData(TRUE);
+	//修改排气道设置后重新搜索
+	if (m_allKitchens.size() > 0)
+		OnBnClickedButtonSearch();
 }
 
 E_DIRECTION CKitchenDlg::GetDir(ads_point pt)
@@ -382,5 +388,23 @@ void CKitchenDlg::LoadDefaultValue()
 	m_bAutoIndex = TRUE;
 	m_number.SetReadOnly(TRUE);
 	UpdateData(FALSE);
+}
+
+void CKitchenDlg::EnableSetProperty(bool bEnable)
+{
+	m_number.EnableWindow(bEnable);
+	m_basinType.EnableWindow(bEnable);
+	m_fridgeType.EnableWindow(bEnable);
+	m_benchWidth.EnableWindow(bEnable);
+	m_isMirror.EnableWindow(bEnable);
+	GetDlgItem(IDC_BUTTON_INSERTKITCHEN)->EnableWindow(bEnable);
+	GetDlgItem(IDC_CHECK_AUTOINDEX)->EnableWindow(bEnable);
+}
+
+void CKitchenDlg::ClearPreviews()
+{
+	m_allKitchens.clear();
+	m_preKitchen.ClearAllPreviews();
+	EnableSetProperty(false);
 }
 
