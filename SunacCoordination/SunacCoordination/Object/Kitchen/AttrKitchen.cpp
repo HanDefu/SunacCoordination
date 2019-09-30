@@ -79,9 +79,34 @@ Acad::ErrorStatus AttrKitchen::dwgInFields(AcDbDwgFiler* filer)
 		return es;
 	}
 
+	filer->readItem(&m_hasPaiQiDao);
+	filer->readItem(&m_isGuoBiao);
+	filer->readItem((int*)&m_floorRange);
 
-	//TODO 本类的对象需要做保存处理
+	filer->readItem(&m_airVentW);
+	filer->readItem(&m_airVentH);
+	filer->readItem(&m_airVentOffsetX);
+	filer->readItem(&m_airVentOffsetY);
 
+	filer->readItem(&m_isMirror);
+
+	ACHAR *tempStr = new ACHAR[SUNAC_COMMON_STR_LEN];
+
+	filer->readItem(&tempStr);
+	m_kitchenType = CString(tempStr);
+	filer->readItem(&tempStr);
+	m_windowDoorPos = CString(tempStr);
+	filer->readItem(&tempStr);
+	m_shuiPenType = CString(tempStr);
+	filer->readItem(&tempStr);
+	m_bingXiangType = CString(tempStr);
+	filer->readItem(&tempStr);
+	m_zaoTaiType = CString(tempStr);
+
+	filer->readItem(&m_width);
+	filer->readItem(&m_height);
+
+	delete [] tempStr;
 
 	return filer->filerStatus();
 }
@@ -95,7 +120,26 @@ Acad::ErrorStatus AttrKitchen::dwgOutFields(AcDbDwgFiler* filer) const
 	if ((es = AttrObject::dwgOutFields(filer)) != Acad::eOk) {
 		return es;
 	}
-	//TODO 本类的对象需要处理
+
+	filer->writeItem(m_hasPaiQiDao);
+	filer->writeItem(m_isGuoBiao);
+	filer->writeItem(m_floorRange);
+
+	filer->writeItem(m_airVentW);
+	filer->writeItem(m_airVentH);
+	filer->writeItem(m_airVentOffsetX);
+	filer->writeItem(m_airVentOffsetY);
+
+	filer->writeItem(m_isMirror);
+
+	filer->writeItem(m_kitchenType);
+	filer->writeItem(m_windowDoorPos);
+	filer->writeItem(m_shuiPenType);
+	filer->writeItem(m_bingXiangType);
+	filer->writeItem(m_zaoTaiType);
+
+	filer->writeItem(m_width);
+	filer->writeItem(m_height);
 
 	return filer->filerStatus();
 }

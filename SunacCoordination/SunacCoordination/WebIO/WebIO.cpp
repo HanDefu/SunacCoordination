@@ -167,7 +167,10 @@ std::vector<AttrKitchen *> WebIO::GetKitchens
 		localFile.Replace(_T(".dwg"), _T("_P.dwg"));
 
 	AttrKitchen *pAttribute = new AttrKitchen();
-	pAttribute->m_yxid.Format(L"K%s_%.0lf¡Á%.0lf", type, kaiJian, jinShen);
+	if (type == L"UÐÍ")
+		pAttribute->m_yxid.Format(L"%s_%.0lf¡Á%.0lf", localFile.Left(3), kaiJian, jinShen);
+	else
+		pAttribute->m_yxid.Format(L"%s_%.0lf¡Á%.0lf", localFile.Left(2), kaiJian, jinShen);
 	if (weiZhiGuanXi == L"ÃÅ´°´¹Ö±")
 		pAttribute->m_yxid += L"_c";
 	pAttribute->m_name = localFile;

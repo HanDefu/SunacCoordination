@@ -45,8 +45,6 @@ protected:
 	//bingXiang:"冰箱_单开门_700"/"冰箱_对开门_800"/"冰箱_对开门_1000"
 	virtual int SelectBingXiang(AcDbObjectId kitchenId, CString bingXiang);
 
-	virtual int SetAirVentSize(double p_width, double p_height );
-
 	//设置门位置关系
 	virtual int SetDoorPos(AcDbObjectId kitchenId, double kaiJian) { return 0; }
 	//设置灶台的位置 
@@ -55,8 +53,7 @@ protected:
 	virtual int SetShuiPenPos(AcDbObjectId kitchenId, double kaiJian, double jinShen, CString shuiPenType){ return 0; }
 
 	virtual void GetRotateAngle(double &angle, AcGeVector3d &offsetV); //处理旋转关系
-	virtual void InitMirror(); //主要针对门窗垂直开情况，门窗垂直原型的窗在门的右侧，若实际为左侧则需要对称
-
+	//virtual void InitMirror(); //主要针对门窗垂直开情况，门窗垂直原型的窗在门的右侧，若实际为左侧则需要对称 //改为对话框内判断
 
 	virtual double GetXLength(){ return m_attr.m_width; } //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
 	virtual double GetYLength(){ return m_attr.m_height; } //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
