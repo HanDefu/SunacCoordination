@@ -36,6 +36,7 @@
 #include "command\CommandWindowDetail.h"
 #include "Common/ComFun_Sunac.h"
 #include "webIO\LocalData.h"
+#include "WebIO\ConfigDictionary.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

@@ -1,12 +1,12 @@
-m_airConPrototypeFile
-m_airConPrototypeFile
-m_airConPrototypeFile
-m_airConHorseNumber
-m_airConHorseNumber
-m_airConPrototypeId
-m_airConPrototypeId
-m_airConPrototypeFile
-// UI\AirconditionerDlg.cpp : ÊµÏÖÎÄ¼ş
+ï»¿//m_airConPrototypeFile
+//m_airConPrototypeFile
+//m_airConPrototypeFile
+//m_airConHorseNumber
+//m_airConHorseNumber
+//m_airConPrototypeId
+//m_airConPrototypeId
+//m_airConPrototypeFile
+// UI\AirconditionerDlg.cpp : å®ç°æ–‡ä»¶
 //
 
 #include "stdafx.h"
@@ -22,14 +22,17 @@ m_airConPrototypeFile
 #include "../Common/ComFun_Str.h"
 
 
-// CAirconditionerDlg ¶Ô»°¿ò
+// CAirconditionerDlg å¯¹è¯æ¡†
+
+
 
 IMPLEMENT_DYNAMIC(CAirconditionerDlg, CAcUiDialog)
 
 CAirconditionerDlg::CAirconditionerDlg(CWnd* pParent /*=NULL*/)
 	: CAcUiDialog(CAirconditionerDlg::IDD, pParent)
+	, m_rSize(0)
 {
-
+	m_flag = false;
 }
 
 CAirconditionerDlg::~CAirconditionerDlg()
@@ -53,6 +56,9 @@ void CAirconditionerDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_BUTTON_INSERTAC, m_btnInbsert);
 	DDX_Control(pDX, IDC_CHECK_UPDOWNIMAGE, m_upDownImage);
 	DDX_Control(pDX, IDC_CHECK_LEFTRIGHTIMAGE, m_leftRightImage);
+	DDX_Control(pDX, IDC_ROOM, m_room);
+	DDX_Control(pDX, IDC_ROOMSIZE, m_roomSize);
+	DDX_Text(pDX, IDC_ROOMSIZE, m_rSize);
 }
 
 
@@ -64,27 +70,31 @@ BEGIN_MESSAGE_MAP(CAirconditionerDlg, CAcUiDialog)
 	ON_CBN_SELCHANGE(IDC_COMBO_RAINTUBEPOS, &CAirconditionerDlg::OnCbnSelchangeComboRaintubepos)
 	ON_BN_CLICKED(IDC_BUTTON_INSERTAC, &CAirconditionerDlg::OnBnClickedButtonInsertac)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
+	ON_BN_CLICKED(IDC_BUTTON_CALCULATE, &CAirconditionerDlg::OnBnClickedButtonCalculate)
 END_MESSAGE_MAP()
 
 
-// CAirconditionerDlg ÏûÏ¢´¦Àí³ÌĞò
+// CAirconditionerDlg æ¶ˆæ¯å¤„ç†ç¨‹åº
 
 
 BOOL CAirconditionerDlg::OnInitDialog()
 {
 	CAcUiDialog::OnInitDialog();
-	//²âÊÔÓÃ
+	//æµ‹è¯•ç”¨
 	//m_preAC.SubclassDlgItem(IDC_STATIC_AC, this);
 	//m_preAC.SetLayoutMode(PREVIEW_LAYOUT_HORIZONTAL);
 	//m_preAC.SetPreview(_T("D:\\Projects\\Sunac\\Support\\Sunac2019\\LocalMode\\Window_N_7_0.dwg"));
-	//m_preAC.SetText(_T("Ô¤ÀÀÍ¼"));
+	//m_preAC.SetText(_T("é¢„è§ˆå›¾"));
 	//m_preAC.Invalidate();
 
-	TYUI_Disable(m_rainTubePos); //Ä¬ÈÏ»ÒµôÓêË®¹ÜÎ»ÖÃÏÂÀ­¿ò
+	TYUI_Disable(m_rainTubePos); //é»˜è®¤ç°æ‰é›¨æ°´ç®¡ä½ç½®ä¸‹æ‹‰æ¡†
 
-	LoadDefaultValue(); //ÉèÖÃÏÂÀ­¿òÄ¬ÈÏÖµ
+	LoadDefaultValue(); //è®¾ç½®ä¸‹æ‹‰æ¡†é»˜è®¤å€¼
+	
+	m_room.ShowWindow(FALSE);	//å°†é™æ€æ–‡æœ¬æ§ä»¶å’Œç¼–è¾‘æ¡†æ§ä»¶éšè—
+	m_roomSize.ShowWindow(FALSE);
 
-	m_preAirCon.SubclassDlgItem(IDC_STATIC_AC, this);		// ¿Ø¼şºÍ×ÊÔ´µÄ¹ØÁª
+	m_preAirCon.SubclassDlgItem(IDC_STATIC_AC, this);		// æ§ä»¶å’Œèµ„æºçš„å…³è”
 	m_preAirCon.Init(theArxDLL.ModuleResourceInstance(), true);
 
 	UpdatePreview();
@@ -92,7 +102,7 @@ BOOL CAirconditionerDlg::OnInitDialog()
 	return TRUE;
 }
 
-//ÉèÖÃ¿Õµ÷¶Ô»°¿òÖĞ¿Ø¼şµÄÄ¬ÈÏÖµ
+//è®¾ç½®ç©ºè°ƒå¯¹è¯æ¡†ä¸­æ§ä»¶çš„é»˜è®¤å€¼
 void CAirconditionerDlg::LoadDefaultValue()
 {
 	const vCString& pNum = WebIO::GetConfigDict()->Air_GetPiShus();
@@ -102,23 +112,22 @@ void CAirconditionerDlg::LoadDefaultValue()
 	TYUI_InitComboBox(m_pNum, pNum, pNum.empty() ? _T("") : pNum[0]);
 	TYUI_InitComboBox(m_lNTubePos, lNTubePos, lNTubePos.empty()? _T("") : lNTubePos[0]);
 	TYUI_InitComboBox(m_rainTubePos, rainTubePos, rainTubePos.empty() ? _T("") : rainTubePos[0]);
-
 	UpdateData(FALSE);
 }
 
 void CAirconditionerDlg::OnBnClickedCheckHasraintube()
 {
-	// TODO: ÔÚ´ËÌí¼Ó¿Ø¼şÍ¨Öª´¦Àí³ÌĞò´úÂë
+	// TODO: åœ¨æ­¤æ·»åŠ æ§ä»¶é€šçŸ¥å¤„ç†ç¨‹åºä»£ç 
 
 	int state =((CButton *)GetDlgItem(IDC_CHECK_HASRAINTUBE))->GetCheck(); 
 
-	/*½«¹ıÂË¸´Ñ¡¿òµÄ×´Ì¬¸³Öµ¸østate
-	µ±state == BST_UNCHECKED Ê±±íÊ¾¸Ã¸´Ñ¡¿òÃ»ÓĞ±»Ñ¡ÖĞ£»
-	µ±state == BST_CHECKED Ê±±íÊ¾¸Ã¸´Ñ¡¿ò±»Ñ¡ÖĞ£»
-	µ±state == BST_INDETERMINATE Ê±±íÊ¾²»È·¶¨*/
+	/*å°†è¿‡æ»¤å¤é€‰æ¡†çš„çŠ¶æ€èµ‹å€¼ç»™state
+	å½“state == BST_UNCHECKED æ—¶è¡¨ç¤ºè¯¥å¤é€‰æ¡†æ²¡æœ‰è¢«é€‰ä¸­ï¼›
+	å½“state == BST_CHECKED æ—¶è¡¨ç¤ºè¯¥å¤é€‰æ¡†è¢«é€‰ä¸­ï¼›
+	å½“state == BST_INDETERMINATE æ—¶è¡¨ç¤ºä¸ç¡®å®š*/
 
 
-	if (state == BST_CHECKED )  //Èç¹û¹ıÂË¸´Ñ¡¿ò´¦ÓÚÑ¡ÖĞ×´Ì¬£¬ÄÇÃ´½«Í¨¹ıÉú²úÈÕÆÚ¶ÔÈÎÎñ½øĞĞÉ¸Ñ¡
+	if (state == BST_CHECKED )  //å¦‚æœè¿‡æ»¤å¤é€‰æ¡†å¤„äºé€‰ä¸­çŠ¶æ€ï¼Œé‚£ä¹ˆå°†é€šè¿‡ç”Ÿäº§æ—¥æœŸå¯¹ä»»åŠ¡è¿›è¡Œç­›é€‰
 	{
 		TYUI_Enable(m_rainTubePos);
 	}
@@ -130,24 +139,24 @@ void CAirconditionerDlg::OnBnClickedCheckHasraintube()
 	UpdatePreview();
 }
 
-void CAirconditionerDlg::UpdatePreview() //µ±¿Õµ÷¶Ô»°¿òÖĞµÄ¿Ø¼şµÄÖµ·¢Éú±ä»¯Ê±£¬Í¼ĞÎÒ²Òª¸ù¾İ¿Ø¼şµÄÖµÀ´É¸Ñ¡¡¢±ä»¯
+void CAirconditionerDlg::UpdatePreview() //å½“ç©ºè°ƒå¯¹è¯æ¡†ä¸­çš„æ§ä»¶çš„å€¼å‘ç”Ÿå˜åŒ–æ—¶ï¼Œå›¾å½¢ä¹Ÿè¦æ ¹æ®æ§ä»¶çš„å€¼æ¥ç­›é€‰ã€å˜åŒ–
 {
 	UpdateData(FALSE);
 
-	//»ñÈ¡¿Ø¼şComboBoxÖĞÑ¡µÄÖµ
+	//è·å–æ§ä»¶ComboBoxä¸­é€‰çš„å€¼
 	CString pNum = TYUI_GetComboBoxText(m_pNum);
 	CString lNTubePos = TYUI_GetComboBoxText(m_lNTubePos);
 	CString rainTubePos = TYUI_GetComboBoxText(m_rainTubePos);
 	int hasRainTube = m_hasRainTube.GetCheck();
-	CString strHasTube = hasRainTube > 0 ? L"ÓĞ" : L"ÎŞ";
+	CString strHasTube = hasRainTube > 0 ? L"æœ‰" : L"æ— ";
 
-	//µ÷ÓÃGetAirCon()º¯ÊıÀ´É¸Ñ¡·ûºÏÌõ¼şµÄ¿Õµ÷
+	//è°ƒç”¨GetAirCon()å‡½æ•°æ¥ç­›é€‰ç¬¦åˆæ¡ä»¶çš„ç©ºè°ƒ
 	m_allAirCons = CLocalData::GetInstance()->GetAirCon(pNum, lNTubePos, strHasTube, rainTubePos);
 
-	//µ±Î´²éÕÒµ½·ûºÏÌõ¼şµÄ¿Õµ÷Ê±£¬¶Ô»°¿òÓÒ²àÍ¼ĞÎÎª¿Õ£¬²¢ÇÒ²åÈë°´Å¥±ä»Ò
+	//å½“æœªæŸ¥æ‰¾åˆ°ç¬¦åˆæ¡ä»¶çš„ç©ºè°ƒæ—¶ï¼Œå¯¹è¯æ¡†å³ä¾§å›¾å½¢ä¸ºç©ºï¼Œå¹¶ä¸”æ’å…¥æŒ‰é’®å˜ç°
 	if (m_allAirCons.empty())
 	{
-		acutPrintf(_T("Î´ÕÒµ½·ûºÏÌõ¼şµÄ¼ÇÂ¼\n"));
+		acutPrintf(_T("æœªæ‰¾åˆ°ç¬¦åˆæ¡ä»¶çš„è®°å½•\n"));
 		m_preAirCon.SetDatabase(NULL);
 		m_btnInbsert.EnableWindow(FALSE);
 		return;
@@ -155,7 +164,7 @@ void CAirconditionerDlg::UpdatePreview() //µ±¿Õµ÷¶Ô»°¿òÖĞµÄ¿Ø¼şµÄÖµ·¢Éú±ä»¯Ê±£¬Í
 
 	Acad::ErrorStatus es=acDocManager->lockDocument(curDoc());
 	AcDbDatabase *pDatabase = new AcDbDatabase();
-	//Í¼ĞÎÎÄ¼şÂ·¾¶
+	//å›¾å½¢æ–‡ä»¶è·¯å¾„
 	m_filePathName = MD2010_GetAppPath() + L"\\support\\Sunac2019\\LocalMode\\" + m_allAirCons[0].m_airConPrototypeFile;
 	es = pDatabase->readDwgFile(m_filePathName);
 	//DrawSolid(zhu, pDatabase,false);
@@ -184,26 +193,26 @@ void CAirconditionerDlg::OnBnClickedButtonInsertac()
 {
 	ShowWindow(FALSE);
 	
-	//»ñÈ¡²åÈëµã
+	//è·å–æ’å…¥ç‚¹
 	AcGePoint3d pnt = TY_GetPoint();
 
 	RCAirCondition blockAirCon;
-	//½«¿é²åÈëÍ¼ĞÎ¿Õ¼ä
+	//å°†å—æ’å…¥å›¾å½¢ç©ºé—´
 	blockAirCon.Insert(m_filePathName, pnt, 0, L"0", 256);
 
-	//ÉÏÏÂ¾µÏñ
+	//ä¸Šä¸‹é•œåƒ
 	if (m_upDownImage.GetCheck())
 		TYCOM_Mirror(blockAirCon.m_id, pnt, AcGeVector3d(1,0,0));
-	//×óÓÒ¾µÏñ
+	//å·¦å³é•œåƒ
 	if (m_leftRightImage.GetCheck())
 		TYCOM_Mirror(blockAirCon.m_id, pnt, AcGeVector3d(0,1,0));
-	//ÉÏÏÂ×óÓÒ¾µÏñ
+	//ä¸Šä¸‹å·¦å³é•œåƒ
 	if (m_upDownImage.GetCheck() && m_leftRightImage.GetCheck())
 	{
-		TYCOM_Rotate(blockAirCon.m_id, pnt, 3.1415926);
+		TYCOM_Mirror(blockAirCon.m_id, pnt, AcGeVector3d(0,0,0));
 	}
 
-	//°ÑUIµÄÊı¾İ¼ÇÂ¼ÔÚÍ¼¿òµÄÀ©Õ¹×ÖµäÖĞ
+	//æŠŠUIçš„æ•°æ®è®°å½•åœ¨å›¾æ¡†çš„æ‰©å±•å­—å…¸ä¸­
 	AttrAirCon * pAirCon = new AttrAirCon(m_allAirCons[0]);
 	blockAirCon.AddAttribute(pAirCon);
 
@@ -212,3 +221,51 @@ void CAirconditionerDlg::OnBnClickedButtonInsertac()
 	ShowWindow(TRUE);
 }
 
+//ç‚¹å‡»è®¡ç®—æŒ‰é’®ï¼Œæ˜¾ç¤ºæˆ¿é—´é¢ç§¯å¯¹è¯æ¡†ï¼Œå¹¶é€šè¿‡æˆ¿é—´é¢ç§¯è®¡ç®—å‡ºç©ºè°ƒåŒ¹æ•°
+void CAirconditionerDlg::OnBnClickedButtonCalculate()
+{
+	UpdateData(TRUE);
+
+	CWnd *pWnd;
+	
+	if (m_flag == FALSE)
+	{
+		//å°†æŒ‰é’®æ§ä»¶ç§»åŠ¨ä½ç½®
+		pWnd = GetDlgItem(IDC_BUTTON_CALCULATE);    //è·å–æ§ä»¶æŒ‡é’ˆï¼ŒIDC_BUTTON_CALCULATEä¸ºæ§ä»¶IDå·
+		pWnd->SetWindowPos(NULL, 380, 23, 0, 0, SWP_NOZORDER | SWP_NOSIZE);    //æŠŠæŒ‰é’®ç§»åˆ°çª—å£çš„(380,23)å¤„
+
+		//å°†é™æ€æ–‡æœ¬å’Œç¼–è¾‘æ¡†æ˜¾ç¤º
+		m_room.ShowWindow(TRUE);
+		m_roomSize.ShowWindow(TRUE);
+
+		m_flag = true;
+	}
+	else 
+	{
+		const vCString& pNum = WebIO::GetConfigDict()->Air_GetPiShus();	//	è·å–ç©ºè°ƒæ‰€æœ‰åŒ¹æ•°
+
+		//ç©ºè°ƒåŒ¹æ•°è®¡ç®—æ–¹æ³•
+		if (m_rSize > 0 && m_rSize <= 18)
+		{
+			TYUI_InitComboBox(m_pNum, pNum, pNum.empty() ? _T("") : pNum[0]);
+		}
+		else if(m_rSize >= 12 && m_rSize <= 24)
+		{
+			TYUI_InitComboBox(m_pNum, pNum, pNum.empty() ? _T("") : pNum[1]);
+		}
+		else if(m_rSize >= 25 && m_rSize <= 34)
+		{
+			TYUI_InitComboBox(m_pNum, pNum, pNum.empty() ? _T("") : pNum[2]);
+		}
+		else if(m_rSize >= 35)
+		{
+			TYUI_InitComboBox(m_pNum, pNum, pNum.empty() ? _T("") : pNum[3]);
+		}
+		else
+		{
+			MessageBox(TEXT("æ‚¨çš„è¾“å…¥ä¸ç¬¦åˆå®é™…è¦æ±‚ï¼Œæˆ¿é—´é¢ç§¯åº”å¤§äº0mÂ²"), TEXT("æ¸©é¦¨æç¤º"), MB_YESNO | MB_ICONQUESTION);
+		}
+	}
+
+	UpdateData(FALSE);
+}

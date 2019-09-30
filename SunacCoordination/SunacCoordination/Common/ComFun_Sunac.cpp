@@ -897,7 +897,7 @@ int TYCOM_Mirror(AcDbObjectId entId, AcGePoint3d first, AcGeVector3d dir)
 	return 0;
 }
 
-//ÉÏÏÂ×óÓÒ¾µÏñ
+//Ðý×ª
 int TYCOM_Rotate(AcDbObjectId entId, AcGePoint3d ptBase, double rotation)
 {
 	CDocLock docLock;
@@ -918,7 +918,6 @@ int TYCOM_Rotate(AcDbObjectId entId, AcGePoint3d ptBase, double rotation)
 
 	return 0;
 }
-
 
 int TYCOM_Move(AcDbObjectId entId, AcGeVector3d offset)
 {
