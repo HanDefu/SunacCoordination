@@ -30,7 +30,6 @@ CWindowDlg::~CWindowDlg()
 
 LRESULT CWindowDlg::onAcadKeepFocus(WPARAM, LPARAM)
 {
-	//return FALSE;
 	return TRUE;
 }
 
@@ -50,6 +49,7 @@ void CWindowDlg::PostNcDestroy()
 {
 	CAcUiDialog::PostNcDestroy();
 	delete this;
+	g_windowDlg = NULL;
 }
 
 void CWindowDlg::DoDataExchange(CDataExchange* pDX)
@@ -313,4 +313,16 @@ void CWindowDlg::LoadDefaultValue()
 	m_autoIndex = TRUE;
 	m_number.SetReadOnly(TRUE);
 	UpdateData(FALSE);
+}
+
+CWindowDlg* g_windowDlg = NULL;
+
+BOOL CloseWindowDlg()
+{
+	if (g_windowDlg == NULL)
+		return TRUE;
+	BOOL ret = g_windowDlg->DestroyWindow();
+	if (ret)
+		g_windowDlg = NULL;
+	return ret;
 }

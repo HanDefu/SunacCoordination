@@ -43,3 +43,5 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 } ;
+
+extern CMyPaletteSet* g_pPaletteSet;

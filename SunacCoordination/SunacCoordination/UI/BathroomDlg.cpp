@@ -8,6 +8,19 @@
 
 // CBathroomDlg ¶Ô»°¿ò
 
+CBathroomDlg* g_bathroomDlg = NULL;
+
+BOOL CloseBathroomDlg()
+{
+	if (g_bathroomDlg == NULL)
+		return TRUE;
+	BOOL ret = g_bathroomDlg->DestroyWindow();
+	if (ret)
+		g_bathroomDlg = NULL;
+	return ret;
+}
+
+
 IMPLEMENT_DYNAMIC(CBathroomDlg, CAcUiDialog)
 
 CBathroomDlg::CBathroomDlg(CWnd* pParent /*=NULL*/)

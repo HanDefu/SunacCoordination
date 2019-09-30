@@ -3,6 +3,7 @@
 #include "afxwin.h"
 #include "../Object/AttrWindow.h"
 #include "ComFun_MFC.h"
+
 // CWindowDlg ¶Ô»°¿ò
 
 class CWindowDlg : public CAcUiDialog
@@ -66,3 +67,6 @@ public:
 	CComboBox m_viewDir;
 	CButton m_isMirror;
 };
+
+extern CWindowDlg* g_windowDlg;
+BOOL CloseWindowDlg();

@@ -64,3 +64,5 @@ void CMyPaletteSet::GetMaximumSize (CSize &size) {
 	//- Call the default implementation by default
 	CAdUiPaletteSet::GetMaximumSize (size) ;
 }
+
+CMyPaletteSet* g_pPaletteSet = NULL;
