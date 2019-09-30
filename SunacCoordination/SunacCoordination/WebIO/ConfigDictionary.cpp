@@ -40,16 +40,106 @@ CConfigDictionary::~CConfigDictionary()
 }
 
 //接口文档 https://docs.qq.com/doc/DUUpaanJLZmlSQ2d4
+
+void CConfigDictionary::GetConfig(wstring Term, vector<wstring> p_paraOut)
+{
+	bool bSuc1 = GetConfigFromWeb(Term, p_paraOut);
+
+	if (bSuc1)
+	{
+		CString cstr = Term.c_str();
+		vector<wstring>::iterator it;  //声明一个迭代器，来访问vector容器，作用：遍历或者指向vector容器的元素 
+		for(it = p_paraOut.begin(); it != p_paraOut.end(); it++)
+		{
+			CString str = it->c_str();
+			m_configDict[cstr].push_back(str);
+		}
+	}
+}
+
 bool CConfigDictionary::InitFromWeb()
 {
 	vector<wstring> p_paraOut;
-	bool bSuc1 = GetConfigFromWeb(_T("area"), p_paraOut);
-	if (bSuc1)
-	{
-		//m_configDict[_T("area")] = p_paraOut;
-	}
+	
+	//区域
+	wstring wstr = _T("area");
+	GetConfig(wstr, p_paraOut);
 
+	//功能区
+	wstr = _T("actionType");
+	GetConfig(wstr, p_paraOut);
 
+	//门窗位置关系
+	wstr = _T("actionType");
+	GetConfig(wstr, p_paraOut);
+
+	//开启类型
+	wstr = _T("actionType");
+	GetConfig(wstr, p_paraOut);
+
+	//开启扇数量
+	wstr = _T("openWindowNum");
+	GetConfig(wstr, p_paraOut);
+
+	//通风量计算面积比值
+	wstr = _T("airVolumeAreaRation");
+	GetConfig(wstr, p_paraOut);
+
+	//门窗距外墙距离
+	wstr = _T("doorWindowDistance");
+	GetConfig(wstr, p_paraOut);
+
+	//门类型
+	wstr = _T("doorType");
+	GetConfig(wstr, p_paraOut);
+
+	//厨房类型
+	wstr = _T("kitchenType");
+	GetConfig(wstr, p_paraOut);
+
+	//厨房水盆类型
+	wstr = _T("kitchenBasinType");
+	GetConfig(wstr, p_paraOut);
+
+	//冰箱类型
+	wstr = _T("refrigeratorType");
+	GetConfig(wstr, p_paraOut);
+
+	//灶台宽度
+	wstr = _T("hearthWidth");
+	GetConfig(wstr, p_paraOut);
+
+	//卫生间类型
+	wstr = _T("toiletType");
+	GetConfig(wstr, p_paraOut);
+
+	//卫生间台盆宽度
+	wstr = _T("toiletBasinWidth");
+	GetConfig(wstr, p_paraOut);
+
+	//马桶宽度
+	wstr = _T("closesToolWidth");
+	GetConfig(wstr, p_paraOut);
+
+	//盥洗区宽度
+	wstr = _T("bathroomWidth");
+	GetConfig(wstr, p_paraOut);
+
+	//空调匹数
+	wstr = _T("airConditionNumber");
+	GetConfig(wstr, p_paraOut);
+
+	//冷凝水管位置
+	wstr = _T("condensatePipePosition");
+	GetConfig(wstr, p_paraOut);
+
+	//雨水管位置
+	wstr = _T("rainPipePosition");
+	GetConfig(wstr, p_paraOut);
+
+	//栏杆类型
+	wstr = _T("handRail");
+	GetConfig(wstr, p_paraOut);
 
 	return true;
 }
@@ -68,10 +158,17 @@ bool CConfigDictionary::GetConfigFromWeb(wstring p_paraTypeName, vector<wstring>
 	//UINT  len = (attResult.StandardDesignAttributeResult)->length();
 	//MessageBox(NULL, attResult.StandardDesignAttributeResult->c_str(), _T("返回结果"), 0);
 
-
 	//解析字符串出结果
 	CMarkup xml;
+	
+	//判断当指针为空，未读到xml时，返回false
+	while (attResult.StandardDesignAttributeResult == NULL)
+	{
+		return false;
+	}
+
 	xml.SetDoc((*(attResult.StandardDesignAttributeResult)).c_str());
+	
 	xml.ResetMainPos();
 	xml.FindElem();	//根节点
 	xml.IntoElem();

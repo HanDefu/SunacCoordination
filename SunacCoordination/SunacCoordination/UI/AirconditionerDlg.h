@@ -53,4 +53,9 @@ public:
 	CString m_filePathName;
 	CButton m_upDownImage;
 	CButton m_leftRightImage;
+	CStatic m_room;	//房间面积(静态文本框)
+	afx_msg void OnBnClickedButtonCalculate(); 
+	CEdit m_roomSize; //房间面积(编辑框)
+	bool m_flag;  //判断是否显示空调编辑框
+	double m_rSize; //房间面积，用于计算空调匹数
 };

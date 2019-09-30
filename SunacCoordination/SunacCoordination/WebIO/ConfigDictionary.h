@@ -11,9 +11,9 @@ public:
 
 	CConfigDictionary();
 	~CConfigDictionary();
-
-protected:
 	bool InitFromWeb();
+protected:
+	//bool InitFromWeb();
 	bool GetConfigFromWeb(wstring p_paraTypeName, vector<wstring>& p_paraOut);
 
 protected:
@@ -65,4 +65,6 @@ public:
 	vCString Air_GetLengNingShuiGuanPos()const;//¿‰ƒ˝ÀÆπ‹Œª÷√
 	vCString Air_GetYuShuiGuanPos() const;
 	vCString Railing_GetTypes();
+
+	void GetConfig(wstring Term, vector<wstring> p_paraOut);
 };
