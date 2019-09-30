@@ -68,16 +68,6 @@ void CWindowLocalData::LoadDataFromExcel(CString p_file)
 {
 	Excel::CExcelUtil xls; 
 
-	CString	widthMin;			//¿í¶È×îÐ¡Öµ
-	CString	widthMax;			//¿í¶È×î´óÖµ
-
-	CString	valueType;		//W1ÖµÀàÐÍ	
-	CString	value;			//W1Öµ	
-	CString	min;				//W1×îÐ¡Öµ
-	CString	max;				//W1×î´óÖµ
-	CString	defaultValue;		//W1Ä¬ÈÏÖµ
-	CString	state;			//W1ËµÃ÷
-
 	xls.OpenExcel(p_file); //´ò¿ª±í¸ñ
 	xls.SetVisible(false); 
 
@@ -90,30 +80,30 @@ void CWindowLocalData::LoadDataFromExcel(CString p_file)
 		AttrWindow attrwindow;
 		
 		//Í¨¹ýÐÐºÍÁÐ»ñÈ¡µ¥Ôª¸ñµÄÖµ£¬²¢½«Öµ¸³¸ø¶ÔÏóattrwindow
-		attrwindow.id = xls.GetCellValue(i, 1); 
-		attrwindow.prototypeId = xls.GetCellValue(i, 2);
-		if (attrwindow.prototypeId.GetLength() == 0)  //¶ÔÔ­ÐÍ±àºÅµÄ³¤¶È½øÐÐÅÐ¶Ï£¬µ±Ô­ÐÍ±àºÅÎª¿ÕµÄÊ±ºò½áÊøÑ­»·
+		attrwindow.m_id = xls.GetCellValue(i, 1); 
+		attrwindow.m_yxid = xls.GetCellValue(i, 2);
+		if (attrwindow.m_yxid.GetLength() == 0)  //¶ÔÔ­ÐÍ±àºÅµÄ³¤¶È½øÐÐÅÐ¶Ï£¬µ±Ô­ÐÍ±àºÅÎª¿ÕµÄÊ±ºò½áÊøÑ­»·
 			break;
 
-		attrwindow.prototypeFile = xls.GetCellValue(i, 3);
-		attrwindow.scopeOfApplication = xls.GetCellValue(i, 4);
-		attrwindow.isDynamic = xls.GetCellValue(i, 5);
-		attrwindow.functionType = xls.GetCellValue(i, 6);
-		attrwindow.openType = xls.GetCellValue(i, 7);
-		attrwindow.openNum = xls.GetCellValue(i, 8);
-		widthMin = xls.GetCellValue(i, 9);
-		widthMax = xls.GetCellValue(i, 10);
-		attrwindow.ventilationFormula = xls.GetCellValue(i, 11);
-		attrwindow.staticWidth = xls.GetCellValue(i, 12);
-		attrwindow.staticHeigth = xls.GetCellValue(i, 13);
-		attrwindow.staticVentilation = xls.GetCellValue(i, 14);
+		attrwindow.m_name = xls.GetCellValue(i, 3);
+		attrwindow.m_scopeOfApplication = xls.GetCellValue(i, 4);
+		attrwindow.m_Dynamic = xls.GetCellValue(i, 5);
+		attrwindow.m_functionType = xls.GetCellValue(i, 6);
+		attrwindow.m_openType = xls.GetCellValue(i, 7);
+		attrwindow.m_openQty = _ttoi(xls.GetCellValue(i, 8));
+		attrwindow.m_minWid =  _ttoi(xls.GetCellValue(i, 9));
+		attrwindow.m_maxWid =  _ttoi(xls.GetCellValue(i, 10));
+		attrwindow.m_tongFengFormula = xls.GetCellValue(i, 11);
+		attrwindow.m_width =  _ttoi(xls.GetCellValue(i, 12));
+		attrwindow.m_height =  _ttoi(xls.GetCellValue(i, 13));
+		attrwindow.m_tongFengQty =  _ttoi(xls.GetCellValue(i, 14));
 		
 		//W 
 		SRCDimData data;
 		data.sCodeName = L"W";
 		data.type = SCOPE;
-		data.values.push_back(_wtof(widthMin));
-		data.values.push_back(_wtof(widthMax));
+		data.values.push_back(attrwindow.m_minWid);
+		data.values.push_back(attrwindow.m_maxWid);
 		data.prompt = L"";
 		data.defaultValue = 0;
 		attrwindow.m_dimData.push_back(data);
@@ -126,61 +116,61 @@ void CWindowLocalData::LoadDataFromExcel(CString p_file)
 		attrwindow.m_dimData.push_back(data);
 
 		//W1
-		valueType = xls.GetCellValue(i, 15);
-		value = xls.GetCellValue(i, 16);
-		defaultValue = xls.GetCellValue(i, 19);
-		state = xls.GetCellValue(i, 20);
+		attrwindow.m_valueType = xls.GetCellValue(i, 15);
+		attrwindow.m_value = xls.GetCellValue(i, 16);
+		attrwindow.m_defaultValue = xls.GetCellValue(i, 19);
+		attrwindow.m_state = xls.GetCellValue(i, 20);
 
-		data = ConvertStringToDimData(L"W1",valueType, value,defaultValue,state);
+		data = ConvertStringToDimData(L"W1",attrwindow.m_valueType, attrwindow.m_value,attrwindow.m_defaultValue,attrwindow.m_state);
 		attrwindow.m_dimData.push_back(data);
 
 		//W2
-		valueType = xls.GetCellValue(i, 21);
-		value = xls.GetCellValue(i, 22);
-		defaultValue = xls.GetCellValue(i, 25);
-		state = xls.GetCellValue(i, 26);
+		attrwindow.m_valueType = xls.GetCellValue(i, 21);
+		attrwindow.m_value = xls.GetCellValue(i, 22);
+		attrwindow.m_defaultValue = xls.GetCellValue(i, 25);
+		attrwindow.m_state = xls.GetCellValue(i, 26);
 
-		data = ConvertStringToDimData(L"W2",valueType, value,defaultValue,state);
+		data = ConvertStringToDimData(L"W2",attrwindow.m_valueType, attrwindow.m_value,attrwindow.m_defaultValue,attrwindow.m_state);
 		attrwindow.m_dimData.push_back(data);
 
 		//W3
-		valueType = xls.GetCellValue(i, 27);
-		value = xls.GetCellValue(i, 28);
-		defaultValue = xls.GetCellValue(i, 31);
-		state = xls.GetCellValue(i, 32);
+		attrwindow.m_valueType = xls.GetCellValue(i, 27);
+		attrwindow.m_value = xls.GetCellValue(i, 28);
+		attrwindow.m_defaultValue = xls.GetCellValue(i, 31);
+		attrwindow.m_state = xls.GetCellValue(i, 32);
 
-		data = ConvertStringToDimData(L"W3",valueType, value,defaultValue,state);
+		data = ConvertStringToDimData(L"W3",attrwindow.m_valueType, attrwindow.m_value,attrwindow.m_defaultValue,attrwindow.m_state);
 		attrwindow.m_dimData.push_back(data);
 
 		//H1
-		valueType = xls.GetCellValue(i, 33);
-		value = xls.GetCellValue(i, 34);
-		defaultValue = xls.GetCellValue(i, 37);
-		state = xls.GetCellValue(i, 38);
+		attrwindow.m_valueType = xls.GetCellValue(i, 33);
+		attrwindow.m_value = xls.GetCellValue(i, 34);
+		attrwindow.m_defaultValue = xls.GetCellValue(i, 37);
+		attrwindow.m_state = xls.GetCellValue(i, 38);
 
-		data = ConvertStringToDimData(L"H1",valueType, value,defaultValue,state);
+		data = ConvertStringToDimData(L"H1",attrwindow.m_valueType, attrwindow.m_value,attrwindow.m_defaultValue,attrwindow.m_state);
 		attrwindow.m_dimData.push_back(data);
 
 		//H2
-		valueType = xls.GetCellValue(i, 39);
-		value = xls.GetCellValue(i, 40);
-		defaultValue = xls.GetCellValue(i, 43);
-		state = xls.GetCellValue(i, 44);
+		attrwindow.m_valueType = xls.GetCellValue(i, 39);
+		attrwindow.m_value = xls.GetCellValue(i, 40);
+		attrwindow.m_defaultValue = xls.GetCellValue(i, 43);
+		attrwindow.m_state = xls.GetCellValue(i, 44);
 
-		data = ConvertStringToDimData(L"H2",valueType, value,defaultValue,state);
+		data = ConvertStringToDimData(L"H2",attrwindow.m_valueType, attrwindow.m_value,attrwindow.m_defaultValue,attrwindow.m_state);
 		attrwindow.m_dimData.push_back(data);
 
 		//H3
-		valueType = xls.GetCellValue(i, 45);
-		value = xls.GetCellValue(i, 46);
-		defaultValue = xls.GetCellValue(i, 49);
-		state = xls.GetCellValue(i, 50);
+		attrwindow.m_valueType = xls.GetCellValue(i, 45);
+		attrwindow.m_value = xls.GetCellValue(i, 46);
+		attrwindow.m_defaultValue = xls.GetCellValue(i, 49);
+		attrwindow.m_state = xls.GetCellValue(i, 50);
 
-		data = ConvertStringToDimData(L"H3",valueType, value,defaultValue,state);
+		data = ConvertStringToDimData(L"H3",attrwindow.m_valueType, attrwindow.m_value,attrwindow.m_defaultValue,attrwindow.m_state);
 		attrwindow.m_dimData.push_back(data);
 
-		attrwindow.prototypeFlatFile = xls.GetCellValue(i, 51);
-		attrwindow.prototypeTopViewFile = xls.GetCellValue(i, 52);
+		attrwindow.m_prototypeFlatFile = xls.GetCellValue(i, 51);
+		attrwindow.m_prototypeTopViewFile = xls.GetCellValue(i, 52);
 
 		m_windows.push_back(attrwindow); //½«Êý¾ÝÌí¼Óµ½vectorÊý×ém_windows
 	}
@@ -193,7 +183,7 @@ bool CWindowLocalData::GetWindowById(CString p_sId, AttrWindow& value) const //Í
 {
 	for (int i = 0; i < m_windows.size(); i++)
 	{
-		if (m_windows[i].prototypeId == p_sId)
+		if (m_windows[i].m_yxid == p_sId)
 		{
 			value = m_windows[i];
 			return true;
@@ -207,7 +197,7 @@ bool  CWindowLocalData::GetWindowByFileName(CString p_sFileName, AttrWindow&valu
 {
 	for (int i = 0; i < m_windows.size(); i++)
 	{
-		if (m_windows[i].prototypeFile == p_sFileName)
+		if (m_windows[i].m_name == p_sFileName)
 		{
 			value = m_windows[i];
 			return true;
@@ -220,7 +210,7 @@ vector<AttrWindow> CWindowLocalData::GetAllWindows() //»ñÈ¡ËùÓÐ´°»§
 {
 	for (int i = 0; i < m_windows.size(); i++)
 	{
-		std::vector<CString> strs = YT_SplitCString(m_windows[i].prototypeId, L'_');  //ÓÃ"_"²ð·Ö
+		std::vector<CString> strs = YT_SplitCString(m_windows[i].m_yxid, L'_');  //ÓÃ"_"²ð·Ö
 		if (strs[0] == "Window")
 		{
 			m_wins.push_back(m_windows[i]);
@@ -233,7 +223,7 @@ vector<AttrWindow> CWindowLocalData::GetAllDoors()  //»ñÈ¡ËùÓÐÃÅ
 {
 	for (int i = 0; i < m_windows.size(); i++)
 	{
-		std::vector<CString> strs = YT_SplitCString(m_windows[i].prototypeId, L'_');
+		std::vector<CString> strs = YT_SplitCString(m_windows[i].m_yxid, L'_');
 		if (strs[0] == "Door")
 		{
 			m_doors.push_back(m_windows[i]);
@@ -248,7 +238,7 @@ std::vector<AttrWindow >  CWindowLocalData::GetWindows(double width, CString ope
 
 	for (int i =0; i < m_windows.size(); i++)
 	{
-		std::vector<CString> strs = YT_SplitCString(m_windows[i].prototypeId, L'_');  //ÓÃ"_"²ð·Ö
+		std::vector<CString> strs = YT_SplitCString(m_windows[i].m_yxid, L'_');  //ÓÃ"_"²ð·Ö
 		if (strs[0] != "Window")
 		{
 			continue;
@@ -261,7 +251,7 @@ std::vector<AttrWindow >  CWindowLocalData::GetWindows(double width, CString ope
 
 		if (openType != L"²»ÏÞ")
 		{
-			if (openType != m_windows[i].openType)
+			if (openType != m_windows[i].m_openType)
 			{
 				continue;
 			}
@@ -269,7 +259,7 @@ std::vector<AttrWindow >  CWindowLocalData::GetWindows(double width, CString ope
 
 		if (openNum != 0)
 		{
-			if (openNum != m_windows[i].openNum)
+			if (openNum != m_windows[i].m_openQty)
 			{
 				continue;
 			}
@@ -277,7 +267,7 @@ std::vector<AttrWindow >  CWindowLocalData::GetWindows(double width, CString ope
 
 		if (gongNengQu != L"²»ÏÞ")
 		{
-			if (gongNengQu != m_windows[i].functionType)
+			if (gongNengQu != m_windows[i].m_functionType)
 			{
 				continue;
 			}
@@ -300,7 +290,7 @@ std::vector<AttrWindow >  CWindowLocalData::GetDoors(double width, CString openT
 
 	for (int i =0; i < m_windows.size(); i++)
 	{
-		std::vector<CString> strs = YT_SplitCString(m_windows[i].prototypeId, L'_');  //ÓÃ"_"²ð·Ö
+		std::vector<CString> strs = YT_SplitCString(m_windows[i].m_yxid, L'_');  //ÓÃ"_"²ð·Ö
 		if (strs[0] != "Door")
 		{
 			continue;
@@ -313,7 +303,7 @@ std::vector<AttrWindow >  CWindowLocalData::GetDoors(double width, CString openT
 
 		if (openType != L"²»ÏÞ")
 		{
-			if (openType != m_windows[i].openType)
+			if (openType != m_windows[i].m_openType)
 			{
 				continue;
 			}
@@ -321,7 +311,7 @@ std::vector<AttrWindow >  CWindowLocalData::GetDoors(double width, CString openT
 
 		if (openNum != 0)
 		{
-			if (openNum != m_windows[i].openNum)
+			if (openNum != m_windows[i].m_openQty)
 			{
 				continue;
 			}
@@ -329,7 +319,7 @@ std::vector<AttrWindow >  CWindowLocalData::GetDoors(double width, CString openT
 
 		if (gongNengQu != L"²»ÏÞ")
 		{
-			if (gongNengQu != m_windows[i].functionType)
+			if (gongNengQu != m_windows[i].m_functionType)
 			{
 				continue;
 			}

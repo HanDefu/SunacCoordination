@@ -62,6 +62,7 @@ public:
 	CString m_yxid;//原型编号
 	CString m_name;//原型名称
 	bool m_isJiTuan;//是否集团
+	CString m_quyuId;//区域ID
 	CString m_quyuName;//区域名称
 	CString m_type;//原型类型
 	bool m_isDynamic;//是否动态块

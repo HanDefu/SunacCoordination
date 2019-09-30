@@ -128,5 +128,6 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
         virtual int send_GetWindows_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetWindows *ns1__GetWindows);
         /// Web service asynchronous operation 'recv_GetWindows' to receive a response message from the connected endpoint, returns SOAP_OK or error code
         virtual int recv_GetWindows_(_ns1__GetWindowsResponse &ns1__GetWindowsResponse);
+
     };
 #endif

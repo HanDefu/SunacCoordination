@@ -33,11 +33,11 @@ void CAirConditionLocalData::LoadDataFromExcel(CString p_file)
 		AttrAirCon attrAirCon;
 
 		attrAirCon.m_airConId = xls.GetCellValue(i, 1); //通过行和列获取单元格的值，并将值赋给对象attrAirCon
-		attrAirCon.m_airConPrototypeId = xls.GetCellValue(i, 2);
-		if (attrAirCon.m_airConPrototypeId.GetLength() == 0)
+		attrAirCon.m_yxid = xls.GetCellValue(i, 2);
+		if (attrAirCon.m_yxid.GetLength() == 0)
 			break;
 
-		attrAirCon.m_airConPrototypeFile = xls.GetCellValue(i, 3);
+		attrAirCon.m_name = xls.GetCellValue(i, 3);
 		attrAirCon.m_airConHorseNumber = xls.GetCellValue(i, 4);
 		attrAirCon.m_airConPipePos = xls.GetCellValue(i, 5);
 		attrAirCon.m_airConRainRiser = xls.GetCellValue(i, 6);
@@ -55,7 +55,7 @@ bool CAirConditionLocalData::GetAirConById(CString p_sId, AttrAirCon& value)cons
 {
 	for (int i = 0; i < m_aircon.size(); i++)
 	{
-		if (m_aircon[i].m_airConPrototypeId == p_sId)
+		if (m_aircon[i].m_yxid == p_sId)
 		{
 			value = m_aircon[i];
 			return true;
@@ -69,7 +69,7 @@ bool CAirConditionLocalData::GetAirConByFileName(CString p_sFileName, AttrAirCon
 {
 	for (int i = 0; i < m_aircon.size(); i++)
 	{
-		if (m_aircon[i].m_airConPrototypeFile == p_sFileName)
+		if (m_aircon[i].m_name == p_sFileName)
 		{
 			value = m_aircon[i];
 			return true;

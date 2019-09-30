@@ -6,6 +6,7 @@
 #include "SunacCadWeb\ArgumentSettingServiceSoap.nsmap" //只用包含一次，且必须包含一次
 #include "SunacCadWeb\soapArgumentSettingServiceSoapProxy.h"
 #include "../Common\ComFun_Str.h"
+#include "../WebIO/WindowWebData.h"
 
 #include "..\Tool\MarkupXml\Markup.h"
 
