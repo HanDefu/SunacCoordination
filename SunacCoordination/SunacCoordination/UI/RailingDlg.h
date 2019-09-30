@@ -37,3 +37,6 @@ public:
 	CString m_selectedFile;
 	CComboBox m_type;
 };
+
+extern CRailingDlg* g_railingDlg;
+BOOL CloseRailingDlg();

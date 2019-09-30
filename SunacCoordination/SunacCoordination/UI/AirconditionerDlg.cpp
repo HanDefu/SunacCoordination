@@ -24,6 +24,17 @@
 
 // CAirconditionerDlg 对话框
 
+CAirconditionerDlg* g_airconditionerDlg = NULL;
+
+BOOL CloseAirconditionerDlg()
+{
+	if (g_airconditionerDlg == NULL)
+		return TRUE;
+	BOOL ret = g_airconditionerDlg->DestroyWindow();
+	if (ret)
+		g_airconditionerDlg = NULL;
+	return ret;
+}
 
 
 IMPLEMENT_DYNAMIC(CAirconditionerDlg, CAcUiDialog)

@@ -17,10 +17,6 @@
 #error _DEBUG should not be defined except in internal Adesk debug builds
 #endif
 
-#include <rxmfcapi.h>
-#include <dbgroup.h>
-#include <geassign.h>
-#include "accmd.h"
 #include "../UI/WindowDlg.h"
 #include "../UI/KitchenDlg.h"
 #include "../UI/BathroomDlg.h"
@@ -34,12 +30,7 @@
 #include "../ui/MyPalette.h"
 #include "../ui/MyPaletteSet.h"
 #include "../ui/DlgLogin.h"
-#include "../Common/ComFun_Sunac.h"
-#include "../Object/RCWindow.h"
-#include "../Common/ComFun_ACad.h"
-#include "dbtable.h"
-
-static void CADPalette_AddP(void);
+#include "Command.h"
 
 //登录
 void CMD_Login()
@@ -57,9 +48,12 @@ void CMD_SUNACWINDOW()
 	CAcModuleResourceOverride resOverride;
 
 	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
-	CWindowDlg * pDlg = new CWindowDlg(acedGetAcadFrame());
-	pDlg->Create(IDD_DIALOG_WINDOW);
-	pDlg->ShowWindow(SW_SHOW);
+	if (g_windowDlg == NULL)
+	{
+		g_windowDlg = new CWindowDlg(acedGetAcadFrame());
+		g_windowDlg->Create(IDD_DIALOG_WINDOW);
+		g_windowDlg->ShowWindow(SW_SHOW);
+	}
 }
 
 //厨房
@@ -68,9 +62,12 @@ void CMD_SUNACKITCHEN()
 	CAcModuleResourceOverride resOverride;
 
 	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
-	CKitchenDlg * pDlg = new CKitchenDlg(acedGetAcadFrame());
-	pDlg->Create(IDD_DIALOG_KITCHEN);
-	pDlg->ShowWindow(SW_SHOW);
+	if (g_kitchenDlg == NULL)
+	{
+		g_kitchenDlg = new CKitchenDlg(acedGetAcadFrame());
+		g_kitchenDlg->Create(IDD_DIALOG_KITCHEN);
+		g_kitchenDlg->ShowWindow(SW_SHOW);
+	}
 }
 
 //卫生间
@@ -79,9 +76,12 @@ void CMD_SUNACBATHROOM()
 	CAcModuleResourceOverride resOverride;
 
 	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
-	CBathroomDlg * pDlg = new CBathroomDlg(acedGetAcadFrame());
-	pDlg->Create(IDD_DIALOG_BATHROOM);
-	pDlg->ShowWindow(SW_SHOW);
+	if (g_bathroomDlg == NULL)
+	{
+		g_bathroomDlg = new CBathroomDlg(acedGetAcadFrame());
+		g_bathroomDlg->Create(IDD_DIALOG_BATHROOM);
+		g_bathroomDlg->ShowWindow(SW_SHOW);
+	}
 }
 
 //门
@@ -99,9 +99,12 @@ void CMD_SUNACRAILING()
 	CAcModuleResourceOverride resOverride;
 
 	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
-	CRailingDlg * pDlg = new CRailingDlg(acedGetAcadFrame());
-	pDlg->Create(IDD_DIALOG_RAILING);
-	pDlg->ShowWindow(SW_SHOW);
+	if (g_railingDlg == NULL)
+	{
+		g_railingDlg = new CRailingDlg(acedGetAcadFrame());
+		g_railingDlg->Create(IDD_DIALOG_RAILING);
+		g_railingDlg->ShowWindow(SW_SHOW);
+	}
 }
 
 //线脚
@@ -127,9 +130,13 @@ void CMD_SUNACAIRCONDITIONER()
 {
 	CAcModuleResourceOverride resOverride;
 
-	CAirconditionerDlg * pDlg = new CAirconditionerDlg(acedGetAcadFrame());
-	pDlg->Create(IDD_DIALOG_AIRCONDITIONER);
-	pDlg->ShowWindow(SW_SHOW);
+	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
+	if (g_airconditionerDlg == NULL)
+	{
+		g_airconditionerDlg = new CAirconditionerDlg(acedGetAcadFrame());
+		g_airconditionerDlg->Create(IDD_DIALOG_AIRCONDITIONER);
+		g_airconditionerDlg->ShowWindow(SW_SHOW);
+	}
 }
 
 //标准立面
@@ -156,22 +163,55 @@ void CMD_SUNACSTATISTICS()
 
 }
 
-
-static void CADPalette_AddP(void)
+void CADPalette_AddP()
 {
-	CMyPaletteSet *pPaletteSet = new CMyPaletteSet;
-	CRect rect(0,30,160,300);
-	pPaletteSet->Create(_T("标准产品"),WS_VISIBLE,rect,acedGetAcadFrame());
-	CMyPalette *pPalette1 = new CMyPalette;
-	CAdUiPalette *pPalette2 = new CAdUiPalette;
-	pPalette1->Create(WS_VISIBLE|WS_CHILD,_T("产品"),pPaletteSet);
-	//pPalette2->Create(WS_VISIBLE|WS_CHILD,_T("算量"),pPaletteSet);
+	if (g_pPaletteSet == NULL)
+	{
+		g_pPaletteSet = new CMyPaletteSet;
+		CRect rect(0,30,160,300);
+		g_pPaletteSet->Create(_T("标准产品"), WS_VISIBLE, rect, acedGetAcadFrame());
 
-	pPaletteSet->AddPalette(pPalette1);
-	//pPaletteSet->AddPalette(pPalette2);
-	pPaletteSet->EnableDocking(CBRS_ALIGN_ANY);
-	pPaletteSet->RestoreControlBar();
+		CMyPalette *pPalette1 = new CMyPalette;
+		//CAdUiPalette *pPalette2 = new CAdUiPalette;
 
-	acedGetAcadFrame()->ShowControlBar(pPaletteSet,TRUE,FALSE);
+		pPalette1->Create(WS_VISIBLE|WS_CHILD, _T("产品"), g_pPaletteSet);
+		//pPalette2->Create(WS_VISIBLE|WS_CHILD,_T("算量"),pPaletteSet);
+
+		g_pPaletteSet->AddPalette(pPalette1);
+		//pPaletteSet->AddPalette(pPalette2);
+
+		g_pPaletteSet->EnableDocking(CBRS_ALIGN_ANY);
+		g_pPaletteSet->RestoreControlBar();
+	}
+
+	acedGetAcadFrame()->ShowControlBar(g_pPaletteSet,TRUE,FALSE);
 }
 
+void CADPalette_RemoveP()
+{
+	if (g_pPaletteSet == NULL)
+		return;
+	while (g_pPaletteSet->GetPaletteCount() > 0)
+	{
+		CAdUiPalette* pPalette = g_pPaletteSet->GetPalette(0);
+		g_pPaletteSet->RemovePalette(pPalette);
+		if (pPalette != NULL)
+		{
+			pPalette->DestroyWindow();
+			delete pPalette;
+			pPalette = NULL;
+		}
+	}
+	g_pPaletteSet->DestroyWindow();
+	delete g_pPaletteSet;
+	g_pPaletteSet = NULL;
+}
+
+void CloseModelessDialogs()
+{
+	CloseWindowDlg();
+	CloseKitchenDlg();
+	CloseBathroomDlg();
+	CloseRailingDlg();
+	CloseAirconditionerDlg();
+}

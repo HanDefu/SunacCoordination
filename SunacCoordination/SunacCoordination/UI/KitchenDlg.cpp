@@ -11,6 +11,18 @@
 
 // CKitchenDlg ¶Ô»°¿ò
 
+CKitchenDlg* g_kitchenDlg = NULL;
+
+BOOL CloseKitchenDlg()
+{
+	if (g_kitchenDlg == NULL)
+		return TRUE;
+	BOOL ret = g_kitchenDlg->DestroyWindow();
+	if (ret)
+		g_kitchenDlg = NULL;
+	return ret;
+}
+
 IMPLEMENT_DYNAMIC(CKitchenDlg, CAcUiDialog)
 
 CKitchenDlg::CKitchenDlg(CWnd* pParent /*=NULL*/)
@@ -60,6 +72,7 @@ void CKitchenDlg::PostNcDestroy()
 {
 	CAcUiDialog::PostNcDestroy();
 	delete this;
+	g_kitchenDlg = NULL;
 }
 
 void CKitchenDlg::DoDataExchange(CDataExchange* pDX)
