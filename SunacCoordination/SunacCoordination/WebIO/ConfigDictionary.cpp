@@ -13,25 +13,7 @@ using namespace std;
 
 CConfigDictionary::CConfigDictionary()
 {
-	//InitFromWeb();
-	//m_quyus = GetQuyus();//区域
-	//m_gongNengQus = GetGongNengQus();//功能区
-	//m_windowDoorPoss = GetWindowDoorPoss();//门窗位置关系
-	//m_windowOpenTypes = Window_GetOpenTypes();//开启类型
-	//m_doorTypes = Door_GetTypes();//门类型
-	//m_kitchenTypes = Kitchen_GetTypes();//厨房类型
-	//m_kitchenShuiPenTypes = Kitchen_GetShuiPenTypes();//水盆类型
-	//m_kitchenBingXiangTypes = Kitchen_GetBingXiangTypes();//冰箱类型
-	//m_kitchenZaoTaiWidths = Kitchen_GetZaoTaiWidths();//灶台宽度
-	//m_toiletTypes = Toilet_GetTypes();//卫生间类型
-	//m_toiletTaiPenWidths = Toilet_GetTaiPenWidths();//卫生间类型
-	//m_toiletMaTongTypes = Toilet_GetMaTongTypes();//卫生间类型
-	//m_toiletGuanXiWidths = Toilet_GetGuanXiWidths();//盥洗区宽度---是否支持手动输入？？
-	//m_airPiShus = Air_GetPiShus();//所有的匹数
-	//m_airLengNingShuiGuanPos = Air_GetLengNingShuiGuanPos();//冷凝水管位置
-	//m_windowOpenAmount = Window_GetOpenAmount();//开启扇数量
-	//m_rate = Window_GetRate();//比值
-	//m_windowWallDis = Window_GetWallDis();//窗户距外墙距离
+	InitFromWeb();
 }
 
 CConfigDictionary::~CConfigDictionary()
@@ -41,105 +23,104 @@ CConfigDictionary::~CConfigDictionary()
 
 //接口文档 https://docs.qq.com/doc/DUUpaanJLZmlSQ2d4
 
-void CConfigDictionary::GetConfig(wstring Term, vector<wstring> p_paraOut)
+void CConfigDictionary::GetConfig(wstring Term)
 {
-	bool bSuc1 = GetConfigFromWeb(Term, p_paraOut);
-
-	if (bSuc1)
+	vector<wstring> paraOut;
+	bool bSuc1 = GetConfigFromWeb(Term, paraOut);
+	if (bSuc1 && paraOut.size()>0)
 	{
-		CString cstr = Term.c_str();
-		vector<wstring>::iterator it;  //声明一个迭代器，来访问vector容器，作用：遍历或者指向vector容器的元素 
-		for(it = p_paraOut.begin(); it != p_paraOut.end(); it++)
+		vCString allPara;
+		for (vector<wstring>::iterator it = paraOut.begin(); it != paraOut.end(); it++)
 		{
 			CString str = it->c_str();
-			m_configDict[cstr].push_back(str);
+			allPara.push_back(str);
 		}
+
+		CString cstr = Term.c_str();
+		m_configDict[cstr] = allPara;
 	}
 }
 
 bool CConfigDictionary::InitFromWeb()
-{
-	vector<wstring> p_paraOut;
-	
+{	
 	//区域
-	wstring wstr = _T("area");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(_T("area"));
 
 	//功能区
-	wstr = _T("actionType");
-	GetConfig(wstr, p_paraOut);
+	wstring wstr = _T("actionType");
+	GetConfig(wstr);
 
 	//门窗位置关系
 	wstr = _T("actionType");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(wstr);
 
 	//开启类型
 	wstr = _T("actionType");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(wstr);
 
 	//开启扇数量
 	wstr = _T("openWindowNum");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(wstr);
 
 	//通风量计算面积比值
 	wstr = _T("airVolumeAreaRation");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(wstr);
 
 	//门窗距外墙距离
 	wstr = _T("doorWindowDistance");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(wstr);
 
 	//门类型
 	wstr = _T("doorType");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(wstr);
 
 	//厨房类型
 	wstr = _T("kitchenType");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(wstr);
 
 	//厨房水盆类型
 	wstr = _T("kitchenBasinType");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(wstr);
 
 	//冰箱类型
 	wstr = _T("refrigeratorType");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(wstr);
 
 	//灶台宽度
 	wstr = _T("hearthWidth");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(wstr);
 
 	//卫生间类型
 	wstr = _T("toiletType");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(wstr);
 
 	//卫生间台盆宽度
 	wstr = _T("toiletBasinWidth");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(wstr);
 
 	//马桶宽度
 	wstr = _T("closesToolWidth");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(wstr);
 
 	//盥洗区宽度
 	wstr = _T("bathroomWidth");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(wstr);
 
 	//空调匹数
 	wstr = _T("airConditionNumber");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(wstr);
 
 	//冷凝水管位置
 	wstr = _T("condensatePipePosition");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(wstr);
 
 	//雨水管位置
 	wstr = _T("rainPipePosition");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(wstr);
 
 	//栏杆类型
 	wstr = _T("handRail");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(wstr);
 
 	return true;
 }
@@ -154,18 +135,17 @@ bool CConfigDictionary::GetConfigFromWeb(wstring p_paraTypeName, vector<wstring>
 
 	ArgumentSettingServiceSoapProxy cadWeb;
 	int nRet = cadWeb.StandardDesignAttribute(&desingAtt, attResult);
+	//判断当指针为空，未读到xml时，返回false
+	if (attResult.StandardDesignAttributeResult == NULL)
+	{
+		return false;
+	}
 
 	//UINT  len = (attResult.StandardDesignAttributeResult)->length();
 	//MessageBox(NULL, attResult.StandardDesignAttributeResult->c_str(), _T("返回结果"), 0);
 
 	//解析字符串出结果
-	CMarkup xml;
-	
-	//判断当指针为空，未读到xml时，返回false
-	while (attResult.StandardDesignAttributeResult == NULL)
-	{
-		return false;
-	}
+	CMarkup xml;	
 
 	xml.SetDoc((*(attResult.StandardDesignAttributeResult)).c_str());
 	
@@ -210,20 +190,23 @@ bool CConfigDictionary::GetConfigFromWeb(wstring p_paraTypeName, vector<wstring>
 
 vCString CConfigDictionary::GetQuyus()const
 {
-	vCString strs;
-#ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"北京区域");
-	strs.push_back(L"华北区域");
-	strs.push_back(L"上海区域");
-	strs.push_back(L"西南区域");
-	strs.push_back(L"东南区域");
-	strs.push_back(L"广深区域");
-	strs.push_back(L"华中区域");
-	strs.push_back(L"海南区域");
-#else
-
-#endif
-	return strs;
+	//if (m_configDict.) // 找下有没有这个key，有的
+	//{
+	//	return m_configDict[_T("area")];
+	//}
+	//else
+	{
+		vCString strs;
+		strs.push_back(L"北京区域");
+		strs.push_back(L"华北区域");
+		strs.push_back(L"上海区域");
+		strs.push_back(L"西南区域");
+		strs.push_back(L"东南区域");
+		strs.push_back(L"广深区域");
+		strs.push_back(L"华中区域");
+		strs.push_back(L"海南区域");
+		return strs;
+	}
 }
 vCString CConfigDictionary::GetGongNengQus()const
 {
