@@ -11,32 +11,15 @@ public:
 
 	CConfigDictionary();
 	~CConfigDictionary();
-	bool InitFromWeb();
+
 protected:
-	//bool InitFromWeb();
+	bool InitFromWeb();
+	void GetConfig(wstring Term);
 	bool GetConfigFromWeb(wstring p_paraTypeName, vector<wstring>& p_paraOut);
 
 protected:
 	map<CString, vCString> m_configDict;
 
-	//vCString m_quyus;//区域
-	//vCString  m_gongNengQus;//功能区
-	//vCString  m_windowDoorPoss;//门窗位置关系--厨房卫生间
-	//vCString m_windowOpenTypes;//外窗开启类型
-	//vCString m_windowOpenAmount;//开启扇数量
-	//vCString m_windowWallDis;//窗户距外墙距离
-	//vCString m_rate;//比值，用于计算通风量
-	//vCString m_doorTypes;//门类型
-	//vCString m_kitchenTypes;//厨房类型
-	//vCString m_kitchenShuiPenTypes;//厨房水盆类型
-	//vCString m_kitchenBingXiangTypes;//厨房冰箱类型
-	//vCString m_kitchenZaoTaiWidths;//厨房灶台宽度
-	//vCString m_toiletTypes;//卫生间类型
-	//vCString m_toiletTaiPenWidths;//卫生间类型
-	//vCString m_toiletMaTongTypes;//卫生间类型
-	//vCString m_toiletGuanXiWidths;//卫生间盥洗区宽度---是否支持手动输入？？
-	//vCString m_airPiShus;//空调所有的匹数
-	//vCString m_airLengNingShuiGuanPos;//空调冷凝水管位置
 
 public:
 	//---------------通用查字典-----------------------//
@@ -66,5 +49,4 @@ public:
 	vCString Air_GetYuShuiGuanPos() const;
 	vCString Railing_GetTypes();
 
-	void GetConfig(wstring Term, vector<wstring> p_paraOut);
 };

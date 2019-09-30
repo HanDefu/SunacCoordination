@@ -18,7 +18,7 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
 
 #include "soapH.h"
 
-SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.84 2019-09-21 14:22:18 GMT")
+SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.84 2019-09-30 03:05:51 GMT")
 
 
 #ifndef WITH_NOGLOBAL
@@ -191,8 +191,14 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, const char *tag,
 		return soap_in_byte(soap, tag, NULL, "xsd:byte");
 	case SOAP_TYPE_int:
 		return soap_in_int(soap, tag, NULL, "xsd:int");
+	case SOAP_TYPE_double:
+		return soap_in_double(soap, tag, NULL, "xsd:double");
 	case SOAP_TYPE_std__wstring:
 		return soap_in_std__wstring(soap, tag, NULL, "xsd:string");
+	case SOAP_TYPE_PointerTo_ns1__GetWindows:
+		return soap_in_PointerTo_ns1__GetWindows(soap, tag, NULL, "ns1:GetWindows");
+	case SOAP_TYPE_PointerTo_ns1__GetAllWindows:
+		return soap_in_PointerTo_ns1__GetAllWindows(soap, tag, NULL, "ns1:GetAllWindows");
 	case SOAP_TYPE_PointerTo_ns1__StandardDesignAttribute:
 		return soap_in_PointerTo_ns1__StandardDesignAttribute(soap, tag, NULL, "ns1:StandardDesignAttribute");
 	case SOAP_TYPE_PointerTostd__wstring:
@@ -226,6 +232,10 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, const char *tag,
 		{	*type = SOAP_TYPE_int;
 			return soap_in_int(soap, tag, NULL, NULL);
 		}
+		if (!soap_match_tag(soap, t, "xsd:double"))
+		{	*type = SOAP_TYPE_double;
+			return soap_in_double(soap, tag, NULL, NULL);
+		}
 		if (!soap_match_tag(soap, t, "xsd:QName"))
 		{	char **s;
 			*type = SOAP_TYPE__QName;
@@ -239,6 +249,22 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, const char *tag,
 			return s ? *s : NULL;
 		}
 		t = soap->tag;
+		if (!soap_match_tag(soap, t, "ns1:GetWindowsResponse"))
+		{	*type = SOAP_TYPE__ns1__GetWindowsResponse;
+			return soap_in__ns1__GetWindowsResponse(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:GetWindows"))
+		{	*type = SOAP_TYPE__ns1__GetWindows;
+			return soap_in__ns1__GetWindows(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:GetAllWindowsResponse"))
+		{	*type = SOAP_TYPE__ns1__GetAllWindowsResponse;
+			return soap_in__ns1__GetAllWindowsResponse(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:GetAllWindows"))
+		{	*type = SOAP_TYPE__ns1__GetAllWindows;
+			return soap_in__ns1__GetAllWindows(soap, NULL, NULL, NULL);
+		}
 		if (!soap_match_tag(soap, t, "ns1:StandardDesignAttributeResponse"))
 		{	*type = SOAP_TYPE__ns1__StandardDesignAttributeResponse;
 			return soap_in__ns1__StandardDesignAttributeResponse(soap, NULL, NULL, NULL);
@@ -310,12 +336,26 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return soap_out_byte(soap, tag, id, (const char *)ptr, "xsd:byte");
 	case SOAP_TYPE_int:
 		return soap_out_int(soap, tag, id, (const int *)ptr, "xsd:int");
+	case SOAP_TYPE_double:
+		return soap_out_double(soap, tag, id, (const double *)ptr, "xsd:double");
 	case SOAP_TYPE_std__wstring:
 		return soap_out_std__wstring(soap, tag, id, (const std::wstring *)ptr, "xsd:string");
+	case SOAP_TYPE__ns1__GetWindowsResponse:
+		return ((_ns1__GetWindowsResponse *)ptr)->soap_out(soap, "ns1:GetWindowsResponse", id, "");
+	case SOAP_TYPE__ns1__GetWindows:
+		return ((_ns1__GetWindows *)ptr)->soap_out(soap, "ns1:GetWindows", id, "");
+	case SOAP_TYPE__ns1__GetAllWindowsResponse:
+		return ((_ns1__GetAllWindowsResponse *)ptr)->soap_out(soap, "ns1:GetAllWindowsResponse", id, "");
+	case SOAP_TYPE__ns1__GetAllWindows:
+		return ((_ns1__GetAllWindows *)ptr)->soap_out(soap, "ns1:GetAllWindows", id, "");
 	case SOAP_TYPE__ns1__StandardDesignAttributeResponse:
 		return ((_ns1__StandardDesignAttributeResponse *)ptr)->soap_out(soap, "ns1:StandardDesignAttributeResponse", id, "");
 	case SOAP_TYPE__ns1__StandardDesignAttribute:
 		return ((_ns1__StandardDesignAttribute *)ptr)->soap_out(soap, "ns1:StandardDesignAttribute", id, "");
+	case SOAP_TYPE_PointerTo_ns1__GetWindows:
+		return soap_out_PointerTo_ns1__GetWindows(soap, tag, id, (_ns1__GetWindows *const*)ptr, "ns1:GetWindows");
+	case SOAP_TYPE_PointerTo_ns1__GetAllWindows:
+		return soap_out_PointerTo_ns1__GetAllWindows(soap, tag, id, (_ns1__GetAllWindows *const*)ptr, "ns1:GetAllWindows");
 	case SOAP_TYPE_PointerTo_ns1__StandardDesignAttribute:
 		return soap_out_PointerTo_ns1__StandardDesignAttribute(soap, tag, id, (_ns1__StandardDesignAttribute *const*)ptr, "ns1:StandardDesignAttribute");
 	case SOAP_TYPE_PointerTostd__wstring:
@@ -347,17 +387,47 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	case SOAP_TYPE_std__wstring:
 		soap_serialize_std__wstring(soap, (const std::wstring *)ptr);
 		break;
+	case SOAP_TYPE__ns1__GetWindowsResponse:
+		((_ns1__GetWindowsResponse *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE__ns1__GetWindows:
+		((_ns1__GetWindows *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE__ns1__GetAllWindowsResponse:
+		((_ns1__GetAllWindowsResponse *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE__ns1__GetAllWindows:
+		((_ns1__GetAllWindows *)ptr)->soap_serialize(soap);
+		break;
 	case SOAP_TYPE__ns1__StandardDesignAttributeResponse:
 		((_ns1__StandardDesignAttributeResponse *)ptr)->soap_serialize(soap);
 		break;
 	case SOAP_TYPE__ns1__StandardDesignAttribute:
 		((_ns1__StandardDesignAttribute *)ptr)->soap_serialize(soap);
 		break;
+	case SOAP_TYPE___ns1__GetWindows_:
+		soap_serialize___ns1__GetWindows_(soap, (const struct __ns1__GetWindows_ *)ptr);
+		break;
+	case SOAP_TYPE___ns1__GetAllWindows_:
+		soap_serialize___ns1__GetAllWindows_(soap, (const struct __ns1__GetAllWindows_ *)ptr);
+		break;
 	case SOAP_TYPE___ns1__StandardDesignAttribute_:
 		soap_serialize___ns1__StandardDesignAttribute_(soap, (const struct __ns1__StandardDesignAttribute_ *)ptr);
 		break;
+	case SOAP_TYPE___ns1__GetWindows:
+		soap_serialize___ns1__GetWindows(soap, (const struct __ns1__GetWindows *)ptr);
+		break;
+	case SOAP_TYPE___ns1__GetAllWindows:
+		soap_serialize___ns1__GetAllWindows(soap, (const struct __ns1__GetAllWindows *)ptr);
+		break;
 	case SOAP_TYPE___ns1__StandardDesignAttribute:
 		soap_serialize___ns1__StandardDesignAttribute(soap, (const struct __ns1__StandardDesignAttribute *)ptr);
+		break;
+	case SOAP_TYPE_PointerTo_ns1__GetWindows:
+		soap_serialize_PointerTo_ns1__GetWindows(soap, (_ns1__GetWindows *const*)ptr);
+		break;
+	case SOAP_TYPE_PointerTo_ns1__GetAllWindows:
+		soap_serialize_PointerTo_ns1__GetAllWindows(soap, (_ns1__GetAllWindows *const*)ptr);
 		break;
 	case SOAP_TYPE_PointerTo_ns1__StandardDesignAttribute:
 		soap_serialize_PointerTo_ns1__StandardDesignAttribute(soap, (_ns1__StandardDesignAttribute *const*)ptr);
@@ -411,10 +481,26 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate__ns1__StandardDesignAttribute(soap, -1, type, arrayType, n);
 	case SOAP_TYPE__ns1__StandardDesignAttributeResponse:
 		return (void*)soap_instantiate__ns1__StandardDesignAttributeResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__GetAllWindows:
+		return (void*)soap_instantiate__ns1__GetAllWindows(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__GetAllWindowsResponse:
+		return (void*)soap_instantiate__ns1__GetAllWindowsResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__GetWindows:
+		return (void*)soap_instantiate__ns1__GetWindows(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__GetWindowsResponse:
+		return (void*)soap_instantiate__ns1__GetWindowsResponse(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__StandardDesignAttribute:
 		return (void*)soap_instantiate___ns1__StandardDesignAttribute(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__GetAllWindows:
+		return (void*)soap_instantiate___ns1__GetAllWindows(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__GetWindows:
+		return (void*)soap_instantiate___ns1__GetWindows(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__StandardDesignAttribute_:
 		return (void*)soap_instantiate___ns1__StandardDesignAttribute_(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__GetAllWindows_:
+		return (void*)soap_instantiate___ns1__GetAllWindows_(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__GetWindows_:
+		return (void*)soap_instantiate___ns1__GetWindows_(soap, -1, type, arrayType, n);
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
 		return (void*)soap_instantiate_SOAP_ENV__Header(soap, -1, type, arrayType, n);
@@ -464,17 +550,65 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap *soap, struct soap_clist *p)
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__StandardDesignAttributeResponse*>(p->ptr), _ns1__StandardDesignAttributeResponse);
 		break;
+	case SOAP_TYPE__ns1__GetAllWindows:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__GetAllWindows*>(p->ptr), _ns1__GetAllWindows);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__GetAllWindows*>(p->ptr), _ns1__GetAllWindows);
+		break;
+	case SOAP_TYPE__ns1__GetAllWindowsResponse:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__GetAllWindowsResponse*>(p->ptr), _ns1__GetAllWindowsResponse);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__GetAllWindowsResponse*>(p->ptr), _ns1__GetAllWindowsResponse);
+		break;
+	case SOAP_TYPE__ns1__GetWindows:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__GetWindows*>(p->ptr), _ns1__GetWindows);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__GetWindows*>(p->ptr), _ns1__GetWindows);
+		break;
+	case SOAP_TYPE__ns1__GetWindowsResponse:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__GetWindowsResponse*>(p->ptr), _ns1__GetWindowsResponse);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__GetWindowsResponse*>(p->ptr), _ns1__GetWindowsResponse);
+		break;
 	case SOAP_TYPE___ns1__StandardDesignAttribute:
 		if (p->size < 0)
 			SOAP_DELETE(soap, static_cast<struct __ns1__StandardDesignAttribute*>(p->ptr), struct __ns1__StandardDesignAttribute);
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__StandardDesignAttribute*>(p->ptr), struct __ns1__StandardDesignAttribute);
 		break;
+	case SOAP_TYPE___ns1__GetAllWindows:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__GetAllWindows*>(p->ptr), struct __ns1__GetAllWindows);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__GetAllWindows*>(p->ptr), struct __ns1__GetAllWindows);
+		break;
+	case SOAP_TYPE___ns1__GetWindows:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__GetWindows*>(p->ptr), struct __ns1__GetWindows);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__GetWindows*>(p->ptr), struct __ns1__GetWindows);
+		break;
 	case SOAP_TYPE___ns1__StandardDesignAttribute_:
 		if (p->size < 0)
 			SOAP_DELETE(soap, static_cast<struct __ns1__StandardDesignAttribute_*>(p->ptr), struct __ns1__StandardDesignAttribute_);
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__StandardDesignAttribute_*>(p->ptr), struct __ns1__StandardDesignAttribute_);
+		break;
+	case SOAP_TYPE___ns1__GetAllWindows_:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__GetAllWindows_*>(p->ptr), struct __ns1__GetAllWindows_);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__GetAllWindows_*>(p->ptr), struct __ns1__GetAllWindows_);
+		break;
+	case SOAP_TYPE___ns1__GetWindows_:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__GetWindows_*>(p->ptr), struct __ns1__GetWindows_);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__GetWindows_*>(p->ptr), struct __ns1__GetWindows_);
 		break;
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
@@ -559,13 +693,45 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_finsert(struct soap *soap, int t, int tt, void *
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__StandardDesignAttributeResponse type=%d location=%p object=%p\n", t, p, q));
 		*(_ns1__StandardDesignAttributeResponse*)p = *(_ns1__StandardDesignAttributeResponse*)q;
 		break;
+	case SOAP_TYPE__ns1__GetAllWindows:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__GetAllWindows type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__GetAllWindows*)p = *(_ns1__GetAllWindows*)q;
+		break;
+	case SOAP_TYPE__ns1__GetAllWindowsResponse:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__GetAllWindowsResponse type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__GetAllWindowsResponse*)p = *(_ns1__GetAllWindowsResponse*)q;
+		break;
+	case SOAP_TYPE__ns1__GetWindows:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__GetWindows type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__GetWindows*)p = *(_ns1__GetWindows*)q;
+		break;
+	case SOAP_TYPE__ns1__GetWindowsResponse:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__GetWindowsResponse type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__GetWindowsResponse*)p = *(_ns1__GetWindowsResponse*)q;
+		break;
 	case SOAP_TYPE___ns1__StandardDesignAttribute:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__StandardDesignAttribute type=%d location=%p object=%p\n", t, p, q));
 		*(struct __ns1__StandardDesignAttribute*)p = *(struct __ns1__StandardDesignAttribute*)q;
 		break;
+	case SOAP_TYPE___ns1__GetAllWindows:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__GetAllWindows type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__GetAllWindows*)p = *(struct __ns1__GetAllWindows*)q;
+		break;
+	case SOAP_TYPE___ns1__GetWindows:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__GetWindows type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__GetWindows*)p = *(struct __ns1__GetWindows*)q;
+		break;
 	case SOAP_TYPE___ns1__StandardDesignAttribute_:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__StandardDesignAttribute_ type=%d location=%p object=%p\n", t, p, q));
 		*(struct __ns1__StandardDesignAttribute_*)p = *(struct __ns1__StandardDesignAttribute_*)q;
+		break;
+	case SOAP_TYPE___ns1__GetAllWindows_:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__GetAllWindows_ type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__GetAllWindows_*)p = *(struct __ns1__GetAllWindows_*)q;
+		break;
+	case SOAP_TYPE___ns1__GetWindows_:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__GetWindows_ type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__GetWindows_*)p = *(struct __ns1__GetWindows_*)q;
 		break;
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
@@ -674,6 +840,40 @@ SOAP_FMAC3 int * SOAP_FMAC4 soap_get_int(struct soap *soap, int *p, const char *
 	return p;
 }
 
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_double(struct soap *soap, const char *tag, int id, const double *a, const char *type)
+{
+	return soap_outdouble(soap, tag, id, a, type, SOAP_TYPE_double);
+}
+
+SOAP_FMAC3 double * SOAP_FMAC4 soap_in_double(struct soap *soap, const char *tag, double *a, const char *type)
+{
+	a = soap_indouble(soap, tag, a, type, SOAP_TYPE_double);
+	return a;
+}
+
+SOAP_FMAC3 double * SOAP_FMAC4 soap_new_double(struct soap *soap, int n)
+{
+	double *a = static_cast<double *>(soap_malloc(soap, (n = (n < 0 ? 1 : n)) * sizeof(double)));
+	for (double *p = a; p && n--; ++p)
+		soap_default_double(soap, p);
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_double(struct soap *soap, const double *a, const char *tag, const char *type)
+{
+	if (soap_out_double(soap, tag ? tag : "double", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 double * SOAP_FMAC4 soap_get_double(struct soap *soap, double *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_double(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__wstring(struct soap *soap, const std::wstring *a)
 {	(void)soap; (void)a; /* appease -Wall -Werror */
 }
@@ -749,6 +949,567 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_put_std__wstring(struct soap *soap, const std::ws
 SOAP_FMAC3 std::wstring * SOAP_FMAC4 soap_get_std__wstring(struct soap *soap, std::wstring *p, const char *tag, const char *type)
 {
 	if ((p = soap_in_std__wstring(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__GetWindowsResponse::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	this->_ns1__GetWindowsResponse::GetWindowsResult = NULL;
+}
+
+void _ns1__GetWindowsResponse::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__GetWindowsResponse::GetWindowsResult);
+#endif
+}
+
+int _ns1__GetWindowsResponse::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__GetWindowsResponse(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetWindowsResponse(struct soap *soap, const char *tag, int id, const _ns1__GetWindowsResponse *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__GetWindowsResponse), type))
+		return soap->error;
+	if (a->GetWindowsResult)
+		soap_element_result(soap, "ns1:GetWindowsResult");
+	if (soap_out_PointerTostd__wstring(soap, "ns1:GetWindowsResult", -1, &a->_ns1__GetWindowsResponse::GetWindowsResult, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__GetWindowsResponse::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__GetWindowsResponse(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__GetWindowsResponse * SOAP_FMAC4 soap_in__ns1__GetWindowsResponse(struct soap *soap, const char *tag, _ns1__GetWindowsResponse *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__GetWindowsResponse*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__GetWindowsResponse, sizeof(_ns1__GetWindowsResponse), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__GetWindowsResponse)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__GetWindowsResponse *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_GetWindowsResult1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_GetWindowsResult1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_PointerTostd__wstring(soap, "ns1:GetWindowsResult", &a->_ns1__GetWindowsResponse::GetWindowsResult, "xsd:string"))
+				{	soap_flag_GetWindowsResult1--;
+					continue;
+				}
+			}
+			soap_check_result(soap, "ns1:GetWindowsResult");
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (_ns1__GetWindowsResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__GetWindowsResponse, SOAP_TYPE__ns1__GetWindowsResponse, sizeof(_ns1__GetWindowsResponse), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__GetWindowsResponse * SOAP_FMAC2 soap_instantiate__ns1__GetWindowsResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__GetWindowsResponse(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__GetWindowsResponse *p;
+	size_t k = sizeof(_ns1__GetWindowsResponse);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__GetWindowsResponse, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__GetWindowsResponse);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__GetWindowsResponse, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__GetWindowsResponse location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__GetWindowsResponse::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__GetWindowsResponse(soap, tag ? tag : "ns1:GetWindowsResponse", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__GetWindowsResponse::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__GetWindowsResponse(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__GetWindowsResponse * SOAP_FMAC4 soap_get__ns1__GetWindowsResponse(struct soap *soap, _ns1__GetWindowsResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__GetWindowsResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__GetWindows::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	soap_default_double(soap, &this->_ns1__GetWindows::width);
+	soap_default_double(soap, &this->_ns1__GetWindows::height);
+	this->_ns1__GetWindows::openType = NULL;
+	this->_ns1__GetWindows::openNum = NULL;
+	this->_ns1__GetWindows::gongNengQu = NULL;
+}
+
+void _ns1__GetWindows::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__GetWindows::openType);
+	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__GetWindows::openNum);
+	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__GetWindows::gongNengQu);
+#endif
+}
+
+int _ns1__GetWindows::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__GetWindows(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetWindows(struct soap *soap, const char *tag, int id, const _ns1__GetWindows *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__GetWindows), type))
+		return soap->error;
+	if (soap_out_double(soap, "ns1:width", -1, &a->_ns1__GetWindows::width, ""))
+		return soap->error;
+	if (soap_out_double(soap, "ns1:height", -1, &a->_ns1__GetWindows::height, ""))
+		return soap->error;
+	if (soap_out_PointerTostd__wstring(soap, "ns1:openType", -1, &a->_ns1__GetWindows::openType, ""))
+		return soap->error;
+	if (soap_out_PointerTostd__wstring(soap, "ns1:openNum", -1, &a->_ns1__GetWindows::openNum, ""))
+		return soap->error;
+	if (soap_out_PointerTostd__wstring(soap, "ns1:gongNengQu", -1, &a->_ns1__GetWindows::gongNengQu, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__GetWindows::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__GetWindows(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__GetWindows * SOAP_FMAC4 soap_in__ns1__GetWindows(struct soap *soap, const char *tag, _ns1__GetWindows *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__GetWindows*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__GetWindows, sizeof(_ns1__GetWindows), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__GetWindows)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__GetWindows *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_width1 = 1;
+	size_t soap_flag_height1 = 1;
+	size_t soap_flag_openType1 = 1;
+	size_t soap_flag_openNum1 = 1;
+	size_t soap_flag_gongNengQu1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_width1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_double(soap, "ns1:width", &a->_ns1__GetWindows::width, "xsd:double"))
+				{	soap_flag_width1--;
+					continue;
+				}
+			}
+			if (soap_flag_height1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_double(soap, "ns1:height", &a->_ns1__GetWindows::height, "xsd:double"))
+				{	soap_flag_height1--;
+					continue;
+				}
+			}
+			if (soap_flag_openType1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_PointerTostd__wstring(soap, "ns1:openType", &a->_ns1__GetWindows::openType, "xsd:string"))
+				{	soap_flag_openType1--;
+					continue;
+				}
+			}
+			if (soap_flag_openNum1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_PointerTostd__wstring(soap, "ns1:openNum", &a->_ns1__GetWindows::openNum, "xsd:string"))
+				{	soap_flag_openNum1--;
+					continue;
+				}
+			}
+			if (soap_flag_gongNengQu1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_PointerTostd__wstring(soap, "ns1:gongNengQu", &a->_ns1__GetWindows::gongNengQu, "xsd:string"))
+				{	soap_flag_gongNengQu1--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+		if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_width1 > 0 || soap_flag_height1 > 0))
+		{	soap->error = SOAP_OCCURS;
+			return NULL;
+		}
+	}
+	else if ((soap->mode & SOAP_XML_STRICT) && *soap->href != '#')
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	else
+	{	a = (_ns1__GetWindows *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__GetWindows, SOAP_TYPE__ns1__GetWindows, sizeof(_ns1__GetWindows), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__GetWindows * SOAP_FMAC2 soap_instantiate__ns1__GetWindows(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__GetWindows(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__GetWindows *p;
+	size_t k = sizeof(_ns1__GetWindows);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__GetWindows, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__GetWindows);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__GetWindows, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__GetWindows location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__GetWindows::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__GetWindows(soap, tag ? tag : "ns1:GetWindows", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__GetWindows::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__GetWindows(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__GetWindows * SOAP_FMAC4 soap_get__ns1__GetWindows(struct soap *soap, _ns1__GetWindows *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__GetWindows(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__GetAllWindowsResponse::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	this->_ns1__GetAllWindowsResponse::GetAllWindowsResult = NULL;
+}
+
+void _ns1__GetAllWindowsResponse::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__GetAllWindowsResponse::GetAllWindowsResult);
+#endif
+}
+
+int _ns1__GetAllWindowsResponse::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__GetAllWindowsResponse(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllWindowsResponse(struct soap *soap, const char *tag, int id, const _ns1__GetAllWindowsResponse *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__GetAllWindowsResponse), type))
+		return soap->error;
+	if (a->GetAllWindowsResult)
+		soap_element_result(soap, "ns1:GetAllWindowsResult");
+	if (soap_out_PointerTostd__wstring(soap, "ns1:GetAllWindowsResult", -1, &a->_ns1__GetAllWindowsResponse::GetAllWindowsResult, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__GetAllWindowsResponse::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__GetAllWindowsResponse(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllWindowsResponse * SOAP_FMAC4 soap_in__ns1__GetAllWindowsResponse(struct soap *soap, const char *tag, _ns1__GetAllWindowsResponse *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__GetAllWindowsResponse*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__GetAllWindowsResponse, sizeof(_ns1__GetAllWindowsResponse), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__GetAllWindowsResponse)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__GetAllWindowsResponse *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_GetAllWindowsResult1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_GetAllWindowsResult1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_PointerTostd__wstring(soap, "ns1:GetAllWindowsResult", &a->_ns1__GetAllWindowsResponse::GetAllWindowsResult, "xsd:string"))
+				{	soap_flag_GetAllWindowsResult1--;
+					continue;
+				}
+			}
+			soap_check_result(soap, "ns1:GetAllWindowsResult");
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (_ns1__GetAllWindowsResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__GetAllWindowsResponse, SOAP_TYPE__ns1__GetAllWindowsResponse, sizeof(_ns1__GetAllWindowsResponse), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__GetAllWindowsResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllWindowsResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__GetAllWindowsResponse(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__GetAllWindowsResponse *p;
+	size_t k = sizeof(_ns1__GetAllWindowsResponse);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__GetAllWindowsResponse, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__GetAllWindowsResponse);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__GetAllWindowsResponse, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__GetAllWindowsResponse location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__GetAllWindowsResponse::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__GetAllWindowsResponse(soap, tag ? tag : "ns1:GetAllWindowsResponse", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__GetAllWindowsResponse::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__GetAllWindowsResponse(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllWindowsResponse * SOAP_FMAC4 soap_get__ns1__GetAllWindowsResponse(struct soap *soap, _ns1__GetAllWindowsResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__GetAllWindowsResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__GetAllWindows::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+}
+
+void _ns1__GetAllWindows::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+#endif
+}
+
+int _ns1__GetAllWindows::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__GetAllWindows(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllWindows(struct soap *soap, const char *tag, int id, const _ns1__GetAllWindows *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__GetAllWindows), type))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__GetAllWindows::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__GetAllWindows(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllWindows * SOAP_FMAC4 soap_in__ns1__GetAllWindows(struct soap *soap, const char *tag, _ns1__GetAllWindows *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__GetAllWindows*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__GetAllWindows, sizeof(_ns1__GetAllWindows), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__GetAllWindows)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__GetAllWindows *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (_ns1__GetAllWindows *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__GetAllWindows, SOAP_TYPE__ns1__GetAllWindows, sizeof(_ns1__GetAllWindows), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__GetAllWindows * SOAP_FMAC2 soap_instantiate__ns1__GetAllWindows(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__GetAllWindows(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__GetAllWindows *p;
+	size_t k = sizeof(_ns1__GetAllWindows);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__GetAllWindows, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__GetAllWindows);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__GetAllWindows, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__GetAllWindows location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__GetAllWindows::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__GetAllWindows(soap, tag ? tag : "ns1:GetAllWindows", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__GetAllWindows::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__GetAllWindows(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllWindows * SOAP_FMAC4 soap_get__ns1__GetAllWindows(struct soap *soap, _ns1__GetAllWindows *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__GetAllWindows(soap, tag, p, type)))
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;
@@ -1655,6 +2416,190 @@ SOAP_FMAC3 struct SOAP_ENV__Header * SOAP_FMAC4 soap_get_SOAP_ENV__Header(struct
 
 #endif
 
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetWindows_(struct soap *soap, struct __ns1__GetWindows_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__GetWindows = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetWindows_(struct soap *soap, const struct __ns1__GetWindows_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__GetWindows(soap, &a->ns1__GetWindows);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetWindows_(struct soap *soap, const char *tag, int id, const struct __ns1__GetWindows_ *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__GetWindows(soap, "ns1:GetWindows", -1, &a->ns1__GetWindows, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetWindows_ * SOAP_FMAC4 soap_in___ns1__GetWindows_(struct soap *soap, const char *tag, struct __ns1__GetWindows_ *a, const char *type)
+{
+	size_t soap_flag_ns1__GetWindows = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__GetWindows_*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__GetWindows_, sizeof(struct __ns1__GetWindows_), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__GetWindows_(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__GetWindows && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__GetWindows(soap, "ns1:GetWindows", &a->ns1__GetWindows, ""))
+				{	soap_flag_ns1__GetWindows--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__GetWindows_ * SOAP_FMAC2 soap_instantiate___ns1__GetWindows_(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__GetWindows_(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__GetWindows_ *p;
+	size_t k = sizeof(struct __ns1__GetWindows_);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__GetWindows_, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__GetWindows_);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__GetWindows_, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__GetWindows_ location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetWindows_(struct soap *soap, const struct __ns1__GetWindows_ *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__GetWindows_(soap, tag ? tag : "-ns1:GetWindows", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetWindows_ * SOAP_FMAC4 soap_get___ns1__GetWindows_(struct soap *soap, struct __ns1__GetWindows_ *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__GetWindows_(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllWindows_(struct soap *soap, struct __ns1__GetAllWindows_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__GetAllWindows = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllWindows_(struct soap *soap, const struct __ns1__GetAllWindows_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__GetAllWindows(soap, &a->ns1__GetAllWindows);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllWindows_(struct soap *soap, const char *tag, int id, const struct __ns1__GetAllWindows_ *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__GetAllWindows(soap, "ns1:GetAllWindows", -1, &a->ns1__GetAllWindows, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllWindows_ * SOAP_FMAC4 soap_in___ns1__GetAllWindows_(struct soap *soap, const char *tag, struct __ns1__GetAllWindows_ *a, const char *type)
+{
+	size_t soap_flag_ns1__GetAllWindows = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__GetAllWindows_*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__GetAllWindows_, sizeof(struct __ns1__GetAllWindows_), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__GetAllWindows_(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__GetAllWindows && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__GetAllWindows(soap, "ns1:GetAllWindows", &a->ns1__GetAllWindows, ""))
+				{	soap_flag_ns1__GetAllWindows--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__GetAllWindows_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllWindows_(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__GetAllWindows_(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__GetAllWindows_ *p;
+	size_t k = sizeof(struct __ns1__GetAllWindows_);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__GetAllWindows_, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__GetAllWindows_);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__GetAllWindows_, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__GetAllWindows_ location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllWindows_(struct soap *soap, const struct __ns1__GetAllWindows_ *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__GetAllWindows_(soap, tag ? tag : "-ns1:GetAllWindows", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllWindows_ * SOAP_FMAC4 soap_get___ns1__GetAllWindows_(struct soap *soap, struct __ns1__GetAllWindows_ *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__GetAllWindows_(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
 SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__StandardDesignAttribute_(struct soap *soap, struct __ns1__StandardDesignAttribute_ *a)
 {
 	(void)soap; (void)a; /* appease -Wall -Werror */
@@ -1742,6 +2687,190 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__StandardDesignAttribute_(struct soap *
 SOAP_FMAC3 struct __ns1__StandardDesignAttribute_ * SOAP_FMAC4 soap_get___ns1__StandardDesignAttribute_(struct soap *soap, struct __ns1__StandardDesignAttribute_ *p, const char *tag, const char *type)
 {
 	if ((p = soap_in___ns1__StandardDesignAttribute_(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetWindows(struct soap *soap, struct __ns1__GetWindows *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__GetWindows = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetWindows(struct soap *soap, const struct __ns1__GetWindows *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__GetWindows(soap, &a->ns1__GetWindows);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetWindows(struct soap *soap, const char *tag, int id, const struct __ns1__GetWindows *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__GetWindows(soap, "ns1:GetWindows", -1, &a->ns1__GetWindows, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetWindows * SOAP_FMAC4 soap_in___ns1__GetWindows(struct soap *soap, const char *tag, struct __ns1__GetWindows *a, const char *type)
+{
+	size_t soap_flag_ns1__GetWindows = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__GetWindows*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__GetWindows, sizeof(struct __ns1__GetWindows), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__GetWindows(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__GetWindows && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__GetWindows(soap, "ns1:GetWindows", &a->ns1__GetWindows, ""))
+				{	soap_flag_ns1__GetWindows--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__GetWindows * SOAP_FMAC2 soap_instantiate___ns1__GetWindows(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__GetWindows(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__GetWindows *p;
+	size_t k = sizeof(struct __ns1__GetWindows);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__GetWindows, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__GetWindows);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__GetWindows, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__GetWindows location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetWindows(struct soap *soap, const struct __ns1__GetWindows *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__GetWindows(soap, tag ? tag : "-ns1:GetWindows", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetWindows * SOAP_FMAC4 soap_get___ns1__GetWindows(struct soap *soap, struct __ns1__GetWindows *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__GetWindows(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllWindows(struct soap *soap, struct __ns1__GetAllWindows *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__GetAllWindows = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllWindows(struct soap *soap, const struct __ns1__GetAllWindows *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__GetAllWindows(soap, &a->ns1__GetAllWindows);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllWindows(struct soap *soap, const char *tag, int id, const struct __ns1__GetAllWindows *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__GetAllWindows(soap, "ns1:GetAllWindows", -1, &a->ns1__GetAllWindows, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllWindows * SOAP_FMAC4 soap_in___ns1__GetAllWindows(struct soap *soap, const char *tag, struct __ns1__GetAllWindows *a, const char *type)
+{
+	size_t soap_flag_ns1__GetAllWindows = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__GetAllWindows*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__GetAllWindows, sizeof(struct __ns1__GetAllWindows), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__GetAllWindows(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__GetAllWindows && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__GetAllWindows(soap, "ns1:GetAllWindows", &a->ns1__GetAllWindows, ""))
+				{	soap_flag_ns1__GetAllWindows--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__GetAllWindows * SOAP_FMAC2 soap_instantiate___ns1__GetAllWindows(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__GetAllWindows(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__GetAllWindows *p;
+	size_t k = sizeof(struct __ns1__GetAllWindows);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__GetAllWindows, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__GetAllWindows);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__GetAllWindows, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__GetAllWindows location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllWindows(struct soap *soap, const struct __ns1__GetAllWindows *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__GetAllWindows(soap, tag ? tag : "-ns1:GetAllWindows", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllWindows * SOAP_FMAC4 soap_get___ns1__GetAllWindows(struct soap *soap, struct __ns1__GetAllWindows *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__GetAllWindows(soap, tag, p, type)))
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;
@@ -2015,6 +3144,124 @@ SOAP_FMAC3 struct SOAP_ENV__Code ** SOAP_FMAC4 soap_get_PointerToSOAP_ENV__Code(
 }
 
 #endif
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__GetWindows(struct soap *soap, _ns1__GetWindows *const*a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	if (!soap_reference(soap, *a, SOAP_TYPE__ns1__GetWindows))
+		(*a)->soap_serialize(soap);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__GetWindows(struct soap *soap, const char *tag, int id, _ns1__GetWindows *const*a, const char *type)
+{
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE__ns1__GetWindows, NULL);
+	if (id < 0)
+		return soap->error;
+	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE__ns1__GetWindows ? type : NULL);
+}
+
+SOAP_FMAC3 _ns1__GetWindows ** SOAP_FMAC4 soap_in_PointerTo_ns1__GetWindows(struct soap *soap, const char *tag, _ns1__GetWindows **a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a)
+		if (!(a = (_ns1__GetWindows **)soap_malloc(soap, sizeof(_ns1__GetWindows *))))
+			return NULL;
+	*a = NULL;
+	if (!soap->null && *soap->href != '#')
+	{	soap_revert(soap);
+		if (!(*a = (_ns1__GetWindows *)soap_instantiate__ns1__GetWindows(soap, -1, soap->type, soap->arrayType, NULL)))
+			return NULL;
+		(*a)->soap_default(soap);
+		if (!(*a)->soap_in(soap, tag, NULL))
+		{	*a = NULL;
+			return NULL;
+		}
+	}
+	else
+	{	a = (_ns1__GetWindows **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE__ns1__GetWindows, sizeof(_ns1__GetWindows), 0, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__GetWindows(struct soap *soap, _ns1__GetWindows *const*a, const char *tag, const char *type)
+{
+	if (soap_out_PointerTo_ns1__GetWindows(soap, tag ? tag : "ns1:GetWindows", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 _ns1__GetWindows ** SOAP_FMAC4 soap_get_PointerTo_ns1__GetWindows(struct soap *soap, _ns1__GetWindows **p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PointerTo_ns1__GetWindows(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__GetAllWindows(struct soap *soap, _ns1__GetAllWindows *const*a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	if (!soap_reference(soap, *a, SOAP_TYPE__ns1__GetAllWindows))
+		(*a)->soap_serialize(soap);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__GetAllWindows(struct soap *soap, const char *tag, int id, _ns1__GetAllWindows *const*a, const char *type)
+{
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE__ns1__GetAllWindows, NULL);
+	if (id < 0)
+		return soap->error;
+	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE__ns1__GetAllWindows ? type : NULL);
+}
+
+SOAP_FMAC3 _ns1__GetAllWindows ** SOAP_FMAC4 soap_in_PointerTo_ns1__GetAllWindows(struct soap *soap, const char *tag, _ns1__GetAllWindows **a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a)
+		if (!(a = (_ns1__GetAllWindows **)soap_malloc(soap, sizeof(_ns1__GetAllWindows *))))
+			return NULL;
+	*a = NULL;
+	if (!soap->null && *soap->href != '#')
+	{	soap_revert(soap);
+		if (!(*a = (_ns1__GetAllWindows *)soap_instantiate__ns1__GetAllWindows(soap, -1, soap->type, soap->arrayType, NULL)))
+			return NULL;
+		(*a)->soap_default(soap);
+		if (!(*a)->soap_in(soap, tag, NULL))
+		{	*a = NULL;
+			return NULL;
+		}
+	}
+	else
+	{	a = (_ns1__GetAllWindows **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE__ns1__GetAllWindows, sizeof(_ns1__GetAllWindows), 0, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__GetAllWindows(struct soap *soap, _ns1__GetAllWindows *const*a, const char *tag, const char *type)
+{
+	if (soap_out_PointerTo_ns1__GetAllWindows(soap, tag ? tag : "ns1:GetAllWindows", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 _ns1__GetAllWindows ** SOAP_FMAC4 soap_get_PointerTo_ns1__GetAllWindows(struct soap *soap, _ns1__GetAllWindows **p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PointerTo_ns1__GetAllWindows(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
 
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__StandardDesignAttribute(struct soap *soap, _ns1__StandardDesignAttribute *const*a)
 {

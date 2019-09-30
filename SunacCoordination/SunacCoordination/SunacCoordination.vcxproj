@@ -222,12 +222,14 @@
     <ClCompile Include="UI\TreeCtrlEx.cpp" />
     <ClCompile Include="UI\WaterproofDlg.cpp" />
     <ClCompile Include="UI\WindowDlg.cpp" />
+    <ClCompile Include="WebIO\AirConditionLocalData.cpp" />
     <ClCompile Include="WebIO\ConfigDictionary.cpp" />
-    <ClCompile Include="WebIO\LocalData.cpp" />
+    <ClCompile Include="WebIO\WindowLocalData.cpp" />
     <ClCompile Include="WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.cpp" />
     <ClCompile Include="WebIO\SunacCadWeb\soapC.cpp" />
     <ClCompile Include="WebIO\SunacCadWeb\stdsoap2.cpp" />
     <ClCompile Include="WebIO\WebIO.cpp" />
+    <ClCompile Include="WebIO\WindowWebData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command\Command.h" />
@@ -335,13 +337,15 @@
     <ClInclude Include="UI\TreeCtrlEx.h" />
     <ClInclude Include="UI\WaterproofDlg.h" />
     <ClInclude Include="UI\WindowDlg.h" />
+    <ClInclude Include="WebIO\AirConditionLocalData.h" />
     <ClInclude Include="WebIO\ConfigDictionary.h" />
-    <ClInclude Include="WebIO\LocalData.h" />
+    <ClInclude Include="WebIO\WindowLocalData.h" />
     <ClInclude Include="WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.h" />
     <ClInclude Include="WebIO\SunacCadWeb\soapH.h" />
     <ClInclude Include="WebIO\SunacCadWeb\soapStub.h" />
     <ClInclude Include="WebIO\SunacCadWeb\stdsoap2.h" />
     <ClInclude Include="WebIO\WebIO.h" />
+    <ClInclude Include="WebIO\WindowWebData.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\SunacCoordination.rc" />

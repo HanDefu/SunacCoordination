@@ -1,0 +1,7 @@
+http://10.4.64.91/SunacCADService.asmx?WSDL
+
+
+1.另存为SunacCADService.wsdl文件
+2.运行soap.bat
+3.将SunacCadWeb2下文件拷贝到SunacCoordination\WebIO\SunacCadWeb目录下
+4. 在soapC.cpp  soapArgumentSettingServiceSoapProxy.cpp  文件最前面加上include"stdafx.h"

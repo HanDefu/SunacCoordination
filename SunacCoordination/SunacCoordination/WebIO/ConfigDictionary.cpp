@@ -3,7 +3,7 @@
 #include "ConfigDictionary.h"
 #include <xstring>
 #include <atlconv.h>  
-#include "SunacCadWeb\ArgumentSettingServiceSoap.nsmap"
+#include "SunacCadWeb\ArgumentSettingServiceSoap.nsmap" //只用包含一次，且必须包含一次
 #include "SunacCadWeb\soapArgumentSettingServiceSoapProxy.h"
 #include "../Common\ComFun_Str.h"
 
@@ -13,25 +13,7 @@ using namespace std;
 
 CConfigDictionary::CConfigDictionary()
 {
-	//InitFromWeb();
-	//m_quyus = GetQuyus();//区域
-	//m_gongNengQus = GetGongNengQus();//功能区
-	//m_windowDoorPoss = GetWindowDoorPoss();//门窗位置关系
-	//m_windowOpenTypes = Window_GetOpenTypes();//开启类型
-	//m_doorTypes = Door_GetTypes();//门类型
-	//m_kitchenTypes = Kitchen_GetTypes();//厨房类型
-	//m_kitchenShuiPenTypes = Kitchen_GetShuiPenTypes();//水盆类型
-	//m_kitchenBingXiangTypes = Kitchen_GetBingXiangTypes();//冰箱类型
-	//m_kitchenZaoTaiWidths = Kitchen_GetZaoTaiWidths();//灶台宽度
-	//m_toiletTypes = Toilet_GetTypes();//卫生间类型
-	//m_toiletTaiPenWidths = Toilet_GetTaiPenWidths();//卫生间类型
-	//m_toiletMaTongTypes = Toilet_GetMaTongTypes();//卫生间类型
-	//m_toiletGuanXiWidths = Toilet_GetGuanXiWidths();//盥洗区宽度---是否支持手动输入？？
-	//m_airPiShus = Air_GetPiShus();//所有的匹数
-	//m_airLengNingShuiGuanPos = Air_GetLengNingShuiGuanPos();//冷凝水管位置
-	//m_windowOpenAmount = Window_GetOpenAmount();//开启扇数量
-	//m_rate = Window_GetRate();//比值
-	//m_windowWallDis = Window_GetWallDis();//窗户距外墙距离
+	InitFromWeb();
 }
 
 CConfigDictionary::~CConfigDictionary()
@@ -41,105 +23,85 @@ CConfigDictionary::~CConfigDictionary()
 
 //接口文档 https://docs.qq.com/doc/DUUpaanJLZmlSQ2d4
 
-void CConfigDictionary::GetConfig(wstring Term, vector<wstring> p_paraOut)
+void CConfigDictionary::GetConfig(wstring Term)
 {
-	bool bSuc1 = GetConfigFromWeb(Term, p_paraOut);
-
-	if (bSuc1)
+	vector<wstring> paraOut;
+	bool bSuc1 = GetConfigFromWeb(Term, paraOut);
+	if (bSuc1 && paraOut.size()>0)
 	{
-		CString cstr = Term.c_str();
-		vector<wstring>::iterator it;  //声明一个迭代器，来访问vector容器，作用：遍历或者指向vector容器的元素 
-		for(it = p_paraOut.begin(); it != p_paraOut.end(); it++)
+		vCString allPara;
+		for (vector<wstring>::iterator it = paraOut.begin(); it != paraOut.end(); it++)
 		{
 			CString str = it->c_str();
-			m_configDict[cstr].push_back(str);
+			allPara.push_back(str);
 		}
+
+		CString cstr = Term.c_str();
+		m_configDict[cstr] = allPara;
 	}
 }
 
 bool CConfigDictionary::InitFromWeb()
-{
-	vector<wstring> p_paraOut;
-	
+{	
 	//区域
-	wstring wstr = _T("area");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(_T("area"));
 
 	//功能区
-	wstr = _T("actionType");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(_T("actionType"));
 
 	//门窗位置关系
-	wstr = _T("actionType");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(_T("doorWindowPosition"));
 
 	//开启类型
-	wstr = _T("actionType");
-	GetConfig(wstr, p_paraOut);
+	GetConfig( _T("openType"));
 
 	//开启扇数量
-	wstr = _T("openWindowNum");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(_T("openWindowNum"));
 
 	//通风量计算面积比值
-	wstr = _T("airVolumeAreaRation");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(_T("airVolumeAreaRation"));
 
 	//门窗距外墙距离
-	wstr = _T("doorWindowDistance");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(_T("doorWindowDistance"));
 
 	//门类型
-	wstr = _T("doorType");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(_T("doorType"));
 
 	//厨房类型
-	wstr = _T("kitchenType");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(_T("kitchenType"));
 
 	//厨房水盆类型
-	wstr = _T("kitchenBasinType");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(_T("kitchenBasinType"));
 
 	//冰箱类型
-	wstr = _T("refrigeratorType");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(_T("refrigeratorType"));
 
 	//灶台宽度
-	wstr = _T("hearthWidth");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(_T("hearthWidth"));
 
 	//卫生间类型
-	wstr = _T("toiletType");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(_T("toiletType"));
 
 	//卫生间台盆宽度
-	wstr = _T("toiletBasinWidth");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(_T("toiletBasinWidth"));
 
 	//马桶宽度
-	wstr = _T("closesToolWidth");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(_T("closesToolWidth"));
 
 	//盥洗区宽度
-	wstr = _T("bathroomWidth");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(_T("bathroomWidth"));
 
 	//空调匹数
-	wstr = _T("airConditionNumber");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(_T("airConditionNumber"));
 
 	//冷凝水管位置
-	wstr = _T("condensatePipePosition");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(_T("condensatePipePosition"));
 
 	//雨水管位置
-	wstr = _T("rainPipePosition");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(_T("rainPipePosition"));
 
 	//栏杆类型
-	wstr = _T("handRail");
-	GetConfig(wstr, p_paraOut);
+	GetConfig(_T("handRail"));
 
 	return true;
 }
@@ -154,18 +116,17 @@ bool CConfigDictionary::GetConfigFromWeb(wstring p_paraTypeName, vector<wstring>
 
 	ArgumentSettingServiceSoapProxy cadWeb;
 	int nRet = cadWeb.StandardDesignAttribute(&desingAtt, attResult);
+	//判断当指针为空，未读到xml时，返回false
+	if (attResult.StandardDesignAttributeResult == NULL)
+	{
+		return false;
+	}
 
 	//UINT  len = (attResult.StandardDesignAttributeResult)->length();
 	//MessageBox(NULL, attResult.StandardDesignAttributeResult->c_str(), _T("返回结果"), 0);
 
 	//解析字符串出结果
-	CMarkup xml;
-	
-	//判断当指针为空，未读到xml时，返回false
-	while (attResult.StandardDesignAttributeResult == NULL)
-	{
-		return false;
-	}
+	CMarkup xml;	
 
 	xml.SetDoc((*(attResult.StandardDesignAttributeResult)).c_str());
 	
@@ -210,266 +171,345 @@ bool CConfigDictionary::GetConfigFromWeb(wstring p_paraTypeName, vector<wstring>
 
 vCString CConfigDictionary::GetQuyus()const
 {
-	vCString strs;
-#ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"北京区域");
-	strs.push_back(L"华北区域");
-	strs.push_back(L"上海区域");
-	strs.push_back(L"西南区域");
-	strs.push_back(L"东南区域");
-	strs.push_back(L"广深区域");
-	strs.push_back(L"华中区域");
-	strs.push_back(L"海南区域");
-#else
-
-#endif
-	return strs;
+	//if (m_configDict.count("area") > 0) // 找下有没有这个key，有的
+	//{
+	//	return m_configDict[_T("area")];
+	//}
+	auto iter = m_configDict.find(_T("area"));
+	if (iter != m_configDict.end())
+	{
+		return iter->second;
+	}
+	else
+	{
+		vCString strs;
+		strs.push_back(L"北京区域");
+		strs.push_back(L"华北区域");
+		strs.push_back(L"上海区域");
+		strs.push_back(L"西南区域");
+		strs.push_back(L"东南区域");
+		strs.push_back(L"广深区域");
+		strs.push_back(L"华中区域");
+		strs.push_back(L"海南区域");
+		return strs;
+	}
 }
 vCString CConfigDictionary::GetGongNengQus()const
 {
-	vCString strs;
-#ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"不限");
-	strs.push_back(L"厨房");
-	strs.push_back(L"卫生间");
-	strs.push_back(L"阳台");
-	strs.push_back(L"卧室");
-	strs.push_back(L"客厅");
-#else
-
-#endif
-	return strs;
+	auto iter = m_configDict.find(_T("actionType"));
+	if (iter != m_configDict.end())
+	{
+		return iter->second;
+	}
+	else
+	{
+		vCString strs;
+		strs.push_back(L"不限");
+		strs.push_back(L"厨房");
+		strs.push_back(L"卫生间");
+		strs.push_back(L"阳台");
+		strs.push_back(L"卧室");
+		strs.push_back(L"客厅");
+		return strs;
+	}
 }
 vCString CConfigDictionary::GetWindowDoorPoss()const
 {
-	vCString strs;
-#ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"门窗对开");
-	strs.push_back(L"门窗垂直开");
-#else
-
-#endif
-	return strs;
+	auto iter = m_configDict.find(_T("doorWindowPosition"));
+	if (iter != m_configDict.end())
+	{
+		return iter->second;
+	}
+	else
+	{
+		vCString strs;
+		strs.push_back(L"门窗对开");
+		strs.push_back(L"门窗垂直开");
+		return strs;
+	}
 }
 vCString CConfigDictionary::Window_GetOpenTypes()const
 {
-	vCString strs;
-#ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"不限");
-	strs.push_back(L"内开");
-	strs.push_back(L"外开");
-	strs.push_back(L"推拉");
-	strs.push_back(L"上悬");
-#else
-
-#endif
-	return strs;
+	auto iter = m_configDict.find(_T("openType"));
+	if (iter != m_configDict.end())
+	{
+		return iter->second;
+	}
+	else
+	{
+		vCString strs;
+		strs.push_back(L"不限");
+		strs.push_back(L"内开");
+		strs.push_back(L"外开");
+		strs.push_back(L"推拉");
+		strs.push_back(L"上悬");
+		return strs;
+	}
 }
 
 vCString CConfigDictionary::Window_GetOpenAmount()const
 {
-	vCString strs;
-#ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"不限");
-	strs.push_back(L"1");
-	strs.push_back(L"2");
-	strs.push_back(L"3");
-	strs.push_back(L"4");
-#else
-
-#endif
-	return strs;
+	auto iter = m_configDict.find(_T("openWindowNum"));
+	if (iter != m_configDict.end())
+	{
+		return iter->second;
+	}
+	else
+	{
+		vCString strs;
+		strs.push_back(L"不限");
+		strs.push_back(L"1");
+		strs.push_back(L"2");
+		strs.push_back(L"3");
+		strs.push_back(L"4");
+		return strs;
+	}
 }
 
 vCString CConfigDictionary::Window_GetRate()const
 {
-	vCString strs;
-#ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"1/4");
-	strs.push_back(L"1/5");
-	strs.push_back(L"1/6");
-	strs.push_back(L"1/8");
-	strs.push_back(L"1/10");
-#else
-
-#endif
-	return strs;
+	auto iter = m_configDict.find(_T("airVolumeAreaRation"));
+	if (iter != m_configDict.end())
+	{
+		return iter->second;
+	}
+	else
+	{
+		vCString strs;
+		strs.push_back(L"1/4");
+		strs.push_back(L"1/5");
+		strs.push_back(L"1/6");
+		strs.push_back(L"1/8");
+		strs.push_back(L"1/10");
+		return strs;
+	}
 }
 
 vCString CConfigDictionary::Window_GetWallDis()const
 {
-	vCString strs;
-#ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"0");
-	strs.push_back(L"50");
-	strs.push_back(L"100");
-	strs.push_back(L"150");
-	strs.push_back(L"200");
-#else
-
-#endif
-	return strs;
+	auto iter = m_configDict.find(_T("doorWindowDistance"));
+	if (iter != m_configDict.end())
+	{
+		return iter->second;
+	}
+	else
+	{
+		vCString strs;
+		strs.push_back(L"0");
+		strs.push_back(L"50");
+		strs.push_back(L"100");
+		strs.push_back(L"150");
+		strs.push_back(L"200");
+		return strs;
+	}
 }
 
 vCString CConfigDictionary::Door_GetTypes()const
 {
-	vCString strs;
-#ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"不限");
-	strs.push_back(L"推拉");
-	strs.push_back(L"外开");
-#else
-
-#endif
-	return strs;
+	auto iter = m_configDict.find(_T("doorType"));
+	if (iter != m_configDict.end())
+	{
+		return iter->second;
+	}
+	else
+	{
+		vCString strs;
+		strs.push_back(L"不限");
+		strs.push_back(L"推拉");
+		strs.push_back(L"外开");
+		return strs;
+	}
 }
 vCString CConfigDictionary::Kitchen_GetTypes()const
 {
-	vCString strs;
-#ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"U型");
-	strs.push_back(L"L型");
-	strs.push_back(L"I型");
-#else
-
-#endif
-	return strs;
+	auto iter = m_configDict.find(_T("kitchenType"));
+	if (iter != m_configDict.end())
+	{
+		return iter->second;
+	}
+	else
+	{
+		vCString strs;
+		strs.push_back(L"U型");
+		strs.push_back(L"L型");
+		strs.push_back(L"I型");
+		return strs;
+	}
 }
 vCString CConfigDictionary::Kitchen_GetShuiPenTypes()const
 {
-	vCString strs;
-#ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"单盆600");
-	strs.push_back(L"单盆800");
-	strs.push_back(L"双盆900");
-	strs.push_back(L"双盆1000");
-	strs.push_back(L"双盆1200");
-#else
-
-#endif
-
-	return strs;
+	auto iter = m_configDict.find(_T("kitchenBasinType"));
+	if (iter != m_configDict.end())
+	{
+		return iter->second;
+	}
+	else
+	{
+		vCString strs;
+		strs.push_back(L"单盆600");
+		strs.push_back(L"单盆800");
+		strs.push_back(L"双盆900");
+		strs.push_back(L"双盆1000");
+		strs.push_back(L"双盆1200");
+		return strs;
+	}
 }
 vCString CConfigDictionary::Kitchen_GetBingXiangTypes()const
 {
-	vCString strs;
-#ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"单开门700");
-	strs.push_back(L"对开门800");
-	strs.push_back(L"对开门1000");
-#else
-
-#endif
-
-	return strs;
+	auto iter = m_configDict.find(_T("refrigeratorType"));
+	if (iter != m_configDict.end())
+	{
+		return iter->second;
+	}
+	else
+	{
+		vCString strs;
+		strs.push_back(L"单开门700");
+		strs.push_back(L"对开门800");
+		strs.push_back(L"对开门1000");
+		return strs;
+	}
 }
 vCString CConfigDictionary::Kitchen_GetZaoTaiWidths()const
 {
-	vCString strs;
-#ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"800");
-	strs.push_back(L"900");
-#else
-
-#endif
-	return strs;
+	auto iter = m_configDict.find(_T("hearthWidth"));
+	if (iter != m_configDict.end())
+	{
+		return iter->second;
+	}
+	else
+	{
+		vCString strs;
+		strs.push_back(L"800");
+		strs.push_back(L"900");
+		return strs;
+	}
 }
 vCString CConfigDictionary::Toilet_GetTypes()const
 {
-	vCString strs;
-#ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"U型");
-	strs.push_back(L"L型");
-	strs.push_back(L"I型");
-#else
-
-#endif
-	return strs;
+	auto iter = m_configDict.find(_T("toiletType"));
+	if (iter != m_configDict.end())
+	{
+		return iter->second;
+	}
+	else
+	{
+		vCString strs;
+		strs.push_back(L"U型");
+		strs.push_back(L"L型");
+		strs.push_back(L"I型");
+		return strs;
+	}
 }
 vCString CConfigDictionary::Toilet_GetTaiPenWidths()const
 {
-	vCString strs;
-#ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"650");
-	strs.push_back(L"750");
-	strs.push_back(L"800");
-	strs.push_back(L"900");
-	strs.push_back(L"1000");
-#else
-
-#endif
-	return strs;
+	auto iter = m_configDict.find(_T("toiletBasinWidth"));
+	if (iter != m_configDict.end())
+	{
+		return iter->second;
+	}
+	else
+	{
+		vCString strs;
+		strs.push_back(L"650");
+		strs.push_back(L"750");
+		strs.push_back(L"800");
+		strs.push_back(L"900");
+		strs.push_back(L"1000");
+		return strs;
+	}
 }
 vCString CConfigDictionary::Toilet_GetMaTongTypes()const
 {
-	vCString strs;
-#ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"750");
-	strs.push_back(L"800");
-#else
-
-#endif
-	return strs;
+	auto iter = m_configDict.find(_T("closesToolWidth"));
+	if (iter != m_configDict.end())
+	{
+		return iter->second;
+	}
+	else
+	{
+		vCString strs;
+		strs.push_back(L"750");
+		strs.push_back(L"800");
+		return strs;
+	}
 }
 vCString CConfigDictionary::Toilet_GetGuanXiWidths()const
 {
-	vCString strs;
-#ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"950");
-	strs.push_back(L"1050");
-#else
-
-#endif
-	return strs;
+	auto iter = m_configDict.find(_T("bathroomWidth"));
+	if (iter != m_configDict.end())
+	{
+		return iter->second;
+	}
+	else
+	{
+		vCString strs;
+		strs.push_back(L"950");
+		strs.push_back(L"1050");
+		return strs;
+	}
 }
 vCString CConfigDictionary::Air_GetPiShus()const
 {
-	vCString strs;
-#ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"1.0P");
-	strs.push_back(L"1.5P");
-	strs.push_back(L"2.0P");
-	strs.push_back(L"3.0P");
-#else
-
-#endif
-	return strs;
+	auto iter = m_configDict.find(_T("airConditionNumber"));
+	if (iter != m_configDict.end())
+	{
+		return iter->second;
+	}
+	else
+	{
+		vCString strs;
+		strs.push_back(L"1.0P");
+		strs.push_back(L"1.5P");
+		strs.push_back(L"2.0P");
+		strs.push_back(L"3.0P");
+		return strs;
+	}
 }
 vCString CConfigDictionary::Air_GetLengNingShuiGuanPos()const//获得冷凝水管位置
 {
-	vCString strs;
-#ifdef WORK_LOCAL//本地模式
-
-	strs.push_back(L"侧面");
-	strs.push_back(L"后面");
-
-
-#else
-
-#endif
-	return strs;
+	auto iter = m_configDict.find(_T("condensatePipePosition"));
+	if (iter != m_configDict.end())
+	{
+		return iter->second;
+	}
+	else
+	{
+		vCString strs;
+		strs.push_back(L"侧面");
+		strs.push_back(L"后面");
+		return strs;
+	}
 }
 
 vCString CConfigDictionary::Air_GetYuShuiGuanPos()const//获得雨水管位置
 {
-	vCString strs;
-#ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"侧面");
-	strs.push_back(L"后面");
-#else
-
-#endif
-	return strs;
+	auto iter = m_configDict.find(_T("rainPipePosition"));
+	if (iter != m_configDict.end())
+	{
+		return iter->second;
+	}
+	else
+	{
+		vCString strs;
+		strs.push_back(L"侧面");
+		strs.push_back(L"后面");
+		return strs;
+	}
 }
 
 vCString CConfigDictionary::Railing_GetTypes()
 {
-	vCString strs;
-#ifdef WORK_LOCAL//本地模式
-	strs.push_back(L"玻璃栏杆");
-	strs.push_back(L"铁艺栏杆");
-#else
-
-#endif
-	return strs;
+	auto iter = m_configDict.find(_T("handRail"));
+	if (iter != m_configDict.end())
+	{
+		return iter->second;
+	}
+	else
+	{
+		vCString strs;
+		strs.push_back(L"玻璃栏杆");
+		strs.push_back(L"铁艺栏杆");
+		return strs;
+	}
 }

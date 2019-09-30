@@ -10,7 +10,6 @@ compiling, linking, and/or using OpenSSL is allowed.
 A commercial use license is available from Genivia Inc., contact@genivia.com
 --------------------------------------------------------------------------------
 */
-
 #include "stdafx.h"
 #include "soapArgumentSettingServiceSoapProxy.h"
 
@@ -200,6 +199,124 @@ int ArgumentSettingServiceSoapProxy::recv_StandardDesignAttribute(_ns1__Standard
 	return soap_closesock(soap);
 }
 
+int ArgumentSettingServiceSoapProxy::send_GetAllWindows(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllWindows *ns1__GetAllWindows)
+{
+	struct soap *soap = this;
+	struct __ns1__GetAllWindows soap_tmp___ns1__GetAllWindows;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/GetAllWindows";
+	soap_tmp___ns1__GetAllWindows.ns1__GetAllWindows = ns1__GetAllWindows;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__GetAllWindows(soap, &soap_tmp___ns1__GetAllWindows);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__GetAllWindows(soap, &soap_tmp___ns1__GetAllWindows, "-ns1:GetAllWindows", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__GetAllWindows(soap, &soap_tmp___ns1__GetAllWindows, "-ns1:GetAllWindows", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_GetAllWindows(_ns1__GetAllWindowsResponse &ns1__GetAllWindowsResponse)
+{
+	struct soap *soap = this;
+	ns1__GetAllWindowsResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__GetAllWindowsResponse.soap_get(soap, "ns1:GetAllWindowsResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_GetWindows(const char *soap_endpoint_url, const char *soap_action, _ns1__GetWindows *ns1__GetWindows)
+{
+	struct soap *soap = this;
+	struct __ns1__GetWindows soap_tmp___ns1__GetWindows;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/GetWindows";
+	soap_tmp___ns1__GetWindows.ns1__GetWindows = ns1__GetWindows;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__GetWindows(soap, &soap_tmp___ns1__GetWindows);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__GetWindows(soap, &soap_tmp___ns1__GetWindows, "-ns1:GetWindows", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__GetWindows(soap, &soap_tmp___ns1__GetWindows, "-ns1:GetWindows", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_GetWindows(_ns1__GetWindowsResponse &ns1__GetWindowsResponse)
+{
+	struct soap *soap = this;
+	ns1__GetWindowsResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__GetWindowsResponse.soap_get(soap, "ns1:GetWindowsResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
 int ArgumentSettingServiceSoapProxy::send_StandardDesignAttribute_(const char *soap_endpoint_url, const char *soap_action, _ns1__StandardDesignAttribute *ns1__StandardDesignAttribute)
 {
 	struct soap *soap = this;
@@ -250,6 +367,124 @@ int ArgumentSettingServiceSoapProxy::recv_StandardDesignAttribute_(_ns1__Standar
 	 || soap_body_begin_in(soap))
 		return soap_closesock(soap);
 	ns1__StandardDesignAttributeResponse.soap_get(soap, "ns1:StandardDesignAttributeResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_GetAllWindows_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllWindows *ns1__GetAllWindows)
+{
+	struct soap *soap = this;
+	struct __ns1__GetAllWindows_ soap_tmp___ns1__GetAllWindows_;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/GetAllWindows";
+	soap_tmp___ns1__GetAllWindows_.ns1__GetAllWindows = ns1__GetAllWindows;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__GetAllWindows_(soap, &soap_tmp___ns1__GetAllWindows_);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__GetAllWindows_(soap, &soap_tmp___ns1__GetAllWindows_, "-ns1:GetAllWindows", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__GetAllWindows_(soap, &soap_tmp___ns1__GetAllWindows_, "-ns1:GetAllWindows", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_GetAllWindows_(_ns1__GetAllWindowsResponse &ns1__GetAllWindowsResponse)
+{
+	struct soap *soap = this;
+	ns1__GetAllWindowsResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__GetAllWindowsResponse.soap_get(soap, "ns1:GetAllWindowsResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_GetWindows_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetWindows *ns1__GetWindows)
+{
+	struct soap *soap = this;
+	struct __ns1__GetWindows_ soap_tmp___ns1__GetWindows_;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/GetWindows";
+	soap_tmp___ns1__GetWindows_.ns1__GetWindows = ns1__GetWindows;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__GetWindows_(soap, &soap_tmp___ns1__GetWindows_);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__GetWindows_(soap, &soap_tmp___ns1__GetWindows_, "-ns1:GetWindows", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__GetWindows_(soap, &soap_tmp___ns1__GetWindows_, "-ns1:GetWindows", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_GetWindows_(_ns1__GetWindowsResponse &ns1__GetWindowsResponse)
+{
+	struct soap *soap = this;
+	ns1__GetWindowsResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__GetWindowsResponse.soap_get(soap, "ns1:GetWindowsResponse", NULL);
 	if (soap->error)
 		return soap_recv_fault(soap, 0);
 	if (soap_body_end_in(soap)

@@ -241,9 +241,6 @@
     <ClCompile Include="WebIO\ConfigDictionary.cpp">
       <Filter>WebIO</Filter>
     </ClCompile>
-    <ClCompile Include="WebIO\LocalData.cpp">
-      <Filter>WebIO</Filter>
-    </ClCompile>
     <ClCompile Include="Tool\MarkupXml\Markup.cpp" />
     <ClCompile Include="UI\ComFun_MFC.cpp" />
     <ClCompile Include="WebIO\ConfigDictionary.cpp" />
@@ -261,6 +258,15 @@
     </ClCompile>
     <ClCompile Include="Object\Kitchen\RCKitchen.cpp">
       <Filter>Object\Kitchen</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\WindowWebData.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\WindowLocalData.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\AirConditionLocalData.cpp">
+      <Filter>WebIO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -582,9 +588,6 @@
     <ClInclude Include="WebIO\ConfigDictionary.h">
       <Filter>WebIO</Filter>
     </ClInclude>
-    <ClInclude Include="WebIO\LocalData.h">
-      <Filter>WebIO</Filter>
-    </ClInclude>
     <ClInclude Include="Tool\MarkupXml\Markup.h" />
     <ClInclude Include="UI\ComFun_MFC.h" />
     <ClInclude Include="WebIO\ConfigDictionary.h" />
@@ -606,6 +609,15 @@
     </ClInclude>
     <ClInclude Include="Object\Kitchen\RCKitchen.h">
       <Filter>Object\Kitchen</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\WindowWebData.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\WindowLocalData.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\AirConditionLocalData.h">
+      <Filter>WebIO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

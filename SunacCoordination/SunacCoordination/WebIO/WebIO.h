@@ -7,6 +7,8 @@
 #include "../Object/AttrToilet.h"
 #include "../Object/AttrWindow.h"
 #include "ConfigDictionary.h"
+#include "WindowLocalData.h"
+#include "AirConditionLocalData.h"
 
 
 class WebIO
@@ -21,7 +23,9 @@ public:
 		return &instance;
 	}
 
-	static const CConfigDictionary* GetConfigDict() {	return &(GetInstance()->m_configDic);	}
+	static const CConfigDictionary* GetConfigDict() { return &(GetInstance()->m_configDic); }
+	static const CWindowLocalData* GetWindowLocalData() { return &(GetInstance()->m_windowLocalData); }
+	static const CAirConditionLocalData* GetAirConditionLocalData() { return &(GetInstance()->m_airConLocalData); }
 
 public:
 	//-----------------原型搜索函数--------------//
@@ -62,6 +66,8 @@ public:
 								bool hasPaiQiDao,//是否含有排气道
 								bool bDynatic); //是否动态
 	
+
+	//////////////////////////////////////////////////////////////////////////
 	//注意外部需要释放返回的内存
 	static std::vector<AttrKitchen *> GetAllKitchens();
 	//注意外部需要释放返回的内存
@@ -96,6 +102,9 @@ public:
 
 protected:
 	CConfigDictionary m_configDic;
+
+	CWindowLocalData m_windowLocalData;
+	CAirConditionLocalData m_airConLocalData;
 
 }; 
 

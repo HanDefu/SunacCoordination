@@ -84,6 +84,24 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
         /// Web service asynchronous operation 'recv_StandardDesignAttribute' to receive a response message from the connected endpoint, returns SOAP_OK or error code
         virtual int recv_StandardDesignAttribute(_ns1__StandardDesignAttributeResponse &ns1__StandardDesignAttributeResponse);
         //
+        /// Web service synchronous operation 'GetAllWindows' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllWindows(_ns1__GetAllWindows *ns1__GetAllWindows, _ns1__GetAllWindowsResponse &ns1__GetAllWindowsResponse) { return this->GetAllWindows(NULL, NULL, ns1__GetAllWindows, ns1__GetAllWindowsResponse); }
+        /// Web service synchronous operation 'GetAllWindows' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllWindows(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllWindows *ns1__GetAllWindows, _ns1__GetAllWindowsResponse &ns1__GetAllWindowsResponse) { return this->send_GetAllWindows(soap_endpoint_url, soap_action, ns1__GetAllWindows) || this->recv_GetAllWindows(ns1__GetAllWindowsResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_GetAllWindows' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_GetAllWindows(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllWindows *ns1__GetAllWindows);
+        /// Web service asynchronous operation 'recv_GetAllWindows' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_GetAllWindows(_ns1__GetAllWindowsResponse &ns1__GetAllWindowsResponse);
+        //
+        /// Web service synchronous operation 'GetWindows' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int GetWindows(_ns1__GetWindows *ns1__GetWindows, _ns1__GetWindowsResponse &ns1__GetWindowsResponse) { return this->GetWindows(NULL, NULL, ns1__GetWindows, ns1__GetWindowsResponse); }
+        /// Web service synchronous operation 'GetWindows' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int GetWindows(const char *soap_endpoint_url, const char *soap_action, _ns1__GetWindows *ns1__GetWindows, _ns1__GetWindowsResponse &ns1__GetWindowsResponse) { return this->send_GetWindows(soap_endpoint_url, soap_action, ns1__GetWindows) || this->recv_GetWindows(ns1__GetWindowsResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_GetWindows' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_GetWindows(const char *soap_endpoint_url, const char *soap_action, _ns1__GetWindows *ns1__GetWindows);
+        /// Web service asynchronous operation 'recv_GetWindows' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_GetWindows(_ns1__GetWindowsResponse &ns1__GetWindowsResponse);
+        //
         /// Web service synchronous operation 'StandardDesignAttribute' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
         virtual int StandardDesignAttribute_(_ns1__StandardDesignAttribute *ns1__StandardDesignAttribute, _ns1__StandardDesignAttributeResponse &ns1__StandardDesignAttributeResponse) { return this->StandardDesignAttribute_(NULL, NULL, ns1__StandardDesignAttribute, ns1__StandardDesignAttributeResponse); }
         /// Web service synchronous operation 'StandardDesignAttribute' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
@@ -92,5 +110,23 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
         virtual int send_StandardDesignAttribute_(const char *soap_endpoint_url, const char *soap_action, _ns1__StandardDesignAttribute *ns1__StandardDesignAttribute);
         /// Web service asynchronous operation 'recv_StandardDesignAttribute' to receive a response message from the connected endpoint, returns SOAP_OK or error code
         virtual int recv_StandardDesignAttribute_(_ns1__StandardDesignAttributeResponse &ns1__StandardDesignAttributeResponse);
+        //
+        /// Web service synchronous operation 'GetAllWindows' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllWindows_(_ns1__GetAllWindows *ns1__GetAllWindows, _ns1__GetAllWindowsResponse &ns1__GetAllWindowsResponse) { return this->GetAllWindows_(NULL, NULL, ns1__GetAllWindows, ns1__GetAllWindowsResponse); }
+        /// Web service synchronous operation 'GetAllWindows' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllWindows_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllWindows *ns1__GetAllWindows, _ns1__GetAllWindowsResponse &ns1__GetAllWindowsResponse) { return this->send_GetAllWindows_(soap_endpoint_url, soap_action, ns1__GetAllWindows) || this->recv_GetAllWindows_(ns1__GetAllWindowsResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_GetAllWindows' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_GetAllWindows_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllWindows *ns1__GetAllWindows);
+        /// Web service asynchronous operation 'recv_GetAllWindows' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_GetAllWindows_(_ns1__GetAllWindowsResponse &ns1__GetAllWindowsResponse);
+        //
+        /// Web service synchronous operation 'GetWindows' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int GetWindows_(_ns1__GetWindows *ns1__GetWindows, _ns1__GetWindowsResponse &ns1__GetWindowsResponse) { return this->GetWindows_(NULL, NULL, ns1__GetWindows, ns1__GetWindowsResponse); }
+        /// Web service synchronous operation 'GetWindows' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int GetWindows_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetWindows *ns1__GetWindows, _ns1__GetWindowsResponse &ns1__GetWindowsResponse) { return this->send_GetWindows_(soap_endpoint_url, soap_action, ns1__GetWindows) || this->recv_GetWindows_(ns1__GetWindowsResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_GetWindows' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_GetWindows_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetWindows *ns1__GetWindows);
+        /// Web service asynchronous operation 'recv_GetWindows' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_GetWindows_(_ns1__GetWindowsResponse &ns1__GetWindowsResponse);
     };
 #endif

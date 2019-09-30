@@ -37,8 +37,16 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
 
 class _ns1__StandardDesignAttribute;	/* .\SunacCADService2.h:151 */
 class _ns1__StandardDesignAttributeResponse;	/* .\SunacCADService2.h:153 */
-struct __ns1__StandardDesignAttribute;	/* .\SunacCADService2.h:362 */
-struct __ns1__StandardDesignAttribute_;	/* .\SunacCADService2.h:433 */
+class _ns1__GetAllWindows;	/* .\SunacCADService2.h:155 */
+class _ns1__GetAllWindowsResponse;	/* .\SunacCADService2.h:157 */
+class _ns1__GetWindows;	/* .\SunacCADService2.h:159 */
+class _ns1__GetWindowsResponse;	/* .\SunacCADService2.h:161 */
+struct __ns1__StandardDesignAttribute;	/* .\SunacCADService2.h:472 */
+struct __ns1__GetAllWindows;	/* .\SunacCADService2.h:543 */
+struct __ns1__GetWindows;	/* .\SunacCADService2.h:614 */
+struct __ns1__StandardDesignAttribute_;	/* .\SunacCADService2.h:685 */
+struct __ns1__GetAllWindows_;	/* .\SunacCADService2.h:756 */
+struct __ns1__GetWindows_;	/* .\SunacCADService2.h:827 */
 
 /* .\SunacCADService2.h:151 */
 #ifndef SOAP_TYPE__ns1__StandardDesignAttribute
@@ -112,9 +120,159 @@ class SOAP_CMAC _ns1__StandardDesignAttributeResponse {
 };
 #endif
 
-/* .\SunacCADService2.h:362 */
+/* .\SunacCADService2.h:155 */
+#ifndef SOAP_TYPE__ns1__GetAllWindows
+#define SOAP_TYPE__ns1__GetAllWindows (10)
+/* complex XML schema type 'ns1:GetAllWindows': */
+class SOAP_CMAC _ns1__GetAllWindows {
+      public:
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__GetAllWindows
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__GetAllWindows; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__GetAllWindows, default initialized and not managed by a soap context
+        virtual _ns1__GetAllWindows *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__GetAllWindows); }
+      public:
+        /// Constructor with default initializations
+        _ns1__GetAllWindows() : soap() { }
+        virtual ~_ns1__GetAllWindows() { }
+        /// Friend allocator used by soap_new__ns1__GetAllWindows(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__GetAllWindows * SOAP_FMAC2 soap_instantiate__ns1__GetAllWindows(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:157 */
+#ifndef SOAP_TYPE__ns1__GetAllWindowsResponse
+#define SOAP_TYPE__ns1__GetAllWindowsResponse (11)
+/* complex XML schema type 'ns1:GetAllWindowsResponse': */
+class SOAP_CMAC _ns1__GetAllWindowsResponse {
+      public:
+        /// Optional element 'ns1:GetAllWindowsResult' of XML schema type 'xsd:string'
+        std::wstring *GetAllWindowsResult;
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__GetAllWindowsResponse
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__GetAllWindowsResponse; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__GetAllWindowsResponse, default initialized and not managed by a soap context
+        virtual _ns1__GetAllWindowsResponse *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__GetAllWindowsResponse); }
+      public:
+        /// Constructor with default initializations
+        _ns1__GetAllWindowsResponse() : GetAllWindowsResult(), soap() { }
+        virtual ~_ns1__GetAllWindowsResponse() { }
+        /// Friend allocator used by soap_new__ns1__GetAllWindowsResponse(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__GetAllWindowsResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllWindowsResponse(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:159 */
+#ifndef SOAP_TYPE__ns1__GetWindows
+#define SOAP_TYPE__ns1__GetWindows (12)
+/* complex XML schema type 'ns1:GetWindows': */
+class SOAP_CMAC _ns1__GetWindows {
+      public:
+        /// Required element 'ns1:width' of XML schema type 'xsd:double'
+        double width;
+        /// Required element 'ns1:height' of XML schema type 'xsd:double'
+        double height;
+        /// Optional element 'ns1:openType' of XML schema type 'xsd:string'
+        std::wstring *openType;
+        /// Optional element 'ns1:openNum' of XML schema type 'xsd:string'
+        std::wstring *openNum;
+        /// Optional element 'ns1:gongNengQu' of XML schema type 'xsd:string'
+        std::wstring *gongNengQu;
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__GetWindows
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__GetWindows; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__GetWindows, default initialized and not managed by a soap context
+        virtual _ns1__GetWindows *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__GetWindows); }
+      public:
+        /// Constructor with default initializations
+        _ns1__GetWindows() : width(), height(), openType(), openNum(), gongNengQu(), soap() { }
+        virtual ~_ns1__GetWindows() { }
+        /// Friend allocator used by soap_new__ns1__GetWindows(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__GetWindows * SOAP_FMAC2 soap_instantiate__ns1__GetWindows(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:161 */
+#ifndef SOAP_TYPE__ns1__GetWindowsResponse
+#define SOAP_TYPE__ns1__GetWindowsResponse (13)
+/* complex XML schema type 'ns1:GetWindowsResponse': */
+class SOAP_CMAC _ns1__GetWindowsResponse {
+      public:
+        /// Optional element 'ns1:GetWindowsResult' of XML schema type 'xsd:string'
+        std::wstring *GetWindowsResult;
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__GetWindowsResponse
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__GetWindowsResponse; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__GetWindowsResponse, default initialized and not managed by a soap context
+        virtual _ns1__GetWindowsResponse *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__GetWindowsResponse); }
+      public:
+        /// Constructor with default initializations
+        _ns1__GetWindowsResponse() : GetWindowsResult(), soap() { }
+        virtual ~_ns1__GetWindowsResponse() { }
+        /// Friend allocator used by soap_new__ns1__GetWindowsResponse(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__GetWindowsResponse * SOAP_FMAC2 soap_instantiate__ns1__GetWindowsResponse(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:472 */
 #ifndef SOAP_TYPE___ns1__StandardDesignAttribute
-#define SOAP_TYPE___ns1__StandardDesignAttribute (16)
+#define SOAP_TYPE___ns1__StandardDesignAttribute (21)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__StandardDesignAttribute {
       public:
@@ -130,9 +288,45 @@ struct SOAP_CMAC __ns1__StandardDesignAttribute {
 };
 #endif
 
-/* .\SunacCADService2.h:433 */
+/* .\SunacCADService2.h:543 */
+#ifndef SOAP_TYPE___ns1__GetAllWindows
+#define SOAP_TYPE___ns1__GetAllWindows (25)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__GetAllWindows {
+      public:
+        /** Optional element 'ns1:GetAllWindows' of XML schema type 'ns1:GetAllWindows' */
+        _ns1__GetAllWindows *ns1__GetAllWindows;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__GetAllWindows */
+        long soap_type() const { return SOAP_TYPE___ns1__GetAllWindows; }
+        /** Constructor with member initializations */
+        __ns1__GetAllWindows() : ns1__GetAllWindows() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__GetAllWindows * SOAP_FMAC2 soap_instantiate___ns1__GetAllWindows(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:614 */
+#ifndef SOAP_TYPE___ns1__GetWindows
+#define SOAP_TYPE___ns1__GetWindows (29)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__GetWindows {
+      public:
+        /** Optional element 'ns1:GetWindows' of XML schema type 'ns1:GetWindows' */
+        _ns1__GetWindows *ns1__GetWindows;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__GetWindows */
+        long soap_type() const { return SOAP_TYPE___ns1__GetWindows; }
+        /** Constructor with member initializations */
+        __ns1__GetWindows() : ns1__GetWindows() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__GetWindows * SOAP_FMAC2 soap_instantiate___ns1__GetWindows(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:685 */
 #ifndef SOAP_TYPE___ns1__StandardDesignAttribute_
-#define SOAP_TYPE___ns1__StandardDesignAttribute_ (18)
+#define SOAP_TYPE___ns1__StandardDesignAttribute_ (31)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__StandardDesignAttribute_ {
       public:
@@ -148,10 +342,46 @@ struct SOAP_CMAC __ns1__StandardDesignAttribute_ {
 };
 #endif
 
-/* .\SunacCADService2.h:524 */
+/* .\SunacCADService2.h:756 */
+#ifndef SOAP_TYPE___ns1__GetAllWindows_
+#define SOAP_TYPE___ns1__GetAllWindows_ (33)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__GetAllWindows_ {
+      public:
+        /** Optional element 'ns1:GetAllWindows' of XML schema type 'ns1:GetAllWindows' */
+        _ns1__GetAllWindows *ns1__GetAllWindows;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__GetAllWindows_ */
+        long soap_type() const { return SOAP_TYPE___ns1__GetAllWindows_; }
+        /** Constructor with member initializations */
+        __ns1__GetAllWindows_() : ns1__GetAllWindows() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__GetAllWindows_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllWindows_(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:827 */
+#ifndef SOAP_TYPE___ns1__GetWindows_
+#define SOAP_TYPE___ns1__GetWindows_ (35)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__GetWindows_ {
+      public:
+        /** Optional element 'ns1:GetWindows' of XML schema type 'ns1:GetWindows' */
+        _ns1__GetWindows *ns1__GetWindows;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__GetWindows_ */
+        long soap_type() const { return SOAP_TYPE___ns1__GetWindows_; }
+        /** Constructor with member initializations */
+        __ns1__GetWindows_() : ns1__GetWindows() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__GetWindows_ * SOAP_FMAC2 soap_instantiate___ns1__GetWindows_(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:978 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Header
-#define SOAP_TYPE_SOAP_ENV__Header (19)
+#define SOAP_TYPE_SOAP_ENV__Header (36)
 /* SOAP_ENV__Header: */
 struct SOAP_CMAC SOAP_ENV__Header {
       public:
@@ -165,10 +395,10 @@ struct SOAP_CMAC SOAP_ENV__Header {
 #endif
 #endif
 
-/* .\SunacCADService2.h:524 */
+/* .\SunacCADService2.h:978 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Code
-#define SOAP_TYPE_SOAP_ENV__Code (20)
+#define SOAP_TYPE_SOAP_ENV__Code (37)
 /* Type SOAP_ENV__Code is a recursive data type, (in)directly referencing itself through its (base or derived class) members */
 /* SOAP_ENV__Code: */
 struct SOAP_CMAC SOAP_ENV__Code {
@@ -188,10 +418,10 @@ struct SOAP_CMAC SOAP_ENV__Code {
 #endif
 #endif
 
-/* .\SunacCADService2.h:524 */
+/* .\SunacCADService2.h:978 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Detail
-#define SOAP_TYPE_SOAP_ENV__Detail (22)
+#define SOAP_TYPE_SOAP_ENV__Detail (39)
 /* SOAP_ENV__Detail: */
 struct SOAP_CMAC SOAP_ENV__Detail {
       public:
@@ -211,10 +441,10 @@ struct SOAP_CMAC SOAP_ENV__Detail {
 #endif
 #endif
 
-/* .\SunacCADService2.h:524 */
+/* .\SunacCADService2.h:978 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Reason
-#define SOAP_TYPE_SOAP_ENV__Reason (25)
+#define SOAP_TYPE_SOAP_ENV__Reason (42)
 /* SOAP_ENV__Reason: */
 struct SOAP_CMAC SOAP_ENV__Reason {
       public:
@@ -231,10 +461,10 @@ struct SOAP_CMAC SOAP_ENV__Reason {
 #endif
 #endif
 
-/* .\SunacCADService2.h:524 */
+/* .\SunacCADService2.h:978 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Fault
-#define SOAP_TYPE_SOAP_ENV__Fault (26)
+#define SOAP_TYPE_SOAP_ENV__Fault (43)
 /* SOAP_ENV__Fault: */
 struct SOAP_CMAC SOAP_ENV__Fault {
       public:
@@ -303,9 +533,34 @@ typedef char *_QName;
 #define SOAP_TYPE_int (1)
 #endif
 
+/* double has binding name 'double' for type 'xsd:double' */
+#ifndef SOAP_TYPE_double
+#define SOAP_TYPE_double (17)
+#endif
+
 /* std::wstring has binding name 'std__wstring' for type 'xsd:string' */
 #ifndef SOAP_TYPE_std__wstring
-#define SOAP_TYPE_std__wstring (10)
+#define SOAP_TYPE_std__wstring (14)
+#endif
+
+/* _ns1__GetWindowsResponse has binding name '_ns1__GetWindowsResponse' for type '' */
+#ifndef SOAP_TYPE__ns1__GetWindowsResponse
+#define SOAP_TYPE__ns1__GetWindowsResponse (13)
+#endif
+
+/* _ns1__GetWindows has binding name '_ns1__GetWindows' for type '' */
+#ifndef SOAP_TYPE__ns1__GetWindows
+#define SOAP_TYPE__ns1__GetWindows (12)
+#endif
+
+/* _ns1__GetAllWindowsResponse has binding name '_ns1__GetAllWindowsResponse' for type '' */
+#ifndef SOAP_TYPE__ns1__GetAllWindowsResponse
+#define SOAP_TYPE__ns1__GetAllWindowsResponse (11)
+#endif
+
+/* _ns1__GetAllWindows has binding name '_ns1__GetAllWindows' for type '' */
+#ifndef SOAP_TYPE__ns1__GetAllWindows
+#define SOAP_TYPE__ns1__GetAllWindows (10)
 #endif
 
 /* _ns1__StandardDesignAttributeResponse has binding name '_ns1__StandardDesignAttributeResponse' for type '' */
@@ -320,52 +575,62 @@ typedef char *_QName;
 
 /* struct SOAP_ENV__Fault has binding name 'SOAP_ENV__Fault' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Fault
-#define SOAP_TYPE_SOAP_ENV__Fault (26)
+#define SOAP_TYPE_SOAP_ENV__Fault (43)
 #endif
 
 /* struct SOAP_ENV__Reason has binding name 'SOAP_ENV__Reason' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Reason
-#define SOAP_TYPE_SOAP_ENV__Reason (25)
+#define SOAP_TYPE_SOAP_ENV__Reason (42)
 #endif
 
 /* struct SOAP_ENV__Detail has binding name 'SOAP_ENV__Detail' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Detail
-#define SOAP_TYPE_SOAP_ENV__Detail (22)
+#define SOAP_TYPE_SOAP_ENV__Detail (39)
 #endif
 
 /* struct SOAP_ENV__Code has binding name 'SOAP_ENV__Code' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Code
-#define SOAP_TYPE_SOAP_ENV__Code (20)
+#define SOAP_TYPE_SOAP_ENV__Code (37)
 #endif
 
 /* struct SOAP_ENV__Header has binding name 'SOAP_ENV__Header' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Header
-#define SOAP_TYPE_SOAP_ENV__Header (19)
+#define SOAP_TYPE_SOAP_ENV__Header (36)
 #endif
 
 /* struct SOAP_ENV__Reason * has binding name 'PointerToSOAP_ENV__Reason' for type '' */
 #ifndef SOAP_TYPE_PointerToSOAP_ENV__Reason
-#define SOAP_TYPE_PointerToSOAP_ENV__Reason (28)
+#define SOAP_TYPE_PointerToSOAP_ENV__Reason (45)
 #endif
 
 /* struct SOAP_ENV__Detail * has binding name 'PointerToSOAP_ENV__Detail' for type '' */
 #ifndef SOAP_TYPE_PointerToSOAP_ENV__Detail
-#define SOAP_TYPE_PointerToSOAP_ENV__Detail (27)
+#define SOAP_TYPE_PointerToSOAP_ENV__Detail (44)
 #endif
 
 /* struct SOAP_ENV__Code * has binding name 'PointerToSOAP_ENV__Code' for type '' */
 #ifndef SOAP_TYPE_PointerToSOAP_ENV__Code
-#define SOAP_TYPE_PointerToSOAP_ENV__Code (21)
+#define SOAP_TYPE_PointerToSOAP_ENV__Code (38)
+#endif
+
+/* _ns1__GetWindows * has binding name 'PointerTo_ns1__GetWindows' for type '' */
+#ifndef SOAP_TYPE_PointerTo_ns1__GetWindows
+#define SOAP_TYPE_PointerTo_ns1__GetWindows (26)
+#endif
+
+/* _ns1__GetAllWindows * has binding name 'PointerTo_ns1__GetAllWindows' for type '' */
+#ifndef SOAP_TYPE_PointerTo_ns1__GetAllWindows
+#define SOAP_TYPE_PointerTo_ns1__GetAllWindows (22)
 #endif
 
 /* _ns1__StandardDesignAttribute * has binding name 'PointerTo_ns1__StandardDesignAttribute' for type '' */
 #ifndef SOAP_TYPE_PointerTo_ns1__StandardDesignAttribute
-#define SOAP_TYPE_PointerTo_ns1__StandardDesignAttribute (13)
+#define SOAP_TYPE_PointerTo_ns1__StandardDesignAttribute (18)
 #endif
 
 /* std::wstring * has binding name 'PointerTostd__wstring' for type 'xsd:string' */
 #ifndef SOAP_TYPE_PointerTostd__wstring
-#define SOAP_TYPE_PointerTostd__wstring (11)
+#define SOAP_TYPE_PointerTostd__wstring (15)
 #endif
 
 /* _QName has binding name '_QName' for type 'xsd:QName' */

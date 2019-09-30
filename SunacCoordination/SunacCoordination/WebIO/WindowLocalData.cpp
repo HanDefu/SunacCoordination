@@ -1,37 +1,33 @@
 #include "StdAfx.h"
-#include "LocalData.h"
-#include "..\Tool\Excel\Excel.h"
 #include "string"
 #include "afx.h"
+#include "WindowLocalData.h"
+#include "..\Tool\Excel\Excel.h"
 #include "../Common/ComFun_String.h"
+#include "../Common/ComFun_Sunac.h"
 
 using namespace Excel;
 
-
-CLocalData::CLocalData()
+CWindowLocalData::CWindowLocalData()
 {
+	CString localWindowPath = TY_GetLocalFilePath();
+	LoadDataFromExcel((localWindowPath + ("Íâ´°Êý¾Ý.xlsx")));
 }
 
-CLocalData::~CLocalData()
+CWindowLocalData::~CWindowLocalData()
 {
-}
-
-CLocalData* CLocalData::GetInstance()
-{
-	static CLocalData instance;
-	return &instance;
 }
 
 
 //ÃÅ´°
-RCDimData CLocalData::ConvertStringToDimData
+RCDimData CWindowLocalData::ConvertStringToDimData 
 (
     CString code,
     CString  valueType,
 	CString value,
 	CString defaultValue,
 	CString state
-)
+	)const
 {
 	RCDimData  data;
 	if (valueType == "ÎÞ")
@@ -68,7 +64,7 @@ RCDimData CLocalData::ConvertStringToDimData
 	return data;
 }
 
-void CLocalData::LoadDataFromExcel(CString p_file) 
+void CWindowLocalData::LoadDataFromExcel(CString p_file) 
 {
 	Excel::CExcelUtil xls; 
 
@@ -189,33 +185,11 @@ void CLocalData::LoadDataFromExcel(CString p_file)
 		m_windows.push_back(attrwindow); //½«Êý¾ÝÌí¼Óµ½vectorÊý×ém_windows
 	}
 
-	//¶ÁÈ¡¿Õµ÷Êý¾Ý±íµ¥µÄ¿Õµ÷Êý¾Ý
-	xls.SetActiveSheet(2); //´ò¿ªµÚ¶þÕÅ±íµ¥
-
-	for (int i = 2; i <= 1000000; i++)  //Ñ­»·excel±í¸ñ  ¿Õµ÷Êý¾Ý±íµ¥µÄÐÐ
-	{
-		AttrAirCon attrAirCon;
-
-		attrAirCon.m_airConId = xls.GetCellValue(i, 1); //Í¨¹ýÐÐºÍÁÐ»ñÈ¡µ¥Ôª¸ñµÄÖµ£¬²¢½«Öµ¸³¸ø¶ÔÏóattrAirCon
-		attrAirCon.m_airConPrototypeId = xls.GetCellValue(i, 2);
-		if (attrAirCon.m_airConPrototypeId.GetLength() == 0)
-			break;
-
-		attrAirCon.m_airConPrototypeFile = xls.GetCellValue(i, 3);
-		attrAirCon.m_airConHorseNumber = xls.GetCellValue(i, 4);
-		attrAirCon.m_airConPipePos = xls.GetCellValue(i, 5);
-		attrAirCon.m_airConRainRiser = xls.GetCellValue(i, 6);
-		attrAirCon.m_airConRainRiserPos = xls.GetCellValue(i, 7);
-		attrAirCon.m_airConInstallNetSize = xls.GetCellValue(i, 8);
-		
-		m_aircon.push_back(attrAirCon); //½«Êý¾ÝÌí¼Óµ½vectorÊý×ém_aircon
-	}
-
 	xls.CloseExcel();//¹Ø±Õ±í¸ñ
 }
 
 
-bool CLocalData::GetWindowById(CString p_sId,AttrWindow& value)  //Í¨¹ýÔ­ÐÍ±àºÅ»ñÈ¡´°»§
+bool CWindowLocalData::GetWindowById(CString p_sId, AttrWindow& value) const //Í¨¹ýÔ­ÐÍ±àºÅ»ñÈ¡´°»§
 {
 	for (int i = 0; i < m_windows.size(); i++)
 	{
@@ -229,7 +203,7 @@ bool CLocalData::GetWindowById(CString p_sId,AttrWindow& value)  //Í¨¹ýÔ­ÐÍ±àºÅ»
 	return false;
 }
 
-bool  CLocalData::GetWindowByFileName(CString p_sFileName, AttrWindow&value)//Í¨¹ýÎÄ¼þÃû»ñÈ¡´°»§
+bool  CWindowLocalData::GetWindowByFileName(CString p_sFileName, AttrWindow&value)const//Í¨¹ýÎÄ¼þÃû»ñÈ¡´°»§
 {
 	for (int i = 0; i < m_windows.size(); i++)
 	{
@@ -242,7 +216,7 @@ bool  CLocalData::GetWindowByFileName(CString p_sFileName, AttrWindow&value)//Í¨
 	return false;
 }
 
-vector<AttrWindow> CLocalData::GetAllWindows() //»ñÈ¡ËùÓÐ´°»§
+vector<AttrWindow> CWindowLocalData::GetAllWindows() //»ñÈ¡ËùÓÐ´°»§
 {
 	for (int i = 0; i < m_windows.size(); i++)
 	{
@@ -255,7 +229,7 @@ vector<AttrWindow> CLocalData::GetAllWindows() //»ñÈ¡ËùÓÐ´°»§
 	return m_wins;
 }
 
-vector<AttrWindow> CLocalData::GetAllDoors()  //»ñÈ¡ËùÓÐÃÅ
+vector<AttrWindow> CWindowLocalData::GetAllDoors()  //»ñÈ¡ËùÓÐÃÅ
 {
 	for (int i = 0; i < m_windows.size(); i++)
 	{
@@ -268,7 +242,7 @@ vector<AttrWindow> CLocalData::GetAllDoors()  //»ñÈ¡ËùÓÐÃÅ
 	return m_doors;
 }
 
-std::vector<AttrWindow >  CLocalData::GetWindows(double width, CString openType, int openNum, CString gongNengQu)
+std::vector<AttrWindow >  CWindowLocalData::GetWindows(double width, CString openType, int openNum, CString gongNengQu)const
 {
 	std::vector<AttrWindow> data;
 
@@ -320,7 +294,7 @@ std::vector<AttrWindow >  CLocalData::GetWindows(double width, CString openType,
 	return data;
 }
 
-std::vector<AttrWindow >  CLocalData::GetDoors(double width, CString openType, int openNum, CString gongNengQu)
+std::vector<AttrWindow >  CWindowLocalData::GetDoors(double width, CString openType, int openNum, CString gongNengQu)const
 {
 	std::vector<AttrWindow> data;
 
@@ -372,67 +346,3 @@ std::vector<AttrWindow >  CLocalData::GetDoors(double width, CString openType, i
 	return data;
 }
 
-
-bool CLocalData::GetAirConById(CString p_sId,AttrAirCon& value)   //Í¨¹ýÔ­ÐÍ±àºÅ´Óm_airconÖÐ»ñÈ¡¿Õµ÷
-{
-	for (int i = 0; i < m_aircon.size(); i++)
-	{
-		if (m_aircon[i].m_airConPrototypeId == p_sId)
-		{
-			value = m_aircon[i];
-			return true;
-		}
-	}
-
-	return false;
-}
-
-bool CLocalData::GetAirConByFileName(CString p_sFileName, AttrAirCon&value)   //Í¨¹ýÎÄ¼þÃû´Óm_airconÖÐ»ñÈ¡¿Õµ÷
-{
-	for (int i = 0; i < m_aircon.size(); i++)
-	{
-		if (m_aircon[i].m_airConPrototypeFile == p_sFileName)
-		{
-			value = m_aircon[i];
-			return true;
-		}
-	}
-	return false;
-}
-
-vector<AttrAirCon> CLocalData::GetAllAirCon()   //»ñÈ¡ËùÓÐ¿Õµ÷
-{
-	return m_aircon;
-}
-
-//»ñÈ¡Âú×ãÉ¸Ñ¡Ìõ¼þµÄ¿Õµ÷
-std::vector<AttrAirCon >  CLocalData::GetAirCon(CString p_airConHorseNumber, CString p_airConPipePos, CString p_airConRainRiser, CString p_airConRainRiserPos)
-{
-	std::vector<AttrAirCon> data;
-
-	for (int i =0; i < m_aircon.size(); i++)
-	{
-		if (p_airConHorseNumber != m_aircon[i].m_airConHorseNumber)
-		{
-			continue;
-		}
-
-		if (p_airConPipePos != m_aircon[i].m_airConPipePos)
-		{
-			continue;
-		}
-
-		if (p_airConRainRiser != L"ÎÞ")
-		{
-			if (p_airConRainRiserPos !=  m_aircon[i].m_airConRainRiserPos)
-			{
-				continue;
-			}
-		}
-		
-		data.push_back(m_aircon[i]);
-	}
-
-	return data;
-
-}
