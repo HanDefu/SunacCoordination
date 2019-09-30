@@ -6,6 +6,6 @@
 若要支持宽字符，可调用xsdString.bat
 
 
-方案二：
+方案二： 本系统采用方案2
 1. 执行soap.bat
 2. 拷贝SuncCadWeb2的文件到测试工程下的SuncCadWeb目录

@@ -35,7 +35,7 @@
 #include "GlobalSetting.h"
 #include "command\CommandWindowDetail.h"
 #include "Common/ComFun_Sunac.h"
-#include "webIO\LocalData.h"
+#include "webIO\WindowLocalData.h"
 #include "WebIO\ConfigDictionary.h"
 
 #ifdef _DEBUG
@@ -324,11 +324,6 @@ static void initApp()
 
 	mThreadHandle = (HANDLE)_beginthread(&SyncDataWithService, 0, 0);
 
-#ifdef WORK_LOCAL
-	CString localWindowPath = TY_GetLocalFilePath();
-
-	CLocalData::GetInstance()->LoadDataFromExcel((localWindowPath+("Íâ´°Êý¾Ý.xlsx")));
-#endif
 }
 
 

@@ -16,6 +16,34 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="GetAllWindows">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetAllWindowsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllWindowsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetWindows">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="width" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="height" type="s:double" />
+            <s:element minOccurs="0" maxOccurs="1" name="openType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="openNum" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="gongNengQu" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetWindowsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetWindowsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="StandardDesignAttributeSoapIn">
@@ -24,11 +52,33 @@
   <wsdl:message name="StandardDesignAttributeSoapOut">
     <wsdl:part name="parameters" element="tns:StandardDesignAttributeResponse" />
   </wsdl:message>
+  <wsdl:message name="GetAllWindowsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllWindows" />
+  </wsdl:message>
+  <wsdl:message name="GetAllWindowsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllWindowsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetWindowsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetWindows" />
+  </wsdl:message>
+  <wsdl:message name="GetWindowsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetWindowsResponse" />
+  </wsdl:message>
   <wsdl:portType name="ArgumentSettingServiceSoap">
     <wsdl:operation name="StandardDesignAttribute">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">标准模块属性；1、标准部品库：外窗、门、栏杆;2、厨房、卫生间、空调</wsdl:documentation>
       <wsdl:input message="tns:StandardDesignAttributeSoapIn" />
       <wsdl:output message="tns:StandardDesignAttributeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllWindows">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">标准部品库[外窗]所有</wsdl:documentation>
+      <wsdl:input message="tns:GetAllWindowsSoapIn" />
+      <wsdl:output message="tns:GetAllWindowsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetWindows">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">标准部品库[外窗]按条件查询</wsdl:documentation>
+      <wsdl:input message="tns:GetWindowsSoapIn" />
+      <wsdl:output message="tns:GetWindowsSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="ArgumentSettingServiceSoap" type="tns:ArgumentSettingServiceSoap">
@@ -42,11 +92,47 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetAllWindows">
+      <soap:operation soapAction="http://tempuri.org/GetAllWindows" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWindows">
+      <soap:operation soapAction="http://tempuri.org/GetWindows" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="ArgumentSettingServiceSoap12" type="tns:ArgumentSettingServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="StandardDesignAttribute">
       <soap12:operation soapAction="http://tempuri.org/StandardDesignAttribute" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllWindows">
+      <soap12:operation soapAction="http://tempuri.org/GetAllWindows" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetWindows">
+      <soap12:operation soapAction="http://tempuri.org/GetWindows" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

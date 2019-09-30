@@ -1,0 +1,21 @@
+生成环境
+10.4.0.139/140	administrator              CADpass!#%246
+10.3.0.126	
+
+测试环境
+10.4.64.91	
+10.4.128.59	
+
+账号 admin
+密码 123456
+
+
+
+服务器地址：https://vpn.sunac.com.cn
+VPN账号：shty
+密码：shty@1918
+
+
+
+IDM测试账号：
+zhoudihao/Asdf1234

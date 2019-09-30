@@ -8,7 +8,7 @@
 #include "../Object/RCWindow.h"
 #include "../WebIO/WebIO.h"
 #include "../GlobalSetting.h"
-#include "../WebIO/LocalData.h"
+#include "../WebIO/WindowLocalData.h"
 #include "../Object/AttrWindow.h"
 
 // CWindowDlg ¶Ô»°¿ò
@@ -171,9 +171,9 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 	CString areaType = TYUI_GetText(m_areaType);
 
 	if (m_radioDoor == 0)
-	    m_allWindows = CLocalData::GetInstance()->GetDoors(width, openType, openNum, areaType);
+	    m_allWindows = WebIO::GetWindowLocalData()->GetDoors(width, openType, openNum, areaType);
 	else
-		m_allWindows = CLocalData::GetInstance()->GetWindows(width, openType, openNum, areaType);
+		m_allWindows = WebIO::GetWindowLocalData()->GetWindows(width, openType, openNum, areaType);
 
 	m_preWindow.ClearAllPreviews();
 	if (m_allWindows.empty())
