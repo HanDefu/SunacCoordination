@@ -16,6 +16,9 @@
     <Filter Include="SunacCADWeb">
       <UniqueIdentifier>{c5e00d32-dcf6-4a44-ae81-bd4c222b281a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="base64">
+      <UniqueIdentifier>{e79ec015-d63e-42a5-b194-3ed6d716daa4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
@@ -42,6 +45,18 @@
     <ClInclude Include="..\SunacCadWeb\stdsoap2.h">
       <Filter>SunacCADWeb</Filter>
     </ClInclude>
+    <ClInclude Include="..\cpp_base64\src\Base64Decoder.h">
+      <Filter>base64</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cpp_base64\src\Base64Encoder.h">
+      <Filter>base64</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cpp_base64\src\cdecode.h">
+      <Filter>base64</Filter>
+    </ClInclude>
+    <ClInclude Include="..\cpp_base64\src\cencode.h">
+      <Filter>base64</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -58,6 +73,18 @@
     </ClCompile>
     <ClCompile Include="..\SunacCadWeb\stdsoap2.cpp">
       <Filter>SunacCADWeb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cpp_base64\src\Base64Decoder.cpp">
+      <Filter>base64</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cpp_base64\src\Base64Encoder.cpp">
+      <Filter>base64</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cpp_base64\src\cdecode.cpp">
+      <Filter>base64</Filter>
+    </ClCompile>
+    <ClCompile Include="..\cpp_base64\src\cencode.cpp">
+      <Filter>base64</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

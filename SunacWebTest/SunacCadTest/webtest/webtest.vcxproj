@@ -153,6 +153,10 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\cpp_base64\src\Base64Decoder.h" />
+    <ClInclude Include="..\cpp_base64\src\Base64Encoder.h" />
+    <ClInclude Include="..\cpp_base64\src\cdecode.h" />
+    <ClInclude Include="..\cpp_base64\src\cencode.h" />
     <ClInclude Include="..\SunacCadWeb\soapArgumentSettingServiceSoapProxy.h" />
     <ClInclude Include="..\SunacCadWeb\soapH.h" />
     <ClInclude Include="..\SunacCadWeb\soapStub.h" />
@@ -161,6 +165,10 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\cpp_base64\src\Base64Decoder.cpp" />
+    <ClCompile Include="..\cpp_base64\src\Base64Encoder.cpp" />
+    <ClCompile Include="..\cpp_base64\src\cdecode.cpp" />
+    <ClCompile Include="..\cpp_base64\src\cencode.cpp" />
     <ClCompile Include="..\SunacCadWeb\soapArgumentSettingServiceSoapProxy.cpp" />
     <ClCompile Include="..\SunacCadWeb\soapC.cpp" />
     <ClCompile Include="..\SunacCadWeb\stdsoap2.cpp" />

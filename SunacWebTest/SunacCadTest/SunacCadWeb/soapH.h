@@ -199,6 +199,83 @@ inline int soap_POST_recv_int(struct soap *soap, int *p)
 }
 #endif
 
+#ifndef SOAP_TYPE_double_DEFINED
+#define SOAP_TYPE_double_DEFINED
+
+inline void soap_default_double(struct soap *soap, double *a)
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifdef SOAP_DEFAULT_double
+	*a = SOAP_DEFAULT_double;
+#else
+	*a = (double)0;
+#endif
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_double(struct soap*, const char*, int, const double *, const char*);
+SOAP_FMAC3 double * SOAP_FMAC4 soap_in_double(struct soap*, const char*, double *, const char*);
+
+SOAP_FMAC3 double * SOAP_FMAC4 soap_new_double(struct soap *soap, int n = -1);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_double(struct soap*, const double *, const char*, const char*);
+
+inline int soap_write_double(struct soap *soap, double const*p)
+{
+	soap_free_temp(soap);
+	if (p)
+	{	if (soap_begin_send(soap) || ::soap_put_double(soap, p, "double", "") || soap_end_send(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_PUT_double(struct soap *soap, const char *URL, double const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || ::soap_put_double(soap, p, "double", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH_double(struct soap *soap, const char *URL, double const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || ::soap_put_double(soap, p, "double", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send_double(struct soap *soap, const char *URL, double const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || ::soap_put_double(soap, p, "double", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 double * SOAP_FMAC4 soap_get_double(struct soap*, double *, const char*, const char*);
+
+inline int soap_read_double(struct soap *soap, double *p)
+{
+	if (p)
+	{	if (soap_begin_recv(soap) || ::soap_get_double(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET_double(struct soap *soap, const char *URL, double *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read_double(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv_double(struct soap *soap, double *p)
+{
+	if (::soap_read_double(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
 #ifndef SOAP_TYPE_std__wstring_DEFINED
 #define SOAP_TYPE_std__wstring_DEFINED
 
@@ -296,6 +373,564 @@ inline int soap_GET_std__wstring(struct soap *soap, const char *URL, std::wstrin
 inline int soap_POST_recv_std__wstring(struct soap *soap, std::wstring *p)
 {
 	if (::soap_read_std__wstring(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__CadFileDownloadResponse_DEFINED
+#define SOAP_TYPE__ns1__CadFileDownloadResponse_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__CadFileDownloadResponse(struct soap*, const char*, int, const _ns1__CadFileDownloadResponse *, const char*);
+SOAP_FMAC3 _ns1__CadFileDownloadResponse * SOAP_FMAC4 soap_in__ns1__CadFileDownloadResponse(struct soap*, const char*, _ns1__CadFileDownloadResponse *, const char*);
+SOAP_FMAC1 _ns1__CadFileDownloadResponse * SOAP_FMAC2 soap_instantiate__ns1__CadFileDownloadResponse(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__CadFileDownloadResponse * soap_new__ns1__CadFileDownloadResponse(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__CadFileDownloadResponse(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__CadFileDownloadResponse * soap_new_req__ns1__CadFileDownloadResponse(
+	struct soap *soap)
+{
+	_ns1__CadFileDownloadResponse *_p = ::soap_new__ns1__CadFileDownloadResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__CadFileDownloadResponse * soap_new_set__ns1__CadFileDownloadResponse(
+	struct soap *soap,
+	std::wstring *CadFileDownloadResult)
+{
+	_ns1__CadFileDownloadResponse *_p = ::soap_new__ns1__CadFileDownloadResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__CadFileDownloadResponse::CadFileDownloadResult = CadFileDownloadResult;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__CadFileDownloadResponse(struct soap *soap, _ns1__CadFileDownloadResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:CadFileDownloadResponse", p->soap_type() == SOAP_TYPE__ns1__CadFileDownloadResponse ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__CadFileDownloadResponse(struct soap *soap, const char *URL, _ns1__CadFileDownloadResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:CadFileDownloadResponse", p->soap_type() == SOAP_TYPE__ns1__CadFileDownloadResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__CadFileDownloadResponse(struct soap *soap, const char *URL, _ns1__CadFileDownloadResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:CadFileDownloadResponse", p->soap_type() == SOAP_TYPE__ns1__CadFileDownloadResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__CadFileDownloadResponse(struct soap *soap, const char *URL, _ns1__CadFileDownloadResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:CadFileDownloadResponse", p->soap_type() == SOAP_TYPE__ns1__CadFileDownloadResponse ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__CadFileDownloadResponse * SOAP_FMAC4 soap_get__ns1__CadFileDownloadResponse(struct soap*, _ns1__CadFileDownloadResponse *, const char*, const char*);
+
+inline int soap_read__ns1__CadFileDownloadResponse(struct soap *soap, _ns1__CadFileDownloadResponse *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__CadFileDownloadResponse(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__CadFileDownloadResponse(struct soap *soap, const char *URL, _ns1__CadFileDownloadResponse *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__CadFileDownloadResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__CadFileDownloadResponse(struct soap *soap, _ns1__CadFileDownloadResponse *p)
+{
+	if (::soap_read__ns1__CadFileDownloadResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__CadFileDownload_DEFINED
+#define SOAP_TYPE__ns1__CadFileDownload_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__CadFileDownload(struct soap*, const char*, int, const _ns1__CadFileDownload *, const char*);
+SOAP_FMAC3 _ns1__CadFileDownload * SOAP_FMAC4 soap_in__ns1__CadFileDownload(struct soap*, const char*, _ns1__CadFileDownload *, const char*);
+SOAP_FMAC1 _ns1__CadFileDownload * SOAP_FMAC2 soap_instantiate__ns1__CadFileDownload(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__CadFileDownload * soap_new__ns1__CadFileDownload(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__CadFileDownload(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__CadFileDownload * soap_new_req__ns1__CadFileDownload(
+	struct soap *soap,
+	int Id)
+{
+	_ns1__CadFileDownload *_p = ::soap_new__ns1__CadFileDownload(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__CadFileDownload::Id = Id;
+	}
+	return _p;
+}
+
+inline _ns1__CadFileDownload * soap_new_set__ns1__CadFileDownload(
+	struct soap *soap,
+	int Id)
+{
+	_ns1__CadFileDownload *_p = ::soap_new__ns1__CadFileDownload(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__CadFileDownload::Id = Id;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__CadFileDownload(struct soap *soap, _ns1__CadFileDownload const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:CadFileDownload", p->soap_type() == SOAP_TYPE__ns1__CadFileDownload ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__CadFileDownload(struct soap *soap, const char *URL, _ns1__CadFileDownload const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:CadFileDownload", p->soap_type() == SOAP_TYPE__ns1__CadFileDownload ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__CadFileDownload(struct soap *soap, const char *URL, _ns1__CadFileDownload const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:CadFileDownload", p->soap_type() == SOAP_TYPE__ns1__CadFileDownload ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__CadFileDownload(struct soap *soap, const char *URL, _ns1__CadFileDownload const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:CadFileDownload", p->soap_type() == SOAP_TYPE__ns1__CadFileDownload ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__CadFileDownload * SOAP_FMAC4 soap_get__ns1__CadFileDownload(struct soap*, _ns1__CadFileDownload *, const char*, const char*);
+
+inline int soap_read__ns1__CadFileDownload(struct soap *soap, _ns1__CadFileDownload *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__CadFileDownload(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__CadFileDownload(struct soap *soap, const char *URL, _ns1__CadFileDownload *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__CadFileDownload(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__CadFileDownload(struct soap *soap, _ns1__CadFileDownload *p)
+{
+	if (::soap_read__ns1__CadFileDownload(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__GetWindowsResponse_DEFINED
+#define SOAP_TYPE__ns1__GetWindowsResponse_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetWindowsResponse(struct soap*, const char*, int, const _ns1__GetWindowsResponse *, const char*);
+SOAP_FMAC3 _ns1__GetWindowsResponse * SOAP_FMAC4 soap_in__ns1__GetWindowsResponse(struct soap*, const char*, _ns1__GetWindowsResponse *, const char*);
+SOAP_FMAC1 _ns1__GetWindowsResponse * SOAP_FMAC2 soap_instantiate__ns1__GetWindowsResponse(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__GetWindowsResponse * soap_new__ns1__GetWindowsResponse(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__GetWindowsResponse(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__GetWindowsResponse * soap_new_req__ns1__GetWindowsResponse(
+	struct soap *soap)
+{
+	_ns1__GetWindowsResponse *_p = ::soap_new__ns1__GetWindowsResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__GetWindowsResponse * soap_new_set__ns1__GetWindowsResponse(
+	struct soap *soap,
+	std::wstring *GetWindowsResult)
+{
+	_ns1__GetWindowsResponse *_p = ::soap_new__ns1__GetWindowsResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__GetWindowsResponse::GetWindowsResult = GetWindowsResult;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__GetWindowsResponse(struct soap *soap, _ns1__GetWindowsResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetWindowsResponse", p->soap_type() == SOAP_TYPE__ns1__GetWindowsResponse ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__GetWindowsResponse(struct soap *soap, const char *URL, _ns1__GetWindowsResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetWindowsResponse", p->soap_type() == SOAP_TYPE__ns1__GetWindowsResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__GetWindowsResponse(struct soap *soap, const char *URL, _ns1__GetWindowsResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetWindowsResponse", p->soap_type() == SOAP_TYPE__ns1__GetWindowsResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__GetWindowsResponse(struct soap *soap, const char *URL, _ns1__GetWindowsResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetWindowsResponse", p->soap_type() == SOAP_TYPE__ns1__GetWindowsResponse ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__GetWindowsResponse * SOAP_FMAC4 soap_get__ns1__GetWindowsResponse(struct soap*, _ns1__GetWindowsResponse *, const char*, const char*);
+
+inline int soap_read__ns1__GetWindowsResponse(struct soap *soap, _ns1__GetWindowsResponse *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__GetWindowsResponse(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__GetWindowsResponse(struct soap *soap, const char *URL, _ns1__GetWindowsResponse *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__GetWindowsResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__GetWindowsResponse(struct soap *soap, _ns1__GetWindowsResponse *p)
+{
+	if (::soap_read__ns1__GetWindowsResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__GetWindows_DEFINED
+#define SOAP_TYPE__ns1__GetWindows_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetWindows(struct soap*, const char*, int, const _ns1__GetWindows *, const char*);
+SOAP_FMAC3 _ns1__GetWindows * SOAP_FMAC4 soap_in__ns1__GetWindows(struct soap*, const char*, _ns1__GetWindows *, const char*);
+SOAP_FMAC1 _ns1__GetWindows * SOAP_FMAC2 soap_instantiate__ns1__GetWindows(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__GetWindows * soap_new__ns1__GetWindows(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__GetWindows(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__GetWindows * soap_new_req__ns1__GetWindows(
+	struct soap *soap,
+	double width,
+	double height)
+{
+	_ns1__GetWindows *_p = ::soap_new__ns1__GetWindows(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__GetWindows::width = width;
+		_p->_ns1__GetWindows::height = height;
+	}
+	return _p;
+}
+
+inline _ns1__GetWindows * soap_new_set__ns1__GetWindows(
+	struct soap *soap,
+	double width,
+	double height,
+	std::wstring *openType,
+	std::wstring *openNum,
+	std::wstring *gongNengQu)
+{
+	_ns1__GetWindows *_p = ::soap_new__ns1__GetWindows(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__GetWindows::width = width;
+		_p->_ns1__GetWindows::height = height;
+		_p->_ns1__GetWindows::openType = openType;
+		_p->_ns1__GetWindows::openNum = openNum;
+		_p->_ns1__GetWindows::gongNengQu = gongNengQu;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__GetWindows(struct soap *soap, _ns1__GetWindows const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetWindows", p->soap_type() == SOAP_TYPE__ns1__GetWindows ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__GetWindows(struct soap *soap, const char *URL, _ns1__GetWindows const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetWindows", p->soap_type() == SOAP_TYPE__ns1__GetWindows ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__GetWindows(struct soap *soap, const char *URL, _ns1__GetWindows const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetWindows", p->soap_type() == SOAP_TYPE__ns1__GetWindows ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__GetWindows(struct soap *soap, const char *URL, _ns1__GetWindows const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetWindows", p->soap_type() == SOAP_TYPE__ns1__GetWindows ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__GetWindows * SOAP_FMAC4 soap_get__ns1__GetWindows(struct soap*, _ns1__GetWindows *, const char*, const char*);
+
+inline int soap_read__ns1__GetWindows(struct soap *soap, _ns1__GetWindows *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__GetWindows(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__GetWindows(struct soap *soap, const char *URL, _ns1__GetWindows *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__GetWindows(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__GetWindows(struct soap *soap, _ns1__GetWindows *p)
+{
+	if (::soap_read__ns1__GetWindows(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__GetAllWindowsResponse_DEFINED
+#define SOAP_TYPE__ns1__GetAllWindowsResponse_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllWindowsResponse(struct soap*, const char*, int, const _ns1__GetAllWindowsResponse *, const char*);
+SOAP_FMAC3 _ns1__GetAllWindowsResponse * SOAP_FMAC4 soap_in__ns1__GetAllWindowsResponse(struct soap*, const char*, _ns1__GetAllWindowsResponse *, const char*);
+SOAP_FMAC1 _ns1__GetAllWindowsResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllWindowsResponse(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__GetAllWindowsResponse * soap_new__ns1__GetAllWindowsResponse(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__GetAllWindowsResponse(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__GetAllWindowsResponse * soap_new_req__ns1__GetAllWindowsResponse(
+	struct soap *soap)
+{
+	_ns1__GetAllWindowsResponse *_p = ::soap_new__ns1__GetAllWindowsResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__GetAllWindowsResponse * soap_new_set__ns1__GetAllWindowsResponse(
+	struct soap *soap,
+	std::wstring *GetAllWindowsResult)
+{
+	_ns1__GetAllWindowsResponse *_p = ::soap_new__ns1__GetAllWindowsResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__GetAllWindowsResponse::GetAllWindowsResult = GetAllWindowsResult;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__GetAllWindowsResponse(struct soap *soap, _ns1__GetAllWindowsResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllWindowsResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllWindowsResponse ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__GetAllWindowsResponse(struct soap *soap, const char *URL, _ns1__GetAllWindowsResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllWindowsResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllWindowsResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__GetAllWindowsResponse(struct soap *soap, const char *URL, _ns1__GetAllWindowsResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllWindowsResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllWindowsResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__GetAllWindowsResponse(struct soap *soap, const char *URL, _ns1__GetAllWindowsResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllWindowsResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllWindowsResponse ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__GetAllWindowsResponse * SOAP_FMAC4 soap_get__ns1__GetAllWindowsResponse(struct soap*, _ns1__GetAllWindowsResponse *, const char*, const char*);
+
+inline int soap_read__ns1__GetAllWindowsResponse(struct soap *soap, _ns1__GetAllWindowsResponse *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__GetAllWindowsResponse(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__GetAllWindowsResponse(struct soap *soap, const char *URL, _ns1__GetAllWindowsResponse *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__GetAllWindowsResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__GetAllWindowsResponse(struct soap *soap, _ns1__GetAllWindowsResponse *p)
+{
+	if (::soap_read__ns1__GetAllWindowsResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__GetAllWindows_DEFINED
+#define SOAP_TYPE__ns1__GetAllWindows_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllWindows(struct soap*, const char*, int, const _ns1__GetAllWindows *, const char*);
+SOAP_FMAC3 _ns1__GetAllWindows * SOAP_FMAC4 soap_in__ns1__GetAllWindows(struct soap*, const char*, _ns1__GetAllWindows *, const char*);
+SOAP_FMAC1 _ns1__GetAllWindows * SOAP_FMAC2 soap_instantiate__ns1__GetAllWindows(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__GetAllWindows * soap_new__ns1__GetAllWindows(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__GetAllWindows(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__GetAllWindows * soap_new_req__ns1__GetAllWindows(
+	struct soap *soap)
+{
+	_ns1__GetAllWindows *_p = ::soap_new__ns1__GetAllWindows(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__GetAllWindows * soap_new_set__ns1__GetAllWindows(
+	struct soap *soap)
+{
+	_ns1__GetAllWindows *_p = ::soap_new__ns1__GetAllWindows(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__GetAllWindows(struct soap *soap, _ns1__GetAllWindows const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllWindows", p->soap_type() == SOAP_TYPE__ns1__GetAllWindows ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__GetAllWindows(struct soap *soap, const char *URL, _ns1__GetAllWindows const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllWindows", p->soap_type() == SOAP_TYPE__ns1__GetAllWindows ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__GetAllWindows(struct soap *soap, const char *URL, _ns1__GetAllWindows const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllWindows", p->soap_type() == SOAP_TYPE__ns1__GetAllWindows ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__GetAllWindows(struct soap *soap, const char *URL, _ns1__GetAllWindows const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllWindows", p->soap_type() == SOAP_TYPE__ns1__GetAllWindows ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__GetAllWindows * SOAP_FMAC4 soap_get__ns1__GetAllWindows(struct soap*, _ns1__GetAllWindows *, const char*, const char*);
+
+inline int soap_read__ns1__GetAllWindows(struct soap *soap, _ns1__GetAllWindows *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__GetAllWindows(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__GetAllWindows(struct soap *soap, const char *URL, _ns1__GetAllWindows *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__GetAllWindows(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__GetAllWindows(struct soap *soap, _ns1__GetAllWindows *p)
+{
+	if (::soap_read__ns1__GetAllWindows(soap, p))
 		return soap_closesock(soap);
 	return soap_closesock(soap);
 }
@@ -997,6 +1632,288 @@ inline int soap_POST_recv_SOAP_ENV__Header(struct soap *soap, struct SOAP_ENV__H
 
 #endif
 
+#ifndef SOAP_TYPE___ns1__CadFileDownload__DEFINED
+#define SOAP_TYPE___ns1__CadFileDownload__DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__CadFileDownload_(struct soap*, struct __ns1__CadFileDownload_ *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__CadFileDownload_(struct soap*, const struct __ns1__CadFileDownload_ *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__CadFileDownload_(struct soap*, const char*, int, const struct __ns1__CadFileDownload_ *, const char*);
+SOAP_FMAC3 struct __ns1__CadFileDownload_ * SOAP_FMAC4 soap_in___ns1__CadFileDownload_(struct soap*, const char*, struct __ns1__CadFileDownload_ *, const char*);
+SOAP_FMAC1 struct __ns1__CadFileDownload_ * SOAP_FMAC2 soap_instantiate___ns1__CadFileDownload_(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__CadFileDownload_ * soap_new___ns1__CadFileDownload_(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__CadFileDownload_(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__CadFileDownload_ * soap_new_req___ns1__CadFileDownload_(
+	struct soap *soap)
+{
+	struct __ns1__CadFileDownload_ *_p = ::soap_new___ns1__CadFileDownload_(soap);
+	if (_p)
+	{	::soap_default___ns1__CadFileDownload_(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__CadFileDownload_ * soap_new_set___ns1__CadFileDownload_(
+	struct soap *soap,
+	_ns1__CadFileDownload *ns1__CadFileDownload)
+{
+	struct __ns1__CadFileDownload_ *_p = ::soap_new___ns1__CadFileDownload_(soap);
+	if (_p)
+	{	::soap_default___ns1__CadFileDownload_(soap, _p);
+		_p->ns1__CadFileDownload = ns1__CadFileDownload;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__CadFileDownload_(struct soap*, const struct __ns1__CadFileDownload_ *, const char*, const char*);
+
+inline int soap_write___ns1__CadFileDownload_(struct soap *soap, struct __ns1__CadFileDownload_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__CadFileDownload_(soap, p), 0) || ::soap_put___ns1__CadFileDownload_(soap, p, "-ns1:CadFileDownload", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__CadFileDownload_(struct soap *soap, const char *URL, struct __ns1__CadFileDownload_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__CadFileDownload_(soap, p), 0) || ::soap_put___ns1__CadFileDownload_(soap, p, "-ns1:CadFileDownload", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__CadFileDownload_(struct soap *soap, const char *URL, struct __ns1__CadFileDownload_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__CadFileDownload_(soap, p), 0) || ::soap_put___ns1__CadFileDownload_(soap, p, "-ns1:CadFileDownload", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__CadFileDownload_(struct soap *soap, const char *URL, struct __ns1__CadFileDownload_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__CadFileDownload_(soap, p), 0) || ::soap_put___ns1__CadFileDownload_(soap, p, "-ns1:CadFileDownload", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__CadFileDownload_ * SOAP_FMAC4 soap_get___ns1__CadFileDownload_(struct soap*, struct __ns1__CadFileDownload_ *, const char*, const char*);
+
+inline int soap_read___ns1__CadFileDownload_(struct soap *soap, struct __ns1__CadFileDownload_ *p)
+{
+	if (p)
+	{	::soap_default___ns1__CadFileDownload_(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__CadFileDownload_(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__CadFileDownload_(struct soap *soap, const char *URL, struct __ns1__CadFileDownload_ *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__CadFileDownload_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__CadFileDownload_(struct soap *soap, struct __ns1__CadFileDownload_ *p)
+{
+	if (::soap_read___ns1__CadFileDownload_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__GetWindows__DEFINED
+#define SOAP_TYPE___ns1__GetWindows__DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetWindows_(struct soap*, struct __ns1__GetWindows_ *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetWindows_(struct soap*, const struct __ns1__GetWindows_ *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetWindows_(struct soap*, const char*, int, const struct __ns1__GetWindows_ *, const char*);
+SOAP_FMAC3 struct __ns1__GetWindows_ * SOAP_FMAC4 soap_in___ns1__GetWindows_(struct soap*, const char*, struct __ns1__GetWindows_ *, const char*);
+SOAP_FMAC1 struct __ns1__GetWindows_ * SOAP_FMAC2 soap_instantiate___ns1__GetWindows_(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__GetWindows_ * soap_new___ns1__GetWindows_(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__GetWindows_(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__GetWindows_ * soap_new_req___ns1__GetWindows_(
+	struct soap *soap)
+{
+	struct __ns1__GetWindows_ *_p = ::soap_new___ns1__GetWindows_(soap);
+	if (_p)
+	{	::soap_default___ns1__GetWindows_(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__GetWindows_ * soap_new_set___ns1__GetWindows_(
+	struct soap *soap,
+	_ns1__GetWindows *ns1__GetWindows)
+{
+	struct __ns1__GetWindows_ *_p = ::soap_new___ns1__GetWindows_(soap);
+	if (_p)
+	{	::soap_default___ns1__GetWindows_(soap, _p);
+		_p->ns1__GetWindows = ns1__GetWindows;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetWindows_(struct soap*, const struct __ns1__GetWindows_ *, const char*, const char*);
+
+inline int soap_write___ns1__GetWindows_(struct soap *soap, struct __ns1__GetWindows_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__GetWindows_(soap, p), 0) || ::soap_put___ns1__GetWindows_(soap, p, "-ns1:GetWindows", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__GetWindows_(struct soap *soap, const char *URL, struct __ns1__GetWindows_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetWindows_(soap, p), 0) || ::soap_put___ns1__GetWindows_(soap, p, "-ns1:GetWindows", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__GetWindows_(struct soap *soap, const char *URL, struct __ns1__GetWindows_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetWindows_(soap, p), 0) || ::soap_put___ns1__GetWindows_(soap, p, "-ns1:GetWindows", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__GetWindows_(struct soap *soap, const char *URL, struct __ns1__GetWindows_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetWindows_(soap, p), 0) || ::soap_put___ns1__GetWindows_(soap, p, "-ns1:GetWindows", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__GetWindows_ * SOAP_FMAC4 soap_get___ns1__GetWindows_(struct soap*, struct __ns1__GetWindows_ *, const char*, const char*);
+
+inline int soap_read___ns1__GetWindows_(struct soap *soap, struct __ns1__GetWindows_ *p)
+{
+	if (p)
+	{	::soap_default___ns1__GetWindows_(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__GetWindows_(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__GetWindows_(struct soap *soap, const char *URL, struct __ns1__GetWindows_ *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__GetWindows_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__GetWindows_(struct soap *soap, struct __ns1__GetWindows_ *p)
+{
+	if (::soap_read___ns1__GetWindows_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__GetAllWindows__DEFINED
+#define SOAP_TYPE___ns1__GetAllWindows__DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllWindows_(struct soap*, struct __ns1__GetAllWindows_ *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllWindows_(struct soap*, const struct __ns1__GetAllWindows_ *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllWindows_(struct soap*, const char*, int, const struct __ns1__GetAllWindows_ *, const char*);
+SOAP_FMAC3 struct __ns1__GetAllWindows_ * SOAP_FMAC4 soap_in___ns1__GetAllWindows_(struct soap*, const char*, struct __ns1__GetAllWindows_ *, const char*);
+SOAP_FMAC1 struct __ns1__GetAllWindows_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllWindows_(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__GetAllWindows_ * soap_new___ns1__GetAllWindows_(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__GetAllWindows_(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__GetAllWindows_ * soap_new_req___ns1__GetAllWindows_(
+	struct soap *soap)
+{
+	struct __ns1__GetAllWindows_ *_p = ::soap_new___ns1__GetAllWindows_(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllWindows_(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__GetAllWindows_ * soap_new_set___ns1__GetAllWindows_(
+	struct soap *soap,
+	_ns1__GetAllWindows *ns1__GetAllWindows)
+{
+	struct __ns1__GetAllWindows_ *_p = ::soap_new___ns1__GetAllWindows_(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllWindows_(soap, _p);
+		_p->ns1__GetAllWindows = ns1__GetAllWindows;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllWindows_(struct soap*, const struct __ns1__GetAllWindows_ *, const char*, const char*);
+
+inline int soap_write___ns1__GetAllWindows_(struct soap *soap, struct __ns1__GetAllWindows_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__GetAllWindows_(soap, p), 0) || ::soap_put___ns1__GetAllWindows_(soap, p, "-ns1:GetAllWindows", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__GetAllWindows_(struct soap *soap, const char *URL, struct __ns1__GetAllWindows_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllWindows_(soap, p), 0) || ::soap_put___ns1__GetAllWindows_(soap, p, "-ns1:GetAllWindows", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__GetAllWindows_(struct soap *soap, const char *URL, struct __ns1__GetAllWindows_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllWindows_(soap, p), 0) || ::soap_put___ns1__GetAllWindows_(soap, p, "-ns1:GetAllWindows", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__GetAllWindows_(struct soap *soap, const char *URL, struct __ns1__GetAllWindows_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllWindows_(soap, p), 0) || ::soap_put___ns1__GetAllWindows_(soap, p, "-ns1:GetAllWindows", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__GetAllWindows_ * SOAP_FMAC4 soap_get___ns1__GetAllWindows_(struct soap*, struct __ns1__GetAllWindows_ *, const char*, const char*);
+
+inline int soap_read___ns1__GetAllWindows_(struct soap *soap, struct __ns1__GetAllWindows_ *p)
+{
+	if (p)
+	{	::soap_default___ns1__GetAllWindows_(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__GetAllWindows_(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__GetAllWindows_(struct soap *soap, const char *URL, struct __ns1__GetAllWindows_ *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__GetAllWindows_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__GetAllWindows_(struct soap *soap, struct __ns1__GetAllWindows_ *p)
+{
+	if (::soap_read___ns1__GetAllWindows_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
 #ifndef SOAP_TYPE___ns1__StandardDesignAttribute__DEFINED
 #define SOAP_TYPE___ns1__StandardDesignAttribute__DEFINED
 SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__StandardDesignAttribute_(struct soap*, struct __ns1__StandardDesignAttribute_ *);
@@ -1086,6 +2003,288 @@ inline int soap_GET___ns1__StandardDesignAttribute_(struct soap *soap, const cha
 inline int soap_POST_recv___ns1__StandardDesignAttribute_(struct soap *soap, struct __ns1__StandardDesignAttribute_ *p)
 {
 	if (::soap_read___ns1__StandardDesignAttribute_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__CadFileDownload_DEFINED
+#define SOAP_TYPE___ns1__CadFileDownload_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__CadFileDownload(struct soap*, struct __ns1__CadFileDownload *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__CadFileDownload(struct soap*, const struct __ns1__CadFileDownload *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__CadFileDownload(struct soap*, const char*, int, const struct __ns1__CadFileDownload *, const char*);
+SOAP_FMAC3 struct __ns1__CadFileDownload * SOAP_FMAC4 soap_in___ns1__CadFileDownload(struct soap*, const char*, struct __ns1__CadFileDownload *, const char*);
+SOAP_FMAC1 struct __ns1__CadFileDownload * SOAP_FMAC2 soap_instantiate___ns1__CadFileDownload(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__CadFileDownload * soap_new___ns1__CadFileDownload(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__CadFileDownload(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__CadFileDownload * soap_new_req___ns1__CadFileDownload(
+	struct soap *soap)
+{
+	struct __ns1__CadFileDownload *_p = ::soap_new___ns1__CadFileDownload(soap);
+	if (_p)
+	{	::soap_default___ns1__CadFileDownload(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__CadFileDownload * soap_new_set___ns1__CadFileDownload(
+	struct soap *soap,
+	_ns1__CadFileDownload *ns1__CadFileDownload)
+{
+	struct __ns1__CadFileDownload *_p = ::soap_new___ns1__CadFileDownload(soap);
+	if (_p)
+	{	::soap_default___ns1__CadFileDownload(soap, _p);
+		_p->ns1__CadFileDownload = ns1__CadFileDownload;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__CadFileDownload(struct soap*, const struct __ns1__CadFileDownload *, const char*, const char*);
+
+inline int soap_write___ns1__CadFileDownload(struct soap *soap, struct __ns1__CadFileDownload const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__CadFileDownload(soap, p), 0) || ::soap_put___ns1__CadFileDownload(soap, p, "-ns1:CadFileDownload", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__CadFileDownload(struct soap *soap, const char *URL, struct __ns1__CadFileDownload const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__CadFileDownload(soap, p), 0) || ::soap_put___ns1__CadFileDownload(soap, p, "-ns1:CadFileDownload", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__CadFileDownload(struct soap *soap, const char *URL, struct __ns1__CadFileDownload const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__CadFileDownload(soap, p), 0) || ::soap_put___ns1__CadFileDownload(soap, p, "-ns1:CadFileDownload", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__CadFileDownload(struct soap *soap, const char *URL, struct __ns1__CadFileDownload const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__CadFileDownload(soap, p), 0) || ::soap_put___ns1__CadFileDownload(soap, p, "-ns1:CadFileDownload", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__CadFileDownload * SOAP_FMAC4 soap_get___ns1__CadFileDownload(struct soap*, struct __ns1__CadFileDownload *, const char*, const char*);
+
+inline int soap_read___ns1__CadFileDownload(struct soap *soap, struct __ns1__CadFileDownload *p)
+{
+	if (p)
+	{	::soap_default___ns1__CadFileDownload(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__CadFileDownload(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__CadFileDownload(struct soap *soap, const char *URL, struct __ns1__CadFileDownload *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__CadFileDownload(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__CadFileDownload(struct soap *soap, struct __ns1__CadFileDownload *p)
+{
+	if (::soap_read___ns1__CadFileDownload(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__GetWindows_DEFINED
+#define SOAP_TYPE___ns1__GetWindows_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetWindows(struct soap*, struct __ns1__GetWindows *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetWindows(struct soap*, const struct __ns1__GetWindows *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetWindows(struct soap*, const char*, int, const struct __ns1__GetWindows *, const char*);
+SOAP_FMAC3 struct __ns1__GetWindows * SOAP_FMAC4 soap_in___ns1__GetWindows(struct soap*, const char*, struct __ns1__GetWindows *, const char*);
+SOAP_FMAC1 struct __ns1__GetWindows * SOAP_FMAC2 soap_instantiate___ns1__GetWindows(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__GetWindows * soap_new___ns1__GetWindows(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__GetWindows(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__GetWindows * soap_new_req___ns1__GetWindows(
+	struct soap *soap)
+{
+	struct __ns1__GetWindows *_p = ::soap_new___ns1__GetWindows(soap);
+	if (_p)
+	{	::soap_default___ns1__GetWindows(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__GetWindows * soap_new_set___ns1__GetWindows(
+	struct soap *soap,
+	_ns1__GetWindows *ns1__GetWindows)
+{
+	struct __ns1__GetWindows *_p = ::soap_new___ns1__GetWindows(soap);
+	if (_p)
+	{	::soap_default___ns1__GetWindows(soap, _p);
+		_p->ns1__GetWindows = ns1__GetWindows;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetWindows(struct soap*, const struct __ns1__GetWindows *, const char*, const char*);
+
+inline int soap_write___ns1__GetWindows(struct soap *soap, struct __ns1__GetWindows const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__GetWindows(soap, p), 0) || ::soap_put___ns1__GetWindows(soap, p, "-ns1:GetWindows", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__GetWindows(struct soap *soap, const char *URL, struct __ns1__GetWindows const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetWindows(soap, p), 0) || ::soap_put___ns1__GetWindows(soap, p, "-ns1:GetWindows", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__GetWindows(struct soap *soap, const char *URL, struct __ns1__GetWindows const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetWindows(soap, p), 0) || ::soap_put___ns1__GetWindows(soap, p, "-ns1:GetWindows", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__GetWindows(struct soap *soap, const char *URL, struct __ns1__GetWindows const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetWindows(soap, p), 0) || ::soap_put___ns1__GetWindows(soap, p, "-ns1:GetWindows", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__GetWindows * SOAP_FMAC4 soap_get___ns1__GetWindows(struct soap*, struct __ns1__GetWindows *, const char*, const char*);
+
+inline int soap_read___ns1__GetWindows(struct soap *soap, struct __ns1__GetWindows *p)
+{
+	if (p)
+	{	::soap_default___ns1__GetWindows(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__GetWindows(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__GetWindows(struct soap *soap, const char *URL, struct __ns1__GetWindows *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__GetWindows(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__GetWindows(struct soap *soap, struct __ns1__GetWindows *p)
+{
+	if (::soap_read___ns1__GetWindows(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__GetAllWindows_DEFINED
+#define SOAP_TYPE___ns1__GetAllWindows_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllWindows(struct soap*, struct __ns1__GetAllWindows *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllWindows(struct soap*, const struct __ns1__GetAllWindows *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllWindows(struct soap*, const char*, int, const struct __ns1__GetAllWindows *, const char*);
+SOAP_FMAC3 struct __ns1__GetAllWindows * SOAP_FMAC4 soap_in___ns1__GetAllWindows(struct soap*, const char*, struct __ns1__GetAllWindows *, const char*);
+SOAP_FMAC1 struct __ns1__GetAllWindows * SOAP_FMAC2 soap_instantiate___ns1__GetAllWindows(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__GetAllWindows * soap_new___ns1__GetAllWindows(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__GetAllWindows(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__GetAllWindows * soap_new_req___ns1__GetAllWindows(
+	struct soap *soap)
+{
+	struct __ns1__GetAllWindows *_p = ::soap_new___ns1__GetAllWindows(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllWindows(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__GetAllWindows * soap_new_set___ns1__GetAllWindows(
+	struct soap *soap,
+	_ns1__GetAllWindows *ns1__GetAllWindows)
+{
+	struct __ns1__GetAllWindows *_p = ::soap_new___ns1__GetAllWindows(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllWindows(soap, _p);
+		_p->ns1__GetAllWindows = ns1__GetAllWindows;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllWindows(struct soap*, const struct __ns1__GetAllWindows *, const char*, const char*);
+
+inline int soap_write___ns1__GetAllWindows(struct soap *soap, struct __ns1__GetAllWindows const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__GetAllWindows(soap, p), 0) || ::soap_put___ns1__GetAllWindows(soap, p, "-ns1:GetAllWindows", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__GetAllWindows(struct soap *soap, const char *URL, struct __ns1__GetAllWindows const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllWindows(soap, p), 0) || ::soap_put___ns1__GetAllWindows(soap, p, "-ns1:GetAllWindows", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__GetAllWindows(struct soap *soap, const char *URL, struct __ns1__GetAllWindows const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllWindows(soap, p), 0) || ::soap_put___ns1__GetAllWindows(soap, p, "-ns1:GetAllWindows", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__GetAllWindows(struct soap *soap, const char *URL, struct __ns1__GetAllWindows const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllWindows(soap, p), 0) || ::soap_put___ns1__GetAllWindows(soap, p, "-ns1:GetAllWindows", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__GetAllWindows * SOAP_FMAC4 soap_get___ns1__GetAllWindows(struct soap*, struct __ns1__GetAllWindows *, const char*, const char*);
+
+inline int soap_read___ns1__GetAllWindows(struct soap *soap, struct __ns1__GetAllWindows *p)
+{
+	if (p)
+	{	::soap_default___ns1__GetAllWindows(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__GetAllWindows(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__GetAllWindows(struct soap *soap, const char *URL, struct __ns1__GetAllWindows *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__GetAllWindows(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__GetAllWindows(struct soap *soap, struct __ns1__GetAllWindows *p)
+{
+	if (::soap_read___ns1__GetAllWindows(soap, p))
 		return soap_closesock(soap);
 	return soap_closesock(soap);
 }
@@ -1222,6 +2421,33 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerToSOAP_ENV__Code(struct soap*, struct 
 SOAP_FMAC3 struct SOAP_ENV__Code ** SOAP_FMAC4 soap_get_PointerToSOAP_ENV__Code(struct soap*, struct SOAP_ENV__Code **, const char*, const char*);
 #endif
 
+#endif
+
+#ifndef SOAP_TYPE_PointerTo_ns1__CadFileDownload_DEFINED
+#define SOAP_TYPE_PointerTo_ns1__CadFileDownload_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__CadFileDownload(struct soap*, _ns1__CadFileDownload *const*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__CadFileDownload(struct soap*, const char *, int, _ns1__CadFileDownload *const*, const char *);
+SOAP_FMAC3 _ns1__CadFileDownload ** SOAP_FMAC4 soap_in_PointerTo_ns1__CadFileDownload(struct soap*, const char*, _ns1__CadFileDownload **, const char*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__CadFileDownload(struct soap*, _ns1__CadFileDownload *const*, const char*, const char*);
+SOAP_FMAC3 _ns1__CadFileDownload ** SOAP_FMAC4 soap_get_PointerTo_ns1__CadFileDownload(struct soap*, _ns1__CadFileDownload **, const char*, const char*);
+#endif
+
+#ifndef SOAP_TYPE_PointerTo_ns1__GetWindows_DEFINED
+#define SOAP_TYPE_PointerTo_ns1__GetWindows_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__GetWindows(struct soap*, _ns1__GetWindows *const*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__GetWindows(struct soap*, const char *, int, _ns1__GetWindows *const*, const char *);
+SOAP_FMAC3 _ns1__GetWindows ** SOAP_FMAC4 soap_in_PointerTo_ns1__GetWindows(struct soap*, const char*, _ns1__GetWindows **, const char*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__GetWindows(struct soap*, _ns1__GetWindows *const*, const char*, const char*);
+SOAP_FMAC3 _ns1__GetWindows ** SOAP_FMAC4 soap_get_PointerTo_ns1__GetWindows(struct soap*, _ns1__GetWindows **, const char*, const char*);
+#endif
+
+#ifndef SOAP_TYPE_PointerTo_ns1__GetAllWindows_DEFINED
+#define SOAP_TYPE_PointerTo_ns1__GetAllWindows_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__GetAllWindows(struct soap*, _ns1__GetAllWindows *const*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__GetAllWindows(struct soap*, const char *, int, _ns1__GetAllWindows *const*, const char *);
+SOAP_FMAC3 _ns1__GetAllWindows ** SOAP_FMAC4 soap_in_PointerTo_ns1__GetAllWindows(struct soap*, const char*, _ns1__GetAllWindows **, const char*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__GetAllWindows(struct soap*, _ns1__GetAllWindows *const*, const char*, const char*);
+SOAP_FMAC3 _ns1__GetAllWindows ** SOAP_FMAC4 soap_get_PointerTo_ns1__GetAllWindows(struct soap*, _ns1__GetAllWindows **, const char*, const char*);
 #endif
 
 #ifndef SOAP_TYPE_PointerTo_ns1__StandardDesignAttribute_DEFINED
