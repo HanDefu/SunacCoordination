@@ -2,8 +2,8 @@
 #pragma once
 
 #include "dbmain.h"
-#include "AttrObject.h"
-#include "../Sunac_def.h"
+#include "..\AttrObject.h"
+#include "../../Sunac_def.h"
 #pragma warning(disable: 4275 4251)
 
 #ifdef _CUSTOMOBJECTDB_

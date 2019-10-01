@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "GlobalSetting.h"
-#include "float.h"
+#include <float.h>
 #include <acdocman.h>
 #include <dbxutil.h>
 #include "Common/ComFun_Sunac.h"

@@ -6,7 +6,7 @@
 ================================================================================
 File description:
 
-    This implementation file of class RCDoor.
+    This implementation file of class RCAirCondition.
 
 ================================================================================
    Date      Name                    Description of Change
@@ -14,44 +14,50 @@ File description:
 ==============================================================================*/
 
 #include "StdAfx.h"
-#include "RCDoor.h"
-#include "float.h"
+#include "RCAirCondition.h"
+#include <float.h>
 #include <algorithm>
+#include "../../Common/ComFun_Sunac.h"
 
 //Constructor
-RCDoor::RCDoor(void)
+RCAirCondition::RCAirCondition(void)
 {
 
 }
 
 //Destructor
-RCDoor::~RCDoor(void)
+RCAirCondition::~RCAirCondition(void)
 {
 
 }
 
 
 //Constructor
-RCDoor::RCDoor(const RCDoor &other):RCDynamicBlock(other)
+RCAirCondition::RCAirCondition(const RCAirCondition &other):RCStandBlock(other)
 {
 
 }
 
 //Operator = 
-RCDoor & RCDoor::operator=(const RCDoor &rhs)
+RCAirCondition & RCAirCondition::operator=(const RCAirCondition &rhs)
 {
 	return *this;
 }
 
 
-void RCDoor::Draw()
+void RCAirCondition::Draw()
 {
 }
 
-RCDoor * RCDoor::Clone()
+RCAirCondition * RCAirCondition::Clone()
 {
-	RCDoor * newObj = new RCDoor;
+	RCAirCondition * newObj = new RCAirCondition;
 
 	return newObj;
 }
 
+void RCAirCondition::AddAttribute(AttrAirCon * attr)
+{
+	if (attr != 0)
+		TY_AddAttributeData(m_id, attr);
+}

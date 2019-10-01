@@ -1,11 +1,11 @@
 #pragma once
 #include "../Sunac_def.h"
-#include "../Object/AttrAirCon.h"
-#include "../Object/AttrDoor.h"
+#include "../Object/AirCondition/AttrAirCon.h"
+#include "../Object/WindowDoor/AttrDoor.h"
 #include "../Object/Kitchen/AttrKitchen.h"
-#include "../Object/AttrRailing.h"
-#include "../Object/AttrToilet.h"
-#include "../Object/AttrWindow.h"
+#include "../Object/Railing/AttrRailing.h"
+#include "../Object/Bathroom/AttrBathroom.h"
+#include "../Object/WindowDoor/AttrWindow.h"
 #include "ConfigDictionary.h"
 #include "WindowLocalData.h"
 #include "AirConditionLocalData.h"
@@ -71,7 +71,7 @@ public:
 	//注意外部需要释放返回的内存
 	static std::vector<AttrKitchen *> GetAllKitchens();
 	//注意外部需要释放返回的内存
-	static std::vector<AttrToilet *> GetToilets
+	static std::vector<AttrBathroom *> GetBathrooms
 	(
 		double width,//宽度，X方向
 		double height,//高度，Y方向
@@ -80,7 +80,7 @@ public:
 		bool hasPaiQiDao//是否含有排气道
 	);
 	//注意外部需要释放返回的内存
-	static std::vector<AttrToilet *> GetAllToilets();
+	static std::vector<AttrBathroom *> GetAllBathrooms();
 	//注意外部需要释放返回的内存
 	static std::vector<AttrAirCon *> GetAirCons(double piShu,
 												CString weiZhi,//冷凝水管位置

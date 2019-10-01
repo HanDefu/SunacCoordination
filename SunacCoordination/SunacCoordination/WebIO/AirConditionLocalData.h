@@ -1,8 +1,8 @@
 #pragma  once
 
 #include <vector>
-#include "../Object/AttrWindow.h"
-#include "../Object/AttrAirCon.h"
+#include "../Object/WindowDoor/AttrWindow.h"
+#include "../Object/AirCondition/AttrAirCon.h"
 
 using namespace std;
 

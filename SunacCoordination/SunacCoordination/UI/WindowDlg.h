@@ -1,7 +1,7 @@
 #pragma once
 #include "GridCtrlWithPreview.h"
 #include "afxwin.h"
-#include "../Object/AttrWindow.h"
+#include "../Object/WindowDoor/AttrWindow.h"
 #include "ComFun_MFC.h"
 
 // CWindowDlg ¶Ô»°¿ò

@@ -15,8 +15,8 @@ File description:
 #pragma once
 
 #include <vector>
-#include "RCDynamicBlock.h"
-#include "../Object/AttrWindow.h"
+#include "..\RCDynamicBlock.h"
+#include "AttrWindow.h"
 
 class RCWindow : public RCDynamicBlock
 {

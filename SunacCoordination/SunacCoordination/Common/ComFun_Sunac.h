@@ -2,7 +2,7 @@
 
 #include "ComFun_ACAD_Common.h"
 #include "TYRect.h"
-#include "../Object/RCWindow.h"
+#include "../Object/WindowDoor/RCWindow.h"
 #include <utility>
 
 using namespace std;
@@ -68,7 +68,7 @@ int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt);
 
 bool TY_IsWindow(AcDbObjectId Id);
 bool TY_Iskitchen(AcDbObjectId Id);
-bool TY_IsToilet(AcDbObjectId Id);
+bool TY_IsBathroom(AcDbObjectId Id);
 bool TY_IsAirCon(AcDbObjectId Id);
 bool TY_IsDoor(AcDbObjectId Id);
 bool TY_IsRailing(AcDbObjectId Id);

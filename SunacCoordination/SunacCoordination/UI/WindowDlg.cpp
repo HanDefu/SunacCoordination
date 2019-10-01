@@ -5,11 +5,11 @@
 #include "WindowDlg.h"
 #include "afxdialogex.h"
 #include "../Common/ComFun_Sunac.h"
-#include "../Object/RCWindow.h"
+#include "../Object/WindowDoor/RCWindow.h"
+#include "../Object/WindowDoor/AttrWindow.h"
 #include "../WebIO/WebIO.h"
 #include "../GlobalSetting.h"
 #include "../WebIO/WindowLocalData.h"
-#include "../Object/AttrWindow.h"
 
 // CWindowDlg ¶Ô»°¿ò
 

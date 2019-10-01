@@ -6,7 +6,7 @@
 ================================================================================
 File description:
 
-    This file is the head file of class RCLanGan.
+    This file is the head file of class RCDoor.
 
 ================================================================================
    Date      Name                    Description of Change
@@ -15,31 +15,29 @@ File description:
 #pragma once
 
 #include <vector>
-#include "RCStandBlock.h"
+#include "..\RCDynamicBlock.h"
 
-class RCRailing : public RCStandBlock
+class RCDoor : public RCDynamicBlock
 {
 public:
 	//Constructors
-	RCRailing(void);
-	RCRailing(const RCRailing &other);
+	RCDoor(void);
+	RCDoor(const RCDoor &other);
 
 	//Destructor
-	~RCRailing(void);
+	~RCDoor(void);
 
 	//Operator = 
-	RCRailing & operator=(const RCRailing &rhs);
+	RCDoor & operator=(const RCDoor &rhs);
 
-	virtual RCTYPE GetType()const{return T_STDFACADE;}
+	virtual RCTYPE GetType()const{return T_DOOR;}
 
-	virtual RCRailing * Clone();
+	virtual RCDoor * Clone();
 	virtual void Draw();
-
-	int InsertRailing(AcGePoint3d start, AcGePoint3d end, CString fileName);
 
 protected: 
 	
 };
 
-typedef std::vector<RCRailing> vRCLanGan;
-typedef std::vector<RCRailing*> vpRCLanGan;
+typedef std::vector<RCDoor> vRCDoor;
+typedef std::vector<RCDoor*> vpRCDoor;

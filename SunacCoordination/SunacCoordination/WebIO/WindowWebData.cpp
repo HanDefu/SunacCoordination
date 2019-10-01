@@ -117,21 +117,10 @@ std::vector<AttrWindow> CWindowWebData::GetWindows(double p_width, double p_heig
 			if (xml.FindElem(_T("WindowOpenTypeid")))
 			{
 				attrwindow.m_openType = xml.GetData();
-
-			/*	if (ns.openType != NULL && ns.openType->c_str() != attrwindow.m_openType)
-				{
-					continue;
-				}*/
-
 			}
 			if (xml.FindElem(_T("WindowOpenQty")))
 			{
-				attrwindow.m_openQty =  _ttoi(xml.GetData());
-
-				/*if (ns.openNum != NULL && _ttoi(ns.openNum->c_str()) != attrwindow.m_openQty)
-				{
-					continue;
-				}*/
+				attrwindow.m_openQty = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("WindowHasCorner")))
 			{
@@ -139,21 +128,11 @@ std::vector<AttrWindow> CWindowWebData::GetWindows(double p_width, double p_heig
 			}
 			if (xml.FindElem(_T("WindowSizeMin")))
 			{
-				attrwindow.m_minWid = _ttoi(xml.GetData());
-
-				/*if (ns.width < attrwindow.m_minWid)
-				{
-					continue;
-				}*/
+				attrwindow.m_minWid = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("WindowSizeMax")))
 			{
-				attrwindow.m_maxWid = _ttoi(xml.GetData());
-
-				/*if (ns.width > attrwindow.m_maxWid)
-				{
-					continue;
-				}*/
+				attrwindow.m_maxWid = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("WindowDesignFormula")))
 			{
@@ -161,11 +140,11 @@ std::vector<AttrWindow> CWindowWebData::GetWindows(double p_width, double p_heig
 			}
 			if (xml.FindElem(_T("WindowVentilationQuantity")))
 			{
-				attrwindow.m_tongFengQty = _ttoi(xml.GetData());
+				attrwindow.m_tongFengQty = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("WindowPlugslotSize")))
 			{
-				attrwindow.m_plugslotSize = _ttoi(xml.GetData());
+				attrwindow.m_plugslotSize = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("WindowFunctionalArea")))
 			{
@@ -319,7 +298,7 @@ std::vector<AttrWindow>  CWindowWebData::GetAllWindows()const
 			}
 			if (xml.FindElem(_T("WindowOpenQty")))
 			{
-				attrallwindow.m_openQty =  _ttoi(xml.GetData());
+				attrallwindow.m_openQty = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("WindowHasCorner")))
 			{
@@ -327,11 +306,11 @@ std::vector<AttrWindow>  CWindowWebData::GetAllWindows()const
 			}
 			if (xml.FindElem(_T("WindowSizeMin")))
 			{
-				attrallwindow.m_minWid = _ttoi(xml.GetData());
+				attrallwindow.m_minWid = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("WindowSizeMax")))
 			{
-				attrallwindow.m_maxWid = _ttoi(xml.GetData());
+				attrallwindow.m_maxWid = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("WindowDesignFormula")))
 			{
@@ -339,11 +318,11 @@ std::vector<AttrWindow>  CWindowWebData::GetAllWindows()const
 			}
 			if (xml.FindElem(_T("WindowVentilationQuantity")))
 			{
-				attrallwindow.m_tongFengQty = _ttoi(xml.GetData());
+				attrallwindow.m_tongFengQty = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("WindowPlugslotSize")))
 			{
-				attrallwindow.m_plugslotSize = _ttoi(xml.GetData());
+				attrallwindow.m_plugslotSize = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("WindowFunctionalArea")))
 			{

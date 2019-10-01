@@ -22,7 +22,7 @@
 #include <geassign.h>
 #include "accmd.h"
 #include "../Common/ComFun_Sunac.h"
-#include "../Object/RCWindow.h"
+#include "../Object/WindowDoor/RCWindow.h"
 #include "../Common/ComFun_ACad.h"
 #include "dbtable.h"
 

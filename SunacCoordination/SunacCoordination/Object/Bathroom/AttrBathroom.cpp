@@ -4,36 +4,36 @@
 #include "dbproxy.h"
 #include "geassign.h"
 #include "acgi.h"
-#include "AttrRailing.h"
+#include "AttrBathroom.h"
 
 
 //{{AFX_ARX_MACRO
-ACRX_DXF_DEFINE_MEMBERS(AttrRailing, AcDbObject,
+ACRX_DXF_DEFINE_MEMBERS(AttrBathroom, AcDbObject,
 						 AcDb::kDHL_CURRENT, AcDb::kMReleaseCurrent,
                         AcDbProxyObject::kNoOperation,
-						 ZFFDWGSCALERAILING, ZffCustomObjectDBRAILING);
-AttrRailing::AttrRailing()
+						 ZFFDWGSCALEBathroom, ZffCustomObjectDBBathroom);
+AttrBathroom::AttrBathroom()
 {
 
 }
 
-AttrRailing::~AttrRailing()
+AttrBathroom::~AttrBathroom()
 {
 
 }
 
-AttrRailing::AttrRailing(const AttrRailing &other) : AttrObject(other)
+AttrBathroom::AttrBathroom(const AttrBathroom &other) : AttrObject(other)
 {
 
 }
 
-AttrRailing & AttrRailing::operator=(const AttrRailing &rhs)
+AttrBathroom & AttrBathroom::operator=(const AttrBathroom &rhs)
 {
 	AttrObject::operator=(rhs);
 	return *this;
 }
 
-Acad::ErrorStatus AttrRailing::dwgInFields(AcDbDwgFiler* filer)
+Acad::ErrorStatus AttrBathroom::dwgInFields(AcDbDwgFiler* filer)
 {
 	assertWriteEnabled();
 	Acad::ErrorStatus es;
@@ -46,7 +46,7 @@ Acad::ErrorStatus AttrRailing::dwgInFields(AcDbDwgFiler* filer)
 	return filer->filerStatus();
 }
 
-Acad::ErrorStatus AttrRailing::dwgOutFields(AcDbDwgFiler* filer) const
+Acad::ErrorStatus AttrBathroom::dwgOutFields(AcDbDwgFiler* filer) const
 {
 	assertReadEnabled();
 	Acad::ErrorStatus es;
@@ -55,16 +55,17 @@ Acad::ErrorStatus AttrRailing::dwgOutFields(AcDbDwgFiler* filer) const
 	if ((es = AttrObject::dwgOutFields(filer)) != Acad::eOk) {
 		return es;
 	}
+
 	
 	return filer->filerStatus();
 }
 
-bool AttrRailing::isEqualTo(AttrObject*other)
+bool AttrBathroom::isEqualTo(AttrObject*other)
 {
 	if (other == 0)
 		return false;
 
-	AttrRailing * pRealObj = dynamic_cast<AttrRailing *>(other);
+	AttrBathroom * pRealObj = dynamic_cast<AttrBathroom *>(other);
 	if (pRealObj == 0)
 		return false;
 
@@ -75,3 +76,4 @@ bool AttrRailing::isEqualTo(AttrObject*other)
 	/*return (m_openType == pRealObj->m_openType
 		);*/
 }
+

@@ -27,15 +27,15 @@
 class DLLIMPEXP  AttrObject : public AcDbObject
 {
 public:
-
 	ACRX_DECLARE_MEMBERS(AttrObject);
 
 	// Constructor / Destructor
 	AttrObject();
 	AttrObject(const AttrObject &other);
-	AttrObject & operator=(const AttrObject &rhs);
-
 	virtual ~AttrObject();
+
+	virtual AttrObject & operator=(const AttrObject &rhs);
+
 
 	//{{AFX_ARX_METHODS(ZffDwgScale)
 	virtual Acad::ErrorStatus dwgOutFields(AcDbDwgFiler* pFiler) const;

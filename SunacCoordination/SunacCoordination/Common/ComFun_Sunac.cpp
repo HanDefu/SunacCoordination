@@ -9,12 +9,12 @@
 #include <dbhatch.h>
 #include <acedads.h>
 #include "../Common/TYRect.h"
-#include "../Object\AttrWindow.h"
-#include "../Object\AttrAirCon.h"
-#include "../Object\AttrDoor.h"
+#include "../Object\WindowDoor\AttrWindow.h"
+#include "../Object\WindowDoor\AttrDoor.h"
+#include "../Object\AirCondition\AttrAirCon.h"
 #include "../Object\Kitchen\AttrKitchen.h"
-#include "../Object\AttrToilet.h"
-#include "../Object\AttrRailing.h"
+#include "../Object\Bathroom\AttrBathroom.h"
+#include "../Object/Railing/AttrRailing.h"
 #include "../Tool/DocLock.h"
 
 bool DQ_IsALine(AcDbObjectId entId)
@@ -667,11 +667,11 @@ bool TY_IsAirCon(AcDbObjectId Id)
 	return false;
 }
 
-bool TY_IsToilet(AcDbObjectId Id)
+bool TY_IsBathroom(AcDbObjectId Id)
 {
 	AcDbObject * pDataEnt = 0;
 	TY_GetAttributeData(Id, pDataEnt);
-	AttrToilet * pKitchen = dynamic_cast<AttrToilet *>(pDataEnt);
+	AttrBathroom * pKitchen = dynamic_cast<AttrBathroom *>(pDataEnt);
 	if (pKitchen != 0)
 		return true;
 	return false;

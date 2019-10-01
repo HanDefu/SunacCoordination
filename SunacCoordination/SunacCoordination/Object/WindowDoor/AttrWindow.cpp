@@ -5,7 +5,7 @@
 #include "geassign.h"
 #include "acgi.h"
 #include "AttrWindow.h"
-#include "../Common/ComFun_Sunac.h"
+#include "../../Common/ComFun_Sunac.h"
 
 
 //{{AFX_ARX_MACRO

@@ -14,7 +14,7 @@ typedef enum eRCType
     WINDOW,//外窗
 	DOOR,//门
 	KITCHEN,//厨房
-	TOILET,//卫生间
+	Bathroom,//卫生间
 	AIRCON,//空调
 	RAILING,//栏杆
 	TYPENUM
@@ -40,8 +40,8 @@ typedef enum eViewDir
 
 typedef enum eRailingType
 {
-	TIEYI,//铁艺
-	BOLI,//玻璃
+	E_RAILING_TIEYI,//铁艺
+	E_RAILING_BOLI,//玻璃
 }eRailingType;
 
 enum E_Prototype_Type

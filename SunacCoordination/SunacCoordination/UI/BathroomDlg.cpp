@@ -48,7 +48,7 @@ void CBathroomDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHECK_AIROUT, m_noAirOut);
 	DDX_Control(pDX, IDC_EDIT_BATHROOMNUMBER, m_number);
 	DDX_Control(pDX, IDC_COMBO_BASINWIDTH, m_basinWidth);
-	DDX_Control(pDX, IDC_COMBO_TOILETAREA, m_toiletWidth);
+	DDX_Control(pDX, IDC_COMBO_BathroomAREA, m_BathroomWidth);
 	DDX_Control(pDX, IDC_COMBO_WASHWIDTH, m_washWidth);
 	DDX_Control(pDX, IDC_CHECK_IMAGE, m_isMirror);
 	DDX_Control(pDX, IDC_CHECK_AUTOINDEX, m_autoIndex);
@@ -120,85 +120,85 @@ E_DIRECTION CBathroomDlg::GetDir(ads_point pt)
 
 void CBathroomDlg::LoadDefaultValue()
 {
-	const vCString& bathroomTypes = WebIO::GetConfigDict()->Toilet_GetTypes();
+	const vCString& bathroomTypes = WebIO::GetConfigDict()->Bathroom_GetTypes();
 	TYUI_InitComboBox(m_bathroomType, bathroomTypes, bathroomTypes.empty() ? _T("") : bathroomTypes[0]);
 	m_autoIndex.SetCheck(TRUE);
 	m_number.SetReadOnly(TRUE);
 	UpdateData(FALSE);
 }
 
-vector<AttrToilet*> CBathroomDlg::FilterTI()
+vector<AttrBathroom*> CBathroomDlg::FilterTI()
 {
-	vector<AttrToilet*> attrToilet;
+	vector<AttrBathroom*> attrBathroom;
 	int width = int(m_rect.GetWidth() + 0.5);
 	int height = int(m_rect.GetHeight() + 0.5);
 
 	if (width != 1600 && width != 1700 && width != 1850)
-		return attrToilet;
+		return attrBathroom;
 	if (height < 2450 || height > 3650)
-		return attrToilet;
+		return attrBathroom;
 	if ((height - 2450) % 150 != 0)
-		return attrToilet;
+		return attrBathroom;
 	if ((abs(m_windowDir - m_doorDir) % 2) == 1) //只支持对开
-		return attrToilet;
+		return attrBathroom;
 
-	return WebIO::GetInstance()->GetToilets(width, height, _T("对开"), _T("I"), (m_noAirOut.GetCheck() == 0));
+	return WebIO::GetInstance()->GetBathrooms(width, height, _T("对开"), _T("I"), (m_noAirOut.GetCheck() == 0));
 }
 
-vector<AttrToilet*> CBathroomDlg::FilterTL()
+vector<AttrBathroom*> CBathroomDlg::FilterTL()
 {
-	vector<AttrToilet*> attrToilet;
+	vector<AttrBathroom*> attrBathroom;
 	int width = int(m_rect.GetWidth() + 0.5);
 	int height = int(m_rect.GetHeight() + 0.5);
 
 	if (width < 1700 || width > 2150)
-		return attrToilet;
+		return attrBathroom;
 	if (height < 1850 || height > 2750)
-		return attrToilet;
+		return attrBathroom;
 	if ((width - 1700) % 150 != 0)
-		return attrToilet;
+		return attrBathroom;
 	if ((height - 1850) % 150 != 0)
-		return attrToilet;
+		return attrBathroom;
 	//不支持以下尺寸
 	if (width == 1700 && height == 1850)
-		return attrToilet;
+		return attrBathroom;
 	if (width == 1700 && height == 2000)
-		return attrToilet;
+		return attrBathroom;
 	if (width == 2000 && height == 2600)
-		return attrToilet;
+		return attrBathroom;
 	if (width == 2000 && height == 2750)
-		return attrToilet;
+		return attrBathroom;
 	if (width == 2150 && height == 2600)
-		return attrToilet;
+		return attrBathroom;
 	if (width == 2150 && height == 2750)
-		return attrToilet;
+		return attrBathroom;
 
 	//暂不考虑开启方向
 	/*if ((height >= 2450) && abs(m_doorDir - m_windowDir) == 2) //四件套垂直开
-		return attrToilet;
+		return attrBathroom;
 	if ((height < 2450) && abs(m_doorDir - m_windowDir) != 2) //四件套垂直开
-		return attrToilet;*/
+		return attrBathroom;*/
 
-	return WebIO::GetInstance()->GetToilets(width, height, _T("对开"), _T("L"), (m_noAirOut.GetCheck() == 0));
+	return WebIO::GetInstance()->GetBathrooms(width, height, _T("对开"), _T("L"), (m_noAirOut.GetCheck() == 0));
 }
 
-vector<AttrToilet*> CBathroomDlg::FilterTU()
+vector<AttrBathroom*> CBathroomDlg::FilterTU()
 {
-	vector<AttrToilet*> attrToilet;
+	vector<AttrBathroom*> attrBathroom;
 	int width = int(m_rect.GetWidth() + 0.5);
 	int height = int(m_rect.GetHeight() + 0.5);
 
 	//U型尺寸固定且不重复，暂时只考虑尺寸
 	if (width == 1850 && height == 2000)
-		return WebIO::GetInstance()->GetToilets(width, height, _T("对开"), _T("U"), (m_noAirOut.GetCheck() == 0));
+		return WebIO::GetInstance()->GetBathrooms(width, height, _T("对开"), _T("U"), (m_noAirOut.GetCheck() == 0));
 	if (width == 1600 && height == 2450)
-		return WebIO::GetInstance()->GetToilets(width, height, _T("对开"), _T("U"), (m_noAirOut.GetCheck() == 0));
+		return WebIO::GetInstance()->GetBathrooms(width, height, _T("对开"), _T("U"), (m_noAirOut.GetCheck() == 0));
 	if (width == 1850 && height == 2750)
-		return WebIO::GetInstance()->GetToilets(width, height, _T("对开"), _T("U"), (m_noAirOut.GetCheck() == 0));
+		return WebIO::GetInstance()->GetBathrooms(width, height, _T("对开"), _T("U"), (m_noAirOut.GetCheck() == 0));
 	if (width == 2000 && height == 2750)
-		return WebIO::GetInstance()->GetToilets(width, height, _T("对开"), _T("U"), (m_noAirOut.GetCheck() == 0));
+		return WebIO::GetInstance()->GetBathrooms(width, height, _T("对开"), _T("U"), (m_noAirOut.GetCheck() == 0));
 
-	return attrToilet;
+	return attrBathroom;
 }
 
 LRESULT CBathroomDlg::onAcadKeepFocus(WPARAM, LPARAM)
@@ -216,11 +216,11 @@ void CBathroomDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 
 	if (nSel >= 0 && nSel < m_allBathrooms.size())
 	{
-		CString type = m_allBathrooms[nSel]->m_toiletType;
+		CString type = m_allBathrooms[nSel]->m_BathroomType;
 		bool isG = (m_allBathrooms[nSel]->m_name.Right(6) == _T("_g.dwg"));
 
 		TYUI_InitComboBox(m_basinWidth, _T("650;750;800;900;1000"), _T("650"));
-		TYUI_InitComboBox(m_toiletWidth, _T("750;800"), _T("750"));
+		TYUI_InitComboBox(m_BathroomWidth, _T("750;800"), _T("750"));
 		if (isG)
 		{
 			TYUI_Enable(m_washWidth);

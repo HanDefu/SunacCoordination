@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "TYRect.h"
-#include "float.h"
+#include <float.h>
 #include <acdocman.h>
 #include <dbxutil.h>
 #include "ComFun_Math.h"

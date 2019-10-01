@@ -18,17 +18,12 @@ File description:
 class RCBlock : public RCObject
 {
 public:
-	//Constructors
 	RCBlock();
 	RCBlock(const RCBlock &other);
-
-	//Destructor
-	~RCBlock(void);
+	virtual ~RCBlock(void);
 	
 	virtual bool isEqualTo(RCObject*other = 0);//基础数据一致
-
-	//Operator = 
-	RCBlock & operator=(const RCBlock &rhs);
+	virtual RCBlock & operator=(const RCBlock &rhs);
 
 	AcDbObjectId Insert(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color);
 	AcDbObjectId RCBlock::Insert(CString layoutname, CString blockDefineName, 

@@ -15,9 +15,9 @@
 #include "../WebIO/WebIO.h"
 #include "../GlobalSetting.h"
 #include "../WebIO/WindowLocalData.h"
-#include "../Object/AttrAirCon.h"
+#include "../Object/AirCondition/AttrAirCon.h"
+#include "../Object/AirCondition/RCAirCondition.h"
 #include "../Common/ComFun_Sunac.h"
-#include "../Object/RCAirCondition.h"
 #include "../GlobalSetting.h"
 #include "../Common/ComFun_Str.h"
 

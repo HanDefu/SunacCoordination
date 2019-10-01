@@ -24,12 +24,12 @@
 #include "AcExtensionModule.h"
 #include "accmd.h"
 #include "UI\menu\Menu_Def.h"
-#include "object\AttrWindow.h"
-#include "object\AttrAirCon.h"
-#include "object\AttrDoor.h"
+#include "object\WindowDoor\AttrWindow.h"
+#include "object\WindowDoor\AttrDoor.h"
+#include "object\AirCondition\AttrAirCon.h"
 #include "object\Kitchen\AttrKitchen.h"
-#include "object\AttrToilet.h"
-#include "object\AttrRailing.h"
+#include "object\Bathroom\AttrBathroom.h"
+#include "object\Railing\AttrRailing.h"
 #include "Command\CommandWindowTable.h"
 #include "Command\Command.h"
 #include "GlobalSetting.h"
@@ -314,9 +314,9 @@ static void initApp()
 	acrxBuildClassHierarchy();
 	acrxRegisterService(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_KITCHEN));
 
-	AttrToilet::rxInit();
+	AttrBathroom::rxInit();
 	acrxBuildClassHierarchy();
-	acrxRegisterService(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_TOILET));
+	acrxRegisterService(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_Bathroom));
 
 	AttrRailing::rxInit();
 	acrxBuildClassHierarchy();
@@ -347,8 +347,8 @@ static void unloadApp()
 	deleteAcRxClass(AttrKitchen::desc());
 	delete acrxServiceDictionary->remove(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_KITCHEN));
 
-	deleteAcRxClass(AttrToilet::desc());
-	delete acrxServiceDictionary->remove(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_TOILET));
+	deleteAcRxClass(AttrBathroom::desc());
+	delete acrxServiceDictionary->remove(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_Bathroom));
 
 	deleteAcRxClass(AttrObject::desc());
 	delete acrxServiceDictionary->remove(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_OBJECT));

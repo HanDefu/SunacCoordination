@@ -2,7 +2,7 @@
 #include "PreviewWithDetail.h"
 #include "GsPreviewCtrl.h"
 #include "afxwin.h"
-#include "../Object/AttrAirCon.h"
+#include "../Object/AirCondition/AttrAirCon.h"
 #include "ComFun_MFC.h"
 
 // CAirconditionerDlg ¶Ô»°¿ò

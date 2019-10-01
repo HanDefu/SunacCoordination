@@ -15,7 +15,7 @@ File description:
 
 #include "StdAfx.h"
 #include "RCStdFacade.h"
-#include "float.h"
+#include <float.h>
 #include <algorithm>
 
 //Constructor

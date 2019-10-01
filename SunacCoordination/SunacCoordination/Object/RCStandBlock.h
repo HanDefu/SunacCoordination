@@ -20,15 +20,11 @@ File description:
 class RCStandBlock : public RCBlock
 {
 public:
-	//Constructors
 	RCStandBlock(void);
 	RCStandBlock(const RCStandBlock &other);
-
-	//Destructor
 	~RCStandBlock(void);
 
-	//Operator = 
-	RCStandBlock & operator=(const RCStandBlock &rhs);
+	virtual RCStandBlock & operator=(const RCStandBlock &rhs);
 
 protected: 
 	

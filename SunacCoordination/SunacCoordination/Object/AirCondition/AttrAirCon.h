@@ -9,7 +9,7 @@
 #endif // _MSC_VER > 1000
 
 #include "dbmain.h"
-#include "AttrObject.h"
+#include "..\AttrObject.h"
 
 #pragma warning(disable: 4275 4251)
 

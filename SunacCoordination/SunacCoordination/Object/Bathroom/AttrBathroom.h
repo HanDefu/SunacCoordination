@@ -1,17 +1,17 @@
 /////////////////////////////////////////////
 // ZffDwgScale custom object.
 
-#if !defined(ARX__ZFFDWGSCALE_H__20140205_113541_TOILET)
-#define ARX__ZFFDWGSCALE_H__20140205_113541_TOILET
+#if !defined(ARX__ZFFDWGSCALE_H__20140205_113541_Bathroom)
+#define ARX__ZFFDWGSCALE_H__20140205_113541_Bathroom
 
 #if _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
 
 #include "dbmain.h"
-#include "AttrObject.h"
-#include "../Sunac_def.h"
-#include "PrototypeCommonDef.h"
+#include "../AttrObject.h"
+#include "../../Sunac_def.h"
+#include "../PrototypeCommonDef.h"
 
 #pragma warning(disable: 4275 4251)
 
@@ -21,28 +21,28 @@
 #define DLLIMPEXP 
 #endif
 
-#ifndef ZFFCUSTOMOBJECTDB_DBXSERVICE_TOILET
-#define ZFFCUSTOMOBJECTDB_DBXSERVICE_TOILET "ZFFCUSTOMOBJECTDB_DBXSERVICE_TOILET"
+#ifndef ZFFCUSTOMOBJECTDB_DBXSERVICE_Bathroom
+#define ZFFCUSTOMOBJECTDB_DBXSERVICE_Bathroom "ZFFCUSTOMOBJECTDB_DBXSERVICE_Bathroom"
 #endif
 
-class DLLIMPEXP  AttrToilet : public AttrObject
+class DLLIMPEXP  AttrBathroom : public AttrObject
 {
 public:
 
-	ACRX_DECLARE_MEMBERS(AttrToilet);
+	ACRX_DECLARE_MEMBERS(AttrBathroom);
 
 	// Constructor / Destructor
-	AttrToilet();
-	virtual ~AttrToilet();
+	AttrBathroom();
+	virtual ~AttrBathroom();
 
-	AttrToilet(const AttrToilet &other);
-	AttrToilet & operator=(const AttrToilet &rhs);
+	AttrBathroom(const AttrBathroom &other);
+	AttrBathroom & operator=(const AttrBathroom &rhs);
 
 	//{{AFX_ARX_METHODS(ZffDwgScale)
 	virtual Acad::ErrorStatus dwgOutFields(AcDbDwgFiler* pFiler) const;
 	virtual Acad::ErrorStatus dwgInFields(AcDbDwgFiler* pFiler);
 	//}}AFX_ARX_METHODS
-	virtual eRCType GetType() {return TOILET;}
+	virtual eRCType GetType() {return Bathroom;}
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
 
 public:
@@ -57,9 +57,9 @@ public:
 
 	double m_guanXiWidth;//盥洗区宽度
 
-	CString m_toiletType; //卫生间
+	CString m_BathroomType; //卫生间
 };
 
 
 
-#endif // !defined(ARX__ZFFDWGSCALE_H__20140205_113541_TOILET)
+#endif // !defined(ARX__ZFFDWGSCALE_H__20140205_113541_Bathroom)

@@ -6,7 +6,7 @@
 #include "afxdialogex.h"
 #include "../Common/ComFun_Sunac.h"
 //#include "RailingBaseDlg.h"
-#include "../Object/RCRailing.h"
+#include "../Object/Railing/RCRailing.h"
 
 
 // CRailingDlg ¶Ô»°¿ò
@@ -118,8 +118,8 @@ void CRailingDlg::OnBnClickedMfcbuttonSelectline()
 	TY_GetTwoPoints(pnt1, pnt2);
 	if (m_selectedFile.GetLength() > 0)
 	{
-		RCRailing oneRailing;
-		oneRailing.InsertRailing(pnt1, pnt2, m_selectedFile);
+		//CRCRailing* pRailing = CreateRailing();
+		//pRailing->InsertRailing(pnt1, pnt2, m_selectedFile);
 	}
 	ShowWindow(true);
 	OnOK();

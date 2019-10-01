@@ -39,10 +39,10 @@ public:
 	vCString Kitchen_GetBingXiangTypes()const;//冰箱类型
 	vCString Kitchen_GetZaoTaiWidths()const;//灶台宽度
 
-	vCString Toilet_GetTypes()const;//卫生间类型
-	vCString Toilet_GetTaiPenWidths()const;//卫生间类型
-	vCString Toilet_GetMaTongTypes()const;//卫生间类型
-	vCString Toilet_GetGuanXiWidths()const;//盥洗区宽度---是否支持手动输入？？
+	vCString Bathroom_GetTypes()const;//卫生间类型
+	vCString Bathroom_GetTaiPenWidths()const;//卫生间类型
+	vCString Bathroom_GetMaTongTypes()const;//卫生间类型
+	vCString Bathroom_GetGuanXiWidths()const;//盥洗区宽度---是否支持手动输入？？
 
 	vCString Air_GetPiShus()const;//所有的匹数
 	vCString Air_GetLengNingShuiGuanPos()const;//冷凝水管位置

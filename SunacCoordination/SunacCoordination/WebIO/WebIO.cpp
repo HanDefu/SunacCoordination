@@ -204,7 +204,7 @@ std::vector<AttrKitchen *> WebIO::GetAllKitchens()
 	return result;
 }
 
-std::vector<AttrToilet *>  WebIO::GetToilets
+std::vector<AttrBathroom *>  WebIO::GetBathrooms
 (
     double width,//宽度，X方向
     double height,//高度，Y方向
@@ -213,7 +213,7 @@ std::vector<AttrToilet *>  WebIO::GetToilets
     bool hasPaiQiDao//是否含有排气道
 )
 {
-	std::vector<AttrToilet *> result;
+	std::vector<AttrBathroom *> result;
 #ifdef WORK_LOCAL//本地模式
 	CString localKitchenPath = TY_GetLocalFilePath();
 	CString localFile;
@@ -224,14 +224,14 @@ std::vector<AttrToilet *>  WebIO::GetToilets
 		{
 			localFile = L"TI3.dwg";
 			type = L"I3";
-			AttrToilet *pAttribute = new AttrToilet();
+			AttrBathroom *pAttribute = new AttrBathroom();
 			pAttribute->m_yxid.Format(L"T%s_%.0lf×%.0lf", type, width, height);
 			pAttribute->m_name = localFile;
 			pAttribute->m_isJiTuan = true;
 			pAttribute->m_isDynamic = true;
 			pAttribute->m_type = L"卫生间";
 			pAttribute->m_filePathName = localKitchenPath + pAttribute->m_name;
-			pAttribute->m_toiletType = type;
+			pAttribute->m_BathroomType = type;
 			pAttribute->m_windowDoorPos = DUIKAI;
 
 			result.push_back(pAttribute);
@@ -241,14 +241,14 @@ std::vector<AttrToilet *>  WebIO::GetToilets
 		{
 			localFile = L"TI3_g.dwg";
 			type = L"I3";
-			AttrToilet *pAttribute = new AttrToilet();
+			AttrBathroom *pAttribute = new AttrBathroom();
 			pAttribute->m_yxid.Format(L"T%s_%.0lf×%.0lf_g", type, width, height);
 			pAttribute->m_name = localFile;
 			pAttribute->m_isJiTuan = true;
 			pAttribute->m_isDynamic = true;
 			pAttribute->m_type = L"卫生间";
 			pAttribute->m_filePathName = localKitchenPath + pAttribute->m_name;
-			pAttribute->m_toiletType = type;
+			pAttribute->m_BathroomType = type;
 			pAttribute->m_windowDoorPos = DUIKAI;
 
 			result.push_back(pAttribute);
@@ -258,14 +258,14 @@ std::vector<AttrToilet *>  WebIO::GetToilets
 		{
 			localFile = L"TI4.dwg";
 			type = L"I4";
-			AttrToilet *pAttribute = new AttrToilet();
+			AttrBathroom *pAttribute = new AttrBathroom();
 			pAttribute->m_yxid.Format(L"T%s_%.0lf×%.0lf", type, width, height);
 			pAttribute->m_name = localFile;
 			pAttribute->m_isJiTuan = true;
 			pAttribute->m_isDynamic = true;
 			pAttribute->m_type = L"卫生间";
 			pAttribute->m_filePathName = localKitchenPath + pAttribute->m_name;
-			pAttribute->m_toiletType = type;
+			pAttribute->m_BathroomType = type;
 			pAttribute->m_windowDoorPos = DUIKAI;
 
 			result.push_back(pAttribute);
@@ -275,14 +275,14 @@ std::vector<AttrToilet *>  WebIO::GetToilets
 		{
 			localFile = L"TI4_g.dwg";
 			type = L"I4";
-			AttrToilet *pAttribute = new AttrToilet();
+			AttrBathroom *pAttribute = new AttrBathroom();
 			pAttribute->m_yxid.Format(L"T%s_%.0lf×%.0lf_g", type, width, height);
 			pAttribute->m_name = localFile;
 			pAttribute->m_isJiTuan = true;
 			pAttribute->m_isDynamic = true;
 			pAttribute->m_type = L"卫生间";
 			pAttribute->m_filePathName = localKitchenPath + pAttribute->m_name;
-			pAttribute->m_toiletType = type;
+			pAttribute->m_BathroomType = type;
 			pAttribute->m_windowDoorPos = DUIKAI;
 
 			result.push_back(pAttribute);
@@ -343,14 +343,14 @@ std::vector<AttrToilet *>  WebIO::GetToilets
 				type = L"U4";
 			}
 		}
-		AttrToilet *pAttribute = new AttrToilet();
+		AttrBathroom *pAttribute = new AttrBathroom();
 		pAttribute->m_yxid.Format(L"T%s_%.0lf×%.0lf_g", type, width, height);
 		pAttribute->m_name = localFile;
 		pAttribute->m_isJiTuan = true;
 		pAttribute->m_isDynamic = true;
 		pAttribute->m_type = L"卫生间";
 		pAttribute->m_filePathName = localKitchenPath + pAttribute->m_name;
-		pAttribute->m_toiletType = type;
+		pAttribute->m_BathroomType = type;
 		pAttribute->m_windowDoorPos = DUIKAI;
 
 		result.push_back(pAttribute);
@@ -363,11 +363,11 @@ std::vector<AttrToilet *>  WebIO::GetToilets
 	return result;
 }
 
-std::vector<AttrToilet *> WebIO::GetAllToilets()
+std::vector<AttrBathroom *> WebIO::GetAllBathrooms()
 {
-	std::vector<AttrToilet *> result;
+	std::vector<AttrBathroom *> result;
 #ifdef WORK_LOCAL//本地模式
-	result = GetToilets(0,0,L"",L"",0);
+	result = GetBathrooms(0,0,L"",L"",0);
 #else
 
 #endif
@@ -449,7 +449,7 @@ std::vector<AttrRailing *> WebIO::GetAllRailings()
 {
 	std::vector<AttrRailing *> result;
 #ifdef WORK_LOCAL//本地模式
-	result = GetRailings(TIEYI);
+	result = GetRailings(E_RAILING_TIEYI);
 #else
 
 #endif

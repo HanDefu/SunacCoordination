@@ -1,39 +1,41 @@
-/////////////////////////////////////////////
-// ZffDwgScale custom object.
+
 #include "StdAfx.h"
 #include "dbproxy.h"
 #include "geassign.h"
 #include "acgi.h"
-#include "AttrToilet.h"
+#include "AttrRailing.h"
 
 
 //{{AFX_ARX_MACRO
-ACRX_DXF_DEFINE_MEMBERS(AttrToilet, AcDbObject,
+ACRX_DXF_DEFINE_MEMBERS(AttrRailing, AcDbObject,
 						 AcDb::kDHL_CURRENT, AcDb::kMReleaseCurrent,
                         AcDbProxyObject::kNoOperation,
-						 ZFFDWGSCALETOILET, ZffCustomObjectDBTOILET);
-AttrToilet::AttrToilet()
+						 ZFFDWGSCALERAILING, ZffCustomObjectDBRAILING);
+AttrRailing::AttrRailing()
+{
+	m_height = 1100;		//栏杆高度
+	m_fanKanHeight = 200;	//反坎高度
+	m_length = 3000;	//栏杆长
+	m_railingType = E_RAILING_TIEYI; //栏杆类型
+}
+
+AttrRailing::~AttrRailing()
 {
 
 }
 
-AttrToilet::~AttrToilet()
+AttrRailing::AttrRailing(const AttrRailing &other) : AttrObject(other)
 {
 
 }
 
-AttrToilet::AttrToilet(const AttrToilet &other) : AttrObject(other)
-{
-
-}
-
-AttrToilet & AttrToilet::operator=(const AttrToilet &rhs)
+AttrRailing & AttrRailing::operator=(const AttrRailing &rhs)
 {
 	AttrObject::operator=(rhs);
 	return *this;
 }
 
-Acad::ErrorStatus AttrToilet::dwgInFields(AcDbDwgFiler* filer)
+Acad::ErrorStatus AttrRailing::dwgInFields(AcDbDwgFiler* filer)
 {
 	assertWriteEnabled();
 	Acad::ErrorStatus es;
@@ -46,7 +48,7 @@ Acad::ErrorStatus AttrToilet::dwgInFields(AcDbDwgFiler* filer)
 	return filer->filerStatus();
 }
 
-Acad::ErrorStatus AttrToilet::dwgOutFields(AcDbDwgFiler* filer) const
+Acad::ErrorStatus AttrRailing::dwgOutFields(AcDbDwgFiler* filer) const
 {
 	assertReadEnabled();
 	Acad::ErrorStatus es;
@@ -55,17 +57,16 @@ Acad::ErrorStatus AttrToilet::dwgOutFields(AcDbDwgFiler* filer) const
 	if ((es = AttrObject::dwgOutFields(filer)) != Acad::eOk) {
 		return es;
 	}
-
 	
 	return filer->filerStatus();
 }
 
-bool AttrToilet::isEqualTo(AttrObject*other)
+bool AttrRailing::isEqualTo(AttrObject*other)
 {
 	if (other == 0)
 		return false;
 
-	AttrToilet * pRealObj = dynamic_cast<AttrToilet *>(other);
+	AttrRailing * pRealObj = dynamic_cast<AttrRailing *>(other);
 	if (pRealObj == 0)
 		return false;
 
@@ -76,4 +77,3 @@ bool AttrToilet::isEqualTo(AttrObject*other)
 	/*return (m_openType == pRealObj->m_openType
 		);*/
 }
-

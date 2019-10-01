@@ -6,7 +6,7 @@
 ================================================================================
 File description:
 
-    This implementation file of class RCAirCondition.
+    This implementation file of class RCBathroom.
 
 ================================================================================
    Date      Name                    Description of Change
@@ -14,50 +14,44 @@ File description:
 ==============================================================================*/
 
 #include "StdAfx.h"
-#include "RCAirCondition.h"
-#include "float.h"
+#include "RCBathroom.h"
+#include <float.h>
 #include <algorithm>
-#include "../Common/ComFun_Sunac.h"
 
 //Constructor
-RCAirCondition::RCAirCondition(void)
+RCBathroom::RCBathroom(void)
 {
 
 }
 
 //Destructor
-RCAirCondition::~RCAirCondition(void)
+RCBathroom::~RCBathroom(void)
 {
 
 }
 
 
 //Constructor
-RCAirCondition::RCAirCondition(const RCAirCondition &other):RCStandBlock(other)
+RCBathroom::RCBathroom(const RCBathroom &other):RCDynamicBlock(other)
 {
 
 }
 
 //Operator = 
-RCAirCondition & RCAirCondition::operator=(const RCAirCondition &rhs)
+RCBathroom & RCBathroom::operator=(const RCBathroom &rhs)
 {
 	return *this;
 }
 
 
-void RCAirCondition::Draw()
+void RCBathroom::Draw()
 {
 }
 
-RCAirCondition * RCAirCondition::Clone()
+RCBathroom * RCBathroom::Clone()
 {
-	RCAirCondition * newObj = new RCAirCondition;
+	RCBathroom * newObj = new RCBathroom;
 
 	return newObj;
 }
 
-void RCAirCondition::AddAttribute(AttrAirCon * attr)
-{
-	if (attr != 0)
-		TY_AddAttributeData(m_id, attr);
-}

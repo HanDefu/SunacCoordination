@@ -21,12 +21,12 @@ enum RCTYPE {
 	T_WINDOW = 1, //窗
 	T_DOOR,//门
 	T_KITCHEN,//厨房
-	T_TOILET,//卫生间
+	T_Bathroom,//卫生间
+	T_AIRCONDITION, //空调
+	T_RAILING,//栏杆
 	T_STDFACADE, //标准立面
 	T_WATERPROOF, //防水
 	T_STDFILL,//填充
-	T_AIRCONDITION, //空调
-	T_LANGAN,//栏杆
 	T_XIANJIAO,//线脚
 	T_TYPE_NUM
 };
@@ -36,7 +36,7 @@ class RCObject
 public:
 	RCObject(void);
 	RCObject(const RCObject&other);
-	~RCObject(void);
+	virtual ~RCObject(void);
 
 	void SetUserData(void * userData){m_userData = userData;}
 	void *GetUserData(){return m_userData;}

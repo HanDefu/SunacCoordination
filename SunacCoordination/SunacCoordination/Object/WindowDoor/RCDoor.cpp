@@ -6,38 +6,52 @@
 ================================================================================
 File description:
 
-    This file is the head file of class RCDoor.
+    This implementation file of class RCDoor.
 
 ================================================================================
    Date      Name                    Description of Change
 16-July-2019  Han Defu                Create.
 ==============================================================================*/
-#pragma once
 
-#include <vector>
-#include "RCDynamicBlock.h"
+#include "StdAfx.h"
+#include "RCDoor.h"
+#include <float.h>
+#include <algorithm>
 
-class RCDoor : public RCDynamicBlock
+//Constructor
+RCDoor::RCDoor(void)
 {
-public:
-	//Constructors
-	RCDoor(void);
-	RCDoor(const RCDoor &other);
 
-	//Destructor
-	~RCDoor(void);
+}
 
-	//Operator = 
-	RCDoor & operator=(const RCDoor &rhs);
+//Destructor
+RCDoor::~RCDoor(void)
+{
 
-	virtual RCTYPE GetType()const{return T_DOOR;}
+}
 
-	virtual RCDoor * Clone();
-	virtual void Draw();
 
-protected: 
-	
-};
+//Constructor
+RCDoor::RCDoor(const RCDoor &other):RCDynamicBlock(other)
+{
 
-typedef std::vector<RCDoor> vRCDoor;
-typedef std::vector<RCDoor*> vpRCDoor;
+}
+
+//Operator = 
+RCDoor & RCDoor::operator=(const RCDoor &rhs)
+{
+	return *this;
+}
+
+
+void RCDoor::Draw()
+{
+}
+
+RCDoor * RCDoor::Clone()
+{
+	RCDoor * newObj = new RCDoor;
+
+	return newObj;
+}
+

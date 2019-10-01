@@ -15,11 +15,11 @@ File description:
 
 #include "StdAfx.h"
 #include "RCWindow.h"
-#include "float.h"
+#include <float.h>
 #include <algorithm>
-#include "../Common/ComFun_Sunac.h"
-#include "../Common/ComFun_ACad.h"
-#include "../Tool/DocLock.h"
+#include "../../Common/ComFun_Sunac.h"
+#include "../../Common/ComFun_ACad.h"
+#include "../../Tool/DocLock.h"
 
 //Constructor
 RCWindow::RCWindow(void)

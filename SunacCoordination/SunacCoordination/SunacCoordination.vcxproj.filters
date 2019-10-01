@@ -127,18 +127,6 @@
     <ClCompile Include="Object\RCDynamicBlock.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Object\RCWindow.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\RCDoor.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\RCToilet.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\RCAirCondition.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="Object\RCWaterProof.cpp">
       <Filter>Object</Filter>
     </ClCompile>
@@ -154,9 +142,6 @@
     <ClCompile Include="Common\ComFun_DynamicBlock.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="Object\RCRailing.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="UI\MyPalette.cpp">
       <Filter>UI</Filter>
     </ClCompile>
@@ -168,21 +153,6 @@
     </ClCompile>
     <ClCompile Include="UI\DlgLogin.cpp">
       <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\AttrAirCon.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\AttrDoor.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\AttrRailing.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\AttrToilet.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\AttrWindow.cpp">
-      <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="Object\AttrObject.cpp">
       <Filter>Object</Filter>
@@ -247,9 +217,6 @@
     <ClCompile Include="WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.cpp" />
     <ClCompile Include="WebIO\SunacCadWeb\soapC.cpp" />
     <ClCompile Include="WebIO\SunacCadWeb\stdsoap2.cpp" />
-    <ClCompile Include="ToiletCom.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="Object\Kitchen\KitchenGen.cpp">
       <Filter>Object\Kitchen</Filter>
     </ClCompile>
@@ -267,6 +234,42 @@
     </ClCompile>
     <ClCompile Include="WebIO\AirConditionLocalData.cpp">
       <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Railing\AttrRailing.cpp">
+      <Filter>Object\Railing</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Railing\RailingGen.cpp">
+      <Filter>Object\Railing</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Railing\RCRailing.cpp">
+      <Filter>Object\Railing</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\AirCondition\AttrAirCon.cpp">
+      <Filter>Object\AirCondition</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\AirCondition\RCAirCondition.cpp">
+      <Filter>Object\AirCondition</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowDoor\AttrDoor.cpp">
+      <Filter>Object\WindowDoor</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowDoor\AttrWindow.cpp">
+      <Filter>Object\WindowDoor</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowDoor\RCDoor.cpp">
+      <Filter>Object\WindowDoor</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowDoor\RCWindow.cpp">
+      <Filter>Object\WindowDoor</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Bathroom\RCBathroom.cpp">
+      <Filter>Object\Bathroom</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Bathroom\AttrBathroom.cpp">
+      <Filter>Object\Bathroom</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Bathroom\BathroomCom.cpp">
+      <Filter>Object\Bathroom</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -465,18 +468,6 @@
     <ClInclude Include="Object\RCDynamicBlock.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Object\RCWindow.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\RCDoor.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\RCToilet.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\RCAirCondition.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="Object\RCWaterProof.h">
       <Filter>Object</Filter>
     </ClInclude>
@@ -492,9 +483,6 @@
     <ClInclude Include="Common\ComFun_DynamicBlock.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Object\RCRailing.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="UI\MyPalette.h">
       <Filter>UI</Filter>
     </ClInclude>
@@ -506,21 +494,6 @@
     </ClInclude>
     <ClInclude Include="UI\DlgLogin.h">
       <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\AttrAirCon.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\AttrDoor.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\AttrRailing.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\AttrToilet.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\AttrWindow.h">
-      <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Object\AttrObject.h">
       <Filter>Object</Filter>
@@ -595,9 +568,6 @@
     <ClInclude Include="WebIO\SunacCadWeb\soapH.h" />
     <ClInclude Include="WebIO\SunacCadWeb\soapStub.h" />
     <ClInclude Include="WebIO\SunacCadWeb\stdsoap2.h" />
-    <ClInclude Include="ToiletCom.h">
-      <Filter>Source</Filter>
-    </ClInclude>
     <ClInclude Include="Object\Kitchen\KitchenGen.h">
       <Filter>Object\Kitchen</Filter>
     </ClInclude>
@@ -618,6 +588,42 @@
     </ClInclude>
     <ClInclude Include="WebIO\AirConditionLocalData.h">
       <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Railing\AttrRailing.h">
+      <Filter>Object\Railing</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Railing\RailingGen.h">
+      <Filter>Object\Railing</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Railing\RCRailing.h">
+      <Filter>Object\Railing</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\AirCondition\AttrAirCon.h">
+      <Filter>Object\AirCondition</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\AirCondition\RCAirCondition.h">
+      <Filter>Object\AirCondition</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\AttrDoor.h">
+      <Filter>Object\WindowDoor</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\AttrWindow.h">
+      <Filter>Object\WindowDoor</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\RCDoor.h">
+      <Filter>Object\WindowDoor</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\RCWindow.h">
+      <Filter>Object\WindowDoor</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Bathroom\RCBathroom.h">
+      <Filter>Object\Bathroom</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Bathroom\AttrBathroom.h">
+      <Filter>Object\Bathroom</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Bathroom\BathroomCom.h">
+      <Filter>Object\Bathroom</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -671,6 +677,15 @@
     </Filter>
     <Filter Include="Object\Bathroom">
       <UniqueIdentifier>{d2294c04-ba86-4686-a0b2-675541f408ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Railing">
+      <UniqueIdentifier>{7d271199-0689-4b26-82df-e0ed689299f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\WindowDoor">
+      <UniqueIdentifier>{322af860-a0df-4953-bbc6-3891f2dbe8d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\AirCondition">
+      <UniqueIdentifier>{0b2fa8ef-0928-40ce-bf66-c28118401bdd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

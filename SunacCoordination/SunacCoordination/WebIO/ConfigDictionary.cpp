@@ -81,10 +81,10 @@ bool CConfigDictionary::InitFromWeb()
 	GetConfig(_T("hearthWidth"));
 
 	//卫生间类型
-	GetConfig(_T("toiletType"));
+	GetConfig(_T("BathroomType"));
 
 	//卫生间台盆宽度
-	GetConfig(_T("toiletBasinWidth"));
+	GetConfig(_T("BathroomBasinWidth"));
 
 	//马桶宽度
 	GetConfig(_T("closesToolWidth"));
@@ -386,9 +386,9 @@ vCString CConfigDictionary::Kitchen_GetZaoTaiWidths()const
 		return strs;
 	}
 }
-vCString CConfigDictionary::Toilet_GetTypes()const
+vCString CConfigDictionary::Bathroom_GetTypes()const
 {
-	auto iter = m_configDict.find(_T("toiletType"));
+	auto iter = m_configDict.find(_T("BathroomType"));
 	if (iter != m_configDict.end())
 	{
 		return iter->second;
@@ -402,9 +402,9 @@ vCString CConfigDictionary::Toilet_GetTypes()const
 		return strs;
 	}
 }
-vCString CConfigDictionary::Toilet_GetTaiPenWidths()const
+vCString CConfigDictionary::Bathroom_GetTaiPenWidths()const
 {
-	auto iter = m_configDict.find(_T("toiletBasinWidth"));
+	auto iter = m_configDict.find(_T("BathroomBasinWidth"));
 	if (iter != m_configDict.end())
 	{
 		return iter->second;
@@ -420,7 +420,7 @@ vCString CConfigDictionary::Toilet_GetTaiPenWidths()const
 		return strs;
 	}
 }
-vCString CConfigDictionary::Toilet_GetMaTongTypes()const
+vCString CConfigDictionary::Bathroom_GetMaTongTypes()const
 {
 	auto iter = m_configDict.find(_T("closesToolWidth"));
 	if (iter != m_configDict.end())
@@ -435,7 +435,7 @@ vCString CConfigDictionary::Toilet_GetMaTongTypes()const
 		return strs;
 	}
 }
-vCString CConfigDictionary::Toilet_GetGuanXiWidths()const
+vCString CConfigDictionary::Bathroom_GetGuanXiWidths()const
 {
 	auto iter = m_configDict.find(_T("bathroomWidth"));
 	if (iter != m_configDict.end())

@@ -6,7 +6,7 @@
 ================================================================================
 File description:
 
-    This file is the head file of class RCToilet.
+    This file is the head file of class RCAirCondition.
 
 ================================================================================
    Date      Name                    Description of Change
@@ -15,29 +15,32 @@ File description:
 #pragma once
 
 #include <vector>
-#include "RCDynamicBlock.h"
+#include "..\RCStandBlock.h"
+#include "AttrAirCon.h"
 
-class RCToilet : public RCDynamicBlock
+class RCAirCondition : public RCStandBlock
 {
 public:
 	//Constructors
-	RCToilet(void);
-	RCToilet(const RCToilet &other);
+	RCAirCondition(void);
+	RCAirCondition(const RCAirCondition &other);
 
 	//Destructor
-	~RCToilet(void);
+	~RCAirCondition(void);
 
 	//Operator = 
-	RCToilet & operator=(const RCToilet &rhs);
+	RCAirCondition & operator=(const RCAirCondition &rhs);
 
-	virtual RCTYPE GetType()const{return T_TOILET;}
+	virtual RCTYPE GetType()const{return T_AIRCONDITION;}
 
-	virtual RCToilet * Clone();
+	void AddAttribute(AttrAirCon * attr);
+
+	virtual RCAirCondition * Clone();
 	virtual void Draw();
 
 protected: 
 	
 };
 
-typedef std::vector<RCToilet> vRCToilet;
-typedef std::vector<RCToilet*> vpRCToilet;
+typedef std::vector<RCAirCondition> vRCAirCondition;
+typedef std::vector<RCAirCondition*> vpRCAirCondition;
