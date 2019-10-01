@@ -47,15 +47,15 @@ private:
 
 
 public:
-	double m_piShu;
-	CString m_lengNingShuiGuanPos;//冷凝水管位置---不确定
-	bool m_hasYuShuiGuan;//是否有雨水管
+	//double m_piShu;
+	//CString m_lengNingShuiGuanPos;//冷凝水管位置---不确定
+	//bool m_hasYuShuiGuan;//是否有雨水管
 
 
 	//外窗数据表格第二张表单空调 变量
 	CString m_airConId;				//空调序号
-	CString m_airConPrototypeId;	//空调原型编号
-	CString m_airConPrototypeFile;	//空调原型文件
+	//CString m_yxid;	//空调原型编号
+	//CString m_name;	//空调原型文件
 	CString m_airConHorseNumber;	//空调匹数
 	CString m_airConPipePos;		//空调冷凝水管位置
 	CString m_airConRainRiser;		//空调是否有雨水立管穿过

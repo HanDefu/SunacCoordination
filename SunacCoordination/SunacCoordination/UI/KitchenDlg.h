@@ -77,3 +77,6 @@ public:
 	void ClearPreviews();
 	bool CheckValid(CString& errMsg); //插入前检验参数合法性
 };
+
+extern CKitchenDlg* g_kitchenDlg;
+BOOL CloseKitchenDlg();

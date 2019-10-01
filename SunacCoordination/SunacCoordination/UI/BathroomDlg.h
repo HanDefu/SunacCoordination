@@ -60,3 +60,6 @@ public:
 	afx_msg void OnBnClickedButtonWindowDir();
 	afx_msg void OnBnClickedButtonSearch();
 };
+
+extern CBathroomDlg* g_bathroomDlg;
+BOOL CloseBathroomDlg();

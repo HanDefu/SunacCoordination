@@ -1,11 +1,11 @@
-﻿//m_airConPrototypeFile
-//m_airConPrototypeFile
-//m_airConPrototypeFile
+﻿//m_name
+//m_name
+//m_name
 //m_airConHorseNumber
 //m_airConHorseNumber
-//m_airConPrototypeId
-//m_airConPrototypeId
-//m_airConPrototypeFile
+//m_yxid
+//m_yxid
+//m_name
 // UI\AirconditionerDlg.cpp : 实现文件
 //
 
@@ -24,6 +24,17 @@
 
 // CAirconditionerDlg 对话框
 
+CAirconditionerDlg* g_airconditionerDlg = NULL;
+
+BOOL CloseAirconditionerDlg()
+{
+	if (g_airconditionerDlg == NULL)
+		return TRUE;
+	BOOL ret = g_airconditionerDlg->DestroyWindow();
+	if (ret)
+		g_airconditionerDlg = NULL;
+	return ret;
+}
 
 
 IMPLEMENT_DYNAMIC(CAirconditionerDlg, CAcUiDialog)
@@ -165,7 +176,7 @@ void CAirconditionerDlg::UpdatePreview() //当空调对话框中的控件的值�
 	Acad::ErrorStatus es=acDocManager->lockDocument(curDoc());
 	AcDbDatabase *pDatabase = new AcDbDatabase();
 	//图形文件路径
-	m_filePathName = MD2010_GetAppPath() + L"\\support\\Sunac2019\\LocalMode\\" + m_allAirCons[0].m_airConPrototypeFile;
+	m_filePathName = MD2010_GetAppPath() + L"\\support\\Sunac2019\\LocalMode\\" + m_allAirCons[0].m_name;
 	es = pDatabase->readDwgFile(m_filePathName);
 	//DrawSolid(zhu, pDatabase,false);
 	m_preAirCon.SetDatabase(pDatabase);

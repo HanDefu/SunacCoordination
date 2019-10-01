@@ -47,22 +47,24 @@ AttrWindow::AttrWindow(const AttrWindow &other) : AttrObject(other)
 	m_wallDis = other.m_wallDis;
 
 	////////////////////////////
-	id = other.id;					//序号
-	prototypeId = other.prototypeId;		//原型编号
-	prototypeFile = other.prototypeFile;		//原型文件
-	scopeOfApplication = other.scopeOfApplication;	//适用范围
-	isDynamic = other.isDynamic;			//是否动态
-	functionType = other.functionType;		//功能区类型
-	openType = other.openType;			//开启类型
-	openNum = other.openNum;			//开启数量
+	m_id = other.m_id;					//序号
+	m_yxid = other.m_yxid;		//原型编号
+	m_name = other.m_name;		//原型文件
+	m_scopeOfApplication = other.m_scopeOfApplication;	//适用范围
+	m_Dynamic = other.m_Dynamic;			//是否动态
+	m_functionType = other.m_functionType;		//功能区类型
+	m_openType = other.m_openType;			//开启类型
+	m_openQty = other.m_openQty;			//开启数量
 	//widthMin = other.widthMin;			//宽度最小值
 	//widthMax = other.widthMax;			//宽度最大值
-	ventilationFormula = other.ventilationFormula;	//通风量公式	
-	staticWidth = other.staticWidth;		//静态宽度	
-	staticHeigth = other.staticHeigth;		//静态高度	
-	staticVentilation = other.staticVentilation;	//静态通风量	
-	prototypeFlatFile = other.prototypeFlatFile;	//原型平面文件
-	prototypeTopViewFile = other.prototypeTopViewFile;//原型俯视图文件
+	m_tongFengFormula = other.m_tongFengFormula;	//通风量公式	
+	m_width = other.m_width;		//静态宽度	
+	m_height = other.m_height;		//静态高度	
+	m_tongFengQty = other.m_tongFengQty;	//静态通风量	
+	m_prototypeFlatFile = other.m_prototypeFlatFile;	//原型平面文件
+	m_prototypeTopViewFile = other.m_prototypeTopViewFile;//原型俯视图文件
+	m_prototypeFacadeFile = other.m_prototypeFacadeFile; //原型立面文件
+	m_prototypeSpreadFile = other.m_prototypeSpreadFile; //原型展开图文件
 
 	m_dimData = other.m_dimData;
 }

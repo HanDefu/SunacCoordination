@@ -358,7 +358,6 @@ static void unloadApp()
 }
 
 
-
 //////////////////////////////////////////////////////////////
 //
 // Entry points
@@ -392,7 +391,12 @@ extern "C" AcRx::AppRetCode acrxEntryPoint( AcRx::AppMsgCode msg, void* appId)
 		InitMenu();
 		break;
 	case AcRx::kUnloadAppMsg: 
+		CloseModelessDialogs();
+		CADPalette_RemoveP();
 		unloadApp();
+		break;
+	case AcRx::kQuitMsg:
+		CloseModelessDialogs();
 		break;
 	case  AcRx::kLoadDwgMsg:
 		break;

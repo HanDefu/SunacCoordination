@@ -30,7 +30,6 @@ CWindowDlg::~CWindowDlg()
 
 LRESULT CWindowDlg::onAcadKeepFocus(WPARAM, LPARAM)
 {
-	//return FALSE;
 	return TRUE;
 }
 
@@ -50,6 +49,7 @@ void CWindowDlg::PostNcDestroy()
 {
 	CAcUiDialog::PostNcDestroy();
 	delete this;
+	g_windowDlg = NULL;
 }
 
 void CWindowDlg::DoDataExchange(CDataExchange* pDX)
@@ -130,11 +130,11 @@ void CWindowDlg::OnBnClickedButtonInsert()
 			
 		int sel = m_viewDir.GetCurSel();
 		if (sel == 0)
-		    oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].prototypeFile, origin, 0, L"0", 256);
+		    oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].m_name, origin, 0, L"0", 256);
 		else if (sel == 1)
-            oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].prototypeFlatFile, origin, 0, L"0", 256);
+            oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].m_prototypeFlatFile, origin, 0, L"0", 256);
 		else
-			oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].prototypeTopViewFile, origin, 0, L"0", 256);
+			oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].m_prototypeTopViewFile, origin, 0, L"0", 256);
 
 		oneWindow.InitParameters();
 		oneWindow.SetParameter(L"H", height);
@@ -156,7 +156,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		oneWindow.AddAttribute(pWindow);
 		pWindow->close();
 
-		oneWindow.SetBianHao(m_allWindows[sels[0]].prototypeId + str);
+		oneWindow.SetBianHao(m_allWindows[sels[0]].m_yxid + str);
 	}
 	OnOK();
 }
@@ -188,8 +188,8 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 	for (int i = 0; i < m_allWindows.size(); i++)
 	{
 		CString str;
-		str.Format(_T("原型编号：%s\n窗户面积：%.2lf\n通风量：0.9\n动态类型：动态\n适用范围：集团"), m_allWindows[i].prototypeId, width * height / 1E6);
-		m_preWindow.AddPreview(i, 0, TY_GetLocalFilePath() + m_allWindows[i].prototypeFile, str);
+		str.Format(_T("原型编号：%s\n窗户面积：%.2lf\n通风量：0.9\n动态类型：动态\n适用范围：集团"), m_allWindows[i].m_yxid, width * height / 1E6);
+		m_preWindow.AddPreview(i, 0, TY_GetLocalFilePath() + m_allWindows[i].m_name, str);
 	}
 
 	m_preWindow.SelectPreview(0, 0);
@@ -254,7 +254,7 @@ void CWindowDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 			}
 		}
 
-		TYUI_SetText(m_number, m_allWindows[nSel].prototypeId);
+		TYUI_SetText(m_number, m_allWindows[nSel].m_yxid);
 		m_radioYes = (m_allWindows[nSel].m_isBayWindow ? 0 : 1);
 		UpdateData(FALSE);
 	}
@@ -313,4 +313,16 @@ void CWindowDlg::LoadDefaultValue()
 	m_autoIndex = TRUE;
 	m_number.SetReadOnly(TRUE);
 	UpdateData(FALSE);
+}
+
+CWindowDlg* g_windowDlg = NULL;
+
+BOOL CloseWindowDlg()
+{
+	if (g_windowDlg == NULL)
+		return TRUE;
+	BOOL ret = g_windowDlg->DestroyWindow();
+	if (ret)
+		g_windowDlg = NULL;
+	return ret;
 }

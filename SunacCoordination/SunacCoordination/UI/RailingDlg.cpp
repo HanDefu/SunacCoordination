@@ -11,6 +11,19 @@
 
 // CRailingDlg ¶Ô»°¿ò
 
+CRailingDlg* g_railingDlg = NULL;
+
+BOOL CloseRailingDlg()
+{
+	if (g_railingDlg == NULL)
+		return TRUE;
+	BOOL ret = g_railingDlg->DestroyWindow();
+	if (ret)
+		g_railingDlg = NULL;
+	return ret;
+}
+
+
 IMPLEMENT_DYNAMIC(CRailingDlg, CAcUiDialog)
 
 CRailingDlg::CRailingDlg(CWnd* pParent /*=NULL*/)

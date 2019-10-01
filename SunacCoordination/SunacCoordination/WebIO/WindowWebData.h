@@ -19,8 +19,8 @@ public:
 	//tongFengLiang//通风量
 	//读取门和窗
 	std::vector<AttrWindow >  GetWindows(double p_width, double p_heigh, CString openType, int openNum, CString gongNengQu)const;
-	std::vector<AttrWindow >  GetDoors(double width, CString openType, int openNum, CString gongNengQu)const;
-
+	std::vector<AttrWindow >  GetAllWindows()const;
+	std::vector<AttrWindow >  GetDoors(double p_width, double p_heigh, CString openType, int openNum, CString gongNengQu)const;
 
 protected:
 

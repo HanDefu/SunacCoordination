@@ -1,5 +1,9 @@
 #pragma once
 
+//创建/移除工具栏
+void CADPalette_AddP();
+void CADPalette_RemoveP();
+
 void CMD_Login();
 
 //窗户
@@ -27,4 +31,7 @@ void CMD_SUNACFACADE();
 
 //防水构造
 void CMD_SUNACWATERPROOF();
+
+//退出前关闭所有非模态对话框
+void CloseModelessDialogs();
 

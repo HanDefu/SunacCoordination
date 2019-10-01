@@ -69,23 +69,36 @@ public:
 	double m_windowH2;  //下固定值（若存在下固定时）
 	double m_wallDis;//外墙距离
 
-public:
-	CString id;					//序号
-	CString	prototypeId;		//原型编号
-	CString	prototypeFile;		//原型文件
-	CString	scopeOfApplication;	//适用范围
-	CString	isDynamic;			//是否动态
-	CString	functionType;		//功能区类型
-	CString	openType;			//开启类型
-	CString	openNum;			//开启数量
-	
-	CString	ventilationFormula;	//通风量公式	
-	CString	staticWidth;		//静态宽度	
-	CString	staticHeigth;		//静态高度	
-	CString	staticVentilation;	//静态通风量	
-	CString	prototypeFlatFile;	//原型平面文件
-	CString	prototypeTopViewFile;//原型俯视图文件
-	
+	//CString	prototypeId;		//原型编号
+	//CString	prototypeFile;		//原型文件
+	//CString	openType;			//开启类型
+	//CString	openNum;			//开启数量
+	//CString	ventilationFormula;	//通风量公式	
+	//CString	staticWidth;		//静态宽度	
+	//CString	staticHeigth;		//静态高度	
+	//CString	staticVentilation;	//静态通风量
+
+	double m_plugslotSize;		//塞缝尺寸
+	CString m_sizeId;			//尺寸代号
+	CString m_id;					//序号
+	CString	m_scopeOfApplication;	//适用范围
+	CString	m_Dynamic;				//动态
+	CString	m_functionType;		//功能区类型
+	CString m_jiTuan;			//集团名称
+	CString m_DynamicType;		//动态类型
+
+	CString	m_valueType;		//值类型	
+	CString	m_value;			//值	
+	CString	m_min;				//最小值
+	CString	m_max;				//最大值
+	CString	m_defaultValue;		//默认值
+	CString	m_state;			//说明
+
+	CString	m_prototypeFlatFile;	//原型平面文件
+	CString	m_prototypeTopViewFile;//原型俯视图文件
+	CString m_prototypeFacadeFile; //原型立面文件
+	CString m_prototypeSpreadFile; //原型展开图文件
+
 	vSRCDimData m_dimData;
 };
 
