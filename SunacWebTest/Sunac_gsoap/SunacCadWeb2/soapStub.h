@@ -41,12 +41,16 @@ class _ns1__GetAllWindows;	/* .\SunacCADService2.h:155 */
 class _ns1__GetAllWindowsResponse;	/* .\SunacCADService2.h:157 */
 class _ns1__GetWindows;	/* .\SunacCADService2.h:159 */
 class _ns1__GetWindowsResponse;	/* .\SunacCADService2.h:161 */
-struct __ns1__StandardDesignAttribute;	/* .\SunacCADService2.h:472 */
-struct __ns1__GetAllWindows;	/* .\SunacCADService2.h:543 */
-struct __ns1__GetWindows;	/* .\SunacCADService2.h:614 */
-struct __ns1__StandardDesignAttribute_;	/* .\SunacCADService2.h:685 */
-struct __ns1__GetAllWindows_;	/* .\SunacCADService2.h:756 */
-struct __ns1__GetWindows_;	/* .\SunacCADService2.h:827 */
+class _ns1__CadFileDownload;	/* .\SunacCADService2.h:163 */
+class _ns1__CadFileDownloadResponse;	/* .\SunacCADService2.h:165 */
+struct __ns1__StandardDesignAttribute;	/* .\SunacCADService2.h:524 */
+struct __ns1__GetAllWindows;	/* .\SunacCADService2.h:595 */
+struct __ns1__GetWindows;	/* .\SunacCADService2.h:666 */
+struct __ns1__CadFileDownload;	/* .\SunacCADService2.h:737 */
+struct __ns1__StandardDesignAttribute_;	/* .\SunacCADService2.h:808 */
+struct __ns1__GetAllWindows_;	/* .\SunacCADService2.h:879 */
+struct __ns1__GetWindows_;	/* .\SunacCADService2.h:950 */
+struct __ns1__CadFileDownload_;	/* .\SunacCADService2.h:1021 */
 
 /* .\SunacCADService2.h:151 */
 #ifndef SOAP_TYPE__ns1__StandardDesignAttribute
@@ -270,9 +274,81 @@ class SOAP_CMAC _ns1__GetWindowsResponse {
 };
 #endif
 
-/* .\SunacCADService2.h:472 */
+/* .\SunacCADService2.h:163 */
+#ifndef SOAP_TYPE__ns1__CadFileDownload
+#define SOAP_TYPE__ns1__CadFileDownload (14)
+/* complex XML schema type 'ns1:CadFileDownload': */
+class SOAP_CMAC _ns1__CadFileDownload {
+      public:
+        /// Required element 'ns1:Id' of XML schema type 'xsd:int'
+        int Id;
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__CadFileDownload
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__CadFileDownload; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__CadFileDownload, default initialized and not managed by a soap context
+        virtual _ns1__CadFileDownload *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__CadFileDownload); }
+      public:
+        /// Constructor with default initializations
+        _ns1__CadFileDownload() : Id(), soap() { }
+        virtual ~_ns1__CadFileDownload() { }
+        /// Friend allocator used by soap_new__ns1__CadFileDownload(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__CadFileDownload * SOAP_FMAC2 soap_instantiate__ns1__CadFileDownload(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:165 */
+#ifndef SOAP_TYPE__ns1__CadFileDownloadResponse
+#define SOAP_TYPE__ns1__CadFileDownloadResponse (15)
+/* complex XML schema type 'ns1:CadFileDownloadResponse': */
+class SOAP_CMAC _ns1__CadFileDownloadResponse {
+      public:
+        /// Optional element 'ns1:CadFileDownloadResult' of XML schema type 'xsd:string'
+        std::wstring *CadFileDownloadResult;
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__CadFileDownloadResponse
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__CadFileDownloadResponse; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__CadFileDownloadResponse, default initialized and not managed by a soap context
+        virtual _ns1__CadFileDownloadResponse *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__CadFileDownloadResponse); }
+      public:
+        /// Constructor with default initializations
+        _ns1__CadFileDownloadResponse() : CadFileDownloadResult(), soap() { }
+        virtual ~_ns1__CadFileDownloadResponse() { }
+        /// Friend allocator used by soap_new__ns1__CadFileDownloadResponse(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__CadFileDownloadResponse * SOAP_FMAC2 soap_instantiate__ns1__CadFileDownloadResponse(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:524 */
 #ifndef SOAP_TYPE___ns1__StandardDesignAttribute
-#define SOAP_TYPE___ns1__StandardDesignAttribute (21)
+#define SOAP_TYPE___ns1__StandardDesignAttribute (23)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__StandardDesignAttribute {
       public:
@@ -288,9 +364,9 @@ struct SOAP_CMAC __ns1__StandardDesignAttribute {
 };
 #endif
 
-/* .\SunacCADService2.h:543 */
+/* .\SunacCADService2.h:595 */
 #ifndef SOAP_TYPE___ns1__GetAllWindows
-#define SOAP_TYPE___ns1__GetAllWindows (25)
+#define SOAP_TYPE___ns1__GetAllWindows (27)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetAllWindows {
       public:
@@ -306,9 +382,9 @@ struct SOAP_CMAC __ns1__GetAllWindows {
 };
 #endif
 
-/* .\SunacCADService2.h:614 */
+/* .\SunacCADService2.h:666 */
 #ifndef SOAP_TYPE___ns1__GetWindows
-#define SOAP_TYPE___ns1__GetWindows (29)
+#define SOAP_TYPE___ns1__GetWindows (31)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetWindows {
       public:
@@ -324,9 +400,27 @@ struct SOAP_CMAC __ns1__GetWindows {
 };
 #endif
 
-/* .\SunacCADService2.h:685 */
+/* .\SunacCADService2.h:737 */
+#ifndef SOAP_TYPE___ns1__CadFileDownload
+#define SOAP_TYPE___ns1__CadFileDownload (35)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__CadFileDownload {
+      public:
+        /** Optional element 'ns1:CadFileDownload' of XML schema type 'ns1:CadFileDownload' */
+        _ns1__CadFileDownload *ns1__CadFileDownload;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__CadFileDownload */
+        long soap_type() const { return SOAP_TYPE___ns1__CadFileDownload; }
+        /** Constructor with member initializations */
+        __ns1__CadFileDownload() : ns1__CadFileDownload() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__CadFileDownload * SOAP_FMAC2 soap_instantiate___ns1__CadFileDownload(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:808 */
 #ifndef SOAP_TYPE___ns1__StandardDesignAttribute_
-#define SOAP_TYPE___ns1__StandardDesignAttribute_ (31)
+#define SOAP_TYPE___ns1__StandardDesignAttribute_ (37)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__StandardDesignAttribute_ {
       public:
@@ -342,9 +436,9 @@ struct SOAP_CMAC __ns1__StandardDesignAttribute_ {
 };
 #endif
 
-/* .\SunacCADService2.h:756 */
+/* .\SunacCADService2.h:879 */
 #ifndef SOAP_TYPE___ns1__GetAllWindows_
-#define SOAP_TYPE___ns1__GetAllWindows_ (33)
+#define SOAP_TYPE___ns1__GetAllWindows_ (39)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetAllWindows_ {
       public:
@@ -360,9 +454,9 @@ struct SOAP_CMAC __ns1__GetAllWindows_ {
 };
 #endif
 
-/* .\SunacCADService2.h:827 */
+/* .\SunacCADService2.h:950 */
 #ifndef SOAP_TYPE___ns1__GetWindows_
-#define SOAP_TYPE___ns1__GetWindows_ (35)
+#define SOAP_TYPE___ns1__GetWindows_ (41)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetWindows_ {
       public:
@@ -378,10 +472,28 @@ struct SOAP_CMAC __ns1__GetWindows_ {
 };
 #endif
 
-/* .\SunacCADService2.h:978 */
+/* .\SunacCADService2.h:1021 */
+#ifndef SOAP_TYPE___ns1__CadFileDownload_
+#define SOAP_TYPE___ns1__CadFileDownload_ (43)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__CadFileDownload_ {
+      public:
+        /** Optional element 'ns1:CadFileDownload' of XML schema type 'ns1:CadFileDownload' */
+        _ns1__CadFileDownload *ns1__CadFileDownload;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__CadFileDownload_ */
+        long soap_type() const { return SOAP_TYPE___ns1__CadFileDownload_; }
+        /** Constructor with member initializations */
+        __ns1__CadFileDownload_() : ns1__CadFileDownload() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__CadFileDownload_ * SOAP_FMAC2 soap_instantiate___ns1__CadFileDownload_(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:1202 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Header
-#define SOAP_TYPE_SOAP_ENV__Header (36)
+#define SOAP_TYPE_SOAP_ENV__Header (44)
 /* SOAP_ENV__Header: */
 struct SOAP_CMAC SOAP_ENV__Header {
       public:
@@ -395,10 +507,10 @@ struct SOAP_CMAC SOAP_ENV__Header {
 #endif
 #endif
 
-/* .\SunacCADService2.h:978 */
+/* .\SunacCADService2.h:1202 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Code
-#define SOAP_TYPE_SOAP_ENV__Code (37)
+#define SOAP_TYPE_SOAP_ENV__Code (45)
 /* Type SOAP_ENV__Code is a recursive data type, (in)directly referencing itself through its (base or derived class) members */
 /* SOAP_ENV__Code: */
 struct SOAP_CMAC SOAP_ENV__Code {
@@ -418,10 +530,10 @@ struct SOAP_CMAC SOAP_ENV__Code {
 #endif
 #endif
 
-/* .\SunacCADService2.h:978 */
+/* .\SunacCADService2.h:1202 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Detail
-#define SOAP_TYPE_SOAP_ENV__Detail (39)
+#define SOAP_TYPE_SOAP_ENV__Detail (47)
 /* SOAP_ENV__Detail: */
 struct SOAP_CMAC SOAP_ENV__Detail {
       public:
@@ -441,10 +553,10 @@ struct SOAP_CMAC SOAP_ENV__Detail {
 #endif
 #endif
 
-/* .\SunacCADService2.h:978 */
+/* .\SunacCADService2.h:1202 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Reason
-#define SOAP_TYPE_SOAP_ENV__Reason (42)
+#define SOAP_TYPE_SOAP_ENV__Reason (50)
 /* SOAP_ENV__Reason: */
 struct SOAP_CMAC SOAP_ENV__Reason {
       public:
@@ -461,10 +573,10 @@ struct SOAP_CMAC SOAP_ENV__Reason {
 #endif
 #endif
 
-/* .\SunacCADService2.h:978 */
+/* .\SunacCADService2.h:1202 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Fault
-#define SOAP_TYPE_SOAP_ENV__Fault (43)
+#define SOAP_TYPE_SOAP_ENV__Fault (51)
 /* SOAP_ENV__Fault: */
 struct SOAP_CMAC SOAP_ENV__Fault {
       public:
@@ -535,12 +647,22 @@ typedef char *_QName;
 
 /* double has binding name 'double' for type 'xsd:double' */
 #ifndef SOAP_TYPE_double
-#define SOAP_TYPE_double (17)
+#define SOAP_TYPE_double (19)
 #endif
 
 /* std::wstring has binding name 'std__wstring' for type 'xsd:string' */
 #ifndef SOAP_TYPE_std__wstring
-#define SOAP_TYPE_std__wstring (14)
+#define SOAP_TYPE_std__wstring (16)
+#endif
+
+/* _ns1__CadFileDownloadResponse has binding name '_ns1__CadFileDownloadResponse' for type '' */
+#ifndef SOAP_TYPE__ns1__CadFileDownloadResponse
+#define SOAP_TYPE__ns1__CadFileDownloadResponse (15)
+#endif
+
+/* _ns1__CadFileDownload has binding name '_ns1__CadFileDownload' for type '' */
+#ifndef SOAP_TYPE__ns1__CadFileDownload
+#define SOAP_TYPE__ns1__CadFileDownload (14)
 #endif
 
 /* _ns1__GetWindowsResponse has binding name '_ns1__GetWindowsResponse' for type '' */
@@ -575,62 +697,67 @@ typedef char *_QName;
 
 /* struct SOAP_ENV__Fault has binding name 'SOAP_ENV__Fault' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Fault
-#define SOAP_TYPE_SOAP_ENV__Fault (43)
+#define SOAP_TYPE_SOAP_ENV__Fault (51)
 #endif
 
 /* struct SOAP_ENV__Reason has binding name 'SOAP_ENV__Reason' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Reason
-#define SOAP_TYPE_SOAP_ENV__Reason (42)
+#define SOAP_TYPE_SOAP_ENV__Reason (50)
 #endif
 
 /* struct SOAP_ENV__Detail has binding name 'SOAP_ENV__Detail' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Detail
-#define SOAP_TYPE_SOAP_ENV__Detail (39)
+#define SOAP_TYPE_SOAP_ENV__Detail (47)
 #endif
 
 /* struct SOAP_ENV__Code has binding name 'SOAP_ENV__Code' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Code
-#define SOAP_TYPE_SOAP_ENV__Code (37)
+#define SOAP_TYPE_SOAP_ENV__Code (45)
 #endif
 
 /* struct SOAP_ENV__Header has binding name 'SOAP_ENV__Header' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Header
-#define SOAP_TYPE_SOAP_ENV__Header (36)
+#define SOAP_TYPE_SOAP_ENV__Header (44)
 #endif
 
 /* struct SOAP_ENV__Reason * has binding name 'PointerToSOAP_ENV__Reason' for type '' */
 #ifndef SOAP_TYPE_PointerToSOAP_ENV__Reason
-#define SOAP_TYPE_PointerToSOAP_ENV__Reason (45)
+#define SOAP_TYPE_PointerToSOAP_ENV__Reason (53)
 #endif
 
 /* struct SOAP_ENV__Detail * has binding name 'PointerToSOAP_ENV__Detail' for type '' */
 #ifndef SOAP_TYPE_PointerToSOAP_ENV__Detail
-#define SOAP_TYPE_PointerToSOAP_ENV__Detail (44)
+#define SOAP_TYPE_PointerToSOAP_ENV__Detail (52)
 #endif
 
 /* struct SOAP_ENV__Code * has binding name 'PointerToSOAP_ENV__Code' for type '' */
 #ifndef SOAP_TYPE_PointerToSOAP_ENV__Code
-#define SOAP_TYPE_PointerToSOAP_ENV__Code (38)
+#define SOAP_TYPE_PointerToSOAP_ENV__Code (46)
+#endif
+
+/* _ns1__CadFileDownload * has binding name 'PointerTo_ns1__CadFileDownload' for type '' */
+#ifndef SOAP_TYPE_PointerTo_ns1__CadFileDownload
+#define SOAP_TYPE_PointerTo_ns1__CadFileDownload (32)
 #endif
 
 /* _ns1__GetWindows * has binding name 'PointerTo_ns1__GetWindows' for type '' */
 #ifndef SOAP_TYPE_PointerTo_ns1__GetWindows
-#define SOAP_TYPE_PointerTo_ns1__GetWindows (26)
+#define SOAP_TYPE_PointerTo_ns1__GetWindows (28)
 #endif
 
 /* _ns1__GetAllWindows * has binding name 'PointerTo_ns1__GetAllWindows' for type '' */
 #ifndef SOAP_TYPE_PointerTo_ns1__GetAllWindows
-#define SOAP_TYPE_PointerTo_ns1__GetAllWindows (22)
+#define SOAP_TYPE_PointerTo_ns1__GetAllWindows (24)
 #endif
 
 /* _ns1__StandardDesignAttribute * has binding name 'PointerTo_ns1__StandardDesignAttribute' for type '' */
 #ifndef SOAP_TYPE_PointerTo_ns1__StandardDesignAttribute
-#define SOAP_TYPE_PointerTo_ns1__StandardDesignAttribute (18)
+#define SOAP_TYPE_PointerTo_ns1__StandardDesignAttribute (20)
 #endif
 
 /* std::wstring * has binding name 'PointerTostd__wstring' for type 'xsd:string' */
 #ifndef SOAP_TYPE_PointerTostd__wstring
-#define SOAP_TYPE_PointerTostd__wstring (15)
+#define SOAP_TYPE_PointerTostd__wstring (17)
 #endif
 
 /* _QName has binding name '_QName' for type 'xsd:QName' */

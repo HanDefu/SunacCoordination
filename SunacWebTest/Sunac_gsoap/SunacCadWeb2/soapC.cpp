@@ -18,7 +18,7 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
 
 #include "soapH.h"
 
-SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.84 2019-09-30 03:05:51 GMT")
+SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.84 2019-10-01 02:51:03 GMT")
 
 
 #ifndef WITH_NOGLOBAL
@@ -195,6 +195,8 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, const char *tag,
 		return soap_in_double(soap, tag, NULL, "xsd:double");
 	case SOAP_TYPE_std__wstring:
 		return soap_in_std__wstring(soap, tag, NULL, "xsd:string");
+	case SOAP_TYPE_PointerTo_ns1__CadFileDownload:
+		return soap_in_PointerTo_ns1__CadFileDownload(soap, tag, NULL, "ns1:CadFileDownload");
 	case SOAP_TYPE_PointerTo_ns1__GetWindows:
 		return soap_in_PointerTo_ns1__GetWindows(soap, tag, NULL, "ns1:GetWindows");
 	case SOAP_TYPE_PointerTo_ns1__GetAllWindows:
@@ -249,6 +251,14 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, const char *tag,
 			return s ? *s : NULL;
 		}
 		t = soap->tag;
+		if (!soap_match_tag(soap, t, "ns1:CadFileDownloadResponse"))
+		{	*type = SOAP_TYPE__ns1__CadFileDownloadResponse;
+			return soap_in__ns1__CadFileDownloadResponse(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:CadFileDownload"))
+		{	*type = SOAP_TYPE__ns1__CadFileDownload;
+			return soap_in__ns1__CadFileDownload(soap, NULL, NULL, NULL);
+		}
 		if (!soap_match_tag(soap, t, "ns1:GetWindowsResponse"))
 		{	*type = SOAP_TYPE__ns1__GetWindowsResponse;
 			return soap_in__ns1__GetWindowsResponse(soap, NULL, NULL, NULL);
@@ -340,6 +350,10 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return soap_out_double(soap, tag, id, (const double *)ptr, "xsd:double");
 	case SOAP_TYPE_std__wstring:
 		return soap_out_std__wstring(soap, tag, id, (const std::wstring *)ptr, "xsd:string");
+	case SOAP_TYPE__ns1__CadFileDownloadResponse:
+		return ((_ns1__CadFileDownloadResponse *)ptr)->soap_out(soap, "ns1:CadFileDownloadResponse", id, "");
+	case SOAP_TYPE__ns1__CadFileDownload:
+		return ((_ns1__CadFileDownload *)ptr)->soap_out(soap, "ns1:CadFileDownload", id, "");
 	case SOAP_TYPE__ns1__GetWindowsResponse:
 		return ((_ns1__GetWindowsResponse *)ptr)->soap_out(soap, "ns1:GetWindowsResponse", id, "");
 	case SOAP_TYPE__ns1__GetWindows:
@@ -352,6 +366,8 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return ((_ns1__StandardDesignAttributeResponse *)ptr)->soap_out(soap, "ns1:StandardDesignAttributeResponse", id, "");
 	case SOAP_TYPE__ns1__StandardDesignAttribute:
 		return ((_ns1__StandardDesignAttribute *)ptr)->soap_out(soap, "ns1:StandardDesignAttribute", id, "");
+	case SOAP_TYPE_PointerTo_ns1__CadFileDownload:
+		return soap_out_PointerTo_ns1__CadFileDownload(soap, tag, id, (_ns1__CadFileDownload *const*)ptr, "ns1:CadFileDownload");
 	case SOAP_TYPE_PointerTo_ns1__GetWindows:
 		return soap_out_PointerTo_ns1__GetWindows(soap, tag, id, (_ns1__GetWindows *const*)ptr, "ns1:GetWindows");
 	case SOAP_TYPE_PointerTo_ns1__GetAllWindows:
@@ -387,6 +403,12 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	case SOAP_TYPE_std__wstring:
 		soap_serialize_std__wstring(soap, (const std::wstring *)ptr);
 		break;
+	case SOAP_TYPE__ns1__CadFileDownloadResponse:
+		((_ns1__CadFileDownloadResponse *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE__ns1__CadFileDownload:
+		((_ns1__CadFileDownload *)ptr)->soap_serialize(soap);
+		break;
 	case SOAP_TYPE__ns1__GetWindowsResponse:
 		((_ns1__GetWindowsResponse *)ptr)->soap_serialize(soap);
 		break;
@@ -405,6 +427,9 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	case SOAP_TYPE__ns1__StandardDesignAttribute:
 		((_ns1__StandardDesignAttribute *)ptr)->soap_serialize(soap);
 		break;
+	case SOAP_TYPE___ns1__CadFileDownload_:
+		soap_serialize___ns1__CadFileDownload_(soap, (const struct __ns1__CadFileDownload_ *)ptr);
+		break;
 	case SOAP_TYPE___ns1__GetWindows_:
 		soap_serialize___ns1__GetWindows_(soap, (const struct __ns1__GetWindows_ *)ptr);
 		break;
@@ -414,6 +439,9 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	case SOAP_TYPE___ns1__StandardDesignAttribute_:
 		soap_serialize___ns1__StandardDesignAttribute_(soap, (const struct __ns1__StandardDesignAttribute_ *)ptr);
 		break;
+	case SOAP_TYPE___ns1__CadFileDownload:
+		soap_serialize___ns1__CadFileDownload(soap, (const struct __ns1__CadFileDownload *)ptr);
+		break;
 	case SOAP_TYPE___ns1__GetWindows:
 		soap_serialize___ns1__GetWindows(soap, (const struct __ns1__GetWindows *)ptr);
 		break;
@@ -422,6 +450,9 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 		break;
 	case SOAP_TYPE___ns1__StandardDesignAttribute:
 		soap_serialize___ns1__StandardDesignAttribute(soap, (const struct __ns1__StandardDesignAttribute *)ptr);
+		break;
+	case SOAP_TYPE_PointerTo_ns1__CadFileDownload:
+		soap_serialize_PointerTo_ns1__CadFileDownload(soap, (_ns1__CadFileDownload *const*)ptr);
 		break;
 	case SOAP_TYPE_PointerTo_ns1__GetWindows:
 		soap_serialize_PointerTo_ns1__GetWindows(soap, (_ns1__GetWindows *const*)ptr);
@@ -489,18 +520,26 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate__ns1__GetWindows(soap, -1, type, arrayType, n);
 	case SOAP_TYPE__ns1__GetWindowsResponse:
 		return (void*)soap_instantiate__ns1__GetWindowsResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__CadFileDownload:
+		return (void*)soap_instantiate__ns1__CadFileDownload(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__CadFileDownloadResponse:
+		return (void*)soap_instantiate__ns1__CadFileDownloadResponse(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__StandardDesignAttribute:
 		return (void*)soap_instantiate___ns1__StandardDesignAttribute(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__GetAllWindows:
 		return (void*)soap_instantiate___ns1__GetAllWindows(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__GetWindows:
 		return (void*)soap_instantiate___ns1__GetWindows(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__CadFileDownload:
+		return (void*)soap_instantiate___ns1__CadFileDownload(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__StandardDesignAttribute_:
 		return (void*)soap_instantiate___ns1__StandardDesignAttribute_(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__GetAllWindows_:
 		return (void*)soap_instantiate___ns1__GetAllWindows_(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__GetWindows_:
 		return (void*)soap_instantiate___ns1__GetWindows_(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__CadFileDownload_:
+		return (void*)soap_instantiate___ns1__CadFileDownload_(soap, -1, type, arrayType, n);
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
 		return (void*)soap_instantiate_SOAP_ENV__Header(soap, -1, type, arrayType, n);
@@ -574,6 +613,18 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap *soap, struct soap_clist *p)
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__GetWindowsResponse*>(p->ptr), _ns1__GetWindowsResponse);
 		break;
+	case SOAP_TYPE__ns1__CadFileDownload:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__CadFileDownload*>(p->ptr), _ns1__CadFileDownload);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__CadFileDownload*>(p->ptr), _ns1__CadFileDownload);
+		break;
+	case SOAP_TYPE__ns1__CadFileDownloadResponse:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__CadFileDownloadResponse*>(p->ptr), _ns1__CadFileDownloadResponse);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__CadFileDownloadResponse*>(p->ptr), _ns1__CadFileDownloadResponse);
+		break;
 	case SOAP_TYPE___ns1__StandardDesignAttribute:
 		if (p->size < 0)
 			SOAP_DELETE(soap, static_cast<struct __ns1__StandardDesignAttribute*>(p->ptr), struct __ns1__StandardDesignAttribute);
@@ -592,6 +643,12 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap *soap, struct soap_clist *p)
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__GetWindows*>(p->ptr), struct __ns1__GetWindows);
 		break;
+	case SOAP_TYPE___ns1__CadFileDownload:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__CadFileDownload*>(p->ptr), struct __ns1__CadFileDownload);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__CadFileDownload*>(p->ptr), struct __ns1__CadFileDownload);
+		break;
 	case SOAP_TYPE___ns1__StandardDesignAttribute_:
 		if (p->size < 0)
 			SOAP_DELETE(soap, static_cast<struct __ns1__StandardDesignAttribute_*>(p->ptr), struct __ns1__StandardDesignAttribute_);
@@ -609,6 +666,12 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap *soap, struct soap_clist *p)
 			SOAP_DELETE(soap, static_cast<struct __ns1__GetWindows_*>(p->ptr), struct __ns1__GetWindows_);
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__GetWindows_*>(p->ptr), struct __ns1__GetWindows_);
+		break;
+	case SOAP_TYPE___ns1__CadFileDownload_:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__CadFileDownload_*>(p->ptr), struct __ns1__CadFileDownload_);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__CadFileDownload_*>(p->ptr), struct __ns1__CadFileDownload_);
 		break;
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
@@ -709,6 +772,14 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_finsert(struct soap *soap, int t, int tt, void *
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__GetWindowsResponse type=%d location=%p object=%p\n", t, p, q));
 		*(_ns1__GetWindowsResponse*)p = *(_ns1__GetWindowsResponse*)q;
 		break;
+	case SOAP_TYPE__ns1__CadFileDownload:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__CadFileDownload type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__CadFileDownload*)p = *(_ns1__CadFileDownload*)q;
+		break;
+	case SOAP_TYPE__ns1__CadFileDownloadResponse:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__CadFileDownloadResponse type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__CadFileDownloadResponse*)p = *(_ns1__CadFileDownloadResponse*)q;
+		break;
 	case SOAP_TYPE___ns1__StandardDesignAttribute:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__StandardDesignAttribute type=%d location=%p object=%p\n", t, p, q));
 		*(struct __ns1__StandardDesignAttribute*)p = *(struct __ns1__StandardDesignAttribute*)q;
@@ -721,6 +792,10 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_finsert(struct soap *soap, int t, int tt, void *
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__GetWindows type=%d location=%p object=%p\n", t, p, q));
 		*(struct __ns1__GetWindows*)p = *(struct __ns1__GetWindows*)q;
 		break;
+	case SOAP_TYPE___ns1__CadFileDownload:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__CadFileDownload type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__CadFileDownload*)p = *(struct __ns1__CadFileDownload*)q;
+		break;
 	case SOAP_TYPE___ns1__StandardDesignAttribute_:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__StandardDesignAttribute_ type=%d location=%p object=%p\n", t, p, q));
 		*(struct __ns1__StandardDesignAttribute_*)p = *(struct __ns1__StandardDesignAttribute_*)q;
@@ -732,6 +807,10 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_finsert(struct soap *soap, int t, int tt, void *
 	case SOAP_TYPE___ns1__GetWindows_:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__GetWindows_ type=%d location=%p object=%p\n", t, p, q));
 		*(struct __ns1__GetWindows_*)p = *(struct __ns1__GetWindows_*)q;
+		break;
+	case SOAP_TYPE___ns1__CadFileDownload_:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__CadFileDownload_ type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__CadFileDownload_*)p = *(struct __ns1__CadFileDownload_*)q;
 		break;
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
@@ -949,6 +1028,274 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_put_std__wstring(struct soap *soap, const std::ws
 SOAP_FMAC3 std::wstring * SOAP_FMAC4 soap_get_std__wstring(struct soap *soap, std::wstring *p, const char *tag, const char *type)
 {
 	if ((p = soap_in_std__wstring(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__CadFileDownloadResponse::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	this->_ns1__CadFileDownloadResponse::CadFileDownloadResult = NULL;
+}
+
+void _ns1__CadFileDownloadResponse::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__CadFileDownloadResponse::CadFileDownloadResult);
+#endif
+}
+
+int _ns1__CadFileDownloadResponse::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__CadFileDownloadResponse(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__CadFileDownloadResponse(struct soap *soap, const char *tag, int id, const _ns1__CadFileDownloadResponse *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__CadFileDownloadResponse), type))
+		return soap->error;
+	if (a->CadFileDownloadResult)
+		soap_element_result(soap, "ns1:CadFileDownloadResult");
+	if (soap_out_PointerTostd__wstring(soap, "ns1:CadFileDownloadResult", -1, &a->_ns1__CadFileDownloadResponse::CadFileDownloadResult, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__CadFileDownloadResponse::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__CadFileDownloadResponse(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__CadFileDownloadResponse * SOAP_FMAC4 soap_in__ns1__CadFileDownloadResponse(struct soap *soap, const char *tag, _ns1__CadFileDownloadResponse *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__CadFileDownloadResponse*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__CadFileDownloadResponse, sizeof(_ns1__CadFileDownloadResponse), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__CadFileDownloadResponse)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__CadFileDownloadResponse *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_CadFileDownloadResult1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_CadFileDownloadResult1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_PointerTostd__wstring(soap, "ns1:CadFileDownloadResult", &a->_ns1__CadFileDownloadResponse::CadFileDownloadResult, "xsd:string"))
+				{	soap_flag_CadFileDownloadResult1--;
+					continue;
+				}
+			}
+			soap_check_result(soap, "ns1:CadFileDownloadResult");
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (_ns1__CadFileDownloadResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__CadFileDownloadResponse, SOAP_TYPE__ns1__CadFileDownloadResponse, sizeof(_ns1__CadFileDownloadResponse), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__CadFileDownloadResponse * SOAP_FMAC2 soap_instantiate__ns1__CadFileDownloadResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__CadFileDownloadResponse(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__CadFileDownloadResponse *p;
+	size_t k = sizeof(_ns1__CadFileDownloadResponse);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__CadFileDownloadResponse, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__CadFileDownloadResponse);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__CadFileDownloadResponse, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__CadFileDownloadResponse location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__CadFileDownloadResponse::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__CadFileDownloadResponse(soap, tag ? tag : "ns1:CadFileDownloadResponse", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__CadFileDownloadResponse::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__CadFileDownloadResponse(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__CadFileDownloadResponse * SOAP_FMAC4 soap_get__ns1__CadFileDownloadResponse(struct soap *soap, _ns1__CadFileDownloadResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__CadFileDownloadResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__CadFileDownload::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	soap_default_int(soap, &this->_ns1__CadFileDownload::Id);
+}
+
+void _ns1__CadFileDownload::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+#endif
+}
+
+int _ns1__CadFileDownload::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__CadFileDownload(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__CadFileDownload(struct soap *soap, const char *tag, int id, const _ns1__CadFileDownload *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__CadFileDownload), type))
+		return soap->error;
+	if (soap_out_int(soap, "ns1:Id", -1, &a->_ns1__CadFileDownload::Id, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__CadFileDownload::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__CadFileDownload(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__CadFileDownload * SOAP_FMAC4 soap_in__ns1__CadFileDownload(struct soap *soap, const char *tag, _ns1__CadFileDownload *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__CadFileDownload*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__CadFileDownload, sizeof(_ns1__CadFileDownload), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__CadFileDownload)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__CadFileDownload *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_Id1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_Id1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_int(soap, "ns1:Id", &a->_ns1__CadFileDownload::Id, "xsd:int"))
+				{	soap_flag_Id1--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+		if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_Id1 > 0))
+		{	soap->error = SOAP_OCCURS;
+			return NULL;
+		}
+	}
+	else if ((soap->mode & SOAP_XML_STRICT) && *soap->href != '#')
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	else
+	{	a = (_ns1__CadFileDownload *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__CadFileDownload, SOAP_TYPE__ns1__CadFileDownload, sizeof(_ns1__CadFileDownload), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__CadFileDownload * SOAP_FMAC2 soap_instantiate__ns1__CadFileDownload(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__CadFileDownload(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__CadFileDownload *p;
+	size_t k = sizeof(_ns1__CadFileDownload);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__CadFileDownload, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__CadFileDownload);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__CadFileDownload, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__CadFileDownload location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__CadFileDownload::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__CadFileDownload(soap, tag ? tag : "ns1:CadFileDownload", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__CadFileDownload::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__CadFileDownload(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__CadFileDownload * SOAP_FMAC4 soap_get__ns1__CadFileDownload(struct soap *soap, _ns1__CadFileDownload *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__CadFileDownload(soap, tag, p, type)))
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;
@@ -2416,6 +2763,98 @@ SOAP_FMAC3 struct SOAP_ENV__Header * SOAP_FMAC4 soap_get_SOAP_ENV__Header(struct
 
 #endif
 
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__CadFileDownload_(struct soap *soap, struct __ns1__CadFileDownload_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__CadFileDownload = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__CadFileDownload_(struct soap *soap, const struct __ns1__CadFileDownload_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__CadFileDownload(soap, &a->ns1__CadFileDownload);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__CadFileDownload_(struct soap *soap, const char *tag, int id, const struct __ns1__CadFileDownload_ *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__CadFileDownload(soap, "ns1:CadFileDownload", -1, &a->ns1__CadFileDownload, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__CadFileDownload_ * SOAP_FMAC4 soap_in___ns1__CadFileDownload_(struct soap *soap, const char *tag, struct __ns1__CadFileDownload_ *a, const char *type)
+{
+	size_t soap_flag_ns1__CadFileDownload = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__CadFileDownload_*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__CadFileDownload_, sizeof(struct __ns1__CadFileDownload_), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__CadFileDownload_(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__CadFileDownload && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__CadFileDownload(soap, "ns1:CadFileDownload", &a->ns1__CadFileDownload, ""))
+				{	soap_flag_ns1__CadFileDownload--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__CadFileDownload_ * SOAP_FMAC2 soap_instantiate___ns1__CadFileDownload_(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__CadFileDownload_(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__CadFileDownload_ *p;
+	size_t k = sizeof(struct __ns1__CadFileDownload_);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__CadFileDownload_, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__CadFileDownload_);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__CadFileDownload_, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__CadFileDownload_ location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__CadFileDownload_(struct soap *soap, const struct __ns1__CadFileDownload_ *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__CadFileDownload_(soap, tag ? tag : "-ns1:CadFileDownload", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__CadFileDownload_ * SOAP_FMAC4 soap_get___ns1__CadFileDownload_(struct soap *soap, struct __ns1__CadFileDownload_ *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__CadFileDownload_(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
 SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetWindows_(struct soap *soap, struct __ns1__GetWindows_ *a)
 {
 	(void)soap; (void)a; /* appease -Wall -Werror */
@@ -2687,6 +3126,98 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__StandardDesignAttribute_(struct soap *
 SOAP_FMAC3 struct __ns1__StandardDesignAttribute_ * SOAP_FMAC4 soap_get___ns1__StandardDesignAttribute_(struct soap *soap, struct __ns1__StandardDesignAttribute_ *p, const char *tag, const char *type)
 {
 	if ((p = soap_in___ns1__StandardDesignAttribute_(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__CadFileDownload(struct soap *soap, struct __ns1__CadFileDownload *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__CadFileDownload = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__CadFileDownload(struct soap *soap, const struct __ns1__CadFileDownload *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__CadFileDownload(soap, &a->ns1__CadFileDownload);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__CadFileDownload(struct soap *soap, const char *tag, int id, const struct __ns1__CadFileDownload *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__CadFileDownload(soap, "ns1:CadFileDownload", -1, &a->ns1__CadFileDownload, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__CadFileDownload * SOAP_FMAC4 soap_in___ns1__CadFileDownload(struct soap *soap, const char *tag, struct __ns1__CadFileDownload *a, const char *type)
+{
+	size_t soap_flag_ns1__CadFileDownload = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__CadFileDownload*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__CadFileDownload, sizeof(struct __ns1__CadFileDownload), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__CadFileDownload(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__CadFileDownload && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__CadFileDownload(soap, "ns1:CadFileDownload", &a->ns1__CadFileDownload, ""))
+				{	soap_flag_ns1__CadFileDownload--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__CadFileDownload * SOAP_FMAC2 soap_instantiate___ns1__CadFileDownload(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__CadFileDownload(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__CadFileDownload *p;
+	size_t k = sizeof(struct __ns1__CadFileDownload);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__CadFileDownload, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__CadFileDownload);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__CadFileDownload, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__CadFileDownload location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__CadFileDownload(struct soap *soap, const struct __ns1__CadFileDownload *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__CadFileDownload(soap, tag ? tag : "-ns1:CadFileDownload", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__CadFileDownload * SOAP_FMAC4 soap_get___ns1__CadFileDownload(struct soap *soap, struct __ns1__CadFileDownload *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__CadFileDownload(soap, tag, p, type)))
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;
@@ -3144,6 +3675,65 @@ SOAP_FMAC3 struct SOAP_ENV__Code ** SOAP_FMAC4 soap_get_PointerToSOAP_ENV__Code(
 }
 
 #endif
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__CadFileDownload(struct soap *soap, _ns1__CadFileDownload *const*a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	if (!soap_reference(soap, *a, SOAP_TYPE__ns1__CadFileDownload))
+		(*a)->soap_serialize(soap);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__CadFileDownload(struct soap *soap, const char *tag, int id, _ns1__CadFileDownload *const*a, const char *type)
+{
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE__ns1__CadFileDownload, NULL);
+	if (id < 0)
+		return soap->error;
+	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE__ns1__CadFileDownload ? type : NULL);
+}
+
+SOAP_FMAC3 _ns1__CadFileDownload ** SOAP_FMAC4 soap_in_PointerTo_ns1__CadFileDownload(struct soap *soap, const char *tag, _ns1__CadFileDownload **a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a)
+		if (!(a = (_ns1__CadFileDownload **)soap_malloc(soap, sizeof(_ns1__CadFileDownload *))))
+			return NULL;
+	*a = NULL;
+	if (!soap->null && *soap->href != '#')
+	{	soap_revert(soap);
+		if (!(*a = (_ns1__CadFileDownload *)soap_instantiate__ns1__CadFileDownload(soap, -1, soap->type, soap->arrayType, NULL)))
+			return NULL;
+		(*a)->soap_default(soap);
+		if (!(*a)->soap_in(soap, tag, NULL))
+		{	*a = NULL;
+			return NULL;
+		}
+	}
+	else
+	{	a = (_ns1__CadFileDownload **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE__ns1__CadFileDownload, sizeof(_ns1__CadFileDownload), 0, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__CadFileDownload(struct soap *soap, _ns1__CadFileDownload *const*a, const char *tag, const char *type)
+{
+	if (soap_out_PointerTo_ns1__CadFileDownload(soap, tag ? tag : "ns1:CadFileDownload", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 _ns1__CadFileDownload ** SOAP_FMAC4 soap_get_PointerTo_ns1__CadFileDownload(struct soap *soap, _ns1__CadFileDownload **p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PointerTo_ns1__CadFileDownload(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
 
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__GetWindows(struct soap *soap, _ns1__GetWindows *const*a)
 {

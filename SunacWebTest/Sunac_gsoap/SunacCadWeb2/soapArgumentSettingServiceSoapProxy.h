@@ -102,6 +102,15 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
         /// Web service asynchronous operation 'recv_GetWindows' to receive a response message from the connected endpoint, returns SOAP_OK or error code
         virtual int recv_GetWindows(_ns1__GetWindowsResponse &ns1__GetWindowsResponse);
         //
+        /// Web service synchronous operation 'CadFileDownload' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int CadFileDownload(_ns1__CadFileDownload *ns1__CadFileDownload, _ns1__CadFileDownloadResponse &ns1__CadFileDownloadResponse) { return this->CadFileDownload(NULL, NULL, ns1__CadFileDownload, ns1__CadFileDownloadResponse); }
+        /// Web service synchronous operation 'CadFileDownload' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int CadFileDownload(const char *soap_endpoint_url, const char *soap_action, _ns1__CadFileDownload *ns1__CadFileDownload, _ns1__CadFileDownloadResponse &ns1__CadFileDownloadResponse) { return this->send_CadFileDownload(soap_endpoint_url, soap_action, ns1__CadFileDownload) || this->recv_CadFileDownload(ns1__CadFileDownloadResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_CadFileDownload' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_CadFileDownload(const char *soap_endpoint_url, const char *soap_action, _ns1__CadFileDownload *ns1__CadFileDownload);
+        /// Web service asynchronous operation 'recv_CadFileDownload' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_CadFileDownload(_ns1__CadFileDownloadResponse &ns1__CadFileDownloadResponse);
+        //
         /// Web service synchronous operation 'StandardDesignAttribute' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
         virtual int StandardDesignAttribute_(_ns1__StandardDesignAttribute *ns1__StandardDesignAttribute, _ns1__StandardDesignAttributeResponse &ns1__StandardDesignAttributeResponse) { return this->StandardDesignAttribute_(NULL, NULL, ns1__StandardDesignAttribute, ns1__StandardDesignAttributeResponse); }
         /// Web service synchronous operation 'StandardDesignAttribute' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
@@ -128,5 +137,14 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
         virtual int send_GetWindows_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetWindows *ns1__GetWindows);
         /// Web service asynchronous operation 'recv_GetWindows' to receive a response message from the connected endpoint, returns SOAP_OK or error code
         virtual int recv_GetWindows_(_ns1__GetWindowsResponse &ns1__GetWindowsResponse);
+        //
+        /// Web service synchronous operation 'CadFileDownload' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int CadFileDownload_(_ns1__CadFileDownload *ns1__CadFileDownload, _ns1__CadFileDownloadResponse &ns1__CadFileDownloadResponse) { return this->CadFileDownload_(NULL, NULL, ns1__CadFileDownload, ns1__CadFileDownloadResponse); }
+        /// Web service synchronous operation 'CadFileDownload' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int CadFileDownload_(const char *soap_endpoint_url, const char *soap_action, _ns1__CadFileDownload *ns1__CadFileDownload, _ns1__CadFileDownloadResponse &ns1__CadFileDownloadResponse) { return this->send_CadFileDownload_(soap_endpoint_url, soap_action, ns1__CadFileDownload) || this->recv_CadFileDownload_(ns1__CadFileDownloadResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_CadFileDownload' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_CadFileDownload_(const char *soap_endpoint_url, const char *soap_action, _ns1__CadFileDownload *ns1__CadFileDownload);
+        /// Web service asynchronous operation 'recv_CadFileDownload' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_CadFileDownload_(_ns1__CadFileDownloadResponse &ns1__CadFileDownloadResponse);
     };
 #endif
