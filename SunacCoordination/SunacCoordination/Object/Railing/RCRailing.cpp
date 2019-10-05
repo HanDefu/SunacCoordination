@@ -90,11 +90,12 @@ int CRCRailingT1::GenerateRailing(AcGePoint3d start, AcGePoint3d end)
 	acDocManager->lockDocument(curDoc());
 
 	const AcGePoint3d leftTopPt = AcGePoint3d(start.x, start.y + 1100, 0);
+	m_railingAtt.m_filePathName = MD2010_GetAppPath() + L"\\support\\Sunac2019\\LocalMode\\" + m_railingAtt.m_prototypeCode + L".dwg";
 
 	//2.1 非标段
 	AcDbObjectId id1;
-	AcGePoint3d pos1 = AcGePoint3d(leftTopPt.x + GetK(), leftTopPt.y - GetHandRailHeight(), 0); //左上角点x方向上减去与结构墙间隙，y方向上减去扶手的厚度
-	MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, m_railingAtt.m_filePathName, _T("Railing_T1_NonStandard"), id1, pos1, 0, AcGeScale3d(1));
+	AcGePoint3d pos1 = AcGePoint3d(leftTopPt.x + GetK(), leftTopPt.y - GetHandRailHeight()-580, 0); //左上角点x方向上减去与结构墙间隙，y方向上减去扶手的厚度,然后考虑居中位置
+	id1 = InsertBlockRefFromDwg(m_railingAtt.m_filePathName, _T("Railing_T1_NonStandard"), ACDB_MODEL_SPACE, pos1);
 
 	//设置非标段长度
 	DQ_SetDynamicAttribute(id1, _T("L"), GetNonstandardLen());
@@ -107,7 +108,8 @@ int CRCRailingT1::GenerateRailing(AcGePoint3d start, AcGePoint3d end)
 	CString sStandardBlockName = GetB() < 1380 ? _T("Railing_T1_1260") : _T("Railing_T1_1380");
 	for (int i = 0; i < GetN(); i++)
 	{
-		MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, m_railingAtt.m_filePathName, sStandardBlockName, id2, pos2, 0, AcGeScale3d(1));
+		id2 = InsertBlockRefFromDwg(m_railingAtt.m_filePathName, sStandardBlockName, ACDB_MODEL_SPACE, pos2);
+		//MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, m_railingAtt.m_filePathName, sStandardBlockName, id2, pos2, 0, AcGeScale3d(1));
 		pos2.x += GetB() - GetPillarWidth(); //减去立柱宽
 	}
 
@@ -115,14 +117,16 @@ int CRCRailingT1::GenerateRailing(AcGePoint3d start, AcGePoint3d end)
 	//2.3 非标段
 	AcDbObjectId id3;
 	AcGePoint3d pos3 = pos2;
-	MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, m_railingAtt.m_filePathName, _T("Railing_T1_NonStandard"), id3, pos3, 0, AcGeScale3d(1));
+	id3 = InsertBlockRefFromDwg(m_railingAtt.m_filePathName, _T("Railing_T1_NonStandard"), ACDB_MODEL_SPACE, pos3);
+	//MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, m_railingAtt.m_filePathName, _T("Railing_T1_NonStandard"), id3, pos3, 0, AcGeScale3d(1));
 	//设置非标段长度
 	DQ_SetDynamicAttribute(id3, _T("L"), GetNonstandardLen());
 	DQ_SetDynamicAttribute(id3, _T("Ln"), GetNonstandardLen() - GetPillarWidth() * 2); //内部的小花格区间为非标段减去两侧立柱
 
 	//2.4 扶手
 	AcDbObjectId id4;
-	MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, m_railingAtt.m_filePathName, _T("Railing_T1_Handrail"), id1, leftTopPt, 0, AcGeScale3d(1));
+	id4 = InsertBlockRefFromDwg(m_railingAtt.m_filePathName, _T("Railing_T1_Handrail"), ACDB_MODEL_SPACE, leftTopPt);
+	//MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, m_railingAtt.m_filePathName, _T("Railing_T1_Handrail"), id4, leftTopPt, 0, AcGeScale3d(1));
 	//设置扶手长度
 	DQ_SetDynamicAttribute(id4, _T("L"), length);
 
@@ -205,7 +209,7 @@ int CRCRailingT1::GenNonstandardUnitCount(double p_lenth, double p_segLength, in
 double CRCRailingT1::GenStandardRailingTotalLen(double p_segLength, int p_standardSegCount)const
 {
 	//通过标准栏杆尺寸和数量计算出标准栏杆总尺寸,公式：标准栏杆总尺寸 = 标准栏杆尺寸*标准栏杆数量- 40*(栏杆数量-1)
-	return p_segLength *p_standardSegCount - GetSmallPillarWidth() * (p_standardSegCount - 1);
+	return p_segLength *p_standardSegCount - GetPillarWidth() * (p_standardSegCount - 1);
 }
 
 double CRCRailingT1::GenK(double p_lenth, double p_segLength, int p_standardSegCount, int p_nonStandardUnitCount) const//侧边留空间隙 = 侧面立柱和结构墙间尺寸/2

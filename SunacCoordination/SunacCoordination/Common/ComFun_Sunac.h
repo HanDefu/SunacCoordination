@@ -97,6 +97,16 @@ int TYCOM_Move(AcDbObjectId entId, AcGeVector3d offset);
 int TY_HideBlockReferencesInBlockReference(AcDbObjectId blkRefId, vCString &hideBlockRecordNames);
 
 
+//功能: 从其他的DWG图形复制一个块定义到当前图形
+//参数: const TCHAR * fileName, Dwg文件名（全路径）
+//参数: const TCHAR * blkDefName, 块定义的名称
+AcDbObjectId CopyBlockDefFromDwg(const TCHAR* fileName, const TCHAR* blkDefName);
+AcDbObjectId CopyBlockDefFromDatabase(AcDbDatabase* pSourceDb, AcDbDatabase* pDestDb, const TCHAR* blkDefName);
+
+AcDbObjectId InsertBlockRefFromDwg(const TCHAR* fileName, const TCHAR* blkDefName, const WCHAR *layoutname, AcGePoint3d origin);
+
+
+
 
 
 

@@ -103,8 +103,8 @@ void CMD_SUNACRAILING()
 	{
 		g_railingDlg = new CRailingDlg(acedGetAcadFrame());
 		g_railingDlg->Create(IDD_DIALOG_RAILING);
-		g_railingDlg->ShowWindow(SW_SHOW);
 	}
+	g_railingDlg->ShowWindow(SW_SHOW);
 }
 
 //线脚

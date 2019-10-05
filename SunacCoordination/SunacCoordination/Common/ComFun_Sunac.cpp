@@ -1087,3 +1087,83 @@ int TY_HideBlockReferencesInBlockReference(AcDbObjectId blkRefId, vCString &hide
 	return 0;
 }
 
+
+
+AcDbObjectId CopyBlockDefFromDatabase(AcDbDatabase* pSourceDb, AcDbDatabase* pDestDb, const TCHAR* blkDefName)
+{
+	Acad::ErrorStatus es;
+	AcDbObjectId blockRefId = AcDbObjectId::kNull;
+
+	// 打开外部图形数据库的块表，寻找给定名称的块表记录
+	AcDbBlockTable* pBlkTable = NULL;
+	es = pSourceDb->getBlockTable(pBlkTable, AcDb::kForRead);
+	assert(es == Acad::eOk);
+	if (es != Acad::eOk)
+	{
+		acutPrintf(TEXT("\n 复制目标源时，打开块表记录失败."));
+		return blockRefId;
+	}
+
+	bool bRet = false;
+	if (pBlkTable->has(blkDefName))	// 不存在指定的图块
+	{
+		AcDbObjectId destBlkDefId;		// 指定图块的块表记录Id
+		es = pBlkTable->getAt(blkDefName, destBlkDefId);
+
+		// 把指定的图块输出到一个临时图形数据库
+		AcDbDatabase* pTempDb = NULL;	// 注意：这里千万不能new
+		es = pSourceDb->wblock(pTempDb, destBlkDefId);
+		assert(es == Acad::eOk);
+
+		// 把该临时图形数据库作为块插入到当前dwg
+		es = pDestDb->insert(blockRefId, blkDefName, pTempDb);
+		assert(es == Acad::eOk);
+		delete pTempDb;
+		pTempDb = NULL;
+	}
+	else
+	{
+		acutPrintf(TEXT("\n给定的源数据中, 不存在指定名称的块表记录."));
+	}
+	pBlkTable->close();
+
+	return blockRefId;
+}
+
+AcDbObjectId CopyBlockDefFromDwg(const TCHAR* fileName, const TCHAR* blkDefName)
+{
+	AcDbObjectId blockRefId = AcDbObjectId::kNull;
+
+	// 使用_SH_DENYNO参数打开图形(只读打开)，允许其它用户读写该文件
+	AcDbDatabase* pSourceDwg = new AcDbDatabase(false);
+	Acad::ErrorStatus es = pSourceDwg->readDwgFile(fileName, _SH_DENYNO);
+	if (es != Acad::eOk)
+	{
+		delete pSourceDwg;
+		pSourceDwg = NULL;
+
+		acutPrintf(TEXT("\n读入dwg图形错误, 图形名称: %s"), fileName);
+		return blockRefId;
+	}
+
+	AcDbDatabase* pCurDb = acdbHostApplicationServices()->workingDatabase();
+	blockRefId = CopyBlockDefFromDatabase(pSourceDwg, pCurDb, blkDefName);
+
+	delete pSourceDwg;
+	pSourceDwg = NULL;
+
+	return blockRefId;
+}
+
+AcDbObjectId InsertBlockRefFromDwg(const TCHAR* fileName, const TCHAR* blkDefName, const WCHAR *layoutname, AcGePoint3d origin)
+{
+	AcDbObjectId blockRefId = CopyBlockDefFromDwg(fileName, blkDefName);
+	if (blockRefId == AcDbObjectId::kNull)
+	{
+		return AcDbObjectId::kNull;
+	}
+	
+	AcDbObjectId entId = AcDbObjectId::kNull;
+	int nSuc = MD2010_InsertBlockReference_Layout(layoutname, blkDefName, entId, origin);
+	return entId;
+}
