@@ -100,7 +100,7 @@ double JHCOM_GetMax(vdouble &values)
 	if(values.size() == 0)
 		return DBL_MIN;
 	double max = values[0];
-	for(int i = 1; i < values.size(); i++)
+	for(UINT i = 1; i < values.size(); i++)
 	{
 		if(values[i] > max)
 		{
@@ -123,7 +123,7 @@ double JHCOM_GetMin(vdouble &values)
 	if(values.size() == 0)
 		return DBL_MAX;
 	double min = values[0];
-	for(int i = 1; i < values.size(); i++)
+	for(UINT i = 1; i < values.size(); i++)
 	{
 		if(values[i] < min)
 		{
@@ -262,7 +262,7 @@ int JHCOM_LoopCountCurve(vAcGeCurve3dP &pCurves, AcGePoint3d &seedOri, AcGePoint
 	AcGePoint3d d3s, d3e;
 	AcGePoint3d seedOld = seedPnt;
 	int index = 0;
-	for (int j = 0; j < pCurves.size(); j++)
+	for (int j = 0; j < (int)pCurves.size(); j++)
 	{
 		d3s = JHCOM_GetCurveStart(pCurves[j]);
 		d3e = JHCOM_GetCurveEnd(pCurves[j]);
@@ -329,7 +329,7 @@ int JHCOM_GetOneCurveFromCurveVectorByDistance(AcGeCurve3d *firstCurve, vAcGeCur
 	AcGePoint3dArray pointArray;
 	firstCurve->getSamplePoints(10,pointArray);
 	double dis = 0;
-	for (int i = 0; i < vGeCurs.size(); i++)
+	for (UINT i = 0; i < vGeCurs.size(); i++)
 	{
 		int isSame = 0;
 		for (int j = 0; j < pointArray.length(); j++)
@@ -361,7 +361,7 @@ int JHCOM_GetOneSameCurveFromCurveVector(AcGeCurve3d *firstCurve, vAcGeCurve3dP 
 	AcGePoint3dArray pointArray;
 	firstCurve->getSamplePoints(10,pointArray);
 	double dis = 0;
-    for (int i = 0; i < vGeCurs.size(); i++)
+    for (UINT i = 0; i < vGeCurs.size(); i++)
     {
 		int isSame = 0;
 		for (int j = 0; j < pointArray.length(); j++)
@@ -383,7 +383,7 @@ int JHCOM_GetPointNearestPoint(AcGePoint3d pt, vAcGePoint3d &pnts)
 {
 	double minidist = DBL_MAX;
 	int index = 0;
-	for (int i = 0; i < pnts.size(); i++)
+	for (UINT i = 0; i < pnts.size(); i++)
 	{
 		double curdis = pt.distanceTo(pnts[i]);
 		if(curdis < minidist)

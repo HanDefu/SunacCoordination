@@ -34,7 +34,7 @@ std::vector<AttrWindow *>  WebIO::GetWindows
 #ifdef WORK_LOCAL//本地模式
 	CString localWindowPath = TY_GetLocalFilePath();
 	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"*_Window.dwg",localWindowPath);
-	for (int i = 0; i < localFiles.size(); i++)
+	for (UINT i = 0; i < localFiles.size(); i++)
 	{
 		AttrWindow *pAttribute = new AttrWindow();
 		CString strid;
@@ -80,7 +80,7 @@ std::vector<AttrDoor *> WebIO::GetDoors
 #ifdef WORK_LOCAL//本地模式
 	CString localWindowPath = TY_GetLocalFilePath();
 	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"*.dwg",localWindowPath);
-	for (int i = 0; i < localFiles.size(); i++)
+	for (UINT i = 0; i < localFiles.size(); i++)
 	{
 		AttrDoor *pAttribute = new AttrDoor();
 		CString strid;
@@ -386,7 +386,7 @@ std::vector<AttrAirCon *> WebIO::GetAirCons
 #ifdef WORK_LOCAL//本地模式
 	CString localWindowPath = TY_GetLocalFilePath();
 	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"*.dwg",localWindowPath);
-	for (int i = 0; i < localFiles.size(); i++)
+	for (UINT i = 0; i < localFiles.size(); i++)
 	{
 		AttrAirCon *pAttribute = new AttrAirCon();
 		CString strid;
@@ -424,7 +424,7 @@ std::vector<AttrRailing *> WebIO::GetRailings(eRailingType type)//一次搜索所有的
 #ifdef WORK_LOCAL//本地模式
 	CString localWindowPath = TY_GetLocalFilePath();
 	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"_Railing1.dwg",localWindowPath);
-	for (int i = 0; i < localFiles.size(); i++)
+	for (UINT i = 0; i < localFiles.size(); i++)
 	{
 		AttrRailing *pAttribute = new AttrRailing();
 		CString strid;

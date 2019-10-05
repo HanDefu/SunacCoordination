@@ -185,7 +185,7 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 	m_preWindow.SetColumnCount(1);
 	m_preWindow.SetDisplayRows(3);
 	m_preWindow.SetDisplayColumns(1);
-	for (int i = 0; i < m_allWindows.size(); i++)
+	for (UINT i = 0; i < m_allWindows.size(); i++)
 	{
 		CString str;
 		str.Format(_T("原型编号：%s\n窗户面积：%.2lf\n通风量：0.9\n动态类型：动态\n适用范围：集团"), m_allWindows[i].m_prototypeCode, width * height / 1E6);
@@ -227,7 +227,7 @@ void CWindowDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	NM_GRIDVIEW* pView = (NM_GRIDVIEW*)pNMHDR;
 	int nSel = pView->iRow;
-	if (nSel >= 0 && nSel < m_allWindows.size())
+	if (nSel >= 0 && nSel < (int)m_allWindows.size())
 	{
 		vSRCDimData& vDimData = m_allWindows[nSel].m_dimData;
 		for (UINT i = 0; i < vDimData.size(); i++)

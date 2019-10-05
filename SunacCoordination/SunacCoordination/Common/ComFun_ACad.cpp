@@ -948,7 +948,7 @@ void JHCOM_Explode(AcDbEntity *pEnt, AcDbVoidPtrArray &entitySet)
 int JHCOM_GetSameDataNumber(vdouble &data, double value, double tol)
 {
 	int num=0;
-	for(int i = 0; i < data.size(); i++)
+	for(UINT i = 0; i < data.size(); i++)
 	{
 		if(JHCOM_equ(data[i],value,tol))
 			num++;

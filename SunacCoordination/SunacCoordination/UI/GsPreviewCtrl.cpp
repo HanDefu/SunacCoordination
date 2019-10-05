@@ -83,8 +83,6 @@ void CGsPreviewCtrl::setModel(AcGsModel* pModel)
 
 void CGsPreviewCtrl::clearAll()
 {
-	if (acgsGetGsManager() == NULL)
-		return;
 	if (mpView)  
 	{
 		mpView->eraseAll();

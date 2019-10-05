@@ -161,6 +161,7 @@
     <ClCompile Include="Object\AttrObject.cpp" />
     <ClCompile Include="Object\Bathroom\AttrBathroom.cpp" />
     <ClCompile Include="Object\Bathroom\BathroomCom.cpp" />
+    <ClCompile Include="Object\Bathroom\BathroomGen.cpp" />
     <ClCompile Include="Object\Bathroom\RCBathroom.cpp" />
     <ClCompile Include="Object\Kitchen\AttrKitchen.cpp" />
     <ClCompile Include="Object\Kitchen\KitchenGen.cpp" />
@@ -257,6 +258,7 @@
     <ClInclude Include="Object\AttrObject.h" />
     <ClInclude Include="Object\Bathroom\AttrBathroom.h" />
     <ClInclude Include="Object\Bathroom\BathroomCom.h" />
+    <ClInclude Include="Object\Bathroom\BathroomGen.h" />
     <ClInclude Include="Object\Bathroom\RCBathroom.h" />
     <ClInclude Include="Object\Kitchen\AttrKitchen.h" />
     <ClInclude Include="Object\Kitchen\KitchenGen.h" />

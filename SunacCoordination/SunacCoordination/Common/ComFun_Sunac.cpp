@@ -308,7 +308,7 @@ int MD2010_GetAllTypedObjectsInLayer(vAcDbObjectId &allEntites, CString layname,
 	pLayerTbl->close();
 
 
-	for (int i = 0; i < allEntites.size(); i++)
+	for (UINT i = 0; i < allEntites.size(); i++)
 	{
 		AcDbEntity *pEnt = 0;
 		// 打开图形数据库中的对象
@@ -719,7 +719,7 @@ bool TY_IsDoor(AcDbObjectId Id)
 int vFind(RCPairKeyDValue &A, vRCPairKeyDValue &B)
 {
 	int ret = -1;
-	for (int i = 0; i < B.size(); i++)
+	for (UINT i = 0; i < B.size(); i++)
 	{
 		if (A.first == B[i].first  &&
 			fabs(A.second - B[i].second) < TOL)
@@ -733,7 +733,7 @@ int vFind(RCPairKeyDValue &A, vRCPairKeyDValue &B)
 int vFind(RCPairKeyIValue &A, vRCPairKeyIValue &B)
 {
 	int ret = -1;
-	for (int i = 0; i < B.size(); i++)
+	for (UINT i = 0; i < B.size(); i++)
 	{
 		if (A.first == B[i].first  &&
 			A.second == B[i].second)
@@ -747,7 +747,7 @@ int vFind(RCPairKeyIValue &A, vRCPairKeyIValue &B)
 int vFind(RCPairKeyStrValue &A, vRCPairKeyStrValue &B)
 {
 	int ret = -1;
-	for (int i = 0; i < B.size(); i++)
+	for (UINT i = 0; i < B.size(); i++)
 	{
 		if (A.first == B[i].first  &&
 			A.second == B[i].second)
@@ -760,7 +760,7 @@ int vFind(RCPairKeyStrValue &A, vRCPairKeyStrValue &B)
 
 int vFind(RCWindow &oneWindow, vRCWindow &allWindows)
 {
-	for (int i = 0; i < allWindows.size(); i++)
+	for (UINT i = 0; i < allWindows.size(); i++)
 	{
 		if (oneWindow.isEqualTo(&(allWindows[i])))
 		{
@@ -776,7 +776,7 @@ bool TY_IsPairsEqual(vRCPairKeyDValue &A, vRCPairKeyDValue &B)
 	if (A.size() != B.size())
 		return false;
 
-	for (int i = 0; i < A.size(); i++)
+	for (UINT i = 0; i < A.size(); i++)
 	{
 		int index = vFind(A[i],B);
 		if (index == -1)
@@ -790,7 +790,7 @@ bool TY_IsPairsEqual(vRCPairKeyIValue &A, vRCPairKeyIValue &B)
 	if (A.size() != B.size())
 		return false;
 
-	for (int i = 0; i < A.size(); i++)
+	for (UINT i = 0; i < A.size(); i++)
 	{
 		int index = vFind(A[i],B);
 		if (index == -1)
@@ -804,7 +804,7 @@ bool TY_IsPairsEqual(vRCPairKeyStrValue &A, vRCPairKeyStrValue &B)
 	if (A.size() != B.size())
 		return false;
 
-	for (int i = 0; i < A.size(); i++)
+	for (UINT i = 0; i < A.size(); i++)
 	{
 		int index = vFind(A[i],B);
 		if (index == -1)
@@ -1021,7 +1021,7 @@ int TY_HideBlockReferencesInBlockReference(AcDbObjectId blkRefId, vCString &hide
 	MD2010_CycleBlockEntites(brecname, vids);
 
 	vAcDbObjectId blkrefs;
-	for (int i = 0; i < vids.size(); i++)
+	for (UINT i = 0; i < vids.size(); i++)
 	{
 		if(MD2010_GetBlockReference_Record_name(vids[i], brecname) == 0)
 		{

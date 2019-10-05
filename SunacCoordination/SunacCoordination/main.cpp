@@ -394,13 +394,15 @@ extern "C" AcRx::AppRetCode acrxEntryPoint( AcRx::AppMsgCode msg, void* appId)
 		CloseModelessDialogs();
 		CADPalette_RemoveP();
 		unloadApp();
+		if (acDocManager->documentCount() > 0)
+			InitMenu();
 		break;
 	case AcRx::kQuitMsg:
-		CloseModelessDialogs();
 		break;
 	case  AcRx::kLoadDwgMsg:
 		break;
 	case  AcRx::kUnloadDwgMsg:
+		CloseModelessDialogs(); //预览控件依赖于当前文档，关闭文档时退出对话框以防止崩溃
 		break;
 	case  AcRx::kSaveMsg:
 		break;

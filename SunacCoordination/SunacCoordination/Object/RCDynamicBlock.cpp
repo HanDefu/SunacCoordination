@@ -53,7 +53,7 @@ RCDynamicBlock & RCDynamicBlock::operator=(const RCDynamicBlock &other)
 int RCDynamicBlock::SetParameter(CString key, double value)
 {
 	int error = -1;
-	for (int m = 0; m < m_dKeyValues.size(); m++)
+	for (UINT m = 0; m < m_dKeyValues.size(); m++)
 	{
         if (key == m_dKeyValues[m].first)
         {
@@ -69,7 +69,7 @@ int RCDynamicBlock::SetParameter(CString key, double value)
 int RCDynamicBlock::SetParameter(CString key, int value)
 {
 	int error = -1;
-	for (int m = 0; m < m_iKeyValues.size(); m++)
+	for (UINT m = 0; m < m_iKeyValues.size(); m++)
 	{
 		if (key == m_iKeyValues[m].first)
 		{
@@ -84,7 +84,7 @@ int RCDynamicBlock::SetParameter(CString key, int value)
 int RCDynamicBlock::GetParameter(CString key, CString &value)
 {
 	int error = -1;
-	for (int m = 0; m < m_strKeyValues.size(); m++)
+	for (UINT m = 0; m < m_strKeyValues.size(); m++)
 	{
 		if (key == m_strKeyValues[m].first)
 		{
@@ -99,7 +99,7 @@ int RCDynamicBlock::GetParameter(CString key, CString &value)
 int RCDynamicBlock::GetParameter(CString key, double &value)
 {
 	int error = -1;
-	for (int m = 0; m < m_dKeyValues.size(); m++)
+	for (UINT m = 0; m < m_dKeyValues.size(); m++)
 	{
 		if (key == m_dKeyValues[m].first)
 		{
@@ -115,7 +115,7 @@ int RCDynamicBlock::GetParameter(CString key, double &value)
 int RCDynamicBlock::GetParameter(CString key, int &value)
 {
 	int error = -1;
-	for (int m = 0; m < m_iKeyValues.size(); m++)
+	for (UINT m = 0; m < m_iKeyValues.size(); m++)
 	{
 		if (key == m_iKeyValues[m].first)
 		{
@@ -130,7 +130,7 @@ int RCDynamicBlock::GetParameter(CString key, int &value)
 int RCDynamicBlock::SetParameter(CString key, CString value)
 {
 	int error = -1;
-	for (int m = 0; m < m_strKeyValues.size(); m++)
+	for (UINT m = 0; m < m_strKeyValues.size(); m++)
 	{
 		if (key == m_strKeyValues[m].first)
 		{
@@ -270,7 +270,7 @@ int RCDynamicBlock::RunParameters()
 			if (blkProp.readOnly())
 				continue;
 
-			for (int m = 0; m < m_dKeyValues.size(); m++)
+			for (UINT m = 0; m < m_dKeyValues.size(); m++)
 			{
 				//look for the relevant property
 				if (wcscmp(blkProp.propertyName().kACharPtr(), m_dKeyValues[m].first) != 0) continue;
@@ -284,7 +284,7 @@ int RCDynamicBlock::RunParameters()
 				break;
 			}
 
-			for (int m = 0; m < m_iKeyValues.size(); m++)
+			for (UINT m = 0; m < m_iKeyValues.size(); m++)
 			{
 				//look for the relevant property
 				if (wcscmp(blkProp.propertyName().kACharPtr(), m_iKeyValues[m].first) != 0) continue;
@@ -297,7 +297,7 @@ int RCDynamicBlock::RunParameters()
 				break;
 			}
 
-			for (int m = 0; m < m_strKeyValues.size(); m++)
+			for (UINT m = 0; m < m_strKeyValues.size(); m++)
 			{
 				//look for the relevant property
 				if (wcscmp(blkProp.propertyName().kACharPtr(), m_strKeyValues[m].first) != 0) continue;
