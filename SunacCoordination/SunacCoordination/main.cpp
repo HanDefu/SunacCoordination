@@ -330,7 +330,7 @@ static void initApp()
 	CDoubleClickBlockReference *pCircleEdit = new CDoubleClickBlockReference;
 	AcDbBlockReference::desc()->addX(AcDbDoubleClickEdit::desc(), pCircleEdit);	
 
-	LoadManagedDll(MD2010_GetAppPath() + L"\\support\\RemoveCuiDoubleClick.dll");
+	LoadManagedDll(MD2010_GetAppPath() + L"\\support\\Sunac2019\\rcdc.dll");
 
 	mThreadHandle = (HANDLE)_beginthread(&SyncDataWithService, 0, 0);
 
