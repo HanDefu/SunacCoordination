@@ -37,6 +37,8 @@
 #include "Common/ComFun_Sunac.h"
 #include "webIO\WindowLocalData.h"
 #include "WebIO\ConfigDictionary.h"
+#include "Tool\DoubleClickBlockReference.h"
+#include "Common\ComFun_Str.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -46,6 +48,8 @@ static char THIS_FILE[] = __FILE__;
 extern "C" HWND adsw_acadMainWnd();
 static HANDLE mThreadHandle = 0;
 
+ACRX_DEFINE_MEMBERS(AcDbDoubleClickEdit);
+enum Acad::ErrorStatus __stdcall LoadManagedDll(ACHAR const *path);
 /////////////////////////////////////////////////////////////////////////////
 // Define the sole extension module object.
 //和服务器同步数据
@@ -322,6 +326,12 @@ static void initApp()
 	acrxBuildClassHierarchy();
 	acrxRegisterService(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_RAILING));
 
+	// 为AcDbCircle类添加协议扩展
+	CDoubleClickBlockReference *pCircleEdit = new CDoubleClickBlockReference;
+	AcDbBlockReference::desc()->addX(AcDbDoubleClickEdit::desc(), pCircleEdit);	
+
+	LoadManagedDll(MD2010_GetAppPath() + L"\\support\\RemoveCuiDoubleClick.dll");
+
 	mThreadHandle = (HANDLE)_beginthread(&SyncDataWithService, 0, 0);
 
 }
@@ -389,6 +399,7 @@ extern "C" AcRx::AppRetCode acrxEntryPoint( AcRx::AppMsgCode msg, void* appId)
 		acrxDynamicLinker->registerAppMDIAware(appId);
 		initApp(); 
 		InitMenu();
+		
 		break;
 	case AcRx::kUnloadAppMsg: 
 		CloseModelessDialogs();

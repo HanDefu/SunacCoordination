@@ -557,20 +557,32 @@ int TY_GetTwoPoints(AcGePoint3d &pnt1, AcGePoint3d &pnt2)
 	return 0;
 }
 
-AcDbObjectId TY_GetExtensionDictionaryID(AcDbObjectId id)
+AcDbObjectId TY_GetExtensionDictionaryID(AcDbObjectId id, bool createIfNotExist)
 {
 	AcDbObject *pObj;
 	acDocManager->lockDocument(curDoc());
-	if(acdbOpenObject(pObj, id, AcDb::kForWrite)==Acad::eOk)
+	if (createIfNotExist)
 	{
-		if (pObj->createExtensionDictionary()==Acad::eOk||pObj->createExtensionDictionary()==Acad::eAlreadyInDb)
+		if(acdbOpenObject(pObj, id, AcDb::kForWrite)==Acad::eOk)
+		{
+			if (pObj->createExtensionDictionary()==Acad::eOk||pObj->createExtensionDictionary()==Acad::eAlreadyInDb)
+			{
+				pObj->close();
+				acDocManager->unlockDocument(curDoc());
+				return pObj->extensionDictionary();
+			}
+			else
+				pObj->close();
+		}
+	}
+	else
+	{
+		if(acdbOpenObject(pObj, id, AcDb::kForRead)==Acad::eOk)
 		{
 			pObj->close();
 			acDocManager->unlockDocument(curDoc());
 			return pObj->extensionDictionary();
 		}
-		else
-			pObj->close();
 	}
 	acDocManager->unlockDocument(curDoc());
 	return 0;
@@ -611,7 +623,7 @@ int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt)
 
 int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt)
 {
-	AcDbObjectId m_dicID = TY_GetExtensionDictionaryID(tkId);
+	AcDbObjectId m_dicID = TY_GetExtensionDictionaryID(tkId,false);
 	if (m_dicID == 0)
 		return -1;
 

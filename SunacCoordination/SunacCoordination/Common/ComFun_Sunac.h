@@ -62,7 +62,7 @@ AcGePoint3d TY_GetPoint(CString prompt = L"«Î—°‘Ò≤Â»Îµ„");
 TYRect TY_GetOneRect();
 int TY_GetTwoPoints(AcGePoint3d &pnt1, AcGePoint3d &pnt2);
 
-AcDbObjectId TY_GetExtensionDictionaryID(AcDbObjectId id);
+AcDbObjectId TY_GetExtensionDictionaryID(AcDbObjectId id, bool createIfNotExist=true);
 int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt);
 int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt);
 
