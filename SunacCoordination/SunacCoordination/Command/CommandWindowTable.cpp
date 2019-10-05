@@ -183,7 +183,7 @@ void CMD_SUNACWINDOWTable()
 			table->setTextString(dataStartRow+i,1,str);
 
 			//门窗编号
-			str.Format(L"%s%dX%d",allWindowsTypes[i].GetAttribute()->m_yxid, 
+			str.Format(L"%s%dX%d",allWindowsTypes[i].GetAttribute()->m_prototypeCode, 
 				                  (int)(allWindowsTypes[i].GetW()),
 								  (int)(allWindowsTypes[i].GetH()));
 			table->setTextString(dataStartRow+i,2,str);

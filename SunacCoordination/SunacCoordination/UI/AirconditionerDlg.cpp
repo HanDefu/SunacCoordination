@@ -3,8 +3,8 @@
 //m_name
 //m_airConHorseNumber
 //m_airConHorseNumber
-//m_yxid
-//m_yxid
+//m_prototypeCode
+//m_prototypeCode
 //m_name
 // UI\AirconditionerDlg.cpp : 实现文件
 //

@@ -31,9 +31,9 @@ public:
 
 	// Constructor / Destructor
 	AttrObject();
-	AttrObject(const AttrObject &other);
 	virtual ~AttrObject();
 
+	AttrObject(const AttrObject &other);
 	virtual AttrObject & operator=(const AttrObject &rhs);
 
 
@@ -54,17 +54,16 @@ public:
 	void SetBianHao(CString  bianHao) { m_instBianHao = bianHao; }
 	CString& GetBianHao() { return m_instBianHao; }
 
-private:
 	
 public:
 	Adesk::Int32 m_version;//文件版本 临时存储
 
-	CString m_yxid;//原型编号
+	CString m_prototypeCode;//原型编号
 	CString m_name;//原型名称
 	bool m_isJiTuan;//是否集团
 	CString m_quyuId;//区域ID
 	CString m_quyuName;//区域名称
-	CString m_type;//原型类型
+	CString m_type;		//原型类型
 	bool m_isDynamic;//是否动态块
 
 	CString m_filePathName;//本地完整路径

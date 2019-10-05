@@ -24,16 +24,17 @@ AttrRailing::~AttrRailing()
 
 }
 
-AttrRailing::AttrRailing(const AttrRailing &other) : AttrObject(other)
-{
-
-}
-
-AttrRailing & AttrRailing::operator=(const AttrRailing &rhs)
-{
-	AttrObject::operator=(rhs);
-	return *this;
-}
+//AttrRailing::AttrRailing(const AttrRailing &other) : AttrObject(other)
+//{
+//
+//}
+//
+//AttrRailing & AttrRailing::operator=(const AttrRailing &rhs)
+//{
+//	AttrObject::operator=(rhs);
+//
+//	return *this;
+//}
 
 Acad::ErrorStatus AttrRailing::dwgInFields(AcDbDwgFiler* filer)
 {

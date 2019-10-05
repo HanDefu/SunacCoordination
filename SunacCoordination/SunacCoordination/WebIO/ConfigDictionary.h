@@ -14,7 +14,7 @@ public:
 
 protected:
 	bool InitFromWeb();
-	void GetConfig(wstring Term);
+	bool GetConfig(wstring Term);
 	bool GetConfigFromWeb(wstring p_paraTypeName, vector<wstring>& p_paraOut);
 
 protected:

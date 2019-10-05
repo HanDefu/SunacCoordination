@@ -23,11 +23,12 @@ public:
 	ACRX_DECLARE_MEMBERS(AttrRailing);
 
 	AttrRailing();
-	AttrRailing(const AttrRailing &other);
 	virtual ~AttrRailing();
 
-	virtual AttrRailing & operator=(const AttrRailing &rhs);
-	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
+	//AttrRailing(const AttrRailing &other);
+	//virtual AttrRailing & operator=(const AttrRailing &rhs);
+
+	virtual bool isEqualTo(AttrObject*other);//基础数据一致
 	virtual eRCType GetType() {return RAILING;}
 
 	//{{AFX_ARX_METHODS(ZffDwgScale)

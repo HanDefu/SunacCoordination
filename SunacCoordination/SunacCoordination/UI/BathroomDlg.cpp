@@ -359,7 +359,7 @@ void CBathroomDlg::OnBnClickedButtonSearch()
 	for (int i = 0; i < m_allBathrooms.size(); i++)
 	{
 		CString str;
-		str.Format(_T("原型编号：%s\n卫生间面积：%.2lf\n通风量要求：0.8\n动态类型：动态\n适用范围：集团"), m_allBathrooms[i]->m_yxid, m_rect.GetWidth() * m_rect.GetHeight() / 1E6);
+		str.Format(_T("原型编号：%s\n卫生间面积：%.2lf\n通风量要求：0.8\n动态类型：动态\n适用范围：集团"), m_allBathrooms[i]->m_prototypeCode, m_rect.GetWidth() * m_rect.GetHeight() / 1E6);
 		m_preBathroom.AddPreview(i, 0, TY_GetLocalFilePath() + m_allBathrooms[i]->m_name, str);
 	}
 

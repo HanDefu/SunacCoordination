@@ -26,7 +26,7 @@ AttrAirCon::AttrAirCon(const AttrAirCon &other) : AttrObject(other)
 {
 	//push_back复制
 	m_airConId = other.m_airConId;						//空调序号
-	m_yxid = other.m_yxid;	//空调原型编号
+	m_prototypeCode = other.m_prototypeCode;	//空调原型编号
 	m_name = other.m_name;//空调原型文件
 	m_airConHorseNumber = other.m_airConHorseNumber;	//空调匹数
 	m_airConPipePos = other.m_airConPipePos;			//空调冷凝水管位置

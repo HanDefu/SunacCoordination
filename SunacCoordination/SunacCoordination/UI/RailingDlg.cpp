@@ -112,16 +112,32 @@ void CRailingDlg::UpdateSelectFile(CString selectFile)
 
 void CRailingDlg::OnBnClickedMfcbuttonSelectline()
 {
-	ShowWindow(FALSE);
+	//ShowWindow(FALSE);
 
-	AcGePoint3d pnt1, pnt2;
-	TY_GetTwoPoints(pnt1, pnt2);
-	if (m_selectedFile.GetLength() > 0)
-	{
-		//CRCRailing* pRailing = CreateRailing();
-		//pRailing->InsertRailing(pnt1, pnt2, m_selectedFile);
-	}
-	ShowWindow(true);
+	//AcGePoint3d pnt1, pnt2;
+	//TY_GetTwoPoints(pnt1, pnt2);
+	//if (m_selectedFile.GetLength() > 0)
+	//{
+	//	//CRCRailing* pRailing = CreateRailing();
+	//	//pRailing->InsertRailing(pnt1, pnt2, m_selectedFile);
+	//}
+	//ShowWindow(true);
+
+
+	AttrRailing railingAtt;
+	railingAtt.m_prototypeCode = _T("Railing_T1");
+	railingAtt.m_height = 1100;
+	railingAtt.m_length = 5400;
+	railingAtt.m_railingType = E_RAILING_TIEYI;
+
+	CRCRailing* pRailing = CreateRailing(railingAtt);
+
+	pRailing->GenerateRailing(AcGePoint3d(0, 0, 0), AcGePoint3d(5400, 0, 0));
+
+
+	delete pRailing;
+
+
 	OnOK();
 }
 

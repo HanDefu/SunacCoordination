@@ -2074,7 +2074,7 @@ AcDbObjectId MD2010_InsertBlockDefineFromPathName(const WCHAR *pathname,CString 
 }
 
 
-int MD2010_InsertBlockFromPathName(const WCHAR *layoutname,const WCHAR *pathname, CString &blockDefineName, AcDbObjectId &entId, AcGePoint3d origin, double angle, AcGeScale3d scale, const WCHAR *layername, int color)
+int MD2010_InsertBlockFromPathName(const WCHAR *layoutname,const WCHAR *pathname, CString blockDefineName, AcDbObjectId &entId, AcGePoint3d origin, double angle, AcGeScale3d scale, const WCHAR *layername, int color)
 {
 	CString name;
 	MD2010_GetCurrentLayer(name);

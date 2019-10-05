@@ -39,7 +39,7 @@ std::vector<AttrWindow *>  WebIO::GetWindows
 		AttrWindow *pAttribute = new AttrWindow();
 		CString strid;
 		strid.Format(L"%s%d_", L"C",i+1);
-		pAttribute->m_yxid = strid;
+		pAttribute->m_prototypeCode = strid;
 		pAttribute->m_name = localFiles[i].first;
 		pAttribute->m_filePathName = localFiles[i].second;
 		int len = pAttribute->m_name.GetLength();
@@ -85,7 +85,7 @@ std::vector<AttrDoor *> WebIO::GetDoors
 		AttrDoor *pAttribute = new AttrDoor();
 		CString strid;
 		strid.Format(L"%s_%d", L"L_DOOR_",i+1);
-		pAttribute->m_yxid = strid;
+		pAttribute->m_prototypeCode = strid;
 		pAttribute->m_name = localFiles[i].first;
 		pAttribute->m_name = pAttribute->m_name.Left(pAttribute->m_name.GetLength() - 4);
 		pAttribute->m_isJiTuan = true;
@@ -168,11 +168,11 @@ std::vector<AttrKitchen *> WebIO::GetKitchens
 
 	AttrKitchen *pAttribute = new AttrKitchen();
 	if (type == L"U型")
-		pAttribute->m_yxid.Format(L"%s_%.0lf×%.0lf", localFile.Left(3), kaiJian, jinShen);
+		pAttribute->m_prototypeCode.Format(L"%s_%.0lf×%.0lf", localFile.Left(3), kaiJian, jinShen);
 	else
-		pAttribute->m_yxid.Format(L"%s_%.0lf×%.0lf", localFile.Left(2), kaiJian, jinShen);
+		pAttribute->m_prototypeCode.Format(L"%s_%.0lf×%.0lf", localFile.Left(2), kaiJian, jinShen);
 	if (weiZhiGuanXi == L"门窗垂直")
-		pAttribute->m_yxid += L"_c";
+		pAttribute->m_prototypeCode += L"_c";
 	pAttribute->m_name = localFile;
 	pAttribute->m_isJiTuan = true;
 	pAttribute->m_isDynamic = true;
@@ -225,7 +225,7 @@ std::vector<AttrBathroom *>  WebIO::GetBathrooms
 			localFile = L"TI3.dwg";
 			type = L"I3";
 			AttrBathroom *pAttribute = new AttrBathroom();
-			pAttribute->m_yxid.Format(L"T%s_%.0lf×%.0lf", type, width, height);
+			pAttribute->m_prototypeCode.Format(L"T%s_%.0lf×%.0lf", type, width, height);
 			pAttribute->m_name = localFile;
 			pAttribute->m_isJiTuan = true;
 			pAttribute->m_isDynamic = true;
@@ -242,7 +242,7 @@ std::vector<AttrBathroom *>  WebIO::GetBathrooms
 			localFile = L"TI3_g.dwg";
 			type = L"I3";
 			AttrBathroom *pAttribute = new AttrBathroom();
-			pAttribute->m_yxid.Format(L"T%s_%.0lf×%.0lf_g", type, width, height);
+			pAttribute->m_prototypeCode.Format(L"T%s_%.0lf×%.0lf_g", type, width, height);
 			pAttribute->m_name = localFile;
 			pAttribute->m_isJiTuan = true;
 			pAttribute->m_isDynamic = true;
@@ -259,7 +259,7 @@ std::vector<AttrBathroom *>  WebIO::GetBathrooms
 			localFile = L"TI4.dwg";
 			type = L"I4";
 			AttrBathroom *pAttribute = new AttrBathroom();
-			pAttribute->m_yxid.Format(L"T%s_%.0lf×%.0lf", type, width, height);
+			pAttribute->m_prototypeCode.Format(L"T%s_%.0lf×%.0lf", type, width, height);
 			pAttribute->m_name = localFile;
 			pAttribute->m_isJiTuan = true;
 			pAttribute->m_isDynamic = true;
@@ -276,7 +276,7 @@ std::vector<AttrBathroom *>  WebIO::GetBathrooms
 			localFile = L"TI4_g.dwg";
 			type = L"I4";
 			AttrBathroom *pAttribute = new AttrBathroom();
-			pAttribute->m_yxid.Format(L"T%s_%.0lf×%.0lf_g", type, width, height);
+			pAttribute->m_prototypeCode.Format(L"T%s_%.0lf×%.0lf_g", type, width, height);
 			pAttribute->m_name = localFile;
 			pAttribute->m_isJiTuan = true;
 			pAttribute->m_isDynamic = true;
@@ -344,7 +344,7 @@ std::vector<AttrBathroom *>  WebIO::GetBathrooms
 			}
 		}
 		AttrBathroom *pAttribute = new AttrBathroom();
-		pAttribute->m_yxid.Format(L"T%s_%.0lf×%.0lf_g", type, width, height);
+		pAttribute->m_prototypeCode.Format(L"T%s_%.0lf×%.0lf_g", type, width, height);
 		pAttribute->m_name = localFile;
 		pAttribute->m_isJiTuan = true;
 		pAttribute->m_isDynamic = true;
@@ -391,7 +391,7 @@ std::vector<AttrAirCon *> WebIO::GetAirCons
 		AttrAirCon *pAttribute = new AttrAirCon();
 		CString strid;
 		strid.Format(L"%s_%d", L"L_AIRCON_",i+1);
-		pAttribute->m_yxid = strid;
+		pAttribute->m_prototypeCode = strid;
 		pAttribute->m_name = localFiles[i].first;
 		pAttribute->m_name.TrimRight(L".dwg");
 		pAttribute->m_isJiTuan = true;
@@ -429,7 +429,7 @@ std::vector<AttrRailing *> WebIO::GetRailings(eRailingType type)//一次搜索所有的
 		AttrRailing *pAttribute = new AttrRailing();
 		CString strid;
 		strid.Format(L"%s_%d", L"L_AIRCON_",i+1);
-		pAttribute->m_yxid = strid;
+		pAttribute->m_prototypeCode = strid;
 		pAttribute->m_name = localFiles[i].first;
 		pAttribute->m_name.TrimRight(L".dwg");
 		pAttribute->m_isJiTuan = true;

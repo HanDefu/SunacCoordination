@@ -33,8 +33,8 @@ void CAirConditionLocalData::LoadDataFromExcel(CString p_file)
 		AttrAirCon attrAirCon;
 
 		attrAirCon.m_airConId = xls.GetCellValue(i, 1); //通过行和列获取单元格的值，并将值赋给对象attrAirCon
-		attrAirCon.m_yxid = xls.GetCellValue(i, 2);
-		if (attrAirCon.m_yxid.GetLength() == 0)
+		attrAirCon.m_prototypeCode = xls.GetCellValue(i, 2);
+		if (attrAirCon.m_prototypeCode.GetLength() == 0)
 			break;
 
 		attrAirCon.m_name = xls.GetCellValue(i, 3);
@@ -55,7 +55,7 @@ bool CAirConditionLocalData::GetAirConById(CString p_sId, AttrAirCon& value)cons
 {
 	for (int i = 0; i < m_aircon.size(); i++)
 	{
-		if (m_aircon[i].m_yxid == p_sId)
+		if (m_aircon[i].m_prototypeCode == p_sId)
 		{
 			value = m_aircon[i];
 			return true;

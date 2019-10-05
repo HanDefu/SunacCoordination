@@ -19,7 +19,7 @@ ACRX_DXF_DEFINE_MEMBERS(AttrObject, AcDbObject,
 AttrObject::AttrObject()
 {
 	m_version = 0;
-	m_yxid = L"";
+	m_prototypeCode = L"";
     m_name = L"";
 	m_isJiTuan = false;
 	m_quyuName = L"";
@@ -35,11 +35,11 @@ AttrObject::~AttrObject()
 AttrObject::AttrObject(const AttrObject &other)
 {
 	m_version = other.m_version;
-	m_yxid = other.m_yxid;
+	m_prototypeCode = other.m_prototypeCode;
 	m_name = other.m_name;
 	m_isJiTuan = other.m_isJiTuan;
 	m_quyuName = other.m_quyuName;
-	m_type = other.m_type; 
+	m_type = other.m_type;
 	m_isDynamic = other.m_isDynamic;
 	m_filePathName = other.m_filePathName;
 	m_instBianHao = other.m_instBianHao;
@@ -48,11 +48,11 @@ AttrObject::AttrObject(const AttrObject &other)
 AttrObject & AttrObject::operator=(const AttrObject &rhs)
 {
 	m_version = rhs.m_version;
-	m_yxid = rhs.m_yxid;
+	m_prototypeCode = rhs.m_prototypeCode;
 	m_name = rhs.m_name;
 	m_isJiTuan = rhs.m_isJiTuan;
 	m_quyuName = rhs.m_quyuName;
-	m_type = rhs.m_type; 
+	m_type = rhs.m_type;
 	m_isDynamic = rhs.m_isDynamic;
 	m_filePathName = rhs.m_filePathName;
 	m_instBianHao = rhs.m_instBianHao;
@@ -74,7 +74,7 @@ Acad::ErrorStatus AttrObject::dwgInFields(AcDbDwgFiler* filer)
 
 	ACHAR *tempStr = new ACHAR[SUNAC_COMMON_STR_LEN];
     filer->readItem(&tempStr);
-	m_yxid = CString(tempStr);
+	m_prototypeCode = CString(tempStr);
 
 	filer->readItem(&tempStr);
 	m_instBianHao = CString(tempStr);
@@ -114,7 +114,7 @@ Acad::ErrorStatus AttrObject::dwgOutFields(AcDbDwgFiler* filer) const
 
 	Adesk::Int32 version = FILE_VERSION;
 	filer->writeItem(version);
-	filer->writeItem(m_yxid);
+	filer->writeItem(m_prototypeCode);
 	filer->writeItem(m_instBianHao);
 	filer->writeItem(m_name);
 	filer->writeItem(m_isJiTuan);
@@ -133,7 +133,7 @@ bool AttrObject::isEqualTo(AttrObject*other)
 		return false;
 
 	//不用比较version
-	if (m_yxid != other->m_yxid)
+	if (m_prototypeCode != other->m_prototypeCode)
 		return false;
 
 	if (m_instBianHao != other->m_instBianHao)
@@ -173,7 +173,7 @@ int AttrObject::GetFile(CString &filePathName)
 		return 0;
 	
 	//如果本地不存在这个文件 去服务器下载一个文件到本地
-	int ret = WebIO::DownLoadFile(m_yxid, filePathName);
+	int ret = WebIO::DownLoadFile(m_prototypeCode, filePathName);
 	if (ret != 0)
 		filePathName = L"";
 
