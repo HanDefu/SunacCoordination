@@ -69,14 +69,14 @@ public:
 	double m_windowH2;  //下固定值（若存在下固定时）
 	double m_wallDis;//外墙距离
 
-	//CString	prototypeId;		//原型编号
-	//CString	prototypeFile;		//原型文件
-	//CString	openType;			//开启类型
-	//CString	openNum;			//开启数量
-	//CString	ventilationFormula;	//通风量公式	
-	//CString	staticWidth;		//静态宽度	
-	//CString	staticHeigth;		//静态高度	
-	//CString	staticVentilation;	//静态通风量
+	////CString	prototypeId;		//原型编号
+	////CString	prototypeFile;		//原型文件
+	////CString	openType;			//开启类型
+	////CString	openNum;			//开启数量
+	////CString	ventilationFormula;	//通风量公式	
+	////CString	staticWidth;		//静态宽度	
+	////CString	staticHeigth;		//静态高度	
+	////CString	staticVentilation;	//静态通风量
 
 	double m_plugslotSize;		//塞缝尺寸
 	CString m_sizeId;			//尺寸代号

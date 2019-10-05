@@ -31,17 +31,17 @@ RCStandBlock::~RCStandBlock(void)
 }
 
 
-//Constructor
-RCStandBlock::RCStandBlock(const RCStandBlock &other):RCBlock(other)
-{
-
-}
-
-//Operator = 
-RCStandBlock & RCStandBlock::operator=(const RCStandBlock &other)
-{
-
-	return *this;
-}
+////Constructor
+//RCStandBlock::RCStandBlock(const RCStandBlock &other):RCBlock(other)
+//{
+//
+//}
+//
+////Operator = 
+//RCStandBlock & RCStandBlock::operator=(const RCStandBlock &other)
+//{
+//
+//	return *this;
+//}
 
 

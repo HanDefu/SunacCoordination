@@ -34,11 +34,18 @@ AttrWindow::~AttrWindow()
 
 AttrWindow::AttrWindow(const AttrWindow &other) : AttrObject(other)
 {
+	*this = other;
+}
+
+AttrWindow & AttrWindow::operator=(const AttrWindow &other)
+{
+	AttrObject::operator=(other);
+
 	m_openType = other.m_openType;
 	m_openQty = other.m_openQty;
 	m_isZhuanJiao = other.m_isZhuanJiao;
 	m_minWid = other.m_minWid;
-	m_maxWid = other.m_maxWid; 
+	m_maxWid = other.m_maxWid;
 	m_tongFengFormula = other.m_tongFengFormula;
 	m_tongFengQty = other.m_tongFengQty;
 
@@ -48,7 +55,7 @@ AttrWindow::AttrWindow(const AttrWindow &other) : AttrObject(other)
 
 	////////////////////////////
 	m_id = other.m_id;					//序号
-	m_yxid = other.m_yxid;		//原型编号
+	m_prototypeCode = other.m_prototypeCode;		//原型编号
 	m_name = other.m_name;		//原型文件
 	m_scopeOfApplication = other.m_scopeOfApplication;	//适用范围
 	m_Dynamic = other.m_Dynamic;			//是否动态
@@ -67,22 +74,6 @@ AttrWindow::AttrWindow(const AttrWindow &other) : AttrObject(other)
 	m_prototypeSpreadFile = other.m_prototypeSpreadFile; //原型展开图文件
 
 	m_dimData = other.m_dimData;
-}
-
-AttrWindow & AttrWindow::operator=(const AttrWindow &rhs)
-{
-	AttrObject::operator=(rhs);
-	m_openType = rhs.m_openType;
-	m_openQty = rhs.m_openQty;
-	m_isZhuanJiao = rhs.m_isZhuanJiao;
-	m_minWid = rhs.m_minWid;
-	m_maxWid = rhs.m_maxWid; 
-	m_tongFengFormula = rhs.m_tongFengFormula;
-	m_tongFengQty = rhs.m_tongFengQty;
-
-	m_isMirror = rhs.m_isMirror;
-	m_viewDir = rhs.m_viewDir;
-	m_wallDis = rhs.m_wallDis;
 
 	return *this;
 }

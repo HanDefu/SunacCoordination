@@ -1,9 +1,9 @@
-#include "StdAfx.h"
+ï»¿#include "StdAfx.h"
 #include "../Sunac_def.h"
 #include "ConfigDictionary.h"
 #include <xstring>
 #include <atlconv.h>  
-#include "SunacCadWeb\ArgumentSettingServiceSoap.nsmap" //Ö»ÓÃ°üº¬Ò»´Î£¬ÇÒ±ØĞë°üº¬Ò»´Î
+#include "SunacCadWeb\ArgumentSettingServiceSoap.nsmap" //åªç”¨åŒ…å«ä¸€æ¬¡ï¼Œä¸”å¿…é¡»åŒ…å«ä¸€æ¬¡
 #include "SunacCadWeb\soapArgumentSettingServiceSoapProxy.h"
 #include "../Common\ComFun_Str.h"
 #include "../WebIO/WindowWebData.h"
@@ -14,7 +14,7 @@ using namespace std;
 
 CConfigDictionary::CConfigDictionary()
 {
-	InitFromWeb();
+	//InitFromWeb();
 }
 
 CConfigDictionary::~CConfigDictionary()
@@ -22,13 +22,13 @@ CConfigDictionary::~CConfigDictionary()
 
 }
 
-//½Ó¿ÚÎÄµµ https://docs.qq.com/doc/DUUpaanJLZmlSQ2d4
+//æ¥å£æ–‡æ¡£ https://docs.qq.com/doc/DUUpaanJLZmlSQ2d4
 
-void CConfigDictionary::GetConfig(wstring Term)
+bool CConfigDictionary::GetConfig(wstring Term)
 {
 	vector<wstring> paraOut;
-	bool bSuc1 = GetConfigFromWeb(Term, paraOut);
-	if (bSuc1 && paraOut.size()>0)
+	bool bSuc = GetConfigFromWeb(Term, paraOut);
+	if (bSuc && paraOut.size()>0)
 	{
 		vCString allPara;
 		for (vector<wstring>::iterator it = paraOut.begin(); it != paraOut.end(); it++)
@@ -40,69 +40,111 @@ void CConfigDictionary::GetConfig(wstring Term)
 		CString cstr = Term.c_str();
 		m_configDict[cstr] = allPara;
 	}
+	return bSuc;
 }
 
 bool CConfigDictionary::InitFromWeb()
 {	
-	//ÇøÓò
-	GetConfig(_T("area"));
+	bool bSuc = false;
+	//åŒºåŸŸ
+	bSuc = GetConfig(_T("area"));
+	if (bSuc == false)
+		return bSuc;
 
-	//¹¦ÄÜÇø
-	GetConfig(_T("actionType"));
+	//åŠŸèƒ½åŒº
+	bSuc = GetConfig(_T("actionType"));
+	if (bSuc == false)
+		return bSuc;
 
-	//ÃÅ´°Î»ÖÃ¹ØÏµ
-	GetConfig(_T("doorWindowPosition"));
+	//é—¨çª—ä½ç½®å…³ç³»
+	bSuc = GetConfig(_T("doorWindowPosition"));
+	if (bSuc == false)
+		return bSuc;
 
-	//¿ªÆôÀàĞÍ
-	GetConfig( _T("openType"));
+	//å¼€å¯ç±»å‹
+	bSuc = GetConfig(_T("openType"));
+	if (bSuc == false)
+		return bSuc;
 
-	//¿ªÆôÉÈÊıÁ¿
-	GetConfig(_T("openWindowNum"));
+	//å¼€å¯æ‰‡æ•°é‡
+	bSuc = GetConfig(_T("openWindowNum"));
+	if (bSuc == false)
+		return bSuc;
 
-	//Í¨·çÁ¿¼ÆËãÃæ»ı±ÈÖµ
-	GetConfig(_T("airVolumeAreaRation"));
+	//é€šé£é‡è®¡ç®—é¢ç§¯æ¯”å€¼
+	bSuc = GetConfig(_T("airVolumeAreaRation"));
+	if (bSuc == false)
+		return bSuc;
 
-	//ÃÅ´°¾àÍâÇ½¾àÀë
-	GetConfig(_T("doorWindowDistance"));
+	//é—¨çª—è·å¤–å¢™è·ç¦»
+	bSuc = GetConfig(_T("doorWindowDistance"));
+	if (bSuc == false)
+		return bSuc;
 
-	//ÃÅÀàĞÍ
-	GetConfig(_T("doorType"));
+	//é—¨ç±»å‹
+	bSuc = GetConfig(_T("doorType"));
+	if (bSuc == false)
+		return bSuc;
 
-	//³ø·¿ÀàĞÍ
-	GetConfig(_T("kitchenType"));
+	//å¨æˆ¿ç±»å‹
+	bSuc = GetConfig(_T("kitchenType"));
+	if (bSuc == false)
+		return bSuc;
 
-	//³ø·¿Ë®ÅèÀàĞÍ
-	GetConfig(_T("kitchenBasinType"));
+	//å¨æˆ¿æ°´ç›†ç±»å‹
+	bSuc = GetConfig(_T("kitchenBasinType"));
+	if (bSuc == false)
+		return bSuc;
 
-	//±ùÏäÀàĞÍ
-	GetConfig(_T("refrigeratorType"));
+	//å†°ç®±ç±»å‹
+	bSuc = GetConfig(_T("refrigeratorType"));
+	if (bSuc == false)
+		return bSuc;
 
-	//ÔîÌ¨¿í¶È
-	GetConfig(_T("hearthWidth"));
+	//ç¶å°å®½åº¦
+	bSuc = GetConfig(_T("hearthWidth"));
+	if (bSuc == false)
+		return bSuc;
 
-	//ÎÀÉú¼äÀàĞÍ
-	GetConfig(_T("BathroomType"));
+	//å«ç”Ÿé—´ç±»å‹
+	bSuc = GetConfig(_T("BathroomType"));
+	if (bSuc == false)
+		return bSuc;
 
-	//ÎÀÉú¼äÌ¨Åè¿í¶È
-	GetConfig(_T("BathroomBasinWidth"));
+	//å«ç”Ÿé—´å°ç›†å®½åº¦
+	bSuc = GetConfig(_T("BathroomBasinWidth"));
+	if (bSuc == false)
+		return bSuc;
 
-	//ÂíÍ°¿í¶È
-	GetConfig(_T("closesToolWidth"));
+	//é©¬æ¡¶å®½åº¦
+	bSuc = GetConfig(_T("closesToolWidth"));
+	if (bSuc == false)
+		return bSuc;
 
-	//îÂÏ´Çø¿í¶È
-	GetConfig(_T("bathroomWidth"));
+	//ç›¥æ´—åŒºå®½åº¦
+	bSuc = GetConfig(_T("bathroomWidth"));
+	if (bSuc == false)
+		return bSuc;
 
-	//¿Õµ÷Æ¥Êı
-	GetConfig(_T("airConditionNumber"));
+	//ç©ºè°ƒåŒ¹æ•°
+	bSuc = GetConfig(_T("airConditionNumber"));
+	if (bSuc == false)
+		return bSuc;
 
-	//ÀäÄıË®¹ÜÎ»ÖÃ
-	GetConfig(_T("condensatePipePosition"));
+	//å†·å‡æ°´ç®¡ä½ç½®
+	bSuc = GetConfig(_T("condensatePipePosition"));
+	if (bSuc == false)
+		return bSuc;
 
-	//ÓêË®¹ÜÎ»ÖÃ
-	GetConfig(_T("rainPipePosition"));
+	//é›¨æ°´ç®¡ä½ç½®
+	bSuc = GetConfig(_T("rainPipePosition"));
+	if (bSuc == false)
+		return bSuc;
 
-	//À¸¸ËÀàĞÍ
-	GetConfig(_T("handRail"));
+	//æ æ†ç±»å‹
+	bSuc = GetConfig(_T("handRail"));
+	if (bSuc == false)
+		return bSuc;
 
 	return true;
 }
@@ -116,23 +158,26 @@ bool CConfigDictionary::GetConfigFromWeb(wstring p_paraTypeName, vector<wstring>
 	_ns1__StandardDesignAttributeResponse attResult;
 
 	ArgumentSettingServiceSoapProxy cadWeb;
+	cadWeb.recv_timeout = 5;	//æ¥å—Â  (å•ä½æ˜¯ç§’)
+	cadWeb.send_timeout = 5;	//å‘é€Â  (å•ä½æ˜¯ç§’)
+	cadWeb.connect_timeout = 5;	//è¿æ¥(å•ä½æ˜¯ç§’)
 	int nRet = cadWeb.StandardDesignAttribute(&desingAtt, attResult);
-	//ÅĞ¶Ïµ±Ö¸ÕëÎª¿Õ£¬Î´¶Áµ½xmlÊ±£¬·µ»Øfalse
+	//åˆ¤æ–­å½“æŒ‡é’ˆä¸ºç©ºï¼Œæœªè¯»åˆ°xmlæ—¶ï¼Œè¿”å›false
 	if (attResult.StandardDesignAttributeResult == NULL)
 	{
 		return false;
 	}
 
 	//UINT  len = (attResult.StandardDesignAttributeResult)->length();
-	//MessageBox(NULL, attResult.StandardDesignAttributeResult->c_str(), _T("·µ»Ø½á¹û"), 0);
+	//MessageBox(NULL, attResult.StandardDesignAttributeResult->c_str(), _T("è¿”å›ç»“æœ"), 0);
 
-	//½âÎö×Ö·û´®³ö½á¹û
+	//è§£æå­—ç¬¦ä¸²å‡ºç»“æœ
 	CMarkup xml;	
 
 	xml.SetDoc((*(attResult.StandardDesignAttributeResult)).c_str());
 	
 	xml.ResetMainPos();
-	xml.FindElem();	//¸ù½Úµã
+	xml.FindElem();	//æ ¹èŠ‚ç‚¹
 	xml.IntoElem();
 	{
 		wstring sCode;
@@ -172,7 +217,7 @@ bool CConfigDictionary::GetConfigFromWeb(wstring p_paraTypeName, vector<wstring>
 
 vCString CConfigDictionary::GetQuyus()const
 {
-	//if (m_configDict.count("area") > 0) // ÕÒÏÂÓĞÃ»ÓĞÕâ¸ökey£¬ÓĞµÄ
+	//if (m_configDict.count("area") > 0) // æ‰¾ä¸‹æœ‰æ²¡æœ‰è¿™ä¸ªkeyï¼Œæœ‰çš„
 	//{
 	//	return m_configDict[_T("area")];
 	//}
@@ -184,14 +229,14 @@ vCString CConfigDictionary::GetQuyus()const
 	else
 	{
 		vCString strs;
-		strs.push_back(L"±±¾©ÇøÓò");
-		strs.push_back(L"»ª±±ÇøÓò");
-		strs.push_back(L"ÉÏº£ÇøÓò");
-		strs.push_back(L"Î÷ÄÏÇøÓò");
-		strs.push_back(L"¶«ÄÏÇøÓò");
-		strs.push_back(L"¹ãÉîÇøÓò");
-		strs.push_back(L"»ªÖĞÇøÓò");
-		strs.push_back(L"º£ÄÏÇøÓò");
+		strs.push_back(L"åŒ—äº¬åŒºåŸŸ");
+		strs.push_back(L"ååŒ—åŒºåŸŸ");
+		strs.push_back(L"ä¸Šæµ·åŒºåŸŸ");
+		strs.push_back(L"è¥¿å—åŒºåŸŸ");
+		strs.push_back(L"ä¸œå—åŒºåŸŸ");
+		strs.push_back(L"å¹¿æ·±åŒºåŸŸ");
+		strs.push_back(L"åä¸­åŒºåŸŸ");
+		strs.push_back(L"æµ·å—åŒºåŸŸ");
 		return strs;
 	}
 }
@@ -205,12 +250,12 @@ vCString CConfigDictionary::GetGongNengQus()const
 	else
 	{
 		vCString strs;
-		strs.push_back(L"²»ÏŞ");
-		strs.push_back(L"³ø·¿");
-		strs.push_back(L"ÎÀÉú¼ä");
-		strs.push_back(L"ÑôÌ¨");
-		strs.push_back(L"ÎÔÊÒ");
-		strs.push_back(L"¿ÍÌü");
+		strs.push_back(L"ä¸é™");
+		strs.push_back(L"å¨æˆ¿");
+		strs.push_back(L"å«ç”Ÿé—´");
+		strs.push_back(L"é˜³å°");
+		strs.push_back(L"å§å®¤");
+		strs.push_back(L"å®¢å…");
 		return strs;
 	}
 }
@@ -224,8 +269,8 @@ vCString CConfigDictionary::GetWindowDoorPoss()const
 	else
 	{
 		vCString strs;
-		strs.push_back(L"ÃÅ´°¶Ô¿ª");
-		strs.push_back(L"ÃÅ´°´¹Ö±¿ª");
+		strs.push_back(L"é—¨çª—å¯¹å¼€");
+		strs.push_back(L"é—¨çª—å‚ç›´å¼€");
 		return strs;
 	}
 }
@@ -239,11 +284,11 @@ vCString CConfigDictionary::Window_GetOpenTypes()const
 	else
 	{
 		vCString strs;
-		strs.push_back(L"²»ÏŞ");
-		strs.push_back(L"ÄÚ¿ª");
-		strs.push_back(L"Íâ¿ª");
-		strs.push_back(L"ÍÆÀ­");
-		strs.push_back(L"ÉÏĞü");
+		strs.push_back(L"ä¸é™");
+		strs.push_back(L"å†…å¼€");
+		strs.push_back(L"å¤–å¼€");
+		strs.push_back(L"æ¨æ‹‰");
+		strs.push_back(L"ä¸Šæ‚¬");
 		return strs;
 	}
 }
@@ -258,7 +303,7 @@ vCString CConfigDictionary::Window_GetOpenAmount()const
 	else
 	{
 		vCString strs;
-		strs.push_back(L"²»ÏŞ");
+		strs.push_back(L"ä¸é™");
 		strs.push_back(L"1");
 		strs.push_back(L"2");
 		strs.push_back(L"3");
@@ -315,9 +360,9 @@ vCString CConfigDictionary::Door_GetTypes()const
 	else
 	{
 		vCString strs;
-		strs.push_back(L"²»ÏŞ");
-		strs.push_back(L"ÍÆÀ­");
-		strs.push_back(L"Íâ¿ª");
+		strs.push_back(L"ä¸é™");
+		strs.push_back(L"æ¨æ‹‰");
+		strs.push_back(L"å¤–å¼€");
 		return strs;
 	}
 }
@@ -331,9 +376,9 @@ vCString CConfigDictionary::Kitchen_GetTypes()const
 	else
 	{
 		vCString strs;
-		strs.push_back(L"UĞÍ");
-		strs.push_back(L"LĞÍ");
-		strs.push_back(L"IĞÍ");
+		strs.push_back(L"Uå‹");
+		strs.push_back(L"Lå‹");
+		strs.push_back(L"Iå‹");
 		return strs;
 	}
 }
@@ -347,11 +392,11 @@ vCString CConfigDictionary::Kitchen_GetShuiPenTypes()const
 	else
 	{
 		vCString strs;
-		strs.push_back(L"µ¥Åè600");
-		strs.push_back(L"µ¥Åè800");
-		strs.push_back(L"Ë«Åè900");
-		strs.push_back(L"Ë«Åè1000");
-		strs.push_back(L"Ë«Åè1200");
+		strs.push_back(L"å•ç›†600");
+		strs.push_back(L"å•ç›†800");
+		strs.push_back(L"åŒç›†900");
+		strs.push_back(L"åŒç›†1000");
+		strs.push_back(L"åŒç›†1200");
 		return strs;
 	}
 }
@@ -365,9 +410,9 @@ vCString CConfigDictionary::Kitchen_GetBingXiangTypes()const
 	else
 	{
 		vCString strs;
-		strs.push_back(L"µ¥¿ªÃÅ700");
-		strs.push_back(L"¶Ô¿ªÃÅ800");
-		strs.push_back(L"¶Ô¿ªÃÅ1000");
+		strs.push_back(L"å•å¼€é—¨700");
+		strs.push_back(L"å¯¹å¼€é—¨800");
+		strs.push_back(L"å¯¹å¼€é—¨1000");
 		return strs;
 	}
 }
@@ -396,9 +441,9 @@ vCString CConfigDictionary::Bathroom_GetTypes()const
 	else
 	{
 		vCString strs;
-		strs.push_back(L"UĞÍ");
-		strs.push_back(L"LĞÍ");
-		strs.push_back(L"IĞÍ");
+		strs.push_back(L"Uå‹");
+		strs.push_back(L"Lå‹");
+		strs.push_back(L"Iå‹");
 		return strs;
 	}
 }
@@ -467,7 +512,7 @@ vCString CConfigDictionary::Air_GetPiShus()const
 		return strs;
 	}
 }
-vCString CConfigDictionary::Air_GetLengNingShuiGuanPos()const//»ñµÃÀäÄıË®¹ÜÎ»ÖÃ
+vCString CConfigDictionary::Air_GetLengNingShuiGuanPos()const//è·å¾—å†·å‡æ°´ç®¡ä½ç½®
 {
 	auto iter = m_configDict.find(_T("condensatePipePosition"));
 	if (iter != m_configDict.end())
@@ -477,13 +522,13 @@ vCString CConfigDictionary::Air_GetLengNingShuiGuanPos()const//»ñµÃÀäÄıË®¹ÜÎ»ÖÃ
 	else
 	{
 		vCString strs;
-		strs.push_back(L"²àÃæ");
-		strs.push_back(L"ºóÃæ");
+		strs.push_back(L"ä¾§é¢");
+		strs.push_back(L"åé¢");
 		return strs;
 	}
 }
 
-vCString CConfigDictionary::Air_GetYuShuiGuanPos()const//»ñµÃÓêË®¹ÜÎ»ÖÃ
+vCString CConfigDictionary::Air_GetYuShuiGuanPos()const//è·å¾—é›¨æ°´ç®¡ä½ç½®
 {
 	auto iter = m_configDict.find(_T("rainPipePosition"));
 	if (iter != m_configDict.end())
@@ -493,8 +538,8 @@ vCString CConfigDictionary::Air_GetYuShuiGuanPos()const//»ñµÃÓêË®¹ÜÎ»ÖÃ
 	else
 	{
 		vCString strs;
-		strs.push_back(L"²àÃæ");
-		strs.push_back(L"ºóÃæ");
+		strs.push_back(L"ä¾§é¢");
+		strs.push_back(L"åé¢");
 		return strs;
 	}
 }
@@ -509,8 +554,8 @@ vCString CConfigDictionary::Railing_GetTypes()
 	else
 	{
 		vCString strs;
-		strs.push_back(L"²£Á§À¸¸Ë");
-		strs.push_back(L"ÌúÒÕÀ¸¸Ë");
+		strs.push_back(L"ç»ç’ƒæ æ†");
+		strs.push_back(L"é“è‰ºæ æ†");
 		return strs;
 	}
 }

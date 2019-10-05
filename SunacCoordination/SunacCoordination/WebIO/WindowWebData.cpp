@@ -72,7 +72,7 @@ std::vector<AttrWindow> CWindowWebData::GetWindows(double p_width, double p_heig
 			xml.IntoElem();
 			if (xml.FindElem(_T("DrawingCode")))
 			{
-				attrwindow.m_yxid = xml.GetData();
+				attrwindow.m_prototypeCode = xml.GetData();
 			}
 			if (xml.FindElem(_T("DrawingName")))
 			{
@@ -250,7 +250,7 @@ std::vector<AttrWindow>  CWindowWebData::GetAllWindows()const
 			xml.IntoElem();
 			if (xml.FindElem(_T("DrawingCode")))
 			{
-				attrallwindow.m_yxid = xml.GetData();
+				attrallwindow.m_prototypeCode = xml.GetData();
 			}
 			if (xml.FindElem(_T("DrawingName")))
 			{

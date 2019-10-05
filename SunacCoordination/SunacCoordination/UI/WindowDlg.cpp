@@ -156,7 +156,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		oneWindow.AddAttribute(pWindow);
 		pWindow->close();
 
-		oneWindow.SetBianHao(m_allWindows[sels[0]].m_yxid + str);
+		oneWindow.SetBianHao(m_allWindows[sels[0]].m_prototypeCode + str);
 	}
 	OnOK();
 }
@@ -188,7 +188,7 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 	for (int i = 0; i < m_allWindows.size(); i++)
 	{
 		CString str;
-		str.Format(_T("原型编号：%s\n窗户面积：%.2lf\n通风量：0.9\n动态类型：动态\n适用范围：集团"), m_allWindows[i].m_yxid, width * height / 1E6);
+		str.Format(_T("原型编号：%s\n窗户面积：%.2lf\n通风量：0.9\n动态类型：动态\n适用范围：集团"), m_allWindows[i].m_prototypeCode, width * height / 1E6);
 		m_preWindow.AddPreview(i, 0, TY_GetLocalFilePath() + m_allWindows[i].m_name, str);
 	}
 
@@ -254,7 +254,7 @@ void CWindowDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 			}
 		}
 
-		TYUI_SetText(m_number, m_allWindows[nSel].m_yxid);
+		TYUI_SetText(m_number, m_allWindows[nSel].m_prototypeCode);
 		m_radioYes = (m_allWindows[nSel].m_isBayWindow ? 0 : 1);
 		UpdateData(FALSE);
 	}

@@ -81,8 +81,8 @@ void CWindowLocalData::LoadDataFromExcel(CString p_file)
 		
 		//Í¨¹ýÐÐºÍÁÐ»ñÈ¡µ¥Ôª¸ñµÄÖµ£¬²¢½«Öµ¸³¸ø¶ÔÏóattrwindow
 		attrwindow.m_id = xls.GetCellValue(i, 1); 
-		attrwindow.m_yxid = xls.GetCellValue(i, 2);
-		if (attrwindow.m_yxid.GetLength() == 0)  //¶ÔÔ­ÐÍ±àºÅµÄ³¤¶È½øÐÐÅÐ¶Ï£¬µ±Ô­ÐÍ±àºÅÎª¿ÕµÄÊ±ºò½áÊøÑ­»·
+		attrwindow.m_prototypeCode = xls.GetCellValue(i, 2);
+		if (attrwindow.m_prototypeCode.GetLength() == 0)  //¶ÔÔ­ÐÍ±àºÅµÄ³¤¶È½øÐÐÅÐ¶Ï£¬µ±Ô­ÐÍ±àºÅÎª¿ÕµÄÊ±ºò½áÊøÑ­»·
 			break;
 
 		attrwindow.m_name = xls.GetCellValue(i, 3);
@@ -183,7 +183,7 @@ bool CWindowLocalData::GetWindowById(CString p_sId, AttrWindow& value) const //Í
 {
 	for (int i = 0; i < m_windows.size(); i++)
 	{
-		if (m_windows[i].m_yxid == p_sId)
+		if (m_windows[i].m_prototypeCode == p_sId)
 		{
 			value = m_windows[i];
 			return true;
@@ -210,7 +210,7 @@ vector<AttrWindow> CWindowLocalData::GetAllWindows() //»ñÈ¡ËùÓÐ´°»§
 {
 	for (int i = 0; i < m_windows.size(); i++)
 	{
-		std::vector<CString> strs = YT_SplitCString(m_windows[i].m_yxid, L'_');  //ÓÃ"_"²ð·Ö
+		std::vector<CString> strs = YT_SplitCString(m_windows[i].m_prototypeCode, L'_');  //ÓÃ"_"²ð·Ö
 		if (strs[0] == "Window")
 		{
 			m_wins.push_back(m_windows[i]);
@@ -223,7 +223,7 @@ vector<AttrWindow> CWindowLocalData::GetAllDoors()  //»ñÈ¡ËùÓÐÃÅ
 {
 	for (int i = 0; i < m_windows.size(); i++)
 	{
-		std::vector<CString> strs = YT_SplitCString(m_windows[i].m_yxid, L'_');
+		std::vector<CString> strs = YT_SplitCString(m_windows[i].m_prototypeCode, L'_');
 		if (strs[0] == "Door")
 		{
 			m_doors.push_back(m_windows[i]);
@@ -238,7 +238,7 @@ std::vector<AttrWindow >  CWindowLocalData::GetWindows(double width, CString ope
 
 	for (int i =0; i < m_windows.size(); i++)
 	{
-		std::vector<CString> strs = YT_SplitCString(m_windows[i].m_yxid, L'_');  //ÓÃ"_"²ð·Ö
+		std::vector<CString> strs = YT_SplitCString(m_windows[i].m_prototypeCode, L'_');  //ÓÃ"_"²ð·Ö
 		if (strs[0] != "Window")
 		{
 			continue;
@@ -290,7 +290,7 @@ std::vector<AttrWindow >  CWindowLocalData::GetDoors(double width, CString openT
 
 	for (int i =0; i < m_windows.size(); i++)
 	{
-		std::vector<CString> strs = YT_SplitCString(m_windows[i].m_yxid, L'_');  //ÓÃ"_"²ð·Ö
+		std::vector<CString> strs = YT_SplitCString(m_windows[i].m_prototypeCode, L'_');  //ÓÃ"_"²ð·Ö
 		if (strs[0] != "Door")
 		{
 			continue;

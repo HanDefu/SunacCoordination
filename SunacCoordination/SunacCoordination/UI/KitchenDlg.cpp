@@ -336,7 +336,7 @@ void CKitchenDlg::OnBnClickedButtonSearch()
 	for (int i = 0; i < m_allKitchens.size(); i++)
 	{
 		CString str;
-		str.Format(_T("原型编号：%s\n厨房面积：%.2lf\n通风量要求：1.5\n动态类型：动态\n适用范围：集团"), m_allKitchens[i]->m_yxid, m_rect.GetWidth() * m_rect.GetHeight() / 1E6);
+		str.Format(_T("原型编号：%s\n厨房面积：%.2lf\n通风量要求：1.5\n动态类型：动态\n适用范围：集团"), m_allKitchens[i]->m_prototypeCode, m_rect.GetWidth() * m_rect.GetHeight() / 1E6);
 		m_preKitchen.AddPreview(i, 0, TY_GetLocalFilePath() + m_allKitchens[i]->m_name, str);
 	}
 
@@ -375,7 +375,7 @@ void CKitchenDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	}
 
 	//设置属性区选项
-	TYUI_SetText(m_number, curSecKitchen->m_yxid);
+	TYUI_SetText(m_number, curSecKitchen->m_prototypeCode);
 
 	TYUI_InitComboBox(m_basinType, m_pKitchGen->GetShuipenOptions(), m_pKitchGen->GetShuipenDefault());
 	TYUI_InitComboBox(m_fridgeType, m_pKitchGen->GetBinxiangOptions(), m_pKitchGen->GetBinxiangDefault());

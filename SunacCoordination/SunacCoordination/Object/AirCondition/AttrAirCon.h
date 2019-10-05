@@ -54,7 +54,7 @@ public:
 
 	//外窗数据表格第二张表单空调 变量
 	CString m_airConId;				//空调序号
-	//CString m_yxid;	//空调原型编号
+	//CString m_prototypeCode;	//空调原型编号
 	//CString m_name;	//空调原型文件
 	CString m_airConHorseNumber;	//空调匹数
 	CString m_airConPipePos;		//空调冷凝水管位置

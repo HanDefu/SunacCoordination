@@ -21,10 +21,10 @@ class RCStandBlock : public RCBlock
 {
 public:
 	RCStandBlock(void);
-	RCStandBlock(const RCStandBlock &other);
 	~RCStandBlock(void);
 
-	virtual RCStandBlock & operator=(const RCStandBlock &rhs);
+	//RCStandBlock(const RCStandBlock &other);
+	//virtual RCStandBlock & operator=(const RCStandBlock &rhs);
 
 protected: 
 	
