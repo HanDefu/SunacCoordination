@@ -26,13 +26,13 @@ BOOL CloseRailingDlg()
 
 IMPLEMENT_DYNAMIC(CRailingDlg, CAcUiDialog)
 
-CRailingDlg::CRailingDlg(CWnd* pParent /*=NULL*/)
+CRailingDlg::CRailingDlg(CWnd* pParent /*=NULL*/, bool p_bModeless)
 	: CAcUiDialog(CRailingDlg::IDD, pParent)
 	, m_height(1100)
 	, m_heightBase(200)
 	, m_width(5400)
 {
-
+	m_isMoldless = p_bModeless;
 }
 
 CRailingDlg::~CRailingDlg()
@@ -61,11 +61,6 @@ END_MESSAGE_MAP()
 
 // CRailingDlg 消息处理程序
 
-LRESULT CRailingDlg::onAcadKeepFocus(WPARAM, LPARAM)
-{
-	//return FALSE;
-	return TRUE;
-}
 
 BOOL CRailingDlg::OnInitDialog()
 {
@@ -143,6 +138,33 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 	OnOK();
 }
 
+
+LRESULT CRailingDlg::onAcadKeepFocus(WPARAM, LPARAM)
+{
+	return TRUE;
+}
+void CRailingDlg::OnOK()
+{
+	CAcUiDialog::OnOK();
+	DestroyWindow();
+}
+
+void CRailingDlg::OnCancel()
+{
+	CAcUiDialog::OnCancel();
+	if (m_isMoldless)
+		DestroyWindow();
+}
+
+void CRailingDlg::PostNcDestroy()
+{
+	CAcUiDialog::PostNcDestroy();
+	if (m_isMoldless)
+	{
+		delete this;
+		g_railingDlg = NULL;
+	}
+}
 
 void CRailingDlg::OnBnClickedButtonSelectline()
 {

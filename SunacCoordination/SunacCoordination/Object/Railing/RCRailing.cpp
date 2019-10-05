@@ -137,6 +137,9 @@ int CRCRailingT1::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOu
 	DQ_SetDynamicAttribute(id4, _T("L"), GetLength());
 	idsOut.append(id4);
 
+	//////////////////////////////////////////////////////////////////////////
+	//3 组合为一个块，并给把属性设给当前块  TODO
+
 	acDocManager->unlockDocument(curDoc());
 
 	return 0;

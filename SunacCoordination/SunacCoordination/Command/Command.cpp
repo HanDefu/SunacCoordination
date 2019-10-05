@@ -101,7 +101,7 @@ void CMD_SUNACRAILING()
 	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
 	if (g_railingDlg == NULL)
 	{
-		g_railingDlg = new CRailingDlg(acedGetAcadFrame());
+		g_railingDlg = new CRailingDlg(acedGetAcadFrame(), true);
 		g_railingDlg->Create(IDD_DIALOG_RAILING);
 	}
 	g_railingDlg->ShowWindow(SW_SHOW);
