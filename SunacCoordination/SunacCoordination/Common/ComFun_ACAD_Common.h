@@ -149,7 +149,7 @@ bool             MD2010_CheckBlockHasAttribute(const WCHAR * blockname);
 AcDbObjectId     MD2010_InsertBlockDefineFromPathName(const WCHAR *pathname,CString blockName);
                  //标准图块插入函数
 int              MD2010_InsertBlockFromPathName(const WCHAR *layoutname,const WCHAR *pathname, CString blockDefineName,  AcDbObjectId &entId, AcGePoint3d origin, double angle, AcGeScale3d scale, const WCHAR *layername = L"0", int color = -2);
-int              MD2010_InsertBlockReference_Layout(const WCHAR * layoutname, const WCHAR * blockname, AcDbObjectId &entId, AcGePoint3d origin, double angle, AcGeScale3d scale, int color = -2);
+int              MD2010_InsertBlockReference_Layout(const WCHAR * layoutname, const WCHAR * blockname, AcDbObjectId &entId, AcGePoint3d origin, double angle = 0, AcGeScale3d scale=AcGeScale3d(1), int color = -2);
 void             MD2010_GetBlockRecordname(AcDbObjectId id, ACHAR *&pName);
 int             MD2010_GetBlockReference_Record_name(AcDbObjectId id, ACHAR *&pName);
 //int MD2010_GetBlock4Points();

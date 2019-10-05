@@ -20,14 +20,7 @@ CWindowLocalData::~CWindowLocalData()
 
 
 //门窗
-RCDimData CWindowLocalData::ConvertStringToDimData 
-(
-    CString code,
-    CString  valueType,
-	CString value,
-	CString defaultValue,
-	CString state
-	)const
+RCDimData CWindowLocalData::ConvertStringToDimData ( CString code, CString  valueType, CString value, CString defaultValue,	CString state) const
 {
 	RCDimData  data;
 	if (valueType == "无")
@@ -166,13 +159,13 @@ void CWindowLocalData::LoadDataFromExcel(CString p_file)
 		attrwindow.m_defaultValue = xls.GetCellValue(i, 49);
 		attrwindow.m_state = xls.GetCellValue(i, 50);
 
-		data = ConvertStringToDimData(L"H3",attrwindow.m_valueType, attrwindow.m_value,attrwindow.m_defaultValue,attrwindow.m_state);
+		data = ConvertStringToDimData(L"H3",attrwindow.m_valueType, attrwindow.m_value, attrwindow.m_defaultValue, attrwindow.m_state);
 		attrwindow.m_dimData.push_back(data);
 
 		attrwindow.m_prototypeFlatFile = xls.GetCellValue(i, 51);
 		attrwindow.m_prototypeTopViewFile = xls.GetCellValue(i, 52);
 
-		m_windows.push_back(attrwindow); //将数据添加到vector数组m_windows
+		m_windows.push_back(attrwindow); 
 	}
 
 	xls.CloseExcel();//关闭表格

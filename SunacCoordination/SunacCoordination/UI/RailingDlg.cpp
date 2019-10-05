@@ -28,6 +28,9 @@ IMPLEMENT_DYNAMIC(CRailingDlg, CAcUiDialog)
 
 CRailingDlg::CRailingDlg(CWnd* pParent /*=NULL*/)
 	: CAcUiDialog(CRailingDlg::IDD, pParent)
+	, m_height(1100)
+	, m_heightBase(200)
+	, m_width(5400)
 {
 
 }
@@ -39,19 +42,20 @@ CRailingDlg::~CRailingDlg()
 void CRailingDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CAcUiDialog::DoDataExchange(pDX);
-	//DDX_Control(pDX, IDC_EDIT_RAILINGINFO, m_railingInfo);
-	DDX_Control(pDX, IDC_EDIT_HOLEWIDTH, m_width);
-	DDX_Control(pDX, IDC_EDIT_RAILINGHEIGHT, m_height);
-	DDX_Control(pDX, IDC_EDIT_REVERSERIDGE_HEIGHT, m_reverse);
 	DDX_Control(pDX, IDC_PREVIEW_RAILING, m_preRailing);
 	DDX_Control(pDX, IDC_COMBO_RAILINGTYPE, m_type);
+	DDX_Text(pDX, IDC_EDIT_RAILINGHEIGHT, m_height);
+	DDV_MinMaxDouble(pDX, m_height, 100, 10000);
+	DDX_Text(pDX, IDC_EDIT_REVERSERIDGE_HEIGHT, m_heightBase);
+	DDV_MinMaxDouble(pDX, m_heightBase, 0, 1000);
+	DDX_Text(pDX, IDC_EDIT_HOLEWIDTH, m_width);
+	DDV_MinMaxDouble(pDX, m_width, 100, 100000);
 }
 
 BEGIN_MESSAGE_MAP(CRailingDlg, CAcUiDialog)
-	//ON_BN_CLICKED(IDC_MFCBUTTON_LIB, &CRailingDlg::OnBnClickedMfcbuttonLib)
-	ON_BN_CLICKED(IDC_BUTTON_INSERTRAILING, &CRailingDlg::OnBnClickedMfcbuttonSelectline)
-	//ON_BN_CLICKED(IDC_MFCBUTTON_CLOSE, &CRailingDlg::OnBnClickedMfcbuttonClose)
+	ON_BN_CLICKED(IDC_BUTTON_INSERTRAILING, &CRailingDlg::OnBnClickedInsertToCAD)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
+	ON_BN_CLICKED(IDC_BUTTON_SELECTLINE, &CRailingDlg::OnBnClickedButtonSelectline)
 END_MESSAGE_MAP()
 
 
@@ -77,9 +81,8 @@ BOOL CRailingDlg::OnInitDialog()
 
 	//m_railingInfo.SetWindowText(_T("栏杆信息说明:\r\n栏杆间距:\r\n单元尺寸:\r\n栏杆类型："));
 
-	m_width.SetWindowTextW(_T("2500"));
-	m_height.SetWindowTextW(_T("1100"));
-	m_reverse.SetWindowTextW(_T("200"));
+	m_type.AddString(_T("铁艺栏杆"));
+	m_type.AddString(_T("玻璃栏杆"));
 	m_type.SetCurSel(0);
 
 	//((CMFCButton*)GetDlgItem(IDC_MFCBUTTON_LIB))->SetImage(IDB_BITMAP37);
@@ -88,18 +91,6 @@ BOOL CRailingDlg::OnInitDialog()
 }
 
 /*
-void CRailingDlg::OnBnClickedMfcbuttonLib()
-{
-	CAcModuleResourceOverride resOverride;
-
-	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
-	CRailingBaseDlg * pDlg = new CRailingBaseDlg(acedGetAcadFrame());
-	pDlg->Create(IDD_DIALOG_RAILINGBASE);
-	pDlg->SetParent(this);
-	pDlg->ShowWindow(SW_SHOW);
-}*/
-/*
-
 void CRailingDlg::UpdateSelectFile(CString selectFile)
 {
 	if (selectFile.GetLength() > 0)
@@ -110,40 +101,54 @@ void CRailingDlg::UpdateSelectFile(CString selectFile)
 }
 */
 
-void CRailingDlg::OnBnClickedMfcbuttonSelectline()
+void CRailingDlg::OnBnClickedInsertToCAD()
 {
-	//ShowWindow(FALSE);
+	UpdateData();
 
-	//AcGePoint3d pnt1, pnt2;
-	//TY_GetTwoPoints(pnt1, pnt2);
-	//if (m_selectedFile.GetLength() > 0)
-	//{
-	//	//CRCRailing* pRailing = CreateRailing();
-	//	//pRailing->InsertRailing(pnt1, pnt2, m_selectedFile);
-	//}
-	//ShowWindow(true);
+	//检查数据
+	if (m_width<1500)
+	{
+		AfxMessageBox(_T("栏杆长度太短"));
+		return;
+	}
 
+	//TODO 必须选择栏杆类型，必须选择栏杆原型
+
+	if (m_selectedFile.GetLength() > 0)
+	{
+		//CRCRailing* pRailing = CreateRailing();
+		//pRailing->InsertRailing(pnt1, pnt2, m_selectedFile);
+	}
+
+	//生成
 
 	AttrRailing railingAtt;
-	railingAtt.m_prototypeCode = _T("Railing_T1");
-	railingAtt.m_height = 1100;
-	railingAtt.m_length = 5400;
+	railingAtt.m_height = m_height;
+	railingAtt.m_length = m_width;
+	railingAtt.m_prototypeCode = _T("Railing_T1"); //TODO 支持其他类型
 	railingAtt.m_railingType = E_RAILING_TIEYI;
 
 	CRCRailing* pRailing = CreateRailing(railingAtt);
 
 	pRailing->GenerateRailing(AcGePoint3d(0, 0, 0), AcGePoint3d(5400, 0, 0));
 
-
 	delete pRailing;
-
 
 	OnOK();
 }
 
 
-/*
-void CRailingDlg::OnBnClickedMfcbuttonClose()
+void CRailingDlg::OnBnClickedButtonSelectline()
 {
-	OnOK();
-}*/
+	ShowWindow(FALSE);
+	AcGePoint3d pnt1, pnt2;
+	TY_GetTwoPoints(pnt1, pnt2);
+
+	//TODO 选线
+
+	ShowWindow(TRUE);
+
+	double len = pnt2.x - pnt1.x;
+	m_width = len;
+	UpdateData(FALSE);
+}
