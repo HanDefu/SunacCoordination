@@ -7,6 +7,19 @@
 #include <dbents.h>
 #include <actrans.h>
 #include "../Common/ComFun_Sunac.h"
+#include "../UI/WindowDlg.h"
+#include "../UI/KitchenDlg.h"
+#include "../UI/BathroomDlg.h"
+#include "../UI/RailingDlg.h"
+#include "../UI/AirconditionerDlg.h"
+#include "../UI/DoorDlg.h"
+#include "../UI/FacadeDlg.h"
+#include "../UI/FillingDlg.h"
+#include "../UI/MoldingsDlg.h"
+#include "../UI/WaterproofDlg.h"
+#include "../ui/MyPalette.h"
+#include "../ui/MyPaletteSet.h"
+#include "../ui/DlgLogin.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -40,24 +53,23 @@ void CDoubleClickBlockReference::startEdit( AcDbEntity *pEnt, AcGePoint3d pt )
 
 		// 锁定文档
 		acDocManager->lockDocument(pDoc);
-		
 		// 将实体的打开状态升级为可写状态
-		pBlockReference->upgradeOpen();
-		
-		bool isWindow = TY_IsWindow(pBlockReference->objectId());
-
+		//pBlockReference->upgradeOpen();
 		pBlockReference->close();
-		
 		// 解锁文档
 		acDocManager->unlockDocument(pDoc);
-		
-		// 清理PickFirst选择集中的内容
-		//acedSSSetFirst(NULL, NULL);
-		
-		// 更新图形的显示
-		pBlockReference->draw();		// 为什么能在关闭之后还能使用它？我也不太清楚
-		actrTransactionManager->flushGraphics();
-		acedUpdateDisplay();		
+
+		eRCType rcType = TY_GetType(pBlockReference);
+
+		CAcModuleResourceOverride resOverride;
+		switch (rcType)
+		{
+		case WINDOW:
+			CWindowDlg dlg;
+			dlg.m_isMoldless = false;
+			dlg.DoModal();
+			break;
+		}
 	}
 	else
 	{

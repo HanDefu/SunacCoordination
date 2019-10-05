@@ -66,6 +66,8 @@ public:
 	BOOL m_autoIndex;
 	CComboBox m_viewDir;
 	CButton m_isMirror;
+
+	bool m_isMoldless;//是否非模态对话框
 };
 
 extern CWindowDlg* g_windowDlg;

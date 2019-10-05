@@ -64,7 +64,7 @@ AcGePoint3d TY_GetPoint(CString prompt = L"«Î—°‘Ò≤Â»Îµ„");
 TYRect TY_GetOneRect();
 int TY_GetTwoPoints(AcGePoint3d &pnt1, AcGePoint3d &pnt2);
 
-AcDbObjectId TY_GetExtensionDictionaryID(AcDbObjectId id, bool createIfNotExist=true);
+AcDbObjectId TY_GetExtensionDictionaryID(AcDbObjectId id);
 int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt);
 int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt);
 
@@ -74,6 +74,9 @@ bool TY_IsBathroom(AcDbObjectId Id);
 bool TY_IsAirCon(AcDbObjectId Id);
 bool TY_IsDoor(AcDbObjectId Id);
 bool TY_IsRailing(AcDbObjectId Id);
+
+eRCType TY_GetType(AcDbBlockReference *pBlockReference);
+
 
 bool TY_IsPairsEqual(vRCPairKeyDValue &A, vRCPairKeyDValue &B);
 bool TY_IsPairsEqual(vRCPairKeyIValue &A, vRCPairKeyIValue &B);

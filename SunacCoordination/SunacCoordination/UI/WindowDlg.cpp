@@ -21,7 +21,7 @@ CWindowDlg::CWindowDlg(CWnd* pParent /*=NULL*/)
 	, m_radioYes(0)
 	, m_autoIndex(FALSE)
 {
-
+	m_isMoldless = true;
 }
 
 CWindowDlg::~CWindowDlg()
@@ -42,14 +42,18 @@ void CWindowDlg::OnOK()
 void CWindowDlg::OnCancel()
 {
 	CAcUiDialog::OnCancel();
-	DestroyWindow();
+	if (m_isMoldless)
+	    DestroyWindow();
 }
 
 void CWindowDlg::PostNcDestroy()
 {
 	CAcUiDialog::PostNcDestroy();
-	delete this;
-	g_windowDlg = NULL;
+	if (m_isMoldless)
+	{
+		delete this;
+		g_windowDlg = NULL;
+	}
 }
 
 void CWindowDlg::DoDataExchange(CDataExchange* pDX)

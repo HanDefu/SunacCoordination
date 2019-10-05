@@ -586,33 +586,23 @@ int TY_GetTwoPoints(AcGePoint3d &pnt1, AcGePoint3d &pnt2)
 	return 0;
 }
 
-AcDbObjectId TY_GetExtensionDictionaryID(AcDbObjectId id, bool createIfNotExist)
+AcDbObjectId TY_GetExtensionDictionaryID(AcDbObjectId id)
 {
 	AcDbObject *pObj;
 	acDocManager->lockDocument(curDoc());
-	if (createIfNotExist)
+
+	if(acdbOpenObject(pObj, id, AcDb::kForWrite)==Acad::eOk)
 	{
-		if(acdbOpenObject(pObj, id, AcDb::kForWrite)==Acad::eOk)
-		{
-			if (pObj->createExtensionDictionary()==Acad::eOk||pObj->createExtensionDictionary()==Acad::eAlreadyInDb)
-			{
-				pObj->close();
-				acDocManager->unlockDocument(curDoc());
-				return pObj->extensionDictionary();
-			}
-			else
-				pObj->close();
-		}
-	}
-	else
-	{
-		if(acdbOpenObject(pObj, id, AcDb::kForRead)==Acad::eOk)
+		if (pObj->createExtensionDictionary()==Acad::eOk||pObj->createExtensionDictionary()==Acad::eAlreadyInDb)
 		{
 			pObj->close();
 			acDocManager->unlockDocument(curDoc());
 			return pObj->extensionDictionary();
 		}
+		else
+			pObj->close();
 	}
+
 	acDocManager->unlockDocument(curDoc());
 	return 0;
 }
@@ -652,7 +642,7 @@ int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt)
 
 int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt)
 {
-	AcDbObjectId m_dicID = TY_GetExtensionDictionaryID(tkId,false);
+	AcDbObjectId m_dicID = TY_GetExtensionDictionaryID(tkId);
 	if (m_dicID == 0)
 		return -1;
 
@@ -671,11 +661,58 @@ int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt)
 bool TY_IsWindow(AcDbObjectId Id)
 {
 	AcDbObject * pDataEnt = 0;
+
 	TY_GetAttributeData(Id, pDataEnt);
 	AttrWindow * pWindow = dynamic_cast<AttrWindow *>(pDataEnt);
 	if (pWindow != 0)
 		return true;
 	return false;
+}
+
+eRCType TY_GetType(AcDbBlockReference *pBlockReference)
+{
+	if (pBlockReference == 0)
+		return TYPENUM;
+	AcDbObject * pDataEnt = 0;
+	AcDbObjectId dictid = pBlockReference->extensionDictionary();
+
+	AcDbDictionary *pDict = NULL;
+	if(acdbOpenObject(pDict, dictid, AcDb::kForRead)==Acad::eOk)
+	{
+		Acad::ErrorStatus es =pDict->getAt(SUNAC_ATTRIBUTE_ENTITY, (AcDbObject*&)pDataEnt, AcDb::kForRead);
+		pDict->close();
+		pDataEnt->close();
+		if(pDataEnt == NULL)
+			return TYPENUM;
+
+		AttrWindow * pWindow = dynamic_cast<AttrWindow *>(pDataEnt);
+		if (pWindow != 0)
+			return WINDOW;
+
+		AttrKitchen * pKit = dynamic_cast<AttrKitchen *>(pDataEnt);
+		if (pKit != 0)
+			return KITCHEN;
+
+		AttrBathroom * pBath= dynamic_cast<AttrBathroom *>(pDataEnt);
+		if (pBath != 0)
+			return Bathroom;
+
+		AttrDoor * pDoor = dynamic_cast<AttrDoor *>(pDataEnt);
+		if (pDoor != 0)
+			return DOOR;
+
+		AttrRailing * pRail = dynamic_cast<AttrRailing *>(pDataEnt);
+		if (pRail != 0)
+			return RAILING;
+
+		AttrAirCon * pAir = dynamic_cast<AttrAirCon *>(pDataEnt);
+		if (pAir != 0)
+			return AIRCON;
+
+		return TYPENUM;
+	}
+	else
+		return TYPENUM;
 }
 
 bool TY_Iskitchen(AcDbObjectId Id)
