@@ -53,7 +53,7 @@ void CAirConditionLocalData::LoadDataFromExcel(CString p_file)
 
 bool CAirConditionLocalData::GetAirConById(CString p_sId, AttrAirCon& value)const   //通过原型编号从m_aircon中获取空调
 {
-	for (int i = 0; i < m_aircon.size(); i++)
+	for (UINT i = 0; i < m_aircon.size(); i++)
 	{
 		if (m_aircon[i].m_prototypeCode == p_sId)
 		{
@@ -67,7 +67,7 @@ bool CAirConditionLocalData::GetAirConById(CString p_sId, AttrAirCon& value)cons
 
 bool CAirConditionLocalData::GetAirConByFileName(CString p_sFileName, AttrAirCon&value)  const //通过文件名从m_aircon中获取空调
 {
-	for (int i = 0; i < m_aircon.size(); i++)
+	for (UINT i = 0; i < m_aircon.size(); i++)
 	{
 		if (m_aircon[i].m_name == p_sFileName)
 		{
@@ -88,7 +88,7 @@ std::vector<AttrAirCon >  CAirConditionLocalData::GetAirCon(CString p_airConHors
 {
 	std::vector<AttrAirCon> data;
 
-	for (int i =0; i < m_aircon.size(); i++)
+	for (UINT i =0; i < m_aircon.size(); i++)
 	{
 		if (p_airConHorseNumber != m_aircon[i].m_airConHorseNumber)
 		{

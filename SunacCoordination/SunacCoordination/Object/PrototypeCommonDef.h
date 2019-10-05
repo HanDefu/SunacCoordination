@@ -10,6 +10,14 @@ enum EKitchType
 	E_KITCH_ALL = 0xff,	 //所有类型
 };
 
+enum EBathroomType
+{
+	E_BATHROOM_U,	//U型
+	E_BATHROOM_L,	//L型
+	E_BATHROOM_I,	//I型
+	E_BATHROOM_OTHER = 0xf, //其他
+	E_BATHROOM_ALL = 0xff,	 //所有类型
+};
 
 enum E_DIRECTION
 {

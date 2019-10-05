@@ -333,7 +333,7 @@ void CKitchenDlg::OnBnClickedButtonSearch()
 	m_preKitchen.SetColumnCount(1);
 	m_preKitchen.SetDisplayRows(3);
 	m_preKitchen.SetDisplayColumns(1);
-	for (int i = 0; i < m_allKitchens.size(); i++)
+	for (UINT i = 0; i < m_allKitchens.size(); i++)
 	{
 		CString str;
 		str.Format(_T("原型编号：%s\n厨房面积：%.2lf\n通风量要求：1.5\n动态类型：动态\n适用范围：集团"), m_allKitchens[i]->m_prototypeCode, m_rect.GetWidth() * m_rect.GetHeight() / 1E6);
@@ -353,7 +353,7 @@ void CKitchenDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	if (m_doorDir == E_DIR_LEFT || m_doorDir == E_DIR_RIGHT)
 		swap(kaiJian, jinShen);
 
-	if (nSel < 0 || nSel >= m_allKitchens.size())
+	if (nSel < 0 || nSel >= (int)m_allKitchens.size())
 	{
 		EnableSetProperty(false);
 		return;

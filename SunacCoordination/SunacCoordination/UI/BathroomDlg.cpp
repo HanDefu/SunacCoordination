@@ -214,7 +214,7 @@ void CBathroomDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	int width = int(m_rect.GetWidth() + 0.5);
 	int height = int(m_rect.GetHeight() + 0.5);
 
-	if (nSel >= 0 && nSel < m_allBathrooms.size())
+	if (nSel >= 0 && nSel < (int)m_allBathrooms.size())
 	{
 		CString type = m_allBathrooms[nSel]->m_BathroomType;
 		bool isG = (m_allBathrooms[nSel]->m_name.Right(6) == _T("_g.dwg"));
@@ -356,7 +356,7 @@ void CBathroomDlg::OnBnClickedButtonSearch()
 	m_preBathroom.SetColumnCount(1);
 	m_preBathroom.SetDisplayRows(3);
 	m_preBathroom.SetDisplayColumns(1);
-	for (int i = 0; i < m_allBathrooms.size(); i++)
+	for (UINT i = 0; i < m_allBathrooms.size(); i++)
 	{
 		CString str;
 		str.Format(_T("原型编号：%s\n卫生间面积：%.2lf\n通风量要求：0.8\n动态类型：动态\n适用范围：集团"), m_allBathrooms[i]->m_prototypeCode, m_rect.GetWidth() * m_rect.GetHeight() / 1E6);

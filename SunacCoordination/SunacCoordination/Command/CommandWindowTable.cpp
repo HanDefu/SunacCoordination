@@ -60,7 +60,7 @@ void CMD_SUNACWINDOWTable()
 
 	//第三步：读取门窗数据并且分类汇总
 	vRCWindow allWindowsTypes;
-	for (int i = 0; i < m_vids.size(); i++)
+	for (UINT i = 0; i < m_vids.size(); i++)
 	{
 		RCWindow oneWindow;
 		oneWindow.m_id = m_vids[i];

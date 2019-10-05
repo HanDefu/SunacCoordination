@@ -151,7 +151,7 @@ void CMD_SUNACWINDOWDetail()
 
 	//第三步：读取门窗数据并且分类汇总
 	vRCWindow allWindowsTypes;
-	for (int i = 0; i < m_vids.size(); i++)
+	for (UINT i = 0; i < m_vids.size(); i++)
 	{
 		RCWindow oneWindow;
 		oneWindow.m_id = m_vids[i];
@@ -176,7 +176,7 @@ void CMD_SUNACWINDOWDetail()
 
 	//4.2 插图门窗图块---写入文字
 	//windowDetailTemplates 和 allWindowsTypes 的数量是一致的
-	for (int i = 0; i < allWindowsTypes.size(); i++)
+	for (UINT i = 0; i < allWindowsTypes.size(); i++)
 	{
 		AcGePoint3d winPnt = windowDetailTemplates[i].GetInsertPntWindow(allWindowsTypes[i].GetW(), allWindowsTypes[i].GetH());
 		allWindowsTypes[i].Insert
@@ -221,7 +221,7 @@ void CMD_SUNACWINDOWDetail()
 	}
 
 	//第四步 开始输出数据
-	for (int i = 0; i < allWindowsTypes.size(); i++)
+	for (UINT i = 0; i < allWindowsTypes.size(); i++)
 	{
 		allWindowsTypes[i].CreateDims();
 	}

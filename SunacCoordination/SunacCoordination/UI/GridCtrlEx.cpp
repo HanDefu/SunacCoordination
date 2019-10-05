@@ -29,7 +29,7 @@ void CGridCtrlEx::SetHeaderText(CString sText)
 {
 	vector<CString> headerTexts = Split(sText, _T(';'));
 
-	if (GetColumnCount() < headerTexts.size())
+	if (GetColumnCount() < (int)headerTexts.size())
 		SetColumnCount((int)headerTexts.size());
 	if (GetRowCount() < 1)
 		SetRowCount(1);

@@ -120,7 +120,7 @@ std::vector<AttrWindow> CWindowWebData::GetWindows(double p_width, double p_heig
 			}
 			if (xml.FindElem(_T("WindowOpenQty")))
 			{
-				attrwindow.m_openQty = _ttof(xml.GetData());
+				attrwindow.m_openQty = _ttoi(xml.GetData());
 			}
 			if (xml.FindElem(_T("WindowHasCorner")))
 			{
@@ -128,7 +128,7 @@ std::vector<AttrWindow> CWindowWebData::GetWindows(double p_width, double p_heig
 			}
 			if (xml.FindElem(_T("WindowSizeMin")))
 			{
-				attrwindow.m_minWid = _ttof(xml.GetData());
+				attrwindow.m_minWid = _ttoi(xml.GetData());
 			}
 			if (xml.FindElem(_T("WindowSizeMax")))
 			{
@@ -298,7 +298,7 @@ std::vector<AttrWindow>  CWindowWebData::GetAllWindows()const
 			}
 			if (xml.FindElem(_T("WindowOpenQty")))
 			{
-				attrallwindow.m_openQty = _ttof(xml.GetData());
+				attrallwindow.m_openQty = _ttoi(xml.GetData());
 			}
 			if (xml.FindElem(_T("WindowHasCorner")))
 			{

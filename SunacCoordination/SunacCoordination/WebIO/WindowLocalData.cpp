@@ -47,7 +47,7 @@ RCDimData CWindowLocalData::ConvertStringToDimData ( CString code, CString  valu
 		data.type = MULTI;
 
 		std::vector<CString> strs = YT_SplitCString(value, L',');
-		for (int i = 0; i < strs.size(); i++)
+		for (UINT i = 0; i < strs.size(); i++)
 		{
 			data.values.push_back(_wtof(strs[i]));
 		}
@@ -174,7 +174,7 @@ void CWindowLocalData::LoadDataFromExcel(CString p_file)
 
 bool CWindowLocalData::GetWindowById(CString p_sId, AttrWindow& value) const //Õ®π˝‘≠–Õ±‡∫≈ªÒ»°¥∞ªß
 {
-	for (int i = 0; i < m_windows.size(); i++)
+	for (UINT i = 0; i < m_windows.size(); i++)
 	{
 		if (m_windows[i].m_prototypeCode == p_sId)
 		{
@@ -188,7 +188,7 @@ bool CWindowLocalData::GetWindowById(CString p_sId, AttrWindow& value) const //Õ
 
 bool  CWindowLocalData::GetWindowByFileName(CString p_sFileName, AttrWindow&value)const//Õ®π˝Œƒº˛√˚ªÒ»°¥∞ªß
 {
-	for (int i = 0; i < m_windows.size(); i++)
+	for (UINT i = 0; i < m_windows.size(); i++)
 	{
 		if (m_windows[i].m_name == p_sFileName)
 		{
@@ -201,7 +201,7 @@ bool  CWindowLocalData::GetWindowByFileName(CString p_sFileName, AttrWindow&valu
 
 vector<AttrWindow> CWindowLocalData::GetAllWindows() //ªÒ»°À˘”–¥∞ªß
 {
-	for (int i = 0; i < m_windows.size(); i++)
+	for (UINT i = 0; i < m_windows.size(); i++)
 	{
 		std::vector<CString> strs = YT_SplitCString(m_windows[i].m_prototypeCode, L'_');  //”√"_"≤∑÷
 		if (strs[0] == "Window")
@@ -214,7 +214,7 @@ vector<AttrWindow> CWindowLocalData::GetAllWindows() //ªÒ»°À˘”–¥∞ªß
 
 vector<AttrWindow> CWindowLocalData::GetAllDoors()  //ªÒ»°À˘”–√≈
 {
-	for (int i = 0; i < m_windows.size(); i++)
+	for (UINT i = 0; i < m_windows.size(); i++)
 	{
 		std::vector<CString> strs = YT_SplitCString(m_windows[i].m_prototypeCode, L'_');
 		if (strs[0] == "Door")
@@ -229,7 +229,7 @@ std::vector<AttrWindow >  CWindowLocalData::GetWindows(double width, CString ope
 {
 	std::vector<AttrWindow> data;
 
-	for (int i =0; i < m_windows.size(); i++)
+	for (UINT i =0; i < m_windows.size(); i++)
 	{
 		std::vector<CString> strs = YT_SplitCString(m_windows[i].m_prototypeCode, L'_');  //”√"_"≤∑÷
 		if (strs[0] != "Window")
@@ -281,7 +281,7 @@ std::vector<AttrWindow >  CWindowLocalData::GetDoors(double width, CString openT
 {
 	std::vector<AttrWindow> data;
 
-	for (int i =0; i < m_windows.size(); i++)
+	for (UINT i = 0; i < m_windows.size(); i++)
 	{
 		std::vector<CString> strs = YT_SplitCString(m_windows[i].m_prototypeCode, L'_');  //”√"_"≤∑÷
 		if (strs[0] != "Door")
