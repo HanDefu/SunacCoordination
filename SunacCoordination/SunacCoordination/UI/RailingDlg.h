@@ -23,19 +23,17 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 public:
-	//afx_msg void OnBnClickedMfcbuttonLib();
-	afx_msg void OnBnClickedMfcbuttonSelectline();
-	//afx_msg void OnBnClickedMfcbuttonClose();
-	//void UpdateSelectFile(CString selectFile);
+	afx_msg void OnBnClickedInsertToCAD();
+	afx_msg void OnBnClickedButtonSelectline();
 
-	//CGsPreviewCtrl m_preStyle; //花样选择预览图
-	//CEdit m_railingInfo;
+
 	CGridCtrlWithPreview m_preRailing;
-	CEdit m_width; //洞口宽度
-	CEdit m_height; //栏杆总高
-	CEdit m_reverse; //反坎高度
 	CString m_selectedFile;
 	CComboBox m_type;
+	
+	double m_height;// 栏杆高度	
+	double m_heightBase;// 反坎高度	
+	double m_width;// 栏杆长度
 };
 
 extern CRailingDlg* g_railingDlg;

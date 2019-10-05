@@ -112,6 +112,7 @@
       <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>.\props\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalDependencies>acdbmgd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -187,6 +188,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Tool\DoubleClickBlockReference.cpp" />
     <ClCompile Include="Tool\Excel\CExcel.cpp" />
     <ClCompile Include="Tool\Excel\Excel.cpp" />
     <ClCompile Include="Tool\MarkupXml\Markup.cpp" />
@@ -283,6 +285,7 @@
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="Sunac_def.h" />
     <ClInclude Include="Tool\DocLock.h" />
+    <ClInclude Include="Tool\DoubleClickBlockReference.h" />
     <ClInclude Include="Tool\Excel\CApplication.h" />
     <ClInclude Include="Tool\Excel\CBorder.h" />
     <ClInclude Include="Tool\Excel\CBorders.h" />

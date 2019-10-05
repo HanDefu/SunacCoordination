@@ -271,6 +271,9 @@
     <ClCompile Include="Object\Bathroom\BathroomCom.cpp">
       <Filter>Object\Bathroom</Filter>
     </ClCompile>
+    <ClCompile Include="Tool\DoubleClickBlockReference.cpp">
+      <Filter>Tool</Filter>
+    </ClCompile>
     <ClCompile Include="Object\Bathroom\BathroomGen.cpp">
       <Filter>Object\Bathroom</Filter>
     </ClCompile>
@@ -627,6 +630,9 @@
     </ClInclude>
     <ClInclude Include="Object\Bathroom\BathroomCom.h">
       <Filter>Object\Bathroom</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\DoubleClickBlockReference.h">
+      <Filter>Tool</Filter>
     </ClInclude>
     <ClInclude Include="Object\Bathroom\BathroomGen.h">
       <Filter>Object\Bathroom</Filter>

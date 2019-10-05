@@ -34,15 +34,7 @@ AttrObject::~AttrObject()
 
 AttrObject::AttrObject(const AttrObject &other)
 {
-	m_version = other.m_version;
-	m_prototypeCode = other.m_prototypeCode;
-	m_name = other.m_name;
-	m_isJiTuan = other.m_isJiTuan;
-	m_quyuName = other.m_quyuName;
-	m_type = other.m_type;
-	m_isDynamic = other.m_isDynamic;
-	m_filePathName = other.m_filePathName;
-	m_instBianHao = other.m_instBianHao;
+	*this = other;
 }
 
 AttrObject & AttrObject::operator=(const AttrObject &rhs)

@@ -22,9 +22,9 @@ class DLLIMPEXP  AttrWindow : public AttrObject
 public:
 	ACRX_DECLARE_MEMBERS(AttrWindow);
 
-	// Constructor / Destructor
 	AttrWindow();
 	virtual ~AttrWindow();
+
 	AttrWindow(const AttrWindow &other);
 	AttrWindow & operator=(const AttrWindow &rhs);
 
@@ -35,7 +35,6 @@ public:
 
 	virtual eRCType GetType() {return WINDOW;}
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
-private:
 
 public:
 	CString m_openType;//开启类型

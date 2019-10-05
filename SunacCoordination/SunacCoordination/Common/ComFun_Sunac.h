@@ -75,6 +75,9 @@ bool TY_IsAirCon(AcDbObjectId Id);
 bool TY_IsDoor(AcDbObjectId Id);
 bool TY_IsRailing(AcDbObjectId Id);
 
+eRCType TY_GetType(AcDbBlockReference *pBlockReference);
+
+
 bool TY_IsPairsEqual(vRCPairKeyDValue &A, vRCPairKeyDValue &B);
 bool TY_IsPairsEqual(vRCPairKeyIValue &A, vRCPairKeyIValue &B);
 bool TY_IsPairsEqual(vRCPairKeyStrValue &A, vRCPairKeyStrValue &B);
@@ -92,6 +95,16 @@ int TYCOM_Move(AcDbObjectId entId, AcGeVector3d offset);
 
 //从一个块参照或者动态块参照种隐藏所有的blockrecordname在hideBlockRecordNames中的块
 int TY_HideBlockReferencesInBlockReference(AcDbObjectId blkRefId, vCString &hideBlockRecordNames);
+
+
+//功能: 从其他的DWG图形复制一个块定义到当前图形
+//参数: const TCHAR * fileName, Dwg文件名（全路径）
+//参数: const TCHAR * blkDefName, 块定义的名称
+AcDbObjectId CopyBlockDefFromDwg(const TCHAR* fileName, const TCHAR* blkDefName);
+AcDbObjectId CopyBlockDefFromDatabase(AcDbDatabase* pSourceDb, AcDbDatabase* pDestDb, const TCHAR* blkDefName);
+
+AcDbObjectId InsertBlockRefFromDwg(const TCHAR* fileName, const TCHAR* blkDefName, const WCHAR *layoutname, AcGePoint3d origin);
+
 
 
 

@@ -590,6 +590,7 @@ AcDbObjectId TY_GetExtensionDictionaryID(AcDbObjectId id)
 {
 	AcDbObject *pObj;
 	acDocManager->lockDocument(curDoc());
+
 	if(acdbOpenObject(pObj, id, AcDb::kForWrite)==Acad::eOk)
 	{
 		if (pObj->createExtensionDictionary()==Acad::eOk||pObj->createExtensionDictionary()==Acad::eAlreadyInDb)
@@ -601,6 +602,7 @@ AcDbObjectId TY_GetExtensionDictionaryID(AcDbObjectId id)
 		else
 			pObj->close();
 	}
+
 	acDocManager->unlockDocument(curDoc());
 	return 0;
 }
@@ -659,11 +661,58 @@ int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt)
 bool TY_IsWindow(AcDbObjectId Id)
 {
 	AcDbObject * pDataEnt = 0;
+
 	TY_GetAttributeData(Id, pDataEnt);
 	AttrWindow * pWindow = dynamic_cast<AttrWindow *>(pDataEnt);
 	if (pWindow != 0)
 		return true;
 	return false;
+}
+
+eRCType TY_GetType(AcDbBlockReference *pBlockReference)
+{
+	if (pBlockReference == 0)
+		return TYPENUM;
+	AcDbObject * pDataEnt = 0;
+	AcDbObjectId dictid = pBlockReference->extensionDictionary();
+
+	AcDbDictionary *pDict = NULL;
+	if(acdbOpenObject(pDict, dictid, AcDb::kForRead)==Acad::eOk)
+	{
+		Acad::ErrorStatus es =pDict->getAt(SUNAC_ATTRIBUTE_ENTITY, (AcDbObject*&)pDataEnt, AcDb::kForRead);
+		pDict->close();
+		pDataEnt->close();
+		if(pDataEnt == NULL)
+			return TYPENUM;
+
+		AttrWindow * pWindow = dynamic_cast<AttrWindow *>(pDataEnt);
+		if (pWindow != 0)
+			return WINDOW;
+
+		AttrKitchen * pKit = dynamic_cast<AttrKitchen *>(pDataEnt);
+		if (pKit != 0)
+			return KITCHEN;
+
+		AttrBathroom * pBath= dynamic_cast<AttrBathroom *>(pDataEnt);
+		if (pBath != 0)
+			return Bathroom;
+
+		AttrDoor * pDoor = dynamic_cast<AttrDoor *>(pDataEnt);
+		if (pDoor != 0)
+			return DOOR;
+
+		AttrRailing * pRail = dynamic_cast<AttrRailing *>(pDataEnt);
+		if (pRail != 0)
+			return RAILING;
+
+		AttrAirCon * pAir = dynamic_cast<AttrAirCon *>(pDataEnt);
+		if (pAir != 0)
+			return AIRCON;
+
+		return TYPENUM;
+	}
+	else
+		return TYPENUM;
 }
 
 bool TY_Iskitchen(AcDbObjectId Id)
@@ -1038,3 +1087,83 @@ int TY_HideBlockReferencesInBlockReference(AcDbObjectId blkRefId, vCString &hide
 	return 0;
 }
 
+
+
+AcDbObjectId CopyBlockDefFromDatabase(AcDbDatabase* pSourceDb, AcDbDatabase* pDestDb, const TCHAR* blkDefName)
+{
+	Acad::ErrorStatus es;
+	AcDbObjectId blockRefId = AcDbObjectId::kNull;
+
+	// 打开外部图形数据库的块表，寻找给定名称的块表记录
+	AcDbBlockTable* pBlkTable = NULL;
+	es = pSourceDb->getBlockTable(pBlkTable, AcDb::kForRead);
+	assert(es == Acad::eOk);
+	if (es != Acad::eOk)
+	{
+		acutPrintf(TEXT("\n 复制目标源时，打开块表记录失败."));
+		return blockRefId;
+	}
+
+	bool bRet = false;
+	if (pBlkTable->has(blkDefName))	// 不存在指定的图块
+	{
+		AcDbObjectId destBlkDefId;		// 指定图块的块表记录Id
+		es = pBlkTable->getAt(blkDefName, destBlkDefId);
+
+		// 把指定的图块输出到一个临时图形数据库
+		AcDbDatabase* pTempDb = NULL;	// 注意：这里千万不能new
+		es = pSourceDb->wblock(pTempDb, destBlkDefId);
+		assert(es == Acad::eOk);
+
+		// 把该临时图形数据库作为块插入到当前dwg
+		es = pDestDb->insert(blockRefId, blkDefName, pTempDb);
+		assert(es == Acad::eOk);
+		delete pTempDb;
+		pTempDb = NULL;
+	}
+	else
+	{
+		acutPrintf(TEXT("\n给定的源数据中, 不存在指定名称的块表记录."));
+	}
+	pBlkTable->close();
+
+	return blockRefId;
+}
+
+AcDbObjectId CopyBlockDefFromDwg(const TCHAR* fileName, const TCHAR* blkDefName)
+{
+	AcDbObjectId blockRefId = AcDbObjectId::kNull;
+
+	// 使用_SH_DENYNO参数打开图形(只读打开)，允许其它用户读写该文件
+	AcDbDatabase* pSourceDwg = new AcDbDatabase(false);
+	Acad::ErrorStatus es = pSourceDwg->readDwgFile(fileName, _SH_DENYNO);
+	if (es != Acad::eOk)
+	{
+		delete pSourceDwg;
+		pSourceDwg = NULL;
+
+		acutPrintf(TEXT("\n读入dwg图形错误, 图形名称: %s"), fileName);
+		return blockRefId;
+	}
+
+	AcDbDatabase* pCurDb = acdbHostApplicationServices()->workingDatabase();
+	blockRefId = CopyBlockDefFromDatabase(pSourceDwg, pCurDb, blkDefName);
+
+	delete pSourceDwg;
+	pSourceDwg = NULL;
+
+	return blockRefId;
+}
+
+AcDbObjectId InsertBlockRefFromDwg(const TCHAR* fileName, const TCHAR* blkDefName, const WCHAR *layoutname, AcGePoint3d origin)
+{
+	AcDbObjectId blockRefId = CopyBlockDefFromDwg(fileName, blkDefName);
+	if (blockRefId == AcDbObjectId::kNull)
+	{
+		return AcDbObjectId::kNull;
+	}
+	
+	AcDbObjectId entId = AcDbObjectId::kNull;
+	int nSuc = MD2010_InsertBlockReference_Layout(layoutname, blkDefName, entId, origin);
+	return entId;
+}

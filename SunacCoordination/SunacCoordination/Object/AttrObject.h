@@ -29,13 +29,11 @@ class DLLIMPEXP  AttrObject : public AcDbObject
 public:
 	ACRX_DECLARE_MEMBERS(AttrObject);
 
-	// Constructor / Destructor
 	AttrObject();
 	virtual ~AttrObject();
 
 	AttrObject(const AttrObject &other);
 	virtual AttrObject & operator=(const AttrObject &rhs);
-
 
 	//{{AFX_ARX_METHODS(ZffDwgScale)
 	virtual Acad::ErrorStatus dwgOutFields(AcDbDwgFiler* pFiler) const;
@@ -43,8 +41,7 @@ public:
 	//}}AFX_ARX_METHODS
 	
 	virtual eRCType GetType(){return TYPENUM;}
-
-	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
+	virtual bool isEqualTo(AttrObject*other);//基础数据一致
 	
 	//得到从服务器下载到本地的一个文件（含路径）
 	//或者是本地本身就存在的一个文件路径
