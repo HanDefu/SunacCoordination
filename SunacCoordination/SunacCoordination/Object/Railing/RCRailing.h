@@ -34,10 +34,10 @@ public:
 	AttrRailing GetRailingAtt()const { return m_railingAtt; }
 
 	virtual bool SetLength(double p_length);
-	virtual int GenerateRailing(AcGePoint3d start, AcGePoint3d end) = 0;
+	virtual int GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut) = 0;
 
 	//////////////////////////////////////////////////////////////////////////
-	virtual double GetLenght()const { return m_railingAtt.m_length; } //获取栏杆总长度
+	virtual double GetLength()const { return m_railingAtt.m_length; } //获取栏杆总长度
 	virtual double Get2K()const { return 2 * m_K; }		//获取栏杆侧边留空间隙
 	virtual double GetK()const { return m_K; }		//获取栏杆侧边留空间隙
 	virtual double GetB()const { return m_B; }			//获取标准栏杆尺寸
@@ -97,7 +97,7 @@ class CRCRailingT1 : public CRCRailingTieyi  //栏杆类
 public:
 	CRCRailingT1();
 
-	virtual int GenerateRailing(AcGePoint3d start, AcGePoint3d end);
+	virtual int GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut);
 
 	//////////////////////////////////////////////////////////////////////////
 	virtual double GetStandardRailingTotalLen()const;

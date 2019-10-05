@@ -121,7 +121,6 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 	}
 
 	//生成
-
 	AttrRailing railingAtt;
 	railingAtt.m_height = m_height;
 	railingAtt.m_length = m_width;
@@ -130,10 +129,17 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 
 	CRCRailing* pRailing = CreateRailing(railingAtt);
 
-	pRailing->GenerateRailing(AcGePoint3d(0, 0, 0), AcGePoint3d(5400, 0, 0));
+	//选择插入点
+	ShowWindow(FALSE);
+	AcGePoint3d pnt;
+	pnt = TY_GetPoint();
+
+	AcDbObjectId railingId;
+	pRailing->GenerateRailing(pnt, railingId);
 
 	delete pRailing;
 
+	//ShowWindow(TRUE);
 	OnOK();
 }
 

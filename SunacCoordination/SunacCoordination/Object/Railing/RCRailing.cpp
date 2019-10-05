@@ -80,11 +80,12 @@ CRCRailingT1::CRCRailingT1()
 }
 
 //start 为栏杆的左下角
-int CRCRailingT1::GenerateRailing(AcGePoint3d start, AcGePoint3d end)
+int CRCRailingT1::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut)
 {
-	//1. 设置长度，并计算各分段的值
-	double length = (end - start).length();
-	SetLength(length);
+	//1. 计算各分段的值
+	bool bSuc = GenRailing();
+	if (bSuc==false)
+		return -1;
 
 	//2 插入到图形
 	acDocManager->lockDocument(curDoc());
@@ -92,6 +93,7 @@ int CRCRailingT1::GenerateRailing(AcGePoint3d start, AcGePoint3d end)
 	const AcGePoint3d leftTopPt = AcGePoint3d(start.x, start.y + 1100, 0);
 	m_railingAtt.m_filePathName = MD2010_GetAppPath() + L"\\support\\Sunac2019\\LocalMode\\" + m_railingAtt.m_prototypeCode + L".dwg";
 
+	AcDbObjectIdArray idsOut;
 	//2.1 非标段
 	AcDbObjectId id1;
 	AcGePoint3d pos1 = AcGePoint3d(leftTopPt.x + GetK(), leftTopPt.y - GetHandRailHeight()-580, 0); //左上角点x方向上减去与结构墙间隙，y方向上减去扶手的厚度,然后考虑居中位置
@@ -99,7 +101,8 @@ int CRCRailingT1::GenerateRailing(AcGePoint3d start, AcGePoint3d end)
 
 	//设置非标段长度
 	DQ_SetDynamicAttribute(id1, _T("L"), GetNonstandardLen());
-	DQ_SetDynamicAttribute(id1, _T("Ln"), GetNonstandardLen()-GetPillarWidth()*2); //内部的小花格区间为非标段减去两侧立柱
+	DQ_SetDynamicAttribute(id1, _T("Ln"), GetNonstandardLen() - GetPillarWidth() * 2); //内部的小花格区间为非标段减去两侧立柱
+	idsOut.append(id1);
 
 	//2.2 标准段
 	AcDbObjectId id2;
@@ -110,6 +113,8 @@ int CRCRailingT1::GenerateRailing(AcGePoint3d start, AcGePoint3d end)
 	{
 		id2 = InsertBlockRefFromDwg(m_railingAtt.m_filePathName, sStandardBlockName, ACDB_MODEL_SPACE, pos2);
 		//MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, m_railingAtt.m_filePathName, sStandardBlockName, id2, pos2, 0, AcGeScale3d(1));
+		idsOut.append(id2);
+
 		pos2.x += GetB() - GetPillarWidth(); //减去立柱宽
 	}
 
@@ -122,14 +127,15 @@ int CRCRailingT1::GenerateRailing(AcGePoint3d start, AcGePoint3d end)
 	//设置非标段长度
 	DQ_SetDynamicAttribute(id3, _T("L"), GetNonstandardLen());
 	DQ_SetDynamicAttribute(id3, _T("Ln"), GetNonstandardLen() - GetPillarWidth() * 2); //内部的小花格区间为非标段减去两侧立柱
+	idsOut.append(id3);
 
 	//2.4 扶手
 	AcDbObjectId id4;
 	id4 = InsertBlockRefFromDwg(m_railingAtt.m_filePathName, _T("Railing_T1_Handrail"), ACDB_MODEL_SPACE, leftTopPt);
 	//MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, m_railingAtt.m_filePathName, _T("Railing_T1_Handrail"), id4, leftTopPt, 0, AcGeScale3d(1));
 	//设置扶手长度
-	DQ_SetDynamicAttribute(id4, _T("L"), length);
-
+	DQ_SetDynamicAttribute(id4, _T("L"), GetLength());
+	idsOut.append(id4);
 
 	acDocManager->unlockDocument(curDoc());
 
@@ -139,20 +145,20 @@ int CRCRailingT1::GenerateRailing(AcGePoint3d start, AcGePoint3d end)
 
 bool CRCRailingT1::GenRailing()  //对栏杆总长进行判断，如果栏杆总长小于1550，返回false
 {
-	if (GetLenght() < 1550)
+	if (GetLength() < 1550)
 	{
 		return false;    //点击计算按钮后，如果judge()返回false,则用户在对话框输入的总尺寸不符合要求，应弹出对话框提示用户输入有误
 	}
 
 	//先计算1260标准段的数据
-	int N_1 = GenStandardSegCount(GetLenght(), 1260);
-	int n_1 = GenNonstandardUnitCount(GetLenght(), 1260, N_1);
-	double k1 = GenK(GetLenght(), 1260, N_1, n_1);
+	int N_1 = GenStandardSegCount(GetLength(), 1260);
+	int n_1 = GenNonstandardUnitCount(GetLength(), 1260, N_1);
+	double k1 = GenK(GetLength(), 1260, N_1, n_1);
 
 	//计算1380标准段的数据
-	int N_2 = GenStandardSegCount(GetLenght(), 1380);
-	int n_2 = GenNonstandardUnitCount(GetLenght(), 1380, N_2);
-	double k2 = GenK(GetLenght(), 1380, N_2, n_2);
+	int N_2 = GenStandardSegCount(GetLength(), 1380);
+	int n_2 = GenNonstandardUnitCount(GetLength(), 1380, N_2);
+	double k2 = GenK(GetLength(), 1380, N_2, n_2);
 
 	//对k(栏杆侧边留空间隙)进行判断，如果大于105，那么标准栏杆尺寸就为1380，否则就为1260
 	if (k1 <= 105)
@@ -195,7 +201,7 @@ int CRCRailingT1::GenStandardSegCount(double p_lenth, double p_segLength)const		
 int CRCRailingT1::GenNonstandardUnitCount(double p_lenth, double p_segLength, int p_standardSegCount)	const
 {
 	//标准栏杆两侧单元花格数量 = 【栏杆总尺寸 - 标准栏杆尺寸 - H(其他空间尺寸)】/ 单元花格尺寸
-	int n = (int)((GetLenght() - GenStandardRailingTotalLen(p_segLength, p_standardSegCount) - GetH()) / Getb());
+	int n = (int)((GetLength() - GenStandardRailingTotalLen(p_segLength, p_standardSegCount) - GetH()) / Getb());
 
 	//花格数量要是2的倍数，如果不是，向下取最接近的2的倍数 (即-1)
 	if ((((int)(n)) % 2) != 0)
