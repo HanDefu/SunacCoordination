@@ -75,6 +75,9 @@ bool TY_IsAirCon(AcDbObjectId Id);
 bool TY_IsDoor(AcDbObjectId Id);
 bool TY_IsRailing(AcDbObjectId Id);
 
+eRCType TY_GetType(AcDbBlockReference *pBlockReference);
+
+
 bool TY_IsPairsEqual(vRCPairKeyDValue &A, vRCPairKeyDValue &B);
 bool TY_IsPairsEqual(vRCPairKeyIValue &A, vRCPairKeyIValue &B);
 bool TY_IsPairsEqual(vRCPairKeyStrValue &A, vRCPairKeyStrValue &B);

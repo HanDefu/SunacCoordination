@@ -39,6 +39,7 @@ END_MESSAGE_MAP()
 void DlgLogin::OnBnClickedOk()
 {
 	// TODO: 在此添加控件通知处理程序代码
+	Acad::ErrorStatus es = acDocManager->sendStringToExecute(curDoc(), L"REMOVEBLOCKREFDOUBLECLICK\n");
 	CAcUiDialog::OnOK();
 }
 
