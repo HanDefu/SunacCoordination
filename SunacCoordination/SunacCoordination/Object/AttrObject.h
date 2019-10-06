@@ -48,8 +48,8 @@ public:
 	//成功返回0 否则返回-1
 	int GetFile(CString &filePathName);
 
-	void SetBianHao(CString  bianHao) { m_instanceCode = bianHao; }
-	CString& GetBianHao() { return m_instanceCode; }
+	void SetInstanceCode(CString  bianHao) { m_instanceCode = bianHao; }
+	CString& GetInstanceCode() { return m_instanceCode; }
 
 	
 public:

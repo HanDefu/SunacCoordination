@@ -56,8 +56,8 @@ public:
 	//¿ªÆôÃæ»ý
 	double GetOpenArea();
 
-	void SetBianHao(CString str);
-	CString GetBianHao();
+	void SetInstanceCode(CString str);
+	CString GetInstanceCode();
 
 	AttrWindow * GetAttribute();
 	void AddAttribute(AttrWindow * attr);

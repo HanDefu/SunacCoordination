@@ -28,7 +28,7 @@ IMPLEMENT_DYNAMIC(CRailingDlg, CAcUiDialog)
 
 CRailingDlg::CRailingDlg(CWnd* pParent /*=NULL*/, bool p_bModeless)
 	: CAcUiDialog(CRailingDlg::IDD, pParent)
-	, m_height(1100)
+	, m_height(1200)
 	, m_heightBase(200)
 	, m_width(5400)
 {

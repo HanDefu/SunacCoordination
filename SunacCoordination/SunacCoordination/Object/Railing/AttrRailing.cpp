@@ -13,9 +13,9 @@ ACRX_DXF_DEFINE_MEMBERS(AttrRailing, AcDbObject,
 						 ZFFDWGSCALERAILING, ZffCustomObjectDBRAILING);
 AttrRailing::AttrRailing()
 {
-	m_height = 1100;		//栏杆高度
+	m_height = 1200;		//栏杆高度
 	m_fanKanHeight = 200;	//反坎高度
-	m_length = 3000;	//栏杆长
+	m_length = 3000;		//栏杆长
 	m_railingType = E_RAILING_TIEYI; //栏杆类型
 }
 

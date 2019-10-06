@@ -160,7 +160,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		oneWindow.AddAttribute(pWindow);
 		pWindow->close();
 
-		oneWindow.SetBianHao(m_allWindows[sels[0]].m_prototypeCode + str);
+		oneWindow.SetInstanceCode(m_allWindows[sels[0]].m_prototypeCode + str);
 	}
 	OnOK();
 }
