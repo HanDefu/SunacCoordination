@@ -91,13 +91,13 @@ int CRCRailingT1::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOu
 	acDocManager->lockDocument(curDoc());
 
 	const AcGePoint3d leftTopPt = AcGePoint3d(start.x, start.y + 1100, 0);
-	m_railingAtt.m_filePathName = MD2010_GetAppPath() + L"\\support\\Sunac2019\\LocalMode\\" + m_railingAtt.m_prototypeCode + L".dwg";
+	m_railingAtt.m_fileName = MD2010_GetAppPath() + L"\\support\\Sunac2019\\LocalMode\\" + m_railingAtt.m_prototypeCode + L".dwg";
 
 	AcDbObjectIdArray idsOut;
 	//2.1 非标段
 	AcDbObjectId id1;
 	AcGePoint3d pos1 = AcGePoint3d(leftTopPt.x + GetK(), leftTopPt.y - GetHandRailHeight()-580, 0); //左上角点x方向上减去与结构墙间隙，y方向上减去扶手的厚度,然后考虑居中位置
-	id1 = InsertBlockRefFromDwg(m_railingAtt.m_filePathName, _T("Railing_T1_NonStandard"), ACDB_MODEL_SPACE, pos1);
+	id1 = InsertBlockRefFromDwg(m_railingAtt.m_fileName, _T("Railing_T1_NonStandard"), ACDB_MODEL_SPACE, pos1);
 
 	//设置非标段长度
 	DQ_SetDynamicAttribute(id1, _T("L"), GetNonstandardLen());
@@ -111,8 +111,8 @@ int CRCRailingT1::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOu
 	CString sStandardBlockName = GetB() < 1380 ? _T("Railing_T1_1260") : _T("Railing_T1_1380");
 	for (int i = 0; i < GetN(); i++)
 	{
-		id2 = InsertBlockRefFromDwg(m_railingAtt.m_filePathName, sStandardBlockName, ACDB_MODEL_SPACE, pos2);
-		//MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, m_railingAtt.m_filePathName, sStandardBlockName, id2, pos2, 0, AcGeScale3d(1));
+		id2 = InsertBlockRefFromDwg(m_railingAtt.m_fileName, sStandardBlockName, ACDB_MODEL_SPACE, pos2);
+		//MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, m_railingAtt.m_fileName, sStandardBlockName, id2, pos2, 0, AcGeScale3d(1));
 		idsOut.append(id2);
 
 		pos2.x += GetB() - GetPillarWidth(); //减去立柱宽
@@ -122,8 +122,8 @@ int CRCRailingT1::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOu
 	//2.3 非标段
 	AcDbObjectId id3;
 	AcGePoint3d pos3 = pos2;
-	id3 = InsertBlockRefFromDwg(m_railingAtt.m_filePathName, _T("Railing_T1_NonStandard"), ACDB_MODEL_SPACE, pos3);
-	//MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, m_railingAtt.m_filePathName, _T("Railing_T1_NonStandard"), id3, pos3, 0, AcGeScale3d(1));
+	id3 = InsertBlockRefFromDwg(m_railingAtt.m_fileName, _T("Railing_T1_NonStandard"), ACDB_MODEL_SPACE, pos3);
+	//MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, m_railingAtt.m_fileName, _T("Railing_T1_NonStandard"), id3, pos3, 0, AcGeScale3d(1));
 	//设置非标段长度
 	DQ_SetDynamicAttribute(id3, _T("L"), GetNonstandardLen());
 	DQ_SetDynamicAttribute(id3, _T("Ln"), GetNonstandardLen() - GetPillarWidth() * 2); //内部的小花格区间为非标段减去两侧立柱
@@ -131,8 +131,8 @@ int CRCRailingT1::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOu
 
 	//2.4 扶手
 	AcDbObjectId id4;
-	id4 = InsertBlockRefFromDwg(m_railingAtt.m_filePathName, _T("Railing_T1_Handrail"), ACDB_MODEL_SPACE, leftTopPt);
-	//MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, m_railingAtt.m_filePathName, _T("Railing_T1_Handrail"), id4, leftTopPt, 0, AcGeScale3d(1));
+	id4 = InsertBlockRefFromDwg(m_railingAtt.m_fileName, _T("Railing_T1_Handrail"), ACDB_MODEL_SPACE, leftTopPt);
+	//MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, m_railingAtt.m_fileName, _T("Railing_T1_Handrail"), id4, leftTopPt, 0, AcGeScale3d(1));
 	//设置扶手长度
 	DQ_SetDynamicAttribute(id4, _T("L"), GetLength());
 	idsOut.append(id4);

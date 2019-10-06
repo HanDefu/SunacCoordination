@@ -50,7 +50,7 @@ public:
 	afx_msg void OnBnClickedButtonInsertac();
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);
 
-	CString m_filePathName;
+	CString m_fileName;
 	CButton m_upDownImage;
 	CButton m_leftRightImage;
 	CStatic m_room;	//房间面积(静态文本框)

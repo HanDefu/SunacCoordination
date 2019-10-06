@@ -19,13 +19,8 @@ ACRX_DXF_DEFINE_MEMBERS(AttrObject, AcDbObject,
 AttrObject::AttrObject()
 {
 	m_version = 0;
-	m_prototypeCode = L"";
-    m_name = L"";
-	m_isJiTuan = false;
-	m_quyuName = L"";
-	m_type = L""; 
+	m_isJiTuan = true;
 	m_isDynamic = true;
-	m_instBianHao = L"";
 }
 
 AttrObject::~AttrObject()
@@ -41,13 +36,14 @@ AttrObject & AttrObject::operator=(const AttrObject &rhs)
 {
 	m_version = rhs.m_version;
 	m_prototypeCode = rhs.m_prototypeCode;
-	m_name = rhs.m_name;
+	//m_name = rhs.m_name;
 	m_isJiTuan = rhs.m_isJiTuan;
+	m_quyuId = rhs.m_quyuId;
 	m_quyuName = rhs.m_quyuName;
 	m_type = rhs.m_type;
 	m_isDynamic = rhs.m_isDynamic;
-	m_filePathName = rhs.m_filePathName;
-	m_instBianHao = rhs.m_instBianHao;
+	m_fileName = rhs.m_fileName;
+	m_instanceCode = rhs.m_instanceCode;
 	return *this;
 }
 
@@ -69,11 +65,11 @@ Acad::ErrorStatus AttrObject::dwgInFields(AcDbDwgFiler* filer)
 	m_prototypeCode = CString(tempStr);
 
 	filer->readItem(&tempStr);
-	m_instBianHao = CString(tempStr);
+	m_instanceCode = CString(tempStr);
 
 
-	filer->readItem(&tempStr);
-	m_name = CString(tempStr);
+	//filer->readItem(&tempStr);
+	//m_name = CString(tempStr);
 
 	filer->readItem(&m_isJiTuan);
 
@@ -86,9 +82,9 @@ Acad::ErrorStatus AttrObject::dwgInFields(AcDbDwgFiler* filer)
 	filer->readItem(&m_isDynamic);
 
 	filer->readItem(&tempStr);
-	m_filePathName = CString(tempStr);
+	m_fileName = CString(tempStr);
 	filer->readItem(&tempStr);
-	m_instBianHao = CString(tempStr);
+	m_instanceCode = CString(tempStr);
 
 	delete [] tempStr;
 	return filer->filerStatus();
@@ -107,14 +103,14 @@ Acad::ErrorStatus AttrObject::dwgOutFields(AcDbDwgFiler* filer) const
 	Adesk::Int32 version = FILE_VERSION;
 	filer->writeItem(version);
 	filer->writeItem(m_prototypeCode);
-	filer->writeItem(m_instBianHao);
-	filer->writeItem(m_name);
+	filer->writeItem(m_instanceCode);
+//	filer->writeItem(m_name);
 	filer->writeItem(m_isJiTuan);
 	filer->writeItem(m_quyuName);
 	filer->writeItem(m_type);
 	filer->writeItem(m_isDynamic);
-	filer->writeItem(m_filePathName);
-	filer->writeItem(m_instBianHao);
+	filer->writeItem(m_fileName);
+	filer->writeItem(m_instanceCode);
 
 	return filer->filerStatus();
 }
@@ -128,11 +124,11 @@ bool AttrObject::isEqualTo(AttrObject*other)
 	if (m_prototypeCode != other->m_prototypeCode)
 		return false;
 
-	if (m_instBianHao != other->m_instBianHao)
+	if (m_instanceCode != other->m_instanceCode)
 		return false;
 
-	if (m_name != other->m_name)
-		return false;
+	//if (m_name != other->m_name)
+	//	return false;
 
 	if (m_isJiTuan != other->m_isJiTuan)
 		return false;
@@ -160,7 +156,7 @@ bool AttrObject::isEqualTo(AttrObject*other)
 int AttrObject::GetFile(CString &filePathName)
 {
 	//首先本地搜索
-	bool has = GSINST->GetLocalFile(m_name,filePathName);
+	bool has = GSINST->GetLocalFile(m_fileName, filePathName);
 	if (has)
 		return 0;
 	
