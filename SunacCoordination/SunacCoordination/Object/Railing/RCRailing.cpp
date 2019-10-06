@@ -23,6 +23,7 @@ File description:
 #include "../../Common/ComFun_ACad.h"
 #include "../../Common/ComFun_Sunac.h"
 #include "RCRailingTieyi.h"
+#include "RCRailingBoli.h"
  
 CRCRailing::CRCRailing(void)
 {
