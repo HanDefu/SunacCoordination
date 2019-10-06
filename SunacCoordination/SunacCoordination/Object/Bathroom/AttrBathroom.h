@@ -46,18 +46,24 @@ public:
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
 
 public:
-	bool m_isGuoBiao;//排气道
-	int m_floorRange;//楼层选项
-	double m_airVentW;//排气道长度
-	double m_airVentH;//排气道宽度
-	bool m_isMirror;//镜像
+	bool m_hasPaiQiDao; //是否含有排气道
+	bool m_isGuoBiao; //排气道
+	E_FLOOR_RANGE m_floorRange; //楼层选项
+	double m_airVentW; //排气道长度
+	double m_airVentH; //排气道宽度
+	double m_airVentOffsetX; //排气道偏移x
+	double m_airVentOffsetY; //排气道偏移y
 
-	bool m_hasPaiQiDao;//是否含有排气道
-	eWindowDoorPos m_windowDoorPos;//门窗位置关系
+	bool m_isMirror; //镜像
 
-	double m_guanXiWidth;//盥洗区宽度
+	CString m_BathroomType; //卫生间类型
+	eWindowDoorPos m_windowDoorPos; //门窗位置关系
 
-	CString m_BathroomType; //卫生间
+	double m_taipenWidth;//台盆宽度
+	double m_matongWidth;//马桶宽度
+	double m_guanXiWidth; //盥洗区宽度
+	double m_width;//长度 面宽
+	double m_height;//宽度 进深
 };
 
 

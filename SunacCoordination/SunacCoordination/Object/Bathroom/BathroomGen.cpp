@@ -21,18 +21,83 @@ CBathroomGen::~CBathroomGen()
 
 }
 
-int CBathroomGen::SelectTaipen(AcDbObjectId bathroomId, CString shuiPen)
+int CBathroomGen::SelectTaipen(AcDbObjectId bathroomId, CString taipen)
 {
+	vCString hideBlockRecordNames;
+	if (taipen == L"Sunac_台盆_650")
+	{
+		hideBlockRecordNames.push_back(L"Sunac_台盆_750");
+		hideBlockRecordNames.push_back(L"Sunac_台盆_800");
+		hideBlockRecordNames.push_back(L"Sunac_台盆_900");
+		hideBlockRecordNames.push_back(L"Sunac_台盆_1000");
+	}
+	else if (taipen == L"Sunac_台盆_750")
+	{
+		hideBlockRecordNames.push_back(L"Sunac_台盆_650");
+		hideBlockRecordNames.push_back(L"Sunac_台盆_800");
+		hideBlockRecordNames.push_back(L"Sunac_台盆_900");
+		hideBlockRecordNames.push_back(L"Sunac_台盆_1000");
+	}
+	else if (taipen == L"Sunac_台盆_800")
+	{
+		hideBlockRecordNames.push_back(L"Sunac_台盆_650");
+		hideBlockRecordNames.push_back(L"Sunac_台盆_750");
+		hideBlockRecordNames.push_back(L"Sunac_台盆_900");
+		hideBlockRecordNames.push_back(L"Sunac_台盆_1000");
+	}
+	else if (taipen == L"Sunac_台盆_900")
+	{
+		hideBlockRecordNames.push_back(L"Sunac_台盆_650");
+		hideBlockRecordNames.push_back(L"Sunac_台盆_750");
+		hideBlockRecordNames.push_back(L"Sunac_台盆_800");
+		hideBlockRecordNames.push_back(L"Sunac_台盆_1000");
+	}
+	else if (taipen == L"Sunac_台盆_1000")
+	{
+		hideBlockRecordNames.push_back(L"Sunac_台盆_650");
+		hideBlockRecordNames.push_back(L"Sunac_台盆_750");
+		hideBlockRecordNames.push_back(L"Sunac_台盆_800");
+		hideBlockRecordNames.push_back(L"Sunac_台盆_900");
+	}
+	else
+		return -1;
+
+
+	TY_HideBlockReferencesInBlockReference(bathroomId, hideBlockRecordNames);
+
 	return 0;
 }
 
-int CBathroomGen::SelectMatong(AcDbObjectId bathroomId, CString zaoTai)
+int CBathroomGen::SelectMatong(AcDbObjectId bathroomId, CString matong)
 {
+	vCString hideBlockRecordNames;
+	if (matong == L"Sunac_马桶800")
+	{
+		hideBlockRecordNames.push_back(L"Sunac_马桶750");
+	}
+	else if (matong == L"Sunac_马桶750")
+	{
+		hideBlockRecordNames.push_back(L"Sunac_马桶800");
+	}
+	else
+		return -1;
+
+
+	TY_HideBlockReferencesInBlockReference(bathroomId, hideBlockRecordNames);
+
 	return 0;
 }
 
-int CBathroomGen::SelectGuanxiqu(AcDbObjectId bathroomId, CString bingXiang)
+int CBathroomGen::SelectGuanxiWidth(AcDbObjectId bathroomId, double width)
 {
+	bool isG = (m_attr.m_name.Right(6) == _T("_g.dwg"));
+	//只有干湿分离的卫生间才有盥洗区
+	if (isG)
+	{
+		if (fabs(width - 950) > TOL && fabs(width - 1050) > TOL )
+			return -1;
+		TYCOM_SetDynamicBlockValue(bathroomId, L"盥洗区Y", width);
+	}
 	return 0;
 }
 
@@ -102,12 +167,23 @@ AcDbObjectId CBathroomGen::GenBathroom(const AcGePoint3d p_pos)
 	return 0;
 }
 
-int CBathroomGenKI::SetTaipenPos(AcDbObjectId bathroomId, double kaiJian, double jinShen, CString taipenWidth)
+int CBathroomGenKI::SetMatongPos(AcDbObjectId bathroomId, double kaiJian, double jinShen, CString matongType)
 {
+	CString type = m_attr.m_BathroomType;
 	return 0;
 }
 
-int CBathroomGenKI::SetMatongPos(AcDbObjectId bathroomId, double kaiJian, double jinShen, CString matongType)
+int CBathroomGenKI::SetMatongPos_I3(AcDbObjectId bathroomId, double yLen)
+{
+	if (yLen > 2600)
+		TYCOM_SetDynamicBlockValue(bathroomId, L"马桶距墙Y", 450.0);
+	else
+		TYCOM_SetDynamicBlockValue(bathroomId, L"马桶距墙Y", 400.0);
+
+	return 0;
+}
+
+int CBathroomGenKI::SetMatongPos_I4(AcDbObjectId bathroomId, double yLen)
 {
 	return 0;
 }
@@ -210,6 +286,7 @@ vector<AttrBathroom*> CBathroomMrg::FilterBathroomTI(double p_width, double p_he
 		return attrBathroom;
 	if ((height - 2450) % 150 != 0)
 		return attrBathroom;
+
 	//I型均为上下对开
 	if (!bOpposite || bLeftRight)
 		return attrBathroom;

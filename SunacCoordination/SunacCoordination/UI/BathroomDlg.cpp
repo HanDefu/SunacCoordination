@@ -239,9 +239,9 @@ void CBathroomDlg::OnBnClickedButtonRange()
 	TYRect rect = TY_GetOneRect();
 	ShowWindow(true);
 
-	if (m_rect.IsSame(rect, 1E-4))
+	if (m_rect.IsSame(rect, TOL))
 		return;
-	if (rect.GetWidth() < 1E-4 || rect.GetHeight() < 1E-4)
+	if (rect.GetWidth() < TOL || rect.GetHeight() < TOL)
 	{
 		acutPrintf(_T("所选卫生间范围无效\n"));
 		return;
@@ -254,7 +254,7 @@ void CBathroomDlg::OnBnClickedButtonRange()
 
 void CBathroomDlg::OnBnClickedButtonDoorDir()
 {
-	if (m_rect.GetWidth() < 1E-4 || m_rect.GetHeight() < 1E-4)
+	if (m_rect.GetWidth() < TOL || m_rect.GetHeight() < TOL)
 	{
 		acutPrintf(_T("请先选择卫生间范围\n"));
 		return;
@@ -291,7 +291,7 @@ void CBathroomDlg::OnBnClickedButtonDoorDir()
 
 void CBathroomDlg::OnBnClickedButtonWindowDir()
 {
-	if (m_rect.GetWidth() < 1E-4 || m_rect.GetHeight() < 1E-4)
+	if (m_rect.GetWidth() < TOL || m_rect.GetHeight() < TOL)
 	{
 		acutPrintf(_T("请先选择卫生间范围\n"));
 		return;
@@ -328,7 +328,7 @@ void CBathroomDlg::OnBnClickedButtonWindowDir()
 
 void CBathroomDlg::OnBnClickedButtonSearch()
 {
-	if (m_rect.GetWidth() < 1E-4 || m_rect.GetHeight() < 1E-4)
+	if (m_rect.GetWidth() < TOL || m_rect.GetHeight() < TOL)
 	{
 		acutPrintf(_T("请先选择卫生间范围\n"));
 		return;

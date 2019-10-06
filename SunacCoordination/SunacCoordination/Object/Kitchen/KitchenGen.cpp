@@ -29,7 +29,6 @@ CKitchGen::CKitchGen(AttrKitchen* p_att)
 
 	m_doorDir = E_DIR_BOTTOM;
 	m_windowDir = E_DIR_TOP;
-	m_angle = 0;
 }
 
 CKitchGen::~CKitchGen()
@@ -577,6 +576,36 @@ CString CKitchGenKL::GetBinxiangDefault()
 	}
 }
 
+
+void CKitchGenKL::GetRotateAngle(double &angle, AcGeVector3d &offsetX)
+{
+	angle = 0;
+	offsetX = AcGeVector3d(0, 0, 0);
+	const double xLen = GetXLength();
+	const double yLen = GetYLength();
+
+	switch (m_doorDir)
+	{
+	case E_DIR_RIGHT:
+		angle = PI;
+		offsetX = AcGeVector3d(xLen, yLen, 0);
+		break;
+	case E_DIR_TOP:
+		angle = -PI / 2;
+		offsetX = AcGeVector3d(0, xLen, 0);
+		break;
+	case E_DIR_LEFT:
+		angle = 0;
+		offsetX = AcGeVector3d(0, 0, 0);
+		break;
+	case E_DIR_BOTTOM:
+		angle = PI / 2;
+		offsetX = AcGeVector3d(yLen, 0, 0);
+		break;
+	default:
+		break;
+	}
+}
 
 //KL门窗对开设置水盆的位置
 int CKitchGenKL::SetShuiPenPos(AcDbObjectId kitchenId, double kaiJian, double jinShen, CString shuiPenType)

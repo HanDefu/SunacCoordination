@@ -52,7 +52,7 @@ protected:
 	//设置水盆的位置
 	virtual int SetShuiPenPos(AcDbObjectId kitchenId, double kaiJian, double jinShen, CString shuiPenType){ return 0; }
 
-	virtual void GetRotateAngle(double &angle, AcGeVector3d &offsetV); //处理旋转关系
+	virtual void GetRotateAngle(double &angle, AcGeVector3d &offsetX); //处理旋转关系
 	//virtual void InitMirror(); //主要针对门窗垂直开情况，门窗垂直原型的窗在门的右侧，若实际为左侧则需要对称 //改为对话框内判断
 
 	virtual double GetXLength(){ return m_attr.m_width; } //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
@@ -65,8 +65,6 @@ protected:
 
 	E_DIRECTION m_doorDir;
 	E_DIRECTION m_windowDir;
-
-	double m_angle;
 };
 //////////////////////////////////////////////////////////////////////////
 class CKitchGenKUQ : public CKitchGen	//浅U，门窗对开
@@ -132,7 +130,7 @@ protected:
 
 };
 
-class CKitchGenKL : public CKitchGen////深U，门窗对开
+class CKitchGenKL : public CKitchGen////L型，门窗对开
 {
 public:
 	CKitchGenKL(AttrKitchen* p_att);
@@ -145,6 +143,7 @@ public:
 
 	//virtual vCString GetZhaotaiOptions();// 获取灶台选项
 	//virtual CString GetZhaotaiDefault();
+	virtual void GetRotateAngle(double &angle, AcGeVector3d &offsetX); //L型门朝左，需要单独处理旋转关系
 	virtual double GetXLength(){ return m_attr.m_height; } //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
 	virtual double GetYLength(){ return m_attr.m_width; } //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
 
@@ -154,7 +153,7 @@ protected:
 
 };
 
-class CKitchGenKI : public CKitchGen////深U，门窗对开
+class CKitchGenKI : public CKitchGen//I型，门窗对开
 {
 public:
 	CKitchGenKI(AttrKitchen* p_att);
