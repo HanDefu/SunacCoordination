@@ -1,6 +1,7 @@
 #pragma  once
 
 #include <vector>
+#include "..\Tool\Excel\Excel.h"
 #include "../Object/WindowDoor/AttrWindow.h"
 
 using namespace std;
@@ -35,6 +36,7 @@ protected:
 	void LoadDataFromExcel(CString p_file); //从表格中把数据传到m_windows中
 
 	//从excel内读出一条尺寸的6个CString转换成dimdata
+	RCDimData ReadDimData(Excel::CExcelUtil &xls, CString code, int p_row, int p_colum);
 	RCDimData ConvertStringToDimData (CString code, CString  valueType,	CString value, CString defaultValue, CString state)const;
 
 protected:

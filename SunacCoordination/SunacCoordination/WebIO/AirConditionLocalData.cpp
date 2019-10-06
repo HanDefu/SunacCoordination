@@ -37,7 +37,7 @@ void CAirConditionLocalData::LoadDataFromExcel(CString p_file)
 		if (attrAirCon.m_prototypeCode.GetLength() == 0)
 			break;
 
-		attrAirCon.m_name = xls.GetCellValue(i, 3);
+		attrAirCon.m_fileName = xls.GetCellValue(i, 3);
 		attrAirCon.m_airConHorseNumber = xls.GetCellValue(i, 4);
 		attrAirCon.m_airConPipePos = xls.GetCellValue(i, 5);
 		attrAirCon.m_airConRainRiser = xls.GetCellValue(i, 6);
@@ -69,7 +69,7 @@ bool CAirConditionLocalData::GetAirConByFileName(CString p_sFileName, AttrAirCon
 {
 	for (UINT i = 0; i < m_aircon.size(); i++)
 	{
-		if (m_aircon[i].m_name == p_sFileName)
+		if (m_aircon[i].m_fileName == p_sFileName)
 		{
 			value = m_aircon[i];
 			return true;

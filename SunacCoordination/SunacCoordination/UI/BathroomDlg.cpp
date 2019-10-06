@@ -217,7 +217,7 @@ void CBathroomDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	if (nSel >= 0 && nSel < (int)m_allBathrooms.size())
 	{
 		CString type = m_allBathrooms[nSel]->m_BathroomType;
-		bool isG = (m_allBathrooms[nSel]->m_name.Right(6) == _T("_g.dwg"));
+		bool isG = (m_allBathrooms[nSel]->m_fileName.Right(6) == _T("_g.dwg"));
 
 		TYUI_InitComboBox(m_basinWidth, _T("650;750;800;900;1000"), _T("650"));
 		TYUI_InitComboBox(m_BathroomWidth, _T("750;800"), _T("750"));
@@ -360,7 +360,7 @@ void CBathroomDlg::OnBnClickedButtonSearch()
 	{
 		CString str;
 		str.Format(_T("原型编号：%s\n卫生间面积：%.2lf\n通风量要求：0.8\n动态类型：动态\n适用范围：集团"), m_allBathrooms[i]->m_prototypeCode, m_rect.GetWidth() * m_rect.GetHeight() / 1E6);
-		m_preBathroom.AddPreview(i, 0, TY_GetLocalFilePath() + m_allBathrooms[i]->m_name, str);
+		m_preBathroom.AddPreview(i, 0, TY_GetLocalFilePath() + m_allBathrooms[i]->m_fileName, str);
 	}
 
 	m_preBathroom.SelectPreview(0, 0);

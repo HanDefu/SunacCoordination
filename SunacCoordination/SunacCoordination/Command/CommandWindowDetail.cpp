@@ -201,7 +201,7 @@ void CMD_SUNACWINDOWDetail()
 			windowDetailTemplates[i].pnt.y + windowDetailTemplates[i].idY,0),
 			AcGeVector3d(0,0,1), 
 			120, 0, 
-			allWindowsTypes[i].GetBianHao());
+			allWindowsTypes[i].GetInstanceCode());
 
 		//窗面积
 		str.Format(L"%.2f",allWindowsTypes[i].GetWindowArea()/1000000);

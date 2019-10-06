@@ -190,13 +190,13 @@ double RCWindow::GetOpenArea()
 	return GetW1() * GetH1();
 }
 
-void RCWindow::SetBianHao(CString str)
+void RCWindow::SetInstanceCode(CString str)
 {
-	GetAttribute()->SetBianHao(str);
+	GetAttribute()->SetInstanceCode(str);
 }
-CString RCWindow::GetBianHao()
+CString RCWindow::GetInstanceCode()
 {
-	return GetAttribute()->GetBianHao();
+	return GetAttribute()->GetInstanceCode();
 }
 
 int RCWindow::CreateDims()

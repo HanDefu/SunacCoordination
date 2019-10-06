@@ -176,8 +176,8 @@ void CAirconditionerDlg::UpdatePreview() //当空调对话框中的控件的值�
 	Acad::ErrorStatus es=acDocManager->lockDocument(curDoc());
 	AcDbDatabase *pDatabase = new AcDbDatabase();
 	//图形文件路径
-	m_filePathName = MD2010_GetAppPath() + L"\\support\\Sunac2019\\LocalMode\\" + m_allAirCons[0].m_name;
-	es = pDatabase->readDwgFile(m_filePathName);
+	m_fileName = MD2010_GetAppPath() + L"\\support\\Sunac2019\\LocalMode\\" + m_allAirCons[0].m_prototypeCode;
+	es = pDatabase->readDwgFile(m_fileName);
 	//DrawSolid(zhu, pDatabase,false);
 	m_preAirCon.SetDatabase(pDatabase);
 	acDocManager->unlockDocument(curDoc());
@@ -209,7 +209,7 @@ void CAirconditionerDlg::OnBnClickedButtonInsertac()
 
 	RCAirCondition blockAirCon;
 	//将块插入图形空间
-	blockAirCon.Insert(m_filePathName, pnt, 0, L"0", 256);
+	blockAirCon.Insert(m_fileName, pnt, 0, L"0", 256);
 
 	//上下镜像
 	if (m_upDownImage.GetCheck())

@@ -18,99 +18,99 @@ WebIO::~WebIO()
 {
 
 }
+//
+//std::vector<AttrWindow *>  WebIO::GetWindows
+//(
+//   double width,//宽度值，注意高度值不作为搜索条件 
+//   double height,
+//   CString openType, //开启类型
+//   int openNum,//开启扇数量
+//   CString gongNengQu,//功能区
+//   double tongFengLiang//通风量
+//)
+//{
+//	std::vector<AttrWindow *> result;
+//
+//#ifdef WORK_LOCAL//本地模式
+//	CString localWindowPath = TY_GetLocalFilePath();
+//	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"*_Window.dwg",localWindowPath);
+//	for (UINT i = 0; i < localFiles.size(); i++)
+//	{
+//		AttrWindow *pAttribute = new AttrWindow();
+//		CString strid;
+//		strid.Format(L"%s%d_", L"C",i+1);
+//		pAttribute->m_prototypeCode = strid;
+//		pAttribute->m_name = localFiles[i].first;
+//		pAttribute->m_fileName = localFiles[i].second;
+//		int len = pAttribute->m_name.GetLength();
+//		pAttribute->m_name.Delete(len - 4, 4);
+//		pAttribute->m_isJiTuan = true;
+//		pAttribute->m_isDynamic = true;
+//		pAttribute->m_type = L"外窗";
+//
+//		result.push_back(pAttribute);
+//		pAttribute->close();
+//	}
+//#else
+//
+//#endif
+//	return result;
+//}
+//
+//std::vector<AttrWindow *>  WebIO::GetAllWindows()
+//{
+//	std::vector<AttrWindow *> result;
+//
+//#ifdef WORK_LOCAL//本地模式
+//	result = GetWindows(0,0,L"",0,L"",0);
+//#else
+//
+//#endif
+//
+//	return result;
+//}
 
-std::vector<AttrWindow *>  WebIO::GetWindows
-(
-   double width,//宽度值，注意高度值不作为搜索条件 
-   double height,
-   CString openType, //开启类型
-   int openNum,//开启扇数量
-   CString gongNengQu,//功能区
-   double tongFengLiang//通风量
-)
-{
-	std::vector<AttrWindow *> result;
-
-#ifdef WORK_LOCAL//本地模式
-	CString localWindowPath = TY_GetLocalFilePath();
-	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"*_Window.dwg",localWindowPath);
-	for (UINT i = 0; i < localFiles.size(); i++)
-	{
-		AttrWindow *pAttribute = new AttrWindow();
-		CString strid;
-		strid.Format(L"%s%d_", L"C",i+1);
-		pAttribute->m_prototypeCode = strid;
-		pAttribute->m_name = localFiles[i].first;
-		pAttribute->m_filePathName = localFiles[i].second;
-		int len = pAttribute->m_name.GetLength();
-		pAttribute->m_name.Delete(len - 4, 4);
-		pAttribute->m_isJiTuan = true;
-		pAttribute->m_isDynamic = true;
-		pAttribute->m_type = L"外窗";
-
-		result.push_back(pAttribute);
-		pAttribute->close();
-	}
-#else
-
-#endif
-	return result;
-}
-
-std::vector<AttrWindow *>  WebIO::GetAllWindows()
-{
-	std::vector<AttrWindow *> result;
-
-#ifdef WORK_LOCAL//本地模式
-	result = GetWindows(0,0,L"",0,L"",0);
-#else
-
-#endif
-
-	return result;
-}
-
-std::vector<AttrDoor *> WebIO::GetDoors
-(
-    double minWid, //宽度值，注意高度值不作为搜索条件 
-    CString doorType //门类型
-)
-{
-	std::vector<AttrDoor *> result;
-#ifdef WORK_LOCAL//本地模式
-	CString localWindowPath = TY_GetLocalFilePath();
-	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"*.dwg",localWindowPath);
-	for (UINT i = 0; i < localFiles.size(); i++)
-	{
-		AttrDoor *pAttribute = new AttrDoor();
-		CString strid;
-		strid.Format(L"%s_%d", L"L_DOOR_",i+1);
-		pAttribute->m_prototypeCode = strid;
-		pAttribute->m_name = localFiles[i].first;
-		pAttribute->m_name = pAttribute->m_name.Left(pAttribute->m_name.GetLength() - 4);
-		pAttribute->m_isJiTuan = true;
-		pAttribute->m_isDynamic = true;
-		pAttribute->m_type = L"门";
-
-		result.push_back(pAttribute);
-		pAttribute->close();
-	}
-#else
-
-#endif
-	return result;
-}
-
-std::vector<AttrDoor *> WebIO::GetAllDoors()
-{
-	std::vector<AttrDoor *> result;
-#ifdef WORK_LOCAL//本地模式
-	result = GetDoors(0,L"");
-#else
-
-#endif
-	return result;
-}
+//std::vector<AttrDoor *> WebIO::GetDoors
+//(
+//    double minWid, //宽度值，注意高度值不作为搜索条件 
+//    CString doorType //门类型
+//)
+//{
+//	std::vector<AttrDoor *> result;
+//#ifdef WORK_LOCAL//本地模式
+//	CString localWindowPath = TY_GetLocalFilePath();
+//	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"*.dwg",localWindowPath);
+//	for (UINT i = 0; i < localFiles.size(); i++)
+//	{
+//		AttrDoor *pAttribute = new AttrDoor();
+//		CString strid;
+//		strid.Format(L"%s_%d", L"L_DOOR_",i+1);
+//		pAttribute->m_prototypeCode = strid;
+//		pAttribute->m_name = localFiles[i].first;
+//		pAttribute->m_name = pAttribute->m_name.Left(pAttribute->m_name.GetLength() - 4);
+//		pAttribute->m_isJiTuan = true;
+//		pAttribute->m_isDynamic = true;
+//		pAttribute->m_type = L"门";
+//
+//		result.push_back(pAttribute);
+//		pAttribute->close();
+//	}
+//#else
+//
+//#endif
+//	return result;
+//}
+//
+//std::vector<AttrDoor *> WebIO::GetAllDoors()
+//{
+//	std::vector<AttrDoor *> result;
+//#ifdef WORK_LOCAL//本地模式
+//	result = GetDoors(0,L"");
+//#else
+//
+//#endif
+//	return result;
+//}
 
 std::vector<AttrKitchen *> WebIO::GetKitchens
 (
@@ -173,11 +173,12 @@ std::vector<AttrKitchen *> WebIO::GetKitchens
 		pAttribute->m_prototypeCode.Format(L"%s_%.0lf×%.0lf", localFile.Left(2), kaiJian, jinShen);
 	if (weiZhiGuanXi == L"门窗垂直")
 		pAttribute->m_prototypeCode += L"_c";
-	pAttribute->m_name = localFile;
+
+	pAttribute->m_fileName = localFile;
 	pAttribute->m_isJiTuan = true;
 	pAttribute->m_isDynamic = true;
 	pAttribute->m_type = L"厨房";
-	pAttribute->m_filePathName = localKitchenPath + pAttribute->m_name;
+	pAttribute->m_fileName = localKitchenPath + pAttribute->m_prototypeCode + _T(".dwg");
 	pAttribute->m_kitchenType = type;
 	pAttribute->m_windowDoorPos = weiZhiGuanXi;
 
@@ -226,11 +227,10 @@ std::vector<AttrBathroom *>  WebIO::GetBathrooms
 			type = L"I3";
 			AttrBathroom *pAttribute = new AttrBathroom();
 			pAttribute->m_prototypeCode.Format(L"T%s_%.0lf×%.0lf", type, width, height);
-			pAttribute->m_name = localFile;
 			pAttribute->m_isJiTuan = true;
 			pAttribute->m_isDynamic = true;
 			pAttribute->m_type = L"卫生间";
-			pAttribute->m_filePathName = localKitchenPath + pAttribute->m_name;
+			pAttribute->m_fileName = localKitchenPath + pAttribute->m_prototypeCode + _T(".dwg");
 			pAttribute->m_BathroomType = type;
 			pAttribute->m_windowDoorPos = DUIKAI;
 
@@ -243,11 +243,10 @@ std::vector<AttrBathroom *>  WebIO::GetBathrooms
 			type = L"I3";
 			AttrBathroom *pAttribute = new AttrBathroom();
 			pAttribute->m_prototypeCode.Format(L"T%s_%.0lf×%.0lf_g", type, width, height);
-			pAttribute->m_name = localFile;
 			pAttribute->m_isJiTuan = true;
 			pAttribute->m_isDynamic = true;
 			pAttribute->m_type = L"卫生间";
-			pAttribute->m_filePathName = localKitchenPath + pAttribute->m_name;
+			pAttribute->m_fileName = localKitchenPath + pAttribute->m_prototypeCode + _T(".dwg");
 			pAttribute->m_BathroomType = type;
 			pAttribute->m_windowDoorPos = DUIKAI;
 
@@ -260,11 +259,10 @@ std::vector<AttrBathroom *>  WebIO::GetBathrooms
 			type = L"I4";
 			AttrBathroom *pAttribute = new AttrBathroom();
 			pAttribute->m_prototypeCode.Format(L"T%s_%.0lf×%.0lf", type, width, height);
-			pAttribute->m_name = localFile;
 			pAttribute->m_isJiTuan = true;
 			pAttribute->m_isDynamic = true;
 			pAttribute->m_type = L"卫生间";
-			pAttribute->m_filePathName = localKitchenPath + pAttribute->m_name;
+			pAttribute->m_fileName = localKitchenPath + pAttribute->m_prototypeCode + _T(".dwg");
 			pAttribute->m_BathroomType = type;
 			pAttribute->m_windowDoorPos = DUIKAI;
 
@@ -277,11 +275,10 @@ std::vector<AttrBathroom *>  WebIO::GetBathrooms
 			type = L"I4";
 			AttrBathroom *pAttribute = new AttrBathroom();
 			pAttribute->m_prototypeCode.Format(L"T%s_%.0lf×%.0lf_g", type, width, height);
-			pAttribute->m_name = localFile;
 			pAttribute->m_isJiTuan = true;
 			pAttribute->m_isDynamic = true;
 			pAttribute->m_type = L"卫生间";
-			pAttribute->m_filePathName = localKitchenPath + pAttribute->m_name;
+			pAttribute->m_fileName = localKitchenPath + pAttribute->m_prototypeCode + _T(".dwg");
 			pAttribute->m_BathroomType = type;
 			pAttribute->m_windowDoorPos = DUIKAI;
 
@@ -345,11 +342,10 @@ std::vector<AttrBathroom *>  WebIO::GetBathrooms
 		}
 		AttrBathroom *pAttribute = new AttrBathroom();
 		pAttribute->m_prototypeCode.Format(L"T%s_%.0lf×%.0lf_g", type, width, height);
-		pAttribute->m_name = localFile;
 		pAttribute->m_isJiTuan = true;
 		pAttribute->m_isDynamic = true;
 		pAttribute->m_type = L"卫生间";
-		pAttribute->m_filePathName = localKitchenPath + pAttribute->m_name;
+		pAttribute->m_fileName = localKitchenPath + pAttribute->m_prototypeCode + _T(".dwg");
 		pAttribute->m_BathroomType = type;
 		pAttribute->m_windowDoorPos = DUIKAI;
 
@@ -392,8 +388,7 @@ std::vector<AttrAirCon *> WebIO::GetAirCons
 		CString strid;
 		strid.Format(L"%s_%d", L"L_AIRCON_",i+1);
 		pAttribute->m_prototypeCode = strid;
-		pAttribute->m_name = localFiles[i].first;
-		pAttribute->m_name.TrimRight(L".dwg");
+		pAttribute->m_fileName = localFiles[i].first;
 		pAttribute->m_isJiTuan = true;
 		pAttribute->m_isDynamic = true;
 		pAttribute->m_type = L"空调";
@@ -430,8 +425,7 @@ std::vector<AttrRailing *> WebIO::GetRailings(eRailingType type)//一次搜索所有的
 		CString strid;
 		strid.Format(L"%s_%d", L"L_AIRCON_",i+1);
 		pAttribute->m_prototypeCode = strid;
-		pAttribute->m_name = localFiles[i].first;
-		pAttribute->m_name.TrimRight(L".dwg");
+		pAttribute->m_fileName = localFiles[i].first;
 		pAttribute->m_isJiTuan = true;
 		pAttribute->m_isDynamic = true;
 		pAttribute->m_type = L"栏杆";
@@ -461,177 +455,177 @@ int WebIO::DownLoadFile(CString id, CString filePathName)
 {
 	return 0;
 }
-
-//读取尺寸值
-SRCDimData WebIO::Window_GetDim(CString yuanXingBianHao, CString dimStr, CString fileName)
-{
-	SRCDimData value;
-#ifdef WORK_LOCAL//本地模式
-	if (fileName == L"Window_N_7_0.dwg")
-	{
-		if (dimStr == L"W")
-		{
-			value.type = SCOPE;
-			value.values.push_back(1200);
-			value.values.push_back(1500);
-		}
-		else if (dimStr == L"W1")
-		{
-			value.type = CALC;
-		}
-		else if (dimStr == L"W2")
-		{
-			value.type = CALC;
-		}
-		else if (dimStr == L"H1")
-		{
-			value.type = CALC;
-		}
-		else if (dimStr == L"H2")
-		{
-			value.type = MULTI;
-			value.values.push_back(400);
-			value.values.push_back(500);
-			value.values.push_back(950);
-			value.prompt = L"卧室凸窗推荐值950;卧室非凸窗推荐值500;厨房卫生间推荐值400;";
-		}
-	}
-
-	if (fileName == L"Window_N_7_1.dwg")
-	{
-		if (dimStr == L"W")
-		{
-			value.type = SCOPE;
-			value.values.push_back(1600);
-			value.values.push_back(2000);
-		}
-		else if (dimStr == L"W1")
-		{
-			value.type = SINGLE;
-			value.values.push_back(750);
-		}
-		else if (dimStr == L"W2")
-		{
-			value.type = CALC;
-		}
-		else if (dimStr == L"H")
-		{
-			value.type = UNLIMIT;
-		}
-		else if (dimStr == L"H1")
-		{
-			value.type = CALC;
-		}
-		else if (dimStr == L"H2")
-		{
-			value.type = MULTI;
-			value.values.push_back(400);
-			value.values.push_back(500);
-			value.values.push_back(950);
-			value.prompt = L"卧室凸窗推荐值950;卧室非凸窗推荐值500;厨房卫生间推荐值400;";
-		}
-	}
-	if (fileName == L"Window_N_9_0.dwg")
-	{
-		if (dimStr == L"W")
-		{
-			value.type = SINGLE;
-			value.values.push_back(1800);
-		}
-		else if (dimStr == L"W1")
-		{
-			value.type = SINGLE;
-			value.values.push_back(550);
-		}
-		else if (dimStr == L"W2")
-		{
-			value.type = CALC;
-		}
-		else if (dimStr == L"H")
-		{
-			value.type = UNLIMIT;
-		}
-		else if (dimStr == L"H1")
-		{
-			value.type = CALC;
-		}
-		else if (dimStr == L"H2")
-		{
-			value.type = MULTI;
-			value.values.push_back(500);
-			value.values.push_back(950);
-			value.prompt = L"卧室凸窗推荐值950;卧室非凸窗推荐值500;厨房卫生间推荐值400;";
-		}
-	}
-	if (fileName == L"Window_N_9_1.dwg")
-	{
-		if (dimStr == L"W")
-		{
-			value.type = SCOPE;
-			value.values.push_back(1900);
-			value.values.push_back(2300);
-		}
-		else if (dimStr == L"W1")
-		{
-			value.type = SINGLE;
-			value.values.push_back(600);
-		}
-		else if (dimStr == L"W2")
-		{
-			value.type = CALC;
-		}
-		else if (dimStr == L"H")
-		{
-			value.type = UNLIMIT;
-		}
-		else if (dimStr == L"H1")
-		{
-			value.type = CALC;
-		}
-		else if (dimStr == L"H2")
-		{
-			value.type = MULTI;
-			value.values.push_back(500);
-			value.values.push_back(950);
-			value.prompt = L"卧室凸窗推荐值950;卧室非凸窗推荐值500;厨房卫生间推荐值400;";
-		}
-	}
-	if (fileName == L"Window_N_9_2.dwg")
-	{
-		if (dimStr == L"W")
-		{
-			value.type = SCOPE;
-			value.values.push_back(2400);
-			value.values.push_back(3000);
-		}
-		else if (dimStr == L"W1")
-		{
-			value.type = SINGLE;
-			value.values.push_back(750);
-		}
-		else if (dimStr == L"W2")
-		{
-			value.type = CALC;
-		}
-		else if (dimStr == L"H")
-		{
-			value.type = UNLIMIT;
-		}
-		else if (dimStr == L"H1")
-		{
-			value.type = CALC;
-		}
-		else if (dimStr == L"H2")
-		{
-			value.type = MULTI;
-			value.values.push_back(500);
-			value.values.push_back(950);
-			value.prompt = L"卧室凸窗推荐值950;卧室非凸窗推荐值500;厨房卫生间推荐值400;";
-		}
-	}
-#else
-
-#endif
-
-	return value;
-}
+//
+////读取尺寸值
+//SRCDimData WebIO::Window_GetDim(CString yuanXingBianHao, CString dimStr, CString fileName)
+//{
+//	SRCDimData value;
+//#ifdef WORK_LOCAL//本地模式
+//	if (fileName == L"Window_N_7_0.dwg")
+//	{
+//		if (dimStr == L"W")
+//		{
+//			value.type = SCOPE;
+//			value.values.push_back(1200);
+//			value.values.push_back(1500);
+//		}
+//		else if (dimStr == L"W1")
+//		{
+//			value.type = CALC;
+//		}
+//		else if (dimStr == L"W2")
+//		{
+//			value.type = CALC;
+//		}
+//		else if (dimStr == L"H1")
+//		{
+//			value.type = CALC;
+//		}
+//		else if (dimStr == L"H2")
+//		{
+//			value.type = MULTI;
+//			value.values.push_back(400);
+//			value.values.push_back(500);
+//			value.values.push_back(950);
+//			value.prompt = L"卧室凸窗推荐值950;卧室非凸窗推荐值500;厨房卫生间推荐值400;";
+//		}
+//	}
+//
+//	if (fileName == L"Window_N_7_1.dwg")
+//	{
+//		if (dimStr == L"W")
+//		{
+//			value.type = SCOPE;
+//			value.values.push_back(1600);
+//			value.values.push_back(2000);
+//		}
+//		else if (dimStr == L"W1")
+//		{
+//			value.type = SINGLE;
+//			value.values.push_back(750);
+//		}
+//		else if (dimStr == L"W2")
+//		{
+//			value.type = CALC;
+//		}
+//		else if (dimStr == L"H")
+//		{
+//			value.type = UNLIMIT;
+//		}
+//		else if (dimStr == L"H1")
+//		{
+//			value.type = CALC;
+//		}
+//		else if (dimStr == L"H2")
+//		{
+//			value.type = MULTI;
+//			value.values.push_back(400);
+//			value.values.push_back(500);
+//			value.values.push_back(950);
+//			value.prompt = L"卧室凸窗推荐值950;卧室非凸窗推荐值500;厨房卫生间推荐值400;";
+//		}
+//	}
+//	if (fileName == L"Window_N_9_0.dwg")
+//	{
+//		if (dimStr == L"W")
+//		{
+//			value.type = SINGLE;
+//			value.values.push_back(1800);
+//		}
+//		else if (dimStr == L"W1")
+//		{
+//			value.type = SINGLE;
+//			value.values.push_back(550);
+//		}
+//		else if (dimStr == L"W2")
+//		{
+//			value.type = CALC;
+//		}
+//		else if (dimStr == L"H")
+//		{
+//			value.type = UNLIMIT;
+//		}
+//		else if (dimStr == L"H1")
+//		{
+//			value.type = CALC;
+//		}
+//		else if (dimStr == L"H2")
+//		{
+//			value.type = MULTI;
+//			value.values.push_back(500);
+//			value.values.push_back(950);
+//			value.prompt = L"卧室凸窗推荐值950;卧室非凸窗推荐值500;厨房卫生间推荐值400;";
+//		}
+//	}
+//	if (fileName == L"Window_N_9_1.dwg")
+//	{
+//		if (dimStr == L"W")
+//		{
+//			value.type = SCOPE;
+//			value.values.push_back(1900);
+//			value.values.push_back(2300);
+//		}
+//		else if (dimStr == L"W1")
+//		{
+//			value.type = SINGLE;
+//			value.values.push_back(600);
+//		}
+//		else if (dimStr == L"W2")
+//		{
+//			value.type = CALC;
+//		}
+//		else if (dimStr == L"H")
+//		{
+//			value.type = UNLIMIT;
+//		}
+//		else if (dimStr == L"H1")
+//		{
+//			value.type = CALC;
+//		}
+//		else if (dimStr == L"H2")
+//		{
+//			value.type = MULTI;
+//			value.values.push_back(500);
+//			value.values.push_back(950);
+//			value.prompt = L"卧室凸窗推荐值950;卧室非凸窗推荐值500;厨房卫生间推荐值400;";
+//		}
+//	}
+//	if (fileName == L"Window_N_9_2.dwg")
+//	{
+//		if (dimStr == L"W")
+//		{
+//			value.type = SCOPE;
+//			value.values.push_back(2400);
+//			value.values.push_back(3000);
+//		}
+//		else if (dimStr == L"W1")
+//		{
+//			value.type = SINGLE;
+//			value.values.push_back(750);
+//		}
+//		else if (dimStr == L"W2")
+//		{
+//			value.type = CALC;
+//		}
+//		else if (dimStr == L"H")
+//		{
+//			value.type = UNLIMIT;
+//		}
+//		else if (dimStr == L"H1")
+//		{
+//			value.type = CALC;
+//		}
+//		else if (dimStr == L"H2")
+//		{
+//			value.type = MULTI;
+//			value.values.push_back(500);
+//			value.values.push_back(950);
+//			value.prompt = L"卧室凸窗推荐值950;卧室非凸窗推荐值500;厨房卫生间推荐值400;";
+//		}
+//	}
+//#else
+//
+//#endif
+//
+//	return value;
+//}

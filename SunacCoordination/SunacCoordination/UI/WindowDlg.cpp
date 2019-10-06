@@ -134,11 +134,11 @@ void CWindowDlg::OnBnClickedButtonInsert()
 			
 		int sel = m_viewDir.GetCurSel();
 		if (sel == 0)
-		    oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].m_name, origin, 0, L"0", 256);
+			oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].m_frontViewFile, origin, 0, L"0", 256);
 		else if (sel == 1)
-            oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].m_prototypeFlatFile, origin, 0, L"0", 256);
+            oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].m_topViewFile, origin, 0, L"0", 256);
 		else
-			oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].m_prototypeTopViewFile, origin, 0, L"0", 256);
+			oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].m_leftViewFile, origin, 0, L"0", 256);
 
 		oneWindow.InitParameters();
 		oneWindow.SetParameter(L"H", height);
@@ -160,7 +160,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		oneWindow.AddAttribute(pWindow);
 		pWindow->close();
 
-		oneWindow.SetBianHao(m_allWindows[sels[0]].m_prototypeCode + str);
+		oneWindow.SetInstanceCode(m_allWindows[sels[0]].m_prototypeCode + str);
 	}
 	OnOK();
 }
@@ -193,7 +193,7 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 	{
 		CString str;
 		str.Format(_T("原型编号：%s\n窗户面积：%.2lf\n通风量：0.9\n动态类型：动态\n适用范围：集团"), m_allWindows[i].m_prototypeCode, width * height / 1E6);
-		m_preWindow.AddPreview(i, 0, TY_GetLocalFilePath() + m_allWindows[i].m_name, str);
+		m_preWindow.AddPreview(i, 0, TY_GetLocalFilePath() + m_allWindows[i].m_fileName, str);
 	}
 
 	m_preWindow.SelectPreview(0, 0);

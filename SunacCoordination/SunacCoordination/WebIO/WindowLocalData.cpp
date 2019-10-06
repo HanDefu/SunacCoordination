@@ -18,6 +18,49 @@ CWindowLocalData::~CWindowLocalData()
 {
 }
 
+RCDimData CWindowLocalData::ReadDimData(Excel::CExcelUtil &xls, CString code, int p_row, int p_colum)
+{
+	CString valueType = xls.GetCellValue(p_row, p_colum);
+	CString sValue = xls.GetCellValue(p_row, p_colum + 1);
+	double minValue = _wtof(xls.GetCellValue(p_row, p_colum + 2));
+	double maxValue = _wtof(xls.GetCellValue(p_row, p_colum + 3));
+	double defaultValue = _wtof(xls.GetCellValue(p_row, p_colum + 4));
+	CString sComment = xls.GetCellValue(p_row, p_colum + 5);   //说明
+
+	RCDimData  data;
+	data.sCodeName = code;
+	data.defaultValue = defaultValue;
+	data.minValue = minValue;
+	data.maxValue = maxValue;
+	data.prompt = sComment;
+
+	if (valueType == "无")
+	{
+		data.type = NOVALUE;
+	}
+	else if (valueType == L"公式")
+	{
+		data.type = CALC;
+		data.sFomula = sValue;
+	}
+	else if (valueType == L"固定值")
+	{
+		data.type = SINGLE;
+		data.values.push_back(_wtof(sValue));
+	}
+	else if (valueType == L"值系列")
+	{
+		data.type = MULTI;
+
+		std::vector<CString> strs = YT_SplitCString(sValue, L',');
+		for (UINT i = 0; i < strs.size(); i++)
+		{
+			data.values.push_back(_wtof(strs[i]));
+		}
+	}
+	
+	return data;
+}
 
 //门窗
 RCDimData CWindowLocalData::ConvertStringToDimData ( CString code, CString  valueType, CString value, CString defaultValue,	CString state) const
@@ -68,103 +111,67 @@ void CWindowLocalData::LoadDataFromExcel(CString p_file)
 	//将数据从表格中读取到m_windows中，读取外窗数据表单
 	xls.SetActiveSheet(1); //打开第一张表
 
+	CString str;
+
 	for (int i = 2; i <= 1000000; i++)  //循环excel表格  外窗数据表单的行
 	{
 		AttrWindow attrwindow;
 		
 		//通过行和列获取单元格的值，并将值赋给对象attrwindow
-		attrwindow.m_id = xls.GetCellValue(i, 1); 
+		//attrwindow.m_id = xls.GetCellValue(i, 1); 
 		attrwindow.m_prototypeCode = xls.GetCellValue(i, 2);
 		if (attrwindow.m_prototypeCode.GetLength() == 0)  //对原型编号的长度进行判断，当原型编号为空的时候结束循环
 			break;
 
-		attrwindow.m_name = xls.GetCellValue(i, 3);
-		attrwindow.m_scopeOfApplication = xls.GetCellValue(i, 4);
-		attrwindow.m_Dynamic = xls.GetCellValue(i, 5);
-		attrwindow.m_functionType = xls.GetCellValue(i, 6);
+		attrwindow.m_fileName = xls.GetCellValue(i, 3);
+		attrwindow.m_quyuName = xls.GetCellValue(i, 4);
+		if (attrwindow.m_quyuName.Find(_T("全部"))>=0 ||
+			attrwindow.m_quyuName.Find(_T("集团")) >= 0)
+		{
+			attrwindow.m_isJiTuan = true;
+		}
+		else
+		{
+			attrwindow.m_isJiTuan = false;
+		}
+
+		str = xls.GetCellValue(i, 5);
+		attrwindow.m_isDynamic = (str==_T("是"))? true : false;
+
+		attrwindow.m_gongNengquType = xls.GetCellValue(i, 6);
 		attrwindow.m_openType = xls.GetCellValue(i, 7);
 		attrwindow.m_openQty = _ttoi(xls.GetCellValue(i, 8));
-		attrwindow.m_minWid =  _ttoi(xls.GetCellValue(i, 9));
-		attrwindow.m_maxWid =  _ttoi(xls.GetCellValue(i, 10));
+		attrwindow.m_minWid =  _ttof(xls.GetCellValue(i, 9));
+		attrwindow.m_maxWid =  _ttof(xls.GetCellValue(i, 10));
 		attrwindow.m_tongFengFormula = xls.GetCellValue(i, 11);
-		attrwindow.m_width =  _ttoi(xls.GetCellValue(i, 12));
-		attrwindow.m_height =  _ttoi(xls.GetCellValue(i, 13));
-		attrwindow.m_tongFengQty =  _ttoi(xls.GetCellValue(i, 14));
+		attrwindow.m_staticWidth = _ttof(xls.GetCellValue(i, 12));
+		attrwindow.m_staticHeight = _ttof(xls.GetCellValue(i, 13));
+		attrwindow.m_staticTongFengQty = _ttof(xls.GetCellValue(i, 14));
 		
-		//W 
-		SRCDimData data;
-		data.sCodeName = L"W";
-		data.type = SCOPE;
-		data.values.push_back(attrwindow.m_minWid);
-		data.values.push_back(attrwindow.m_maxWid);
-		data.prompt = L"";
-		data.defaultValue = 0;
-		attrwindow.m_dimData.push_back(data);
+		RCDimData rcDimData = ReadDimData(xls, L"W1", i, 15);		
+		attrwindow.m_dimData.push_back(rcDimData);
 
-		//H
-		data.sCodeName = L"H";
-		data.type = UNLIMIT;
-		data.prompt = L"";
-		data.defaultValue = 0;
-		attrwindow.m_dimData.push_back(data);
+		rcDimData = ReadDimData(xls, L"W2", i, 21);
+		attrwindow.m_dimData.push_back(rcDimData);
 
-		//W1
-		attrwindow.m_valueType = xls.GetCellValue(i, 15);
-		attrwindow.m_value = xls.GetCellValue(i, 16);
-		attrwindow.m_defaultValue = xls.GetCellValue(i, 19);
-		attrwindow.m_state = xls.GetCellValue(i, 20);
+		rcDimData = ReadDimData(xls, L"W3", i, 27);
+		attrwindow.m_dimData.push_back(rcDimData);
 
-		data = ConvertStringToDimData(L"W1",attrwindow.m_valueType, attrwindow.m_value,attrwindow.m_defaultValue,attrwindow.m_state);
-		attrwindow.m_dimData.push_back(data);
+		rcDimData = ReadDimData(xls, L"H1", i, 33);
+		attrwindow.m_dimData.push_back(rcDimData);
 
-		//W2
-		attrwindow.m_valueType = xls.GetCellValue(i, 21);
-		attrwindow.m_value = xls.GetCellValue(i, 22);
-		attrwindow.m_defaultValue = xls.GetCellValue(i, 25);
-		attrwindow.m_state = xls.GetCellValue(i, 26);
+		rcDimData = ReadDimData(xls, L"H2", i, 39);
+		attrwindow.m_dimData.push_back(rcDimData);
 
-		data = ConvertStringToDimData(L"W2",attrwindow.m_valueType, attrwindow.m_value,attrwindow.m_defaultValue,attrwindow.m_state);
-		attrwindow.m_dimData.push_back(data);
+		rcDimData = ReadDimData(xls, L"H3", i, 45);
+		attrwindow.m_dimData.push_back(rcDimData);
 
-		//W3
-		attrwindow.m_valueType = xls.GetCellValue(i, 27);
-		attrwindow.m_value = xls.GetCellValue(i, 28);
-		attrwindow.m_defaultValue = xls.GetCellValue(i, 31);
-		attrwindow.m_state = xls.GetCellValue(i, 32);
 
-		data = ConvertStringToDimData(L"W3",attrwindow.m_valueType, attrwindow.m_value,attrwindow.m_defaultValue,attrwindow.m_state);
-		attrwindow.m_dimData.push_back(data);
+		attrwindow.m_frontViewFile = xls.GetCellValue(i, 51);
+		attrwindow.m_topViewFile = xls.GetCellValue(i, 52);
+		attrwindow.m_leftViewFile = xls.GetCellValue(i, 53);
 
-		//H1
-		attrwindow.m_valueType = xls.GetCellValue(i, 33);
-		attrwindow.m_value = xls.GetCellValue(i, 34);
-		attrwindow.m_defaultValue = xls.GetCellValue(i, 37);
-		attrwindow.m_state = xls.GetCellValue(i, 38);
-
-		data = ConvertStringToDimData(L"H1",attrwindow.m_valueType, attrwindow.m_value,attrwindow.m_defaultValue,attrwindow.m_state);
-		attrwindow.m_dimData.push_back(data);
-
-		//H2
-		attrwindow.m_valueType = xls.GetCellValue(i, 39);
-		attrwindow.m_value = xls.GetCellValue(i, 40);
-		attrwindow.m_defaultValue = xls.GetCellValue(i, 43);
-		attrwindow.m_state = xls.GetCellValue(i, 44);
-
-		data = ConvertStringToDimData(L"H2",attrwindow.m_valueType, attrwindow.m_value,attrwindow.m_defaultValue,attrwindow.m_state);
-		attrwindow.m_dimData.push_back(data);
-
-		//H3
-		attrwindow.m_valueType = xls.GetCellValue(i, 45);
-		attrwindow.m_value = xls.GetCellValue(i, 46);
-		attrwindow.m_defaultValue = xls.GetCellValue(i, 49);
-		attrwindow.m_state = xls.GetCellValue(i, 50);
-
-		data = ConvertStringToDimData(L"H3",attrwindow.m_valueType, attrwindow.m_value, attrwindow.m_defaultValue, attrwindow.m_state);
-		attrwindow.m_dimData.push_back(data);
-
-		attrwindow.m_prototypeFlatFile = xls.GetCellValue(i, 51);
-		attrwindow.m_prototypeTopViewFile = xls.GetCellValue(i, 52);
-
+		//////////////////////////////////////////////////////////////////////////
 		m_windows.push_back(attrwindow); 
 	}
 
@@ -190,7 +197,7 @@ bool  CWindowLocalData::GetWindowByFileName(CString p_sFileName, AttrWindow&valu
 {
 	for (UINT i = 0; i < m_windows.size(); i++)
 	{
-		if (m_windows[i].m_name == p_sFileName)
+		if (m_windows[i].m_fileName == p_sFileName)
 		{
 			value = m_windows[i];
 			return true;
@@ -237,7 +244,7 @@ std::vector<AttrWindow >  CWindowLocalData::GetWindows(double width, CString ope
 			continue;
 		}
 
-		if (width < m_windows[i].m_dimData[0].values[0] || width > m_windows[i].m_dimData[0].values[1])
+		if (width < m_windows[i].m_minWid || width > m_windows[i].m_maxWid)
 		{
 			continue;
 		}
@@ -260,7 +267,7 @@ std::vector<AttrWindow >  CWindowLocalData::GetWindows(double width, CString ope
 
 		if (gongNengQu != L"不限")
 		{
-			if (gongNengQu != m_windows[i].m_functionType)
+			if (gongNengQu != m_windows[i].m_gongNengquType)
 			{
 				continue;
 			}
@@ -312,7 +319,7 @@ std::vector<AttrWindow >  CWindowLocalData::GetDoors(double width, CString openT
 
 		if (gongNengQu != L"不限")
 		{
-			if (gongNengQu != m_windows[i].m_functionType)
+			if (gongNengQu != m_windows[i].m_gongNengquType)
 			{
 				continue;
 			}

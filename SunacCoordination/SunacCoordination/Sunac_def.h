@@ -33,9 +33,10 @@ typedef enum eWindowDimType
 
 typedef enum eViewDir
 {
-	LIMINAN,//立面图
-	PINGMIAN,//平面图
-	CESHI,//侧视图
+	E_VIEW_FRONT,//立面图
+	E_VIEW_TOP,	//平面图
+	E_VIEW_LEFT,//侧视图
+	E_VIEW_EXTEND,//展开图
 }eViewDir;
 
 typedef enum eRailingType
@@ -84,7 +85,10 @@ typedef struct RCDimData
 	CString sCodeName; //代号 W W1 W2 W3 H H1 H2 H3
 	eWindowDimType type;//值类型
 	vdouble values;  //根据值类型，可存储单个值、系列、取值最小值、最大值
+	double minValue;
+	double maxValue;
+	CString sFomula;	//公式
 	double defaultValue;
-	CString prompt;
+	CString prompt;  //说明
 }SRCDimData;
 typedef std::vector<SRCDimData> vSRCDimData;

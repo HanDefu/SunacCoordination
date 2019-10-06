@@ -26,13 +26,13 @@ BOOL CloseRailingDlg()
 
 IMPLEMENT_DYNAMIC(CRailingDlg, CAcUiDialog)
 
-CRailingDlg::CRailingDlg(CWnd* pParent /*=NULL*/)
+CRailingDlg::CRailingDlg(CWnd* pParent /*=NULL*/, bool p_bModeless)
 	: CAcUiDialog(CRailingDlg::IDD, pParent)
-	, m_height(1100)
+	, m_height(1200)
 	, m_heightBase(200)
 	, m_width(5400)
 {
-
+	m_isMoldless = p_bModeless;
 }
 
 CRailingDlg::~CRailingDlg()
@@ -61,11 +61,6 @@ END_MESSAGE_MAP()
 
 // CRailingDlg 消息处理程序
 
-LRESULT CRailingDlg::onAcadKeepFocus(WPARAM, LPARAM)
-{
-	//return FALSE;
-	return TRUE;
-}
 
 BOOL CRailingDlg::OnInitDialog()
 {
@@ -121,7 +116,6 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 	}
 
 	//生成
-
 	AttrRailing railingAtt;
 	railingAtt.m_height = m_height;
 	railingAtt.m_length = m_width;
@@ -130,13 +124,47 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 
 	CRCRailing* pRailing = CreateRailing(railingAtt);
 
-	pRailing->GenerateRailing(AcGePoint3d(0, 0, 0), AcGePoint3d(5400, 0, 0));
+	//选择插入点
+	ShowWindow(FALSE);
+	AcGePoint3d pnt;
+	pnt = TY_GetPoint();
+
+	AcDbObjectId railingId;
+	pRailing->GenerateRailing(pnt, railingId);
 
 	delete pRailing;
 
+	//ShowWindow(TRUE);
 	OnOK();
 }
 
+
+LRESULT CRailingDlg::onAcadKeepFocus(WPARAM, LPARAM)
+{
+	return TRUE;
+}
+void CRailingDlg::OnOK()
+{
+	CAcUiDialog::OnOK();
+	DestroyWindow();
+}
+
+void CRailingDlg::OnCancel()
+{
+	CAcUiDialog::OnCancel();
+	if (m_isMoldless)
+		DestroyWindow();
+}
+
+void CRailingDlg::PostNcDestroy()
+{
+	CAcUiDialog::PostNcDestroy();
+	if (m_isMoldless)
+	{
+		delete this;
+		g_railingDlg = NULL;
+	}
+}
 
 void CRailingDlg::OnBnClickedButtonSelectline()
 {

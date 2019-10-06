@@ -25,8 +25,8 @@ public:
 	AttrWindow();
 	virtual ~AttrWindow();
 
-	AttrWindow(const AttrWindow &other);
-	AttrWindow & operator=(const AttrWindow &rhs);
+	//AttrWindow(const AttrWindow &other);
+	//AttrWindow & operator=(const AttrWindow &rhs);
 
 	//{{AFX_ARX_METHODS(ZffDwgScale)
 	virtual Acad::ErrorStatus dwgOutFields(AcDbDwgFiler* pFiler) const;
@@ -37,11 +37,17 @@ public:
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
 
 public:
-	CString m_openType;//开启类型
-	Adesk::Int32 m_openQty;//开启扇数量
+	CString m_openType;		//开启类型
+	Adesk::Int32 m_openQty;	//开启扇数量
+	CString m_gongNengquType;//功能区类型
 
-	bool m_isZhuanJiao;//是否转角窗
-	bool m_isMirrorWindow; //是否对称窗型		//TODO 新增
+	bool m_isZhuanJiao;		//是否转角窗
+	bool m_isMirrorWindow;	//是否对称窗型 
+
+	CString m_frontViewFile;	//原型立面文件, 展开图用基类的m_fileName
+	CString	m_topViewFile;		//原型俯视图文件
+	CString m_leftViewFile;		//原型侧视图文件
+	
 
 	//动态窗型属性
 	double m_minWid;//宽度尺寸最小值
@@ -49,56 +55,36 @@ public:
 	CString m_tongFengFormula;//通风量计算公式
 
 	//静态窗型属性
-	double m_tongFengQty; //通风量
-	double m_width;					//TODO 新增
-	double m_height;				//TODO 新增
+	double m_staticTongFengQty;	//通风量
+	double m_staticWidth;		
+	double m_staticHeight;		
 
+	vSRCDimData m_dimData;
 
+	//////////////////////////////////////////////////////////////////////////
 	//算量相关
 	vSCalcData m_calFormulas;
 	
+
+
+
+
 	//////////////////////////////////////////////////////////////////////////
-	//以下属性为具体外窗插入时才设置
+	//以下属性为具体外窗插入时才设置,单个窗户实例的属性，非原型属性
 	//视图属性
 	bool m_isMirror;//是否镜像
 	eViewDir m_viewDir;//视图方向
 
-	bool m_isBayWindow; //是否凸窗
+	bool   m_isBayWindow;	 //是否凸窗
 	double m_openWindowSize; //开启扇宽度
-	double m_windowH2;  //下固定值（若存在下固定时）
-	double m_wallDis;//外墙距离
+	double m_windowH2;		 //下固定值（若存在下固定时）
+	double m_wallDis;		 //外墙距离
 
-	////CString	prototypeId;		//原型编号
-	////CString	prototypeFile;		//原型文件
-	////CString	openType;			//开启类型
-	////CString	openNum;			//开启数量
-	////CString	ventilationFormula;	//通风量公式	
-	////CString	staticWidth;		//静态宽度	
-	////CString	staticHeigth;		//静态高度	
-	////CString	staticVentilation;	//静态通风量
-
+	//////////////////////////////////////////////////////////////////////////
+	//二次深化属性
 	double m_plugslotSize;		//塞缝尺寸
-	CString m_sizeId;			//尺寸代号
-	CString m_id;					//序号
-	CString	m_scopeOfApplication;	//适用范围
-	CString	m_Dynamic;				//动态
-	CString	m_functionType;		//功能区类型
-	CString m_jiTuan;			//集团名称
-	CString m_DynamicType;		//动态类型
 
-	CString	m_valueType;		//值类型	
-	CString	m_value;			//值	
-	CString	m_min;				//最小值
-	CString	m_max;				//最大值
-	CString	m_defaultValue;		//默认值
-	CString	m_state;			//说明
 
-	CString	m_prototypeFlatFile;	//原型平面文件
-	CString	m_prototypeTopViewFile;//原型俯视图文件
-	CString m_prototypeFacadeFile; //原型立面文件
-	CString m_prototypeSpreadFile; //原型展开图文件
-
-	vSRCDimData m_dimData;
 };
 
 typedef std::vector<AttrWindow> vAttrWindow;
