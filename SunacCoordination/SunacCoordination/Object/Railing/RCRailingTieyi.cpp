@@ -64,7 +64,6 @@ int CRCRailingTieyi::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingI
 
 	const AcGePoint3d leftTopPt = AcGePoint3d(start.x, start.y + m_railingAtt.m_height, 0); //栏杆整体的左上角点
 	const double railH = m_railingAtt.m_height - GetHandRailHeight();//扣除扶手的高度
-	const double railH0 = 1200 - GetHandRailHeight();//原型扣除扶手后的高度
 	const double centerY = leftTopPt.y - GetHandRailHeight() - railH / 2;
 	const CString fileName = GetPrototypeFilePath();
 	const CString sStandardBlockName = GetStandardBlockName();
@@ -73,55 +72,26 @@ int CRCRailingTieyi::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingI
 	
 	AcDbObjectIdArray idsOut;
 	//2.1 非标段
-	AcDbObjectId id1;
 	AcGePoint3d pos1 = AcGePoint3d(leftTopPt.x + GetK(), centerY, 0); //左上角点x方向上减去与结构墙间隙，y方向上减去扶手的厚度,然后考虑居中位置
-	id1 = InsertBlockRefFromDwg(fileName, sNonStandardBlockName, ACDB_MODEL_SPACE, pos1);
-	assert(id1 != AcDbObjectId::kNull);
-
-	//设置非标段长度
-	DQ_SetDynamicAttribute(id1, _T("L"), GetNonstandardLen());
-	double Ln = GetNonstandardLen() - GetPillarWidth() * 2;//内部的小花格区间为非标段减去两侧立柱
-	double Ln2 = 
-	DQ_SetDynamicAttribute(id1, _T("Ln"), GetNonstandardLen() - GetPillarWidth() * 2); 
-	DQ_SetDynamicAttribute(id1, _T("H"), railH);
-	
+	AcDbObjectId id1 = GenerateRailing_NonStandard(pos1);	
 	idsOut.append(id1);
 
 	//2.2 标准段
 	AcDbObjectId id2;
 	AcGePoint3d pos2 = pos1;
 	pos2.x = pos1.x + GetNonstandardLen() - GetPillarWidth();
-	for (int i = 0; i < GetN(); i++)
-	{
-		id2 = InsertBlockRefFromDwg(fileName, sStandardBlockName, ACDB_MODEL_SPACE, pos2);
-		assert(id2 != AcDbObjectId::kNull);
-
-		DQ_SetDynamicAttribute(id2, _T("H"), railH);
-
-		idsOut.append(id2);
-
-		pos2.x += GetB() - GetPillarWidth(); //减去立柱宽
-	}
-
+	AcDbObjectIdArray ids =  GenerateRailing_Standard(pos2);
+	idsOut.append(ids);
+	
 
 	//2.3 非标段
-	AcDbObjectId id3;
 	AcGePoint3d pos3 = pos2;
-	id3 = InsertBlockRefFromDwg(fileName, sNonStandardBlockName, ACDB_MODEL_SPACE, pos3);
-	assert(id3 != AcDbObjectId::kNull);
-	//设置非标段长度
-	DQ_SetDynamicAttribute(id3, _T("L"), GetNonstandardLen());
-	DQ_SetDynamicAttribute(id3, _T("Ln"), GetNonstandardLen() - GetPillarWidth() * 2); //内部的小花格区间为非标段减去两侧立柱
-	DQ_SetDynamicAttribute(id3, _T("H"), railH);
+	pos3.x = pos2.x + GetStandardRailingTotalLen() - GetPillarWidth();
+	AcDbObjectId id3 = GenerateRailing_NonStandard(pos3);
 	idsOut.append(id3);
 
 	//2.4 扶手
-	AcDbObjectId id4;
-	id4 = InsertBlockRefFromDwg(fileName, sHandrailBlockName, ACDB_MODEL_SPACE, leftTopPt);
-	assert(id4 != AcDbObjectId::kNull);
-	//设置扶手长度
-	DQ_SetDynamicAttribute(id4, _T("L"), GetLength());
-	DQ_SetDynamicAttribute(id4, _T("H"), railH);
+	AcDbObjectId id4 = GenerateRailing_HandRail(leftTopPt);
 	idsOut.append(id4);
 
 	//////////////////////////////////////////////////////////////////////////
@@ -132,23 +102,63 @@ int CRCRailingTieyi::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingI
 	return 0;
 }
 
-AcDbObjectId CRCRailingTieyi::GenerateRailing_NonStandard(AcGePoint3d p_pos, double p_L, double p_H)
+AcDbObjectId CRCRailingTieyi::GenerateRailing_NonStandard(AcGePoint3d p_pos)
 {
-	AcDbObjectId id1;
-	//const CString fileName = GetPrototypeFilePath();
-	//const CString sNonStandardBlockName = GetNonStandardBlockName();
+	AcDbObjectId id1 = AcDbObjectId::kNull;
 
-	//id1 = InsertBlockRefFromDwg(fileName, sNonStandardBlockName, ACDB_MODEL_SPACE, pos1);
-	//assert(id1 != AcDbObjectId::kNull);
+	const double railH = m_railingAtt.m_height - GetHandRailHeight();//扣除扶手的高度
+	const CString fileName = GetPrototypeFilePath();
+	const CString sNonStandardBlockName = GetNonStandardBlockName();
 
-	////设置非标段长度
-	//DQ_SetDynamicAttribute(id1, _T("L"), p_L);
-	//double Ln = GetNonstandardLen() - GetPillarWidth() * 2;//内部的小花格区间为非标段减去两侧立柱
-	//double Ln2 =
-	//	DQ_SetDynamicAttribute(id1, _T("Ln"), GetNonstandardLen() - GetPillarWidth() * 2);
-	//DQ_SetDynamicAttribute(id1, _T("H"), p_H);
+	id1 = InsertBlockRefFromDwg(fileName, sNonStandardBlockName, ACDB_MODEL_SPACE, p_pos);
+	assert(id1 != AcDbObjectId::kNull);
+
+	//设置非标段长度
+	DQ_SetDynamicAttribute(id1, _T("L"), GetNonstandardLen());
+	DQ_SetDynamicAttribute(id1, _T("Ln"), GetNonstandardLen() - GetPillarWidth() * 2);
+	DQ_SetDynamicAttribute(id1, _T("H"), railH);
 
 	return id1;
+}
+
+
+AcDbObjectIdArray CRCRailingTieyi::GenerateRailing_Standard(AcGePoint3d pos)
+{
+	const double railH = m_railingAtt.m_height - GetHandRailHeight();//扣除扶手的高度
+	const CString fileName = GetPrototypeFilePath();
+	const CString sStandardBlockName = GetStandardBlockName();
+
+	AcDbObjectIdArray idsOut;
+	AcDbObjectId id2;
+	for (int i = 0; i < GetN(); i++)
+	{
+		id2 = InsertBlockRefFromDwg(fileName, sStandardBlockName, ACDB_MODEL_SPACE, pos);
+		assert(id2 != AcDbObjectId::kNull);
+
+		DQ_SetDynamicAttribute(id2, _T("H"), railH);
+
+		idsOut.append(id2);
+
+		pos.x += GetB() - GetPillarWidth(); //减去立柱宽
+	}
+
+	return idsOut;
+}
+
+AcDbObjectId CRCRailingTieyi::GenerateRailing_HandRail(AcGePoint3d pos)
+{
+	const double railH = m_railingAtt.m_height - GetHandRailHeight();//扣除扶手的高度
+	const CString fileName = GetPrototypeFilePath();
+	const CString sHandrailBlockName = GetHandRailBlockName();
+
+	AcDbObjectId id4;
+	id4 = InsertBlockRefFromDwg(fileName, sHandrailBlockName, ACDB_MODEL_SPACE, pos);
+	assert(id4 != AcDbObjectId::kNull);
+	//设置扶手长度
+	DQ_SetDynamicAttribute(id4, _T("L"), GetLength());
+	DQ_SetDynamicAttribute(id4, _T("H"), railH);
+	
+	return id4;
 }
 
 

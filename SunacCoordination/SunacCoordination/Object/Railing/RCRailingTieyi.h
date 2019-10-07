@@ -52,7 +52,9 @@ protected:
 	double B1() const { return m_B1; }
 	double B2() const { return m_B2; }
 
-	AcDbObjectId GenerateRailing_NonStandard(AcGePoint3d pos1, double p_L, double p_H);
+	AcDbObjectId GenerateRailing_NonStandard(AcGePoint3d pos);
+	AcDbObjectIdArray GenerateRailing_Standard(AcGePoint3d pos);
+	AcDbObjectId GenerateRailing_HandRail(AcGePoint3d pos);
 
 
 protected:
