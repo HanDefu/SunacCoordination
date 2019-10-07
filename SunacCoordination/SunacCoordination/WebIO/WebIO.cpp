@@ -129,7 +129,7 @@ std::vector<AttrKitchen *> WebIO::GetKitchens
 	{
 		return result;
 	}
-	CString localKitchenPath = TY_GetLocalFilePath();
+
 	CString localFile;
 
 	if (type == L"U型")
@@ -174,11 +174,10 @@ std::vector<AttrKitchen *> WebIO::GetKitchens
 	if (weiZhiGuanXi == L"门窗垂直")
 		pAttribute->m_prototypeCode += L"_c";
 
-	pAttribute->m_fileName = localFile;
 	pAttribute->m_isJiTuan = true;
 	pAttribute->m_isDynamic = true;
 	pAttribute->m_type = L"厨房";
-	pAttribute->m_fileName = localKitchenPath + pAttribute->m_prototypeCode + _T(".dwg");
+	pAttribute->m_fileName = localFile;
 	pAttribute->m_kitchenType = type;
 	pAttribute->m_windowDoorPos = weiZhiGuanXi;
 
@@ -233,6 +232,8 @@ std::vector<AttrBathroom *>  WebIO::GetBathrooms
 			pAttribute->m_fileName = localKitchenPath + pAttribute->m_prototypeCode + _T(".dwg");
 			pAttribute->m_BathroomType = type;
 			pAttribute->m_windowDoorPos = DUIKAI;
+			pAttribute->m_width = width;
+			pAttribute->m_height = height;
 
 			result.push_back(pAttribute);
 			pAttribute->close();
@@ -249,6 +250,8 @@ std::vector<AttrBathroom *>  WebIO::GetBathrooms
 			pAttribute->m_fileName = localKitchenPath + pAttribute->m_prototypeCode + _T(".dwg");
 			pAttribute->m_BathroomType = type;
 			pAttribute->m_windowDoorPos = DUIKAI;
+			pAttribute->m_width = width;
+			pAttribute->m_height = height;
 
 			result.push_back(pAttribute);
 			pAttribute->close();
@@ -265,6 +268,8 @@ std::vector<AttrBathroom *>  WebIO::GetBathrooms
 			pAttribute->m_fileName = localKitchenPath + pAttribute->m_prototypeCode + _T(".dwg");
 			pAttribute->m_BathroomType = type;
 			pAttribute->m_windowDoorPos = DUIKAI;
+			pAttribute->m_width = width;
+			pAttribute->m_height = height;
 
 			result.push_back(pAttribute);
 			pAttribute->close();
@@ -281,6 +286,8 @@ std::vector<AttrBathroom *>  WebIO::GetBathrooms
 			pAttribute->m_fileName = localKitchenPath + pAttribute->m_prototypeCode + _T(".dwg");
 			pAttribute->m_BathroomType = type;
 			pAttribute->m_windowDoorPos = DUIKAI;
+			pAttribute->m_width = width;
+			pAttribute->m_height = height;
 
 			result.push_back(pAttribute);
 			pAttribute->close();
@@ -348,6 +355,8 @@ std::vector<AttrBathroom *>  WebIO::GetBathrooms
 		pAttribute->m_fileName = localKitchenPath + pAttribute->m_prototypeCode + _T(".dwg");
 		pAttribute->m_BathroomType = type;
 		pAttribute->m_windowDoorPos = DUIKAI;
+		pAttribute->m_width = width;
+		pAttribute->m_height = height;
 
 		result.push_back(pAttribute);
 		pAttribute->close();

@@ -59,8 +59,8 @@ public:
 	CString m_BathroomType; //卫生间类型
 	eWindowDoorPos m_windowDoorPos; //门窗位置关系
 
-	double m_taipenWidth;//台盆宽度
-	double m_matongWidth;//马桶宽度
+	CString m_taipenWidth;//台盆宽度
+	CString m_matongWidth;//马桶宽度
 	double m_guanXiWidth; //盥洗区宽度
 	double m_width;//长度 面宽
 	double m_height;//宽度 进深

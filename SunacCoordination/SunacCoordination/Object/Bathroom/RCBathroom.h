@@ -16,6 +16,7 @@ File description:
 
 #include <vector>
 #include "..\RCDynamicBlock.h"
+#include "AttrBathroom.h"
 
 class RCBathroom : public RCDynamicBlock
 {
@@ -35,8 +36,11 @@ public:
 	virtual RCBathroom * Clone();
 	virtual void Draw();
 
+	AttrBathroom * GetAttribute();
+	void AddAttribute(AttrBathroom * attr);
+
 protected: 
-	
+	AttrBathroom * m_pAttribute;
 };
 
 typedef std::vector<RCBathroom> vRCBathroom;

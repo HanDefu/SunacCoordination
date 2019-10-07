@@ -1,7 +1,5 @@
 #pragma once
-#include "gridctrlwithpreview.h"
-#include "afxwin.h"
-#include "../Object/Kitchen/AttrKitchen.h"
+#include "GridCtrlWithPreview.h"
 #include "../Common/ComFun_Sunac.h"
 #include "../Object/Kitchen/KitchenGen.h"
 #include "ComFun_MFC.h"

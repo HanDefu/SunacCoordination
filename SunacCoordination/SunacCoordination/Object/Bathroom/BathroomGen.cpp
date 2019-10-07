@@ -2,8 +2,8 @@
 #include "BathroomGen.h"
 #include "RCBathroom.h"
 #include "..\..\WebIO\WebIO.h"
-#include "..\..\Common/ComFun_Sunac.h"
 #include "..\..\Common/ComFun_DynamicBlock.h"
+#include "..\..\Common/ComFun_Sunac.h"
 
 
 CBathroomGen::CBathroomGen(AttrBathroom* p_att)
@@ -13,7 +13,6 @@ CBathroomGen::CBathroomGen(AttrBathroom* p_att)
 
 	m_doorDir = E_DIR_BOTTOM;
 	m_windowDir = E_DIR_TOP;
-	m_angle = 0;
 }
 
 CBathroomGen::~CBathroomGen()
@@ -90,7 +89,7 @@ int CBathroomGen::SelectMatong(AcDbObjectId bathroomId, CString matong)
 
 int CBathroomGen::SelectGuanxiWidth(AcDbObjectId bathroomId, double width)
 {
-	bool isG = (m_attr.m_name.Right(6) == _T("_g.dwg"));
+	bool isG = (m_attr.m_fileName.Right(6) == _T("_g.dwg"));
 	//只有干湿分离的卫生间才有盥洗区
 	if (isG)
 	{
@@ -104,8 +103,7 @@ int CBathroomGen::SelectGuanxiWidth(AcDbObjectId bathroomId, double width)
 //////////////////////////////////////////////////////////////////////////
 vCString CBathroomGen::GetTaipenOptions()
 {
-	vCString options = WebIO::GetConfigDict()->Bathroom_GetTaiPenWidths();
-	return options;
+	return WebIO::GetConfigDict()->Bathroom_GetTaiPenWidths();
 }
 CString CBathroomGen::GetTaipenDefault()
 { 
@@ -114,8 +112,7 @@ CString CBathroomGen::GetTaipenDefault()
 
 vCString CBathroomGen::GetMatongOptions()
 {
-	vCString options = WebIO::GetConfigDict()->Bathroom_GetMaTongTypes();
-	return options;
+	return WebIO::GetConfigDict()->Bathroom_GetMaTongTypes();
 }
 CString CBathroomGen::GetMatongDefault()
 {
@@ -124,8 +121,11 @@ CString CBathroomGen::GetMatongDefault()
 
 vCString CBathroomGen::GetGuanxiquOptions()
 {
-	vCString options = WebIO::GetConfigDict()->Bathroom_GetGuanXiWidths();
-	return options;
+	//只有干湿分离的卫生间才有盥洗区
+	bool isG = (m_attr.m_fileName.Right(6) == _T("_g.dwg"));
+	if (!isG)
+		return vCString(0);
+	return WebIO::GetConfigDict()->Bathroom_GetGuanXiWidths();
 
 }
 CString CBathroomGen::GetGuanxiquDefault()
@@ -164,13 +164,81 @@ void CBathroomGen::GetRotateAngle(double &angle, AcGeVector3d &offsetX) //处理旋
 
 AcDbObjectId CBathroomGen::GenBathroom(const AcGePoint3d p_pos)
 {
-	return 0;
+	double angle = 0;
+	AcGeVector3d offsetXY = AcGeVector3d(0, 0, 0);
+	GetRotateAngle(angle, offsetXY);
+
+	RCBathroom oneBathroom;
+
+	//先插入到原点，最后再做镜像和旋转处理
+	AcDbObjectId id = oneBathroom.Insert(m_attr.m_fileName, p_pos, 0, L"0", 256);
+	oneBathroom.InitParameters();
+	oneBathroom.SetParameter(L"进深", m_attr.m_height);
+	oneBathroom.SetParameter(L"开间", m_attr.m_width);
+	//////////////////////////////////////////////////////////////////////////
+	//烟道
+	if (m_attr.m_hasPaiQiDao)
+	{
+		double airVentW = 0;
+		double airVentH = 0;
+		if (m_attr.m_isGuoBiao) //国标
+		{
+			airVentW = m_attr.m_airVentOffsetX + c_airVentSize[m_attr.m_floorRange];
+			airVentH = m_attr.m_airVentOffsetY + c_airVentSize[m_attr.m_floorRange];
+		}
+		else
+		{
+			airVentW = m_attr.m_airVentW;
+			airVentH = m_attr.m_airVentH;
+		}
+		assert(airVentW > 0 && airVentH > 0);
+		oneBathroom.SetParameter(L"排气道X尺寸", airVentW);
+		oneBathroom.SetParameter(L"排气道Y尺寸", airVentH);
+	}
+	//////////////////////////////////////////////////////////////////////////
+	oneBathroom.RunParameters();
+
+	SelectTaipen(id, m_attr.m_taipenWidth);
+	SelectMatong(id, m_attr.m_matongWidth);
+	SelectGuanxiWidth(id, m_attr.m_guanXiWidth);
+
+	SetMatongPos(id, GetYLength());
+
+	//////////////////////////////////////////////////////////////////////////
+	//先镜像处理
+	if (m_attr.m_isMirror)
+	{
+		AcGePoint3d basePt(p_pos.x + GetXLength() / 2, 0, 0);
+		TYCOM_Mirror(id, basePt, AcGeVector3d(0, 1, 0));
+	}
+
+	//再角度旋转
+	if (angle!=0)
+	{
+		TYCOM_Rotate(id, p_pos, angle);
+
+		//旋转后定义点不再是左下角，需要平移
+		TYCOM_Move(id, offsetXY);
+	}
+
+
+	//////////////////////////////////////////////////////////////////////////
+	//把UI的数据记录在图框的扩展字典中
+	AttrBathroom *pAttribute = new AttrBathroom(m_attr);
+	oneBathroom.AddAttribute(pAttribute);
+	pAttribute->close();
+
+	m_id = id;
+	return id;
 }
 
-int CBathroomGenKI::SetMatongPos(AcDbObjectId bathroomId, double kaiJian, double jinShen, CString matongType)
+int CBathroomGenKI::SetMatongPos(AcDbObjectId bathroomId, double yLen)
 {
 	CString type = m_attr.m_BathroomType;
-	return 0;
+	if (type == _T("I3"))
+		return SetMatongPos_I3(bathroomId, yLen);
+	else
+		return SetMatongPos_I4(bathroomId, yLen);
 }
 
 int CBathroomGenKI::SetMatongPos_I3(AcDbObjectId bathroomId, double yLen)
@@ -185,6 +253,11 @@ int CBathroomGenKI::SetMatongPos_I3(AcDbObjectId bathroomId, double yLen)
 
 int CBathroomGenKI::SetMatongPos_I4(AcDbObjectId bathroomId, double yLen)
 {
+	if (yLen > 3200)
+		TYCOM_SetDynamicBlockValue(bathroomId, L"马桶距墙Y", 450.0);
+	else
+		TYCOM_SetDynamicBlockValue(bathroomId, L"马桶距墙Y", 400.0);
+
 	return 0;
 }
 
@@ -206,6 +279,49 @@ vector<AttrBathroom*> CBathroomMrg::FilterBathroom(EBathroomType p_type, double 
 		return FilterBathroomTI(p_width, p_height, p_doorDir, p_windowDir, p_bHasAirVent);
 
 	return allBathroomOut;
+}
+
+CBathroomGen* CBathroomMrg::CreateBathroomGenByBathroomType(AttrBathroom* p_attBathroom)
+{
+	if (p_attBathroom == NULL)
+	{
+		assert(false);
+		return NULL;
+	}
+
+	//确保卫生间在传入前设置了尺寸
+	assert(p_attBathroom->m_width > 0 && p_attBathroom->m_height > 0);
+
+
+	//或者通过门窗编号创建对应的类
+	CBathroomGen* pBathroomGen = NULL;
+
+	if (p_attBathroom->m_isDynamic)
+	{
+		if (p_attBathroom->m_BathroomType.Left(1) == _T("U"))
+		{
+			pBathroomGen = new CBathroomGenKU(p_attBathroom);
+		}
+		else if (p_attBathroom->m_BathroomType.Left(1) == _T("L"))
+		{
+			pBathroomGen = new CBathroomGenKL(p_attBathroom);
+		}
+		else if (p_attBathroom->m_BathroomType.Left(1) == _T("I"))
+		{
+			pBathroomGen = new CBathroomGenKI(p_attBathroom);
+		}
+		else
+		{
+			assert(false);
+		}
+	}
+	else
+	{
+		//pBathroomGen = new CKitchGenSTATIC(p_attBathroom);
+	}
+
+
+	return pBathroomGen;
 }
 
 vector<AttrBathroom*> CBathroomMrg::FilterBathroomTU(double p_width, double p_height, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir, bool p_bHasAirVent)

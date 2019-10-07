@@ -24,6 +24,7 @@ public:
 	virtual vCString GetGuanxiquOptions();
 	virtual CString GetGuanxiquDefault();
 
+	virtual bool CheckParameter() { return true; } //插入前检查参数合法性
 
 	//////////////////////////////////////////////////////////////////////////
 	//设置基本属性
@@ -35,12 +36,10 @@ public:
 
 protected:
 	virtual int SelectTaipen(AcDbObjectId bathroomId, CString taipen);
-
 	virtual int SelectMatong(AcDbObjectId bathroomId, CString matong);
-
 	virtual int SelectGuanxiWidth(AcDbObjectId bathroomId, double width);
 
-	virtual int SetMatongPos(AcDbObjectId bathroomId, double kaiJian, double jinShen, CString matongType) { return 0; }
+	virtual int SetMatongPos(AcDbObjectId bathroomId, double jinShen) { return 0; } //自动计算并设置马桶位置
 
 	virtual void GetRotateAngle(double &angle, AcGeVector3d &offsetV); //处理旋转关系
 
@@ -54,24 +53,14 @@ protected:
 
 	E_DIRECTION m_doorDir;
 	E_DIRECTION m_windowDir;
-
-	double m_angle;
 };
 
 class CBathroomGenKI : public CBathroomGen
 {
 public:
-	vCString GetTaipenOptions();
-	CString GetTaipenDefault();
+	CBathroomGenKI(AttrBathroom* p_att) : CBathroomGen(p_att) {}
 
-	vCString GetMatongOptions();
-	CString GetMatongDefault();
-
-	vCString GetGuanxiquOptions();
-	CString GetGuanxiquDefault();
-
-	int SetTaipenPos(AcDbObjectId bathroomId, double kaiJian, double jinShen, CString taipenWidth);
-	int SetMatongPos(AcDbObjectId bathroomId, double kaiJian, double jinShen, CString matongType);
+	virtual int SetMatongPos(AcDbObjectId bathroomId, double yLen);
 
 protected:
 	int SetMatongPos_I3(AcDbObjectId bathroomId, double yLen);
@@ -81,35 +70,17 @@ protected:
 class CBathroomGenKU : public CBathroomGen
 {
 public:
-	vCString GetTaipenOptions();
-	CString GetTaipenDefault();
+	CBathroomGenKU(AttrBathroom* p_att) : CBathroomGen(p_att) {}
 
-	vCString GetMatongOptions();
-	CString GetMatongDefault();
-
-	vCString GetGuanxiquOptions();
-	CString GetGuanxiquDefault();
-
-	int SetTaipenPos(AcDbObjectId bathroomId, double kaiJian, double jinShen, CString taipenWidth);
-
-	int SetMatongPos(AcDbObjectId bathroomId, double kaiJian, double jinShen, CString matongType);
+	//int SetMatongPos(AcDbObjectId bathroomId, double yLen);
 };
 
 class CBathroomGenKL : public CBathroomGen
 {
 public:
-	vCString GetTaipenOptions();
-	CString GetTaipenDefault();
+	CBathroomGenKL(AttrBathroom* p_att) : CBathroomGen(p_att) {}
 
-	vCString GetMatongOptions();
-	CString GetMatongDefault();
-
-	vCString GetGuanxiquOptions();
-	CString GetGuanxiquDefault();
-
-	int SetTaipenPos(AcDbObjectId bathroomId, double kaiJian, double jinShen, CString taipenWidth);
-
-	int SetMatongPos(AcDbObjectId bathroomId, double kaiJian, double jinShen, CString matongType);
+	//int SetMatongPos(AcDbObjectId bathroomId, double yLen);
 };
 
 class CBathroomMrg
@@ -118,6 +89,9 @@ public:
 	static CBathroomMrg* GetInstance();
 
 	vector<AttrBathroom*> FilterBathroom(EBathroomType p_type, double p_width, double p_height, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir, bool p_bHasAirVent);
+
+	//根据原型创建厨房生成对象
+	CBathroomGen* CreateBathroomGenByBathroomType(AttrBathroom* p_attBathroom);
 
 protected:
 	//检查尺寸与方向

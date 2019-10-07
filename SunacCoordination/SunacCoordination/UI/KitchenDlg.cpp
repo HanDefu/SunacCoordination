@@ -4,10 +4,6 @@
 #include "stdafx.h"
 #include "KitchenDlg.h"
 #include "../WebIO/WebIO.h"
-#include "../Object/Kitchen/RCKitchen.h"
-#include "../Object/Kitchen/KitchenGen.h"
-#include "afxdialogex.h"
-
 
 // CKitchenDlg ¶Ô»°¿ò
 
@@ -128,8 +124,8 @@ BOOL CKitchenDlg::OnInitDialog()
 
 void CKitchenDlg::OnBnClickedOk()
 {
-
 	CAcUiDialog::OnOK();
+	DestroyWindow();
 }
 
 void CKitchenDlg::OnBnClickedButtonInsert()
