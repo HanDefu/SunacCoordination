@@ -39,6 +39,11 @@
 #include "WebIO\ConfigDictionary.h"
 #include "Tool\DoubleClickBlockReference.h"
 #include "Common\ComFun_Str.h"
+#include "WebIO\WindowWebData.h"
+#include "WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.h"
+#include "Common\ComFun_Str.h"
+#include "Tool\MarkupXml\Markup.h"
+#include <string>
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -140,6 +145,7 @@ void InitMenu()
 
 void CMD_test()
 {
+/*
 	ads_name ename;
 	ads_point pt;
 	if (acedEntSel(L"\nSelect a dynamic block reference: ", ename, pt) != RTNORM)
@@ -148,7 +154,7 @@ void CMD_test()
 		return;
 	}
 	AcDbObjectId eId;
-	acdbGetObjectId(eId, ename);
+	acdbGetObjectId(eId, ename);*/
 
 	////SetDoorPos(eId, 3600);
 	//SelectZaoTai(eId, L"900");
@@ -157,6 +163,13 @@ void CMD_test()
 	////SelectShuiPen(eId, L"Ë«Åè900");
 	////SelectZaoTai(eId, L"800");
 	////acedRedraw(eId,);
+
+	double width = 1800;
+	double height = 1800;
+
+	CWindowWebData b;
+	vAttrWindow a = b.GetWindows(width, height, "", 0, "");
+	return;
 }
 
 static void initApp()
@@ -164,8 +177,8 @@ static void initApp()
 	CAcModuleResourceOverride resOverride;
 
 	acedRegCmds->addCommand(_T("SUNAC"),
-		_T("test"),
-		_T("test"),
+		_T("tes"),
+		_T("tes"),
 		ACRX_CMD_MODAL,
 		CMD_test,
 		NULL,
