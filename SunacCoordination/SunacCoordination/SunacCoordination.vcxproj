@@ -170,6 +170,8 @@
     <ClCompile Include="Object\Railing\AttrRailing.cpp" />
     <ClCompile Include="Object\Railing\RailingGen.cpp" />
     <ClCompile Include="Object\Railing\RCRailing.cpp" />
+    <ClCompile Include="Object\Railing\RCRailingBoli.cpp" />
+    <ClCompile Include="Object\Railing\RCRailingTieyi.cpp" />
     <ClCompile Include="Object\RCBlock.cpp" />
     <ClCompile Include="Object\RCDynamicBlock.cpp" />
     <ClCompile Include="Object\RCObject.cpp" />
@@ -269,6 +271,8 @@
     <ClInclude Include="Object\Railing\AttrRailing.h" />
     <ClInclude Include="Object\Railing\RailingGen.h" />
     <ClInclude Include="Object\Railing\RCRailing.h" />
+    <ClInclude Include="Object\Railing\RCRailingBoli.h" />
+    <ClInclude Include="Object\Railing\RCRailingTieyi.h" />
     <ClInclude Include="Object\RCBlock.h" />
     <ClInclude Include="Object\RCDynamicBlock.h" />
     <ClInclude Include="Object\RCObject.h" />
