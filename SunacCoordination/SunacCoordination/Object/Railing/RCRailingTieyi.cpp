@@ -26,21 +26,33 @@ File description:
 //////////////////////////////////////////////////////////////////////////
 CRCRailingTieyi::CRCRailingTieyi()
 {
+	m_B1 = 0;
+	m_B2 = 0;
 }
 
 CRCRailingTieyi::~CRCRailingTieyi()
 {
 }
 
-
-//////////////////////////////////////////////////////////////////////////
-
-CRCRailingT1::CRCRailingT1()
+CString CRCRailingTieyi::GetStandardBlockName() const
 {
+	CString sName;
+	sName.Format(_T("%s_%d"), m_railingAtt.m_prototypeCode, (int)GetB());
+	return sName;
 }
 
+CString CRCRailingTieyi::GetNonStandardBlockName() const
+{
+	return m_railingAtt.m_prototypeCode + _T("_NonStandard");
+}
+CString CRCRailingTieyi::GetHandRailBlockName() const
+{
+	return m_railingAtt.m_prototypeCode + _T("_Handrail");
+}
+
+
 //start ÎªÀ¸¸ËµÄ×óÏÂ½Ç
-int CRCRailingT1::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut)
+int CRCRailingTieyi::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut)
 {
 	//1. ¼ÆËã¸÷·Ö¶ÎµÄÖµ
 	bool bSuc = GenRailing();
@@ -52,18 +64,25 @@ int CRCRailingT1::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOu
 
 	const AcGePoint3d leftTopPt = AcGePoint3d(start.x, start.y + m_railingAtt.m_height, 0); //À¸¸ËÕûÌåµÄ×óÉÏ½Çµã
 	const double railH = m_railingAtt.m_height - GetHandRailHeight();//¿Û³ý·öÊÖµÄ¸ß¶È
+	const double railH0 = 1200 - GetHandRailHeight();//Ô­ÐÍ¿Û³ý·öÊÖºóµÄ¸ß¶È
 	const double centerY = leftTopPt.y - GetHandRailHeight() - railH / 2;
-	m_railingAtt.m_fileName = MD2010_GetAppPath() + L"\\support\\Sunac2019\\LocalMode\\" + m_railingAtt.m_prototypeCode + L".dwg";
-
+	const CString fileName = GetPrototypeFilePath();
+	const CString sStandardBlockName = GetStandardBlockName();
+	const CString sNonStandardBlockName = GetNonStandardBlockName();
+	const CString sHandrailBlockName = GetHandRailBlockName();
+	
 	AcDbObjectIdArray idsOut;
 	//2.1 ·Ç±ê¶Î
 	AcDbObjectId id1;
 	AcGePoint3d pos1 = AcGePoint3d(leftTopPt.x + GetK(), centerY, 0); //×óÉÏ½Çµãx·½ÏòÉÏ¼õÈ¥Óë½á¹¹Ç½¼äÏ¶£¬y·½ÏòÉÏ¼õÈ¥·öÊÖµÄºñ¶È,È»ºó¿¼ÂÇ¾ÓÖÐÎ»ÖÃ
-	id1 = InsertBlockRefFromDwg(m_railingAtt.m_fileName, _T("Railing_T1_NonStandard"), ACDB_MODEL_SPACE, pos1);
+	id1 = InsertBlockRefFromDwg(fileName, sNonStandardBlockName, ACDB_MODEL_SPACE, pos1);
+	assert(id1 != AcDbObjectId::kNull);
 
 	//ÉèÖÃ·Ç±ê¶Î³¤¶È
 	DQ_SetDynamicAttribute(id1, _T("L"), GetNonstandardLen());
-	DQ_SetDynamicAttribute(id1, _T("Ln"), GetNonstandardLen() - GetPillarWidth() * 2); //ÄÚ²¿µÄÐ¡»¨¸ñÇø¼äÎª·Ç±ê¶Î¼õÈ¥Á½²àÁ¢Öù
+	double Ln = GetNonstandardLen() - GetPillarWidth() * 2;//ÄÚ²¿µÄÐ¡»¨¸ñÇø¼äÎª·Ç±ê¶Î¼õÈ¥Á½²àÁ¢Öù
+	double Ln2 = 
+	DQ_SetDynamicAttribute(id1, _T("Ln"), GetNonstandardLen() - GetPillarWidth() * 2); 
 	DQ_SetDynamicAttribute(id1, _T("H"), railH);
 	
 	idsOut.append(id1);
@@ -72,11 +91,11 @@ int CRCRailingT1::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOu
 	AcDbObjectId id2;
 	AcGePoint3d pos2 = pos1;
 	pos2.x = pos1.x + GetNonstandardLen() - GetPillarWidth();
-	CString sStandardBlockName = GetB() < 1380 ? _T("Railing_T1_1260") : _T("Railing_T1_1380");
 	for (int i = 0; i < GetN(); i++)
 	{
-		id2 = InsertBlockRefFromDwg(m_railingAtt.m_fileName, sStandardBlockName, ACDB_MODEL_SPACE, pos2);
-		//MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, m_railingAtt.m_fileName, sStandardBlockName, id2, pos2, 0, AcGeScale3d(1));
+		id2 = InsertBlockRefFromDwg(fileName, sStandardBlockName, ACDB_MODEL_SPACE, pos2);
+		assert(id2 != AcDbObjectId::kNull);
+
 		DQ_SetDynamicAttribute(id2, _T("H"), railH);
 
 		idsOut.append(id2);
@@ -88,8 +107,8 @@ int CRCRailingT1::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOu
 	//2.3 ·Ç±ê¶Î
 	AcDbObjectId id3;
 	AcGePoint3d pos3 = pos2;
-	id3 = InsertBlockRefFromDwg(m_railingAtt.m_fileName, _T("Railing_T1_NonStandard"), ACDB_MODEL_SPACE, pos3);
-	//MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, m_railingAtt.m_fileName, _T("Railing_T1_NonStandard"), id3, pos3, 0, AcGeScale3d(1));
+	id3 = InsertBlockRefFromDwg(fileName, sNonStandardBlockName, ACDB_MODEL_SPACE, pos3);
+	assert(id3 != AcDbObjectId::kNull);
 	//ÉèÖÃ·Ç±ê¶Î³¤¶È
 	DQ_SetDynamicAttribute(id3, _T("L"), GetNonstandardLen());
 	DQ_SetDynamicAttribute(id3, _T("Ln"), GetNonstandardLen() - GetPillarWidth() * 2); //ÄÚ²¿µÄÐ¡»¨¸ñÇø¼äÎª·Ç±ê¶Î¼õÈ¥Á½²àÁ¢Öù
@@ -98,8 +117,8 @@ int CRCRailingT1::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOu
 
 	//2.4 ·öÊÖ
 	AcDbObjectId id4;
-	id4 = InsertBlockRefFromDwg(m_railingAtt.m_fileName, _T("Railing_T1_Handrail"), ACDB_MODEL_SPACE, leftTopPt);
-	//MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, m_railingAtt.m_fileName, _T("Railing_T1_Handrail"), id4, leftTopPt, 0, AcGeScale3d(1));
+	id4 = InsertBlockRefFromDwg(fileName, sHandrailBlockName, ACDB_MODEL_SPACE, leftTopPt);
+	assert(id4 != AcDbObjectId::kNull);
 	//ÉèÖÃ·öÊÖ³¤¶È
 	DQ_SetDynamicAttribute(id4, _T("L"), GetLength());
 	DQ_SetDynamicAttribute(id4, _T("H"), railH);
@@ -113,8 +132,27 @@ int CRCRailingT1::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOu
 	return 0;
 }
 
+AcDbObjectId CRCRailingTieyi::GenerateRailing_NonStandard(AcGePoint3d p_pos, double p_L, double p_H)
+{
+	AcDbObjectId id1;
+	//const CString fileName = GetPrototypeFilePath();
+	//const CString sNonStandardBlockName = GetNonStandardBlockName();
 
-bool CRCRailingT1::GenRailing()  //¶ÔÀ¸¸Ë×Ü³¤½øÐÐÅÐ¶Ï£¬Èç¹ûÀ¸¸Ë×Ü³¤Ð¡ÓÚ1550£¬·µ»Øfalse
+	//id1 = InsertBlockRefFromDwg(fileName, sNonStandardBlockName, ACDB_MODEL_SPACE, pos1);
+	//assert(id1 != AcDbObjectId::kNull);
+
+	////ÉèÖÃ·Ç±ê¶Î³¤¶È
+	//DQ_SetDynamicAttribute(id1, _T("L"), p_L);
+	//double Ln = GetNonstandardLen() - GetPillarWidth() * 2;//ÄÚ²¿µÄÐ¡»¨¸ñÇø¼äÎª·Ç±ê¶Î¼õÈ¥Á½²àÁ¢Öù
+	//double Ln2 =
+	//	DQ_SetDynamicAttribute(id1, _T("Ln"), GetNonstandardLen() - GetPillarWidth() * 2);
+	//DQ_SetDynamicAttribute(id1, _T("H"), p_H);
+
+	return id1;
+}
+
+
+bool CRCRailingTieyi::GenRailing()  //¶ÔÀ¸¸Ë×Ü³¤½øÐÐÅÐ¶Ï£¬Èç¹ûÀ¸¸Ë×Ü³¤Ð¡ÓÚ1550£¬·µ»Øfalse
 {
 	if (GetLength() < 1550)
 	{
@@ -122,26 +160,26 @@ bool CRCRailingT1::GenRailing()  //¶ÔÀ¸¸Ë×Ü³¤½øÐÐÅÐ¶Ï£¬Èç¹ûÀ¸¸Ë×Ü³¤Ð¡ÓÚ1550£¬·µ»
 	}
 
 	//ÏÈ¼ÆËã1260±ê×¼¶ÎµÄÊý¾Ý
-	int N_1 = GenStandardSegCount(GetLength(), 1260);
-	int n_1 = GenNonstandardUnitCount(GetLength(), 1260, N_1);
-	double k1 = GenK(GetLength(), 1260, N_1, n_1);
+	int N_1 = GenStandardSegCount(GetLength(), B1());
+	int n_1 = GenNonstandardUnitCount(GetLength(), B1(), N_1);
+	double k1 = GenK(GetLength(), B1(), N_1, n_1);
 
 	//¼ÆËã1380±ê×¼¶ÎµÄÊý¾Ý
-	int N_2 = GenStandardSegCount(GetLength(), 1380);
-	int n_2 = GenNonstandardUnitCount(GetLength(), 1380, N_2);
-	double k2 = GenK(GetLength(), 1380, N_2, n_2);
+	int N_2 = GenStandardSegCount(GetLength(), B2());
+	int n_2 = GenNonstandardUnitCount(GetLength(), B2(), N_2);
+	double k2 = GenK(GetLength(), B2(), N_2, n_2);
 
 	//¶Ôk(À¸¸Ë²à±ßÁô¿Õ¼äÏ¶)½øÐÐÅÐ¶Ï£¬Èç¹û´óÓÚ105£¬ÄÇÃ´±ê×¼À¸¸Ë³ß´ç¾ÍÎª1380£¬·ñÔò¾ÍÎª1260
 	if (k1 <= 105)
 	{
-		m_B = 1260;
+		m_B = B1();
 		m_N = N_1;
 		m_n = n_1;
 		m_K = k1;
 	}
 	else
 	{
-		m_B = 1380;
+		m_B = B2();
 		m_N = N_2;
 		m_n = n_2;
 		m_K = k2;
@@ -149,7 +187,7 @@ bool CRCRailingT1::GenRailing()  //¶ÔÀ¸¸Ë×Ü³¤½øÐÐÅÐ¶Ï£¬Èç¹ûÀ¸¸Ë×Ü³¤Ð¡ÓÚ1550£¬·µ»
 	return true;
 }
 
-int CRCRailingT1::GenStandardSegCount(double p_lenth, double p_segLength)const		//¼ÆËã±ê×¼À¸¸ËÊýÁ¿£¬p_lenthÎªÀ¸¸Ë³¤£¬p_segLengthÎªÀ¸¸ËµÄ±ê×¼¶Î³¤
+int CRCRailingTieyi::GenStandardSegCount(double p_lenth, double p_segLength)const		//¼ÆËã±ê×¼À¸¸ËÊýÁ¿£¬p_lenthÎªÀ¸¸Ë³¤£¬p_segLengthÎªÀ¸¸ËµÄ±ê×¼¶Î³¤
 {
 	int nCount = 0;
 	if ((int)(p_lenth / p_segLength == 1))
@@ -169,46 +207,59 @@ int CRCRailingT1::GenStandardSegCount(double p_lenth, double p_segLength)const		
 }
 
 //»ñÈ¡±ê×¼À¸¸ËÁ½²àµ¥Ôª»¨¸ñÊýÁ¿
-int CRCRailingT1::GenNonstandardUnitCount(double p_lenth, double p_segLength, int p_standardSegCount)	const
+int CRCRailingTieyi::GenNonstandardUnitCount(double p_lenth, double p_segLength, int p_standardSegCount)	const
 {
 	//±ê×¼À¸¸ËÁ½²àµ¥Ôª»¨¸ñÊýÁ¿ = ¡¾À¸¸Ë×Ü³ß´ç - ±ê×¼À¸¸Ë³ß´ç - H(ÆäËû¿Õ¼ä³ß´ç)¡¿/ µ¥Ôª»¨¸ñ³ß´ç
 	int n = (int)((GetLength() - GenStandardRailingTotalLen(p_segLength, p_standardSegCount) - GetH()) / Getb());
 
-	//»¨¸ñÊýÁ¿ÒªÊÇ2µÄ±¶Êý£¬Èç¹û²»ÊÇ£¬ÏòÏÂÈ¡×î½Ó½üµÄ2µÄ±¶Êý (¼´-1)
-	if ((((int)(n)) % 2) != 0)
+	//»¨¸ñÊýÁ¿ÒªÊÇ2µÄ±¶Êý£¬Èç¹û²»ÊÇ£¬ÏòÏÂÈ¡×î½Ó½üµÄ2µÄ±¶Êý
+	if ((n % 2) != 0)
 	{
 		n--;
 	}
 
-	return n;
+	return n/2; //×îÖÕµÄnÈ¡Ò»²àµÄÊýÁ¿,Òò´Ë³ý2
 }
 
-double CRCRailingT1::GenStandardRailingTotalLen(double p_segLength, int p_standardSegCount)const
+double CRCRailingTieyi::GenStandardRailingTotalLen(double p_segLength, int p_standardSegCount)const
 {
 	//Í¨¹ý±ê×¼À¸¸Ë³ß´çºÍÊýÁ¿¼ÆËã³ö±ê×¼À¸¸Ë×Ü³ß´ç,¹«Ê½£º±ê×¼À¸¸Ë×Ü³ß´ç = ±ê×¼À¸¸Ë³ß´ç*±ê×¼À¸¸ËÊýÁ¿- 40*(À¸¸ËÊýÁ¿-1)
 	return p_segLength *p_standardSegCount - GetPillarWidth() * (p_standardSegCount - 1);
 }
 
-double CRCRailingT1::GenK(double p_lenth, double p_segLength, int p_standardSegCount, int p_nonStandardUnitCount) const//²à±ßÁô¿Õ¼äÏ¶ = ²àÃæÁ¢ÖùºÍ½á¹¹Ç½¼ä³ß´ç/2
+double CRCRailingTieyi::GenK(double p_lenth, double p_segLength, int p_standardSegCount, int p_nonStandardUnitCount) const//²à±ßÁô¿Õ¼äÏ¶ = ²àÃæÁ¢ÖùºÍ½á¹¹Ç½¼ä³ß´ç/2
 {
 	double nonStandardLen = p_nonStandardUnitCount * Getb(); //·Ç±ê×¼¶ÎµÄµ¥Ôª»¨¸ñ×Ü³¤¶È
 	double k = (p_lenth - GenStandardRailingTotalLen(p_segLength, p_standardSegCount) - nonStandardLen - GetH()) / 2;
 	return k;
 }
 
-//////////////////////////////////////////////////////////////////////////
 
-double CRCRailingT1::GetStandardRailingTotalLen()const
+double CRCRailingTieyi::GetStandardRailingTotalLen()const
 {
 	return GenStandardRailingTotalLen(m_B, m_N);
 }
-double CRCRailingT1::GetNonstandardLen()const   //»ñÈ¡·Ç±ê¶ÎÀ¸¸Ë³¤¶È£¬º¬Á½²àÁ¢Öù
+double CRCRailingTieyi::GetNonstandardLen()const   //»ñÈ¡·Ç±ê¶ÎÀ¸¸Ë³¤¶È£¬º¬Á½²àÁ¢Öù
 {
 	//»¨¸ñ×Ü³ß´ç = »¨¸ñÊýÁ¿/2*»¨¸ñ³ß´ç   /2ÊÇÖ»¼ÆËãÒ»²àµÄ³¤¶È
-	double nonStandardLen = (m_n/2) * Getb() + (Getb()-GetSmallPillarWidth()) + GetPillarWidth() * 2; //¼ÓÉÏÒ»¸ö»¨¸ñ¿ÕÏ¶ºÍÁ½²àÁ¢Öù
+	double nonStandardLen = m_n * Getb() + (Getb()-GetSmallPillarWidth()) + GetPillarWidth() * 2; //¼ÓÉÏÒ»¸ö»¨¸ñ¿ÕÏ¶ºÍÁ½²àÁ¢Öù
 	return nonStandardLen;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+CRCRailingT1::CRCRailingT1()
+{
+	m_B1 = 1260;
+	m_B2 = 1380;
+}
+
+//////////////////////////////////////////////////////////////////////////
+CRCRailingT3::CRCRailingT3()
+{
+	m_B1 = 1250;
+	m_B2 = 1320;
 }
 
 
 //////////////////////////////////////////////////////////////////////////
-

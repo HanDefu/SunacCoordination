@@ -56,11 +56,13 @@ public:
 protected:
 	virtual bool GenRailing() = 0;
 
+	CString GetPrototypeFilePath()const ;
+
 protected:
 	//double m_length;	//栏杆总尺寸 譬如5400
 	double m_B;			//标准栏杆尺寸 1260或者1380
 	int	   m_N;			//标准栏杆段数量 
-	int	   m_n;			//标准栏杆两侧单元花格数量（两侧）
+	int	   m_n;			//标准栏杆两侧单元花格数量
 	double m_K;			//侧边立柱与结构墙间尺寸（单边）
 
 protected: 

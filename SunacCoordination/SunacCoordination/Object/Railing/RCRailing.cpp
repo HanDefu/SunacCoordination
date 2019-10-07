@@ -64,6 +64,10 @@ bool CRCRailing::SetLength(double p_length) //设置栏杆总长度，参数(栏杆总长度)传
 	m_railingAtt.m_length = p_length;
 	return GenRailing(); //调用GenRailing()函数对栏杆总长进行判断，如果栏杆总长小于1550，返回false
 }
+CString CRCRailing::GetPrototypeFilePath()const
+{
+	return MD2010_GetAppPath() + L"\\support\\Sunac2019\\LocalMode\\" + m_railingAtt.m_prototypeCode + L".dwg";
+}
 
 //////////////////////////////////////////////////////////////////////////
 
