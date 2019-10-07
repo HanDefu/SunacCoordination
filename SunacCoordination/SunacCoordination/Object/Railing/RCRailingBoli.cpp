@@ -25,10 +25,124 @@ bool CRCRailingBoli::GenRailing()
 	return true;
 }
 
+
+
 int CRCRailingBoli::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut)
-{
+{	//1. 计算各分段的值
+	bool bSuc = GenRailing();
+	if (bSuc == false)
+		return -1;
+
+	//2 插入到图形
+	acDocManager->lockDocument(curDoc());
+
+	const AcGePoint3d leftTopPt = AcGePoint3d(start.x, start.y + m_railingAtt.m_height, 0); //栏杆整体的左上角点
+	const double railH = m_railingAtt.m_height - GetHandRailHeight();//扣除扶手的高度
+	const double centerY = leftTopPt.y - GetHandRailHeight() - railH / 2;
+
+
+	AcDbObjectIdArray idsOut;
+	//2.1 左侧段
+	AcGePoint3d pos1 = AcGePoint3d(leftTopPt.x + GetK(), centerY, 0); //左上角点x方向上减去与结构墙间隙，y方向上减去扶手的厚度,然后考虑居中位置
+	AcDbObjectId id1 = GenerateRailing_Left(pos1);
+	idsOut.append(id1);
+
+	//2.2 标准段
+	AcDbObjectId id2;
+	AcGePoint3d pos2 = pos1;
+	pos2.x = pos1.x + GetB() +GetH();
+	AcDbObjectIdArray ids = GenerateRailing_Standard(pos2);
+	idsOut.append(ids);
+
+
+	//2.3 非标段
+	AcGePoint3d pos3 = pos2;
+	pos3.x = pos2.x + GetB() + GetH();
+	AcDbObjectId id3 = GenerateRailing_Right(pos3);
+	idsOut.append(id3);
+
+	//2.4 扶手
+	AcDbObjectId id4 = GenerateRailing_HandRail(leftTopPt);
+	idsOut.append(id4);
+
+	//////////////////////////////////////////////////////////////////////////
+	//3 组合为一个块，并给把属性设给当前块  TODO
+
+	acDocManager->unlockDocument(curDoc());
+
 	return 0;
 }
+CString CRCRailingBoli::GetStandardBlockName() const
+{
+	return m_railingAtt.m_prototypeCode + _T("_Standard");
+}
+
+CString CRCRailingBoli::GetLeftBlockName() const
+{
+	return m_railingAtt.m_prototypeCode + _T("_Left");
+}
+CString CRCRailingBoli::GetRightBlockName() const
+{
+	return m_railingAtt.m_prototypeCode + _T("_Right");
+}
+CString CRCRailingBoli::GetHandRailBlockName() const
+{
+	return m_railingAtt.m_prototypeCode + _T("_Handrail");
+}
+
+AcDbObjectId CRCRailingBoli::GenerateRailing_Left(AcGePoint3d pos)
+{
+	//TODO
+	AcDbObjectId id;
+	return id;
+}
+AcDbObjectId CRCRailingBoli::GenerateRailing_Right(AcGePoint3d pos)
+{
+	//TODO
+	AcDbObjectId id;
+	return id;
+}
+
+AcDbObjectIdArray CRCRailingBoli::GenerateRailing_Standard(AcGePoint3d pos)
+{
+	const double railH = m_railingAtt.m_height - GetHandRailHeight();//扣除扶手的高度
+	const CString fileName = GetPrototypeFilePath();
+	const CString sStandardBlockName = GetStandardBlockName();
+
+	AcDbObjectIdArray idsOut;
+	AcDbObjectId id2;
+	for (int i = 0; i < GetN(); i++)
+	{
+		id2 = InsertBlockRefFromDwg(fileName, sStandardBlockName, ACDB_MODEL_SPACE, pos);
+		assert(id2 != AcDbObjectId::kNull);
+
+		DQ_SetDynamicAttribute(id2, _T("H"), railH);
+		DQ_SetDynamicAttribute(id2, _T("L"), GetB());
+
+		idsOut.append(id2);
+
+		pos.x += GetB() + GetH(); 
+	}
+
+	return idsOut;
+}
+
+AcDbObjectId CRCRailingBoli::GenerateRailing_HandRail(AcGePoint3d pos)
+{
+	const double railH = m_railingAtt.m_height - GetHandRailHeight();//扣除扶手的高度
+	const CString fileName = GetPrototypeFilePath();
+	const CString sHandrailBlockName = GetHandRailBlockName();
+
+	AcDbObjectId id4;
+	id4 = InsertBlockRefFromDwg(fileName, sHandrailBlockName, ACDB_MODEL_SPACE, pos);
+	assert(id4 != AcDbObjectId::kNull);
+	//设置扶手长度
+	DQ_SetDynamicAttribute(id4, _T("L"), GetLength());
+	DQ_SetDynamicAttribute(id4, _T("H"), railH);
+
+	return id4;
+}
+
 //////////////////////////////////////////////////////////////////////////
 CRCRailingB1::CRCRailingB1()
 {

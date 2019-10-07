@@ -67,10 +67,7 @@ int CRCRailingTieyi::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingI
 	const AcGePoint3d leftTopPt = AcGePoint3d(start.x, start.y + m_railingAtt.m_height, 0); //栏杆整体的左上角点
 	const double railH = m_railingAtt.m_height - GetHandRailHeight();//扣除扶手的高度
 	const double centerY = leftTopPt.y - GetHandRailHeight() - railH / 2;
-	const CString fileName = GetPrototypeFilePath();
-	const CString sStandardBlockName = GetStandardBlockName();
-	const CString sNonStandardBlockName = GetNonStandardBlockName();
-	const CString sHandrailBlockName = GetHandRailBlockName();
+
 	
 	AcDbObjectIdArray idsOut;
 	//2.1 非标段
