@@ -29,7 +29,6 @@ CRCRailing::CRCRailing(void)
 {
 	m_B = 1260;			//标准栏杆尺寸 1260或者1380
 	m_N = 1;			//标准栏杆数量 
-	m_n = 1;			//标准栏杆两侧单元花格数量
 	m_K = 0;
 }
  
@@ -105,7 +104,24 @@ CRCRailing* CreateRailing(const AttrRailing p_railingAtt)
 							}
 	}
 		break;
-	case E_RAILING_BOLI://TODO
+	case E_RAILING_BOLI:
+
+		if (p_railingAtt.m_prototypeCode.Find(_T("B1")) >= 0)
+		{
+			pRailing = new CRCRailingB1();
+		}
+		else if (p_railingAtt.m_prototypeCode.Find(_T("B2")) >= 0 ||
+			p_railingAtt.m_prototypeCode.Find(_T("B3")) >= 0)
+		{
+			pRailing = new CRCRailingB2();
+		}
+		else if (p_railingAtt.m_prototypeCode.Find(_T("B4")) >= 0 ||
+			p_railingAtt.m_prototypeCode.Find(_T("B5")) >= 0 ||
+			p_railingAtt.m_prototypeCode.Find(_T("B6")) >= 0)
+		{
+			pRailing = new CRCRailingB4();
+		}
+
 		break;
 	default:
 		break;

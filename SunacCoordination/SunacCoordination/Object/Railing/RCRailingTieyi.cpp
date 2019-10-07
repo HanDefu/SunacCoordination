@@ -28,6 +28,8 @@ CRCRailingTieyi::CRCRailingTieyi()
 {
 	m_B1 = 0;
 	m_B2 = 0;
+
+	m_n = 1;			//标准栏杆两侧单元花格数量
 }
 
 CRCRailingTieyi::~CRCRailingTieyi()
