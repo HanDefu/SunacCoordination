@@ -102,6 +102,78 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
         /// Web service asynchronous operation 'recv_GetWindows' to receive a response message from the connected endpoint, returns SOAP_OK or error code
         virtual int recv_GetWindows(_ns1__GetWindowsResponse &ns1__GetWindowsResponse);
         //
+        /// Web service synchronous operation 'GetAllDoor' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllDoor(_ns1__GetAllDoor *ns1__GetAllDoor, _ns1__GetAllDoorResponse &ns1__GetAllDoorResponse) { return this->GetAllDoor(NULL, NULL, ns1__GetAllDoor, ns1__GetAllDoorResponse); }
+        /// Web service synchronous operation 'GetAllDoor' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllDoor(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllDoor *ns1__GetAllDoor, _ns1__GetAllDoorResponse &ns1__GetAllDoorResponse) { return this->send_GetAllDoor(soap_endpoint_url, soap_action, ns1__GetAllDoor) || this->recv_GetAllDoor(ns1__GetAllDoorResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_GetAllDoor' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_GetAllDoor(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllDoor *ns1__GetAllDoor);
+        /// Web service asynchronous operation 'recv_GetAllDoor' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_GetAllDoor(_ns1__GetAllDoorResponse &ns1__GetAllDoorResponse);
+        //
+        /// Web service synchronous operation 'GetAllDoorByParam' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllDoorByParam(_ns1__GetAllDoorByParam *ns1__GetAllDoorByParam, _ns1__GetAllDoorByParamResponse &ns1__GetAllDoorByParamResponse) { return this->GetAllDoorByParam(NULL, NULL, ns1__GetAllDoorByParam, ns1__GetAllDoorByParamResponse); }
+        /// Web service synchronous operation 'GetAllDoorByParam' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllDoorByParam(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllDoorByParam *ns1__GetAllDoorByParam, _ns1__GetAllDoorByParamResponse &ns1__GetAllDoorByParamResponse) { return this->send_GetAllDoorByParam(soap_endpoint_url, soap_action, ns1__GetAllDoorByParam) || this->recv_GetAllDoorByParam(ns1__GetAllDoorByParamResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_GetAllDoorByParam' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_GetAllDoorByParam(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllDoorByParam *ns1__GetAllDoorByParam);
+        /// Web service asynchronous operation 'recv_GetAllDoorByParam' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_GetAllDoorByParam(_ns1__GetAllDoorByParamResponse &ns1__GetAllDoorByParamResponse);
+        //
+        /// Web service synchronous operation 'GetAllKitchen' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllKitchen(_ns1__GetAllKitchen *ns1__GetAllKitchen, _ns1__GetAllKitchenResponse &ns1__GetAllKitchenResponse) { return this->GetAllKitchen(NULL, NULL, ns1__GetAllKitchen, ns1__GetAllKitchenResponse); }
+        /// Web service synchronous operation 'GetAllKitchen' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllKitchen(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllKitchen *ns1__GetAllKitchen, _ns1__GetAllKitchenResponse &ns1__GetAllKitchenResponse) { return this->send_GetAllKitchen(soap_endpoint_url, soap_action, ns1__GetAllKitchen) || this->recv_GetAllKitchen(ns1__GetAllKitchenResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_GetAllKitchen' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_GetAllKitchen(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllKitchen *ns1__GetAllKitchen);
+        /// Web service asynchronous operation 'recv_GetAllKitchen' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_GetAllKitchen(_ns1__GetAllKitchenResponse &ns1__GetAllKitchenResponse);
+        //
+        /// Web service synchronous operation 'GetAllKitchenParam' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllKitchenParam(_ns1__GetAllKitchenParam *ns1__GetAllKitchenParam, _ns1__GetAllKitchenParamResponse &ns1__GetAllKitchenParamResponse) { return this->GetAllKitchenParam(NULL, NULL, ns1__GetAllKitchenParam, ns1__GetAllKitchenParamResponse); }
+        /// Web service synchronous operation 'GetAllKitchenParam' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllKitchenParam(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllKitchenParam *ns1__GetAllKitchenParam, _ns1__GetAllKitchenParamResponse &ns1__GetAllKitchenParamResponse) { return this->send_GetAllKitchenParam(soap_endpoint_url, soap_action, ns1__GetAllKitchenParam) || this->recv_GetAllKitchenParam(ns1__GetAllKitchenParamResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_GetAllKitchenParam' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_GetAllKitchenParam(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllKitchenParam *ns1__GetAllKitchenParam);
+        /// Web service asynchronous operation 'recv_GetAllKitchenParam' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_GetAllKitchenParam(_ns1__GetAllKitchenParamResponse &ns1__GetAllKitchenParamResponse);
+        //
+        /// Web service synchronous operation 'GetAllBathroom' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllBathroom(_ns1__GetAllBathroom *ns1__GetAllBathroom, _ns1__GetAllBathroomResponse &ns1__GetAllBathroomResponse) { return this->GetAllBathroom(NULL, NULL, ns1__GetAllBathroom, ns1__GetAllBathroomResponse); }
+        /// Web service synchronous operation 'GetAllBathroom' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllBathroom(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllBathroom *ns1__GetAllBathroom, _ns1__GetAllBathroomResponse &ns1__GetAllBathroomResponse) { return this->send_GetAllBathroom(soap_endpoint_url, soap_action, ns1__GetAllBathroom) || this->recv_GetAllBathroom(ns1__GetAllBathroomResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_GetAllBathroom' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_GetAllBathroom(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllBathroom *ns1__GetAllBathroom);
+        /// Web service asynchronous operation 'recv_GetAllBathroom' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_GetAllBathroom(_ns1__GetAllBathroomResponse &ns1__GetAllBathroomResponse);
+        //
+        /// Web service synchronous operation 'GetAllBathroomByParam' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllBathroomByParam(_ns1__GetAllBathroomByParam *ns1__GetAllBathroomByParam, _ns1__GetAllBathroomByParamResponse &ns1__GetAllBathroomByParamResponse) { return this->GetAllBathroomByParam(NULL, NULL, ns1__GetAllBathroomByParam, ns1__GetAllBathroomByParamResponse); }
+        /// Web service synchronous operation 'GetAllBathroomByParam' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllBathroomByParam(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllBathroomByParam *ns1__GetAllBathroomByParam, _ns1__GetAllBathroomByParamResponse &ns1__GetAllBathroomByParamResponse) { return this->send_GetAllBathroomByParam(soap_endpoint_url, soap_action, ns1__GetAllBathroomByParam) || this->recv_GetAllBathroomByParam(ns1__GetAllBathroomByParamResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_GetAllBathroomByParam' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_GetAllBathroomByParam(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllBathroomByParam *ns1__GetAllBathroomByParam);
+        /// Web service asynchronous operation 'recv_GetAllBathroomByParam' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_GetAllBathroomByParam(_ns1__GetAllBathroomByParamResponse &ns1__GetAllBathroomByParamResponse);
+        //
+        /// Web service synchronous operation 'GetAllHandrailByParam' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllHandrailByParam(_ns1__GetAllHandrailByParam *ns1__GetAllHandrailByParam, _ns1__GetAllHandrailByParamResponse &ns1__GetAllHandrailByParamResponse) { return this->GetAllHandrailByParam(NULL, NULL, ns1__GetAllHandrailByParam, ns1__GetAllHandrailByParamResponse); }
+        /// Web service synchronous operation 'GetAllHandrailByParam' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllHandrailByParam(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllHandrailByParam *ns1__GetAllHandrailByParam, _ns1__GetAllHandrailByParamResponse &ns1__GetAllHandrailByParamResponse) { return this->send_GetAllHandrailByParam(soap_endpoint_url, soap_action, ns1__GetAllHandrailByParam) || this->recv_GetAllHandrailByParam(ns1__GetAllHandrailByParamResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_GetAllHandrailByParam' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_GetAllHandrailByParam(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllHandrailByParam *ns1__GetAllHandrailByParam);
+        /// Web service asynchronous operation 'recv_GetAllHandrailByParam' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_GetAllHandrailByParam(_ns1__GetAllHandrailByParamResponse &ns1__GetAllHandrailByParamResponse);
+        //
+        /// Web service synchronous operation 'GetAllAirconditionerByParam' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllAirconditionerByParam(_ns1__GetAllAirconditionerByParam *ns1__GetAllAirconditionerByParam, _ns1__GetAllAirconditionerByParamResponse &ns1__GetAllAirconditionerByParamResponse) { return this->GetAllAirconditionerByParam(NULL, NULL, ns1__GetAllAirconditionerByParam, ns1__GetAllAirconditionerByParamResponse); }
+        /// Web service synchronous operation 'GetAllAirconditionerByParam' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllAirconditionerByParam(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllAirconditionerByParam *ns1__GetAllAirconditionerByParam, _ns1__GetAllAirconditionerByParamResponse &ns1__GetAllAirconditionerByParamResponse) { return this->send_GetAllAirconditionerByParam(soap_endpoint_url, soap_action, ns1__GetAllAirconditionerByParam) || this->recv_GetAllAirconditionerByParam(ns1__GetAllAirconditionerByParamResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_GetAllAirconditionerByParam' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_GetAllAirconditionerByParam(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllAirconditionerByParam *ns1__GetAllAirconditionerByParam);
+        /// Web service asynchronous operation 'recv_GetAllAirconditionerByParam' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_GetAllAirconditionerByParam(_ns1__GetAllAirconditionerByParamResponse &ns1__GetAllAirconditionerByParamResponse);
+        //
         /// Web service synchronous operation 'CadFileDownload' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
         virtual int CadFileDownload(_ns1__CadFileDownload *ns1__CadFileDownload, _ns1__CadFileDownloadResponse &ns1__CadFileDownloadResponse) { return this->CadFileDownload(NULL, NULL, ns1__CadFileDownload, ns1__CadFileDownloadResponse); }
         /// Web service synchronous operation 'CadFileDownload' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
@@ -137,6 +209,78 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
         virtual int send_GetWindows_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetWindows *ns1__GetWindows);
         /// Web service asynchronous operation 'recv_GetWindows' to receive a response message from the connected endpoint, returns SOAP_OK or error code
         virtual int recv_GetWindows_(_ns1__GetWindowsResponse &ns1__GetWindowsResponse);
+        //
+        /// Web service synchronous operation 'GetAllDoor' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllDoor_(_ns1__GetAllDoor *ns1__GetAllDoor, _ns1__GetAllDoorResponse &ns1__GetAllDoorResponse) { return this->GetAllDoor_(NULL, NULL, ns1__GetAllDoor, ns1__GetAllDoorResponse); }
+        /// Web service synchronous operation 'GetAllDoor' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllDoor_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllDoor *ns1__GetAllDoor, _ns1__GetAllDoorResponse &ns1__GetAllDoorResponse) { return this->send_GetAllDoor_(soap_endpoint_url, soap_action, ns1__GetAllDoor) || this->recv_GetAllDoor_(ns1__GetAllDoorResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_GetAllDoor' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_GetAllDoor_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllDoor *ns1__GetAllDoor);
+        /// Web service asynchronous operation 'recv_GetAllDoor' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_GetAllDoor_(_ns1__GetAllDoorResponse &ns1__GetAllDoorResponse);
+        //
+        /// Web service synchronous operation 'GetAllDoorByParam' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllDoorByParam_(_ns1__GetAllDoorByParam *ns1__GetAllDoorByParam, _ns1__GetAllDoorByParamResponse &ns1__GetAllDoorByParamResponse) { return this->GetAllDoorByParam_(NULL, NULL, ns1__GetAllDoorByParam, ns1__GetAllDoorByParamResponse); }
+        /// Web service synchronous operation 'GetAllDoorByParam' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllDoorByParam_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllDoorByParam *ns1__GetAllDoorByParam, _ns1__GetAllDoorByParamResponse &ns1__GetAllDoorByParamResponse) { return this->send_GetAllDoorByParam_(soap_endpoint_url, soap_action, ns1__GetAllDoorByParam) || this->recv_GetAllDoorByParam_(ns1__GetAllDoorByParamResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_GetAllDoorByParam' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_GetAllDoorByParam_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllDoorByParam *ns1__GetAllDoorByParam);
+        /// Web service asynchronous operation 'recv_GetAllDoorByParam' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_GetAllDoorByParam_(_ns1__GetAllDoorByParamResponse &ns1__GetAllDoorByParamResponse);
+        //
+        /// Web service synchronous operation 'GetAllKitchen' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllKitchen_(_ns1__GetAllKitchen *ns1__GetAllKitchen, _ns1__GetAllKitchenResponse &ns1__GetAllKitchenResponse) { return this->GetAllKitchen_(NULL, NULL, ns1__GetAllKitchen, ns1__GetAllKitchenResponse); }
+        /// Web service synchronous operation 'GetAllKitchen' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllKitchen_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllKitchen *ns1__GetAllKitchen, _ns1__GetAllKitchenResponse &ns1__GetAllKitchenResponse) { return this->send_GetAllKitchen_(soap_endpoint_url, soap_action, ns1__GetAllKitchen) || this->recv_GetAllKitchen_(ns1__GetAllKitchenResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_GetAllKitchen' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_GetAllKitchen_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllKitchen *ns1__GetAllKitchen);
+        /// Web service asynchronous operation 'recv_GetAllKitchen' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_GetAllKitchen_(_ns1__GetAllKitchenResponse &ns1__GetAllKitchenResponse);
+        //
+        /// Web service synchronous operation 'GetAllKitchenParam' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllKitchenParam_(_ns1__GetAllKitchenParam *ns1__GetAllKitchenParam, _ns1__GetAllKitchenParamResponse &ns1__GetAllKitchenParamResponse) { return this->GetAllKitchenParam_(NULL, NULL, ns1__GetAllKitchenParam, ns1__GetAllKitchenParamResponse); }
+        /// Web service synchronous operation 'GetAllKitchenParam' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllKitchenParam_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllKitchenParam *ns1__GetAllKitchenParam, _ns1__GetAllKitchenParamResponse &ns1__GetAllKitchenParamResponse) { return this->send_GetAllKitchenParam_(soap_endpoint_url, soap_action, ns1__GetAllKitchenParam) || this->recv_GetAllKitchenParam_(ns1__GetAllKitchenParamResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_GetAllKitchenParam' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_GetAllKitchenParam_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllKitchenParam *ns1__GetAllKitchenParam);
+        /// Web service asynchronous operation 'recv_GetAllKitchenParam' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_GetAllKitchenParam_(_ns1__GetAllKitchenParamResponse &ns1__GetAllKitchenParamResponse);
+        //
+        /// Web service synchronous operation 'GetAllBathroom' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllBathroom_(_ns1__GetAllBathroom *ns1__GetAllBathroom, _ns1__GetAllBathroomResponse &ns1__GetAllBathroomResponse) { return this->GetAllBathroom_(NULL, NULL, ns1__GetAllBathroom, ns1__GetAllBathroomResponse); }
+        /// Web service synchronous operation 'GetAllBathroom' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllBathroom_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllBathroom *ns1__GetAllBathroom, _ns1__GetAllBathroomResponse &ns1__GetAllBathroomResponse) { return this->send_GetAllBathroom_(soap_endpoint_url, soap_action, ns1__GetAllBathroom) || this->recv_GetAllBathroom_(ns1__GetAllBathroomResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_GetAllBathroom' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_GetAllBathroom_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllBathroom *ns1__GetAllBathroom);
+        /// Web service asynchronous operation 'recv_GetAllBathroom' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_GetAllBathroom_(_ns1__GetAllBathroomResponse &ns1__GetAllBathroomResponse);
+        //
+        /// Web service synchronous operation 'GetAllBathroomByParam' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllBathroomByParam_(_ns1__GetAllBathroomByParam *ns1__GetAllBathroomByParam, _ns1__GetAllBathroomByParamResponse &ns1__GetAllBathroomByParamResponse) { return this->GetAllBathroomByParam_(NULL, NULL, ns1__GetAllBathroomByParam, ns1__GetAllBathroomByParamResponse); }
+        /// Web service synchronous operation 'GetAllBathroomByParam' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllBathroomByParam_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllBathroomByParam *ns1__GetAllBathroomByParam, _ns1__GetAllBathroomByParamResponse &ns1__GetAllBathroomByParamResponse) { return this->send_GetAllBathroomByParam_(soap_endpoint_url, soap_action, ns1__GetAllBathroomByParam) || this->recv_GetAllBathroomByParam_(ns1__GetAllBathroomByParamResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_GetAllBathroomByParam' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_GetAllBathroomByParam_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllBathroomByParam *ns1__GetAllBathroomByParam);
+        /// Web service asynchronous operation 'recv_GetAllBathroomByParam' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_GetAllBathroomByParam_(_ns1__GetAllBathroomByParamResponse &ns1__GetAllBathroomByParamResponse);
+        //
+        /// Web service synchronous operation 'GetAllHandrailByParam' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllHandrailByParam_(_ns1__GetAllHandrailByParam *ns1__GetAllHandrailByParam, _ns1__GetAllHandrailByParamResponse &ns1__GetAllHandrailByParamResponse) { return this->GetAllHandrailByParam_(NULL, NULL, ns1__GetAllHandrailByParam, ns1__GetAllHandrailByParamResponse); }
+        /// Web service synchronous operation 'GetAllHandrailByParam' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllHandrailByParam_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllHandrailByParam *ns1__GetAllHandrailByParam, _ns1__GetAllHandrailByParamResponse &ns1__GetAllHandrailByParamResponse) { return this->send_GetAllHandrailByParam_(soap_endpoint_url, soap_action, ns1__GetAllHandrailByParam) || this->recv_GetAllHandrailByParam_(ns1__GetAllHandrailByParamResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_GetAllHandrailByParam' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_GetAllHandrailByParam_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllHandrailByParam *ns1__GetAllHandrailByParam);
+        /// Web service asynchronous operation 'recv_GetAllHandrailByParam' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_GetAllHandrailByParam_(_ns1__GetAllHandrailByParamResponse &ns1__GetAllHandrailByParamResponse);
+        //
+        /// Web service synchronous operation 'GetAllAirconditionerByParam' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllAirconditionerByParam_(_ns1__GetAllAirconditionerByParam *ns1__GetAllAirconditionerByParam, _ns1__GetAllAirconditionerByParamResponse &ns1__GetAllAirconditionerByParamResponse) { return this->GetAllAirconditionerByParam_(NULL, NULL, ns1__GetAllAirconditionerByParam, ns1__GetAllAirconditionerByParamResponse); }
+        /// Web service synchronous operation 'GetAllAirconditionerByParam' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int GetAllAirconditionerByParam_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllAirconditionerByParam *ns1__GetAllAirconditionerByParam, _ns1__GetAllAirconditionerByParamResponse &ns1__GetAllAirconditionerByParamResponse) { return this->send_GetAllAirconditionerByParam_(soap_endpoint_url, soap_action, ns1__GetAllAirconditionerByParam) || this->recv_GetAllAirconditionerByParam_(ns1__GetAllAirconditionerByParamResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_GetAllAirconditionerByParam' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_GetAllAirconditionerByParam_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllAirconditionerByParam *ns1__GetAllAirconditionerByParam);
+        /// Web service asynchronous operation 'recv_GetAllAirconditionerByParam' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_GetAllAirconditionerByParam_(_ns1__GetAllAirconditionerByParamResponse &ns1__GetAllAirconditionerByParamResponse);
         //
         /// Web service synchronous operation 'CadFileDownload' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
         virtual int CadFileDownload_(_ns1__CadFileDownload *ns1__CadFileDownload, _ns1__CadFileDownloadResponse &ns1__CadFileDownloadResponse) { return this->CadFileDownload_(NULL, NULL, ns1__CadFileDownload, ns1__CadFileDownloadResponse); }

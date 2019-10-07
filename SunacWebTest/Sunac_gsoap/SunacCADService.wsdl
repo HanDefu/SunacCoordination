@@ -44,6 +44,118 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="GetAllDoor">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetAllDoorResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllDoorResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllDoorByParam">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="width" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="doorType" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllDoorByParamResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllDoorByParamResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllKitchen">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetAllKitchenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllKitchenResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllKitchenParam">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="Width" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="Height" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="KitchenDoorWindowPosition" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="KitchenType" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="AirVent" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllKitchenParamResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllKitchenParamResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllBathroom">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetAllBathroomResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllBathroomResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllBathroomByParam">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="Width" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="Height" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="BathroomDoorWindowPosition" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="ToiletType" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="AirVent" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllBathroomByParamResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllBathroomByParamResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllHandrailByParam">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RailingType" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllHandrailByParamResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllHandrailByParamResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllAirconditionerByParam">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AirconditionerPower" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="AirconditionerPipePosition" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="AirconditionerIsRainpipe" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="RainpipePosition" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAllAirconditionerByParamResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllAirconditionerByParamResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="CadFileDownload">
         <s:complexType>
           <s:sequence>
@@ -78,6 +190,54 @@
   <wsdl:message name="GetWindowsSoapOut">
     <wsdl:part name="parameters" element="tns:GetWindowsResponse" />
   </wsdl:message>
+  <wsdl:message name="GetAllDoorSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllDoor" />
+  </wsdl:message>
+  <wsdl:message name="GetAllDoorSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllDoorResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllDoorByParamSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllDoorByParam" />
+  </wsdl:message>
+  <wsdl:message name="GetAllDoorByParamSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllDoorByParamResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllKitchenSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllKitchen" />
+  </wsdl:message>
+  <wsdl:message name="GetAllKitchenSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllKitchenResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllKitchenParamSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllKitchenParam" />
+  </wsdl:message>
+  <wsdl:message name="GetAllKitchenParamSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllKitchenParamResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllBathroomSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllBathroom" />
+  </wsdl:message>
+  <wsdl:message name="GetAllBathroomSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllBathroomResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllBathroomByParamSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllBathroomByParam" />
+  </wsdl:message>
+  <wsdl:message name="GetAllBathroomByParamSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllBathroomByParamResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllHandrailByParamSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllHandrailByParam" />
+  </wsdl:message>
+  <wsdl:message name="GetAllHandrailByParamSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllHandrailByParamResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllAirconditionerByParamSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllAirconditionerByParam" />
+  </wsdl:message>
+  <wsdl:message name="GetAllAirconditionerByParamSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllAirconditionerByParamResponse" />
+  </wsdl:message>
   <wsdl:message name="CadFileDownloadSoapIn">
     <wsdl:part name="parameters" element="tns:CadFileDownload" />
   </wsdl:message>
@@ -99,6 +259,46 @@
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">标准部品库[外窗]按条件查询</wsdl:documentation>
       <wsdl:input message="tns:GetWindowsSoapIn" />
       <wsdl:output message="tns:GetWindowsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllDoor">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">标准部品库[门]所有</wsdl:documentation>
+      <wsdl:input message="tns:GetAllDoorSoapIn" />
+      <wsdl:output message="tns:GetAllDoorSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllDoorByParam">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">标准部品库[门]条件查询</wsdl:documentation>
+      <wsdl:input message="tns:GetAllDoorByParamSoapIn" />
+      <wsdl:output message="tns:GetAllDoorByParamSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllKitchen">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">标准部品库[厨房原型]</wsdl:documentation>
+      <wsdl:input message="tns:GetAllKitchenSoapIn" />
+      <wsdl:output message="tns:GetAllKitchenSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllKitchenParam">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">标准部品库[厨房原型]条件查询</wsdl:documentation>
+      <wsdl:input message="tns:GetAllKitchenParamSoapIn" />
+      <wsdl:output message="tns:GetAllKitchenParamSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllBathroom">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">标准部品库[卫生间原型]</wsdl:documentation>
+      <wsdl:input message="tns:GetAllBathroomSoapIn" />
+      <wsdl:output message="tns:GetAllBathroomSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllBathroomByParam">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">标准部品库[卫生间原型]条件查询</wsdl:documentation>
+      <wsdl:input message="tns:GetAllBathroomByParamSoapIn" />
+      <wsdl:output message="tns:GetAllBathroomByParamSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllHandrailByParam">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">标准部品库[栏杆原型]条件查询</wsdl:documentation>
+      <wsdl:input message="tns:GetAllHandrailByParamSoapIn" />
+      <wsdl:output message="tns:GetAllHandrailByParamSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllAirconditionerByParam">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">标准部品库[空调原型]条件查询</wsdl:documentation>
+      <wsdl:input message="tns:GetAllAirconditionerByParamSoapIn" />
+      <wsdl:output message="tns:GetAllAirconditionerByParamSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="CadFileDownload">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">标准部品库[ CAD文件下载]</wsdl:documentation>
@@ -128,6 +328,78 @@
     </wsdl:operation>
     <wsdl:operation name="GetWindows">
       <soap:operation soapAction="http://tempuri.org/GetWindows" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllDoor">
+      <soap:operation soapAction="http://tempuri.org/GetAllDoor" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllDoorByParam">
+      <soap:operation soapAction="http://tempuri.org/GetAllDoorByParam" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllKitchen">
+      <soap:operation soapAction="http://tempuri.org/GetAllKitchen" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllKitchenParam">
+      <soap:operation soapAction="http://tempuri.org/GetAllKitchenParam" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllBathroom">
+      <soap:operation soapAction="http://tempuri.org/GetAllBathroom" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllBathroomByParam">
+      <soap:operation soapAction="http://tempuri.org/GetAllBathroomByParam" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllHandrailByParam">
+      <soap:operation soapAction="http://tempuri.org/GetAllHandrailByParam" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllAirconditionerByParam">
+      <soap:operation soapAction="http://tempuri.org/GetAllAirconditionerByParam" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -167,6 +439,78 @@
     </wsdl:operation>
     <wsdl:operation name="GetWindows">
       <soap12:operation soapAction="http://tempuri.org/GetWindows" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllDoor">
+      <soap12:operation soapAction="http://tempuri.org/GetAllDoor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllDoorByParam">
+      <soap12:operation soapAction="http://tempuri.org/GetAllDoorByParam" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllKitchen">
+      <soap12:operation soapAction="http://tempuri.org/GetAllKitchen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllKitchenParam">
+      <soap12:operation soapAction="http://tempuri.org/GetAllKitchenParam" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllBathroom">
+      <soap12:operation soapAction="http://tempuri.org/GetAllBathroom" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllBathroomByParam">
+      <soap12:operation soapAction="http://tempuri.org/GetAllBathroomByParam" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllHandrailByParam">
+      <soap12:operation soapAction="http://tempuri.org/GetAllHandrailByParam" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllAirconditionerByParam">
+      <soap12:operation soapAction="http://tempuri.org/GetAllAirconditionerByParam" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

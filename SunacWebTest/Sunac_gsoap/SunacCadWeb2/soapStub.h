@@ -41,16 +41,48 @@ class _ns1__GetAllWindows;	/* .\SunacCADService2.h:155 */
 class _ns1__GetAllWindowsResponse;	/* .\SunacCADService2.h:157 */
 class _ns1__GetWindows;	/* .\SunacCADService2.h:159 */
 class _ns1__GetWindowsResponse;	/* .\SunacCADService2.h:161 */
-class _ns1__CadFileDownload;	/* .\SunacCADService2.h:163 */
-class _ns1__CadFileDownloadResponse;	/* .\SunacCADService2.h:165 */
-struct __ns1__StandardDesignAttribute;	/* .\SunacCADService2.h:524 */
-struct __ns1__GetAllWindows;	/* .\SunacCADService2.h:595 */
-struct __ns1__GetWindows;	/* .\SunacCADService2.h:666 */
-struct __ns1__CadFileDownload;	/* .\SunacCADService2.h:737 */
-struct __ns1__StandardDesignAttribute_;	/* .\SunacCADService2.h:808 */
-struct __ns1__GetAllWindows_;	/* .\SunacCADService2.h:879 */
-struct __ns1__GetWindows_;	/* .\SunacCADService2.h:950 */
-struct __ns1__CadFileDownload_;	/* .\SunacCADService2.h:1021 */
+class _ns1__GetAllDoor;	/* .\SunacCADService2.h:163 */
+class _ns1__GetAllDoorResponse;	/* .\SunacCADService2.h:165 */
+class _ns1__GetAllDoorByParam;	/* .\SunacCADService2.h:167 */
+class _ns1__GetAllDoorByParamResponse;	/* .\SunacCADService2.h:169 */
+class _ns1__GetAllKitchen;	/* .\SunacCADService2.h:171 */
+class _ns1__GetAllKitchenResponse;	/* .\SunacCADService2.h:173 */
+class _ns1__GetAllKitchenParam;	/* .\SunacCADService2.h:175 */
+class _ns1__GetAllKitchenParamResponse;	/* .\SunacCADService2.h:177 */
+class _ns1__GetAllBathroom;	/* .\SunacCADService2.h:179 */
+class _ns1__GetAllBathroomResponse;	/* .\SunacCADService2.h:181 */
+class _ns1__GetAllBathroomByParam;	/* .\SunacCADService2.h:183 */
+class _ns1__GetAllBathroomByParamResponse;	/* .\SunacCADService2.h:185 */
+class _ns1__GetAllHandrailByParam;	/* .\SunacCADService2.h:187 */
+class _ns1__GetAllHandrailByParamResponse;	/* .\SunacCADService2.h:189 */
+class _ns1__GetAllAirconditionerByParam;	/* .\SunacCADService2.h:191 */
+class _ns1__GetAllAirconditionerByParamResponse;	/* .\SunacCADService2.h:193 */
+class _ns1__CadFileDownload;	/* .\SunacCADService2.h:195 */
+class _ns1__CadFileDownloadResponse;	/* .\SunacCADService2.h:197 */
+struct __ns1__StandardDesignAttribute;	/* .\SunacCADService2.h:958 */
+struct __ns1__GetAllWindows;	/* .\SunacCADService2.h:1029 */
+struct __ns1__GetWindows;	/* .\SunacCADService2.h:1100 */
+struct __ns1__GetAllDoor;	/* .\SunacCADService2.h:1171 */
+struct __ns1__GetAllDoorByParam;	/* .\SunacCADService2.h:1242 */
+struct __ns1__GetAllKitchen;	/* .\SunacCADService2.h:1313 */
+struct __ns1__GetAllKitchenParam;	/* .\SunacCADService2.h:1384 */
+struct __ns1__GetAllBathroom;	/* .\SunacCADService2.h:1455 */
+struct __ns1__GetAllBathroomByParam;	/* .\SunacCADService2.h:1526 */
+struct __ns1__GetAllHandrailByParam;	/* .\SunacCADService2.h:1597 */
+struct __ns1__GetAllAirconditionerByParam;	/* .\SunacCADService2.h:1668 */
+struct __ns1__CadFileDownload;	/* .\SunacCADService2.h:1739 */
+struct __ns1__StandardDesignAttribute_;	/* .\SunacCADService2.h:1810 */
+struct __ns1__GetAllWindows_;	/* .\SunacCADService2.h:1881 */
+struct __ns1__GetWindows_;	/* .\SunacCADService2.h:1952 */
+struct __ns1__GetAllDoor_;	/* .\SunacCADService2.h:2023 */
+struct __ns1__GetAllDoorByParam_;	/* .\SunacCADService2.h:2094 */
+struct __ns1__GetAllKitchen_;	/* .\SunacCADService2.h:2165 */
+struct __ns1__GetAllKitchenParam_;	/* .\SunacCADService2.h:2236 */
+struct __ns1__GetAllBathroom_;	/* .\SunacCADService2.h:2307 */
+struct __ns1__GetAllBathroomByParam_;	/* .\SunacCADService2.h:2378 */
+struct __ns1__GetAllHandrailByParam_;	/* .\SunacCADService2.h:2449 */
+struct __ns1__GetAllAirconditionerByParam_;	/* .\SunacCADService2.h:2520 */
+struct __ns1__CadFileDownload_;	/* .\SunacCADService2.h:2591 */
 
 /* .\SunacCADService2.h:151 */
 #ifndef SOAP_TYPE__ns1__StandardDesignAttribute
@@ -275,8 +307,602 @@ class SOAP_CMAC _ns1__GetWindowsResponse {
 #endif
 
 /* .\SunacCADService2.h:163 */
+#ifndef SOAP_TYPE__ns1__GetAllDoor
+#define SOAP_TYPE__ns1__GetAllDoor (14)
+/* complex XML schema type 'ns1:GetAllDoor': */
+class SOAP_CMAC _ns1__GetAllDoor {
+      public:
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__GetAllDoor
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__GetAllDoor; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__GetAllDoor, default initialized and not managed by a soap context
+        virtual _ns1__GetAllDoor *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__GetAllDoor); }
+      public:
+        /// Constructor with default initializations
+        _ns1__GetAllDoor() : soap() { }
+        virtual ~_ns1__GetAllDoor() { }
+        /// Friend allocator used by soap_new__ns1__GetAllDoor(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__GetAllDoor * SOAP_FMAC2 soap_instantiate__ns1__GetAllDoor(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:165 */
+#ifndef SOAP_TYPE__ns1__GetAllDoorResponse
+#define SOAP_TYPE__ns1__GetAllDoorResponse (15)
+/* complex XML schema type 'ns1:GetAllDoorResponse': */
+class SOAP_CMAC _ns1__GetAllDoorResponse {
+      public:
+        /// Optional element 'ns1:GetAllDoorResult' of XML schema type 'xsd:string'
+        std::wstring *GetAllDoorResult;
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__GetAllDoorResponse
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__GetAllDoorResponse; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__GetAllDoorResponse, default initialized and not managed by a soap context
+        virtual _ns1__GetAllDoorResponse *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__GetAllDoorResponse); }
+      public:
+        /// Constructor with default initializations
+        _ns1__GetAllDoorResponse() : GetAllDoorResult(), soap() { }
+        virtual ~_ns1__GetAllDoorResponse() { }
+        /// Friend allocator used by soap_new__ns1__GetAllDoorResponse(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__GetAllDoorResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllDoorResponse(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:167 */
+#ifndef SOAP_TYPE__ns1__GetAllDoorByParam
+#define SOAP_TYPE__ns1__GetAllDoorByParam (16)
+/* complex XML schema type 'ns1:GetAllDoorByParam': */
+class SOAP_CMAC _ns1__GetAllDoorByParam {
+      public:
+        /// Required element 'ns1:width' of XML schema type 'xsd:double'
+        double width;
+        /// Required element 'ns1:doorType' of XML schema type 'xsd:int'
+        int doorType;
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__GetAllDoorByParam
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__GetAllDoorByParam; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__GetAllDoorByParam, default initialized and not managed by a soap context
+        virtual _ns1__GetAllDoorByParam *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__GetAllDoorByParam); }
+      public:
+        /// Constructor with default initializations
+        _ns1__GetAllDoorByParam() : width(), doorType(), soap() { }
+        virtual ~_ns1__GetAllDoorByParam() { }
+        /// Friend allocator used by soap_new__ns1__GetAllDoorByParam(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__GetAllDoorByParam * SOAP_FMAC2 soap_instantiate__ns1__GetAllDoorByParam(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:169 */
+#ifndef SOAP_TYPE__ns1__GetAllDoorByParamResponse
+#define SOAP_TYPE__ns1__GetAllDoorByParamResponse (17)
+/* complex XML schema type 'ns1:GetAllDoorByParamResponse': */
+class SOAP_CMAC _ns1__GetAllDoorByParamResponse {
+      public:
+        /// Optional element 'ns1:GetAllDoorByParamResult' of XML schema type 'xsd:string'
+        std::wstring *GetAllDoorByParamResult;
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__GetAllDoorByParamResponse
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__GetAllDoorByParamResponse; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__GetAllDoorByParamResponse, default initialized and not managed by a soap context
+        virtual _ns1__GetAllDoorByParamResponse *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__GetAllDoorByParamResponse); }
+      public:
+        /// Constructor with default initializations
+        _ns1__GetAllDoorByParamResponse() : GetAllDoorByParamResult(), soap() { }
+        virtual ~_ns1__GetAllDoorByParamResponse() { }
+        /// Friend allocator used by soap_new__ns1__GetAllDoorByParamResponse(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__GetAllDoorByParamResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllDoorByParamResponse(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:171 */
+#ifndef SOAP_TYPE__ns1__GetAllKitchen
+#define SOAP_TYPE__ns1__GetAllKitchen (18)
+/* complex XML schema type 'ns1:GetAllKitchen': */
+class SOAP_CMAC _ns1__GetAllKitchen {
+      public:
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__GetAllKitchen
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__GetAllKitchen; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__GetAllKitchen, default initialized and not managed by a soap context
+        virtual _ns1__GetAllKitchen *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__GetAllKitchen); }
+      public:
+        /// Constructor with default initializations
+        _ns1__GetAllKitchen() : soap() { }
+        virtual ~_ns1__GetAllKitchen() { }
+        /// Friend allocator used by soap_new__ns1__GetAllKitchen(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__GetAllKitchen * SOAP_FMAC2 soap_instantiate__ns1__GetAllKitchen(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:173 */
+#ifndef SOAP_TYPE__ns1__GetAllKitchenResponse
+#define SOAP_TYPE__ns1__GetAllKitchenResponse (19)
+/* complex XML schema type 'ns1:GetAllKitchenResponse': */
+class SOAP_CMAC _ns1__GetAllKitchenResponse {
+      public:
+        /// Optional element 'ns1:GetAllKitchenResult' of XML schema type 'xsd:string'
+        std::wstring *GetAllKitchenResult;
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__GetAllKitchenResponse
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__GetAllKitchenResponse; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__GetAllKitchenResponse, default initialized and not managed by a soap context
+        virtual _ns1__GetAllKitchenResponse *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__GetAllKitchenResponse); }
+      public:
+        /// Constructor with default initializations
+        _ns1__GetAllKitchenResponse() : GetAllKitchenResult(), soap() { }
+        virtual ~_ns1__GetAllKitchenResponse() { }
+        /// Friend allocator used by soap_new__ns1__GetAllKitchenResponse(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__GetAllKitchenResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllKitchenResponse(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:175 */
+#ifndef SOAP_TYPE__ns1__GetAllKitchenParam
+#define SOAP_TYPE__ns1__GetAllKitchenParam (20)
+/* complex XML schema type 'ns1:GetAllKitchenParam': */
+class SOAP_CMAC _ns1__GetAllKitchenParam {
+      public:
+        /// Required element 'ns1:Width' of XML schema type 'xsd:double'
+        double Width;
+        /// Required element 'ns1:Height' of XML schema type 'xsd:double'
+        double Height;
+        /// Required element 'ns1:KitchenDoorWindowPosition' of XML schema type 'xsd:int'
+        int KitchenDoorWindowPosition;
+        /// Required element 'ns1:KitchenType' of XML schema type 'xsd:int'
+        int KitchenType;
+        /// Required element 'ns1:AirVent' of XML schema type 'xsd:int'
+        int AirVent;
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__GetAllKitchenParam
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__GetAllKitchenParam; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__GetAllKitchenParam, default initialized and not managed by a soap context
+        virtual _ns1__GetAllKitchenParam *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__GetAllKitchenParam); }
+      public:
+        /// Constructor with default initializations
+        _ns1__GetAllKitchenParam() : Width(), Height(), KitchenDoorWindowPosition(), KitchenType(), AirVent(), soap() { }
+        virtual ~_ns1__GetAllKitchenParam() { }
+        /// Friend allocator used by soap_new__ns1__GetAllKitchenParam(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__GetAllKitchenParam * SOAP_FMAC2 soap_instantiate__ns1__GetAllKitchenParam(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:177 */
+#ifndef SOAP_TYPE__ns1__GetAllKitchenParamResponse
+#define SOAP_TYPE__ns1__GetAllKitchenParamResponse (21)
+/* complex XML schema type 'ns1:GetAllKitchenParamResponse': */
+class SOAP_CMAC _ns1__GetAllKitchenParamResponse {
+      public:
+        /// Optional element 'ns1:GetAllKitchenParamResult' of XML schema type 'xsd:string'
+        std::wstring *GetAllKitchenParamResult;
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__GetAllKitchenParamResponse
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__GetAllKitchenParamResponse; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__GetAllKitchenParamResponse, default initialized and not managed by a soap context
+        virtual _ns1__GetAllKitchenParamResponse *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__GetAllKitchenParamResponse); }
+      public:
+        /// Constructor with default initializations
+        _ns1__GetAllKitchenParamResponse() : GetAllKitchenParamResult(), soap() { }
+        virtual ~_ns1__GetAllKitchenParamResponse() { }
+        /// Friend allocator used by soap_new__ns1__GetAllKitchenParamResponse(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__GetAllKitchenParamResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllKitchenParamResponse(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:179 */
+#ifndef SOAP_TYPE__ns1__GetAllBathroom
+#define SOAP_TYPE__ns1__GetAllBathroom (22)
+/* complex XML schema type 'ns1:GetAllBathroom': */
+class SOAP_CMAC _ns1__GetAllBathroom {
+      public:
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__GetAllBathroom
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__GetAllBathroom; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__GetAllBathroom, default initialized and not managed by a soap context
+        virtual _ns1__GetAllBathroom *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__GetAllBathroom); }
+      public:
+        /// Constructor with default initializations
+        _ns1__GetAllBathroom() : soap() { }
+        virtual ~_ns1__GetAllBathroom() { }
+        /// Friend allocator used by soap_new__ns1__GetAllBathroom(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__GetAllBathroom * SOAP_FMAC2 soap_instantiate__ns1__GetAllBathroom(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:181 */
+#ifndef SOAP_TYPE__ns1__GetAllBathroomResponse
+#define SOAP_TYPE__ns1__GetAllBathroomResponse (23)
+/* complex XML schema type 'ns1:GetAllBathroomResponse': */
+class SOAP_CMAC _ns1__GetAllBathroomResponse {
+      public:
+        /// Optional element 'ns1:GetAllBathroomResult' of XML schema type 'xsd:string'
+        std::wstring *GetAllBathroomResult;
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__GetAllBathroomResponse
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__GetAllBathroomResponse; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__GetAllBathroomResponse, default initialized and not managed by a soap context
+        virtual _ns1__GetAllBathroomResponse *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__GetAllBathroomResponse); }
+      public:
+        /// Constructor with default initializations
+        _ns1__GetAllBathroomResponse() : GetAllBathroomResult(), soap() { }
+        virtual ~_ns1__GetAllBathroomResponse() { }
+        /// Friend allocator used by soap_new__ns1__GetAllBathroomResponse(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__GetAllBathroomResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllBathroomResponse(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:183 */
+#ifndef SOAP_TYPE__ns1__GetAllBathroomByParam
+#define SOAP_TYPE__ns1__GetAllBathroomByParam (24)
+/* complex XML schema type 'ns1:GetAllBathroomByParam': */
+class SOAP_CMAC _ns1__GetAllBathroomByParam {
+      public:
+        /// Required element 'ns1:Width' of XML schema type 'xsd:double'
+        double Width;
+        /// Required element 'ns1:Height' of XML schema type 'xsd:double'
+        double Height;
+        /// Required element 'ns1:BathroomDoorWindowPosition' of XML schema type 'xsd:int'
+        int BathroomDoorWindowPosition;
+        /// Required element 'ns1:ToiletType' of XML schema type 'xsd:int'
+        int ToiletType;
+        /// Required element 'ns1:AirVent' of XML schema type 'xsd:int'
+        int AirVent;
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__GetAllBathroomByParam
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__GetAllBathroomByParam; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__GetAllBathroomByParam, default initialized and not managed by a soap context
+        virtual _ns1__GetAllBathroomByParam *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__GetAllBathroomByParam); }
+      public:
+        /// Constructor with default initializations
+        _ns1__GetAllBathroomByParam() : Width(), Height(), BathroomDoorWindowPosition(), ToiletType(), AirVent(), soap() { }
+        virtual ~_ns1__GetAllBathroomByParam() { }
+        /// Friend allocator used by soap_new__ns1__GetAllBathroomByParam(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__GetAllBathroomByParam * SOAP_FMAC2 soap_instantiate__ns1__GetAllBathroomByParam(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:185 */
+#ifndef SOAP_TYPE__ns1__GetAllBathroomByParamResponse
+#define SOAP_TYPE__ns1__GetAllBathroomByParamResponse (25)
+/* complex XML schema type 'ns1:GetAllBathroomByParamResponse': */
+class SOAP_CMAC _ns1__GetAllBathroomByParamResponse {
+      public:
+        /// Optional element 'ns1:GetAllBathroomByParamResult' of XML schema type 'xsd:string'
+        std::wstring *GetAllBathroomByParamResult;
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__GetAllBathroomByParamResponse
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__GetAllBathroomByParamResponse; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__GetAllBathroomByParamResponse, default initialized and not managed by a soap context
+        virtual _ns1__GetAllBathroomByParamResponse *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__GetAllBathroomByParamResponse); }
+      public:
+        /// Constructor with default initializations
+        _ns1__GetAllBathroomByParamResponse() : GetAllBathroomByParamResult(), soap() { }
+        virtual ~_ns1__GetAllBathroomByParamResponse() { }
+        /// Friend allocator used by soap_new__ns1__GetAllBathroomByParamResponse(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__GetAllBathroomByParamResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllBathroomByParamResponse(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:187 */
+#ifndef SOAP_TYPE__ns1__GetAllHandrailByParam
+#define SOAP_TYPE__ns1__GetAllHandrailByParam (26)
+/* complex XML schema type 'ns1:GetAllHandrailByParam': */
+class SOAP_CMAC _ns1__GetAllHandrailByParam {
+      public:
+        /// Required element 'ns1:RailingType' of XML schema type 'xsd:int'
+        int RailingType;
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__GetAllHandrailByParam
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__GetAllHandrailByParam; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__GetAllHandrailByParam, default initialized and not managed by a soap context
+        virtual _ns1__GetAllHandrailByParam *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__GetAllHandrailByParam); }
+      public:
+        /// Constructor with default initializations
+        _ns1__GetAllHandrailByParam() : RailingType(), soap() { }
+        virtual ~_ns1__GetAllHandrailByParam() { }
+        /// Friend allocator used by soap_new__ns1__GetAllHandrailByParam(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__GetAllHandrailByParam * SOAP_FMAC2 soap_instantiate__ns1__GetAllHandrailByParam(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:189 */
+#ifndef SOAP_TYPE__ns1__GetAllHandrailByParamResponse
+#define SOAP_TYPE__ns1__GetAllHandrailByParamResponse (27)
+/* complex XML schema type 'ns1:GetAllHandrailByParamResponse': */
+class SOAP_CMAC _ns1__GetAllHandrailByParamResponse {
+      public:
+        /// Optional element 'ns1:GetAllHandrailByParamResult' of XML schema type 'xsd:string'
+        std::wstring *GetAllHandrailByParamResult;
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__GetAllHandrailByParamResponse
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__GetAllHandrailByParamResponse; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__GetAllHandrailByParamResponse, default initialized and not managed by a soap context
+        virtual _ns1__GetAllHandrailByParamResponse *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__GetAllHandrailByParamResponse); }
+      public:
+        /// Constructor with default initializations
+        _ns1__GetAllHandrailByParamResponse() : GetAllHandrailByParamResult(), soap() { }
+        virtual ~_ns1__GetAllHandrailByParamResponse() { }
+        /// Friend allocator used by soap_new__ns1__GetAllHandrailByParamResponse(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__GetAllHandrailByParamResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllHandrailByParamResponse(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:191 */
+#ifndef SOAP_TYPE__ns1__GetAllAirconditionerByParam
+#define SOAP_TYPE__ns1__GetAllAirconditionerByParam (28)
+/* complex XML schema type 'ns1:GetAllAirconditionerByParam': */
+class SOAP_CMAC _ns1__GetAllAirconditionerByParam {
+      public:
+        /// Required element 'ns1:AirconditionerPower' of XML schema type 'xsd:int'
+        int AirconditionerPower;
+        /// Required element 'ns1:AirconditionerPipePosition' of XML schema type 'xsd:int'
+        int AirconditionerPipePosition;
+        /// Required element 'ns1:AirconditionerIsRainpipe' of XML schema type 'xsd:int'
+        int AirconditionerIsRainpipe;
+        /// Required element 'ns1:RainpipePosition' of XML schema type 'xsd:int'
+        int RainpipePosition;
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__GetAllAirconditionerByParam
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__GetAllAirconditionerByParam; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__GetAllAirconditionerByParam, default initialized and not managed by a soap context
+        virtual _ns1__GetAllAirconditionerByParam *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__GetAllAirconditionerByParam); }
+      public:
+        /// Constructor with default initializations
+        _ns1__GetAllAirconditionerByParam() : AirconditionerPower(), AirconditionerPipePosition(), AirconditionerIsRainpipe(), RainpipePosition(), soap() { }
+        virtual ~_ns1__GetAllAirconditionerByParam() { }
+        /// Friend allocator used by soap_new__ns1__GetAllAirconditionerByParam(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__GetAllAirconditionerByParam * SOAP_FMAC2 soap_instantiate__ns1__GetAllAirconditionerByParam(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:193 */
+#ifndef SOAP_TYPE__ns1__GetAllAirconditionerByParamResponse
+#define SOAP_TYPE__ns1__GetAllAirconditionerByParamResponse (29)
+/* complex XML schema type 'ns1:GetAllAirconditionerByParamResponse': */
+class SOAP_CMAC _ns1__GetAllAirconditionerByParamResponse {
+      public:
+        /// Optional element 'ns1:GetAllAirconditionerByParamResult' of XML schema type 'xsd:string'
+        std::wstring *GetAllAirconditionerByParamResult;
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__GetAllAirconditionerByParamResponse
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__GetAllAirconditionerByParamResponse; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__GetAllAirconditionerByParamResponse, default initialized and not managed by a soap context
+        virtual _ns1__GetAllAirconditionerByParamResponse *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__GetAllAirconditionerByParamResponse); }
+      public:
+        /// Constructor with default initializations
+        _ns1__GetAllAirconditionerByParamResponse() : GetAllAirconditionerByParamResult(), soap() { }
+        virtual ~_ns1__GetAllAirconditionerByParamResponse() { }
+        /// Friend allocator used by soap_new__ns1__GetAllAirconditionerByParamResponse(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__GetAllAirconditionerByParamResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllAirconditionerByParamResponse(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:195 */
 #ifndef SOAP_TYPE__ns1__CadFileDownload
-#define SOAP_TYPE__ns1__CadFileDownload (14)
+#define SOAP_TYPE__ns1__CadFileDownload (30)
 /* complex XML schema type 'ns1:CadFileDownload': */
 class SOAP_CMAC _ns1__CadFileDownload {
       public:
@@ -310,9 +936,9 @@ class SOAP_CMAC _ns1__CadFileDownload {
 };
 #endif
 
-/* .\SunacCADService2.h:165 */
+/* .\SunacCADService2.h:197 */
 #ifndef SOAP_TYPE__ns1__CadFileDownloadResponse
-#define SOAP_TYPE__ns1__CadFileDownloadResponse (15)
+#define SOAP_TYPE__ns1__CadFileDownloadResponse (31)
 /* complex XML schema type 'ns1:CadFileDownloadResponse': */
 class SOAP_CMAC _ns1__CadFileDownloadResponse {
       public:
@@ -346,9 +972,9 @@ class SOAP_CMAC _ns1__CadFileDownloadResponse {
 };
 #endif
 
-/* .\SunacCADService2.h:524 */
+/* .\SunacCADService2.h:958 */
 #ifndef SOAP_TYPE___ns1__StandardDesignAttribute
-#define SOAP_TYPE___ns1__StandardDesignAttribute (23)
+#define SOAP_TYPE___ns1__StandardDesignAttribute (39)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__StandardDesignAttribute {
       public:
@@ -364,9 +990,9 @@ struct SOAP_CMAC __ns1__StandardDesignAttribute {
 };
 #endif
 
-/* .\SunacCADService2.h:595 */
+/* .\SunacCADService2.h:1029 */
 #ifndef SOAP_TYPE___ns1__GetAllWindows
-#define SOAP_TYPE___ns1__GetAllWindows (27)
+#define SOAP_TYPE___ns1__GetAllWindows (43)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetAllWindows {
       public:
@@ -382,9 +1008,9 @@ struct SOAP_CMAC __ns1__GetAllWindows {
 };
 #endif
 
-/* .\SunacCADService2.h:666 */
+/* .\SunacCADService2.h:1100 */
 #ifndef SOAP_TYPE___ns1__GetWindows
-#define SOAP_TYPE___ns1__GetWindows (31)
+#define SOAP_TYPE___ns1__GetWindows (47)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetWindows {
       public:
@@ -400,9 +1026,153 @@ struct SOAP_CMAC __ns1__GetWindows {
 };
 #endif
 
-/* .\SunacCADService2.h:737 */
+/* .\SunacCADService2.h:1171 */
+#ifndef SOAP_TYPE___ns1__GetAllDoor
+#define SOAP_TYPE___ns1__GetAllDoor (51)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__GetAllDoor {
+      public:
+        /** Optional element 'ns1:GetAllDoor' of XML schema type 'ns1:GetAllDoor' */
+        _ns1__GetAllDoor *ns1__GetAllDoor;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__GetAllDoor */
+        long soap_type() const { return SOAP_TYPE___ns1__GetAllDoor; }
+        /** Constructor with member initializations */
+        __ns1__GetAllDoor() : ns1__GetAllDoor() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__GetAllDoor * SOAP_FMAC2 soap_instantiate___ns1__GetAllDoor(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:1242 */
+#ifndef SOAP_TYPE___ns1__GetAllDoorByParam
+#define SOAP_TYPE___ns1__GetAllDoorByParam (55)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__GetAllDoorByParam {
+      public:
+        /** Optional element 'ns1:GetAllDoorByParam' of XML schema type 'ns1:GetAllDoorByParam' */
+        _ns1__GetAllDoorByParam *ns1__GetAllDoorByParam;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__GetAllDoorByParam */
+        long soap_type() const { return SOAP_TYPE___ns1__GetAllDoorByParam; }
+        /** Constructor with member initializations */
+        __ns1__GetAllDoorByParam() : ns1__GetAllDoorByParam() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__GetAllDoorByParam * SOAP_FMAC2 soap_instantiate___ns1__GetAllDoorByParam(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:1313 */
+#ifndef SOAP_TYPE___ns1__GetAllKitchen
+#define SOAP_TYPE___ns1__GetAllKitchen (59)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__GetAllKitchen {
+      public:
+        /** Optional element 'ns1:GetAllKitchen' of XML schema type 'ns1:GetAllKitchen' */
+        _ns1__GetAllKitchen *ns1__GetAllKitchen;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__GetAllKitchen */
+        long soap_type() const { return SOAP_TYPE___ns1__GetAllKitchen; }
+        /** Constructor with member initializations */
+        __ns1__GetAllKitchen() : ns1__GetAllKitchen() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__GetAllKitchen * SOAP_FMAC2 soap_instantiate___ns1__GetAllKitchen(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:1384 */
+#ifndef SOAP_TYPE___ns1__GetAllKitchenParam
+#define SOAP_TYPE___ns1__GetAllKitchenParam (63)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__GetAllKitchenParam {
+      public:
+        /** Optional element 'ns1:GetAllKitchenParam' of XML schema type 'ns1:GetAllKitchenParam' */
+        _ns1__GetAllKitchenParam *ns1__GetAllKitchenParam;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__GetAllKitchenParam */
+        long soap_type() const { return SOAP_TYPE___ns1__GetAllKitchenParam; }
+        /** Constructor with member initializations */
+        __ns1__GetAllKitchenParam() : ns1__GetAllKitchenParam() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__GetAllKitchenParam * SOAP_FMAC2 soap_instantiate___ns1__GetAllKitchenParam(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:1455 */
+#ifndef SOAP_TYPE___ns1__GetAllBathroom
+#define SOAP_TYPE___ns1__GetAllBathroom (67)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__GetAllBathroom {
+      public:
+        /** Optional element 'ns1:GetAllBathroom' of XML schema type 'ns1:GetAllBathroom' */
+        _ns1__GetAllBathroom *ns1__GetAllBathroom;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__GetAllBathroom */
+        long soap_type() const { return SOAP_TYPE___ns1__GetAllBathroom; }
+        /** Constructor with member initializations */
+        __ns1__GetAllBathroom() : ns1__GetAllBathroom() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__GetAllBathroom * SOAP_FMAC2 soap_instantiate___ns1__GetAllBathroom(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:1526 */
+#ifndef SOAP_TYPE___ns1__GetAllBathroomByParam
+#define SOAP_TYPE___ns1__GetAllBathroomByParam (71)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__GetAllBathroomByParam {
+      public:
+        /** Optional element 'ns1:GetAllBathroomByParam' of XML schema type 'ns1:GetAllBathroomByParam' */
+        _ns1__GetAllBathroomByParam *ns1__GetAllBathroomByParam;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__GetAllBathroomByParam */
+        long soap_type() const { return SOAP_TYPE___ns1__GetAllBathroomByParam; }
+        /** Constructor with member initializations */
+        __ns1__GetAllBathroomByParam() : ns1__GetAllBathroomByParam() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__GetAllBathroomByParam * SOAP_FMAC2 soap_instantiate___ns1__GetAllBathroomByParam(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:1597 */
+#ifndef SOAP_TYPE___ns1__GetAllHandrailByParam
+#define SOAP_TYPE___ns1__GetAllHandrailByParam (75)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__GetAllHandrailByParam {
+      public:
+        /** Optional element 'ns1:GetAllHandrailByParam' of XML schema type 'ns1:GetAllHandrailByParam' */
+        _ns1__GetAllHandrailByParam *ns1__GetAllHandrailByParam;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__GetAllHandrailByParam */
+        long soap_type() const { return SOAP_TYPE___ns1__GetAllHandrailByParam; }
+        /** Constructor with member initializations */
+        __ns1__GetAllHandrailByParam() : ns1__GetAllHandrailByParam() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__GetAllHandrailByParam * SOAP_FMAC2 soap_instantiate___ns1__GetAllHandrailByParam(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:1668 */
+#ifndef SOAP_TYPE___ns1__GetAllAirconditionerByParam
+#define SOAP_TYPE___ns1__GetAllAirconditionerByParam (79)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__GetAllAirconditionerByParam {
+      public:
+        /** Optional element 'ns1:GetAllAirconditionerByParam' of XML schema type 'ns1:GetAllAirconditionerByParam' */
+        _ns1__GetAllAirconditionerByParam *ns1__GetAllAirconditionerByParam;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__GetAllAirconditionerByParam */
+        long soap_type() const { return SOAP_TYPE___ns1__GetAllAirconditionerByParam; }
+        /** Constructor with member initializations */
+        __ns1__GetAllAirconditionerByParam() : ns1__GetAllAirconditionerByParam() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__GetAllAirconditionerByParam * SOAP_FMAC2 soap_instantiate___ns1__GetAllAirconditionerByParam(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:1739 */
 #ifndef SOAP_TYPE___ns1__CadFileDownload
-#define SOAP_TYPE___ns1__CadFileDownload (35)
+#define SOAP_TYPE___ns1__CadFileDownload (83)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__CadFileDownload {
       public:
@@ -418,9 +1188,9 @@ struct SOAP_CMAC __ns1__CadFileDownload {
 };
 #endif
 
-/* .\SunacCADService2.h:808 */
+/* .\SunacCADService2.h:1810 */
 #ifndef SOAP_TYPE___ns1__StandardDesignAttribute_
-#define SOAP_TYPE___ns1__StandardDesignAttribute_ (37)
+#define SOAP_TYPE___ns1__StandardDesignAttribute_ (85)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__StandardDesignAttribute_ {
       public:
@@ -436,9 +1206,9 @@ struct SOAP_CMAC __ns1__StandardDesignAttribute_ {
 };
 #endif
 
-/* .\SunacCADService2.h:879 */
+/* .\SunacCADService2.h:1881 */
 #ifndef SOAP_TYPE___ns1__GetAllWindows_
-#define SOAP_TYPE___ns1__GetAllWindows_ (39)
+#define SOAP_TYPE___ns1__GetAllWindows_ (87)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetAllWindows_ {
       public:
@@ -454,9 +1224,9 @@ struct SOAP_CMAC __ns1__GetAllWindows_ {
 };
 #endif
 
-/* .\SunacCADService2.h:950 */
+/* .\SunacCADService2.h:1952 */
 #ifndef SOAP_TYPE___ns1__GetWindows_
-#define SOAP_TYPE___ns1__GetWindows_ (41)
+#define SOAP_TYPE___ns1__GetWindows_ (89)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetWindows_ {
       public:
@@ -472,9 +1242,153 @@ struct SOAP_CMAC __ns1__GetWindows_ {
 };
 #endif
 
-/* .\SunacCADService2.h:1021 */
+/* .\SunacCADService2.h:2023 */
+#ifndef SOAP_TYPE___ns1__GetAllDoor_
+#define SOAP_TYPE___ns1__GetAllDoor_ (91)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__GetAllDoor_ {
+      public:
+        /** Optional element 'ns1:GetAllDoor' of XML schema type 'ns1:GetAllDoor' */
+        _ns1__GetAllDoor *ns1__GetAllDoor;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__GetAllDoor_ */
+        long soap_type() const { return SOAP_TYPE___ns1__GetAllDoor_; }
+        /** Constructor with member initializations */
+        __ns1__GetAllDoor_() : ns1__GetAllDoor() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__GetAllDoor_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllDoor_(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:2094 */
+#ifndef SOAP_TYPE___ns1__GetAllDoorByParam_
+#define SOAP_TYPE___ns1__GetAllDoorByParam_ (93)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__GetAllDoorByParam_ {
+      public:
+        /** Optional element 'ns1:GetAllDoorByParam' of XML schema type 'ns1:GetAllDoorByParam' */
+        _ns1__GetAllDoorByParam *ns1__GetAllDoorByParam;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__GetAllDoorByParam_ */
+        long soap_type() const { return SOAP_TYPE___ns1__GetAllDoorByParam_; }
+        /** Constructor with member initializations */
+        __ns1__GetAllDoorByParam_() : ns1__GetAllDoorByParam() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__GetAllDoorByParam_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllDoorByParam_(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:2165 */
+#ifndef SOAP_TYPE___ns1__GetAllKitchen_
+#define SOAP_TYPE___ns1__GetAllKitchen_ (95)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__GetAllKitchen_ {
+      public:
+        /** Optional element 'ns1:GetAllKitchen' of XML schema type 'ns1:GetAllKitchen' */
+        _ns1__GetAllKitchen *ns1__GetAllKitchen;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__GetAllKitchen_ */
+        long soap_type() const { return SOAP_TYPE___ns1__GetAllKitchen_; }
+        /** Constructor with member initializations */
+        __ns1__GetAllKitchen_() : ns1__GetAllKitchen() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__GetAllKitchen_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllKitchen_(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:2236 */
+#ifndef SOAP_TYPE___ns1__GetAllKitchenParam_
+#define SOAP_TYPE___ns1__GetAllKitchenParam_ (97)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__GetAllKitchenParam_ {
+      public:
+        /** Optional element 'ns1:GetAllKitchenParam' of XML schema type 'ns1:GetAllKitchenParam' */
+        _ns1__GetAllKitchenParam *ns1__GetAllKitchenParam;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__GetAllKitchenParam_ */
+        long soap_type() const { return SOAP_TYPE___ns1__GetAllKitchenParam_; }
+        /** Constructor with member initializations */
+        __ns1__GetAllKitchenParam_() : ns1__GetAllKitchenParam() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__GetAllKitchenParam_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllKitchenParam_(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:2307 */
+#ifndef SOAP_TYPE___ns1__GetAllBathroom_
+#define SOAP_TYPE___ns1__GetAllBathroom_ (99)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__GetAllBathroom_ {
+      public:
+        /** Optional element 'ns1:GetAllBathroom' of XML schema type 'ns1:GetAllBathroom' */
+        _ns1__GetAllBathroom *ns1__GetAllBathroom;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__GetAllBathroom_ */
+        long soap_type() const { return SOAP_TYPE___ns1__GetAllBathroom_; }
+        /** Constructor with member initializations */
+        __ns1__GetAllBathroom_() : ns1__GetAllBathroom() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__GetAllBathroom_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllBathroom_(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:2378 */
+#ifndef SOAP_TYPE___ns1__GetAllBathroomByParam_
+#define SOAP_TYPE___ns1__GetAllBathroomByParam_ (101)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__GetAllBathroomByParam_ {
+      public:
+        /** Optional element 'ns1:GetAllBathroomByParam' of XML schema type 'ns1:GetAllBathroomByParam' */
+        _ns1__GetAllBathroomByParam *ns1__GetAllBathroomByParam;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__GetAllBathroomByParam_ */
+        long soap_type() const { return SOAP_TYPE___ns1__GetAllBathroomByParam_; }
+        /** Constructor with member initializations */
+        __ns1__GetAllBathroomByParam_() : ns1__GetAllBathroomByParam() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__GetAllBathroomByParam_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllBathroomByParam_(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:2449 */
+#ifndef SOAP_TYPE___ns1__GetAllHandrailByParam_
+#define SOAP_TYPE___ns1__GetAllHandrailByParam_ (103)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__GetAllHandrailByParam_ {
+      public:
+        /** Optional element 'ns1:GetAllHandrailByParam' of XML schema type 'ns1:GetAllHandrailByParam' */
+        _ns1__GetAllHandrailByParam *ns1__GetAllHandrailByParam;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__GetAllHandrailByParam_ */
+        long soap_type() const { return SOAP_TYPE___ns1__GetAllHandrailByParam_; }
+        /** Constructor with member initializations */
+        __ns1__GetAllHandrailByParam_() : ns1__GetAllHandrailByParam() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__GetAllHandrailByParam_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllHandrailByParam_(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:2520 */
+#ifndef SOAP_TYPE___ns1__GetAllAirconditionerByParam_
+#define SOAP_TYPE___ns1__GetAllAirconditionerByParam_ (105)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__GetAllAirconditionerByParam_ {
+      public:
+        /** Optional element 'ns1:GetAllAirconditionerByParam' of XML schema type 'ns1:GetAllAirconditionerByParam' */
+        _ns1__GetAllAirconditionerByParam *ns1__GetAllAirconditionerByParam;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__GetAllAirconditionerByParam_ */
+        long soap_type() const { return SOAP_TYPE___ns1__GetAllAirconditionerByParam_; }
+        /** Constructor with member initializations */
+        __ns1__GetAllAirconditionerByParam_() : ns1__GetAllAirconditionerByParam() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__GetAllAirconditionerByParam_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllAirconditionerByParam_(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:2591 */
 #ifndef SOAP_TYPE___ns1__CadFileDownload_
-#define SOAP_TYPE___ns1__CadFileDownload_ (43)
+#define SOAP_TYPE___ns1__CadFileDownload_ (107)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__CadFileDownload_ {
       public:
@@ -490,10 +1404,10 @@ struct SOAP_CMAC __ns1__CadFileDownload_ {
 };
 #endif
 
-/* .\SunacCADService2.h:1202 */
+/* .\SunacCADService2.h:3012 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Header
-#define SOAP_TYPE_SOAP_ENV__Header (44)
+#define SOAP_TYPE_SOAP_ENV__Header (108)
 /* SOAP_ENV__Header: */
 struct SOAP_CMAC SOAP_ENV__Header {
       public:
@@ -507,10 +1421,10 @@ struct SOAP_CMAC SOAP_ENV__Header {
 #endif
 #endif
 
-/* .\SunacCADService2.h:1202 */
+/* .\SunacCADService2.h:3012 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Code
-#define SOAP_TYPE_SOAP_ENV__Code (45)
+#define SOAP_TYPE_SOAP_ENV__Code (109)
 /* Type SOAP_ENV__Code is a recursive data type, (in)directly referencing itself through its (base or derived class) members */
 /* SOAP_ENV__Code: */
 struct SOAP_CMAC SOAP_ENV__Code {
@@ -530,10 +1444,10 @@ struct SOAP_CMAC SOAP_ENV__Code {
 #endif
 #endif
 
-/* .\SunacCADService2.h:1202 */
+/* .\SunacCADService2.h:3012 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Detail
-#define SOAP_TYPE_SOAP_ENV__Detail (47)
+#define SOAP_TYPE_SOAP_ENV__Detail (111)
 /* SOAP_ENV__Detail: */
 struct SOAP_CMAC SOAP_ENV__Detail {
       public:
@@ -553,10 +1467,10 @@ struct SOAP_CMAC SOAP_ENV__Detail {
 #endif
 #endif
 
-/* .\SunacCADService2.h:1202 */
+/* .\SunacCADService2.h:3012 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Reason
-#define SOAP_TYPE_SOAP_ENV__Reason (50)
+#define SOAP_TYPE_SOAP_ENV__Reason (114)
 /* SOAP_ENV__Reason: */
 struct SOAP_CMAC SOAP_ENV__Reason {
       public:
@@ -573,10 +1487,10 @@ struct SOAP_CMAC SOAP_ENV__Reason {
 #endif
 #endif
 
-/* .\SunacCADService2.h:1202 */
+/* .\SunacCADService2.h:3012 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Fault
-#define SOAP_TYPE_SOAP_ENV__Fault (51)
+#define SOAP_TYPE_SOAP_ENV__Fault (115)
 /* SOAP_ENV__Fault: */
 struct SOAP_CMAC SOAP_ENV__Fault {
       public:
@@ -647,22 +1561,102 @@ typedef char *_QName;
 
 /* double has binding name 'double' for type 'xsd:double' */
 #ifndef SOAP_TYPE_double
-#define SOAP_TYPE_double (19)
+#define SOAP_TYPE_double (35)
 #endif
 
 /* std::wstring has binding name 'std__wstring' for type 'xsd:string' */
 #ifndef SOAP_TYPE_std__wstring
-#define SOAP_TYPE_std__wstring (16)
+#define SOAP_TYPE_std__wstring (32)
 #endif
 
 /* _ns1__CadFileDownloadResponse has binding name '_ns1__CadFileDownloadResponse' for type '' */
 #ifndef SOAP_TYPE__ns1__CadFileDownloadResponse
-#define SOAP_TYPE__ns1__CadFileDownloadResponse (15)
+#define SOAP_TYPE__ns1__CadFileDownloadResponse (31)
 #endif
 
 /* _ns1__CadFileDownload has binding name '_ns1__CadFileDownload' for type '' */
 #ifndef SOAP_TYPE__ns1__CadFileDownload
-#define SOAP_TYPE__ns1__CadFileDownload (14)
+#define SOAP_TYPE__ns1__CadFileDownload (30)
+#endif
+
+/* _ns1__GetAllAirconditionerByParamResponse has binding name '_ns1__GetAllAirconditionerByParamResponse' for type '' */
+#ifndef SOAP_TYPE__ns1__GetAllAirconditionerByParamResponse
+#define SOAP_TYPE__ns1__GetAllAirconditionerByParamResponse (29)
+#endif
+
+/* _ns1__GetAllAirconditionerByParam has binding name '_ns1__GetAllAirconditionerByParam' for type '' */
+#ifndef SOAP_TYPE__ns1__GetAllAirconditionerByParam
+#define SOAP_TYPE__ns1__GetAllAirconditionerByParam (28)
+#endif
+
+/* _ns1__GetAllHandrailByParamResponse has binding name '_ns1__GetAllHandrailByParamResponse' for type '' */
+#ifndef SOAP_TYPE__ns1__GetAllHandrailByParamResponse
+#define SOAP_TYPE__ns1__GetAllHandrailByParamResponse (27)
+#endif
+
+/* _ns1__GetAllHandrailByParam has binding name '_ns1__GetAllHandrailByParam' for type '' */
+#ifndef SOAP_TYPE__ns1__GetAllHandrailByParam
+#define SOAP_TYPE__ns1__GetAllHandrailByParam (26)
+#endif
+
+/* _ns1__GetAllBathroomByParamResponse has binding name '_ns1__GetAllBathroomByParamResponse' for type '' */
+#ifndef SOAP_TYPE__ns1__GetAllBathroomByParamResponse
+#define SOAP_TYPE__ns1__GetAllBathroomByParamResponse (25)
+#endif
+
+/* _ns1__GetAllBathroomByParam has binding name '_ns1__GetAllBathroomByParam' for type '' */
+#ifndef SOAP_TYPE__ns1__GetAllBathroomByParam
+#define SOAP_TYPE__ns1__GetAllBathroomByParam (24)
+#endif
+
+/* _ns1__GetAllBathroomResponse has binding name '_ns1__GetAllBathroomResponse' for type '' */
+#ifndef SOAP_TYPE__ns1__GetAllBathroomResponse
+#define SOAP_TYPE__ns1__GetAllBathroomResponse (23)
+#endif
+
+/* _ns1__GetAllBathroom has binding name '_ns1__GetAllBathroom' for type '' */
+#ifndef SOAP_TYPE__ns1__GetAllBathroom
+#define SOAP_TYPE__ns1__GetAllBathroom (22)
+#endif
+
+/* _ns1__GetAllKitchenParamResponse has binding name '_ns1__GetAllKitchenParamResponse' for type '' */
+#ifndef SOAP_TYPE__ns1__GetAllKitchenParamResponse
+#define SOAP_TYPE__ns1__GetAllKitchenParamResponse (21)
+#endif
+
+/* _ns1__GetAllKitchenParam has binding name '_ns1__GetAllKitchenParam' for type '' */
+#ifndef SOAP_TYPE__ns1__GetAllKitchenParam
+#define SOAP_TYPE__ns1__GetAllKitchenParam (20)
+#endif
+
+/* _ns1__GetAllKitchenResponse has binding name '_ns1__GetAllKitchenResponse' for type '' */
+#ifndef SOAP_TYPE__ns1__GetAllKitchenResponse
+#define SOAP_TYPE__ns1__GetAllKitchenResponse (19)
+#endif
+
+/* _ns1__GetAllKitchen has binding name '_ns1__GetAllKitchen' for type '' */
+#ifndef SOAP_TYPE__ns1__GetAllKitchen
+#define SOAP_TYPE__ns1__GetAllKitchen (18)
+#endif
+
+/* _ns1__GetAllDoorByParamResponse has binding name '_ns1__GetAllDoorByParamResponse' for type '' */
+#ifndef SOAP_TYPE__ns1__GetAllDoorByParamResponse
+#define SOAP_TYPE__ns1__GetAllDoorByParamResponse (17)
+#endif
+
+/* _ns1__GetAllDoorByParam has binding name '_ns1__GetAllDoorByParam' for type '' */
+#ifndef SOAP_TYPE__ns1__GetAllDoorByParam
+#define SOAP_TYPE__ns1__GetAllDoorByParam (16)
+#endif
+
+/* _ns1__GetAllDoorResponse has binding name '_ns1__GetAllDoorResponse' for type '' */
+#ifndef SOAP_TYPE__ns1__GetAllDoorResponse
+#define SOAP_TYPE__ns1__GetAllDoorResponse (15)
+#endif
+
+/* _ns1__GetAllDoor has binding name '_ns1__GetAllDoor' for type '' */
+#ifndef SOAP_TYPE__ns1__GetAllDoor
+#define SOAP_TYPE__ns1__GetAllDoor (14)
 #endif
 
 /* _ns1__GetWindowsResponse has binding name '_ns1__GetWindowsResponse' for type '' */
@@ -697,67 +1691,107 @@ typedef char *_QName;
 
 /* struct SOAP_ENV__Fault has binding name 'SOAP_ENV__Fault' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Fault
-#define SOAP_TYPE_SOAP_ENV__Fault (51)
+#define SOAP_TYPE_SOAP_ENV__Fault (115)
 #endif
 
 /* struct SOAP_ENV__Reason has binding name 'SOAP_ENV__Reason' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Reason
-#define SOAP_TYPE_SOAP_ENV__Reason (50)
+#define SOAP_TYPE_SOAP_ENV__Reason (114)
 #endif
 
 /* struct SOAP_ENV__Detail has binding name 'SOAP_ENV__Detail' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Detail
-#define SOAP_TYPE_SOAP_ENV__Detail (47)
+#define SOAP_TYPE_SOAP_ENV__Detail (111)
 #endif
 
 /* struct SOAP_ENV__Code has binding name 'SOAP_ENV__Code' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Code
-#define SOAP_TYPE_SOAP_ENV__Code (45)
+#define SOAP_TYPE_SOAP_ENV__Code (109)
 #endif
 
 /* struct SOAP_ENV__Header has binding name 'SOAP_ENV__Header' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Header
-#define SOAP_TYPE_SOAP_ENV__Header (44)
+#define SOAP_TYPE_SOAP_ENV__Header (108)
 #endif
 
 /* struct SOAP_ENV__Reason * has binding name 'PointerToSOAP_ENV__Reason' for type '' */
 #ifndef SOAP_TYPE_PointerToSOAP_ENV__Reason
-#define SOAP_TYPE_PointerToSOAP_ENV__Reason (53)
+#define SOAP_TYPE_PointerToSOAP_ENV__Reason (117)
 #endif
 
 /* struct SOAP_ENV__Detail * has binding name 'PointerToSOAP_ENV__Detail' for type '' */
 #ifndef SOAP_TYPE_PointerToSOAP_ENV__Detail
-#define SOAP_TYPE_PointerToSOAP_ENV__Detail (52)
+#define SOAP_TYPE_PointerToSOAP_ENV__Detail (116)
 #endif
 
 /* struct SOAP_ENV__Code * has binding name 'PointerToSOAP_ENV__Code' for type '' */
 #ifndef SOAP_TYPE_PointerToSOAP_ENV__Code
-#define SOAP_TYPE_PointerToSOAP_ENV__Code (46)
+#define SOAP_TYPE_PointerToSOAP_ENV__Code (110)
 #endif
 
 /* _ns1__CadFileDownload * has binding name 'PointerTo_ns1__CadFileDownload' for type '' */
 #ifndef SOAP_TYPE_PointerTo_ns1__CadFileDownload
-#define SOAP_TYPE_PointerTo_ns1__CadFileDownload (32)
+#define SOAP_TYPE_PointerTo_ns1__CadFileDownload (80)
+#endif
+
+/* _ns1__GetAllAirconditionerByParam * has binding name 'PointerTo_ns1__GetAllAirconditionerByParam' for type '' */
+#ifndef SOAP_TYPE_PointerTo_ns1__GetAllAirconditionerByParam
+#define SOAP_TYPE_PointerTo_ns1__GetAllAirconditionerByParam (76)
+#endif
+
+/* _ns1__GetAllHandrailByParam * has binding name 'PointerTo_ns1__GetAllHandrailByParam' for type '' */
+#ifndef SOAP_TYPE_PointerTo_ns1__GetAllHandrailByParam
+#define SOAP_TYPE_PointerTo_ns1__GetAllHandrailByParam (72)
+#endif
+
+/* _ns1__GetAllBathroomByParam * has binding name 'PointerTo_ns1__GetAllBathroomByParam' for type '' */
+#ifndef SOAP_TYPE_PointerTo_ns1__GetAllBathroomByParam
+#define SOAP_TYPE_PointerTo_ns1__GetAllBathroomByParam (68)
+#endif
+
+/* _ns1__GetAllBathroom * has binding name 'PointerTo_ns1__GetAllBathroom' for type '' */
+#ifndef SOAP_TYPE_PointerTo_ns1__GetAllBathroom
+#define SOAP_TYPE_PointerTo_ns1__GetAllBathroom (64)
+#endif
+
+/* _ns1__GetAllKitchenParam * has binding name 'PointerTo_ns1__GetAllKitchenParam' for type '' */
+#ifndef SOAP_TYPE_PointerTo_ns1__GetAllKitchenParam
+#define SOAP_TYPE_PointerTo_ns1__GetAllKitchenParam (60)
+#endif
+
+/* _ns1__GetAllKitchen * has binding name 'PointerTo_ns1__GetAllKitchen' for type '' */
+#ifndef SOAP_TYPE_PointerTo_ns1__GetAllKitchen
+#define SOAP_TYPE_PointerTo_ns1__GetAllKitchen (56)
+#endif
+
+/* _ns1__GetAllDoorByParam * has binding name 'PointerTo_ns1__GetAllDoorByParam' for type '' */
+#ifndef SOAP_TYPE_PointerTo_ns1__GetAllDoorByParam
+#define SOAP_TYPE_PointerTo_ns1__GetAllDoorByParam (52)
+#endif
+
+/* _ns1__GetAllDoor * has binding name 'PointerTo_ns1__GetAllDoor' for type '' */
+#ifndef SOAP_TYPE_PointerTo_ns1__GetAllDoor
+#define SOAP_TYPE_PointerTo_ns1__GetAllDoor (48)
 #endif
 
 /* _ns1__GetWindows * has binding name 'PointerTo_ns1__GetWindows' for type '' */
 #ifndef SOAP_TYPE_PointerTo_ns1__GetWindows
-#define SOAP_TYPE_PointerTo_ns1__GetWindows (28)
+#define SOAP_TYPE_PointerTo_ns1__GetWindows (44)
 #endif
 
 /* _ns1__GetAllWindows * has binding name 'PointerTo_ns1__GetAllWindows' for type '' */
 #ifndef SOAP_TYPE_PointerTo_ns1__GetAllWindows
-#define SOAP_TYPE_PointerTo_ns1__GetAllWindows (24)
+#define SOAP_TYPE_PointerTo_ns1__GetAllWindows (40)
 #endif
 
 /* _ns1__StandardDesignAttribute * has binding name 'PointerTo_ns1__StandardDesignAttribute' for type '' */
 #ifndef SOAP_TYPE_PointerTo_ns1__StandardDesignAttribute
-#define SOAP_TYPE_PointerTo_ns1__StandardDesignAttribute (20)
+#define SOAP_TYPE_PointerTo_ns1__StandardDesignAttribute (36)
 #endif
 
 /* std::wstring * has binding name 'PointerTostd__wstring' for type 'xsd:string' */
 #ifndef SOAP_TYPE_PointerTostd__wstring
-#define SOAP_TYPE_PointerTostd__wstring (17)
+#define SOAP_TYPE_PointerTostd__wstring (33)
 #endif
 
 /* _QName has binding name '_QName' for type 'xsd:QName' */
