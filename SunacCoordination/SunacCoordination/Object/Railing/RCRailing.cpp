@@ -78,9 +78,30 @@ CRCRailing* CreateRailing(const AttrRailing p_railingAtt)
 	{
 	case E_RAILING_TIEYI:
 	{
-							if (p_railingAtt.m_prototypeCode.Find(_T("T1")) >= 0)
+							if (p_railingAtt.m_prototypeCode.Find(_T("T1")) >= 0 ||
+								p_railingAtt.m_prototypeCode.Find(_T("T2")) >= 0)
 							{
 								pRailing = new CRCRailingT1();
+							}
+							else if (p_railingAtt.m_prototypeCode.Find(_T("T3")) >= 0)
+							{
+								pRailing = new CRCRailingT3();
+							}
+							else if (p_railingAtt.m_prototypeCode.Find(_T("T4")) >= 0)
+							{
+								pRailing = new CRCRailingT4();
+							}
+							else if (p_railingAtt.m_prototypeCode.Find(_T("T5")) >= 0)
+							{
+								pRailing = new CRCRailingT5();
+							}
+							else if (p_railingAtt.m_prototypeCode.Find(_T("T6")) >= 0)
+							{
+								pRailing = new CRCRailingT6();
+							}
+							else if (p_railingAtt.m_prototypeCode.Find(_T("T7")) >= 0)
+							{
+								pRailing = new CRCRailingT7();
 							}
 	}
 		break;

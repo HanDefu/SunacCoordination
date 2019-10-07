@@ -273,3 +273,137 @@ CRCRailingT3::CRCRailingT3()
 
 
 //////////////////////////////////////////////////////////////////////////
+CRCRailingT4::CRCRailingT4()
+{
+	m_B1 = 1206;
+	m_B2 = 1320;
+}
+AcDbObjectId CRCRailingT4::GenerateRailing_NonStandard(AcGePoint3d p_pos)
+{
+	AcDbObjectId id1 = AcDbObjectId::kNull;
+
+	const double railH = m_railingAtt.m_height - GetHandRailHeight();//扣除扶手的高度
+	const double railH0 = 1200 - GetHandRailHeight();//扣除扶手的高度
+	const CString fileName = GetPrototypeFilePath();
+	const CString sNonStandardBlockName = GetNonStandardBlockName();
+
+	id1 = InsertBlockRefFromDwg(fileName, sNonStandardBlockName, ACDB_MODEL_SPACE, p_pos);
+	assert(id1 != AcDbObjectId::kNull);
+
+	double L = GetNonstandardLen();
+	double Ln1 = L - GetPillarWidth() * 2 + 100; //第一种小杆的整列方式, 加100是因间隔跳跃式
+	double Ln2 = L - GetPillarWidth() * 2;
+	double H1 = 219 + (railH - railH0) / 2;  //219是H1在原型中的初始值
+	double H2 = 232 + (railH - railH0) / 2;  //232是H1在原型中的初始值
+
+	//设置非标段长度
+	DQ_SetDynamicAttribute(id1, _T("L"), L);
+	DQ_SetDynamicAttribute(id1, _T("Ln1"), Ln1);
+	DQ_SetDynamicAttribute(id1, _T("Ln2"), Ln2);
+	DQ_SetDynamicAttribute(id1, _T("Ln21"), Ln2);
+	DQ_SetDynamicAttribute(id1, _T("Ln22"), Ln2);
+	DQ_SetDynamicAttribute(id1, _T("H"), railH);
+	DQ_SetDynamicAttribute(id1, _T("H1"), H1);
+	DQ_SetDynamicAttribute(id1, _T("H2"), H2);
+
+	return id1;
+}
+
+
+AcDbObjectIdArray CRCRailingT4::GenerateRailing_Standard(AcGePoint3d pos)
+{
+	const double railH = m_railingAtt.m_height - GetHandRailHeight();//扣除扶手的高度
+	const double railH0 = 1200 - GetHandRailHeight();//扣除扶手的高度
+	const CString fileName = GetPrototypeFilePath();
+	const CString sStandardBlockName = GetStandardBlockName();
+	double H1 = 219 + (railH - railH0) / 2;  //219是H1在原型中的初始值
+	double H2 = 232 + (railH - railH0) / 2;  //232是H1在原型中的初始值
+
+	AcDbObjectIdArray idsOut;
+	AcDbObjectId id2;
+	for (int i = 0; i < GetN(); i++)
+	{
+		id2 = InsertBlockRefFromDwg(fileName, sStandardBlockName, ACDB_MODEL_SPACE, pos);
+		assert(id2 != AcDbObjectId::kNull);
+
+		DQ_SetDynamicAttribute(id2, _T("H"), railH);
+		DQ_SetDynamicAttribute(id2, _T("H1"), H1);
+		DQ_SetDynamicAttribute(id2, _T("H2"), H2);
+
+		idsOut.append(id2);
+
+		pos.x += GetB() - GetPillarWidth(); //减去立柱宽
+	}
+
+	return idsOut;
+}
+
+//////////////////////////////////////////////////////////////////////////
+CRCRailingT5::CRCRailingT5()
+{
+	m_B1 = 1220;
+	m_B2 = 1430;
+}
+
+
+AcDbObjectId CRCRailingT5::GenerateRailing_NonStandard(AcGePoint3d p_pos)
+{
+	AcDbObjectId id1 = AcDbObjectId::kNull;
+
+	const double railH = m_railingAtt.m_height - GetHandRailHeight();//扣除扶手的高度
+	const CString fileName = GetPrototypeFilePath();
+	const CString sNonStandardBlockName = GetNonStandardBlockName();
+
+	id1 = InsertBlockRefFromDwg(fileName, sNonStandardBlockName, ACDB_MODEL_SPACE, p_pos);
+	assert(id1 != AcDbObjectId::kNull);
+
+	double L = GetNonstandardLen();
+	double Ln1 = L - GetPillarWidth() * 2 ;		//因两侧都留有一个杆，因此不用加100
+	double Ln2 = L - GetPillarWidth() * 2 - 100;
+
+	//设置非标段长度
+	DQ_SetDynamicAttribute(id1, _T("L"), L);
+	DQ_SetDynamicAttribute(id1, _T("Ln"), Ln1);
+	DQ_SetDynamicAttribute(id1, _T("Ln2"), Ln2);
+	DQ_SetDynamicAttribute(id1, _T("H"), railH);
+
+	return id1;
+}
+//////////////////////////////////////////////////////////////////////////
+CRCRailingT6::CRCRailingT6()
+{
+	m_B1 = 1355;
+	m_B2 = 1570;
+}
+
+
+AcDbObjectId CRCRailingT6::GenerateRailing_NonStandard(AcGePoint3d p_pos)
+{
+	AcDbObjectId id1 = AcDbObjectId::kNull;
+
+	const double railH = m_railingAtt.m_height - GetHandRailHeight();//扣除扶手的高度
+	const CString fileName = GetPrototypeFilePath();
+	const CString sNonStandardBlockName = GetNonStandardBlockName();
+
+	id1 = InsertBlockRefFromDwg(fileName, sNonStandardBlockName, ACDB_MODEL_SPACE, p_pos);
+	assert(id1 != AcDbObjectId::kNull);
+
+	double L = GetNonstandardLen();
+	double Ln1 = L - GetPillarWidth() * 2;		//因两侧都留有一个杆，因此不用加
+	double Ln2 = L - GetPillarWidth() * 2 - 200;
+
+	//设置非标段长度
+	DQ_SetDynamicAttribute(id1, _T("L"), L);
+	DQ_SetDynamicAttribute(id1, _T("Ln"), Ln1);
+	DQ_SetDynamicAttribute(id1, _T("Ln2"), Ln2);
+	DQ_SetDynamicAttribute(id1, _T("H"), railH);
+
+	return id1;
+}
+
+//////////////////////////////////////////////////////////////////////////
+CRCRailingT7::CRCRailingT7()
+{
+	m_B1 = 1510;
+	m_B2 = 1716;
+}
