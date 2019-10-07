@@ -8,6 +8,7 @@
 #include "../Object/WindowDoor/AttrWindow.h"
 #include "ConfigDictionary.h"
 #include "WindowLocalData.h"
+#include "WindowWebData.h"
 #include "AirConditionLocalData.h"
 
 
@@ -24,40 +25,24 @@ public:
 	}
 
 	static const CConfigDictionary* GetConfigDict() { return &(GetInstance()->m_configDic); }
-	static const CWindowLocalData* GetWindowLocalData() { return &(GetInstance()->m_windowLocalData); }
+	//static const CWindowLocalData* GetWindowLocalData() { return &(GetInstance()->m_windowLocalData); }
 	static const CAirConditionLocalData* GetAirConditionLocalData() { return &(GetInstance()->m_airConLocalData); }
 
 public:
 	////-----------------原型搜索函数--------------//
-	////注意外部需要释放返回的内存
-	//static std::vector<AttrWindow *>  GetWindows
-	//(
-	//	double width,//宽度值，注意高度值不作为搜索条件 
-	//	double height,
-	//	CString openType, //开启类型
-	//	int openNum,//开启扇数量
-	//	CString gongNengQu,//功能区
-	//	double tongFengLiang//通风量
-	//);
+	//width,//宽度值，注意高度值不作为搜索条件 
+	//openType, //开启类型
+	//openNum,//开启扇数量
+	//gongNengQu,//功能区
+	//tongFengLiang//通风量
+	//读取门和窗
+	std::vector<AttrWindow >  GetWindows(double width, CString openType, int openNum, CString gongNengQu)const;
+	std::vector<AttrWindow >  GetDoors(double width, CString openType, int openNum, CString gongNengQu)const;
 
-	////注意外部需要释放返回的内存
-	//static std::vector<AttrWindow *>  GetAllWindows();
+	vector<AttrWindow> GetAllWindows(); //获取所有窗户
+	vector<AttrWindow> GetAllDoors();  //获取所有门
 
-	////门窗读取尺寸值， yuanXingBianHao原型编号， dimStr字符串类(如"H2")，fileName文件名,本地状态根据文件名定义尺寸类型读取尺寸取值
-	//SRCDimData Window_GetDim(CString yuanXingBianHao, CString dimStr, CString fileName);
-
-
-
-	////////////////////////////////////////////////////////////////////////////
-	////注意外部需要释放返回的内存
-	//static std::vector<AttrDoor *> GetDoors
-	//(
-	//	double minWid, //宽度值，注意高度值不作为搜索条件 
-	//	CString doorType //门类型
-	//);
-	////注意外部需要释放返回的内存
-	//static std::vector<AttrDoor *> GetAllDoors();
-
+	//////////////////////////////////////////////////////////////////////////
 
 	//注意外部需要释放返回的内存
 	static std::vector<AttrKitchen *> GetKitchens (
@@ -107,6 +92,9 @@ protected:
 
 	CWindowLocalData m_windowLocalData;
 	CAirConditionLocalData m_airConLocalData;
+
+
+	CWindowWebData m_windowWebData;
 
 }; 
 
