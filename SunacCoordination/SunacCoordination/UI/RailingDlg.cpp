@@ -111,8 +111,6 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 
 	if (m_selectedFile.GetLength() > 0)
 	{
-		//CRCRailing* pRailing = CreateRailing();
-		//pRailing->InsertRailing(pnt1, pnt2, m_selectedFile);
 	}
 
 	//Éú³É

@@ -53,10 +53,16 @@ static eWindowDimType ToEWindowType(CString type)
 	{
 		return CALC;
 	}
-	else
+	else if(type == "无")
 	{
 		return NOVALUE;
 	}
+	else
+	{
+		ASSERT(FALSE);
+		return NOVALUE;
+	}
+	
 }
 
 typedef enum eViewDir
@@ -73,6 +79,24 @@ typedef enum eRailingType
 	E_RAILING_BOLI,//玻璃
 }eRailingType;
 
+static eRailingType ToERailingType(CString type)
+{
+	if (type == "铁艺")
+	{
+		return E_RAILING_TIEYI;
+	} 
+	else if (type == "玻璃")
+	{
+		return E_RAILING_BOLI;
+	}
+	else
+	{
+		ASSERT(FALSE);
+		return E_RAILING_TIEYI;
+	}
+
+}
+
 enum E_Prototype_Type
 {
 	E_DYNAMIC_PROTOTYPE,	//动态原型
@@ -85,6 +109,22 @@ typedef enum eWindowDoorPos//门窗位置关系
 	CHUIZHIKAI//垂直开
 } eWindowDoorPos;
 
+static eWindowDoorPos ToEWindowDoorPos(CString type)
+{
+	if (type == "对开")
+	{
+		return DUIKAI;
+	} 
+	else if (type == "垂直开")
+	{
+		return CHUIZHIKAI;
+	}
+	else
+	{
+		ASSERT(FALSE);
+		return DUIKAI;
+	}
+}
 
 typedef enum eLengNingShuiGuanPos//冷凝水管位置
 {

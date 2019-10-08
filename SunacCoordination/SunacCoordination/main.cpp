@@ -166,9 +166,16 @@ void CMD_test()
 
 	double width = 1800;
 	double height = 1800;
+	CString doorType = "";
 
 	CWindowWebData b;
-	vAttrWindow a = b.GetWindows(width, height, "", 0, "");
+	//vAttrWindow window = b.GetWindows(width, height, "", 0, "");
+	std::vector<AttrWindow> window = b.GetAllWindows();
+	std::vector<AttrDoor> door = b.GetAllDoors();
+	std::vector<AttrKitchen> kitchen = b.GetAllKitchens();
+	std::vector<AttrBathroom> bathroom = b.GetAllBathrooms();
+	std::vector<AttrRailing> railing = b.GetRailings("0");
+	std::vector<AttrAirCon> aircon = b.GetAirConditioners("","",0 ,"");
 	return;
 }
 

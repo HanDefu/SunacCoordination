@@ -178,7 +178,6 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 	    m_allWindows = WebIO::GetInstance()->GetDoors(width, openType, openNum, areaType);
 	else
 		m_allWindows = WebIO::GetInstance()->GetWindows(width, openType, openNum, areaType);
-	    //m_allWindows = WebIO::GetInstance()->GetWindows(width, "", openNum, "");
 
 	m_preWindow.ClearAllPreviews();
 	if (m_allWindows.empty())
