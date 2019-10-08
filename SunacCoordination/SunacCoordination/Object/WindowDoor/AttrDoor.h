@@ -43,9 +43,17 @@ public:
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
 private:
 
-
 public:
+	CString m_frontViewFile;	//原型立面文件, 展开图用基类的m_fileName
+	CString	m_topViewFile;		//原型俯视图文件
+	CString m_leftViewFile;		//原型侧视图文件
 
+	double m_minWid;//宽度尺寸最小值
+	double m_maxWid;//宽度尺寸最大值
+
+	CString m_DoorType;//门类型
+
+	vSRCDimData m_dimData;
 private:
 
 };

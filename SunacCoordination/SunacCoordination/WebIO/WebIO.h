@@ -46,8 +46,7 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 
 	//注意外部需要释放返回的内存
-	static std::vector<AttrKitchen *> GetKitchens (
-								double kaiJian,//开间
+	static std::vector<AttrKitchen *> GetKitchens (double kaiJian,//开间
 								double jinShen,//进深
 								CString weiZhiGuanXi,//门窗位置关系 门窗对开/门窗垂直开
 								CString type,//厨房类型 I型
