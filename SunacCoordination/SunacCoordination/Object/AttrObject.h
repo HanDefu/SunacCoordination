@@ -64,7 +64,7 @@ public:
 	CString m_quyuId;//区域ID
 	CString m_quyuName;//区域名称
 
-	CString m_fileName;//原型文件名
+	CString m_fileName;//原型文件名,包含.dwg，但不包含路径
 	
 	CString m_instanceCode;//实例编号
 };

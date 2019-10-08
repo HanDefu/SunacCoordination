@@ -283,6 +283,15 @@
     <ClCompile Include="Object\Railing\RCRailingBoli.cpp">
       <Filter>Object\Railing</Filter>
     </ClCompile>
+    <ClCompile Include="WebIO\KitchenBathroomWebData.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\AirconditionWebData.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\RailingWebData.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
     <ClCompile Include="Object\PrototypeInfo.cpp">
       <Filter>Object</Filter>
     </ClCompile>
@@ -651,6 +660,15 @@
     </ClInclude>
     <ClInclude Include="Object\Railing\RCRailingBoli.h">
       <Filter>Object\Railing</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\KitchenBathroomWebData.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\AirconditionWebData.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\RailingWebData.h">
+      <Filter>WebIO</Filter>
     </ClInclude>
     <ClInclude Include="Object\PrototypeInfo.h">
       <Filter>Object</Filter>

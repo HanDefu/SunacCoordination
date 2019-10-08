@@ -317,6 +317,478 @@ int ArgumentSettingServiceSoapProxy::recv_GetWindows(_ns1__GetWindowsResponse &n
 	return soap_closesock(soap);
 }
 
+int ArgumentSettingServiceSoapProxy::send_GetAllDoor(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllDoor *ns1__GetAllDoor)
+{
+	struct soap *soap = this;
+	struct __ns1__GetAllDoor soap_tmp___ns1__GetAllDoor;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/GetAllDoor";
+	soap_tmp___ns1__GetAllDoor.ns1__GetAllDoor = ns1__GetAllDoor;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__GetAllDoor(soap, &soap_tmp___ns1__GetAllDoor);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__GetAllDoor(soap, &soap_tmp___ns1__GetAllDoor, "-ns1:GetAllDoor", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__GetAllDoor(soap, &soap_tmp___ns1__GetAllDoor, "-ns1:GetAllDoor", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_GetAllDoor(_ns1__GetAllDoorResponse &ns1__GetAllDoorResponse)
+{
+	struct soap *soap = this;
+	ns1__GetAllDoorResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__GetAllDoorResponse.soap_get(soap, "ns1:GetAllDoorResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_GetAllDoorByParam(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllDoorByParam *ns1__GetAllDoorByParam)
+{
+	struct soap *soap = this;
+	struct __ns1__GetAllDoorByParam soap_tmp___ns1__GetAllDoorByParam;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/GetAllDoorByParam";
+	soap_tmp___ns1__GetAllDoorByParam.ns1__GetAllDoorByParam = ns1__GetAllDoorByParam;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__GetAllDoorByParam(soap, &soap_tmp___ns1__GetAllDoorByParam);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__GetAllDoorByParam(soap, &soap_tmp___ns1__GetAllDoorByParam, "-ns1:GetAllDoorByParam", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__GetAllDoorByParam(soap, &soap_tmp___ns1__GetAllDoorByParam, "-ns1:GetAllDoorByParam", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_GetAllDoorByParam(_ns1__GetAllDoorByParamResponse &ns1__GetAllDoorByParamResponse)
+{
+	struct soap *soap = this;
+	ns1__GetAllDoorByParamResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__GetAllDoorByParamResponse.soap_get(soap, "ns1:GetAllDoorByParamResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_GetAllKitchen(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllKitchen *ns1__GetAllKitchen)
+{
+	struct soap *soap = this;
+	struct __ns1__GetAllKitchen soap_tmp___ns1__GetAllKitchen;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/GetAllKitchen";
+	soap_tmp___ns1__GetAllKitchen.ns1__GetAllKitchen = ns1__GetAllKitchen;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__GetAllKitchen(soap, &soap_tmp___ns1__GetAllKitchen);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__GetAllKitchen(soap, &soap_tmp___ns1__GetAllKitchen, "-ns1:GetAllKitchen", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__GetAllKitchen(soap, &soap_tmp___ns1__GetAllKitchen, "-ns1:GetAllKitchen", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_GetAllKitchen(_ns1__GetAllKitchenResponse &ns1__GetAllKitchenResponse)
+{
+	struct soap *soap = this;
+	ns1__GetAllKitchenResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__GetAllKitchenResponse.soap_get(soap, "ns1:GetAllKitchenResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_GetAllKitchenParam(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllKitchenParam *ns1__GetAllKitchenParam)
+{
+	struct soap *soap = this;
+	struct __ns1__GetAllKitchenParam soap_tmp___ns1__GetAllKitchenParam;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/GetAllKitchenParam";
+	soap_tmp___ns1__GetAllKitchenParam.ns1__GetAllKitchenParam = ns1__GetAllKitchenParam;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__GetAllKitchenParam(soap, &soap_tmp___ns1__GetAllKitchenParam);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__GetAllKitchenParam(soap, &soap_tmp___ns1__GetAllKitchenParam, "-ns1:GetAllKitchenParam", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__GetAllKitchenParam(soap, &soap_tmp___ns1__GetAllKitchenParam, "-ns1:GetAllKitchenParam", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_GetAllKitchenParam(_ns1__GetAllKitchenParamResponse &ns1__GetAllKitchenParamResponse)
+{
+	struct soap *soap = this;
+	ns1__GetAllKitchenParamResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__GetAllKitchenParamResponse.soap_get(soap, "ns1:GetAllKitchenParamResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_GetAllBathroom(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllBathroom *ns1__GetAllBathroom)
+{
+	struct soap *soap = this;
+	struct __ns1__GetAllBathroom soap_tmp___ns1__GetAllBathroom;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/GetAllBathroom";
+	soap_tmp___ns1__GetAllBathroom.ns1__GetAllBathroom = ns1__GetAllBathroom;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__GetAllBathroom(soap, &soap_tmp___ns1__GetAllBathroom);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__GetAllBathroom(soap, &soap_tmp___ns1__GetAllBathroom, "-ns1:GetAllBathroom", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__GetAllBathroom(soap, &soap_tmp___ns1__GetAllBathroom, "-ns1:GetAllBathroom", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_GetAllBathroom(_ns1__GetAllBathroomResponse &ns1__GetAllBathroomResponse)
+{
+	struct soap *soap = this;
+	ns1__GetAllBathroomResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__GetAllBathroomResponse.soap_get(soap, "ns1:GetAllBathroomResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_GetAllBathroomByParam(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllBathroomByParam *ns1__GetAllBathroomByParam)
+{
+	struct soap *soap = this;
+	struct __ns1__GetAllBathroomByParam soap_tmp___ns1__GetAllBathroomByParam;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/GetAllBathroomByParam";
+	soap_tmp___ns1__GetAllBathroomByParam.ns1__GetAllBathroomByParam = ns1__GetAllBathroomByParam;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__GetAllBathroomByParam(soap, &soap_tmp___ns1__GetAllBathroomByParam);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__GetAllBathroomByParam(soap, &soap_tmp___ns1__GetAllBathroomByParam, "-ns1:GetAllBathroomByParam", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__GetAllBathroomByParam(soap, &soap_tmp___ns1__GetAllBathroomByParam, "-ns1:GetAllBathroomByParam", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_GetAllBathroomByParam(_ns1__GetAllBathroomByParamResponse &ns1__GetAllBathroomByParamResponse)
+{
+	struct soap *soap = this;
+	ns1__GetAllBathroomByParamResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__GetAllBathroomByParamResponse.soap_get(soap, "ns1:GetAllBathroomByParamResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_GetAllHandrailByParam(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllHandrailByParam *ns1__GetAllHandrailByParam)
+{
+	struct soap *soap = this;
+	struct __ns1__GetAllHandrailByParam soap_tmp___ns1__GetAllHandrailByParam;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/GetAllHandrailByParam";
+	soap_tmp___ns1__GetAllHandrailByParam.ns1__GetAllHandrailByParam = ns1__GetAllHandrailByParam;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__GetAllHandrailByParam(soap, &soap_tmp___ns1__GetAllHandrailByParam);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__GetAllHandrailByParam(soap, &soap_tmp___ns1__GetAllHandrailByParam, "-ns1:GetAllHandrailByParam", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__GetAllHandrailByParam(soap, &soap_tmp___ns1__GetAllHandrailByParam, "-ns1:GetAllHandrailByParam", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_GetAllHandrailByParam(_ns1__GetAllHandrailByParamResponse &ns1__GetAllHandrailByParamResponse)
+{
+	struct soap *soap = this;
+	ns1__GetAllHandrailByParamResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__GetAllHandrailByParamResponse.soap_get(soap, "ns1:GetAllHandrailByParamResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_GetAllAirconditionerByParam(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllAirconditionerByParam *ns1__GetAllAirconditionerByParam)
+{
+	struct soap *soap = this;
+	struct __ns1__GetAllAirconditionerByParam soap_tmp___ns1__GetAllAirconditionerByParam;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/GetAllAirconditionerByParam";
+	soap_tmp___ns1__GetAllAirconditionerByParam.ns1__GetAllAirconditionerByParam = ns1__GetAllAirconditionerByParam;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__GetAllAirconditionerByParam(soap, &soap_tmp___ns1__GetAllAirconditionerByParam);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__GetAllAirconditionerByParam(soap, &soap_tmp___ns1__GetAllAirconditionerByParam, "-ns1:GetAllAirconditionerByParam", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__GetAllAirconditionerByParam(soap, &soap_tmp___ns1__GetAllAirconditionerByParam, "-ns1:GetAllAirconditionerByParam", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_GetAllAirconditionerByParam(_ns1__GetAllAirconditionerByParamResponse &ns1__GetAllAirconditionerByParamResponse)
+{
+	struct soap *soap = this;
+	ns1__GetAllAirconditionerByParamResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__GetAllAirconditionerByParamResponse.soap_get(soap, "ns1:GetAllAirconditionerByParamResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
 int ArgumentSettingServiceSoapProxy::send_CadFileDownload(const char *soap_endpoint_url, const char *soap_action, _ns1__CadFileDownload *ns1__CadFileDownload)
 {
 	struct soap *soap = this;
@@ -544,6 +1016,478 @@ int ArgumentSettingServiceSoapProxy::recv_GetWindows_(_ns1__GetWindowsResponse &
 	 || soap_body_begin_in(soap))
 		return soap_closesock(soap);
 	ns1__GetWindowsResponse.soap_get(soap, "ns1:GetWindowsResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_GetAllDoor_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllDoor *ns1__GetAllDoor)
+{
+	struct soap *soap = this;
+	struct __ns1__GetAllDoor_ soap_tmp___ns1__GetAllDoor_;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/GetAllDoor";
+	soap_tmp___ns1__GetAllDoor_.ns1__GetAllDoor = ns1__GetAllDoor;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__GetAllDoor_(soap, &soap_tmp___ns1__GetAllDoor_);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__GetAllDoor_(soap, &soap_tmp___ns1__GetAllDoor_, "-ns1:GetAllDoor", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__GetAllDoor_(soap, &soap_tmp___ns1__GetAllDoor_, "-ns1:GetAllDoor", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_GetAllDoor_(_ns1__GetAllDoorResponse &ns1__GetAllDoorResponse)
+{
+	struct soap *soap = this;
+	ns1__GetAllDoorResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__GetAllDoorResponse.soap_get(soap, "ns1:GetAllDoorResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_GetAllDoorByParam_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllDoorByParam *ns1__GetAllDoorByParam)
+{
+	struct soap *soap = this;
+	struct __ns1__GetAllDoorByParam_ soap_tmp___ns1__GetAllDoorByParam_;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/GetAllDoorByParam";
+	soap_tmp___ns1__GetAllDoorByParam_.ns1__GetAllDoorByParam = ns1__GetAllDoorByParam;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__GetAllDoorByParam_(soap, &soap_tmp___ns1__GetAllDoorByParam_);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__GetAllDoorByParam_(soap, &soap_tmp___ns1__GetAllDoorByParam_, "-ns1:GetAllDoorByParam", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__GetAllDoorByParam_(soap, &soap_tmp___ns1__GetAllDoorByParam_, "-ns1:GetAllDoorByParam", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_GetAllDoorByParam_(_ns1__GetAllDoorByParamResponse &ns1__GetAllDoorByParamResponse)
+{
+	struct soap *soap = this;
+	ns1__GetAllDoorByParamResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__GetAllDoorByParamResponse.soap_get(soap, "ns1:GetAllDoorByParamResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_GetAllKitchen_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllKitchen *ns1__GetAllKitchen)
+{
+	struct soap *soap = this;
+	struct __ns1__GetAllKitchen_ soap_tmp___ns1__GetAllKitchen_;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/GetAllKitchen";
+	soap_tmp___ns1__GetAllKitchen_.ns1__GetAllKitchen = ns1__GetAllKitchen;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__GetAllKitchen_(soap, &soap_tmp___ns1__GetAllKitchen_);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__GetAllKitchen_(soap, &soap_tmp___ns1__GetAllKitchen_, "-ns1:GetAllKitchen", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__GetAllKitchen_(soap, &soap_tmp___ns1__GetAllKitchen_, "-ns1:GetAllKitchen", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_GetAllKitchen_(_ns1__GetAllKitchenResponse &ns1__GetAllKitchenResponse)
+{
+	struct soap *soap = this;
+	ns1__GetAllKitchenResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__GetAllKitchenResponse.soap_get(soap, "ns1:GetAllKitchenResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_GetAllKitchenParam_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllKitchenParam *ns1__GetAllKitchenParam)
+{
+	struct soap *soap = this;
+	struct __ns1__GetAllKitchenParam_ soap_tmp___ns1__GetAllKitchenParam_;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/GetAllKitchenParam";
+	soap_tmp___ns1__GetAllKitchenParam_.ns1__GetAllKitchenParam = ns1__GetAllKitchenParam;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__GetAllKitchenParam_(soap, &soap_tmp___ns1__GetAllKitchenParam_);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__GetAllKitchenParam_(soap, &soap_tmp___ns1__GetAllKitchenParam_, "-ns1:GetAllKitchenParam", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__GetAllKitchenParam_(soap, &soap_tmp___ns1__GetAllKitchenParam_, "-ns1:GetAllKitchenParam", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_GetAllKitchenParam_(_ns1__GetAllKitchenParamResponse &ns1__GetAllKitchenParamResponse)
+{
+	struct soap *soap = this;
+	ns1__GetAllKitchenParamResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__GetAllKitchenParamResponse.soap_get(soap, "ns1:GetAllKitchenParamResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_GetAllBathroom_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllBathroom *ns1__GetAllBathroom)
+{
+	struct soap *soap = this;
+	struct __ns1__GetAllBathroom_ soap_tmp___ns1__GetAllBathroom_;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/GetAllBathroom";
+	soap_tmp___ns1__GetAllBathroom_.ns1__GetAllBathroom = ns1__GetAllBathroom;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__GetAllBathroom_(soap, &soap_tmp___ns1__GetAllBathroom_);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__GetAllBathroom_(soap, &soap_tmp___ns1__GetAllBathroom_, "-ns1:GetAllBathroom", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__GetAllBathroom_(soap, &soap_tmp___ns1__GetAllBathroom_, "-ns1:GetAllBathroom", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_GetAllBathroom_(_ns1__GetAllBathroomResponse &ns1__GetAllBathroomResponse)
+{
+	struct soap *soap = this;
+	ns1__GetAllBathroomResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__GetAllBathroomResponse.soap_get(soap, "ns1:GetAllBathroomResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_GetAllBathroomByParam_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllBathroomByParam *ns1__GetAllBathroomByParam)
+{
+	struct soap *soap = this;
+	struct __ns1__GetAllBathroomByParam_ soap_tmp___ns1__GetAllBathroomByParam_;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/GetAllBathroomByParam";
+	soap_tmp___ns1__GetAllBathroomByParam_.ns1__GetAllBathroomByParam = ns1__GetAllBathroomByParam;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__GetAllBathroomByParam_(soap, &soap_tmp___ns1__GetAllBathroomByParam_);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__GetAllBathroomByParam_(soap, &soap_tmp___ns1__GetAllBathroomByParam_, "-ns1:GetAllBathroomByParam", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__GetAllBathroomByParam_(soap, &soap_tmp___ns1__GetAllBathroomByParam_, "-ns1:GetAllBathroomByParam", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_GetAllBathroomByParam_(_ns1__GetAllBathroomByParamResponse &ns1__GetAllBathroomByParamResponse)
+{
+	struct soap *soap = this;
+	ns1__GetAllBathroomByParamResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__GetAllBathroomByParamResponse.soap_get(soap, "ns1:GetAllBathroomByParamResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_GetAllHandrailByParam_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllHandrailByParam *ns1__GetAllHandrailByParam)
+{
+	struct soap *soap = this;
+	struct __ns1__GetAllHandrailByParam_ soap_tmp___ns1__GetAllHandrailByParam_;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/GetAllHandrailByParam";
+	soap_tmp___ns1__GetAllHandrailByParam_.ns1__GetAllHandrailByParam = ns1__GetAllHandrailByParam;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__GetAllHandrailByParam_(soap, &soap_tmp___ns1__GetAllHandrailByParam_);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__GetAllHandrailByParam_(soap, &soap_tmp___ns1__GetAllHandrailByParam_, "-ns1:GetAllHandrailByParam", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__GetAllHandrailByParam_(soap, &soap_tmp___ns1__GetAllHandrailByParam_, "-ns1:GetAllHandrailByParam", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_GetAllHandrailByParam_(_ns1__GetAllHandrailByParamResponse &ns1__GetAllHandrailByParamResponse)
+{
+	struct soap *soap = this;
+	ns1__GetAllHandrailByParamResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__GetAllHandrailByParamResponse.soap_get(soap, "ns1:GetAllHandrailByParamResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_GetAllAirconditionerByParam_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetAllAirconditionerByParam *ns1__GetAllAirconditionerByParam)
+{
+	struct soap *soap = this;
+	struct __ns1__GetAllAirconditionerByParam_ soap_tmp___ns1__GetAllAirconditionerByParam_;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/GetAllAirconditionerByParam";
+	soap_tmp___ns1__GetAllAirconditionerByParam_.ns1__GetAllAirconditionerByParam = ns1__GetAllAirconditionerByParam;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__GetAllAirconditionerByParam_(soap, &soap_tmp___ns1__GetAllAirconditionerByParam_);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__GetAllAirconditionerByParam_(soap, &soap_tmp___ns1__GetAllAirconditionerByParam_, "-ns1:GetAllAirconditionerByParam", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__GetAllAirconditionerByParam_(soap, &soap_tmp___ns1__GetAllAirconditionerByParam_, "-ns1:GetAllAirconditionerByParam", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_GetAllAirconditionerByParam_(_ns1__GetAllAirconditionerByParamResponse &ns1__GetAllAirconditionerByParamResponse)
+{
+	struct soap *soap = this;
+	ns1__GetAllAirconditionerByParamResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__GetAllAirconditionerByParamResponse.soap_get(soap, "ns1:GetAllAirconditionerByParamResponse", NULL);
 	if (soap->error)
 		return soap_recv_fault(soap, 0);
 	if (soap_body_end_in(soap)

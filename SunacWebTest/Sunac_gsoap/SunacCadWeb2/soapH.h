@@ -562,6 +562,1514 @@ inline int soap_POST_recv__ns1__CadFileDownload(struct soap *soap, _ns1__CadFile
 }
 #endif
 
+#ifndef SOAP_TYPE__ns1__GetAllAirconditionerByParamResponse_DEFINED
+#define SOAP_TYPE__ns1__GetAllAirconditionerByParamResponse_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllAirconditionerByParamResponse(struct soap*, const char*, int, const _ns1__GetAllAirconditionerByParamResponse *, const char*);
+SOAP_FMAC3 _ns1__GetAllAirconditionerByParamResponse * SOAP_FMAC4 soap_in__ns1__GetAllAirconditionerByParamResponse(struct soap*, const char*, _ns1__GetAllAirconditionerByParamResponse *, const char*);
+SOAP_FMAC1 _ns1__GetAllAirconditionerByParamResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllAirconditionerByParamResponse(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__GetAllAirconditionerByParamResponse * soap_new__ns1__GetAllAirconditionerByParamResponse(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__GetAllAirconditionerByParamResponse(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__GetAllAirconditionerByParamResponse * soap_new_req__ns1__GetAllAirconditionerByParamResponse(
+	struct soap *soap)
+{
+	_ns1__GetAllAirconditionerByParamResponse *_p = ::soap_new__ns1__GetAllAirconditionerByParamResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__GetAllAirconditionerByParamResponse * soap_new_set__ns1__GetAllAirconditionerByParamResponse(
+	struct soap *soap,
+	std::wstring *GetAllAirconditionerByParamResult)
+{
+	_ns1__GetAllAirconditionerByParamResponse *_p = ::soap_new__ns1__GetAllAirconditionerByParamResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__GetAllAirconditionerByParamResponse::GetAllAirconditionerByParamResult = GetAllAirconditionerByParamResult;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__GetAllAirconditionerByParamResponse(struct soap *soap, _ns1__GetAllAirconditionerByParamResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllAirconditionerByParamResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllAirconditionerByParamResponse ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__GetAllAirconditionerByParamResponse(struct soap *soap, const char *URL, _ns1__GetAllAirconditionerByParamResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllAirconditionerByParamResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllAirconditionerByParamResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__GetAllAirconditionerByParamResponse(struct soap *soap, const char *URL, _ns1__GetAllAirconditionerByParamResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllAirconditionerByParamResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllAirconditionerByParamResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__GetAllAirconditionerByParamResponse(struct soap *soap, const char *URL, _ns1__GetAllAirconditionerByParamResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllAirconditionerByParamResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllAirconditionerByParamResponse ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__GetAllAirconditionerByParamResponse * SOAP_FMAC4 soap_get__ns1__GetAllAirconditionerByParamResponse(struct soap*, _ns1__GetAllAirconditionerByParamResponse *, const char*, const char*);
+
+inline int soap_read__ns1__GetAllAirconditionerByParamResponse(struct soap *soap, _ns1__GetAllAirconditionerByParamResponse *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__GetAllAirconditionerByParamResponse(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__GetAllAirconditionerByParamResponse(struct soap *soap, const char *URL, _ns1__GetAllAirconditionerByParamResponse *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__GetAllAirconditionerByParamResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__GetAllAirconditionerByParamResponse(struct soap *soap, _ns1__GetAllAirconditionerByParamResponse *p)
+{
+	if (::soap_read__ns1__GetAllAirconditionerByParamResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__GetAllAirconditionerByParam_DEFINED
+#define SOAP_TYPE__ns1__GetAllAirconditionerByParam_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllAirconditionerByParam(struct soap*, const char*, int, const _ns1__GetAllAirconditionerByParam *, const char*);
+SOAP_FMAC3 _ns1__GetAllAirconditionerByParam * SOAP_FMAC4 soap_in__ns1__GetAllAirconditionerByParam(struct soap*, const char*, _ns1__GetAllAirconditionerByParam *, const char*);
+SOAP_FMAC1 _ns1__GetAllAirconditionerByParam * SOAP_FMAC2 soap_instantiate__ns1__GetAllAirconditionerByParam(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__GetAllAirconditionerByParam * soap_new__ns1__GetAllAirconditionerByParam(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__GetAllAirconditionerByParam(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__GetAllAirconditionerByParam * soap_new_req__ns1__GetAllAirconditionerByParam(
+	struct soap *soap,
+	int AirconditionerPower,
+	int AirconditionerPipePosition,
+	int AirconditionerIsRainpipe,
+	int RainpipePosition)
+{
+	_ns1__GetAllAirconditionerByParam *_p = ::soap_new__ns1__GetAllAirconditionerByParam(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__GetAllAirconditionerByParam::AirconditionerPower = AirconditionerPower;
+		_p->_ns1__GetAllAirconditionerByParam::AirconditionerPipePosition = AirconditionerPipePosition;
+		_p->_ns1__GetAllAirconditionerByParam::AirconditionerIsRainpipe = AirconditionerIsRainpipe;
+		_p->_ns1__GetAllAirconditionerByParam::RainpipePosition = RainpipePosition;
+	}
+	return _p;
+}
+
+inline _ns1__GetAllAirconditionerByParam * soap_new_set__ns1__GetAllAirconditionerByParam(
+	struct soap *soap,
+	int AirconditionerPower,
+	int AirconditionerPipePosition,
+	int AirconditionerIsRainpipe,
+	int RainpipePosition)
+{
+	_ns1__GetAllAirconditionerByParam *_p = ::soap_new__ns1__GetAllAirconditionerByParam(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__GetAllAirconditionerByParam::AirconditionerPower = AirconditionerPower;
+		_p->_ns1__GetAllAirconditionerByParam::AirconditionerPipePosition = AirconditionerPipePosition;
+		_p->_ns1__GetAllAirconditionerByParam::AirconditionerIsRainpipe = AirconditionerIsRainpipe;
+		_p->_ns1__GetAllAirconditionerByParam::RainpipePosition = RainpipePosition;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__GetAllAirconditionerByParam(struct soap *soap, _ns1__GetAllAirconditionerByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllAirconditionerByParam", p->soap_type() == SOAP_TYPE__ns1__GetAllAirconditionerByParam ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__GetAllAirconditionerByParam(struct soap *soap, const char *URL, _ns1__GetAllAirconditionerByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllAirconditionerByParam", p->soap_type() == SOAP_TYPE__ns1__GetAllAirconditionerByParam ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__GetAllAirconditionerByParam(struct soap *soap, const char *URL, _ns1__GetAllAirconditionerByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllAirconditionerByParam", p->soap_type() == SOAP_TYPE__ns1__GetAllAirconditionerByParam ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__GetAllAirconditionerByParam(struct soap *soap, const char *URL, _ns1__GetAllAirconditionerByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllAirconditionerByParam", p->soap_type() == SOAP_TYPE__ns1__GetAllAirconditionerByParam ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__GetAllAirconditionerByParam * SOAP_FMAC4 soap_get__ns1__GetAllAirconditionerByParam(struct soap*, _ns1__GetAllAirconditionerByParam *, const char*, const char*);
+
+inline int soap_read__ns1__GetAllAirconditionerByParam(struct soap *soap, _ns1__GetAllAirconditionerByParam *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__GetAllAirconditionerByParam(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__GetAllAirconditionerByParam(struct soap *soap, const char *URL, _ns1__GetAllAirconditionerByParam *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__GetAllAirconditionerByParam(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__GetAllAirconditionerByParam(struct soap *soap, _ns1__GetAllAirconditionerByParam *p)
+{
+	if (::soap_read__ns1__GetAllAirconditionerByParam(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__GetAllHandrailByParamResponse_DEFINED
+#define SOAP_TYPE__ns1__GetAllHandrailByParamResponse_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllHandrailByParamResponse(struct soap*, const char*, int, const _ns1__GetAllHandrailByParamResponse *, const char*);
+SOAP_FMAC3 _ns1__GetAllHandrailByParamResponse * SOAP_FMAC4 soap_in__ns1__GetAllHandrailByParamResponse(struct soap*, const char*, _ns1__GetAllHandrailByParamResponse *, const char*);
+SOAP_FMAC1 _ns1__GetAllHandrailByParamResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllHandrailByParamResponse(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__GetAllHandrailByParamResponse * soap_new__ns1__GetAllHandrailByParamResponse(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__GetAllHandrailByParamResponse(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__GetAllHandrailByParamResponse * soap_new_req__ns1__GetAllHandrailByParamResponse(
+	struct soap *soap)
+{
+	_ns1__GetAllHandrailByParamResponse *_p = ::soap_new__ns1__GetAllHandrailByParamResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__GetAllHandrailByParamResponse * soap_new_set__ns1__GetAllHandrailByParamResponse(
+	struct soap *soap,
+	std::wstring *GetAllHandrailByParamResult)
+{
+	_ns1__GetAllHandrailByParamResponse *_p = ::soap_new__ns1__GetAllHandrailByParamResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__GetAllHandrailByParamResponse::GetAllHandrailByParamResult = GetAllHandrailByParamResult;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__GetAllHandrailByParamResponse(struct soap *soap, _ns1__GetAllHandrailByParamResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllHandrailByParamResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllHandrailByParamResponse ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__GetAllHandrailByParamResponse(struct soap *soap, const char *URL, _ns1__GetAllHandrailByParamResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllHandrailByParamResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllHandrailByParamResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__GetAllHandrailByParamResponse(struct soap *soap, const char *URL, _ns1__GetAllHandrailByParamResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllHandrailByParamResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllHandrailByParamResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__GetAllHandrailByParamResponse(struct soap *soap, const char *URL, _ns1__GetAllHandrailByParamResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllHandrailByParamResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllHandrailByParamResponse ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__GetAllHandrailByParamResponse * SOAP_FMAC4 soap_get__ns1__GetAllHandrailByParamResponse(struct soap*, _ns1__GetAllHandrailByParamResponse *, const char*, const char*);
+
+inline int soap_read__ns1__GetAllHandrailByParamResponse(struct soap *soap, _ns1__GetAllHandrailByParamResponse *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__GetAllHandrailByParamResponse(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__GetAllHandrailByParamResponse(struct soap *soap, const char *URL, _ns1__GetAllHandrailByParamResponse *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__GetAllHandrailByParamResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__GetAllHandrailByParamResponse(struct soap *soap, _ns1__GetAllHandrailByParamResponse *p)
+{
+	if (::soap_read__ns1__GetAllHandrailByParamResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__GetAllHandrailByParam_DEFINED
+#define SOAP_TYPE__ns1__GetAllHandrailByParam_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllHandrailByParam(struct soap*, const char*, int, const _ns1__GetAllHandrailByParam *, const char*);
+SOAP_FMAC3 _ns1__GetAllHandrailByParam * SOAP_FMAC4 soap_in__ns1__GetAllHandrailByParam(struct soap*, const char*, _ns1__GetAllHandrailByParam *, const char*);
+SOAP_FMAC1 _ns1__GetAllHandrailByParam * SOAP_FMAC2 soap_instantiate__ns1__GetAllHandrailByParam(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__GetAllHandrailByParam * soap_new__ns1__GetAllHandrailByParam(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__GetAllHandrailByParam(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__GetAllHandrailByParam * soap_new_req__ns1__GetAllHandrailByParam(
+	struct soap *soap,
+	int RailingType)
+{
+	_ns1__GetAllHandrailByParam *_p = ::soap_new__ns1__GetAllHandrailByParam(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__GetAllHandrailByParam::RailingType = RailingType;
+	}
+	return _p;
+}
+
+inline _ns1__GetAllHandrailByParam * soap_new_set__ns1__GetAllHandrailByParam(
+	struct soap *soap,
+	int RailingType)
+{
+	_ns1__GetAllHandrailByParam *_p = ::soap_new__ns1__GetAllHandrailByParam(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__GetAllHandrailByParam::RailingType = RailingType;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__GetAllHandrailByParam(struct soap *soap, _ns1__GetAllHandrailByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllHandrailByParam", p->soap_type() == SOAP_TYPE__ns1__GetAllHandrailByParam ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__GetAllHandrailByParam(struct soap *soap, const char *URL, _ns1__GetAllHandrailByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllHandrailByParam", p->soap_type() == SOAP_TYPE__ns1__GetAllHandrailByParam ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__GetAllHandrailByParam(struct soap *soap, const char *URL, _ns1__GetAllHandrailByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllHandrailByParam", p->soap_type() == SOAP_TYPE__ns1__GetAllHandrailByParam ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__GetAllHandrailByParam(struct soap *soap, const char *URL, _ns1__GetAllHandrailByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllHandrailByParam", p->soap_type() == SOAP_TYPE__ns1__GetAllHandrailByParam ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__GetAllHandrailByParam * SOAP_FMAC4 soap_get__ns1__GetAllHandrailByParam(struct soap*, _ns1__GetAllHandrailByParam *, const char*, const char*);
+
+inline int soap_read__ns1__GetAllHandrailByParam(struct soap *soap, _ns1__GetAllHandrailByParam *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__GetAllHandrailByParam(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__GetAllHandrailByParam(struct soap *soap, const char *URL, _ns1__GetAllHandrailByParam *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__GetAllHandrailByParam(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__GetAllHandrailByParam(struct soap *soap, _ns1__GetAllHandrailByParam *p)
+{
+	if (::soap_read__ns1__GetAllHandrailByParam(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__GetAllBathroomByParamResponse_DEFINED
+#define SOAP_TYPE__ns1__GetAllBathroomByParamResponse_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllBathroomByParamResponse(struct soap*, const char*, int, const _ns1__GetAllBathroomByParamResponse *, const char*);
+SOAP_FMAC3 _ns1__GetAllBathroomByParamResponse * SOAP_FMAC4 soap_in__ns1__GetAllBathroomByParamResponse(struct soap*, const char*, _ns1__GetAllBathroomByParamResponse *, const char*);
+SOAP_FMAC1 _ns1__GetAllBathroomByParamResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllBathroomByParamResponse(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__GetAllBathroomByParamResponse * soap_new__ns1__GetAllBathroomByParamResponse(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__GetAllBathroomByParamResponse(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__GetAllBathroomByParamResponse * soap_new_req__ns1__GetAllBathroomByParamResponse(
+	struct soap *soap)
+{
+	_ns1__GetAllBathroomByParamResponse *_p = ::soap_new__ns1__GetAllBathroomByParamResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__GetAllBathroomByParamResponse * soap_new_set__ns1__GetAllBathroomByParamResponse(
+	struct soap *soap,
+	std::wstring *GetAllBathroomByParamResult)
+{
+	_ns1__GetAllBathroomByParamResponse *_p = ::soap_new__ns1__GetAllBathroomByParamResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__GetAllBathroomByParamResponse::GetAllBathroomByParamResult = GetAllBathroomByParamResult;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__GetAllBathroomByParamResponse(struct soap *soap, _ns1__GetAllBathroomByParamResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllBathroomByParamResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllBathroomByParamResponse ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__GetAllBathroomByParamResponse(struct soap *soap, const char *URL, _ns1__GetAllBathroomByParamResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllBathroomByParamResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllBathroomByParamResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__GetAllBathroomByParamResponse(struct soap *soap, const char *URL, _ns1__GetAllBathroomByParamResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllBathroomByParamResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllBathroomByParamResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__GetAllBathroomByParamResponse(struct soap *soap, const char *URL, _ns1__GetAllBathroomByParamResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllBathroomByParamResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllBathroomByParamResponse ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__GetAllBathroomByParamResponse * SOAP_FMAC4 soap_get__ns1__GetAllBathroomByParamResponse(struct soap*, _ns1__GetAllBathroomByParamResponse *, const char*, const char*);
+
+inline int soap_read__ns1__GetAllBathroomByParamResponse(struct soap *soap, _ns1__GetAllBathroomByParamResponse *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__GetAllBathroomByParamResponse(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__GetAllBathroomByParamResponse(struct soap *soap, const char *URL, _ns1__GetAllBathroomByParamResponse *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__GetAllBathroomByParamResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__GetAllBathroomByParamResponse(struct soap *soap, _ns1__GetAllBathroomByParamResponse *p)
+{
+	if (::soap_read__ns1__GetAllBathroomByParamResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__GetAllBathroomByParam_DEFINED
+#define SOAP_TYPE__ns1__GetAllBathroomByParam_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllBathroomByParam(struct soap*, const char*, int, const _ns1__GetAllBathroomByParam *, const char*);
+SOAP_FMAC3 _ns1__GetAllBathroomByParam * SOAP_FMAC4 soap_in__ns1__GetAllBathroomByParam(struct soap*, const char*, _ns1__GetAllBathroomByParam *, const char*);
+SOAP_FMAC1 _ns1__GetAllBathroomByParam * SOAP_FMAC2 soap_instantiate__ns1__GetAllBathroomByParam(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__GetAllBathroomByParam * soap_new__ns1__GetAllBathroomByParam(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__GetAllBathroomByParam(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__GetAllBathroomByParam * soap_new_req__ns1__GetAllBathroomByParam(
+	struct soap *soap,
+	double Width,
+	double Height,
+	int BathroomDoorWindowPosition,
+	int ToiletType,
+	int AirVent)
+{
+	_ns1__GetAllBathroomByParam *_p = ::soap_new__ns1__GetAllBathroomByParam(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__GetAllBathroomByParam::Width = Width;
+		_p->_ns1__GetAllBathroomByParam::Height = Height;
+		_p->_ns1__GetAllBathroomByParam::BathroomDoorWindowPosition = BathroomDoorWindowPosition;
+		_p->_ns1__GetAllBathroomByParam::ToiletType = ToiletType;
+		_p->_ns1__GetAllBathroomByParam::AirVent = AirVent;
+	}
+	return _p;
+}
+
+inline _ns1__GetAllBathroomByParam * soap_new_set__ns1__GetAllBathroomByParam(
+	struct soap *soap,
+	double Width,
+	double Height,
+	int BathroomDoorWindowPosition,
+	int ToiletType,
+	int AirVent)
+{
+	_ns1__GetAllBathroomByParam *_p = ::soap_new__ns1__GetAllBathroomByParam(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__GetAllBathroomByParam::Width = Width;
+		_p->_ns1__GetAllBathroomByParam::Height = Height;
+		_p->_ns1__GetAllBathroomByParam::BathroomDoorWindowPosition = BathroomDoorWindowPosition;
+		_p->_ns1__GetAllBathroomByParam::ToiletType = ToiletType;
+		_p->_ns1__GetAllBathroomByParam::AirVent = AirVent;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__GetAllBathroomByParam(struct soap *soap, _ns1__GetAllBathroomByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllBathroomByParam", p->soap_type() == SOAP_TYPE__ns1__GetAllBathroomByParam ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__GetAllBathroomByParam(struct soap *soap, const char *URL, _ns1__GetAllBathroomByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllBathroomByParam", p->soap_type() == SOAP_TYPE__ns1__GetAllBathroomByParam ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__GetAllBathroomByParam(struct soap *soap, const char *URL, _ns1__GetAllBathroomByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllBathroomByParam", p->soap_type() == SOAP_TYPE__ns1__GetAllBathroomByParam ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__GetAllBathroomByParam(struct soap *soap, const char *URL, _ns1__GetAllBathroomByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllBathroomByParam", p->soap_type() == SOAP_TYPE__ns1__GetAllBathroomByParam ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__GetAllBathroomByParam * SOAP_FMAC4 soap_get__ns1__GetAllBathroomByParam(struct soap*, _ns1__GetAllBathroomByParam *, const char*, const char*);
+
+inline int soap_read__ns1__GetAllBathroomByParam(struct soap *soap, _ns1__GetAllBathroomByParam *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__GetAllBathroomByParam(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__GetAllBathroomByParam(struct soap *soap, const char *URL, _ns1__GetAllBathroomByParam *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__GetAllBathroomByParam(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__GetAllBathroomByParam(struct soap *soap, _ns1__GetAllBathroomByParam *p)
+{
+	if (::soap_read__ns1__GetAllBathroomByParam(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__GetAllBathroomResponse_DEFINED
+#define SOAP_TYPE__ns1__GetAllBathroomResponse_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllBathroomResponse(struct soap*, const char*, int, const _ns1__GetAllBathroomResponse *, const char*);
+SOAP_FMAC3 _ns1__GetAllBathroomResponse * SOAP_FMAC4 soap_in__ns1__GetAllBathroomResponse(struct soap*, const char*, _ns1__GetAllBathroomResponse *, const char*);
+SOAP_FMAC1 _ns1__GetAllBathroomResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllBathroomResponse(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__GetAllBathroomResponse * soap_new__ns1__GetAllBathroomResponse(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__GetAllBathroomResponse(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__GetAllBathroomResponse * soap_new_req__ns1__GetAllBathroomResponse(
+	struct soap *soap)
+{
+	_ns1__GetAllBathroomResponse *_p = ::soap_new__ns1__GetAllBathroomResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__GetAllBathroomResponse * soap_new_set__ns1__GetAllBathroomResponse(
+	struct soap *soap,
+	std::wstring *GetAllBathroomResult)
+{
+	_ns1__GetAllBathroomResponse *_p = ::soap_new__ns1__GetAllBathroomResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__GetAllBathroomResponse::GetAllBathroomResult = GetAllBathroomResult;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__GetAllBathroomResponse(struct soap *soap, _ns1__GetAllBathroomResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllBathroomResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllBathroomResponse ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__GetAllBathroomResponse(struct soap *soap, const char *URL, _ns1__GetAllBathroomResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllBathroomResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllBathroomResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__GetAllBathroomResponse(struct soap *soap, const char *URL, _ns1__GetAllBathroomResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllBathroomResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllBathroomResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__GetAllBathroomResponse(struct soap *soap, const char *URL, _ns1__GetAllBathroomResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllBathroomResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllBathroomResponse ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__GetAllBathroomResponse * SOAP_FMAC4 soap_get__ns1__GetAllBathroomResponse(struct soap*, _ns1__GetAllBathroomResponse *, const char*, const char*);
+
+inline int soap_read__ns1__GetAllBathroomResponse(struct soap *soap, _ns1__GetAllBathroomResponse *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__GetAllBathroomResponse(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__GetAllBathroomResponse(struct soap *soap, const char *URL, _ns1__GetAllBathroomResponse *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__GetAllBathroomResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__GetAllBathroomResponse(struct soap *soap, _ns1__GetAllBathroomResponse *p)
+{
+	if (::soap_read__ns1__GetAllBathroomResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__GetAllBathroom_DEFINED
+#define SOAP_TYPE__ns1__GetAllBathroom_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllBathroom(struct soap*, const char*, int, const _ns1__GetAllBathroom *, const char*);
+SOAP_FMAC3 _ns1__GetAllBathroom * SOAP_FMAC4 soap_in__ns1__GetAllBathroom(struct soap*, const char*, _ns1__GetAllBathroom *, const char*);
+SOAP_FMAC1 _ns1__GetAllBathroom * SOAP_FMAC2 soap_instantiate__ns1__GetAllBathroom(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__GetAllBathroom * soap_new__ns1__GetAllBathroom(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__GetAllBathroom(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__GetAllBathroom * soap_new_req__ns1__GetAllBathroom(
+	struct soap *soap)
+{
+	_ns1__GetAllBathroom *_p = ::soap_new__ns1__GetAllBathroom(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__GetAllBathroom * soap_new_set__ns1__GetAllBathroom(
+	struct soap *soap)
+{
+	_ns1__GetAllBathroom *_p = ::soap_new__ns1__GetAllBathroom(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__GetAllBathroom(struct soap *soap, _ns1__GetAllBathroom const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllBathroom", p->soap_type() == SOAP_TYPE__ns1__GetAllBathroom ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__GetAllBathroom(struct soap *soap, const char *URL, _ns1__GetAllBathroom const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllBathroom", p->soap_type() == SOAP_TYPE__ns1__GetAllBathroom ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__GetAllBathroom(struct soap *soap, const char *URL, _ns1__GetAllBathroom const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllBathroom", p->soap_type() == SOAP_TYPE__ns1__GetAllBathroom ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__GetAllBathroom(struct soap *soap, const char *URL, _ns1__GetAllBathroom const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllBathroom", p->soap_type() == SOAP_TYPE__ns1__GetAllBathroom ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__GetAllBathroom * SOAP_FMAC4 soap_get__ns1__GetAllBathroom(struct soap*, _ns1__GetAllBathroom *, const char*, const char*);
+
+inline int soap_read__ns1__GetAllBathroom(struct soap *soap, _ns1__GetAllBathroom *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__GetAllBathroom(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__GetAllBathroom(struct soap *soap, const char *URL, _ns1__GetAllBathroom *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__GetAllBathroom(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__GetAllBathroom(struct soap *soap, _ns1__GetAllBathroom *p)
+{
+	if (::soap_read__ns1__GetAllBathroom(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__GetAllKitchenParamResponse_DEFINED
+#define SOAP_TYPE__ns1__GetAllKitchenParamResponse_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllKitchenParamResponse(struct soap*, const char*, int, const _ns1__GetAllKitchenParamResponse *, const char*);
+SOAP_FMAC3 _ns1__GetAllKitchenParamResponse * SOAP_FMAC4 soap_in__ns1__GetAllKitchenParamResponse(struct soap*, const char*, _ns1__GetAllKitchenParamResponse *, const char*);
+SOAP_FMAC1 _ns1__GetAllKitchenParamResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllKitchenParamResponse(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__GetAllKitchenParamResponse * soap_new__ns1__GetAllKitchenParamResponse(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__GetAllKitchenParamResponse(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__GetAllKitchenParamResponse * soap_new_req__ns1__GetAllKitchenParamResponse(
+	struct soap *soap)
+{
+	_ns1__GetAllKitchenParamResponse *_p = ::soap_new__ns1__GetAllKitchenParamResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__GetAllKitchenParamResponse * soap_new_set__ns1__GetAllKitchenParamResponse(
+	struct soap *soap,
+	std::wstring *GetAllKitchenParamResult)
+{
+	_ns1__GetAllKitchenParamResponse *_p = ::soap_new__ns1__GetAllKitchenParamResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__GetAllKitchenParamResponse::GetAllKitchenParamResult = GetAllKitchenParamResult;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__GetAllKitchenParamResponse(struct soap *soap, _ns1__GetAllKitchenParamResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllKitchenParamResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllKitchenParamResponse ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__GetAllKitchenParamResponse(struct soap *soap, const char *URL, _ns1__GetAllKitchenParamResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllKitchenParamResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllKitchenParamResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__GetAllKitchenParamResponse(struct soap *soap, const char *URL, _ns1__GetAllKitchenParamResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllKitchenParamResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllKitchenParamResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__GetAllKitchenParamResponse(struct soap *soap, const char *URL, _ns1__GetAllKitchenParamResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllKitchenParamResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllKitchenParamResponse ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__GetAllKitchenParamResponse * SOAP_FMAC4 soap_get__ns1__GetAllKitchenParamResponse(struct soap*, _ns1__GetAllKitchenParamResponse *, const char*, const char*);
+
+inline int soap_read__ns1__GetAllKitchenParamResponse(struct soap *soap, _ns1__GetAllKitchenParamResponse *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__GetAllKitchenParamResponse(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__GetAllKitchenParamResponse(struct soap *soap, const char *URL, _ns1__GetAllKitchenParamResponse *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__GetAllKitchenParamResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__GetAllKitchenParamResponse(struct soap *soap, _ns1__GetAllKitchenParamResponse *p)
+{
+	if (::soap_read__ns1__GetAllKitchenParamResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__GetAllKitchenParam_DEFINED
+#define SOAP_TYPE__ns1__GetAllKitchenParam_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllKitchenParam(struct soap*, const char*, int, const _ns1__GetAllKitchenParam *, const char*);
+SOAP_FMAC3 _ns1__GetAllKitchenParam * SOAP_FMAC4 soap_in__ns1__GetAllKitchenParam(struct soap*, const char*, _ns1__GetAllKitchenParam *, const char*);
+SOAP_FMAC1 _ns1__GetAllKitchenParam * SOAP_FMAC2 soap_instantiate__ns1__GetAllKitchenParam(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__GetAllKitchenParam * soap_new__ns1__GetAllKitchenParam(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__GetAllKitchenParam(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__GetAllKitchenParam * soap_new_req__ns1__GetAllKitchenParam(
+	struct soap *soap,
+	double Width,
+	double Height,
+	int KitchenDoorWindowPosition,
+	int KitchenType,
+	int AirVent)
+{
+	_ns1__GetAllKitchenParam *_p = ::soap_new__ns1__GetAllKitchenParam(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__GetAllKitchenParam::Width = Width;
+		_p->_ns1__GetAllKitchenParam::Height = Height;
+		_p->_ns1__GetAllKitchenParam::KitchenDoorWindowPosition = KitchenDoorWindowPosition;
+		_p->_ns1__GetAllKitchenParam::KitchenType = KitchenType;
+		_p->_ns1__GetAllKitchenParam::AirVent = AirVent;
+	}
+	return _p;
+}
+
+inline _ns1__GetAllKitchenParam * soap_new_set__ns1__GetAllKitchenParam(
+	struct soap *soap,
+	double Width,
+	double Height,
+	int KitchenDoorWindowPosition,
+	int KitchenType,
+	int AirVent)
+{
+	_ns1__GetAllKitchenParam *_p = ::soap_new__ns1__GetAllKitchenParam(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__GetAllKitchenParam::Width = Width;
+		_p->_ns1__GetAllKitchenParam::Height = Height;
+		_p->_ns1__GetAllKitchenParam::KitchenDoorWindowPosition = KitchenDoorWindowPosition;
+		_p->_ns1__GetAllKitchenParam::KitchenType = KitchenType;
+		_p->_ns1__GetAllKitchenParam::AirVent = AirVent;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__GetAllKitchenParam(struct soap *soap, _ns1__GetAllKitchenParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllKitchenParam", p->soap_type() == SOAP_TYPE__ns1__GetAllKitchenParam ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__GetAllKitchenParam(struct soap *soap, const char *URL, _ns1__GetAllKitchenParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllKitchenParam", p->soap_type() == SOAP_TYPE__ns1__GetAllKitchenParam ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__GetAllKitchenParam(struct soap *soap, const char *URL, _ns1__GetAllKitchenParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllKitchenParam", p->soap_type() == SOAP_TYPE__ns1__GetAllKitchenParam ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__GetAllKitchenParam(struct soap *soap, const char *URL, _ns1__GetAllKitchenParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllKitchenParam", p->soap_type() == SOAP_TYPE__ns1__GetAllKitchenParam ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__GetAllKitchenParam * SOAP_FMAC4 soap_get__ns1__GetAllKitchenParam(struct soap*, _ns1__GetAllKitchenParam *, const char*, const char*);
+
+inline int soap_read__ns1__GetAllKitchenParam(struct soap *soap, _ns1__GetAllKitchenParam *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__GetAllKitchenParam(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__GetAllKitchenParam(struct soap *soap, const char *URL, _ns1__GetAllKitchenParam *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__GetAllKitchenParam(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__GetAllKitchenParam(struct soap *soap, _ns1__GetAllKitchenParam *p)
+{
+	if (::soap_read__ns1__GetAllKitchenParam(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__GetAllKitchenResponse_DEFINED
+#define SOAP_TYPE__ns1__GetAllKitchenResponse_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllKitchenResponse(struct soap*, const char*, int, const _ns1__GetAllKitchenResponse *, const char*);
+SOAP_FMAC3 _ns1__GetAllKitchenResponse * SOAP_FMAC4 soap_in__ns1__GetAllKitchenResponse(struct soap*, const char*, _ns1__GetAllKitchenResponse *, const char*);
+SOAP_FMAC1 _ns1__GetAllKitchenResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllKitchenResponse(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__GetAllKitchenResponse * soap_new__ns1__GetAllKitchenResponse(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__GetAllKitchenResponse(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__GetAllKitchenResponse * soap_new_req__ns1__GetAllKitchenResponse(
+	struct soap *soap)
+{
+	_ns1__GetAllKitchenResponse *_p = ::soap_new__ns1__GetAllKitchenResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__GetAllKitchenResponse * soap_new_set__ns1__GetAllKitchenResponse(
+	struct soap *soap,
+	std::wstring *GetAllKitchenResult)
+{
+	_ns1__GetAllKitchenResponse *_p = ::soap_new__ns1__GetAllKitchenResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__GetAllKitchenResponse::GetAllKitchenResult = GetAllKitchenResult;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__GetAllKitchenResponse(struct soap *soap, _ns1__GetAllKitchenResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllKitchenResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllKitchenResponse ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__GetAllKitchenResponse(struct soap *soap, const char *URL, _ns1__GetAllKitchenResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllKitchenResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllKitchenResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__GetAllKitchenResponse(struct soap *soap, const char *URL, _ns1__GetAllKitchenResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllKitchenResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllKitchenResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__GetAllKitchenResponse(struct soap *soap, const char *URL, _ns1__GetAllKitchenResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllKitchenResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllKitchenResponse ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__GetAllKitchenResponse * SOAP_FMAC4 soap_get__ns1__GetAllKitchenResponse(struct soap*, _ns1__GetAllKitchenResponse *, const char*, const char*);
+
+inline int soap_read__ns1__GetAllKitchenResponse(struct soap *soap, _ns1__GetAllKitchenResponse *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__GetAllKitchenResponse(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__GetAllKitchenResponse(struct soap *soap, const char *URL, _ns1__GetAllKitchenResponse *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__GetAllKitchenResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__GetAllKitchenResponse(struct soap *soap, _ns1__GetAllKitchenResponse *p)
+{
+	if (::soap_read__ns1__GetAllKitchenResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__GetAllKitchen_DEFINED
+#define SOAP_TYPE__ns1__GetAllKitchen_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllKitchen(struct soap*, const char*, int, const _ns1__GetAllKitchen *, const char*);
+SOAP_FMAC3 _ns1__GetAllKitchen * SOAP_FMAC4 soap_in__ns1__GetAllKitchen(struct soap*, const char*, _ns1__GetAllKitchen *, const char*);
+SOAP_FMAC1 _ns1__GetAllKitchen * SOAP_FMAC2 soap_instantiate__ns1__GetAllKitchen(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__GetAllKitchen * soap_new__ns1__GetAllKitchen(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__GetAllKitchen(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__GetAllKitchen * soap_new_req__ns1__GetAllKitchen(
+	struct soap *soap)
+{
+	_ns1__GetAllKitchen *_p = ::soap_new__ns1__GetAllKitchen(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__GetAllKitchen * soap_new_set__ns1__GetAllKitchen(
+	struct soap *soap)
+{
+	_ns1__GetAllKitchen *_p = ::soap_new__ns1__GetAllKitchen(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__GetAllKitchen(struct soap *soap, _ns1__GetAllKitchen const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllKitchen", p->soap_type() == SOAP_TYPE__ns1__GetAllKitchen ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__GetAllKitchen(struct soap *soap, const char *URL, _ns1__GetAllKitchen const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllKitchen", p->soap_type() == SOAP_TYPE__ns1__GetAllKitchen ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__GetAllKitchen(struct soap *soap, const char *URL, _ns1__GetAllKitchen const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllKitchen", p->soap_type() == SOAP_TYPE__ns1__GetAllKitchen ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__GetAllKitchen(struct soap *soap, const char *URL, _ns1__GetAllKitchen const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllKitchen", p->soap_type() == SOAP_TYPE__ns1__GetAllKitchen ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__GetAllKitchen * SOAP_FMAC4 soap_get__ns1__GetAllKitchen(struct soap*, _ns1__GetAllKitchen *, const char*, const char*);
+
+inline int soap_read__ns1__GetAllKitchen(struct soap *soap, _ns1__GetAllKitchen *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__GetAllKitchen(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__GetAllKitchen(struct soap *soap, const char *URL, _ns1__GetAllKitchen *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__GetAllKitchen(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__GetAllKitchen(struct soap *soap, _ns1__GetAllKitchen *p)
+{
+	if (::soap_read__ns1__GetAllKitchen(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__GetAllDoorByParamResponse_DEFINED
+#define SOAP_TYPE__ns1__GetAllDoorByParamResponse_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllDoorByParamResponse(struct soap*, const char*, int, const _ns1__GetAllDoorByParamResponse *, const char*);
+SOAP_FMAC3 _ns1__GetAllDoorByParamResponse * SOAP_FMAC4 soap_in__ns1__GetAllDoorByParamResponse(struct soap*, const char*, _ns1__GetAllDoorByParamResponse *, const char*);
+SOAP_FMAC1 _ns1__GetAllDoorByParamResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllDoorByParamResponse(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__GetAllDoorByParamResponse * soap_new__ns1__GetAllDoorByParamResponse(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__GetAllDoorByParamResponse(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__GetAllDoorByParamResponse * soap_new_req__ns1__GetAllDoorByParamResponse(
+	struct soap *soap)
+{
+	_ns1__GetAllDoorByParamResponse *_p = ::soap_new__ns1__GetAllDoorByParamResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__GetAllDoorByParamResponse * soap_new_set__ns1__GetAllDoorByParamResponse(
+	struct soap *soap,
+	std::wstring *GetAllDoorByParamResult)
+{
+	_ns1__GetAllDoorByParamResponse *_p = ::soap_new__ns1__GetAllDoorByParamResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__GetAllDoorByParamResponse::GetAllDoorByParamResult = GetAllDoorByParamResult;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__GetAllDoorByParamResponse(struct soap *soap, _ns1__GetAllDoorByParamResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllDoorByParamResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllDoorByParamResponse ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__GetAllDoorByParamResponse(struct soap *soap, const char *URL, _ns1__GetAllDoorByParamResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllDoorByParamResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllDoorByParamResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__GetAllDoorByParamResponse(struct soap *soap, const char *URL, _ns1__GetAllDoorByParamResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllDoorByParamResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllDoorByParamResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__GetAllDoorByParamResponse(struct soap *soap, const char *URL, _ns1__GetAllDoorByParamResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllDoorByParamResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllDoorByParamResponse ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__GetAllDoorByParamResponse * SOAP_FMAC4 soap_get__ns1__GetAllDoorByParamResponse(struct soap*, _ns1__GetAllDoorByParamResponse *, const char*, const char*);
+
+inline int soap_read__ns1__GetAllDoorByParamResponse(struct soap *soap, _ns1__GetAllDoorByParamResponse *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__GetAllDoorByParamResponse(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__GetAllDoorByParamResponse(struct soap *soap, const char *URL, _ns1__GetAllDoorByParamResponse *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__GetAllDoorByParamResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__GetAllDoorByParamResponse(struct soap *soap, _ns1__GetAllDoorByParamResponse *p)
+{
+	if (::soap_read__ns1__GetAllDoorByParamResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__GetAllDoorByParam_DEFINED
+#define SOAP_TYPE__ns1__GetAllDoorByParam_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllDoorByParam(struct soap*, const char*, int, const _ns1__GetAllDoorByParam *, const char*);
+SOAP_FMAC3 _ns1__GetAllDoorByParam * SOAP_FMAC4 soap_in__ns1__GetAllDoorByParam(struct soap*, const char*, _ns1__GetAllDoorByParam *, const char*);
+SOAP_FMAC1 _ns1__GetAllDoorByParam * SOAP_FMAC2 soap_instantiate__ns1__GetAllDoorByParam(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__GetAllDoorByParam * soap_new__ns1__GetAllDoorByParam(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__GetAllDoorByParam(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__GetAllDoorByParam * soap_new_req__ns1__GetAllDoorByParam(
+	struct soap *soap,
+	double width,
+	int doorType)
+{
+	_ns1__GetAllDoorByParam *_p = ::soap_new__ns1__GetAllDoorByParam(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__GetAllDoorByParam::width = width;
+		_p->_ns1__GetAllDoorByParam::doorType = doorType;
+	}
+	return _p;
+}
+
+inline _ns1__GetAllDoorByParam * soap_new_set__ns1__GetAllDoorByParam(
+	struct soap *soap,
+	double width,
+	int doorType)
+{
+	_ns1__GetAllDoorByParam *_p = ::soap_new__ns1__GetAllDoorByParam(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__GetAllDoorByParam::width = width;
+		_p->_ns1__GetAllDoorByParam::doorType = doorType;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__GetAllDoorByParam(struct soap *soap, _ns1__GetAllDoorByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllDoorByParam", p->soap_type() == SOAP_TYPE__ns1__GetAllDoorByParam ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__GetAllDoorByParam(struct soap *soap, const char *URL, _ns1__GetAllDoorByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllDoorByParam", p->soap_type() == SOAP_TYPE__ns1__GetAllDoorByParam ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__GetAllDoorByParam(struct soap *soap, const char *URL, _ns1__GetAllDoorByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllDoorByParam", p->soap_type() == SOAP_TYPE__ns1__GetAllDoorByParam ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__GetAllDoorByParam(struct soap *soap, const char *URL, _ns1__GetAllDoorByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllDoorByParam", p->soap_type() == SOAP_TYPE__ns1__GetAllDoorByParam ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__GetAllDoorByParam * SOAP_FMAC4 soap_get__ns1__GetAllDoorByParam(struct soap*, _ns1__GetAllDoorByParam *, const char*, const char*);
+
+inline int soap_read__ns1__GetAllDoorByParam(struct soap *soap, _ns1__GetAllDoorByParam *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__GetAllDoorByParam(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__GetAllDoorByParam(struct soap *soap, const char *URL, _ns1__GetAllDoorByParam *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__GetAllDoorByParam(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__GetAllDoorByParam(struct soap *soap, _ns1__GetAllDoorByParam *p)
+{
+	if (::soap_read__ns1__GetAllDoorByParam(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__GetAllDoorResponse_DEFINED
+#define SOAP_TYPE__ns1__GetAllDoorResponse_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllDoorResponse(struct soap*, const char*, int, const _ns1__GetAllDoorResponse *, const char*);
+SOAP_FMAC3 _ns1__GetAllDoorResponse * SOAP_FMAC4 soap_in__ns1__GetAllDoorResponse(struct soap*, const char*, _ns1__GetAllDoorResponse *, const char*);
+SOAP_FMAC1 _ns1__GetAllDoorResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllDoorResponse(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__GetAllDoorResponse * soap_new__ns1__GetAllDoorResponse(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__GetAllDoorResponse(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__GetAllDoorResponse * soap_new_req__ns1__GetAllDoorResponse(
+	struct soap *soap)
+{
+	_ns1__GetAllDoorResponse *_p = ::soap_new__ns1__GetAllDoorResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__GetAllDoorResponse * soap_new_set__ns1__GetAllDoorResponse(
+	struct soap *soap,
+	std::wstring *GetAllDoorResult)
+{
+	_ns1__GetAllDoorResponse *_p = ::soap_new__ns1__GetAllDoorResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__GetAllDoorResponse::GetAllDoorResult = GetAllDoorResult;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__GetAllDoorResponse(struct soap *soap, _ns1__GetAllDoorResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllDoorResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllDoorResponse ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__GetAllDoorResponse(struct soap *soap, const char *URL, _ns1__GetAllDoorResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllDoorResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllDoorResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__GetAllDoorResponse(struct soap *soap, const char *URL, _ns1__GetAllDoorResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllDoorResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllDoorResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__GetAllDoorResponse(struct soap *soap, const char *URL, _ns1__GetAllDoorResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllDoorResponse", p->soap_type() == SOAP_TYPE__ns1__GetAllDoorResponse ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__GetAllDoorResponse * SOAP_FMAC4 soap_get__ns1__GetAllDoorResponse(struct soap*, _ns1__GetAllDoorResponse *, const char*, const char*);
+
+inline int soap_read__ns1__GetAllDoorResponse(struct soap *soap, _ns1__GetAllDoorResponse *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__GetAllDoorResponse(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__GetAllDoorResponse(struct soap *soap, const char *URL, _ns1__GetAllDoorResponse *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__GetAllDoorResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__GetAllDoorResponse(struct soap *soap, _ns1__GetAllDoorResponse *p)
+{
+	if (::soap_read__ns1__GetAllDoorResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__GetAllDoor_DEFINED
+#define SOAP_TYPE__ns1__GetAllDoor_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllDoor(struct soap*, const char*, int, const _ns1__GetAllDoor *, const char*);
+SOAP_FMAC3 _ns1__GetAllDoor * SOAP_FMAC4 soap_in__ns1__GetAllDoor(struct soap*, const char*, _ns1__GetAllDoor *, const char*);
+SOAP_FMAC1 _ns1__GetAllDoor * SOAP_FMAC2 soap_instantiate__ns1__GetAllDoor(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__GetAllDoor * soap_new__ns1__GetAllDoor(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__GetAllDoor(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__GetAllDoor * soap_new_req__ns1__GetAllDoor(
+	struct soap *soap)
+{
+	_ns1__GetAllDoor *_p = ::soap_new__ns1__GetAllDoor(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__GetAllDoor * soap_new_set__ns1__GetAllDoor(
+	struct soap *soap)
+{
+	_ns1__GetAllDoor *_p = ::soap_new__ns1__GetAllDoor(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__GetAllDoor(struct soap *soap, _ns1__GetAllDoor const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllDoor", p->soap_type() == SOAP_TYPE__ns1__GetAllDoor ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__GetAllDoor(struct soap *soap, const char *URL, _ns1__GetAllDoor const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllDoor", p->soap_type() == SOAP_TYPE__ns1__GetAllDoor ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__GetAllDoor(struct soap *soap, const char *URL, _ns1__GetAllDoor const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllDoor", p->soap_type() == SOAP_TYPE__ns1__GetAllDoor ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__GetAllDoor(struct soap *soap, const char *URL, _ns1__GetAllDoor const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetAllDoor", p->soap_type() == SOAP_TYPE__ns1__GetAllDoor ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__GetAllDoor * SOAP_FMAC4 soap_get__ns1__GetAllDoor(struct soap*, _ns1__GetAllDoor *, const char*, const char*);
+
+inline int soap_read__ns1__GetAllDoor(struct soap *soap, _ns1__GetAllDoor *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__GetAllDoor(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__GetAllDoor(struct soap *soap, const char *URL, _ns1__GetAllDoor *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__GetAllDoor(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__GetAllDoor(struct soap *soap, _ns1__GetAllDoor *p)
+{
+	if (::soap_read__ns1__GetAllDoor(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
 #ifndef SOAP_TYPE__ns1__GetWindowsResponse_DEFINED
 #define SOAP_TYPE__ns1__GetWindowsResponse_DEFINED
 SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetWindowsResponse(struct soap*, const char*, int, const _ns1__GetWindowsResponse *, const char*);
@@ -1726,6 +3234,758 @@ inline int soap_POST_recv___ns1__CadFileDownload_(struct soap *soap, struct __ns
 }
 #endif
 
+#ifndef SOAP_TYPE___ns1__GetAllAirconditionerByParam__DEFINED
+#define SOAP_TYPE___ns1__GetAllAirconditionerByParam__DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllAirconditionerByParam_(struct soap*, struct __ns1__GetAllAirconditionerByParam_ *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllAirconditionerByParam_(struct soap*, const struct __ns1__GetAllAirconditionerByParam_ *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllAirconditionerByParam_(struct soap*, const char*, int, const struct __ns1__GetAllAirconditionerByParam_ *, const char*);
+SOAP_FMAC3 struct __ns1__GetAllAirconditionerByParam_ * SOAP_FMAC4 soap_in___ns1__GetAllAirconditionerByParam_(struct soap*, const char*, struct __ns1__GetAllAirconditionerByParam_ *, const char*);
+SOAP_FMAC1 struct __ns1__GetAllAirconditionerByParam_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllAirconditionerByParam_(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__GetAllAirconditionerByParam_ * soap_new___ns1__GetAllAirconditionerByParam_(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__GetAllAirconditionerByParam_(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__GetAllAirconditionerByParam_ * soap_new_req___ns1__GetAllAirconditionerByParam_(
+	struct soap *soap)
+{
+	struct __ns1__GetAllAirconditionerByParam_ *_p = ::soap_new___ns1__GetAllAirconditionerByParam_(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllAirconditionerByParam_(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__GetAllAirconditionerByParam_ * soap_new_set___ns1__GetAllAirconditionerByParam_(
+	struct soap *soap,
+	_ns1__GetAllAirconditionerByParam *ns1__GetAllAirconditionerByParam)
+{
+	struct __ns1__GetAllAirconditionerByParam_ *_p = ::soap_new___ns1__GetAllAirconditionerByParam_(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllAirconditionerByParam_(soap, _p);
+		_p->ns1__GetAllAirconditionerByParam = ns1__GetAllAirconditionerByParam;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllAirconditionerByParam_(struct soap*, const struct __ns1__GetAllAirconditionerByParam_ *, const char*, const char*);
+
+inline int soap_write___ns1__GetAllAirconditionerByParam_(struct soap *soap, struct __ns1__GetAllAirconditionerByParam_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__GetAllAirconditionerByParam_(soap, p), 0) || ::soap_put___ns1__GetAllAirconditionerByParam_(soap, p, "-ns1:GetAllAirconditionerByParam", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__GetAllAirconditionerByParam_(struct soap *soap, const char *URL, struct __ns1__GetAllAirconditionerByParam_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllAirconditionerByParam_(soap, p), 0) || ::soap_put___ns1__GetAllAirconditionerByParam_(soap, p, "-ns1:GetAllAirconditionerByParam", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__GetAllAirconditionerByParam_(struct soap *soap, const char *URL, struct __ns1__GetAllAirconditionerByParam_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllAirconditionerByParam_(soap, p), 0) || ::soap_put___ns1__GetAllAirconditionerByParam_(soap, p, "-ns1:GetAllAirconditionerByParam", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__GetAllAirconditionerByParam_(struct soap *soap, const char *URL, struct __ns1__GetAllAirconditionerByParam_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllAirconditionerByParam_(soap, p), 0) || ::soap_put___ns1__GetAllAirconditionerByParam_(soap, p, "-ns1:GetAllAirconditionerByParam", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__GetAllAirconditionerByParam_ * SOAP_FMAC4 soap_get___ns1__GetAllAirconditionerByParam_(struct soap*, struct __ns1__GetAllAirconditionerByParam_ *, const char*, const char*);
+
+inline int soap_read___ns1__GetAllAirconditionerByParam_(struct soap *soap, struct __ns1__GetAllAirconditionerByParam_ *p)
+{
+	if (p)
+	{	::soap_default___ns1__GetAllAirconditionerByParam_(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__GetAllAirconditionerByParam_(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__GetAllAirconditionerByParam_(struct soap *soap, const char *URL, struct __ns1__GetAllAirconditionerByParam_ *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__GetAllAirconditionerByParam_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__GetAllAirconditionerByParam_(struct soap *soap, struct __ns1__GetAllAirconditionerByParam_ *p)
+{
+	if (::soap_read___ns1__GetAllAirconditionerByParam_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__GetAllHandrailByParam__DEFINED
+#define SOAP_TYPE___ns1__GetAllHandrailByParam__DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllHandrailByParam_(struct soap*, struct __ns1__GetAllHandrailByParam_ *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllHandrailByParam_(struct soap*, const struct __ns1__GetAllHandrailByParam_ *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllHandrailByParam_(struct soap*, const char*, int, const struct __ns1__GetAllHandrailByParam_ *, const char*);
+SOAP_FMAC3 struct __ns1__GetAllHandrailByParam_ * SOAP_FMAC4 soap_in___ns1__GetAllHandrailByParam_(struct soap*, const char*, struct __ns1__GetAllHandrailByParam_ *, const char*);
+SOAP_FMAC1 struct __ns1__GetAllHandrailByParam_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllHandrailByParam_(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__GetAllHandrailByParam_ * soap_new___ns1__GetAllHandrailByParam_(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__GetAllHandrailByParam_(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__GetAllHandrailByParam_ * soap_new_req___ns1__GetAllHandrailByParam_(
+	struct soap *soap)
+{
+	struct __ns1__GetAllHandrailByParam_ *_p = ::soap_new___ns1__GetAllHandrailByParam_(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllHandrailByParam_(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__GetAllHandrailByParam_ * soap_new_set___ns1__GetAllHandrailByParam_(
+	struct soap *soap,
+	_ns1__GetAllHandrailByParam *ns1__GetAllHandrailByParam)
+{
+	struct __ns1__GetAllHandrailByParam_ *_p = ::soap_new___ns1__GetAllHandrailByParam_(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllHandrailByParam_(soap, _p);
+		_p->ns1__GetAllHandrailByParam = ns1__GetAllHandrailByParam;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllHandrailByParam_(struct soap*, const struct __ns1__GetAllHandrailByParam_ *, const char*, const char*);
+
+inline int soap_write___ns1__GetAllHandrailByParam_(struct soap *soap, struct __ns1__GetAllHandrailByParam_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__GetAllHandrailByParam_(soap, p), 0) || ::soap_put___ns1__GetAllHandrailByParam_(soap, p, "-ns1:GetAllHandrailByParam", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__GetAllHandrailByParam_(struct soap *soap, const char *URL, struct __ns1__GetAllHandrailByParam_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllHandrailByParam_(soap, p), 0) || ::soap_put___ns1__GetAllHandrailByParam_(soap, p, "-ns1:GetAllHandrailByParam", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__GetAllHandrailByParam_(struct soap *soap, const char *URL, struct __ns1__GetAllHandrailByParam_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllHandrailByParam_(soap, p), 0) || ::soap_put___ns1__GetAllHandrailByParam_(soap, p, "-ns1:GetAllHandrailByParam", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__GetAllHandrailByParam_(struct soap *soap, const char *URL, struct __ns1__GetAllHandrailByParam_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllHandrailByParam_(soap, p), 0) || ::soap_put___ns1__GetAllHandrailByParam_(soap, p, "-ns1:GetAllHandrailByParam", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__GetAllHandrailByParam_ * SOAP_FMAC4 soap_get___ns1__GetAllHandrailByParam_(struct soap*, struct __ns1__GetAllHandrailByParam_ *, const char*, const char*);
+
+inline int soap_read___ns1__GetAllHandrailByParam_(struct soap *soap, struct __ns1__GetAllHandrailByParam_ *p)
+{
+	if (p)
+	{	::soap_default___ns1__GetAllHandrailByParam_(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__GetAllHandrailByParam_(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__GetAllHandrailByParam_(struct soap *soap, const char *URL, struct __ns1__GetAllHandrailByParam_ *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__GetAllHandrailByParam_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__GetAllHandrailByParam_(struct soap *soap, struct __ns1__GetAllHandrailByParam_ *p)
+{
+	if (::soap_read___ns1__GetAllHandrailByParam_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__GetAllBathroomByParam__DEFINED
+#define SOAP_TYPE___ns1__GetAllBathroomByParam__DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllBathroomByParam_(struct soap*, struct __ns1__GetAllBathroomByParam_ *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllBathroomByParam_(struct soap*, const struct __ns1__GetAllBathroomByParam_ *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllBathroomByParam_(struct soap*, const char*, int, const struct __ns1__GetAllBathroomByParam_ *, const char*);
+SOAP_FMAC3 struct __ns1__GetAllBathroomByParam_ * SOAP_FMAC4 soap_in___ns1__GetAllBathroomByParam_(struct soap*, const char*, struct __ns1__GetAllBathroomByParam_ *, const char*);
+SOAP_FMAC1 struct __ns1__GetAllBathroomByParam_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllBathroomByParam_(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__GetAllBathroomByParam_ * soap_new___ns1__GetAllBathroomByParam_(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__GetAllBathroomByParam_(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__GetAllBathroomByParam_ * soap_new_req___ns1__GetAllBathroomByParam_(
+	struct soap *soap)
+{
+	struct __ns1__GetAllBathroomByParam_ *_p = ::soap_new___ns1__GetAllBathroomByParam_(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllBathroomByParam_(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__GetAllBathroomByParam_ * soap_new_set___ns1__GetAllBathroomByParam_(
+	struct soap *soap,
+	_ns1__GetAllBathroomByParam *ns1__GetAllBathroomByParam)
+{
+	struct __ns1__GetAllBathroomByParam_ *_p = ::soap_new___ns1__GetAllBathroomByParam_(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllBathroomByParam_(soap, _p);
+		_p->ns1__GetAllBathroomByParam = ns1__GetAllBathroomByParam;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllBathroomByParam_(struct soap*, const struct __ns1__GetAllBathroomByParam_ *, const char*, const char*);
+
+inline int soap_write___ns1__GetAllBathroomByParam_(struct soap *soap, struct __ns1__GetAllBathroomByParam_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__GetAllBathroomByParam_(soap, p), 0) || ::soap_put___ns1__GetAllBathroomByParam_(soap, p, "-ns1:GetAllBathroomByParam", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__GetAllBathroomByParam_(struct soap *soap, const char *URL, struct __ns1__GetAllBathroomByParam_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllBathroomByParam_(soap, p), 0) || ::soap_put___ns1__GetAllBathroomByParam_(soap, p, "-ns1:GetAllBathroomByParam", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__GetAllBathroomByParam_(struct soap *soap, const char *URL, struct __ns1__GetAllBathroomByParam_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllBathroomByParam_(soap, p), 0) || ::soap_put___ns1__GetAllBathroomByParam_(soap, p, "-ns1:GetAllBathroomByParam", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__GetAllBathroomByParam_(struct soap *soap, const char *URL, struct __ns1__GetAllBathroomByParam_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllBathroomByParam_(soap, p), 0) || ::soap_put___ns1__GetAllBathroomByParam_(soap, p, "-ns1:GetAllBathroomByParam", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__GetAllBathroomByParam_ * SOAP_FMAC4 soap_get___ns1__GetAllBathroomByParam_(struct soap*, struct __ns1__GetAllBathroomByParam_ *, const char*, const char*);
+
+inline int soap_read___ns1__GetAllBathroomByParam_(struct soap *soap, struct __ns1__GetAllBathroomByParam_ *p)
+{
+	if (p)
+	{	::soap_default___ns1__GetAllBathroomByParam_(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__GetAllBathroomByParam_(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__GetAllBathroomByParam_(struct soap *soap, const char *URL, struct __ns1__GetAllBathroomByParam_ *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__GetAllBathroomByParam_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__GetAllBathroomByParam_(struct soap *soap, struct __ns1__GetAllBathroomByParam_ *p)
+{
+	if (::soap_read___ns1__GetAllBathroomByParam_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__GetAllBathroom__DEFINED
+#define SOAP_TYPE___ns1__GetAllBathroom__DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllBathroom_(struct soap*, struct __ns1__GetAllBathroom_ *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllBathroom_(struct soap*, const struct __ns1__GetAllBathroom_ *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllBathroom_(struct soap*, const char*, int, const struct __ns1__GetAllBathroom_ *, const char*);
+SOAP_FMAC3 struct __ns1__GetAllBathroom_ * SOAP_FMAC4 soap_in___ns1__GetAllBathroom_(struct soap*, const char*, struct __ns1__GetAllBathroom_ *, const char*);
+SOAP_FMAC1 struct __ns1__GetAllBathroom_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllBathroom_(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__GetAllBathroom_ * soap_new___ns1__GetAllBathroom_(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__GetAllBathroom_(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__GetAllBathroom_ * soap_new_req___ns1__GetAllBathroom_(
+	struct soap *soap)
+{
+	struct __ns1__GetAllBathroom_ *_p = ::soap_new___ns1__GetAllBathroom_(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllBathroom_(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__GetAllBathroom_ * soap_new_set___ns1__GetAllBathroom_(
+	struct soap *soap,
+	_ns1__GetAllBathroom *ns1__GetAllBathroom)
+{
+	struct __ns1__GetAllBathroom_ *_p = ::soap_new___ns1__GetAllBathroom_(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllBathroom_(soap, _p);
+		_p->ns1__GetAllBathroom = ns1__GetAllBathroom;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllBathroom_(struct soap*, const struct __ns1__GetAllBathroom_ *, const char*, const char*);
+
+inline int soap_write___ns1__GetAllBathroom_(struct soap *soap, struct __ns1__GetAllBathroom_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__GetAllBathroom_(soap, p), 0) || ::soap_put___ns1__GetAllBathroom_(soap, p, "-ns1:GetAllBathroom", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__GetAllBathroom_(struct soap *soap, const char *URL, struct __ns1__GetAllBathroom_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllBathroom_(soap, p), 0) || ::soap_put___ns1__GetAllBathroom_(soap, p, "-ns1:GetAllBathroom", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__GetAllBathroom_(struct soap *soap, const char *URL, struct __ns1__GetAllBathroom_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllBathroom_(soap, p), 0) || ::soap_put___ns1__GetAllBathroom_(soap, p, "-ns1:GetAllBathroom", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__GetAllBathroom_(struct soap *soap, const char *URL, struct __ns1__GetAllBathroom_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllBathroom_(soap, p), 0) || ::soap_put___ns1__GetAllBathroom_(soap, p, "-ns1:GetAllBathroom", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__GetAllBathroom_ * SOAP_FMAC4 soap_get___ns1__GetAllBathroom_(struct soap*, struct __ns1__GetAllBathroom_ *, const char*, const char*);
+
+inline int soap_read___ns1__GetAllBathroom_(struct soap *soap, struct __ns1__GetAllBathroom_ *p)
+{
+	if (p)
+	{	::soap_default___ns1__GetAllBathroom_(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__GetAllBathroom_(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__GetAllBathroom_(struct soap *soap, const char *URL, struct __ns1__GetAllBathroom_ *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__GetAllBathroom_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__GetAllBathroom_(struct soap *soap, struct __ns1__GetAllBathroom_ *p)
+{
+	if (::soap_read___ns1__GetAllBathroom_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__GetAllKitchenParam__DEFINED
+#define SOAP_TYPE___ns1__GetAllKitchenParam__DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllKitchenParam_(struct soap*, struct __ns1__GetAllKitchenParam_ *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllKitchenParam_(struct soap*, const struct __ns1__GetAllKitchenParam_ *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllKitchenParam_(struct soap*, const char*, int, const struct __ns1__GetAllKitchenParam_ *, const char*);
+SOAP_FMAC3 struct __ns1__GetAllKitchenParam_ * SOAP_FMAC4 soap_in___ns1__GetAllKitchenParam_(struct soap*, const char*, struct __ns1__GetAllKitchenParam_ *, const char*);
+SOAP_FMAC1 struct __ns1__GetAllKitchenParam_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllKitchenParam_(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__GetAllKitchenParam_ * soap_new___ns1__GetAllKitchenParam_(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__GetAllKitchenParam_(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__GetAllKitchenParam_ * soap_new_req___ns1__GetAllKitchenParam_(
+	struct soap *soap)
+{
+	struct __ns1__GetAllKitchenParam_ *_p = ::soap_new___ns1__GetAllKitchenParam_(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllKitchenParam_(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__GetAllKitchenParam_ * soap_new_set___ns1__GetAllKitchenParam_(
+	struct soap *soap,
+	_ns1__GetAllKitchenParam *ns1__GetAllKitchenParam)
+{
+	struct __ns1__GetAllKitchenParam_ *_p = ::soap_new___ns1__GetAllKitchenParam_(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllKitchenParam_(soap, _p);
+		_p->ns1__GetAllKitchenParam = ns1__GetAllKitchenParam;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllKitchenParam_(struct soap*, const struct __ns1__GetAllKitchenParam_ *, const char*, const char*);
+
+inline int soap_write___ns1__GetAllKitchenParam_(struct soap *soap, struct __ns1__GetAllKitchenParam_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__GetAllKitchenParam_(soap, p), 0) || ::soap_put___ns1__GetAllKitchenParam_(soap, p, "-ns1:GetAllKitchenParam", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__GetAllKitchenParam_(struct soap *soap, const char *URL, struct __ns1__GetAllKitchenParam_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllKitchenParam_(soap, p), 0) || ::soap_put___ns1__GetAllKitchenParam_(soap, p, "-ns1:GetAllKitchenParam", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__GetAllKitchenParam_(struct soap *soap, const char *URL, struct __ns1__GetAllKitchenParam_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllKitchenParam_(soap, p), 0) || ::soap_put___ns1__GetAllKitchenParam_(soap, p, "-ns1:GetAllKitchenParam", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__GetAllKitchenParam_(struct soap *soap, const char *URL, struct __ns1__GetAllKitchenParam_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllKitchenParam_(soap, p), 0) || ::soap_put___ns1__GetAllKitchenParam_(soap, p, "-ns1:GetAllKitchenParam", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__GetAllKitchenParam_ * SOAP_FMAC4 soap_get___ns1__GetAllKitchenParam_(struct soap*, struct __ns1__GetAllKitchenParam_ *, const char*, const char*);
+
+inline int soap_read___ns1__GetAllKitchenParam_(struct soap *soap, struct __ns1__GetAllKitchenParam_ *p)
+{
+	if (p)
+	{	::soap_default___ns1__GetAllKitchenParam_(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__GetAllKitchenParam_(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__GetAllKitchenParam_(struct soap *soap, const char *URL, struct __ns1__GetAllKitchenParam_ *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__GetAllKitchenParam_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__GetAllKitchenParam_(struct soap *soap, struct __ns1__GetAllKitchenParam_ *p)
+{
+	if (::soap_read___ns1__GetAllKitchenParam_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__GetAllKitchen__DEFINED
+#define SOAP_TYPE___ns1__GetAllKitchen__DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllKitchen_(struct soap*, struct __ns1__GetAllKitchen_ *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllKitchen_(struct soap*, const struct __ns1__GetAllKitchen_ *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllKitchen_(struct soap*, const char*, int, const struct __ns1__GetAllKitchen_ *, const char*);
+SOAP_FMAC3 struct __ns1__GetAllKitchen_ * SOAP_FMAC4 soap_in___ns1__GetAllKitchen_(struct soap*, const char*, struct __ns1__GetAllKitchen_ *, const char*);
+SOAP_FMAC1 struct __ns1__GetAllKitchen_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllKitchen_(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__GetAllKitchen_ * soap_new___ns1__GetAllKitchen_(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__GetAllKitchen_(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__GetAllKitchen_ * soap_new_req___ns1__GetAllKitchen_(
+	struct soap *soap)
+{
+	struct __ns1__GetAllKitchen_ *_p = ::soap_new___ns1__GetAllKitchen_(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllKitchen_(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__GetAllKitchen_ * soap_new_set___ns1__GetAllKitchen_(
+	struct soap *soap,
+	_ns1__GetAllKitchen *ns1__GetAllKitchen)
+{
+	struct __ns1__GetAllKitchen_ *_p = ::soap_new___ns1__GetAllKitchen_(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllKitchen_(soap, _p);
+		_p->ns1__GetAllKitchen = ns1__GetAllKitchen;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllKitchen_(struct soap*, const struct __ns1__GetAllKitchen_ *, const char*, const char*);
+
+inline int soap_write___ns1__GetAllKitchen_(struct soap *soap, struct __ns1__GetAllKitchen_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__GetAllKitchen_(soap, p), 0) || ::soap_put___ns1__GetAllKitchen_(soap, p, "-ns1:GetAllKitchen", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__GetAllKitchen_(struct soap *soap, const char *URL, struct __ns1__GetAllKitchen_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllKitchen_(soap, p), 0) || ::soap_put___ns1__GetAllKitchen_(soap, p, "-ns1:GetAllKitchen", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__GetAllKitchen_(struct soap *soap, const char *URL, struct __ns1__GetAllKitchen_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllKitchen_(soap, p), 0) || ::soap_put___ns1__GetAllKitchen_(soap, p, "-ns1:GetAllKitchen", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__GetAllKitchen_(struct soap *soap, const char *URL, struct __ns1__GetAllKitchen_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllKitchen_(soap, p), 0) || ::soap_put___ns1__GetAllKitchen_(soap, p, "-ns1:GetAllKitchen", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__GetAllKitchen_ * SOAP_FMAC4 soap_get___ns1__GetAllKitchen_(struct soap*, struct __ns1__GetAllKitchen_ *, const char*, const char*);
+
+inline int soap_read___ns1__GetAllKitchen_(struct soap *soap, struct __ns1__GetAllKitchen_ *p)
+{
+	if (p)
+	{	::soap_default___ns1__GetAllKitchen_(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__GetAllKitchen_(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__GetAllKitchen_(struct soap *soap, const char *URL, struct __ns1__GetAllKitchen_ *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__GetAllKitchen_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__GetAllKitchen_(struct soap *soap, struct __ns1__GetAllKitchen_ *p)
+{
+	if (::soap_read___ns1__GetAllKitchen_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__GetAllDoorByParam__DEFINED
+#define SOAP_TYPE___ns1__GetAllDoorByParam__DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllDoorByParam_(struct soap*, struct __ns1__GetAllDoorByParam_ *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllDoorByParam_(struct soap*, const struct __ns1__GetAllDoorByParam_ *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllDoorByParam_(struct soap*, const char*, int, const struct __ns1__GetAllDoorByParam_ *, const char*);
+SOAP_FMAC3 struct __ns1__GetAllDoorByParam_ * SOAP_FMAC4 soap_in___ns1__GetAllDoorByParam_(struct soap*, const char*, struct __ns1__GetAllDoorByParam_ *, const char*);
+SOAP_FMAC1 struct __ns1__GetAllDoorByParam_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllDoorByParam_(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__GetAllDoorByParam_ * soap_new___ns1__GetAllDoorByParam_(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__GetAllDoorByParam_(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__GetAllDoorByParam_ * soap_new_req___ns1__GetAllDoorByParam_(
+	struct soap *soap)
+{
+	struct __ns1__GetAllDoorByParam_ *_p = ::soap_new___ns1__GetAllDoorByParam_(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllDoorByParam_(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__GetAllDoorByParam_ * soap_new_set___ns1__GetAllDoorByParam_(
+	struct soap *soap,
+	_ns1__GetAllDoorByParam *ns1__GetAllDoorByParam)
+{
+	struct __ns1__GetAllDoorByParam_ *_p = ::soap_new___ns1__GetAllDoorByParam_(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllDoorByParam_(soap, _p);
+		_p->ns1__GetAllDoorByParam = ns1__GetAllDoorByParam;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllDoorByParam_(struct soap*, const struct __ns1__GetAllDoorByParam_ *, const char*, const char*);
+
+inline int soap_write___ns1__GetAllDoorByParam_(struct soap *soap, struct __ns1__GetAllDoorByParam_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__GetAllDoorByParam_(soap, p), 0) || ::soap_put___ns1__GetAllDoorByParam_(soap, p, "-ns1:GetAllDoorByParam", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__GetAllDoorByParam_(struct soap *soap, const char *URL, struct __ns1__GetAllDoorByParam_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllDoorByParam_(soap, p), 0) || ::soap_put___ns1__GetAllDoorByParam_(soap, p, "-ns1:GetAllDoorByParam", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__GetAllDoorByParam_(struct soap *soap, const char *URL, struct __ns1__GetAllDoorByParam_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllDoorByParam_(soap, p), 0) || ::soap_put___ns1__GetAllDoorByParam_(soap, p, "-ns1:GetAllDoorByParam", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__GetAllDoorByParam_(struct soap *soap, const char *URL, struct __ns1__GetAllDoorByParam_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllDoorByParam_(soap, p), 0) || ::soap_put___ns1__GetAllDoorByParam_(soap, p, "-ns1:GetAllDoorByParam", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__GetAllDoorByParam_ * SOAP_FMAC4 soap_get___ns1__GetAllDoorByParam_(struct soap*, struct __ns1__GetAllDoorByParam_ *, const char*, const char*);
+
+inline int soap_read___ns1__GetAllDoorByParam_(struct soap *soap, struct __ns1__GetAllDoorByParam_ *p)
+{
+	if (p)
+	{	::soap_default___ns1__GetAllDoorByParam_(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__GetAllDoorByParam_(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__GetAllDoorByParam_(struct soap *soap, const char *URL, struct __ns1__GetAllDoorByParam_ *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__GetAllDoorByParam_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__GetAllDoorByParam_(struct soap *soap, struct __ns1__GetAllDoorByParam_ *p)
+{
+	if (::soap_read___ns1__GetAllDoorByParam_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__GetAllDoor__DEFINED
+#define SOAP_TYPE___ns1__GetAllDoor__DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllDoor_(struct soap*, struct __ns1__GetAllDoor_ *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllDoor_(struct soap*, const struct __ns1__GetAllDoor_ *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllDoor_(struct soap*, const char*, int, const struct __ns1__GetAllDoor_ *, const char*);
+SOAP_FMAC3 struct __ns1__GetAllDoor_ * SOAP_FMAC4 soap_in___ns1__GetAllDoor_(struct soap*, const char*, struct __ns1__GetAllDoor_ *, const char*);
+SOAP_FMAC1 struct __ns1__GetAllDoor_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllDoor_(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__GetAllDoor_ * soap_new___ns1__GetAllDoor_(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__GetAllDoor_(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__GetAllDoor_ * soap_new_req___ns1__GetAllDoor_(
+	struct soap *soap)
+{
+	struct __ns1__GetAllDoor_ *_p = ::soap_new___ns1__GetAllDoor_(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllDoor_(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__GetAllDoor_ * soap_new_set___ns1__GetAllDoor_(
+	struct soap *soap,
+	_ns1__GetAllDoor *ns1__GetAllDoor)
+{
+	struct __ns1__GetAllDoor_ *_p = ::soap_new___ns1__GetAllDoor_(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllDoor_(soap, _p);
+		_p->ns1__GetAllDoor = ns1__GetAllDoor;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllDoor_(struct soap*, const struct __ns1__GetAllDoor_ *, const char*, const char*);
+
+inline int soap_write___ns1__GetAllDoor_(struct soap *soap, struct __ns1__GetAllDoor_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__GetAllDoor_(soap, p), 0) || ::soap_put___ns1__GetAllDoor_(soap, p, "-ns1:GetAllDoor", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__GetAllDoor_(struct soap *soap, const char *URL, struct __ns1__GetAllDoor_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllDoor_(soap, p), 0) || ::soap_put___ns1__GetAllDoor_(soap, p, "-ns1:GetAllDoor", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__GetAllDoor_(struct soap *soap, const char *URL, struct __ns1__GetAllDoor_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllDoor_(soap, p), 0) || ::soap_put___ns1__GetAllDoor_(soap, p, "-ns1:GetAllDoor", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__GetAllDoor_(struct soap *soap, const char *URL, struct __ns1__GetAllDoor_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllDoor_(soap, p), 0) || ::soap_put___ns1__GetAllDoor_(soap, p, "-ns1:GetAllDoor", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__GetAllDoor_ * SOAP_FMAC4 soap_get___ns1__GetAllDoor_(struct soap*, struct __ns1__GetAllDoor_ *, const char*, const char*);
+
+inline int soap_read___ns1__GetAllDoor_(struct soap *soap, struct __ns1__GetAllDoor_ *p)
+{
+	if (p)
+	{	::soap_default___ns1__GetAllDoor_(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__GetAllDoor_(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__GetAllDoor_(struct soap *soap, const char *URL, struct __ns1__GetAllDoor_ *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__GetAllDoor_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__GetAllDoor_(struct soap *soap, struct __ns1__GetAllDoor_ *p)
+{
+	if (::soap_read___ns1__GetAllDoor_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
 #ifndef SOAP_TYPE___ns1__GetWindows__DEFINED
 #define SOAP_TYPE___ns1__GetWindows__DEFINED
 SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetWindows_(struct soap*, struct __ns1__GetWindows_ *);
@@ -2102,6 +4362,758 @@ inline int soap_POST_recv___ns1__CadFileDownload(struct soap *soap, struct __ns1
 }
 #endif
 
+#ifndef SOAP_TYPE___ns1__GetAllAirconditionerByParam_DEFINED
+#define SOAP_TYPE___ns1__GetAllAirconditionerByParam_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllAirconditionerByParam(struct soap*, struct __ns1__GetAllAirconditionerByParam *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllAirconditionerByParam(struct soap*, const struct __ns1__GetAllAirconditionerByParam *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllAirconditionerByParam(struct soap*, const char*, int, const struct __ns1__GetAllAirconditionerByParam *, const char*);
+SOAP_FMAC3 struct __ns1__GetAllAirconditionerByParam * SOAP_FMAC4 soap_in___ns1__GetAllAirconditionerByParam(struct soap*, const char*, struct __ns1__GetAllAirconditionerByParam *, const char*);
+SOAP_FMAC1 struct __ns1__GetAllAirconditionerByParam * SOAP_FMAC2 soap_instantiate___ns1__GetAllAirconditionerByParam(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__GetAllAirconditionerByParam * soap_new___ns1__GetAllAirconditionerByParam(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__GetAllAirconditionerByParam(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__GetAllAirconditionerByParam * soap_new_req___ns1__GetAllAirconditionerByParam(
+	struct soap *soap)
+{
+	struct __ns1__GetAllAirconditionerByParam *_p = ::soap_new___ns1__GetAllAirconditionerByParam(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllAirconditionerByParam(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__GetAllAirconditionerByParam * soap_new_set___ns1__GetAllAirconditionerByParam(
+	struct soap *soap,
+	_ns1__GetAllAirconditionerByParam *ns1__GetAllAirconditionerByParam)
+{
+	struct __ns1__GetAllAirconditionerByParam *_p = ::soap_new___ns1__GetAllAirconditionerByParam(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllAirconditionerByParam(soap, _p);
+		_p->ns1__GetAllAirconditionerByParam = ns1__GetAllAirconditionerByParam;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllAirconditionerByParam(struct soap*, const struct __ns1__GetAllAirconditionerByParam *, const char*, const char*);
+
+inline int soap_write___ns1__GetAllAirconditionerByParam(struct soap *soap, struct __ns1__GetAllAirconditionerByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__GetAllAirconditionerByParam(soap, p), 0) || ::soap_put___ns1__GetAllAirconditionerByParam(soap, p, "-ns1:GetAllAirconditionerByParam", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__GetAllAirconditionerByParam(struct soap *soap, const char *URL, struct __ns1__GetAllAirconditionerByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllAirconditionerByParam(soap, p), 0) || ::soap_put___ns1__GetAllAirconditionerByParam(soap, p, "-ns1:GetAllAirconditionerByParam", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__GetAllAirconditionerByParam(struct soap *soap, const char *URL, struct __ns1__GetAllAirconditionerByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllAirconditionerByParam(soap, p), 0) || ::soap_put___ns1__GetAllAirconditionerByParam(soap, p, "-ns1:GetAllAirconditionerByParam", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__GetAllAirconditionerByParam(struct soap *soap, const char *URL, struct __ns1__GetAllAirconditionerByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllAirconditionerByParam(soap, p), 0) || ::soap_put___ns1__GetAllAirconditionerByParam(soap, p, "-ns1:GetAllAirconditionerByParam", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__GetAllAirconditionerByParam * SOAP_FMAC4 soap_get___ns1__GetAllAirconditionerByParam(struct soap*, struct __ns1__GetAllAirconditionerByParam *, const char*, const char*);
+
+inline int soap_read___ns1__GetAllAirconditionerByParam(struct soap *soap, struct __ns1__GetAllAirconditionerByParam *p)
+{
+	if (p)
+	{	::soap_default___ns1__GetAllAirconditionerByParam(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__GetAllAirconditionerByParam(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__GetAllAirconditionerByParam(struct soap *soap, const char *URL, struct __ns1__GetAllAirconditionerByParam *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__GetAllAirconditionerByParam(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__GetAllAirconditionerByParam(struct soap *soap, struct __ns1__GetAllAirconditionerByParam *p)
+{
+	if (::soap_read___ns1__GetAllAirconditionerByParam(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__GetAllHandrailByParam_DEFINED
+#define SOAP_TYPE___ns1__GetAllHandrailByParam_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllHandrailByParam(struct soap*, struct __ns1__GetAllHandrailByParam *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllHandrailByParam(struct soap*, const struct __ns1__GetAllHandrailByParam *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllHandrailByParam(struct soap*, const char*, int, const struct __ns1__GetAllHandrailByParam *, const char*);
+SOAP_FMAC3 struct __ns1__GetAllHandrailByParam * SOAP_FMAC4 soap_in___ns1__GetAllHandrailByParam(struct soap*, const char*, struct __ns1__GetAllHandrailByParam *, const char*);
+SOAP_FMAC1 struct __ns1__GetAllHandrailByParam * SOAP_FMAC2 soap_instantiate___ns1__GetAllHandrailByParam(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__GetAllHandrailByParam * soap_new___ns1__GetAllHandrailByParam(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__GetAllHandrailByParam(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__GetAllHandrailByParam * soap_new_req___ns1__GetAllHandrailByParam(
+	struct soap *soap)
+{
+	struct __ns1__GetAllHandrailByParam *_p = ::soap_new___ns1__GetAllHandrailByParam(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllHandrailByParam(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__GetAllHandrailByParam * soap_new_set___ns1__GetAllHandrailByParam(
+	struct soap *soap,
+	_ns1__GetAllHandrailByParam *ns1__GetAllHandrailByParam)
+{
+	struct __ns1__GetAllHandrailByParam *_p = ::soap_new___ns1__GetAllHandrailByParam(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllHandrailByParam(soap, _p);
+		_p->ns1__GetAllHandrailByParam = ns1__GetAllHandrailByParam;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllHandrailByParam(struct soap*, const struct __ns1__GetAllHandrailByParam *, const char*, const char*);
+
+inline int soap_write___ns1__GetAllHandrailByParam(struct soap *soap, struct __ns1__GetAllHandrailByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__GetAllHandrailByParam(soap, p), 0) || ::soap_put___ns1__GetAllHandrailByParam(soap, p, "-ns1:GetAllHandrailByParam", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__GetAllHandrailByParam(struct soap *soap, const char *URL, struct __ns1__GetAllHandrailByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllHandrailByParam(soap, p), 0) || ::soap_put___ns1__GetAllHandrailByParam(soap, p, "-ns1:GetAllHandrailByParam", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__GetAllHandrailByParam(struct soap *soap, const char *URL, struct __ns1__GetAllHandrailByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllHandrailByParam(soap, p), 0) || ::soap_put___ns1__GetAllHandrailByParam(soap, p, "-ns1:GetAllHandrailByParam", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__GetAllHandrailByParam(struct soap *soap, const char *URL, struct __ns1__GetAllHandrailByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllHandrailByParam(soap, p), 0) || ::soap_put___ns1__GetAllHandrailByParam(soap, p, "-ns1:GetAllHandrailByParam", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__GetAllHandrailByParam * SOAP_FMAC4 soap_get___ns1__GetAllHandrailByParam(struct soap*, struct __ns1__GetAllHandrailByParam *, const char*, const char*);
+
+inline int soap_read___ns1__GetAllHandrailByParam(struct soap *soap, struct __ns1__GetAllHandrailByParam *p)
+{
+	if (p)
+	{	::soap_default___ns1__GetAllHandrailByParam(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__GetAllHandrailByParam(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__GetAllHandrailByParam(struct soap *soap, const char *URL, struct __ns1__GetAllHandrailByParam *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__GetAllHandrailByParam(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__GetAllHandrailByParam(struct soap *soap, struct __ns1__GetAllHandrailByParam *p)
+{
+	if (::soap_read___ns1__GetAllHandrailByParam(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__GetAllBathroomByParam_DEFINED
+#define SOAP_TYPE___ns1__GetAllBathroomByParam_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllBathroomByParam(struct soap*, struct __ns1__GetAllBathroomByParam *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllBathroomByParam(struct soap*, const struct __ns1__GetAllBathroomByParam *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllBathroomByParam(struct soap*, const char*, int, const struct __ns1__GetAllBathroomByParam *, const char*);
+SOAP_FMAC3 struct __ns1__GetAllBathroomByParam * SOAP_FMAC4 soap_in___ns1__GetAllBathroomByParam(struct soap*, const char*, struct __ns1__GetAllBathroomByParam *, const char*);
+SOAP_FMAC1 struct __ns1__GetAllBathroomByParam * SOAP_FMAC2 soap_instantiate___ns1__GetAllBathroomByParam(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__GetAllBathroomByParam * soap_new___ns1__GetAllBathroomByParam(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__GetAllBathroomByParam(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__GetAllBathroomByParam * soap_new_req___ns1__GetAllBathroomByParam(
+	struct soap *soap)
+{
+	struct __ns1__GetAllBathroomByParam *_p = ::soap_new___ns1__GetAllBathroomByParam(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllBathroomByParam(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__GetAllBathroomByParam * soap_new_set___ns1__GetAllBathroomByParam(
+	struct soap *soap,
+	_ns1__GetAllBathroomByParam *ns1__GetAllBathroomByParam)
+{
+	struct __ns1__GetAllBathroomByParam *_p = ::soap_new___ns1__GetAllBathroomByParam(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllBathroomByParam(soap, _p);
+		_p->ns1__GetAllBathroomByParam = ns1__GetAllBathroomByParam;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllBathroomByParam(struct soap*, const struct __ns1__GetAllBathroomByParam *, const char*, const char*);
+
+inline int soap_write___ns1__GetAllBathroomByParam(struct soap *soap, struct __ns1__GetAllBathroomByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__GetAllBathroomByParam(soap, p), 0) || ::soap_put___ns1__GetAllBathroomByParam(soap, p, "-ns1:GetAllBathroomByParam", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__GetAllBathroomByParam(struct soap *soap, const char *URL, struct __ns1__GetAllBathroomByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllBathroomByParam(soap, p), 0) || ::soap_put___ns1__GetAllBathroomByParam(soap, p, "-ns1:GetAllBathroomByParam", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__GetAllBathroomByParam(struct soap *soap, const char *URL, struct __ns1__GetAllBathroomByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllBathroomByParam(soap, p), 0) || ::soap_put___ns1__GetAllBathroomByParam(soap, p, "-ns1:GetAllBathroomByParam", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__GetAllBathroomByParam(struct soap *soap, const char *URL, struct __ns1__GetAllBathroomByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllBathroomByParam(soap, p), 0) || ::soap_put___ns1__GetAllBathroomByParam(soap, p, "-ns1:GetAllBathroomByParam", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__GetAllBathroomByParam * SOAP_FMAC4 soap_get___ns1__GetAllBathroomByParam(struct soap*, struct __ns1__GetAllBathroomByParam *, const char*, const char*);
+
+inline int soap_read___ns1__GetAllBathroomByParam(struct soap *soap, struct __ns1__GetAllBathroomByParam *p)
+{
+	if (p)
+	{	::soap_default___ns1__GetAllBathroomByParam(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__GetAllBathroomByParam(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__GetAllBathroomByParam(struct soap *soap, const char *URL, struct __ns1__GetAllBathroomByParam *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__GetAllBathroomByParam(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__GetAllBathroomByParam(struct soap *soap, struct __ns1__GetAllBathroomByParam *p)
+{
+	if (::soap_read___ns1__GetAllBathroomByParam(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__GetAllBathroom_DEFINED
+#define SOAP_TYPE___ns1__GetAllBathroom_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllBathroom(struct soap*, struct __ns1__GetAllBathroom *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllBathroom(struct soap*, const struct __ns1__GetAllBathroom *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllBathroom(struct soap*, const char*, int, const struct __ns1__GetAllBathroom *, const char*);
+SOAP_FMAC3 struct __ns1__GetAllBathroom * SOAP_FMAC4 soap_in___ns1__GetAllBathroom(struct soap*, const char*, struct __ns1__GetAllBathroom *, const char*);
+SOAP_FMAC1 struct __ns1__GetAllBathroom * SOAP_FMAC2 soap_instantiate___ns1__GetAllBathroom(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__GetAllBathroom * soap_new___ns1__GetAllBathroom(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__GetAllBathroom(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__GetAllBathroom * soap_new_req___ns1__GetAllBathroom(
+	struct soap *soap)
+{
+	struct __ns1__GetAllBathroom *_p = ::soap_new___ns1__GetAllBathroom(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllBathroom(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__GetAllBathroom * soap_new_set___ns1__GetAllBathroom(
+	struct soap *soap,
+	_ns1__GetAllBathroom *ns1__GetAllBathroom)
+{
+	struct __ns1__GetAllBathroom *_p = ::soap_new___ns1__GetAllBathroom(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllBathroom(soap, _p);
+		_p->ns1__GetAllBathroom = ns1__GetAllBathroom;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllBathroom(struct soap*, const struct __ns1__GetAllBathroom *, const char*, const char*);
+
+inline int soap_write___ns1__GetAllBathroom(struct soap *soap, struct __ns1__GetAllBathroom const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__GetAllBathroom(soap, p), 0) || ::soap_put___ns1__GetAllBathroom(soap, p, "-ns1:GetAllBathroom", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__GetAllBathroom(struct soap *soap, const char *URL, struct __ns1__GetAllBathroom const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllBathroom(soap, p), 0) || ::soap_put___ns1__GetAllBathroom(soap, p, "-ns1:GetAllBathroom", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__GetAllBathroom(struct soap *soap, const char *URL, struct __ns1__GetAllBathroom const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllBathroom(soap, p), 0) || ::soap_put___ns1__GetAllBathroom(soap, p, "-ns1:GetAllBathroom", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__GetAllBathroom(struct soap *soap, const char *URL, struct __ns1__GetAllBathroom const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllBathroom(soap, p), 0) || ::soap_put___ns1__GetAllBathroom(soap, p, "-ns1:GetAllBathroom", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__GetAllBathroom * SOAP_FMAC4 soap_get___ns1__GetAllBathroom(struct soap*, struct __ns1__GetAllBathroom *, const char*, const char*);
+
+inline int soap_read___ns1__GetAllBathroom(struct soap *soap, struct __ns1__GetAllBathroom *p)
+{
+	if (p)
+	{	::soap_default___ns1__GetAllBathroom(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__GetAllBathroom(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__GetAllBathroom(struct soap *soap, const char *URL, struct __ns1__GetAllBathroom *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__GetAllBathroom(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__GetAllBathroom(struct soap *soap, struct __ns1__GetAllBathroom *p)
+{
+	if (::soap_read___ns1__GetAllBathroom(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__GetAllKitchenParam_DEFINED
+#define SOAP_TYPE___ns1__GetAllKitchenParam_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllKitchenParam(struct soap*, struct __ns1__GetAllKitchenParam *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllKitchenParam(struct soap*, const struct __ns1__GetAllKitchenParam *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllKitchenParam(struct soap*, const char*, int, const struct __ns1__GetAllKitchenParam *, const char*);
+SOAP_FMAC3 struct __ns1__GetAllKitchenParam * SOAP_FMAC4 soap_in___ns1__GetAllKitchenParam(struct soap*, const char*, struct __ns1__GetAllKitchenParam *, const char*);
+SOAP_FMAC1 struct __ns1__GetAllKitchenParam * SOAP_FMAC2 soap_instantiate___ns1__GetAllKitchenParam(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__GetAllKitchenParam * soap_new___ns1__GetAllKitchenParam(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__GetAllKitchenParam(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__GetAllKitchenParam * soap_new_req___ns1__GetAllKitchenParam(
+	struct soap *soap)
+{
+	struct __ns1__GetAllKitchenParam *_p = ::soap_new___ns1__GetAllKitchenParam(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllKitchenParam(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__GetAllKitchenParam * soap_new_set___ns1__GetAllKitchenParam(
+	struct soap *soap,
+	_ns1__GetAllKitchenParam *ns1__GetAllKitchenParam)
+{
+	struct __ns1__GetAllKitchenParam *_p = ::soap_new___ns1__GetAllKitchenParam(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllKitchenParam(soap, _p);
+		_p->ns1__GetAllKitchenParam = ns1__GetAllKitchenParam;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllKitchenParam(struct soap*, const struct __ns1__GetAllKitchenParam *, const char*, const char*);
+
+inline int soap_write___ns1__GetAllKitchenParam(struct soap *soap, struct __ns1__GetAllKitchenParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__GetAllKitchenParam(soap, p), 0) || ::soap_put___ns1__GetAllKitchenParam(soap, p, "-ns1:GetAllKitchenParam", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__GetAllKitchenParam(struct soap *soap, const char *URL, struct __ns1__GetAllKitchenParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllKitchenParam(soap, p), 0) || ::soap_put___ns1__GetAllKitchenParam(soap, p, "-ns1:GetAllKitchenParam", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__GetAllKitchenParam(struct soap *soap, const char *URL, struct __ns1__GetAllKitchenParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllKitchenParam(soap, p), 0) || ::soap_put___ns1__GetAllKitchenParam(soap, p, "-ns1:GetAllKitchenParam", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__GetAllKitchenParam(struct soap *soap, const char *URL, struct __ns1__GetAllKitchenParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllKitchenParam(soap, p), 0) || ::soap_put___ns1__GetAllKitchenParam(soap, p, "-ns1:GetAllKitchenParam", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__GetAllKitchenParam * SOAP_FMAC4 soap_get___ns1__GetAllKitchenParam(struct soap*, struct __ns1__GetAllKitchenParam *, const char*, const char*);
+
+inline int soap_read___ns1__GetAllKitchenParam(struct soap *soap, struct __ns1__GetAllKitchenParam *p)
+{
+	if (p)
+	{	::soap_default___ns1__GetAllKitchenParam(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__GetAllKitchenParam(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__GetAllKitchenParam(struct soap *soap, const char *URL, struct __ns1__GetAllKitchenParam *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__GetAllKitchenParam(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__GetAllKitchenParam(struct soap *soap, struct __ns1__GetAllKitchenParam *p)
+{
+	if (::soap_read___ns1__GetAllKitchenParam(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__GetAllKitchen_DEFINED
+#define SOAP_TYPE___ns1__GetAllKitchen_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllKitchen(struct soap*, struct __ns1__GetAllKitchen *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllKitchen(struct soap*, const struct __ns1__GetAllKitchen *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllKitchen(struct soap*, const char*, int, const struct __ns1__GetAllKitchen *, const char*);
+SOAP_FMAC3 struct __ns1__GetAllKitchen * SOAP_FMAC4 soap_in___ns1__GetAllKitchen(struct soap*, const char*, struct __ns1__GetAllKitchen *, const char*);
+SOAP_FMAC1 struct __ns1__GetAllKitchen * SOAP_FMAC2 soap_instantiate___ns1__GetAllKitchen(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__GetAllKitchen * soap_new___ns1__GetAllKitchen(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__GetAllKitchen(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__GetAllKitchen * soap_new_req___ns1__GetAllKitchen(
+	struct soap *soap)
+{
+	struct __ns1__GetAllKitchen *_p = ::soap_new___ns1__GetAllKitchen(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllKitchen(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__GetAllKitchen * soap_new_set___ns1__GetAllKitchen(
+	struct soap *soap,
+	_ns1__GetAllKitchen *ns1__GetAllKitchen)
+{
+	struct __ns1__GetAllKitchen *_p = ::soap_new___ns1__GetAllKitchen(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllKitchen(soap, _p);
+		_p->ns1__GetAllKitchen = ns1__GetAllKitchen;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllKitchen(struct soap*, const struct __ns1__GetAllKitchen *, const char*, const char*);
+
+inline int soap_write___ns1__GetAllKitchen(struct soap *soap, struct __ns1__GetAllKitchen const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__GetAllKitchen(soap, p), 0) || ::soap_put___ns1__GetAllKitchen(soap, p, "-ns1:GetAllKitchen", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__GetAllKitchen(struct soap *soap, const char *URL, struct __ns1__GetAllKitchen const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllKitchen(soap, p), 0) || ::soap_put___ns1__GetAllKitchen(soap, p, "-ns1:GetAllKitchen", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__GetAllKitchen(struct soap *soap, const char *URL, struct __ns1__GetAllKitchen const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllKitchen(soap, p), 0) || ::soap_put___ns1__GetAllKitchen(soap, p, "-ns1:GetAllKitchen", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__GetAllKitchen(struct soap *soap, const char *URL, struct __ns1__GetAllKitchen const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllKitchen(soap, p), 0) || ::soap_put___ns1__GetAllKitchen(soap, p, "-ns1:GetAllKitchen", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__GetAllKitchen * SOAP_FMAC4 soap_get___ns1__GetAllKitchen(struct soap*, struct __ns1__GetAllKitchen *, const char*, const char*);
+
+inline int soap_read___ns1__GetAllKitchen(struct soap *soap, struct __ns1__GetAllKitchen *p)
+{
+	if (p)
+	{	::soap_default___ns1__GetAllKitchen(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__GetAllKitchen(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__GetAllKitchen(struct soap *soap, const char *URL, struct __ns1__GetAllKitchen *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__GetAllKitchen(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__GetAllKitchen(struct soap *soap, struct __ns1__GetAllKitchen *p)
+{
+	if (::soap_read___ns1__GetAllKitchen(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__GetAllDoorByParam_DEFINED
+#define SOAP_TYPE___ns1__GetAllDoorByParam_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllDoorByParam(struct soap*, struct __ns1__GetAllDoorByParam *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllDoorByParam(struct soap*, const struct __ns1__GetAllDoorByParam *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllDoorByParam(struct soap*, const char*, int, const struct __ns1__GetAllDoorByParam *, const char*);
+SOAP_FMAC3 struct __ns1__GetAllDoorByParam * SOAP_FMAC4 soap_in___ns1__GetAllDoorByParam(struct soap*, const char*, struct __ns1__GetAllDoorByParam *, const char*);
+SOAP_FMAC1 struct __ns1__GetAllDoorByParam * SOAP_FMAC2 soap_instantiate___ns1__GetAllDoorByParam(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__GetAllDoorByParam * soap_new___ns1__GetAllDoorByParam(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__GetAllDoorByParam(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__GetAllDoorByParam * soap_new_req___ns1__GetAllDoorByParam(
+	struct soap *soap)
+{
+	struct __ns1__GetAllDoorByParam *_p = ::soap_new___ns1__GetAllDoorByParam(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllDoorByParam(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__GetAllDoorByParam * soap_new_set___ns1__GetAllDoorByParam(
+	struct soap *soap,
+	_ns1__GetAllDoorByParam *ns1__GetAllDoorByParam)
+{
+	struct __ns1__GetAllDoorByParam *_p = ::soap_new___ns1__GetAllDoorByParam(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllDoorByParam(soap, _p);
+		_p->ns1__GetAllDoorByParam = ns1__GetAllDoorByParam;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllDoorByParam(struct soap*, const struct __ns1__GetAllDoorByParam *, const char*, const char*);
+
+inline int soap_write___ns1__GetAllDoorByParam(struct soap *soap, struct __ns1__GetAllDoorByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__GetAllDoorByParam(soap, p), 0) || ::soap_put___ns1__GetAllDoorByParam(soap, p, "-ns1:GetAllDoorByParam", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__GetAllDoorByParam(struct soap *soap, const char *URL, struct __ns1__GetAllDoorByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllDoorByParam(soap, p), 0) || ::soap_put___ns1__GetAllDoorByParam(soap, p, "-ns1:GetAllDoorByParam", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__GetAllDoorByParam(struct soap *soap, const char *URL, struct __ns1__GetAllDoorByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllDoorByParam(soap, p), 0) || ::soap_put___ns1__GetAllDoorByParam(soap, p, "-ns1:GetAllDoorByParam", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__GetAllDoorByParam(struct soap *soap, const char *URL, struct __ns1__GetAllDoorByParam const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllDoorByParam(soap, p), 0) || ::soap_put___ns1__GetAllDoorByParam(soap, p, "-ns1:GetAllDoorByParam", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__GetAllDoorByParam * SOAP_FMAC4 soap_get___ns1__GetAllDoorByParam(struct soap*, struct __ns1__GetAllDoorByParam *, const char*, const char*);
+
+inline int soap_read___ns1__GetAllDoorByParam(struct soap *soap, struct __ns1__GetAllDoorByParam *p)
+{
+	if (p)
+	{	::soap_default___ns1__GetAllDoorByParam(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__GetAllDoorByParam(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__GetAllDoorByParam(struct soap *soap, const char *URL, struct __ns1__GetAllDoorByParam *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__GetAllDoorByParam(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__GetAllDoorByParam(struct soap *soap, struct __ns1__GetAllDoorByParam *p)
+{
+	if (::soap_read___ns1__GetAllDoorByParam(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__GetAllDoor_DEFINED
+#define SOAP_TYPE___ns1__GetAllDoor_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllDoor(struct soap*, struct __ns1__GetAllDoor *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllDoor(struct soap*, const struct __ns1__GetAllDoor *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllDoor(struct soap*, const char*, int, const struct __ns1__GetAllDoor *, const char*);
+SOAP_FMAC3 struct __ns1__GetAllDoor * SOAP_FMAC4 soap_in___ns1__GetAllDoor(struct soap*, const char*, struct __ns1__GetAllDoor *, const char*);
+SOAP_FMAC1 struct __ns1__GetAllDoor * SOAP_FMAC2 soap_instantiate___ns1__GetAllDoor(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__GetAllDoor * soap_new___ns1__GetAllDoor(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__GetAllDoor(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__GetAllDoor * soap_new_req___ns1__GetAllDoor(
+	struct soap *soap)
+{
+	struct __ns1__GetAllDoor *_p = ::soap_new___ns1__GetAllDoor(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllDoor(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__GetAllDoor * soap_new_set___ns1__GetAllDoor(
+	struct soap *soap,
+	_ns1__GetAllDoor *ns1__GetAllDoor)
+{
+	struct __ns1__GetAllDoor *_p = ::soap_new___ns1__GetAllDoor(soap);
+	if (_p)
+	{	::soap_default___ns1__GetAllDoor(soap, _p);
+		_p->ns1__GetAllDoor = ns1__GetAllDoor;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllDoor(struct soap*, const struct __ns1__GetAllDoor *, const char*, const char*);
+
+inline int soap_write___ns1__GetAllDoor(struct soap *soap, struct __ns1__GetAllDoor const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__GetAllDoor(soap, p), 0) || ::soap_put___ns1__GetAllDoor(soap, p, "-ns1:GetAllDoor", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__GetAllDoor(struct soap *soap, const char *URL, struct __ns1__GetAllDoor const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllDoor(soap, p), 0) || ::soap_put___ns1__GetAllDoor(soap, p, "-ns1:GetAllDoor", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__GetAllDoor(struct soap *soap, const char *URL, struct __ns1__GetAllDoor const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllDoor(soap, p), 0) || ::soap_put___ns1__GetAllDoor(soap, p, "-ns1:GetAllDoor", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__GetAllDoor(struct soap *soap, const char *URL, struct __ns1__GetAllDoor const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetAllDoor(soap, p), 0) || ::soap_put___ns1__GetAllDoor(soap, p, "-ns1:GetAllDoor", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__GetAllDoor * SOAP_FMAC4 soap_get___ns1__GetAllDoor(struct soap*, struct __ns1__GetAllDoor *, const char*, const char*);
+
+inline int soap_read___ns1__GetAllDoor(struct soap *soap, struct __ns1__GetAllDoor *p)
+{
+	if (p)
+	{	::soap_default___ns1__GetAllDoor(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__GetAllDoor(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__GetAllDoor(struct soap *soap, const char *URL, struct __ns1__GetAllDoor *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__GetAllDoor(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__GetAllDoor(struct soap *soap, struct __ns1__GetAllDoor *p)
+{
+	if (::soap_read___ns1__GetAllDoor(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
 #ifndef SOAP_TYPE___ns1__GetWindows_DEFINED
 #define SOAP_TYPE___ns1__GetWindows_DEFINED
 SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetWindows(struct soap*, struct __ns1__GetWindows *);
@@ -2430,6 +5442,78 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__CadFileDownload(struct soap*, 
 SOAP_FMAC3 _ns1__CadFileDownload ** SOAP_FMAC4 soap_in_PointerTo_ns1__CadFileDownload(struct soap*, const char*, _ns1__CadFileDownload **, const char*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__CadFileDownload(struct soap*, _ns1__CadFileDownload *const*, const char*, const char*);
 SOAP_FMAC3 _ns1__CadFileDownload ** SOAP_FMAC4 soap_get_PointerTo_ns1__CadFileDownload(struct soap*, _ns1__CadFileDownload **, const char*, const char*);
+#endif
+
+#ifndef SOAP_TYPE_PointerTo_ns1__GetAllAirconditionerByParam_DEFINED
+#define SOAP_TYPE_PointerTo_ns1__GetAllAirconditionerByParam_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__GetAllAirconditionerByParam(struct soap*, _ns1__GetAllAirconditionerByParam *const*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__GetAllAirconditionerByParam(struct soap*, const char *, int, _ns1__GetAllAirconditionerByParam *const*, const char *);
+SOAP_FMAC3 _ns1__GetAllAirconditionerByParam ** SOAP_FMAC4 soap_in_PointerTo_ns1__GetAllAirconditionerByParam(struct soap*, const char*, _ns1__GetAllAirconditionerByParam **, const char*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__GetAllAirconditionerByParam(struct soap*, _ns1__GetAllAirconditionerByParam *const*, const char*, const char*);
+SOAP_FMAC3 _ns1__GetAllAirconditionerByParam ** SOAP_FMAC4 soap_get_PointerTo_ns1__GetAllAirconditionerByParam(struct soap*, _ns1__GetAllAirconditionerByParam **, const char*, const char*);
+#endif
+
+#ifndef SOAP_TYPE_PointerTo_ns1__GetAllHandrailByParam_DEFINED
+#define SOAP_TYPE_PointerTo_ns1__GetAllHandrailByParam_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__GetAllHandrailByParam(struct soap*, _ns1__GetAllHandrailByParam *const*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__GetAllHandrailByParam(struct soap*, const char *, int, _ns1__GetAllHandrailByParam *const*, const char *);
+SOAP_FMAC3 _ns1__GetAllHandrailByParam ** SOAP_FMAC4 soap_in_PointerTo_ns1__GetAllHandrailByParam(struct soap*, const char*, _ns1__GetAllHandrailByParam **, const char*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__GetAllHandrailByParam(struct soap*, _ns1__GetAllHandrailByParam *const*, const char*, const char*);
+SOAP_FMAC3 _ns1__GetAllHandrailByParam ** SOAP_FMAC4 soap_get_PointerTo_ns1__GetAllHandrailByParam(struct soap*, _ns1__GetAllHandrailByParam **, const char*, const char*);
+#endif
+
+#ifndef SOAP_TYPE_PointerTo_ns1__GetAllBathroomByParam_DEFINED
+#define SOAP_TYPE_PointerTo_ns1__GetAllBathroomByParam_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__GetAllBathroomByParam(struct soap*, _ns1__GetAllBathroomByParam *const*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__GetAllBathroomByParam(struct soap*, const char *, int, _ns1__GetAllBathroomByParam *const*, const char *);
+SOAP_FMAC3 _ns1__GetAllBathroomByParam ** SOAP_FMAC4 soap_in_PointerTo_ns1__GetAllBathroomByParam(struct soap*, const char*, _ns1__GetAllBathroomByParam **, const char*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__GetAllBathroomByParam(struct soap*, _ns1__GetAllBathroomByParam *const*, const char*, const char*);
+SOAP_FMAC3 _ns1__GetAllBathroomByParam ** SOAP_FMAC4 soap_get_PointerTo_ns1__GetAllBathroomByParam(struct soap*, _ns1__GetAllBathroomByParam **, const char*, const char*);
+#endif
+
+#ifndef SOAP_TYPE_PointerTo_ns1__GetAllBathroom_DEFINED
+#define SOAP_TYPE_PointerTo_ns1__GetAllBathroom_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__GetAllBathroom(struct soap*, _ns1__GetAllBathroom *const*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__GetAllBathroom(struct soap*, const char *, int, _ns1__GetAllBathroom *const*, const char *);
+SOAP_FMAC3 _ns1__GetAllBathroom ** SOAP_FMAC4 soap_in_PointerTo_ns1__GetAllBathroom(struct soap*, const char*, _ns1__GetAllBathroom **, const char*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__GetAllBathroom(struct soap*, _ns1__GetAllBathroom *const*, const char*, const char*);
+SOAP_FMAC3 _ns1__GetAllBathroom ** SOAP_FMAC4 soap_get_PointerTo_ns1__GetAllBathroom(struct soap*, _ns1__GetAllBathroom **, const char*, const char*);
+#endif
+
+#ifndef SOAP_TYPE_PointerTo_ns1__GetAllKitchenParam_DEFINED
+#define SOAP_TYPE_PointerTo_ns1__GetAllKitchenParam_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__GetAllKitchenParam(struct soap*, _ns1__GetAllKitchenParam *const*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__GetAllKitchenParam(struct soap*, const char *, int, _ns1__GetAllKitchenParam *const*, const char *);
+SOAP_FMAC3 _ns1__GetAllKitchenParam ** SOAP_FMAC4 soap_in_PointerTo_ns1__GetAllKitchenParam(struct soap*, const char*, _ns1__GetAllKitchenParam **, const char*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__GetAllKitchenParam(struct soap*, _ns1__GetAllKitchenParam *const*, const char*, const char*);
+SOAP_FMAC3 _ns1__GetAllKitchenParam ** SOAP_FMAC4 soap_get_PointerTo_ns1__GetAllKitchenParam(struct soap*, _ns1__GetAllKitchenParam **, const char*, const char*);
+#endif
+
+#ifndef SOAP_TYPE_PointerTo_ns1__GetAllKitchen_DEFINED
+#define SOAP_TYPE_PointerTo_ns1__GetAllKitchen_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__GetAllKitchen(struct soap*, _ns1__GetAllKitchen *const*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__GetAllKitchen(struct soap*, const char *, int, _ns1__GetAllKitchen *const*, const char *);
+SOAP_FMAC3 _ns1__GetAllKitchen ** SOAP_FMAC4 soap_in_PointerTo_ns1__GetAllKitchen(struct soap*, const char*, _ns1__GetAllKitchen **, const char*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__GetAllKitchen(struct soap*, _ns1__GetAllKitchen *const*, const char*, const char*);
+SOAP_FMAC3 _ns1__GetAllKitchen ** SOAP_FMAC4 soap_get_PointerTo_ns1__GetAllKitchen(struct soap*, _ns1__GetAllKitchen **, const char*, const char*);
+#endif
+
+#ifndef SOAP_TYPE_PointerTo_ns1__GetAllDoorByParam_DEFINED
+#define SOAP_TYPE_PointerTo_ns1__GetAllDoorByParam_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__GetAllDoorByParam(struct soap*, _ns1__GetAllDoorByParam *const*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__GetAllDoorByParam(struct soap*, const char *, int, _ns1__GetAllDoorByParam *const*, const char *);
+SOAP_FMAC3 _ns1__GetAllDoorByParam ** SOAP_FMAC4 soap_in_PointerTo_ns1__GetAllDoorByParam(struct soap*, const char*, _ns1__GetAllDoorByParam **, const char*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__GetAllDoorByParam(struct soap*, _ns1__GetAllDoorByParam *const*, const char*, const char*);
+SOAP_FMAC3 _ns1__GetAllDoorByParam ** SOAP_FMAC4 soap_get_PointerTo_ns1__GetAllDoorByParam(struct soap*, _ns1__GetAllDoorByParam **, const char*, const char*);
+#endif
+
+#ifndef SOAP_TYPE_PointerTo_ns1__GetAllDoor_DEFINED
+#define SOAP_TYPE_PointerTo_ns1__GetAllDoor_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__GetAllDoor(struct soap*, _ns1__GetAllDoor *const*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__GetAllDoor(struct soap*, const char *, int, _ns1__GetAllDoor *const*, const char *);
+SOAP_FMAC3 _ns1__GetAllDoor ** SOAP_FMAC4 soap_in_PointerTo_ns1__GetAllDoor(struct soap*, const char*, _ns1__GetAllDoor **, const char*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__GetAllDoor(struct soap*, _ns1__GetAllDoor *const*, const char*, const char*);
+SOAP_FMAC3 _ns1__GetAllDoor ** SOAP_FMAC4 soap_get_PointerTo_ns1__GetAllDoor(struct soap*, _ns1__GetAllDoor **, const char*, const char*);
 #endif
 
 #ifndef SOAP_TYPE_PointerTo_ns1__GetWindows_DEFINED

@@ -230,7 +230,10 @@
     <ClCompile Include="UI\WaterproofDlg.cpp" />
     <ClCompile Include="UI\WindowDlg.cpp" />
     <ClCompile Include="WebIO\AirConditionLocalData.cpp" />
+    <ClCompile Include="WebIO\AirconditionWebData.cpp" />
     <ClCompile Include="WebIO\ConfigDictionary.cpp" />
+    <ClCompile Include="WebIO\KitchenBathroomWebData.cpp" />
+    <ClCompile Include="WebIO\RailingWebData.cpp" />
     <ClCompile Include="WebIO\WindowLocalData.cpp" />
     <ClCompile Include="WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.cpp" />
     <ClCompile Include="WebIO\SunacCadWeb\soapC.cpp" />
@@ -351,7 +354,10 @@
     <ClInclude Include="UI\WaterproofDlg.h" />
     <ClInclude Include="UI\WindowDlg.h" />
     <ClInclude Include="WebIO\AirConditionLocalData.h" />
+    <ClInclude Include="WebIO\AirconditionWebData.h" />
     <ClInclude Include="WebIO\ConfigDictionary.h" />
+    <ClInclude Include="WebIO\KitchenBathroomWebData.h" />
+    <ClInclude Include="WebIO\RailingWebData.h" />
     <ClInclude Include="WebIO\WindowLocalData.h" />
     <ClInclude Include="WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.h" />
     <ClInclude Include="WebIO\SunacCadWeb\soapH.h" />

@@ -18,99 +18,29 @@ WebIO::~WebIO()
 {
 
 }
-//
-//std::vector<AttrWindow *>  WebIO::GetWindows
-//(
-//   double width,//宽度值，注意高度值不作为搜索条件 
-//   double height,
-//   CString openType, //开启类型
-//   int openNum,//开启扇数量
-//   CString gongNengQu,//功能区
-//   double tongFengLiang//通风量
-//)
-//{
-//	std::vector<AttrWindow *> result;
-//
-//#ifdef WORK_LOCAL//本地模式
-//	CString localWindowPath = TY_GetLocalFilePath();
-//	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"*_Window.dwg",localWindowPath);
-//	for (UINT i = 0; i < localFiles.size(); i++)
-//	{
-//		AttrWindow *pAttribute = new AttrWindow();
-//		CString strid;
-//		strid.Format(L"%s%d_", L"C",i+1);
-//		pAttribute->m_prototypeCode = strid;
-//		pAttribute->m_name = localFiles[i].first;
-//		pAttribute->m_fileName = localFiles[i].second;
-//		int len = pAttribute->m_name.GetLength();
-//		pAttribute->m_name.Delete(len - 4, 4);
-//		pAttribute->m_isJiTuan = true;
-//		pAttribute->m_isDynamic = true;
-//		pAttribute->m_type = L"外窗";
-//
-//		result.push_back(pAttribute);
-//		pAttribute->close();
-//	}
-//#else
-//
-//#endif
-//	return result;
-//}
-//
-//std::vector<AttrWindow *>  WebIO::GetAllWindows()
-//{
-//	std::vector<AttrWindow *> result;
-//
-//#ifdef WORK_LOCAL//本地模式
-//	result = GetWindows(0,0,L"",0,L"",0);
-//#else
-//
-//#endif
-//
-//	return result;
-//}
 
-//std::vector<AttrDoor *> WebIO::GetDoors
-//(
-//    double minWid, //宽度值，注意高度值不作为搜索条件 
-//    CString doorType //门类型
-//)
-//{
-//	std::vector<AttrDoor *> result;
-//#ifdef WORK_LOCAL//本地模式
-//	CString localWindowPath = TY_GetLocalFilePath();
-//	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"*.dwg",localWindowPath);
-//	for (UINT i = 0; i < localFiles.size(); i++)
-//	{
-//		AttrDoor *pAttribute = new AttrDoor();
-//		CString strid;
-//		strid.Format(L"%s_%d", L"L_DOOR_",i+1);
-//		pAttribute->m_prototypeCode = strid;
-//		pAttribute->m_name = localFiles[i].first;
-//		pAttribute->m_name = pAttribute->m_name.Left(pAttribute->m_name.GetLength() - 4);
-//		pAttribute->m_isJiTuan = true;
-//		pAttribute->m_isDynamic = true;
-//		pAttribute->m_type = L"门";
-//
-//		result.push_back(pAttribute);
-//		pAttribute->close();
-//	}
-//#else
-//
-//#endif
-//	return result;
-//}
-//
-//std::vector<AttrDoor *> WebIO::GetAllDoors()
-//{
-//	std::vector<AttrDoor *> result;
-//#ifdef WORK_LOCAL//本地模式
-//	result = GetDoors(0,L"");
-//#else
-//
-//#endif
-//	return result;
-//}
+//width,//宽度值，注意高度值不作为搜索条件 
+//openType, //开启类型
+//openNum,//开启扇数量
+//gongNengQu,//功能区
+//tongFengLiang//通风量
+//读取门和窗
+std::vector<AttrWindow >  WebIO::GetWindows(double width, CString openType, int openNum, CString gongNengQu)const
+{
+#ifdef WORK_LOCAL//本地模式
+	return m_windowLocalData.GetWindows(width, openType, openNum, gongNengQu);
+#else
+	return m_windowWebData.GetWindows(width, openType, openNum, gongNengQu);
+#endif
+}
+std::vector<AttrWindow > WebIO::GetDoors(double width, CString openType, int openNum, CString gongNengQu)const
+{
+#ifdef WORK_LOCAL//本地模式
+	return m_windowLocalData.GetDoors(width, openType, openNum, gongNengQu);
+#else
+return m_windowWebData.GetDoors(width, openType, openNum, gongNengQu);
+#endif
+}
 
 std::vector<AttrKitchen *> WebIO::GetKitchens
 (

@@ -18,7 +18,7 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
 
 #include "soapH.h"
 
-SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.84 2019-10-01 02:51:03 GMT")
+SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.84 2019-10-07 05:59:42 GMT")
 
 
 #ifndef WITH_NOGLOBAL
@@ -197,6 +197,22 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, const char *tag,
 		return soap_in_std__wstring(soap, tag, NULL, "xsd:string");
 	case SOAP_TYPE_PointerTo_ns1__CadFileDownload:
 		return soap_in_PointerTo_ns1__CadFileDownload(soap, tag, NULL, "ns1:CadFileDownload");
+	case SOAP_TYPE_PointerTo_ns1__GetAllAirconditionerByParam:
+		return soap_in_PointerTo_ns1__GetAllAirconditionerByParam(soap, tag, NULL, "ns1:GetAllAirconditionerByParam");
+	case SOAP_TYPE_PointerTo_ns1__GetAllHandrailByParam:
+		return soap_in_PointerTo_ns1__GetAllHandrailByParam(soap, tag, NULL, "ns1:GetAllHandrailByParam");
+	case SOAP_TYPE_PointerTo_ns1__GetAllBathroomByParam:
+		return soap_in_PointerTo_ns1__GetAllBathroomByParam(soap, tag, NULL, "ns1:GetAllBathroomByParam");
+	case SOAP_TYPE_PointerTo_ns1__GetAllBathroom:
+		return soap_in_PointerTo_ns1__GetAllBathroom(soap, tag, NULL, "ns1:GetAllBathroom");
+	case SOAP_TYPE_PointerTo_ns1__GetAllKitchenParam:
+		return soap_in_PointerTo_ns1__GetAllKitchenParam(soap, tag, NULL, "ns1:GetAllKitchenParam");
+	case SOAP_TYPE_PointerTo_ns1__GetAllKitchen:
+		return soap_in_PointerTo_ns1__GetAllKitchen(soap, tag, NULL, "ns1:GetAllKitchen");
+	case SOAP_TYPE_PointerTo_ns1__GetAllDoorByParam:
+		return soap_in_PointerTo_ns1__GetAllDoorByParam(soap, tag, NULL, "ns1:GetAllDoorByParam");
+	case SOAP_TYPE_PointerTo_ns1__GetAllDoor:
+		return soap_in_PointerTo_ns1__GetAllDoor(soap, tag, NULL, "ns1:GetAllDoor");
 	case SOAP_TYPE_PointerTo_ns1__GetWindows:
 		return soap_in_PointerTo_ns1__GetWindows(soap, tag, NULL, "ns1:GetWindows");
 	case SOAP_TYPE_PointerTo_ns1__GetAllWindows:
@@ -258,6 +274,70 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, const char *tag,
 		if (!soap_match_tag(soap, t, "ns1:CadFileDownload"))
 		{	*type = SOAP_TYPE__ns1__CadFileDownload;
 			return soap_in__ns1__CadFileDownload(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:GetAllAirconditionerByParamResponse"))
+		{	*type = SOAP_TYPE__ns1__GetAllAirconditionerByParamResponse;
+			return soap_in__ns1__GetAllAirconditionerByParamResponse(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:GetAllAirconditionerByParam"))
+		{	*type = SOAP_TYPE__ns1__GetAllAirconditionerByParam;
+			return soap_in__ns1__GetAllAirconditionerByParam(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:GetAllHandrailByParamResponse"))
+		{	*type = SOAP_TYPE__ns1__GetAllHandrailByParamResponse;
+			return soap_in__ns1__GetAllHandrailByParamResponse(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:GetAllHandrailByParam"))
+		{	*type = SOAP_TYPE__ns1__GetAllHandrailByParam;
+			return soap_in__ns1__GetAllHandrailByParam(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:GetAllBathroomByParamResponse"))
+		{	*type = SOAP_TYPE__ns1__GetAllBathroomByParamResponse;
+			return soap_in__ns1__GetAllBathroomByParamResponse(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:GetAllBathroomByParam"))
+		{	*type = SOAP_TYPE__ns1__GetAllBathroomByParam;
+			return soap_in__ns1__GetAllBathroomByParam(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:GetAllBathroomResponse"))
+		{	*type = SOAP_TYPE__ns1__GetAllBathroomResponse;
+			return soap_in__ns1__GetAllBathroomResponse(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:GetAllBathroom"))
+		{	*type = SOAP_TYPE__ns1__GetAllBathroom;
+			return soap_in__ns1__GetAllBathroom(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:GetAllKitchenParamResponse"))
+		{	*type = SOAP_TYPE__ns1__GetAllKitchenParamResponse;
+			return soap_in__ns1__GetAllKitchenParamResponse(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:GetAllKitchenParam"))
+		{	*type = SOAP_TYPE__ns1__GetAllKitchenParam;
+			return soap_in__ns1__GetAllKitchenParam(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:GetAllKitchenResponse"))
+		{	*type = SOAP_TYPE__ns1__GetAllKitchenResponse;
+			return soap_in__ns1__GetAllKitchenResponse(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:GetAllKitchen"))
+		{	*type = SOAP_TYPE__ns1__GetAllKitchen;
+			return soap_in__ns1__GetAllKitchen(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:GetAllDoorByParamResponse"))
+		{	*type = SOAP_TYPE__ns1__GetAllDoorByParamResponse;
+			return soap_in__ns1__GetAllDoorByParamResponse(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:GetAllDoorByParam"))
+		{	*type = SOAP_TYPE__ns1__GetAllDoorByParam;
+			return soap_in__ns1__GetAllDoorByParam(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:GetAllDoorResponse"))
+		{	*type = SOAP_TYPE__ns1__GetAllDoorResponse;
+			return soap_in__ns1__GetAllDoorResponse(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:GetAllDoor"))
+		{	*type = SOAP_TYPE__ns1__GetAllDoor;
+			return soap_in__ns1__GetAllDoor(soap, NULL, NULL, NULL);
 		}
 		if (!soap_match_tag(soap, t, "ns1:GetWindowsResponse"))
 		{	*type = SOAP_TYPE__ns1__GetWindowsResponse;
@@ -354,6 +434,38 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return ((_ns1__CadFileDownloadResponse *)ptr)->soap_out(soap, "ns1:CadFileDownloadResponse", id, "");
 	case SOAP_TYPE__ns1__CadFileDownload:
 		return ((_ns1__CadFileDownload *)ptr)->soap_out(soap, "ns1:CadFileDownload", id, "");
+	case SOAP_TYPE__ns1__GetAllAirconditionerByParamResponse:
+		return ((_ns1__GetAllAirconditionerByParamResponse *)ptr)->soap_out(soap, "ns1:GetAllAirconditionerByParamResponse", id, "");
+	case SOAP_TYPE__ns1__GetAllAirconditionerByParam:
+		return ((_ns1__GetAllAirconditionerByParam *)ptr)->soap_out(soap, "ns1:GetAllAirconditionerByParam", id, "");
+	case SOAP_TYPE__ns1__GetAllHandrailByParamResponse:
+		return ((_ns1__GetAllHandrailByParamResponse *)ptr)->soap_out(soap, "ns1:GetAllHandrailByParamResponse", id, "");
+	case SOAP_TYPE__ns1__GetAllHandrailByParam:
+		return ((_ns1__GetAllHandrailByParam *)ptr)->soap_out(soap, "ns1:GetAllHandrailByParam", id, "");
+	case SOAP_TYPE__ns1__GetAllBathroomByParamResponse:
+		return ((_ns1__GetAllBathroomByParamResponse *)ptr)->soap_out(soap, "ns1:GetAllBathroomByParamResponse", id, "");
+	case SOAP_TYPE__ns1__GetAllBathroomByParam:
+		return ((_ns1__GetAllBathroomByParam *)ptr)->soap_out(soap, "ns1:GetAllBathroomByParam", id, "");
+	case SOAP_TYPE__ns1__GetAllBathroomResponse:
+		return ((_ns1__GetAllBathroomResponse *)ptr)->soap_out(soap, "ns1:GetAllBathroomResponse", id, "");
+	case SOAP_TYPE__ns1__GetAllBathroom:
+		return ((_ns1__GetAllBathroom *)ptr)->soap_out(soap, "ns1:GetAllBathroom", id, "");
+	case SOAP_TYPE__ns1__GetAllKitchenParamResponse:
+		return ((_ns1__GetAllKitchenParamResponse *)ptr)->soap_out(soap, "ns1:GetAllKitchenParamResponse", id, "");
+	case SOAP_TYPE__ns1__GetAllKitchenParam:
+		return ((_ns1__GetAllKitchenParam *)ptr)->soap_out(soap, "ns1:GetAllKitchenParam", id, "");
+	case SOAP_TYPE__ns1__GetAllKitchenResponse:
+		return ((_ns1__GetAllKitchenResponse *)ptr)->soap_out(soap, "ns1:GetAllKitchenResponse", id, "");
+	case SOAP_TYPE__ns1__GetAllKitchen:
+		return ((_ns1__GetAllKitchen *)ptr)->soap_out(soap, "ns1:GetAllKitchen", id, "");
+	case SOAP_TYPE__ns1__GetAllDoorByParamResponse:
+		return ((_ns1__GetAllDoorByParamResponse *)ptr)->soap_out(soap, "ns1:GetAllDoorByParamResponse", id, "");
+	case SOAP_TYPE__ns1__GetAllDoorByParam:
+		return ((_ns1__GetAllDoorByParam *)ptr)->soap_out(soap, "ns1:GetAllDoorByParam", id, "");
+	case SOAP_TYPE__ns1__GetAllDoorResponse:
+		return ((_ns1__GetAllDoorResponse *)ptr)->soap_out(soap, "ns1:GetAllDoorResponse", id, "");
+	case SOAP_TYPE__ns1__GetAllDoor:
+		return ((_ns1__GetAllDoor *)ptr)->soap_out(soap, "ns1:GetAllDoor", id, "");
 	case SOAP_TYPE__ns1__GetWindowsResponse:
 		return ((_ns1__GetWindowsResponse *)ptr)->soap_out(soap, "ns1:GetWindowsResponse", id, "");
 	case SOAP_TYPE__ns1__GetWindows:
@@ -368,6 +480,22 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return ((_ns1__StandardDesignAttribute *)ptr)->soap_out(soap, "ns1:StandardDesignAttribute", id, "");
 	case SOAP_TYPE_PointerTo_ns1__CadFileDownload:
 		return soap_out_PointerTo_ns1__CadFileDownload(soap, tag, id, (_ns1__CadFileDownload *const*)ptr, "ns1:CadFileDownload");
+	case SOAP_TYPE_PointerTo_ns1__GetAllAirconditionerByParam:
+		return soap_out_PointerTo_ns1__GetAllAirconditionerByParam(soap, tag, id, (_ns1__GetAllAirconditionerByParam *const*)ptr, "ns1:GetAllAirconditionerByParam");
+	case SOAP_TYPE_PointerTo_ns1__GetAllHandrailByParam:
+		return soap_out_PointerTo_ns1__GetAllHandrailByParam(soap, tag, id, (_ns1__GetAllHandrailByParam *const*)ptr, "ns1:GetAllHandrailByParam");
+	case SOAP_TYPE_PointerTo_ns1__GetAllBathroomByParam:
+		return soap_out_PointerTo_ns1__GetAllBathroomByParam(soap, tag, id, (_ns1__GetAllBathroomByParam *const*)ptr, "ns1:GetAllBathroomByParam");
+	case SOAP_TYPE_PointerTo_ns1__GetAllBathroom:
+		return soap_out_PointerTo_ns1__GetAllBathroom(soap, tag, id, (_ns1__GetAllBathroom *const*)ptr, "ns1:GetAllBathroom");
+	case SOAP_TYPE_PointerTo_ns1__GetAllKitchenParam:
+		return soap_out_PointerTo_ns1__GetAllKitchenParam(soap, tag, id, (_ns1__GetAllKitchenParam *const*)ptr, "ns1:GetAllKitchenParam");
+	case SOAP_TYPE_PointerTo_ns1__GetAllKitchen:
+		return soap_out_PointerTo_ns1__GetAllKitchen(soap, tag, id, (_ns1__GetAllKitchen *const*)ptr, "ns1:GetAllKitchen");
+	case SOAP_TYPE_PointerTo_ns1__GetAllDoorByParam:
+		return soap_out_PointerTo_ns1__GetAllDoorByParam(soap, tag, id, (_ns1__GetAllDoorByParam *const*)ptr, "ns1:GetAllDoorByParam");
+	case SOAP_TYPE_PointerTo_ns1__GetAllDoor:
+		return soap_out_PointerTo_ns1__GetAllDoor(soap, tag, id, (_ns1__GetAllDoor *const*)ptr, "ns1:GetAllDoor");
 	case SOAP_TYPE_PointerTo_ns1__GetWindows:
 		return soap_out_PointerTo_ns1__GetWindows(soap, tag, id, (_ns1__GetWindows *const*)ptr, "ns1:GetWindows");
 	case SOAP_TYPE_PointerTo_ns1__GetAllWindows:
@@ -409,6 +537,54 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	case SOAP_TYPE__ns1__CadFileDownload:
 		((_ns1__CadFileDownload *)ptr)->soap_serialize(soap);
 		break;
+	case SOAP_TYPE__ns1__GetAllAirconditionerByParamResponse:
+		((_ns1__GetAllAirconditionerByParamResponse *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE__ns1__GetAllAirconditionerByParam:
+		((_ns1__GetAllAirconditionerByParam *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE__ns1__GetAllHandrailByParamResponse:
+		((_ns1__GetAllHandrailByParamResponse *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE__ns1__GetAllHandrailByParam:
+		((_ns1__GetAllHandrailByParam *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE__ns1__GetAllBathroomByParamResponse:
+		((_ns1__GetAllBathroomByParamResponse *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE__ns1__GetAllBathroomByParam:
+		((_ns1__GetAllBathroomByParam *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE__ns1__GetAllBathroomResponse:
+		((_ns1__GetAllBathroomResponse *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE__ns1__GetAllBathroom:
+		((_ns1__GetAllBathroom *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE__ns1__GetAllKitchenParamResponse:
+		((_ns1__GetAllKitchenParamResponse *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE__ns1__GetAllKitchenParam:
+		((_ns1__GetAllKitchenParam *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE__ns1__GetAllKitchenResponse:
+		((_ns1__GetAllKitchenResponse *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE__ns1__GetAllKitchen:
+		((_ns1__GetAllKitchen *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE__ns1__GetAllDoorByParamResponse:
+		((_ns1__GetAllDoorByParamResponse *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE__ns1__GetAllDoorByParam:
+		((_ns1__GetAllDoorByParam *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE__ns1__GetAllDoorResponse:
+		((_ns1__GetAllDoorResponse *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE__ns1__GetAllDoor:
+		((_ns1__GetAllDoor *)ptr)->soap_serialize(soap);
+		break;
 	case SOAP_TYPE__ns1__GetWindowsResponse:
 		((_ns1__GetWindowsResponse *)ptr)->soap_serialize(soap);
 		break;
@@ -430,6 +606,30 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	case SOAP_TYPE___ns1__CadFileDownload_:
 		soap_serialize___ns1__CadFileDownload_(soap, (const struct __ns1__CadFileDownload_ *)ptr);
 		break;
+	case SOAP_TYPE___ns1__GetAllAirconditionerByParam_:
+		soap_serialize___ns1__GetAllAirconditionerByParam_(soap, (const struct __ns1__GetAllAirconditionerByParam_ *)ptr);
+		break;
+	case SOAP_TYPE___ns1__GetAllHandrailByParam_:
+		soap_serialize___ns1__GetAllHandrailByParam_(soap, (const struct __ns1__GetAllHandrailByParam_ *)ptr);
+		break;
+	case SOAP_TYPE___ns1__GetAllBathroomByParam_:
+		soap_serialize___ns1__GetAllBathroomByParam_(soap, (const struct __ns1__GetAllBathroomByParam_ *)ptr);
+		break;
+	case SOAP_TYPE___ns1__GetAllBathroom_:
+		soap_serialize___ns1__GetAllBathroom_(soap, (const struct __ns1__GetAllBathroom_ *)ptr);
+		break;
+	case SOAP_TYPE___ns1__GetAllKitchenParam_:
+		soap_serialize___ns1__GetAllKitchenParam_(soap, (const struct __ns1__GetAllKitchenParam_ *)ptr);
+		break;
+	case SOAP_TYPE___ns1__GetAllKitchen_:
+		soap_serialize___ns1__GetAllKitchen_(soap, (const struct __ns1__GetAllKitchen_ *)ptr);
+		break;
+	case SOAP_TYPE___ns1__GetAllDoorByParam_:
+		soap_serialize___ns1__GetAllDoorByParam_(soap, (const struct __ns1__GetAllDoorByParam_ *)ptr);
+		break;
+	case SOAP_TYPE___ns1__GetAllDoor_:
+		soap_serialize___ns1__GetAllDoor_(soap, (const struct __ns1__GetAllDoor_ *)ptr);
+		break;
 	case SOAP_TYPE___ns1__GetWindows_:
 		soap_serialize___ns1__GetWindows_(soap, (const struct __ns1__GetWindows_ *)ptr);
 		break;
@@ -442,6 +642,30 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	case SOAP_TYPE___ns1__CadFileDownload:
 		soap_serialize___ns1__CadFileDownload(soap, (const struct __ns1__CadFileDownload *)ptr);
 		break;
+	case SOAP_TYPE___ns1__GetAllAirconditionerByParam:
+		soap_serialize___ns1__GetAllAirconditionerByParam(soap, (const struct __ns1__GetAllAirconditionerByParam *)ptr);
+		break;
+	case SOAP_TYPE___ns1__GetAllHandrailByParam:
+		soap_serialize___ns1__GetAllHandrailByParam(soap, (const struct __ns1__GetAllHandrailByParam *)ptr);
+		break;
+	case SOAP_TYPE___ns1__GetAllBathroomByParam:
+		soap_serialize___ns1__GetAllBathroomByParam(soap, (const struct __ns1__GetAllBathroomByParam *)ptr);
+		break;
+	case SOAP_TYPE___ns1__GetAllBathroom:
+		soap_serialize___ns1__GetAllBathroom(soap, (const struct __ns1__GetAllBathroom *)ptr);
+		break;
+	case SOAP_TYPE___ns1__GetAllKitchenParam:
+		soap_serialize___ns1__GetAllKitchenParam(soap, (const struct __ns1__GetAllKitchenParam *)ptr);
+		break;
+	case SOAP_TYPE___ns1__GetAllKitchen:
+		soap_serialize___ns1__GetAllKitchen(soap, (const struct __ns1__GetAllKitchen *)ptr);
+		break;
+	case SOAP_TYPE___ns1__GetAllDoorByParam:
+		soap_serialize___ns1__GetAllDoorByParam(soap, (const struct __ns1__GetAllDoorByParam *)ptr);
+		break;
+	case SOAP_TYPE___ns1__GetAllDoor:
+		soap_serialize___ns1__GetAllDoor(soap, (const struct __ns1__GetAllDoor *)ptr);
+		break;
 	case SOAP_TYPE___ns1__GetWindows:
 		soap_serialize___ns1__GetWindows(soap, (const struct __ns1__GetWindows *)ptr);
 		break;
@@ -453,6 +677,30 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 		break;
 	case SOAP_TYPE_PointerTo_ns1__CadFileDownload:
 		soap_serialize_PointerTo_ns1__CadFileDownload(soap, (_ns1__CadFileDownload *const*)ptr);
+		break;
+	case SOAP_TYPE_PointerTo_ns1__GetAllAirconditionerByParam:
+		soap_serialize_PointerTo_ns1__GetAllAirconditionerByParam(soap, (_ns1__GetAllAirconditionerByParam *const*)ptr);
+		break;
+	case SOAP_TYPE_PointerTo_ns1__GetAllHandrailByParam:
+		soap_serialize_PointerTo_ns1__GetAllHandrailByParam(soap, (_ns1__GetAllHandrailByParam *const*)ptr);
+		break;
+	case SOAP_TYPE_PointerTo_ns1__GetAllBathroomByParam:
+		soap_serialize_PointerTo_ns1__GetAllBathroomByParam(soap, (_ns1__GetAllBathroomByParam *const*)ptr);
+		break;
+	case SOAP_TYPE_PointerTo_ns1__GetAllBathroom:
+		soap_serialize_PointerTo_ns1__GetAllBathroom(soap, (_ns1__GetAllBathroom *const*)ptr);
+		break;
+	case SOAP_TYPE_PointerTo_ns1__GetAllKitchenParam:
+		soap_serialize_PointerTo_ns1__GetAllKitchenParam(soap, (_ns1__GetAllKitchenParam *const*)ptr);
+		break;
+	case SOAP_TYPE_PointerTo_ns1__GetAllKitchen:
+		soap_serialize_PointerTo_ns1__GetAllKitchen(soap, (_ns1__GetAllKitchen *const*)ptr);
+		break;
+	case SOAP_TYPE_PointerTo_ns1__GetAllDoorByParam:
+		soap_serialize_PointerTo_ns1__GetAllDoorByParam(soap, (_ns1__GetAllDoorByParam *const*)ptr);
+		break;
+	case SOAP_TYPE_PointerTo_ns1__GetAllDoor:
+		soap_serialize_PointerTo_ns1__GetAllDoor(soap, (_ns1__GetAllDoor *const*)ptr);
 		break;
 	case SOAP_TYPE_PointerTo_ns1__GetWindows:
 		soap_serialize_PointerTo_ns1__GetWindows(soap, (_ns1__GetWindows *const*)ptr);
@@ -520,6 +768,38 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate__ns1__GetWindows(soap, -1, type, arrayType, n);
 	case SOAP_TYPE__ns1__GetWindowsResponse:
 		return (void*)soap_instantiate__ns1__GetWindowsResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__GetAllDoor:
+		return (void*)soap_instantiate__ns1__GetAllDoor(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__GetAllDoorResponse:
+		return (void*)soap_instantiate__ns1__GetAllDoorResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__GetAllDoorByParam:
+		return (void*)soap_instantiate__ns1__GetAllDoorByParam(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__GetAllDoorByParamResponse:
+		return (void*)soap_instantiate__ns1__GetAllDoorByParamResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__GetAllKitchen:
+		return (void*)soap_instantiate__ns1__GetAllKitchen(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__GetAllKitchenResponse:
+		return (void*)soap_instantiate__ns1__GetAllKitchenResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__GetAllKitchenParam:
+		return (void*)soap_instantiate__ns1__GetAllKitchenParam(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__GetAllKitchenParamResponse:
+		return (void*)soap_instantiate__ns1__GetAllKitchenParamResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__GetAllBathroom:
+		return (void*)soap_instantiate__ns1__GetAllBathroom(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__GetAllBathroomResponse:
+		return (void*)soap_instantiate__ns1__GetAllBathroomResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__GetAllBathroomByParam:
+		return (void*)soap_instantiate__ns1__GetAllBathroomByParam(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__GetAllBathroomByParamResponse:
+		return (void*)soap_instantiate__ns1__GetAllBathroomByParamResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__GetAllHandrailByParam:
+		return (void*)soap_instantiate__ns1__GetAllHandrailByParam(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__GetAllHandrailByParamResponse:
+		return (void*)soap_instantiate__ns1__GetAllHandrailByParamResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__GetAllAirconditionerByParam:
+		return (void*)soap_instantiate__ns1__GetAllAirconditionerByParam(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__GetAllAirconditionerByParamResponse:
+		return (void*)soap_instantiate__ns1__GetAllAirconditionerByParamResponse(soap, -1, type, arrayType, n);
 	case SOAP_TYPE__ns1__CadFileDownload:
 		return (void*)soap_instantiate__ns1__CadFileDownload(soap, -1, type, arrayType, n);
 	case SOAP_TYPE__ns1__CadFileDownloadResponse:
@@ -530,6 +810,22 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate___ns1__GetAllWindows(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__GetWindows:
 		return (void*)soap_instantiate___ns1__GetWindows(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__GetAllDoor:
+		return (void*)soap_instantiate___ns1__GetAllDoor(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__GetAllDoorByParam:
+		return (void*)soap_instantiate___ns1__GetAllDoorByParam(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__GetAllKitchen:
+		return (void*)soap_instantiate___ns1__GetAllKitchen(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__GetAllKitchenParam:
+		return (void*)soap_instantiate___ns1__GetAllKitchenParam(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__GetAllBathroom:
+		return (void*)soap_instantiate___ns1__GetAllBathroom(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__GetAllBathroomByParam:
+		return (void*)soap_instantiate___ns1__GetAllBathroomByParam(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__GetAllHandrailByParam:
+		return (void*)soap_instantiate___ns1__GetAllHandrailByParam(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__GetAllAirconditionerByParam:
+		return (void*)soap_instantiate___ns1__GetAllAirconditionerByParam(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__CadFileDownload:
 		return (void*)soap_instantiate___ns1__CadFileDownload(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__StandardDesignAttribute_:
@@ -538,6 +834,22 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate___ns1__GetAllWindows_(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__GetWindows_:
 		return (void*)soap_instantiate___ns1__GetWindows_(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__GetAllDoor_:
+		return (void*)soap_instantiate___ns1__GetAllDoor_(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__GetAllDoorByParam_:
+		return (void*)soap_instantiate___ns1__GetAllDoorByParam_(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__GetAllKitchen_:
+		return (void*)soap_instantiate___ns1__GetAllKitchen_(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__GetAllKitchenParam_:
+		return (void*)soap_instantiate___ns1__GetAllKitchenParam_(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__GetAllBathroom_:
+		return (void*)soap_instantiate___ns1__GetAllBathroom_(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__GetAllBathroomByParam_:
+		return (void*)soap_instantiate___ns1__GetAllBathroomByParam_(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__GetAllHandrailByParam_:
+		return (void*)soap_instantiate___ns1__GetAllHandrailByParam_(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__GetAllAirconditionerByParam_:
+		return (void*)soap_instantiate___ns1__GetAllAirconditionerByParam_(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__CadFileDownload_:
 		return (void*)soap_instantiate___ns1__CadFileDownload_(soap, -1, type, arrayType, n);
 #ifndef WITH_NOGLOBAL
@@ -613,6 +925,102 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap *soap, struct soap_clist *p)
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__GetWindowsResponse*>(p->ptr), _ns1__GetWindowsResponse);
 		break;
+	case SOAP_TYPE__ns1__GetAllDoor:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__GetAllDoor*>(p->ptr), _ns1__GetAllDoor);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__GetAllDoor*>(p->ptr), _ns1__GetAllDoor);
+		break;
+	case SOAP_TYPE__ns1__GetAllDoorResponse:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__GetAllDoorResponse*>(p->ptr), _ns1__GetAllDoorResponse);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__GetAllDoorResponse*>(p->ptr), _ns1__GetAllDoorResponse);
+		break;
+	case SOAP_TYPE__ns1__GetAllDoorByParam:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__GetAllDoorByParam*>(p->ptr), _ns1__GetAllDoorByParam);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__GetAllDoorByParam*>(p->ptr), _ns1__GetAllDoorByParam);
+		break;
+	case SOAP_TYPE__ns1__GetAllDoorByParamResponse:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__GetAllDoorByParamResponse*>(p->ptr), _ns1__GetAllDoorByParamResponse);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__GetAllDoorByParamResponse*>(p->ptr), _ns1__GetAllDoorByParamResponse);
+		break;
+	case SOAP_TYPE__ns1__GetAllKitchen:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__GetAllKitchen*>(p->ptr), _ns1__GetAllKitchen);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__GetAllKitchen*>(p->ptr), _ns1__GetAllKitchen);
+		break;
+	case SOAP_TYPE__ns1__GetAllKitchenResponse:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__GetAllKitchenResponse*>(p->ptr), _ns1__GetAllKitchenResponse);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__GetAllKitchenResponse*>(p->ptr), _ns1__GetAllKitchenResponse);
+		break;
+	case SOAP_TYPE__ns1__GetAllKitchenParam:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__GetAllKitchenParam*>(p->ptr), _ns1__GetAllKitchenParam);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__GetAllKitchenParam*>(p->ptr), _ns1__GetAllKitchenParam);
+		break;
+	case SOAP_TYPE__ns1__GetAllKitchenParamResponse:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__GetAllKitchenParamResponse*>(p->ptr), _ns1__GetAllKitchenParamResponse);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__GetAllKitchenParamResponse*>(p->ptr), _ns1__GetAllKitchenParamResponse);
+		break;
+	case SOAP_TYPE__ns1__GetAllBathroom:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__GetAllBathroom*>(p->ptr), _ns1__GetAllBathroom);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__GetAllBathroom*>(p->ptr), _ns1__GetAllBathroom);
+		break;
+	case SOAP_TYPE__ns1__GetAllBathroomResponse:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__GetAllBathroomResponse*>(p->ptr), _ns1__GetAllBathroomResponse);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__GetAllBathroomResponse*>(p->ptr), _ns1__GetAllBathroomResponse);
+		break;
+	case SOAP_TYPE__ns1__GetAllBathroomByParam:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__GetAllBathroomByParam*>(p->ptr), _ns1__GetAllBathroomByParam);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__GetAllBathroomByParam*>(p->ptr), _ns1__GetAllBathroomByParam);
+		break;
+	case SOAP_TYPE__ns1__GetAllBathroomByParamResponse:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__GetAllBathroomByParamResponse*>(p->ptr), _ns1__GetAllBathroomByParamResponse);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__GetAllBathroomByParamResponse*>(p->ptr), _ns1__GetAllBathroomByParamResponse);
+		break;
+	case SOAP_TYPE__ns1__GetAllHandrailByParam:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__GetAllHandrailByParam*>(p->ptr), _ns1__GetAllHandrailByParam);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__GetAllHandrailByParam*>(p->ptr), _ns1__GetAllHandrailByParam);
+		break;
+	case SOAP_TYPE__ns1__GetAllHandrailByParamResponse:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__GetAllHandrailByParamResponse*>(p->ptr), _ns1__GetAllHandrailByParamResponse);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__GetAllHandrailByParamResponse*>(p->ptr), _ns1__GetAllHandrailByParamResponse);
+		break;
+	case SOAP_TYPE__ns1__GetAllAirconditionerByParam:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__GetAllAirconditionerByParam*>(p->ptr), _ns1__GetAllAirconditionerByParam);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__GetAllAirconditionerByParam*>(p->ptr), _ns1__GetAllAirconditionerByParam);
+		break;
+	case SOAP_TYPE__ns1__GetAllAirconditionerByParamResponse:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__GetAllAirconditionerByParamResponse*>(p->ptr), _ns1__GetAllAirconditionerByParamResponse);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__GetAllAirconditionerByParamResponse*>(p->ptr), _ns1__GetAllAirconditionerByParamResponse);
+		break;
 	case SOAP_TYPE__ns1__CadFileDownload:
 		if (p->size < 0)
 			SOAP_DELETE(soap, static_cast<_ns1__CadFileDownload*>(p->ptr), _ns1__CadFileDownload);
@@ -643,6 +1051,54 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap *soap, struct soap_clist *p)
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__GetWindows*>(p->ptr), struct __ns1__GetWindows);
 		break;
+	case SOAP_TYPE___ns1__GetAllDoor:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__GetAllDoor*>(p->ptr), struct __ns1__GetAllDoor);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__GetAllDoor*>(p->ptr), struct __ns1__GetAllDoor);
+		break;
+	case SOAP_TYPE___ns1__GetAllDoorByParam:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__GetAllDoorByParam*>(p->ptr), struct __ns1__GetAllDoorByParam);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__GetAllDoorByParam*>(p->ptr), struct __ns1__GetAllDoorByParam);
+		break;
+	case SOAP_TYPE___ns1__GetAllKitchen:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__GetAllKitchen*>(p->ptr), struct __ns1__GetAllKitchen);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__GetAllKitchen*>(p->ptr), struct __ns1__GetAllKitchen);
+		break;
+	case SOAP_TYPE___ns1__GetAllKitchenParam:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__GetAllKitchenParam*>(p->ptr), struct __ns1__GetAllKitchenParam);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__GetAllKitchenParam*>(p->ptr), struct __ns1__GetAllKitchenParam);
+		break;
+	case SOAP_TYPE___ns1__GetAllBathroom:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__GetAllBathroom*>(p->ptr), struct __ns1__GetAllBathroom);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__GetAllBathroom*>(p->ptr), struct __ns1__GetAllBathroom);
+		break;
+	case SOAP_TYPE___ns1__GetAllBathroomByParam:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__GetAllBathroomByParam*>(p->ptr), struct __ns1__GetAllBathroomByParam);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__GetAllBathroomByParam*>(p->ptr), struct __ns1__GetAllBathroomByParam);
+		break;
+	case SOAP_TYPE___ns1__GetAllHandrailByParam:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__GetAllHandrailByParam*>(p->ptr), struct __ns1__GetAllHandrailByParam);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__GetAllHandrailByParam*>(p->ptr), struct __ns1__GetAllHandrailByParam);
+		break;
+	case SOAP_TYPE___ns1__GetAllAirconditionerByParam:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__GetAllAirconditionerByParam*>(p->ptr), struct __ns1__GetAllAirconditionerByParam);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__GetAllAirconditionerByParam*>(p->ptr), struct __ns1__GetAllAirconditionerByParam);
+		break;
 	case SOAP_TYPE___ns1__CadFileDownload:
 		if (p->size < 0)
 			SOAP_DELETE(soap, static_cast<struct __ns1__CadFileDownload*>(p->ptr), struct __ns1__CadFileDownload);
@@ -666,6 +1122,54 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap *soap, struct soap_clist *p)
 			SOAP_DELETE(soap, static_cast<struct __ns1__GetWindows_*>(p->ptr), struct __ns1__GetWindows_);
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__GetWindows_*>(p->ptr), struct __ns1__GetWindows_);
+		break;
+	case SOAP_TYPE___ns1__GetAllDoor_:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__GetAllDoor_*>(p->ptr), struct __ns1__GetAllDoor_);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__GetAllDoor_*>(p->ptr), struct __ns1__GetAllDoor_);
+		break;
+	case SOAP_TYPE___ns1__GetAllDoorByParam_:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__GetAllDoorByParam_*>(p->ptr), struct __ns1__GetAllDoorByParam_);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__GetAllDoorByParam_*>(p->ptr), struct __ns1__GetAllDoorByParam_);
+		break;
+	case SOAP_TYPE___ns1__GetAllKitchen_:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__GetAllKitchen_*>(p->ptr), struct __ns1__GetAllKitchen_);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__GetAllKitchen_*>(p->ptr), struct __ns1__GetAllKitchen_);
+		break;
+	case SOAP_TYPE___ns1__GetAllKitchenParam_:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__GetAllKitchenParam_*>(p->ptr), struct __ns1__GetAllKitchenParam_);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__GetAllKitchenParam_*>(p->ptr), struct __ns1__GetAllKitchenParam_);
+		break;
+	case SOAP_TYPE___ns1__GetAllBathroom_:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__GetAllBathroom_*>(p->ptr), struct __ns1__GetAllBathroom_);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__GetAllBathroom_*>(p->ptr), struct __ns1__GetAllBathroom_);
+		break;
+	case SOAP_TYPE___ns1__GetAllBathroomByParam_:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__GetAllBathroomByParam_*>(p->ptr), struct __ns1__GetAllBathroomByParam_);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__GetAllBathroomByParam_*>(p->ptr), struct __ns1__GetAllBathroomByParam_);
+		break;
+	case SOAP_TYPE___ns1__GetAllHandrailByParam_:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__GetAllHandrailByParam_*>(p->ptr), struct __ns1__GetAllHandrailByParam_);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__GetAllHandrailByParam_*>(p->ptr), struct __ns1__GetAllHandrailByParam_);
+		break;
+	case SOAP_TYPE___ns1__GetAllAirconditionerByParam_:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__GetAllAirconditionerByParam_*>(p->ptr), struct __ns1__GetAllAirconditionerByParam_);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__GetAllAirconditionerByParam_*>(p->ptr), struct __ns1__GetAllAirconditionerByParam_);
 		break;
 	case SOAP_TYPE___ns1__CadFileDownload_:
 		if (p->size < 0)
@@ -772,6 +1276,70 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_finsert(struct soap *soap, int t, int tt, void *
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__GetWindowsResponse type=%d location=%p object=%p\n", t, p, q));
 		*(_ns1__GetWindowsResponse*)p = *(_ns1__GetWindowsResponse*)q;
 		break;
+	case SOAP_TYPE__ns1__GetAllDoor:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__GetAllDoor type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__GetAllDoor*)p = *(_ns1__GetAllDoor*)q;
+		break;
+	case SOAP_TYPE__ns1__GetAllDoorResponse:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__GetAllDoorResponse type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__GetAllDoorResponse*)p = *(_ns1__GetAllDoorResponse*)q;
+		break;
+	case SOAP_TYPE__ns1__GetAllDoorByParam:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__GetAllDoorByParam type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__GetAllDoorByParam*)p = *(_ns1__GetAllDoorByParam*)q;
+		break;
+	case SOAP_TYPE__ns1__GetAllDoorByParamResponse:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__GetAllDoorByParamResponse type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__GetAllDoorByParamResponse*)p = *(_ns1__GetAllDoorByParamResponse*)q;
+		break;
+	case SOAP_TYPE__ns1__GetAllKitchen:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__GetAllKitchen type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__GetAllKitchen*)p = *(_ns1__GetAllKitchen*)q;
+		break;
+	case SOAP_TYPE__ns1__GetAllKitchenResponse:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__GetAllKitchenResponse type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__GetAllKitchenResponse*)p = *(_ns1__GetAllKitchenResponse*)q;
+		break;
+	case SOAP_TYPE__ns1__GetAllKitchenParam:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__GetAllKitchenParam type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__GetAllKitchenParam*)p = *(_ns1__GetAllKitchenParam*)q;
+		break;
+	case SOAP_TYPE__ns1__GetAllKitchenParamResponse:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__GetAllKitchenParamResponse type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__GetAllKitchenParamResponse*)p = *(_ns1__GetAllKitchenParamResponse*)q;
+		break;
+	case SOAP_TYPE__ns1__GetAllBathroom:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__GetAllBathroom type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__GetAllBathroom*)p = *(_ns1__GetAllBathroom*)q;
+		break;
+	case SOAP_TYPE__ns1__GetAllBathroomResponse:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__GetAllBathroomResponse type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__GetAllBathroomResponse*)p = *(_ns1__GetAllBathroomResponse*)q;
+		break;
+	case SOAP_TYPE__ns1__GetAllBathroomByParam:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__GetAllBathroomByParam type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__GetAllBathroomByParam*)p = *(_ns1__GetAllBathroomByParam*)q;
+		break;
+	case SOAP_TYPE__ns1__GetAllBathroomByParamResponse:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__GetAllBathroomByParamResponse type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__GetAllBathroomByParamResponse*)p = *(_ns1__GetAllBathroomByParamResponse*)q;
+		break;
+	case SOAP_TYPE__ns1__GetAllHandrailByParam:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__GetAllHandrailByParam type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__GetAllHandrailByParam*)p = *(_ns1__GetAllHandrailByParam*)q;
+		break;
+	case SOAP_TYPE__ns1__GetAllHandrailByParamResponse:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__GetAllHandrailByParamResponse type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__GetAllHandrailByParamResponse*)p = *(_ns1__GetAllHandrailByParamResponse*)q;
+		break;
+	case SOAP_TYPE__ns1__GetAllAirconditionerByParam:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__GetAllAirconditionerByParam type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__GetAllAirconditionerByParam*)p = *(_ns1__GetAllAirconditionerByParam*)q;
+		break;
+	case SOAP_TYPE__ns1__GetAllAirconditionerByParamResponse:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__GetAllAirconditionerByParamResponse type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__GetAllAirconditionerByParamResponse*)p = *(_ns1__GetAllAirconditionerByParamResponse*)q;
+		break;
 	case SOAP_TYPE__ns1__CadFileDownload:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__CadFileDownload type=%d location=%p object=%p\n", t, p, q));
 		*(_ns1__CadFileDownload*)p = *(_ns1__CadFileDownload*)q;
@@ -792,6 +1360,38 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_finsert(struct soap *soap, int t, int tt, void *
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__GetWindows type=%d location=%p object=%p\n", t, p, q));
 		*(struct __ns1__GetWindows*)p = *(struct __ns1__GetWindows*)q;
 		break;
+	case SOAP_TYPE___ns1__GetAllDoor:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__GetAllDoor type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__GetAllDoor*)p = *(struct __ns1__GetAllDoor*)q;
+		break;
+	case SOAP_TYPE___ns1__GetAllDoorByParam:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__GetAllDoorByParam type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__GetAllDoorByParam*)p = *(struct __ns1__GetAllDoorByParam*)q;
+		break;
+	case SOAP_TYPE___ns1__GetAllKitchen:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__GetAllKitchen type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__GetAllKitchen*)p = *(struct __ns1__GetAllKitchen*)q;
+		break;
+	case SOAP_TYPE___ns1__GetAllKitchenParam:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__GetAllKitchenParam type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__GetAllKitchenParam*)p = *(struct __ns1__GetAllKitchenParam*)q;
+		break;
+	case SOAP_TYPE___ns1__GetAllBathroom:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__GetAllBathroom type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__GetAllBathroom*)p = *(struct __ns1__GetAllBathroom*)q;
+		break;
+	case SOAP_TYPE___ns1__GetAllBathroomByParam:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__GetAllBathroomByParam type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__GetAllBathroomByParam*)p = *(struct __ns1__GetAllBathroomByParam*)q;
+		break;
+	case SOAP_TYPE___ns1__GetAllHandrailByParam:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__GetAllHandrailByParam type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__GetAllHandrailByParam*)p = *(struct __ns1__GetAllHandrailByParam*)q;
+		break;
+	case SOAP_TYPE___ns1__GetAllAirconditionerByParam:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__GetAllAirconditionerByParam type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__GetAllAirconditionerByParam*)p = *(struct __ns1__GetAllAirconditionerByParam*)q;
+		break;
 	case SOAP_TYPE___ns1__CadFileDownload:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__CadFileDownload type=%d location=%p object=%p\n", t, p, q));
 		*(struct __ns1__CadFileDownload*)p = *(struct __ns1__CadFileDownload*)q;
@@ -807,6 +1407,38 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_finsert(struct soap *soap, int t, int tt, void *
 	case SOAP_TYPE___ns1__GetWindows_:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__GetWindows_ type=%d location=%p object=%p\n", t, p, q));
 		*(struct __ns1__GetWindows_*)p = *(struct __ns1__GetWindows_*)q;
+		break;
+	case SOAP_TYPE___ns1__GetAllDoor_:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__GetAllDoor_ type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__GetAllDoor_*)p = *(struct __ns1__GetAllDoor_*)q;
+		break;
+	case SOAP_TYPE___ns1__GetAllDoorByParam_:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__GetAllDoorByParam_ type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__GetAllDoorByParam_*)p = *(struct __ns1__GetAllDoorByParam_*)q;
+		break;
+	case SOAP_TYPE___ns1__GetAllKitchen_:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__GetAllKitchen_ type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__GetAllKitchen_*)p = *(struct __ns1__GetAllKitchen_*)q;
+		break;
+	case SOAP_TYPE___ns1__GetAllKitchenParam_:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__GetAllKitchenParam_ type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__GetAllKitchenParam_*)p = *(struct __ns1__GetAllKitchenParam_*)q;
+		break;
+	case SOAP_TYPE___ns1__GetAllBathroom_:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__GetAllBathroom_ type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__GetAllBathroom_*)p = *(struct __ns1__GetAllBathroom_*)q;
+		break;
+	case SOAP_TYPE___ns1__GetAllBathroomByParam_:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__GetAllBathroomByParam_ type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__GetAllBathroomByParam_*)p = *(struct __ns1__GetAllBathroomByParam_*)q;
+		break;
+	case SOAP_TYPE___ns1__GetAllHandrailByParam_:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__GetAllHandrailByParam_ type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__GetAllHandrailByParam_*)p = *(struct __ns1__GetAllHandrailByParam_*)q;
+		break;
+	case SOAP_TYPE___ns1__GetAllAirconditionerByParam_:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__GetAllAirconditionerByParam_ type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__GetAllAirconditionerByParam_*)p = *(struct __ns1__GetAllAirconditionerByParam_*)q;
 		break;
 	case SOAP_TYPE___ns1__CadFileDownload_:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__CadFileDownload_ type=%d location=%p object=%p\n", t, p, q));
@@ -1296,6 +1928,2216 @@ void *_ns1__CadFileDownload::soap_get(struct soap *soap, const char *tag, const 
 SOAP_FMAC3 _ns1__CadFileDownload * SOAP_FMAC4 soap_get__ns1__CadFileDownload(struct soap *soap, _ns1__CadFileDownload *p, const char *tag, const char *type)
 {
 	if ((p = soap_in__ns1__CadFileDownload(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__GetAllAirconditionerByParamResponse::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	this->_ns1__GetAllAirconditionerByParamResponse::GetAllAirconditionerByParamResult = NULL;
+}
+
+void _ns1__GetAllAirconditionerByParamResponse::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__GetAllAirconditionerByParamResponse::GetAllAirconditionerByParamResult);
+#endif
+}
+
+int _ns1__GetAllAirconditionerByParamResponse::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__GetAllAirconditionerByParamResponse(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllAirconditionerByParamResponse(struct soap *soap, const char *tag, int id, const _ns1__GetAllAirconditionerByParamResponse *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__GetAllAirconditionerByParamResponse), type))
+		return soap->error;
+	if (a->GetAllAirconditionerByParamResult)
+		soap_element_result(soap, "ns1:GetAllAirconditionerByParamResult");
+	if (soap_out_PointerTostd__wstring(soap, "ns1:GetAllAirconditionerByParamResult", -1, &a->_ns1__GetAllAirconditionerByParamResponse::GetAllAirconditionerByParamResult, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__GetAllAirconditionerByParamResponse::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__GetAllAirconditionerByParamResponse(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllAirconditionerByParamResponse * SOAP_FMAC4 soap_in__ns1__GetAllAirconditionerByParamResponse(struct soap *soap, const char *tag, _ns1__GetAllAirconditionerByParamResponse *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__GetAllAirconditionerByParamResponse*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__GetAllAirconditionerByParamResponse, sizeof(_ns1__GetAllAirconditionerByParamResponse), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__GetAllAirconditionerByParamResponse)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__GetAllAirconditionerByParamResponse *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_GetAllAirconditionerByParamResult1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_GetAllAirconditionerByParamResult1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_PointerTostd__wstring(soap, "ns1:GetAllAirconditionerByParamResult", &a->_ns1__GetAllAirconditionerByParamResponse::GetAllAirconditionerByParamResult, "xsd:string"))
+				{	soap_flag_GetAllAirconditionerByParamResult1--;
+					continue;
+				}
+			}
+			soap_check_result(soap, "ns1:GetAllAirconditionerByParamResult");
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (_ns1__GetAllAirconditionerByParamResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__GetAllAirconditionerByParamResponse, SOAP_TYPE__ns1__GetAllAirconditionerByParamResponse, sizeof(_ns1__GetAllAirconditionerByParamResponse), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__GetAllAirconditionerByParamResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllAirconditionerByParamResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__GetAllAirconditionerByParamResponse(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__GetAllAirconditionerByParamResponse *p;
+	size_t k = sizeof(_ns1__GetAllAirconditionerByParamResponse);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__GetAllAirconditionerByParamResponse, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__GetAllAirconditionerByParamResponse);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__GetAllAirconditionerByParamResponse, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__GetAllAirconditionerByParamResponse location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__GetAllAirconditionerByParamResponse::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__GetAllAirconditionerByParamResponse(soap, tag ? tag : "ns1:GetAllAirconditionerByParamResponse", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__GetAllAirconditionerByParamResponse::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__GetAllAirconditionerByParamResponse(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllAirconditionerByParamResponse * SOAP_FMAC4 soap_get__ns1__GetAllAirconditionerByParamResponse(struct soap *soap, _ns1__GetAllAirconditionerByParamResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__GetAllAirconditionerByParamResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__GetAllAirconditionerByParam::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	soap_default_int(soap, &this->_ns1__GetAllAirconditionerByParam::AirconditionerPower);
+	soap_default_int(soap, &this->_ns1__GetAllAirconditionerByParam::AirconditionerPipePosition);
+	soap_default_int(soap, &this->_ns1__GetAllAirconditionerByParam::AirconditionerIsRainpipe);
+	soap_default_int(soap, &this->_ns1__GetAllAirconditionerByParam::RainpipePosition);
+}
+
+void _ns1__GetAllAirconditionerByParam::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+#endif
+}
+
+int _ns1__GetAllAirconditionerByParam::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__GetAllAirconditionerByParam(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllAirconditionerByParam(struct soap *soap, const char *tag, int id, const _ns1__GetAllAirconditionerByParam *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__GetAllAirconditionerByParam), type))
+		return soap->error;
+	if (soap_out_int(soap, "ns1:AirconditionerPower", -1, &a->_ns1__GetAllAirconditionerByParam::AirconditionerPower, ""))
+		return soap->error;
+	if (soap_out_int(soap, "ns1:AirconditionerPipePosition", -1, &a->_ns1__GetAllAirconditionerByParam::AirconditionerPipePosition, ""))
+		return soap->error;
+	if (soap_out_int(soap, "ns1:AirconditionerIsRainpipe", -1, &a->_ns1__GetAllAirconditionerByParam::AirconditionerIsRainpipe, ""))
+		return soap->error;
+	if (soap_out_int(soap, "ns1:RainpipePosition", -1, &a->_ns1__GetAllAirconditionerByParam::RainpipePosition, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__GetAllAirconditionerByParam::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__GetAllAirconditionerByParam(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllAirconditionerByParam * SOAP_FMAC4 soap_in__ns1__GetAllAirconditionerByParam(struct soap *soap, const char *tag, _ns1__GetAllAirconditionerByParam *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__GetAllAirconditionerByParam*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__GetAllAirconditionerByParam, sizeof(_ns1__GetAllAirconditionerByParam), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__GetAllAirconditionerByParam)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__GetAllAirconditionerByParam *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_AirconditionerPower1 = 1;
+	size_t soap_flag_AirconditionerPipePosition1 = 1;
+	size_t soap_flag_AirconditionerIsRainpipe1 = 1;
+	size_t soap_flag_RainpipePosition1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_AirconditionerPower1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_int(soap, "ns1:AirconditionerPower", &a->_ns1__GetAllAirconditionerByParam::AirconditionerPower, "xsd:int"))
+				{	soap_flag_AirconditionerPower1--;
+					continue;
+				}
+			}
+			if (soap_flag_AirconditionerPipePosition1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_int(soap, "ns1:AirconditionerPipePosition", &a->_ns1__GetAllAirconditionerByParam::AirconditionerPipePosition, "xsd:int"))
+				{	soap_flag_AirconditionerPipePosition1--;
+					continue;
+				}
+			}
+			if (soap_flag_AirconditionerIsRainpipe1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_int(soap, "ns1:AirconditionerIsRainpipe", &a->_ns1__GetAllAirconditionerByParam::AirconditionerIsRainpipe, "xsd:int"))
+				{	soap_flag_AirconditionerIsRainpipe1--;
+					continue;
+				}
+			}
+			if (soap_flag_RainpipePosition1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_int(soap, "ns1:RainpipePosition", &a->_ns1__GetAllAirconditionerByParam::RainpipePosition, "xsd:int"))
+				{	soap_flag_RainpipePosition1--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+		if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_AirconditionerPower1 > 0 || soap_flag_AirconditionerPipePosition1 > 0 || soap_flag_AirconditionerIsRainpipe1 > 0 || soap_flag_RainpipePosition1 > 0))
+		{	soap->error = SOAP_OCCURS;
+			return NULL;
+		}
+	}
+	else if ((soap->mode & SOAP_XML_STRICT) && *soap->href != '#')
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	else
+	{	a = (_ns1__GetAllAirconditionerByParam *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__GetAllAirconditionerByParam, SOAP_TYPE__ns1__GetAllAirconditionerByParam, sizeof(_ns1__GetAllAirconditionerByParam), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__GetAllAirconditionerByParam * SOAP_FMAC2 soap_instantiate__ns1__GetAllAirconditionerByParam(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__GetAllAirconditionerByParam(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__GetAllAirconditionerByParam *p;
+	size_t k = sizeof(_ns1__GetAllAirconditionerByParam);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__GetAllAirconditionerByParam, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__GetAllAirconditionerByParam);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__GetAllAirconditionerByParam, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__GetAllAirconditionerByParam location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__GetAllAirconditionerByParam::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__GetAllAirconditionerByParam(soap, tag ? tag : "ns1:GetAllAirconditionerByParam", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__GetAllAirconditionerByParam::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__GetAllAirconditionerByParam(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllAirconditionerByParam * SOAP_FMAC4 soap_get__ns1__GetAllAirconditionerByParam(struct soap *soap, _ns1__GetAllAirconditionerByParam *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__GetAllAirconditionerByParam(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__GetAllHandrailByParamResponse::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	this->_ns1__GetAllHandrailByParamResponse::GetAllHandrailByParamResult = NULL;
+}
+
+void _ns1__GetAllHandrailByParamResponse::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__GetAllHandrailByParamResponse::GetAllHandrailByParamResult);
+#endif
+}
+
+int _ns1__GetAllHandrailByParamResponse::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__GetAllHandrailByParamResponse(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllHandrailByParamResponse(struct soap *soap, const char *tag, int id, const _ns1__GetAllHandrailByParamResponse *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__GetAllHandrailByParamResponse), type))
+		return soap->error;
+	if (a->GetAllHandrailByParamResult)
+		soap_element_result(soap, "ns1:GetAllHandrailByParamResult");
+	if (soap_out_PointerTostd__wstring(soap, "ns1:GetAllHandrailByParamResult", -1, &a->_ns1__GetAllHandrailByParamResponse::GetAllHandrailByParamResult, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__GetAllHandrailByParamResponse::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__GetAllHandrailByParamResponse(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllHandrailByParamResponse * SOAP_FMAC4 soap_in__ns1__GetAllHandrailByParamResponse(struct soap *soap, const char *tag, _ns1__GetAllHandrailByParamResponse *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__GetAllHandrailByParamResponse*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__GetAllHandrailByParamResponse, sizeof(_ns1__GetAllHandrailByParamResponse), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__GetAllHandrailByParamResponse)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__GetAllHandrailByParamResponse *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_GetAllHandrailByParamResult1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_GetAllHandrailByParamResult1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_PointerTostd__wstring(soap, "ns1:GetAllHandrailByParamResult", &a->_ns1__GetAllHandrailByParamResponse::GetAllHandrailByParamResult, "xsd:string"))
+				{	soap_flag_GetAllHandrailByParamResult1--;
+					continue;
+				}
+			}
+			soap_check_result(soap, "ns1:GetAllHandrailByParamResult");
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (_ns1__GetAllHandrailByParamResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__GetAllHandrailByParamResponse, SOAP_TYPE__ns1__GetAllHandrailByParamResponse, sizeof(_ns1__GetAllHandrailByParamResponse), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__GetAllHandrailByParamResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllHandrailByParamResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__GetAllHandrailByParamResponse(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__GetAllHandrailByParamResponse *p;
+	size_t k = sizeof(_ns1__GetAllHandrailByParamResponse);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__GetAllHandrailByParamResponse, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__GetAllHandrailByParamResponse);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__GetAllHandrailByParamResponse, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__GetAllHandrailByParamResponse location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__GetAllHandrailByParamResponse::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__GetAllHandrailByParamResponse(soap, tag ? tag : "ns1:GetAllHandrailByParamResponse", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__GetAllHandrailByParamResponse::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__GetAllHandrailByParamResponse(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllHandrailByParamResponse * SOAP_FMAC4 soap_get__ns1__GetAllHandrailByParamResponse(struct soap *soap, _ns1__GetAllHandrailByParamResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__GetAllHandrailByParamResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__GetAllHandrailByParam::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	soap_default_int(soap, &this->_ns1__GetAllHandrailByParam::RailingType);
+}
+
+void _ns1__GetAllHandrailByParam::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+#endif
+}
+
+int _ns1__GetAllHandrailByParam::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__GetAllHandrailByParam(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllHandrailByParam(struct soap *soap, const char *tag, int id, const _ns1__GetAllHandrailByParam *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__GetAllHandrailByParam), type))
+		return soap->error;
+	if (soap_out_int(soap, "ns1:RailingType", -1, &a->_ns1__GetAllHandrailByParam::RailingType, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__GetAllHandrailByParam::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__GetAllHandrailByParam(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllHandrailByParam * SOAP_FMAC4 soap_in__ns1__GetAllHandrailByParam(struct soap *soap, const char *tag, _ns1__GetAllHandrailByParam *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__GetAllHandrailByParam*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__GetAllHandrailByParam, sizeof(_ns1__GetAllHandrailByParam), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__GetAllHandrailByParam)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__GetAllHandrailByParam *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_RailingType1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_RailingType1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_int(soap, "ns1:RailingType", &a->_ns1__GetAllHandrailByParam::RailingType, "xsd:int"))
+				{	soap_flag_RailingType1--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+		if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_RailingType1 > 0))
+		{	soap->error = SOAP_OCCURS;
+			return NULL;
+		}
+	}
+	else if ((soap->mode & SOAP_XML_STRICT) && *soap->href != '#')
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	else
+	{	a = (_ns1__GetAllHandrailByParam *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__GetAllHandrailByParam, SOAP_TYPE__ns1__GetAllHandrailByParam, sizeof(_ns1__GetAllHandrailByParam), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__GetAllHandrailByParam * SOAP_FMAC2 soap_instantiate__ns1__GetAllHandrailByParam(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__GetAllHandrailByParam(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__GetAllHandrailByParam *p;
+	size_t k = sizeof(_ns1__GetAllHandrailByParam);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__GetAllHandrailByParam, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__GetAllHandrailByParam);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__GetAllHandrailByParam, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__GetAllHandrailByParam location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__GetAllHandrailByParam::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__GetAllHandrailByParam(soap, tag ? tag : "ns1:GetAllHandrailByParam", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__GetAllHandrailByParam::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__GetAllHandrailByParam(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllHandrailByParam * SOAP_FMAC4 soap_get__ns1__GetAllHandrailByParam(struct soap *soap, _ns1__GetAllHandrailByParam *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__GetAllHandrailByParam(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__GetAllBathroomByParamResponse::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	this->_ns1__GetAllBathroomByParamResponse::GetAllBathroomByParamResult = NULL;
+}
+
+void _ns1__GetAllBathroomByParamResponse::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__GetAllBathroomByParamResponse::GetAllBathroomByParamResult);
+#endif
+}
+
+int _ns1__GetAllBathroomByParamResponse::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__GetAllBathroomByParamResponse(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllBathroomByParamResponse(struct soap *soap, const char *tag, int id, const _ns1__GetAllBathroomByParamResponse *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__GetAllBathroomByParamResponse), type))
+		return soap->error;
+	if (a->GetAllBathroomByParamResult)
+		soap_element_result(soap, "ns1:GetAllBathroomByParamResult");
+	if (soap_out_PointerTostd__wstring(soap, "ns1:GetAllBathroomByParamResult", -1, &a->_ns1__GetAllBathroomByParamResponse::GetAllBathroomByParamResult, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__GetAllBathroomByParamResponse::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__GetAllBathroomByParamResponse(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllBathroomByParamResponse * SOAP_FMAC4 soap_in__ns1__GetAllBathroomByParamResponse(struct soap *soap, const char *tag, _ns1__GetAllBathroomByParamResponse *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__GetAllBathroomByParamResponse*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__GetAllBathroomByParamResponse, sizeof(_ns1__GetAllBathroomByParamResponse), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__GetAllBathroomByParamResponse)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__GetAllBathroomByParamResponse *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_GetAllBathroomByParamResult1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_GetAllBathroomByParamResult1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_PointerTostd__wstring(soap, "ns1:GetAllBathroomByParamResult", &a->_ns1__GetAllBathroomByParamResponse::GetAllBathroomByParamResult, "xsd:string"))
+				{	soap_flag_GetAllBathroomByParamResult1--;
+					continue;
+				}
+			}
+			soap_check_result(soap, "ns1:GetAllBathroomByParamResult");
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (_ns1__GetAllBathroomByParamResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__GetAllBathroomByParamResponse, SOAP_TYPE__ns1__GetAllBathroomByParamResponse, sizeof(_ns1__GetAllBathroomByParamResponse), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__GetAllBathroomByParamResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllBathroomByParamResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__GetAllBathroomByParamResponse(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__GetAllBathroomByParamResponse *p;
+	size_t k = sizeof(_ns1__GetAllBathroomByParamResponse);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__GetAllBathroomByParamResponse, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__GetAllBathroomByParamResponse);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__GetAllBathroomByParamResponse, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__GetAllBathroomByParamResponse location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__GetAllBathroomByParamResponse::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__GetAllBathroomByParamResponse(soap, tag ? tag : "ns1:GetAllBathroomByParamResponse", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__GetAllBathroomByParamResponse::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__GetAllBathroomByParamResponse(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllBathroomByParamResponse * SOAP_FMAC4 soap_get__ns1__GetAllBathroomByParamResponse(struct soap *soap, _ns1__GetAllBathroomByParamResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__GetAllBathroomByParamResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__GetAllBathroomByParam::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	soap_default_double(soap, &this->_ns1__GetAllBathroomByParam::Width);
+	soap_default_double(soap, &this->_ns1__GetAllBathroomByParam::Height);
+	soap_default_int(soap, &this->_ns1__GetAllBathroomByParam::BathroomDoorWindowPosition);
+	soap_default_int(soap, &this->_ns1__GetAllBathroomByParam::ToiletType);
+	soap_default_int(soap, &this->_ns1__GetAllBathroomByParam::AirVent);
+}
+
+void _ns1__GetAllBathroomByParam::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+#endif
+}
+
+int _ns1__GetAllBathroomByParam::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__GetAllBathroomByParam(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllBathroomByParam(struct soap *soap, const char *tag, int id, const _ns1__GetAllBathroomByParam *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__GetAllBathroomByParam), type))
+		return soap->error;
+	if (soap_out_double(soap, "ns1:Width", -1, &a->_ns1__GetAllBathroomByParam::Width, ""))
+		return soap->error;
+	if (soap_out_double(soap, "ns1:Height", -1, &a->_ns1__GetAllBathroomByParam::Height, ""))
+		return soap->error;
+	if (soap_out_int(soap, "ns1:BathroomDoorWindowPosition", -1, &a->_ns1__GetAllBathroomByParam::BathroomDoorWindowPosition, ""))
+		return soap->error;
+	if (soap_out_int(soap, "ns1:ToiletType", -1, &a->_ns1__GetAllBathroomByParam::ToiletType, ""))
+		return soap->error;
+	if (soap_out_int(soap, "ns1:AirVent", -1, &a->_ns1__GetAllBathroomByParam::AirVent, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__GetAllBathroomByParam::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__GetAllBathroomByParam(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllBathroomByParam * SOAP_FMAC4 soap_in__ns1__GetAllBathroomByParam(struct soap *soap, const char *tag, _ns1__GetAllBathroomByParam *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__GetAllBathroomByParam*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__GetAllBathroomByParam, sizeof(_ns1__GetAllBathroomByParam), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__GetAllBathroomByParam)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__GetAllBathroomByParam *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_Width1 = 1;
+	size_t soap_flag_Height1 = 1;
+	size_t soap_flag_BathroomDoorWindowPosition1 = 1;
+	size_t soap_flag_ToiletType1 = 1;
+	size_t soap_flag_AirVent1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_Width1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_double(soap, "ns1:Width", &a->_ns1__GetAllBathroomByParam::Width, "xsd:double"))
+				{	soap_flag_Width1--;
+					continue;
+				}
+			}
+			if (soap_flag_Height1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_double(soap, "ns1:Height", &a->_ns1__GetAllBathroomByParam::Height, "xsd:double"))
+				{	soap_flag_Height1--;
+					continue;
+				}
+			}
+			if (soap_flag_BathroomDoorWindowPosition1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_int(soap, "ns1:BathroomDoorWindowPosition", &a->_ns1__GetAllBathroomByParam::BathroomDoorWindowPosition, "xsd:int"))
+				{	soap_flag_BathroomDoorWindowPosition1--;
+					continue;
+				}
+			}
+			if (soap_flag_ToiletType1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_int(soap, "ns1:ToiletType", &a->_ns1__GetAllBathroomByParam::ToiletType, "xsd:int"))
+				{	soap_flag_ToiletType1--;
+					continue;
+				}
+			}
+			if (soap_flag_AirVent1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_int(soap, "ns1:AirVent", &a->_ns1__GetAllBathroomByParam::AirVent, "xsd:int"))
+				{	soap_flag_AirVent1--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+		if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_Width1 > 0 || soap_flag_Height1 > 0 || soap_flag_BathroomDoorWindowPosition1 > 0 || soap_flag_ToiletType1 > 0 || soap_flag_AirVent1 > 0))
+		{	soap->error = SOAP_OCCURS;
+			return NULL;
+		}
+	}
+	else if ((soap->mode & SOAP_XML_STRICT) && *soap->href != '#')
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	else
+	{	a = (_ns1__GetAllBathroomByParam *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__GetAllBathroomByParam, SOAP_TYPE__ns1__GetAllBathroomByParam, sizeof(_ns1__GetAllBathroomByParam), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__GetAllBathroomByParam * SOAP_FMAC2 soap_instantiate__ns1__GetAllBathroomByParam(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__GetAllBathroomByParam(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__GetAllBathroomByParam *p;
+	size_t k = sizeof(_ns1__GetAllBathroomByParam);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__GetAllBathroomByParam, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__GetAllBathroomByParam);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__GetAllBathroomByParam, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__GetAllBathroomByParam location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__GetAllBathroomByParam::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__GetAllBathroomByParam(soap, tag ? tag : "ns1:GetAllBathroomByParam", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__GetAllBathroomByParam::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__GetAllBathroomByParam(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllBathroomByParam * SOAP_FMAC4 soap_get__ns1__GetAllBathroomByParam(struct soap *soap, _ns1__GetAllBathroomByParam *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__GetAllBathroomByParam(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__GetAllBathroomResponse::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	this->_ns1__GetAllBathroomResponse::GetAllBathroomResult = NULL;
+}
+
+void _ns1__GetAllBathroomResponse::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__GetAllBathroomResponse::GetAllBathroomResult);
+#endif
+}
+
+int _ns1__GetAllBathroomResponse::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__GetAllBathroomResponse(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllBathroomResponse(struct soap *soap, const char *tag, int id, const _ns1__GetAllBathroomResponse *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__GetAllBathroomResponse), type))
+		return soap->error;
+	if (a->GetAllBathroomResult)
+		soap_element_result(soap, "ns1:GetAllBathroomResult");
+	if (soap_out_PointerTostd__wstring(soap, "ns1:GetAllBathroomResult", -1, &a->_ns1__GetAllBathroomResponse::GetAllBathroomResult, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__GetAllBathroomResponse::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__GetAllBathroomResponse(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllBathroomResponse * SOAP_FMAC4 soap_in__ns1__GetAllBathroomResponse(struct soap *soap, const char *tag, _ns1__GetAllBathroomResponse *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__GetAllBathroomResponse*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__GetAllBathroomResponse, sizeof(_ns1__GetAllBathroomResponse), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__GetAllBathroomResponse)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__GetAllBathroomResponse *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_GetAllBathroomResult1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_GetAllBathroomResult1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_PointerTostd__wstring(soap, "ns1:GetAllBathroomResult", &a->_ns1__GetAllBathroomResponse::GetAllBathroomResult, "xsd:string"))
+				{	soap_flag_GetAllBathroomResult1--;
+					continue;
+				}
+			}
+			soap_check_result(soap, "ns1:GetAllBathroomResult");
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (_ns1__GetAllBathroomResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__GetAllBathroomResponse, SOAP_TYPE__ns1__GetAllBathroomResponse, sizeof(_ns1__GetAllBathroomResponse), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__GetAllBathroomResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllBathroomResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__GetAllBathroomResponse(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__GetAllBathroomResponse *p;
+	size_t k = sizeof(_ns1__GetAllBathroomResponse);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__GetAllBathroomResponse, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__GetAllBathroomResponse);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__GetAllBathroomResponse, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__GetAllBathroomResponse location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__GetAllBathroomResponse::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__GetAllBathroomResponse(soap, tag ? tag : "ns1:GetAllBathroomResponse", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__GetAllBathroomResponse::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__GetAllBathroomResponse(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllBathroomResponse * SOAP_FMAC4 soap_get__ns1__GetAllBathroomResponse(struct soap *soap, _ns1__GetAllBathroomResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__GetAllBathroomResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__GetAllBathroom::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+}
+
+void _ns1__GetAllBathroom::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+#endif
+}
+
+int _ns1__GetAllBathroom::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__GetAllBathroom(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllBathroom(struct soap *soap, const char *tag, int id, const _ns1__GetAllBathroom *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__GetAllBathroom), type))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__GetAllBathroom::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__GetAllBathroom(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllBathroom * SOAP_FMAC4 soap_in__ns1__GetAllBathroom(struct soap *soap, const char *tag, _ns1__GetAllBathroom *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__GetAllBathroom*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__GetAllBathroom, sizeof(_ns1__GetAllBathroom), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__GetAllBathroom)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__GetAllBathroom *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (_ns1__GetAllBathroom *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__GetAllBathroom, SOAP_TYPE__ns1__GetAllBathroom, sizeof(_ns1__GetAllBathroom), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__GetAllBathroom * SOAP_FMAC2 soap_instantiate__ns1__GetAllBathroom(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__GetAllBathroom(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__GetAllBathroom *p;
+	size_t k = sizeof(_ns1__GetAllBathroom);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__GetAllBathroom, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__GetAllBathroom);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__GetAllBathroom, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__GetAllBathroom location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__GetAllBathroom::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__GetAllBathroom(soap, tag ? tag : "ns1:GetAllBathroom", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__GetAllBathroom::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__GetAllBathroom(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllBathroom * SOAP_FMAC4 soap_get__ns1__GetAllBathroom(struct soap *soap, _ns1__GetAllBathroom *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__GetAllBathroom(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__GetAllKitchenParamResponse::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	this->_ns1__GetAllKitchenParamResponse::GetAllKitchenParamResult = NULL;
+}
+
+void _ns1__GetAllKitchenParamResponse::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__GetAllKitchenParamResponse::GetAllKitchenParamResult);
+#endif
+}
+
+int _ns1__GetAllKitchenParamResponse::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__GetAllKitchenParamResponse(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllKitchenParamResponse(struct soap *soap, const char *tag, int id, const _ns1__GetAllKitchenParamResponse *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__GetAllKitchenParamResponse), type))
+		return soap->error;
+	if (a->GetAllKitchenParamResult)
+		soap_element_result(soap, "ns1:GetAllKitchenParamResult");
+	if (soap_out_PointerTostd__wstring(soap, "ns1:GetAllKitchenParamResult", -1, &a->_ns1__GetAllKitchenParamResponse::GetAllKitchenParamResult, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__GetAllKitchenParamResponse::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__GetAllKitchenParamResponse(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllKitchenParamResponse * SOAP_FMAC4 soap_in__ns1__GetAllKitchenParamResponse(struct soap *soap, const char *tag, _ns1__GetAllKitchenParamResponse *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__GetAllKitchenParamResponse*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__GetAllKitchenParamResponse, sizeof(_ns1__GetAllKitchenParamResponse), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__GetAllKitchenParamResponse)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__GetAllKitchenParamResponse *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_GetAllKitchenParamResult1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_GetAllKitchenParamResult1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_PointerTostd__wstring(soap, "ns1:GetAllKitchenParamResult", &a->_ns1__GetAllKitchenParamResponse::GetAllKitchenParamResult, "xsd:string"))
+				{	soap_flag_GetAllKitchenParamResult1--;
+					continue;
+				}
+			}
+			soap_check_result(soap, "ns1:GetAllKitchenParamResult");
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (_ns1__GetAllKitchenParamResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__GetAllKitchenParamResponse, SOAP_TYPE__ns1__GetAllKitchenParamResponse, sizeof(_ns1__GetAllKitchenParamResponse), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__GetAllKitchenParamResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllKitchenParamResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__GetAllKitchenParamResponse(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__GetAllKitchenParamResponse *p;
+	size_t k = sizeof(_ns1__GetAllKitchenParamResponse);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__GetAllKitchenParamResponse, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__GetAllKitchenParamResponse);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__GetAllKitchenParamResponse, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__GetAllKitchenParamResponse location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__GetAllKitchenParamResponse::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__GetAllKitchenParamResponse(soap, tag ? tag : "ns1:GetAllKitchenParamResponse", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__GetAllKitchenParamResponse::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__GetAllKitchenParamResponse(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllKitchenParamResponse * SOAP_FMAC4 soap_get__ns1__GetAllKitchenParamResponse(struct soap *soap, _ns1__GetAllKitchenParamResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__GetAllKitchenParamResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__GetAllKitchenParam::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	soap_default_double(soap, &this->_ns1__GetAllKitchenParam::Width);
+	soap_default_double(soap, &this->_ns1__GetAllKitchenParam::Height);
+	soap_default_int(soap, &this->_ns1__GetAllKitchenParam::KitchenDoorWindowPosition);
+	soap_default_int(soap, &this->_ns1__GetAllKitchenParam::KitchenType);
+	soap_default_int(soap, &this->_ns1__GetAllKitchenParam::AirVent);
+}
+
+void _ns1__GetAllKitchenParam::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+#endif
+}
+
+int _ns1__GetAllKitchenParam::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__GetAllKitchenParam(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllKitchenParam(struct soap *soap, const char *tag, int id, const _ns1__GetAllKitchenParam *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__GetAllKitchenParam), type))
+		return soap->error;
+	if (soap_out_double(soap, "ns1:Width", -1, &a->_ns1__GetAllKitchenParam::Width, ""))
+		return soap->error;
+	if (soap_out_double(soap, "ns1:Height", -1, &a->_ns1__GetAllKitchenParam::Height, ""))
+		return soap->error;
+	if (soap_out_int(soap, "ns1:KitchenDoorWindowPosition", -1, &a->_ns1__GetAllKitchenParam::KitchenDoorWindowPosition, ""))
+		return soap->error;
+	if (soap_out_int(soap, "ns1:KitchenType", -1, &a->_ns1__GetAllKitchenParam::KitchenType, ""))
+		return soap->error;
+	if (soap_out_int(soap, "ns1:AirVent", -1, &a->_ns1__GetAllKitchenParam::AirVent, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__GetAllKitchenParam::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__GetAllKitchenParam(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllKitchenParam * SOAP_FMAC4 soap_in__ns1__GetAllKitchenParam(struct soap *soap, const char *tag, _ns1__GetAllKitchenParam *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__GetAllKitchenParam*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__GetAllKitchenParam, sizeof(_ns1__GetAllKitchenParam), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__GetAllKitchenParam)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__GetAllKitchenParam *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_Width1 = 1;
+	size_t soap_flag_Height1 = 1;
+	size_t soap_flag_KitchenDoorWindowPosition1 = 1;
+	size_t soap_flag_KitchenType1 = 1;
+	size_t soap_flag_AirVent1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_Width1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_double(soap, "ns1:Width", &a->_ns1__GetAllKitchenParam::Width, "xsd:double"))
+				{	soap_flag_Width1--;
+					continue;
+				}
+			}
+			if (soap_flag_Height1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_double(soap, "ns1:Height", &a->_ns1__GetAllKitchenParam::Height, "xsd:double"))
+				{	soap_flag_Height1--;
+					continue;
+				}
+			}
+			if (soap_flag_KitchenDoorWindowPosition1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_int(soap, "ns1:KitchenDoorWindowPosition", &a->_ns1__GetAllKitchenParam::KitchenDoorWindowPosition, "xsd:int"))
+				{	soap_flag_KitchenDoorWindowPosition1--;
+					continue;
+				}
+			}
+			if (soap_flag_KitchenType1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_int(soap, "ns1:KitchenType", &a->_ns1__GetAllKitchenParam::KitchenType, "xsd:int"))
+				{	soap_flag_KitchenType1--;
+					continue;
+				}
+			}
+			if (soap_flag_AirVent1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_int(soap, "ns1:AirVent", &a->_ns1__GetAllKitchenParam::AirVent, "xsd:int"))
+				{	soap_flag_AirVent1--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+		if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_Width1 > 0 || soap_flag_Height1 > 0 || soap_flag_KitchenDoorWindowPosition1 > 0 || soap_flag_KitchenType1 > 0 || soap_flag_AirVent1 > 0))
+		{	soap->error = SOAP_OCCURS;
+			return NULL;
+		}
+	}
+	else if ((soap->mode & SOAP_XML_STRICT) && *soap->href != '#')
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	else
+	{	a = (_ns1__GetAllKitchenParam *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__GetAllKitchenParam, SOAP_TYPE__ns1__GetAllKitchenParam, sizeof(_ns1__GetAllKitchenParam), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__GetAllKitchenParam * SOAP_FMAC2 soap_instantiate__ns1__GetAllKitchenParam(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__GetAllKitchenParam(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__GetAllKitchenParam *p;
+	size_t k = sizeof(_ns1__GetAllKitchenParam);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__GetAllKitchenParam, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__GetAllKitchenParam);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__GetAllKitchenParam, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__GetAllKitchenParam location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__GetAllKitchenParam::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__GetAllKitchenParam(soap, tag ? tag : "ns1:GetAllKitchenParam", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__GetAllKitchenParam::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__GetAllKitchenParam(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllKitchenParam * SOAP_FMAC4 soap_get__ns1__GetAllKitchenParam(struct soap *soap, _ns1__GetAllKitchenParam *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__GetAllKitchenParam(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__GetAllKitchenResponse::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	this->_ns1__GetAllKitchenResponse::GetAllKitchenResult = NULL;
+}
+
+void _ns1__GetAllKitchenResponse::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__GetAllKitchenResponse::GetAllKitchenResult);
+#endif
+}
+
+int _ns1__GetAllKitchenResponse::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__GetAllKitchenResponse(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllKitchenResponse(struct soap *soap, const char *tag, int id, const _ns1__GetAllKitchenResponse *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__GetAllKitchenResponse), type))
+		return soap->error;
+	if (a->GetAllKitchenResult)
+		soap_element_result(soap, "ns1:GetAllKitchenResult");
+	if (soap_out_PointerTostd__wstring(soap, "ns1:GetAllKitchenResult", -1, &a->_ns1__GetAllKitchenResponse::GetAllKitchenResult, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__GetAllKitchenResponse::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__GetAllKitchenResponse(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllKitchenResponse * SOAP_FMAC4 soap_in__ns1__GetAllKitchenResponse(struct soap *soap, const char *tag, _ns1__GetAllKitchenResponse *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__GetAllKitchenResponse*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__GetAllKitchenResponse, sizeof(_ns1__GetAllKitchenResponse), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__GetAllKitchenResponse)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__GetAllKitchenResponse *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_GetAllKitchenResult1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_GetAllKitchenResult1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_PointerTostd__wstring(soap, "ns1:GetAllKitchenResult", &a->_ns1__GetAllKitchenResponse::GetAllKitchenResult, "xsd:string"))
+				{	soap_flag_GetAllKitchenResult1--;
+					continue;
+				}
+			}
+			soap_check_result(soap, "ns1:GetAllKitchenResult");
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (_ns1__GetAllKitchenResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__GetAllKitchenResponse, SOAP_TYPE__ns1__GetAllKitchenResponse, sizeof(_ns1__GetAllKitchenResponse), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__GetAllKitchenResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllKitchenResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__GetAllKitchenResponse(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__GetAllKitchenResponse *p;
+	size_t k = sizeof(_ns1__GetAllKitchenResponse);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__GetAllKitchenResponse, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__GetAllKitchenResponse);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__GetAllKitchenResponse, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__GetAllKitchenResponse location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__GetAllKitchenResponse::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__GetAllKitchenResponse(soap, tag ? tag : "ns1:GetAllKitchenResponse", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__GetAllKitchenResponse::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__GetAllKitchenResponse(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllKitchenResponse * SOAP_FMAC4 soap_get__ns1__GetAllKitchenResponse(struct soap *soap, _ns1__GetAllKitchenResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__GetAllKitchenResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__GetAllKitchen::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+}
+
+void _ns1__GetAllKitchen::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+#endif
+}
+
+int _ns1__GetAllKitchen::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__GetAllKitchen(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllKitchen(struct soap *soap, const char *tag, int id, const _ns1__GetAllKitchen *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__GetAllKitchen), type))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__GetAllKitchen::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__GetAllKitchen(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllKitchen * SOAP_FMAC4 soap_in__ns1__GetAllKitchen(struct soap *soap, const char *tag, _ns1__GetAllKitchen *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__GetAllKitchen*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__GetAllKitchen, sizeof(_ns1__GetAllKitchen), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__GetAllKitchen)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__GetAllKitchen *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (_ns1__GetAllKitchen *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__GetAllKitchen, SOAP_TYPE__ns1__GetAllKitchen, sizeof(_ns1__GetAllKitchen), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__GetAllKitchen * SOAP_FMAC2 soap_instantiate__ns1__GetAllKitchen(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__GetAllKitchen(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__GetAllKitchen *p;
+	size_t k = sizeof(_ns1__GetAllKitchen);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__GetAllKitchen, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__GetAllKitchen);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__GetAllKitchen, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__GetAllKitchen location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__GetAllKitchen::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__GetAllKitchen(soap, tag ? tag : "ns1:GetAllKitchen", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__GetAllKitchen::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__GetAllKitchen(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllKitchen * SOAP_FMAC4 soap_get__ns1__GetAllKitchen(struct soap *soap, _ns1__GetAllKitchen *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__GetAllKitchen(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__GetAllDoorByParamResponse::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	this->_ns1__GetAllDoorByParamResponse::GetAllDoorByParamResult = NULL;
+}
+
+void _ns1__GetAllDoorByParamResponse::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__GetAllDoorByParamResponse::GetAllDoorByParamResult);
+#endif
+}
+
+int _ns1__GetAllDoorByParamResponse::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__GetAllDoorByParamResponse(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllDoorByParamResponse(struct soap *soap, const char *tag, int id, const _ns1__GetAllDoorByParamResponse *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__GetAllDoorByParamResponse), type))
+		return soap->error;
+	if (a->GetAllDoorByParamResult)
+		soap_element_result(soap, "ns1:GetAllDoorByParamResult");
+	if (soap_out_PointerTostd__wstring(soap, "ns1:GetAllDoorByParamResult", -1, &a->_ns1__GetAllDoorByParamResponse::GetAllDoorByParamResult, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__GetAllDoorByParamResponse::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__GetAllDoorByParamResponse(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllDoorByParamResponse * SOAP_FMAC4 soap_in__ns1__GetAllDoorByParamResponse(struct soap *soap, const char *tag, _ns1__GetAllDoorByParamResponse *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__GetAllDoorByParamResponse*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__GetAllDoorByParamResponse, sizeof(_ns1__GetAllDoorByParamResponse), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__GetAllDoorByParamResponse)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__GetAllDoorByParamResponse *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_GetAllDoorByParamResult1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_GetAllDoorByParamResult1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_PointerTostd__wstring(soap, "ns1:GetAllDoorByParamResult", &a->_ns1__GetAllDoorByParamResponse::GetAllDoorByParamResult, "xsd:string"))
+				{	soap_flag_GetAllDoorByParamResult1--;
+					continue;
+				}
+			}
+			soap_check_result(soap, "ns1:GetAllDoorByParamResult");
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (_ns1__GetAllDoorByParamResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__GetAllDoorByParamResponse, SOAP_TYPE__ns1__GetAllDoorByParamResponse, sizeof(_ns1__GetAllDoorByParamResponse), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__GetAllDoorByParamResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllDoorByParamResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__GetAllDoorByParamResponse(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__GetAllDoorByParamResponse *p;
+	size_t k = sizeof(_ns1__GetAllDoorByParamResponse);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__GetAllDoorByParamResponse, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__GetAllDoorByParamResponse);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__GetAllDoorByParamResponse, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__GetAllDoorByParamResponse location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__GetAllDoorByParamResponse::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__GetAllDoorByParamResponse(soap, tag ? tag : "ns1:GetAllDoorByParamResponse", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__GetAllDoorByParamResponse::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__GetAllDoorByParamResponse(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllDoorByParamResponse * SOAP_FMAC4 soap_get__ns1__GetAllDoorByParamResponse(struct soap *soap, _ns1__GetAllDoorByParamResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__GetAllDoorByParamResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__GetAllDoorByParam::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	soap_default_double(soap, &this->_ns1__GetAllDoorByParam::width);
+	soap_default_int(soap, &this->_ns1__GetAllDoorByParam::doorType);
+}
+
+void _ns1__GetAllDoorByParam::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+#endif
+}
+
+int _ns1__GetAllDoorByParam::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__GetAllDoorByParam(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllDoorByParam(struct soap *soap, const char *tag, int id, const _ns1__GetAllDoorByParam *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__GetAllDoorByParam), type))
+		return soap->error;
+	if (soap_out_double(soap, "ns1:width", -1, &a->_ns1__GetAllDoorByParam::width, ""))
+		return soap->error;
+	if (soap_out_int(soap, "ns1:doorType", -1, &a->_ns1__GetAllDoorByParam::doorType, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__GetAllDoorByParam::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__GetAllDoorByParam(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllDoorByParam * SOAP_FMAC4 soap_in__ns1__GetAllDoorByParam(struct soap *soap, const char *tag, _ns1__GetAllDoorByParam *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__GetAllDoorByParam*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__GetAllDoorByParam, sizeof(_ns1__GetAllDoorByParam), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__GetAllDoorByParam)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__GetAllDoorByParam *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_width1 = 1;
+	size_t soap_flag_doorType1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_width1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_double(soap, "ns1:width", &a->_ns1__GetAllDoorByParam::width, "xsd:double"))
+				{	soap_flag_width1--;
+					continue;
+				}
+			}
+			if (soap_flag_doorType1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_int(soap, "ns1:doorType", &a->_ns1__GetAllDoorByParam::doorType, "xsd:int"))
+				{	soap_flag_doorType1--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+		if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_width1 > 0 || soap_flag_doorType1 > 0))
+		{	soap->error = SOAP_OCCURS;
+			return NULL;
+		}
+	}
+	else if ((soap->mode & SOAP_XML_STRICT) && *soap->href != '#')
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	else
+	{	a = (_ns1__GetAllDoorByParam *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__GetAllDoorByParam, SOAP_TYPE__ns1__GetAllDoorByParam, sizeof(_ns1__GetAllDoorByParam), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__GetAllDoorByParam * SOAP_FMAC2 soap_instantiate__ns1__GetAllDoorByParam(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__GetAllDoorByParam(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__GetAllDoorByParam *p;
+	size_t k = sizeof(_ns1__GetAllDoorByParam);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__GetAllDoorByParam, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__GetAllDoorByParam);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__GetAllDoorByParam, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__GetAllDoorByParam location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__GetAllDoorByParam::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__GetAllDoorByParam(soap, tag ? tag : "ns1:GetAllDoorByParam", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__GetAllDoorByParam::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__GetAllDoorByParam(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllDoorByParam * SOAP_FMAC4 soap_get__ns1__GetAllDoorByParam(struct soap *soap, _ns1__GetAllDoorByParam *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__GetAllDoorByParam(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__GetAllDoorResponse::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	this->_ns1__GetAllDoorResponse::GetAllDoorResult = NULL;
+}
+
+void _ns1__GetAllDoorResponse::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__GetAllDoorResponse::GetAllDoorResult);
+#endif
+}
+
+int _ns1__GetAllDoorResponse::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__GetAllDoorResponse(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllDoorResponse(struct soap *soap, const char *tag, int id, const _ns1__GetAllDoorResponse *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__GetAllDoorResponse), type))
+		return soap->error;
+	if (a->GetAllDoorResult)
+		soap_element_result(soap, "ns1:GetAllDoorResult");
+	if (soap_out_PointerTostd__wstring(soap, "ns1:GetAllDoorResult", -1, &a->_ns1__GetAllDoorResponse::GetAllDoorResult, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__GetAllDoorResponse::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__GetAllDoorResponse(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllDoorResponse * SOAP_FMAC4 soap_in__ns1__GetAllDoorResponse(struct soap *soap, const char *tag, _ns1__GetAllDoorResponse *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__GetAllDoorResponse*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__GetAllDoorResponse, sizeof(_ns1__GetAllDoorResponse), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__GetAllDoorResponse)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__GetAllDoorResponse *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_GetAllDoorResult1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_GetAllDoorResult1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_PointerTostd__wstring(soap, "ns1:GetAllDoorResult", &a->_ns1__GetAllDoorResponse::GetAllDoorResult, "xsd:string"))
+				{	soap_flag_GetAllDoorResult1--;
+					continue;
+				}
+			}
+			soap_check_result(soap, "ns1:GetAllDoorResult");
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (_ns1__GetAllDoorResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__GetAllDoorResponse, SOAP_TYPE__ns1__GetAllDoorResponse, sizeof(_ns1__GetAllDoorResponse), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__GetAllDoorResponse * SOAP_FMAC2 soap_instantiate__ns1__GetAllDoorResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__GetAllDoorResponse(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__GetAllDoorResponse *p;
+	size_t k = sizeof(_ns1__GetAllDoorResponse);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__GetAllDoorResponse, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__GetAllDoorResponse);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__GetAllDoorResponse, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__GetAllDoorResponse location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__GetAllDoorResponse::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__GetAllDoorResponse(soap, tag ? tag : "ns1:GetAllDoorResponse", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__GetAllDoorResponse::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__GetAllDoorResponse(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllDoorResponse * SOAP_FMAC4 soap_get__ns1__GetAllDoorResponse(struct soap *soap, _ns1__GetAllDoorResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__GetAllDoorResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__GetAllDoor::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+}
+
+void _ns1__GetAllDoor::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+#endif
+}
+
+int _ns1__GetAllDoor::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__GetAllDoor(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetAllDoor(struct soap *soap, const char *tag, int id, const _ns1__GetAllDoor *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__GetAllDoor), type))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__GetAllDoor::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__GetAllDoor(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllDoor * SOAP_FMAC4 soap_in__ns1__GetAllDoor(struct soap *soap, const char *tag, _ns1__GetAllDoor *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__GetAllDoor*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__GetAllDoor, sizeof(_ns1__GetAllDoor), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__GetAllDoor)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__GetAllDoor *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (_ns1__GetAllDoor *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__GetAllDoor, SOAP_TYPE__ns1__GetAllDoor, sizeof(_ns1__GetAllDoor), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__GetAllDoor * SOAP_FMAC2 soap_instantiate__ns1__GetAllDoor(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__GetAllDoor(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__GetAllDoor *p;
+	size_t k = sizeof(_ns1__GetAllDoor);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__GetAllDoor, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__GetAllDoor);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__GetAllDoor, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__GetAllDoor location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__GetAllDoor::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__GetAllDoor(soap, tag ? tag : "ns1:GetAllDoor", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__GetAllDoor::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__GetAllDoor(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__GetAllDoor * SOAP_FMAC4 soap_get__ns1__GetAllDoor(struct soap *soap, _ns1__GetAllDoor *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__GetAllDoor(soap, tag, p, type)))
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;
@@ -2855,6 +5697,742 @@ SOAP_FMAC3 struct __ns1__CadFileDownload_ * SOAP_FMAC4 soap_get___ns1__CadFileDo
 	return p;
 }
 
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllAirconditionerByParam_(struct soap *soap, struct __ns1__GetAllAirconditionerByParam_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__GetAllAirconditionerByParam = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllAirconditionerByParam_(struct soap *soap, const struct __ns1__GetAllAirconditionerByParam_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__GetAllAirconditionerByParam(soap, &a->ns1__GetAllAirconditionerByParam);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllAirconditionerByParam_(struct soap *soap, const char *tag, int id, const struct __ns1__GetAllAirconditionerByParam_ *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__GetAllAirconditionerByParam(soap, "ns1:GetAllAirconditionerByParam", -1, &a->ns1__GetAllAirconditionerByParam, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllAirconditionerByParam_ * SOAP_FMAC4 soap_in___ns1__GetAllAirconditionerByParam_(struct soap *soap, const char *tag, struct __ns1__GetAllAirconditionerByParam_ *a, const char *type)
+{
+	size_t soap_flag_ns1__GetAllAirconditionerByParam = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__GetAllAirconditionerByParam_*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__GetAllAirconditionerByParam_, sizeof(struct __ns1__GetAllAirconditionerByParam_), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__GetAllAirconditionerByParam_(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__GetAllAirconditionerByParam && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__GetAllAirconditionerByParam(soap, "ns1:GetAllAirconditionerByParam", &a->ns1__GetAllAirconditionerByParam, ""))
+				{	soap_flag_ns1__GetAllAirconditionerByParam--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__GetAllAirconditionerByParam_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllAirconditionerByParam_(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__GetAllAirconditionerByParam_(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__GetAllAirconditionerByParam_ *p;
+	size_t k = sizeof(struct __ns1__GetAllAirconditionerByParam_);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__GetAllAirconditionerByParam_, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__GetAllAirconditionerByParam_);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__GetAllAirconditionerByParam_, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__GetAllAirconditionerByParam_ location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllAirconditionerByParam_(struct soap *soap, const struct __ns1__GetAllAirconditionerByParam_ *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__GetAllAirconditionerByParam_(soap, tag ? tag : "-ns1:GetAllAirconditionerByParam", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllAirconditionerByParam_ * SOAP_FMAC4 soap_get___ns1__GetAllAirconditionerByParam_(struct soap *soap, struct __ns1__GetAllAirconditionerByParam_ *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__GetAllAirconditionerByParam_(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllHandrailByParam_(struct soap *soap, struct __ns1__GetAllHandrailByParam_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__GetAllHandrailByParam = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllHandrailByParam_(struct soap *soap, const struct __ns1__GetAllHandrailByParam_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__GetAllHandrailByParam(soap, &a->ns1__GetAllHandrailByParam);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllHandrailByParam_(struct soap *soap, const char *tag, int id, const struct __ns1__GetAllHandrailByParam_ *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__GetAllHandrailByParam(soap, "ns1:GetAllHandrailByParam", -1, &a->ns1__GetAllHandrailByParam, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllHandrailByParam_ * SOAP_FMAC4 soap_in___ns1__GetAllHandrailByParam_(struct soap *soap, const char *tag, struct __ns1__GetAllHandrailByParam_ *a, const char *type)
+{
+	size_t soap_flag_ns1__GetAllHandrailByParam = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__GetAllHandrailByParam_*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__GetAllHandrailByParam_, sizeof(struct __ns1__GetAllHandrailByParam_), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__GetAllHandrailByParam_(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__GetAllHandrailByParam && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__GetAllHandrailByParam(soap, "ns1:GetAllHandrailByParam", &a->ns1__GetAllHandrailByParam, ""))
+				{	soap_flag_ns1__GetAllHandrailByParam--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__GetAllHandrailByParam_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllHandrailByParam_(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__GetAllHandrailByParam_(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__GetAllHandrailByParam_ *p;
+	size_t k = sizeof(struct __ns1__GetAllHandrailByParam_);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__GetAllHandrailByParam_, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__GetAllHandrailByParam_);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__GetAllHandrailByParam_, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__GetAllHandrailByParam_ location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllHandrailByParam_(struct soap *soap, const struct __ns1__GetAllHandrailByParam_ *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__GetAllHandrailByParam_(soap, tag ? tag : "-ns1:GetAllHandrailByParam", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllHandrailByParam_ * SOAP_FMAC4 soap_get___ns1__GetAllHandrailByParam_(struct soap *soap, struct __ns1__GetAllHandrailByParam_ *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__GetAllHandrailByParam_(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllBathroomByParam_(struct soap *soap, struct __ns1__GetAllBathroomByParam_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__GetAllBathroomByParam = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllBathroomByParam_(struct soap *soap, const struct __ns1__GetAllBathroomByParam_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__GetAllBathroomByParam(soap, &a->ns1__GetAllBathroomByParam);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllBathroomByParam_(struct soap *soap, const char *tag, int id, const struct __ns1__GetAllBathroomByParam_ *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__GetAllBathroomByParam(soap, "ns1:GetAllBathroomByParam", -1, &a->ns1__GetAllBathroomByParam, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllBathroomByParam_ * SOAP_FMAC4 soap_in___ns1__GetAllBathroomByParam_(struct soap *soap, const char *tag, struct __ns1__GetAllBathroomByParam_ *a, const char *type)
+{
+	size_t soap_flag_ns1__GetAllBathroomByParam = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__GetAllBathroomByParam_*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__GetAllBathroomByParam_, sizeof(struct __ns1__GetAllBathroomByParam_), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__GetAllBathroomByParam_(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__GetAllBathroomByParam && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__GetAllBathroomByParam(soap, "ns1:GetAllBathroomByParam", &a->ns1__GetAllBathroomByParam, ""))
+				{	soap_flag_ns1__GetAllBathroomByParam--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__GetAllBathroomByParam_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllBathroomByParam_(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__GetAllBathroomByParam_(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__GetAllBathroomByParam_ *p;
+	size_t k = sizeof(struct __ns1__GetAllBathroomByParam_);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__GetAllBathroomByParam_, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__GetAllBathroomByParam_);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__GetAllBathroomByParam_, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__GetAllBathroomByParam_ location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllBathroomByParam_(struct soap *soap, const struct __ns1__GetAllBathroomByParam_ *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__GetAllBathroomByParam_(soap, tag ? tag : "-ns1:GetAllBathroomByParam", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllBathroomByParam_ * SOAP_FMAC4 soap_get___ns1__GetAllBathroomByParam_(struct soap *soap, struct __ns1__GetAllBathroomByParam_ *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__GetAllBathroomByParam_(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllBathroom_(struct soap *soap, struct __ns1__GetAllBathroom_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__GetAllBathroom = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllBathroom_(struct soap *soap, const struct __ns1__GetAllBathroom_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__GetAllBathroom(soap, &a->ns1__GetAllBathroom);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllBathroom_(struct soap *soap, const char *tag, int id, const struct __ns1__GetAllBathroom_ *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__GetAllBathroom(soap, "ns1:GetAllBathroom", -1, &a->ns1__GetAllBathroom, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllBathroom_ * SOAP_FMAC4 soap_in___ns1__GetAllBathroom_(struct soap *soap, const char *tag, struct __ns1__GetAllBathroom_ *a, const char *type)
+{
+	size_t soap_flag_ns1__GetAllBathroom = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__GetAllBathroom_*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__GetAllBathroom_, sizeof(struct __ns1__GetAllBathroom_), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__GetAllBathroom_(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__GetAllBathroom && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__GetAllBathroom(soap, "ns1:GetAllBathroom", &a->ns1__GetAllBathroom, ""))
+				{	soap_flag_ns1__GetAllBathroom--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__GetAllBathroom_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllBathroom_(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__GetAllBathroom_(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__GetAllBathroom_ *p;
+	size_t k = sizeof(struct __ns1__GetAllBathroom_);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__GetAllBathroom_, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__GetAllBathroom_);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__GetAllBathroom_, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__GetAllBathroom_ location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllBathroom_(struct soap *soap, const struct __ns1__GetAllBathroom_ *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__GetAllBathroom_(soap, tag ? tag : "-ns1:GetAllBathroom", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllBathroom_ * SOAP_FMAC4 soap_get___ns1__GetAllBathroom_(struct soap *soap, struct __ns1__GetAllBathroom_ *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__GetAllBathroom_(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllKitchenParam_(struct soap *soap, struct __ns1__GetAllKitchenParam_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__GetAllKitchenParam = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllKitchenParam_(struct soap *soap, const struct __ns1__GetAllKitchenParam_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__GetAllKitchenParam(soap, &a->ns1__GetAllKitchenParam);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllKitchenParam_(struct soap *soap, const char *tag, int id, const struct __ns1__GetAllKitchenParam_ *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__GetAllKitchenParam(soap, "ns1:GetAllKitchenParam", -1, &a->ns1__GetAllKitchenParam, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllKitchenParam_ * SOAP_FMAC4 soap_in___ns1__GetAllKitchenParam_(struct soap *soap, const char *tag, struct __ns1__GetAllKitchenParam_ *a, const char *type)
+{
+	size_t soap_flag_ns1__GetAllKitchenParam = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__GetAllKitchenParam_*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__GetAllKitchenParam_, sizeof(struct __ns1__GetAllKitchenParam_), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__GetAllKitchenParam_(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__GetAllKitchenParam && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__GetAllKitchenParam(soap, "ns1:GetAllKitchenParam", &a->ns1__GetAllKitchenParam, ""))
+				{	soap_flag_ns1__GetAllKitchenParam--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__GetAllKitchenParam_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllKitchenParam_(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__GetAllKitchenParam_(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__GetAllKitchenParam_ *p;
+	size_t k = sizeof(struct __ns1__GetAllKitchenParam_);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__GetAllKitchenParam_, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__GetAllKitchenParam_);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__GetAllKitchenParam_, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__GetAllKitchenParam_ location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllKitchenParam_(struct soap *soap, const struct __ns1__GetAllKitchenParam_ *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__GetAllKitchenParam_(soap, tag ? tag : "-ns1:GetAllKitchenParam", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllKitchenParam_ * SOAP_FMAC4 soap_get___ns1__GetAllKitchenParam_(struct soap *soap, struct __ns1__GetAllKitchenParam_ *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__GetAllKitchenParam_(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllKitchen_(struct soap *soap, struct __ns1__GetAllKitchen_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__GetAllKitchen = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllKitchen_(struct soap *soap, const struct __ns1__GetAllKitchen_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__GetAllKitchen(soap, &a->ns1__GetAllKitchen);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllKitchen_(struct soap *soap, const char *tag, int id, const struct __ns1__GetAllKitchen_ *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__GetAllKitchen(soap, "ns1:GetAllKitchen", -1, &a->ns1__GetAllKitchen, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllKitchen_ * SOAP_FMAC4 soap_in___ns1__GetAllKitchen_(struct soap *soap, const char *tag, struct __ns1__GetAllKitchen_ *a, const char *type)
+{
+	size_t soap_flag_ns1__GetAllKitchen = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__GetAllKitchen_*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__GetAllKitchen_, sizeof(struct __ns1__GetAllKitchen_), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__GetAllKitchen_(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__GetAllKitchen && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__GetAllKitchen(soap, "ns1:GetAllKitchen", &a->ns1__GetAllKitchen, ""))
+				{	soap_flag_ns1__GetAllKitchen--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__GetAllKitchen_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllKitchen_(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__GetAllKitchen_(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__GetAllKitchen_ *p;
+	size_t k = sizeof(struct __ns1__GetAllKitchen_);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__GetAllKitchen_, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__GetAllKitchen_);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__GetAllKitchen_, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__GetAllKitchen_ location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllKitchen_(struct soap *soap, const struct __ns1__GetAllKitchen_ *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__GetAllKitchen_(soap, tag ? tag : "-ns1:GetAllKitchen", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllKitchen_ * SOAP_FMAC4 soap_get___ns1__GetAllKitchen_(struct soap *soap, struct __ns1__GetAllKitchen_ *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__GetAllKitchen_(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllDoorByParam_(struct soap *soap, struct __ns1__GetAllDoorByParam_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__GetAllDoorByParam = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllDoorByParam_(struct soap *soap, const struct __ns1__GetAllDoorByParam_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__GetAllDoorByParam(soap, &a->ns1__GetAllDoorByParam);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllDoorByParam_(struct soap *soap, const char *tag, int id, const struct __ns1__GetAllDoorByParam_ *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__GetAllDoorByParam(soap, "ns1:GetAllDoorByParam", -1, &a->ns1__GetAllDoorByParam, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllDoorByParam_ * SOAP_FMAC4 soap_in___ns1__GetAllDoorByParam_(struct soap *soap, const char *tag, struct __ns1__GetAllDoorByParam_ *a, const char *type)
+{
+	size_t soap_flag_ns1__GetAllDoorByParam = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__GetAllDoorByParam_*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__GetAllDoorByParam_, sizeof(struct __ns1__GetAllDoorByParam_), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__GetAllDoorByParam_(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__GetAllDoorByParam && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__GetAllDoorByParam(soap, "ns1:GetAllDoorByParam", &a->ns1__GetAllDoorByParam, ""))
+				{	soap_flag_ns1__GetAllDoorByParam--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__GetAllDoorByParam_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllDoorByParam_(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__GetAllDoorByParam_(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__GetAllDoorByParam_ *p;
+	size_t k = sizeof(struct __ns1__GetAllDoorByParam_);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__GetAllDoorByParam_, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__GetAllDoorByParam_);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__GetAllDoorByParam_, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__GetAllDoorByParam_ location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllDoorByParam_(struct soap *soap, const struct __ns1__GetAllDoorByParam_ *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__GetAllDoorByParam_(soap, tag ? tag : "-ns1:GetAllDoorByParam", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllDoorByParam_ * SOAP_FMAC4 soap_get___ns1__GetAllDoorByParam_(struct soap *soap, struct __ns1__GetAllDoorByParam_ *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__GetAllDoorByParam_(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllDoor_(struct soap *soap, struct __ns1__GetAllDoor_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__GetAllDoor = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllDoor_(struct soap *soap, const struct __ns1__GetAllDoor_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__GetAllDoor(soap, &a->ns1__GetAllDoor);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllDoor_(struct soap *soap, const char *tag, int id, const struct __ns1__GetAllDoor_ *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__GetAllDoor(soap, "ns1:GetAllDoor", -1, &a->ns1__GetAllDoor, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllDoor_ * SOAP_FMAC4 soap_in___ns1__GetAllDoor_(struct soap *soap, const char *tag, struct __ns1__GetAllDoor_ *a, const char *type)
+{
+	size_t soap_flag_ns1__GetAllDoor = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__GetAllDoor_*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__GetAllDoor_, sizeof(struct __ns1__GetAllDoor_), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__GetAllDoor_(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__GetAllDoor && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__GetAllDoor(soap, "ns1:GetAllDoor", &a->ns1__GetAllDoor, ""))
+				{	soap_flag_ns1__GetAllDoor--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__GetAllDoor_ * SOAP_FMAC2 soap_instantiate___ns1__GetAllDoor_(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__GetAllDoor_(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__GetAllDoor_ *p;
+	size_t k = sizeof(struct __ns1__GetAllDoor_);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__GetAllDoor_, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__GetAllDoor_);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__GetAllDoor_, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__GetAllDoor_ location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllDoor_(struct soap *soap, const struct __ns1__GetAllDoor_ *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__GetAllDoor_(soap, tag ? tag : "-ns1:GetAllDoor", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllDoor_ * SOAP_FMAC4 soap_get___ns1__GetAllDoor_(struct soap *soap, struct __ns1__GetAllDoor_ *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__GetAllDoor_(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
 SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetWindows_(struct soap *soap, struct __ns1__GetWindows_ *a)
 {
 	(void)soap; (void)a; /* appease -Wall -Werror */
@@ -3218,6 +6796,742 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__CadFileDownload(struct soap *soap, con
 SOAP_FMAC3 struct __ns1__CadFileDownload * SOAP_FMAC4 soap_get___ns1__CadFileDownload(struct soap *soap, struct __ns1__CadFileDownload *p, const char *tag, const char *type)
 {
 	if ((p = soap_in___ns1__CadFileDownload(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllAirconditionerByParam(struct soap *soap, struct __ns1__GetAllAirconditionerByParam *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__GetAllAirconditionerByParam = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllAirconditionerByParam(struct soap *soap, const struct __ns1__GetAllAirconditionerByParam *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__GetAllAirconditionerByParam(soap, &a->ns1__GetAllAirconditionerByParam);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllAirconditionerByParam(struct soap *soap, const char *tag, int id, const struct __ns1__GetAllAirconditionerByParam *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__GetAllAirconditionerByParam(soap, "ns1:GetAllAirconditionerByParam", -1, &a->ns1__GetAllAirconditionerByParam, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllAirconditionerByParam * SOAP_FMAC4 soap_in___ns1__GetAllAirconditionerByParam(struct soap *soap, const char *tag, struct __ns1__GetAllAirconditionerByParam *a, const char *type)
+{
+	size_t soap_flag_ns1__GetAllAirconditionerByParam = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__GetAllAirconditionerByParam*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__GetAllAirconditionerByParam, sizeof(struct __ns1__GetAllAirconditionerByParam), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__GetAllAirconditionerByParam(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__GetAllAirconditionerByParam && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__GetAllAirconditionerByParam(soap, "ns1:GetAllAirconditionerByParam", &a->ns1__GetAllAirconditionerByParam, ""))
+				{	soap_flag_ns1__GetAllAirconditionerByParam--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__GetAllAirconditionerByParam * SOAP_FMAC2 soap_instantiate___ns1__GetAllAirconditionerByParam(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__GetAllAirconditionerByParam(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__GetAllAirconditionerByParam *p;
+	size_t k = sizeof(struct __ns1__GetAllAirconditionerByParam);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__GetAllAirconditionerByParam, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__GetAllAirconditionerByParam);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__GetAllAirconditionerByParam, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__GetAllAirconditionerByParam location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllAirconditionerByParam(struct soap *soap, const struct __ns1__GetAllAirconditionerByParam *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__GetAllAirconditionerByParam(soap, tag ? tag : "-ns1:GetAllAirconditionerByParam", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllAirconditionerByParam * SOAP_FMAC4 soap_get___ns1__GetAllAirconditionerByParam(struct soap *soap, struct __ns1__GetAllAirconditionerByParam *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__GetAllAirconditionerByParam(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllHandrailByParam(struct soap *soap, struct __ns1__GetAllHandrailByParam *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__GetAllHandrailByParam = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllHandrailByParam(struct soap *soap, const struct __ns1__GetAllHandrailByParam *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__GetAllHandrailByParam(soap, &a->ns1__GetAllHandrailByParam);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllHandrailByParam(struct soap *soap, const char *tag, int id, const struct __ns1__GetAllHandrailByParam *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__GetAllHandrailByParam(soap, "ns1:GetAllHandrailByParam", -1, &a->ns1__GetAllHandrailByParam, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllHandrailByParam * SOAP_FMAC4 soap_in___ns1__GetAllHandrailByParam(struct soap *soap, const char *tag, struct __ns1__GetAllHandrailByParam *a, const char *type)
+{
+	size_t soap_flag_ns1__GetAllHandrailByParam = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__GetAllHandrailByParam*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__GetAllHandrailByParam, sizeof(struct __ns1__GetAllHandrailByParam), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__GetAllHandrailByParam(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__GetAllHandrailByParam && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__GetAllHandrailByParam(soap, "ns1:GetAllHandrailByParam", &a->ns1__GetAllHandrailByParam, ""))
+				{	soap_flag_ns1__GetAllHandrailByParam--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__GetAllHandrailByParam * SOAP_FMAC2 soap_instantiate___ns1__GetAllHandrailByParam(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__GetAllHandrailByParam(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__GetAllHandrailByParam *p;
+	size_t k = sizeof(struct __ns1__GetAllHandrailByParam);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__GetAllHandrailByParam, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__GetAllHandrailByParam);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__GetAllHandrailByParam, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__GetAllHandrailByParam location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllHandrailByParam(struct soap *soap, const struct __ns1__GetAllHandrailByParam *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__GetAllHandrailByParam(soap, tag ? tag : "-ns1:GetAllHandrailByParam", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllHandrailByParam * SOAP_FMAC4 soap_get___ns1__GetAllHandrailByParam(struct soap *soap, struct __ns1__GetAllHandrailByParam *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__GetAllHandrailByParam(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllBathroomByParam(struct soap *soap, struct __ns1__GetAllBathroomByParam *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__GetAllBathroomByParam = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllBathroomByParam(struct soap *soap, const struct __ns1__GetAllBathroomByParam *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__GetAllBathroomByParam(soap, &a->ns1__GetAllBathroomByParam);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllBathroomByParam(struct soap *soap, const char *tag, int id, const struct __ns1__GetAllBathroomByParam *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__GetAllBathroomByParam(soap, "ns1:GetAllBathroomByParam", -1, &a->ns1__GetAllBathroomByParam, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllBathroomByParam * SOAP_FMAC4 soap_in___ns1__GetAllBathroomByParam(struct soap *soap, const char *tag, struct __ns1__GetAllBathroomByParam *a, const char *type)
+{
+	size_t soap_flag_ns1__GetAllBathroomByParam = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__GetAllBathroomByParam*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__GetAllBathroomByParam, sizeof(struct __ns1__GetAllBathroomByParam), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__GetAllBathroomByParam(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__GetAllBathroomByParam && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__GetAllBathroomByParam(soap, "ns1:GetAllBathroomByParam", &a->ns1__GetAllBathroomByParam, ""))
+				{	soap_flag_ns1__GetAllBathroomByParam--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__GetAllBathroomByParam * SOAP_FMAC2 soap_instantiate___ns1__GetAllBathroomByParam(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__GetAllBathroomByParam(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__GetAllBathroomByParam *p;
+	size_t k = sizeof(struct __ns1__GetAllBathroomByParam);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__GetAllBathroomByParam, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__GetAllBathroomByParam);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__GetAllBathroomByParam, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__GetAllBathroomByParam location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllBathroomByParam(struct soap *soap, const struct __ns1__GetAllBathroomByParam *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__GetAllBathroomByParam(soap, tag ? tag : "-ns1:GetAllBathroomByParam", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllBathroomByParam * SOAP_FMAC4 soap_get___ns1__GetAllBathroomByParam(struct soap *soap, struct __ns1__GetAllBathroomByParam *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__GetAllBathroomByParam(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllBathroom(struct soap *soap, struct __ns1__GetAllBathroom *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__GetAllBathroom = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllBathroom(struct soap *soap, const struct __ns1__GetAllBathroom *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__GetAllBathroom(soap, &a->ns1__GetAllBathroom);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllBathroom(struct soap *soap, const char *tag, int id, const struct __ns1__GetAllBathroom *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__GetAllBathroom(soap, "ns1:GetAllBathroom", -1, &a->ns1__GetAllBathroom, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllBathroom * SOAP_FMAC4 soap_in___ns1__GetAllBathroom(struct soap *soap, const char *tag, struct __ns1__GetAllBathroom *a, const char *type)
+{
+	size_t soap_flag_ns1__GetAllBathroom = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__GetAllBathroom*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__GetAllBathroom, sizeof(struct __ns1__GetAllBathroom), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__GetAllBathroom(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__GetAllBathroom && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__GetAllBathroom(soap, "ns1:GetAllBathroom", &a->ns1__GetAllBathroom, ""))
+				{	soap_flag_ns1__GetAllBathroom--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__GetAllBathroom * SOAP_FMAC2 soap_instantiate___ns1__GetAllBathroom(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__GetAllBathroom(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__GetAllBathroom *p;
+	size_t k = sizeof(struct __ns1__GetAllBathroom);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__GetAllBathroom, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__GetAllBathroom);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__GetAllBathroom, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__GetAllBathroom location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllBathroom(struct soap *soap, const struct __ns1__GetAllBathroom *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__GetAllBathroom(soap, tag ? tag : "-ns1:GetAllBathroom", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllBathroom * SOAP_FMAC4 soap_get___ns1__GetAllBathroom(struct soap *soap, struct __ns1__GetAllBathroom *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__GetAllBathroom(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllKitchenParam(struct soap *soap, struct __ns1__GetAllKitchenParam *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__GetAllKitchenParam = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllKitchenParam(struct soap *soap, const struct __ns1__GetAllKitchenParam *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__GetAllKitchenParam(soap, &a->ns1__GetAllKitchenParam);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllKitchenParam(struct soap *soap, const char *tag, int id, const struct __ns1__GetAllKitchenParam *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__GetAllKitchenParam(soap, "ns1:GetAllKitchenParam", -1, &a->ns1__GetAllKitchenParam, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllKitchenParam * SOAP_FMAC4 soap_in___ns1__GetAllKitchenParam(struct soap *soap, const char *tag, struct __ns1__GetAllKitchenParam *a, const char *type)
+{
+	size_t soap_flag_ns1__GetAllKitchenParam = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__GetAllKitchenParam*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__GetAllKitchenParam, sizeof(struct __ns1__GetAllKitchenParam), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__GetAllKitchenParam(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__GetAllKitchenParam && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__GetAllKitchenParam(soap, "ns1:GetAllKitchenParam", &a->ns1__GetAllKitchenParam, ""))
+				{	soap_flag_ns1__GetAllKitchenParam--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__GetAllKitchenParam * SOAP_FMAC2 soap_instantiate___ns1__GetAllKitchenParam(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__GetAllKitchenParam(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__GetAllKitchenParam *p;
+	size_t k = sizeof(struct __ns1__GetAllKitchenParam);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__GetAllKitchenParam, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__GetAllKitchenParam);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__GetAllKitchenParam, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__GetAllKitchenParam location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllKitchenParam(struct soap *soap, const struct __ns1__GetAllKitchenParam *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__GetAllKitchenParam(soap, tag ? tag : "-ns1:GetAllKitchenParam", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllKitchenParam * SOAP_FMAC4 soap_get___ns1__GetAllKitchenParam(struct soap *soap, struct __ns1__GetAllKitchenParam *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__GetAllKitchenParam(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllKitchen(struct soap *soap, struct __ns1__GetAllKitchen *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__GetAllKitchen = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllKitchen(struct soap *soap, const struct __ns1__GetAllKitchen *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__GetAllKitchen(soap, &a->ns1__GetAllKitchen);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllKitchen(struct soap *soap, const char *tag, int id, const struct __ns1__GetAllKitchen *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__GetAllKitchen(soap, "ns1:GetAllKitchen", -1, &a->ns1__GetAllKitchen, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllKitchen * SOAP_FMAC4 soap_in___ns1__GetAllKitchen(struct soap *soap, const char *tag, struct __ns1__GetAllKitchen *a, const char *type)
+{
+	size_t soap_flag_ns1__GetAllKitchen = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__GetAllKitchen*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__GetAllKitchen, sizeof(struct __ns1__GetAllKitchen), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__GetAllKitchen(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__GetAllKitchen && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__GetAllKitchen(soap, "ns1:GetAllKitchen", &a->ns1__GetAllKitchen, ""))
+				{	soap_flag_ns1__GetAllKitchen--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__GetAllKitchen * SOAP_FMAC2 soap_instantiate___ns1__GetAllKitchen(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__GetAllKitchen(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__GetAllKitchen *p;
+	size_t k = sizeof(struct __ns1__GetAllKitchen);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__GetAllKitchen, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__GetAllKitchen);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__GetAllKitchen, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__GetAllKitchen location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllKitchen(struct soap *soap, const struct __ns1__GetAllKitchen *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__GetAllKitchen(soap, tag ? tag : "-ns1:GetAllKitchen", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllKitchen * SOAP_FMAC4 soap_get___ns1__GetAllKitchen(struct soap *soap, struct __ns1__GetAllKitchen *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__GetAllKitchen(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllDoorByParam(struct soap *soap, struct __ns1__GetAllDoorByParam *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__GetAllDoorByParam = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllDoorByParam(struct soap *soap, const struct __ns1__GetAllDoorByParam *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__GetAllDoorByParam(soap, &a->ns1__GetAllDoorByParam);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllDoorByParam(struct soap *soap, const char *tag, int id, const struct __ns1__GetAllDoorByParam *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__GetAllDoorByParam(soap, "ns1:GetAllDoorByParam", -1, &a->ns1__GetAllDoorByParam, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllDoorByParam * SOAP_FMAC4 soap_in___ns1__GetAllDoorByParam(struct soap *soap, const char *tag, struct __ns1__GetAllDoorByParam *a, const char *type)
+{
+	size_t soap_flag_ns1__GetAllDoorByParam = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__GetAllDoorByParam*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__GetAllDoorByParam, sizeof(struct __ns1__GetAllDoorByParam), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__GetAllDoorByParam(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__GetAllDoorByParam && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__GetAllDoorByParam(soap, "ns1:GetAllDoorByParam", &a->ns1__GetAllDoorByParam, ""))
+				{	soap_flag_ns1__GetAllDoorByParam--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__GetAllDoorByParam * SOAP_FMAC2 soap_instantiate___ns1__GetAllDoorByParam(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__GetAllDoorByParam(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__GetAllDoorByParam *p;
+	size_t k = sizeof(struct __ns1__GetAllDoorByParam);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__GetAllDoorByParam, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__GetAllDoorByParam);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__GetAllDoorByParam, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__GetAllDoorByParam location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllDoorByParam(struct soap *soap, const struct __ns1__GetAllDoorByParam *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__GetAllDoorByParam(soap, tag ? tag : "-ns1:GetAllDoorByParam", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllDoorByParam * SOAP_FMAC4 soap_get___ns1__GetAllDoorByParam(struct soap *soap, struct __ns1__GetAllDoorByParam *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__GetAllDoorByParam(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetAllDoor(struct soap *soap, struct __ns1__GetAllDoor *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__GetAllDoor = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetAllDoor(struct soap *soap, const struct __ns1__GetAllDoor *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__GetAllDoor(soap, &a->ns1__GetAllDoor);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetAllDoor(struct soap *soap, const char *tag, int id, const struct __ns1__GetAllDoor *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__GetAllDoor(soap, "ns1:GetAllDoor", -1, &a->ns1__GetAllDoor, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllDoor * SOAP_FMAC4 soap_in___ns1__GetAllDoor(struct soap *soap, const char *tag, struct __ns1__GetAllDoor *a, const char *type)
+{
+	size_t soap_flag_ns1__GetAllDoor = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__GetAllDoor*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__GetAllDoor, sizeof(struct __ns1__GetAllDoor), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__GetAllDoor(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__GetAllDoor && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__GetAllDoor(soap, "ns1:GetAllDoor", &a->ns1__GetAllDoor, ""))
+				{	soap_flag_ns1__GetAllDoor--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__GetAllDoor * SOAP_FMAC2 soap_instantiate___ns1__GetAllDoor(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__GetAllDoor(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__GetAllDoor *p;
+	size_t k = sizeof(struct __ns1__GetAllDoor);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__GetAllDoor, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__GetAllDoor);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__GetAllDoor, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__GetAllDoor location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetAllDoor(struct soap *soap, const struct __ns1__GetAllDoor *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__GetAllDoor(soap, tag ? tag : "-ns1:GetAllDoor", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__GetAllDoor * SOAP_FMAC4 soap_get___ns1__GetAllDoor(struct soap *soap, struct __ns1__GetAllDoor *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__GetAllDoor(soap, tag, p, type)))
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;
@@ -3730,6 +8044,478 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__CadFileDownload(struct soap *s
 SOAP_FMAC3 _ns1__CadFileDownload ** SOAP_FMAC4 soap_get_PointerTo_ns1__CadFileDownload(struct soap *soap, _ns1__CadFileDownload **p, const char *tag, const char *type)
 {
 	if ((p = soap_in_PointerTo_ns1__CadFileDownload(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__GetAllAirconditionerByParam(struct soap *soap, _ns1__GetAllAirconditionerByParam *const*a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	if (!soap_reference(soap, *a, SOAP_TYPE__ns1__GetAllAirconditionerByParam))
+		(*a)->soap_serialize(soap);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__GetAllAirconditionerByParam(struct soap *soap, const char *tag, int id, _ns1__GetAllAirconditionerByParam *const*a, const char *type)
+{
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE__ns1__GetAllAirconditionerByParam, NULL);
+	if (id < 0)
+		return soap->error;
+	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE__ns1__GetAllAirconditionerByParam ? type : NULL);
+}
+
+SOAP_FMAC3 _ns1__GetAllAirconditionerByParam ** SOAP_FMAC4 soap_in_PointerTo_ns1__GetAllAirconditionerByParam(struct soap *soap, const char *tag, _ns1__GetAllAirconditionerByParam **a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a)
+		if (!(a = (_ns1__GetAllAirconditionerByParam **)soap_malloc(soap, sizeof(_ns1__GetAllAirconditionerByParam *))))
+			return NULL;
+	*a = NULL;
+	if (!soap->null && *soap->href != '#')
+	{	soap_revert(soap);
+		if (!(*a = (_ns1__GetAllAirconditionerByParam *)soap_instantiate__ns1__GetAllAirconditionerByParam(soap, -1, soap->type, soap->arrayType, NULL)))
+			return NULL;
+		(*a)->soap_default(soap);
+		if (!(*a)->soap_in(soap, tag, NULL))
+		{	*a = NULL;
+			return NULL;
+		}
+	}
+	else
+	{	a = (_ns1__GetAllAirconditionerByParam **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE__ns1__GetAllAirconditionerByParam, sizeof(_ns1__GetAllAirconditionerByParam), 0, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__GetAllAirconditionerByParam(struct soap *soap, _ns1__GetAllAirconditionerByParam *const*a, const char *tag, const char *type)
+{
+	if (soap_out_PointerTo_ns1__GetAllAirconditionerByParam(soap, tag ? tag : "ns1:GetAllAirconditionerByParam", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 _ns1__GetAllAirconditionerByParam ** SOAP_FMAC4 soap_get_PointerTo_ns1__GetAllAirconditionerByParam(struct soap *soap, _ns1__GetAllAirconditionerByParam **p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PointerTo_ns1__GetAllAirconditionerByParam(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__GetAllHandrailByParam(struct soap *soap, _ns1__GetAllHandrailByParam *const*a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	if (!soap_reference(soap, *a, SOAP_TYPE__ns1__GetAllHandrailByParam))
+		(*a)->soap_serialize(soap);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__GetAllHandrailByParam(struct soap *soap, const char *tag, int id, _ns1__GetAllHandrailByParam *const*a, const char *type)
+{
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE__ns1__GetAllHandrailByParam, NULL);
+	if (id < 0)
+		return soap->error;
+	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE__ns1__GetAllHandrailByParam ? type : NULL);
+}
+
+SOAP_FMAC3 _ns1__GetAllHandrailByParam ** SOAP_FMAC4 soap_in_PointerTo_ns1__GetAllHandrailByParam(struct soap *soap, const char *tag, _ns1__GetAllHandrailByParam **a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a)
+		if (!(a = (_ns1__GetAllHandrailByParam **)soap_malloc(soap, sizeof(_ns1__GetAllHandrailByParam *))))
+			return NULL;
+	*a = NULL;
+	if (!soap->null && *soap->href != '#')
+	{	soap_revert(soap);
+		if (!(*a = (_ns1__GetAllHandrailByParam *)soap_instantiate__ns1__GetAllHandrailByParam(soap, -1, soap->type, soap->arrayType, NULL)))
+			return NULL;
+		(*a)->soap_default(soap);
+		if (!(*a)->soap_in(soap, tag, NULL))
+		{	*a = NULL;
+			return NULL;
+		}
+	}
+	else
+	{	a = (_ns1__GetAllHandrailByParam **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE__ns1__GetAllHandrailByParam, sizeof(_ns1__GetAllHandrailByParam), 0, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__GetAllHandrailByParam(struct soap *soap, _ns1__GetAllHandrailByParam *const*a, const char *tag, const char *type)
+{
+	if (soap_out_PointerTo_ns1__GetAllHandrailByParam(soap, tag ? tag : "ns1:GetAllHandrailByParam", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 _ns1__GetAllHandrailByParam ** SOAP_FMAC4 soap_get_PointerTo_ns1__GetAllHandrailByParam(struct soap *soap, _ns1__GetAllHandrailByParam **p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PointerTo_ns1__GetAllHandrailByParam(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__GetAllBathroomByParam(struct soap *soap, _ns1__GetAllBathroomByParam *const*a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	if (!soap_reference(soap, *a, SOAP_TYPE__ns1__GetAllBathroomByParam))
+		(*a)->soap_serialize(soap);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__GetAllBathroomByParam(struct soap *soap, const char *tag, int id, _ns1__GetAllBathroomByParam *const*a, const char *type)
+{
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE__ns1__GetAllBathroomByParam, NULL);
+	if (id < 0)
+		return soap->error;
+	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE__ns1__GetAllBathroomByParam ? type : NULL);
+}
+
+SOAP_FMAC3 _ns1__GetAllBathroomByParam ** SOAP_FMAC4 soap_in_PointerTo_ns1__GetAllBathroomByParam(struct soap *soap, const char *tag, _ns1__GetAllBathroomByParam **a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a)
+		if (!(a = (_ns1__GetAllBathroomByParam **)soap_malloc(soap, sizeof(_ns1__GetAllBathroomByParam *))))
+			return NULL;
+	*a = NULL;
+	if (!soap->null && *soap->href != '#')
+	{	soap_revert(soap);
+		if (!(*a = (_ns1__GetAllBathroomByParam *)soap_instantiate__ns1__GetAllBathroomByParam(soap, -1, soap->type, soap->arrayType, NULL)))
+			return NULL;
+		(*a)->soap_default(soap);
+		if (!(*a)->soap_in(soap, tag, NULL))
+		{	*a = NULL;
+			return NULL;
+		}
+	}
+	else
+	{	a = (_ns1__GetAllBathroomByParam **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE__ns1__GetAllBathroomByParam, sizeof(_ns1__GetAllBathroomByParam), 0, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__GetAllBathroomByParam(struct soap *soap, _ns1__GetAllBathroomByParam *const*a, const char *tag, const char *type)
+{
+	if (soap_out_PointerTo_ns1__GetAllBathroomByParam(soap, tag ? tag : "ns1:GetAllBathroomByParam", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 _ns1__GetAllBathroomByParam ** SOAP_FMAC4 soap_get_PointerTo_ns1__GetAllBathroomByParam(struct soap *soap, _ns1__GetAllBathroomByParam **p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PointerTo_ns1__GetAllBathroomByParam(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__GetAllBathroom(struct soap *soap, _ns1__GetAllBathroom *const*a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	if (!soap_reference(soap, *a, SOAP_TYPE__ns1__GetAllBathroom))
+		(*a)->soap_serialize(soap);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__GetAllBathroom(struct soap *soap, const char *tag, int id, _ns1__GetAllBathroom *const*a, const char *type)
+{
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE__ns1__GetAllBathroom, NULL);
+	if (id < 0)
+		return soap->error;
+	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE__ns1__GetAllBathroom ? type : NULL);
+}
+
+SOAP_FMAC3 _ns1__GetAllBathroom ** SOAP_FMAC4 soap_in_PointerTo_ns1__GetAllBathroom(struct soap *soap, const char *tag, _ns1__GetAllBathroom **a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a)
+		if (!(a = (_ns1__GetAllBathroom **)soap_malloc(soap, sizeof(_ns1__GetAllBathroom *))))
+			return NULL;
+	*a = NULL;
+	if (!soap->null && *soap->href != '#')
+	{	soap_revert(soap);
+		if (!(*a = (_ns1__GetAllBathroom *)soap_instantiate__ns1__GetAllBathroom(soap, -1, soap->type, soap->arrayType, NULL)))
+			return NULL;
+		(*a)->soap_default(soap);
+		if (!(*a)->soap_in(soap, tag, NULL))
+		{	*a = NULL;
+			return NULL;
+		}
+	}
+	else
+	{	a = (_ns1__GetAllBathroom **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE__ns1__GetAllBathroom, sizeof(_ns1__GetAllBathroom), 0, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__GetAllBathroom(struct soap *soap, _ns1__GetAllBathroom *const*a, const char *tag, const char *type)
+{
+	if (soap_out_PointerTo_ns1__GetAllBathroom(soap, tag ? tag : "ns1:GetAllBathroom", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 _ns1__GetAllBathroom ** SOAP_FMAC4 soap_get_PointerTo_ns1__GetAllBathroom(struct soap *soap, _ns1__GetAllBathroom **p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PointerTo_ns1__GetAllBathroom(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__GetAllKitchenParam(struct soap *soap, _ns1__GetAllKitchenParam *const*a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	if (!soap_reference(soap, *a, SOAP_TYPE__ns1__GetAllKitchenParam))
+		(*a)->soap_serialize(soap);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__GetAllKitchenParam(struct soap *soap, const char *tag, int id, _ns1__GetAllKitchenParam *const*a, const char *type)
+{
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE__ns1__GetAllKitchenParam, NULL);
+	if (id < 0)
+		return soap->error;
+	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE__ns1__GetAllKitchenParam ? type : NULL);
+}
+
+SOAP_FMAC3 _ns1__GetAllKitchenParam ** SOAP_FMAC4 soap_in_PointerTo_ns1__GetAllKitchenParam(struct soap *soap, const char *tag, _ns1__GetAllKitchenParam **a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a)
+		if (!(a = (_ns1__GetAllKitchenParam **)soap_malloc(soap, sizeof(_ns1__GetAllKitchenParam *))))
+			return NULL;
+	*a = NULL;
+	if (!soap->null && *soap->href != '#')
+	{	soap_revert(soap);
+		if (!(*a = (_ns1__GetAllKitchenParam *)soap_instantiate__ns1__GetAllKitchenParam(soap, -1, soap->type, soap->arrayType, NULL)))
+			return NULL;
+		(*a)->soap_default(soap);
+		if (!(*a)->soap_in(soap, tag, NULL))
+		{	*a = NULL;
+			return NULL;
+		}
+	}
+	else
+	{	a = (_ns1__GetAllKitchenParam **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE__ns1__GetAllKitchenParam, sizeof(_ns1__GetAllKitchenParam), 0, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__GetAllKitchenParam(struct soap *soap, _ns1__GetAllKitchenParam *const*a, const char *tag, const char *type)
+{
+	if (soap_out_PointerTo_ns1__GetAllKitchenParam(soap, tag ? tag : "ns1:GetAllKitchenParam", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 _ns1__GetAllKitchenParam ** SOAP_FMAC4 soap_get_PointerTo_ns1__GetAllKitchenParam(struct soap *soap, _ns1__GetAllKitchenParam **p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PointerTo_ns1__GetAllKitchenParam(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__GetAllKitchen(struct soap *soap, _ns1__GetAllKitchen *const*a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	if (!soap_reference(soap, *a, SOAP_TYPE__ns1__GetAllKitchen))
+		(*a)->soap_serialize(soap);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__GetAllKitchen(struct soap *soap, const char *tag, int id, _ns1__GetAllKitchen *const*a, const char *type)
+{
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE__ns1__GetAllKitchen, NULL);
+	if (id < 0)
+		return soap->error;
+	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE__ns1__GetAllKitchen ? type : NULL);
+}
+
+SOAP_FMAC3 _ns1__GetAllKitchen ** SOAP_FMAC4 soap_in_PointerTo_ns1__GetAllKitchen(struct soap *soap, const char *tag, _ns1__GetAllKitchen **a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a)
+		if (!(a = (_ns1__GetAllKitchen **)soap_malloc(soap, sizeof(_ns1__GetAllKitchen *))))
+			return NULL;
+	*a = NULL;
+	if (!soap->null && *soap->href != '#')
+	{	soap_revert(soap);
+		if (!(*a = (_ns1__GetAllKitchen *)soap_instantiate__ns1__GetAllKitchen(soap, -1, soap->type, soap->arrayType, NULL)))
+			return NULL;
+		(*a)->soap_default(soap);
+		if (!(*a)->soap_in(soap, tag, NULL))
+		{	*a = NULL;
+			return NULL;
+		}
+	}
+	else
+	{	a = (_ns1__GetAllKitchen **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE__ns1__GetAllKitchen, sizeof(_ns1__GetAllKitchen), 0, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__GetAllKitchen(struct soap *soap, _ns1__GetAllKitchen *const*a, const char *tag, const char *type)
+{
+	if (soap_out_PointerTo_ns1__GetAllKitchen(soap, tag ? tag : "ns1:GetAllKitchen", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 _ns1__GetAllKitchen ** SOAP_FMAC4 soap_get_PointerTo_ns1__GetAllKitchen(struct soap *soap, _ns1__GetAllKitchen **p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PointerTo_ns1__GetAllKitchen(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__GetAllDoorByParam(struct soap *soap, _ns1__GetAllDoorByParam *const*a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	if (!soap_reference(soap, *a, SOAP_TYPE__ns1__GetAllDoorByParam))
+		(*a)->soap_serialize(soap);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__GetAllDoorByParam(struct soap *soap, const char *tag, int id, _ns1__GetAllDoorByParam *const*a, const char *type)
+{
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE__ns1__GetAllDoorByParam, NULL);
+	if (id < 0)
+		return soap->error;
+	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE__ns1__GetAllDoorByParam ? type : NULL);
+}
+
+SOAP_FMAC3 _ns1__GetAllDoorByParam ** SOAP_FMAC4 soap_in_PointerTo_ns1__GetAllDoorByParam(struct soap *soap, const char *tag, _ns1__GetAllDoorByParam **a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a)
+		if (!(a = (_ns1__GetAllDoorByParam **)soap_malloc(soap, sizeof(_ns1__GetAllDoorByParam *))))
+			return NULL;
+	*a = NULL;
+	if (!soap->null && *soap->href != '#')
+	{	soap_revert(soap);
+		if (!(*a = (_ns1__GetAllDoorByParam *)soap_instantiate__ns1__GetAllDoorByParam(soap, -1, soap->type, soap->arrayType, NULL)))
+			return NULL;
+		(*a)->soap_default(soap);
+		if (!(*a)->soap_in(soap, tag, NULL))
+		{	*a = NULL;
+			return NULL;
+		}
+	}
+	else
+	{	a = (_ns1__GetAllDoorByParam **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE__ns1__GetAllDoorByParam, sizeof(_ns1__GetAllDoorByParam), 0, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__GetAllDoorByParam(struct soap *soap, _ns1__GetAllDoorByParam *const*a, const char *tag, const char *type)
+{
+	if (soap_out_PointerTo_ns1__GetAllDoorByParam(soap, tag ? tag : "ns1:GetAllDoorByParam", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 _ns1__GetAllDoorByParam ** SOAP_FMAC4 soap_get_PointerTo_ns1__GetAllDoorByParam(struct soap *soap, _ns1__GetAllDoorByParam **p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PointerTo_ns1__GetAllDoorByParam(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__GetAllDoor(struct soap *soap, _ns1__GetAllDoor *const*a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	if (!soap_reference(soap, *a, SOAP_TYPE__ns1__GetAllDoor))
+		(*a)->soap_serialize(soap);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__GetAllDoor(struct soap *soap, const char *tag, int id, _ns1__GetAllDoor *const*a, const char *type)
+{
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE__ns1__GetAllDoor, NULL);
+	if (id < 0)
+		return soap->error;
+	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE__ns1__GetAllDoor ? type : NULL);
+}
+
+SOAP_FMAC3 _ns1__GetAllDoor ** SOAP_FMAC4 soap_in_PointerTo_ns1__GetAllDoor(struct soap *soap, const char *tag, _ns1__GetAllDoor **a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a)
+		if (!(a = (_ns1__GetAllDoor **)soap_malloc(soap, sizeof(_ns1__GetAllDoor *))))
+			return NULL;
+	*a = NULL;
+	if (!soap->null && *soap->href != '#')
+	{	soap_revert(soap);
+		if (!(*a = (_ns1__GetAllDoor *)soap_instantiate__ns1__GetAllDoor(soap, -1, soap->type, soap->arrayType, NULL)))
+			return NULL;
+		(*a)->soap_default(soap);
+		if (!(*a)->soap_in(soap, tag, NULL))
+		{	*a = NULL;
+			return NULL;
+		}
+	}
+	else
+	{	a = (_ns1__GetAllDoor **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE__ns1__GetAllDoor, sizeof(_ns1__GetAllDoor), 0, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__GetAllDoor(struct soap *soap, _ns1__GetAllDoor *const*a, const char *tag, const char *type)
+{
+	if (soap_out_PointerTo_ns1__GetAllDoor(soap, tag ? tag : "ns1:GetAllDoor", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 _ns1__GetAllDoor ** SOAP_FMAC4 soap_get_PointerTo_ns1__GetAllDoor(struct soap *soap, _ns1__GetAllDoor **p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PointerTo_ns1__GetAllDoor(soap, tag, p, type)))
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;

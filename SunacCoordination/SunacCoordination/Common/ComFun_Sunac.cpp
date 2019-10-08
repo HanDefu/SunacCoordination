@@ -262,6 +262,9 @@ bool DQ_GetAttributeValue( AcDbObjectId blockRefId, CString tag, CString &value 
 
 bool DQ_SetDynamicAttribute(AcDbObjectId p_blockRefId, CString p_attributename, double p_value)
 {
+	if (p_blockRefId==AcDbObjectId::kNull)
+		return false;
+
 	AcDbDynBlockReference* pDynBlkRef = new AcDbDynBlockReference(p_blockRefId);
 	if (pDynBlkRef == NULL)
 		return false;
