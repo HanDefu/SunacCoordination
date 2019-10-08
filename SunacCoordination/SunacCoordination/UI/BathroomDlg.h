@@ -1,10 +1,9 @@
 #pragma once
 #include "GridCtrlWithPreview.h"
-#include "afxwin.h"
-#include "../Object/Bathroom/AttrBathroom.h"
-#include "../Object/PrototypeCommonDef.h"
 #include "../Common/ComFun_Sunac.h"
+#include "../Object/Bathroom/BathroomGen.h"
 #include "ComFun_MFC.h"
+#include "afxwin.h"
 
 // CBathroomDlg 对话框
 
@@ -30,28 +29,39 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 
+	bool IsBathroomRectValid(TYRect rect);
+
+public:
 	CGridCtrlWithPreview m_preBathroom;
+	CComboBox m_bathroomType;
+	CComboBox m_basinWidth;
+	CComboBox m_toiletWidth;
+	CComboBox m_washWidth;
+	CComboBox m_floorRange;
+	CEdit m_number;
+	CEdit m_offsetX;
+	CEdit m_offsetY;
+	CEdit m_customX;
+	CEdit m_customY;
+	CButton m_isMirror;
+	CButton m_autoIndex;
+	CButton m_noAirOut;
+
 	TYRect m_rect;
 	E_DIRECTION m_doorDir;
 	E_DIRECTION m_windowDir;
+	int m_isStd;
+	int m_angle; //插入时旋转角，可能取值为0, 90, 180, 270
 
-	vector<AttrBathroom*> m_allBathrooms;
+	vector<AttrBathroom> m_allBathrooms;
+	vector<CPrototypeInfo> m_allPrototypes;
+	CBathroomGen* m_pBathroomGen;
 
-public:
-	CComboBox m_bathroomType;
-	CButton m_noAirOut;
-	CEdit m_number;
-	CComboBox m_basinWidth;
-	CComboBox m_BathroomWidth;
-	CComboBox m_washWidth;
-	CButton m_isMirror;
-	CButton m_autoIndex;
-
-	E_DIRECTION GetDir(ads_point pt);
 	void LoadDefaultValue();
-	vector<AttrBathroom*> FilterTI();
-	vector<AttrBathroom*> FilterTL();
-	vector<AttrBathroom*> FilterTU();
+	E_DIRECTION GetDir(ads_point pt);
+	void EnableSetAirout(bool bEnable);
+	void EnableSetProperty(bool bEnable);
+
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);///---01
 	afx_msg void OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedButtonInsert();

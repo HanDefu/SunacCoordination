@@ -30,19 +30,9 @@ public:
 	std::vector<AttrDoor >  GetAllDoors()const;
 	std::vector<AttrDoor >  GetDoors(double p_width, double p_heigh, CString doorType)const;
 
-	std::vector<AttrBathroom> GetBathrooms(double width, double height, CString BathroomDoorWindowPosition, CString ToiletType, int Airvent)const;
-	std::vector<AttrBathroom> GetAllBathrooms()const;
-
-	std::vector<AttrKitchen> GetAllKitchens()const;
-	std::vector<AttrRailing> GetRailings(CString RailingType)const;
-	std::vector<AttrAirCon> GetAirConditioners(CString AirconditionerPower, CString AirconditionerPipePosition, int AirconditionerIsRainpipe, CString RainpipePosition)const;
 
 	std::vector<AttrWindow > ParseWindowsFromXML(CMarkup xml)const;//从XML解析窗户信息
 	std::vector<AttrDoor > ParseDoorsFromXML(CMarkup xml)const;//从XML解析门信息
-	std::vector<AttrBathroom > ParseBathroomsFromXML(CMarkup xml)const;//从XML解析卫生间信息
-	std::vector<AttrKitchen > ParseKitchensFromXML(CMarkup xml)const;//从XML解析厨房信息
-	std::vector<AttrRailing > ParseRailingsFromXML(CMarkup xml)const;//从XML解析栏杆信息
-	std::vector<AttrAirCon > ParseAirConditionersFromXML(CMarkup xml)const;//从XML解析空调信息
 
 protected:
 

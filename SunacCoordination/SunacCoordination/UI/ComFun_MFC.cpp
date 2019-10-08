@@ -122,6 +122,8 @@ CString TYUI_GetComboBoxText(CComboBox& comboBox)
 {
 	CString str;
 	int sel = comboBox.GetCurSel();
+	if (sel < 0 || sel >= comboBox.GetCount())
+		return str;
 	comboBox.GetLBText(sel, str);
 	return str;
 }

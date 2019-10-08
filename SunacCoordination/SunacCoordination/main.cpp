@@ -39,6 +39,9 @@
 #include "WebIO\ConfigDictionary.h"
 #include "Tool\DoubleClickBlockReference.h"
 #include "Common\ComFun_Str.h"
+#include "WebIO\KitchenBathroomWebData.h"
+#include "WebIO\RailingWebData.h"
+#include "WebIO\AirconditionWebData.h"
 #include "WebIO\WindowWebData.h"
 #include "WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.h"
 #include "Common\ComFun_Str.h"
@@ -169,13 +172,16 @@ void CMD_test()
 	CString doorType = "";
 
 	CWindowWebData b;
+	CKitchenBathroomWebData c;
+	CRailingWebData d;
+	CAirConditionWebData e;
 	//vAttrWindow window = b.GetWindows(width, height, "", 0, "");
 	std::vector<AttrWindow> window = b.GetAllWindows();
 	std::vector<AttrDoor> door = b.GetAllDoors();
-	std::vector<AttrKitchen> kitchen = b.GetAllKitchens();
-	std::vector<AttrBathroom> bathroom = b.GetAllBathrooms();
-	std::vector<AttrRailing> railing = b.GetRailings("0");
-	std::vector<AttrAirCon> aircon = b.GetAirConditioners("","",0 ,"");
+	std::vector<AttrKitchen> kitchen = c.GetAllKitchens();
+	std::vector<AttrBathroom> bathroom = c.GetAllBathrooms();
+	std::vector<AttrRailing> railing = d.GetRailings(E_RAILING_BOLI);
+	std::vector<AttrAirCon> aircon = e.GetAirCons(0,"",0 ,"");
 	return;
 }
 
