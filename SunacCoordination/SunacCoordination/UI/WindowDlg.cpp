@@ -28,6 +28,12 @@ CWindowDlg::~CWindowDlg()
 {
 }
 
+INT_PTR CWindowDlg::DoModal()
+{
+	m_isMoldless = false;
+	return CAcUiDialog::DoModal();
+}
+
 LRESULT CWindowDlg::onAcadKeepFocus(WPARAM, LPARAM)
 {
 	return TRUE;
@@ -36,7 +42,8 @@ LRESULT CWindowDlg::onAcadKeepFocus(WPARAM, LPARAM)
 void CWindowDlg::OnOK()
 {
 	CAcUiDialog::OnOK();
-	DestroyWindow();
+	if (m_isMoldless)
+		DestroyWindow();
 }
 
 void CWindowDlg::OnCancel()

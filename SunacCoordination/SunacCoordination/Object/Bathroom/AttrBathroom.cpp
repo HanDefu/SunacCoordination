@@ -5,6 +5,7 @@
 #include "geassign.h"
 #include "acgi.h"
 #include "AttrBathroom.h"
+#include "..\..\WebIO\WebIO.h"
 
 
 //{{AFX_ARX_MACRO
@@ -18,7 +19,7 @@ AttrBathroom::AttrBathroom()
 
 }
 
-AttrBathroom::AttrBathroom(double p_xLen, double p_yLen, E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, const CPrototypeInfo& p_protptype)
+AttrBathroom::AttrBathroom(double p_xLen, double p_yLen, E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, const CProBathroom& p_protptype)
 {
 	m_type = L"卫生间";
 	m_sBathroomType = p_protptype.m_sType;
@@ -84,3 +85,13 @@ bool AttrBathroom::isEqualTo(AttrObject*other)
 		);*/
 }
 
+CProBathroom* AttrBathroom::GetProBathroom()
+{
+	CProBathroom *pProBathroom = dynamic_cast<CProBathroom *>(GetPrototype());
+	if (NULL == pProBathroom)
+	{
+		//原型与原型实例的类型不匹配
+		assert(false);
+	}
+	return pProBathroom;
+}

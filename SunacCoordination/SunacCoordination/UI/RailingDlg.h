@@ -9,8 +9,10 @@ class CRailingDlg : public CAcUiDialog
 	DECLARE_DYNAMIC(CRailingDlg)
 
 public:
-	CRailingDlg(CWnd* pParent, bool p_bModeless);   // 标准构造函数
+	CRailingDlg(CWnd* pParent = NULL);   // 标准构造函数
 	virtual ~CRailingDlg();
+
+	virtual INT_PTR DoModal();
 
 // 对话框数据
 	enum { IDD = IDD_DIALOG_RAILING };

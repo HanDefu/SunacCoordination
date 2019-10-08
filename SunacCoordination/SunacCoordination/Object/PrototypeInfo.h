@@ -11,11 +11,11 @@ struct PrototypeSize
 	int yLen;
 };
 
-class CPrototypeInfo
+class CProBase
 {
 public:
-	CPrototypeInfo();
-	virtual ~CPrototypeInfo();
+	CProBase();
+	virtual ~CProBase();
 
 	void AddSizeRange(int p_minXLen, int p_minYLen, int p_maxXLen, int p_maxYLen, int p_step = 150);
 	void AddSize(int p_xLen, int p_yLen);
@@ -39,3 +39,12 @@ protected:
 	vector<PrototypeSize> m_sizeList; //支持的尺寸列表
 };
 
+class CProBathroom : public CProBase
+{
+
+};
+
+class CProKitchen : public CProBase
+{
+
+};

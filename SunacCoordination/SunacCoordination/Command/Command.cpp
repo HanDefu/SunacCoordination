@@ -52,8 +52,8 @@ void CMD_SUNACWINDOW()
 	{
 		g_windowDlg = new CWindowDlg(acedGetAcadFrame());
 		g_windowDlg->Create(IDD_DIALOG_WINDOW);
-		g_windowDlg->ShowWindow(SW_SHOW);
 	}
+	g_windowDlg->ShowWindow(SW_SHOW);
 }
 
 //厨房
@@ -66,8 +66,8 @@ void CMD_SUNACKITCHEN()
 	{
 		g_kitchenDlg = new CKitchenDlg(acedGetAcadFrame());
 		g_kitchenDlg->Create(IDD_DIALOG_KITCHEN);
-		g_kitchenDlg->ShowWindow(SW_SHOW);
 	}
+	g_kitchenDlg->ShowWindow(SW_SHOW);
 }
 
 //卫生间
@@ -80,8 +80,8 @@ void CMD_SUNACBATHROOM()
 	{
 		g_bathroomDlg = new CBathroomDlg(acedGetAcadFrame());
 		g_bathroomDlg->Create(IDD_DIALOG_BATHROOM);
-		g_bathroomDlg->ShowWindow(SW_SHOW);
 	}
+	g_bathroomDlg->ShowWindow(SW_SHOW);
 }
 
 //门
@@ -101,7 +101,7 @@ void CMD_SUNACRAILING()
 	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
 	if (g_railingDlg == NULL)
 	{
-		g_railingDlg = new CRailingDlg(acedGetAcadFrame(), true);
+		g_railingDlg = new CRailingDlg(acedGetAcadFrame());
 		g_railingDlg->Create(IDD_DIALOG_RAILING);
 	}
 	g_railingDlg->ShowWindow(SW_SHOW);
@@ -135,8 +135,8 @@ void CMD_SUNACAIRCONDITIONER()
 	{
 		g_airconditionerDlg = new CAirconditionerDlg(acedGetAcadFrame());
 		g_airconditionerDlg->Create(IDD_DIALOG_AIRCONDITIONER);
-		g_airconditionerDlg->ShowWindow(SW_SHOW);
 	}
+	g_airconditionerDlg->ShowWindow(SW_SHOW);
 }
 
 //标准立面

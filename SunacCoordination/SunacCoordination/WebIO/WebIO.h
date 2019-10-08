@@ -10,7 +10,7 @@
 #include "WindowLocalData.h"
 #include "WindowWebData.h"
 #include "AirConditionLocalData.h"
-#include "../Object/PrototypeInfo.h"
+#include "KitchenBathroomLocalData.h"
 
 
 class WebIO
@@ -59,8 +59,8 @@ public:
 	//注意外部需要释放返回的内存
 	static std::vector<AttrKitchen *> GetAllKitchens();
 	//获取卫生间
-	static std::vector<CPrototypeInfo> GetBathrooms(EBathroomType p_type, double p_xLen, double p_yLen, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir);
-	static std::vector<CPrototypeInfo> GetAllBathrooms();
+	static std::vector<AttrBathroom> GetBathrooms(EBathroomType p_type, double p_xLen, double p_yLen, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir);
+	static std::vector<AttrBathroom> GetAllBathrooms();
 	//注意外部需要释放返回的内存
 	static std::vector<AttrAirCon *> GetAirCons(double piShu,
 												CString weiZhi,//冷凝水管位置
@@ -78,7 +78,8 @@ public:
 	//ok返回0 否则返回-1
 	static int DownLoadFile(CString id, CString filePathName);
 
-
+	//通过原型文件获取原型
+	static CProBase* GetPrototypeByFileName(CString p_sFileName);
 
 protected:
 	CConfigDictionary m_configDic;

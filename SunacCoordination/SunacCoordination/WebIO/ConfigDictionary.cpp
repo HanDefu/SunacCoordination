@@ -441,9 +441,10 @@ vCString CConfigDictionary::Bathroom_GetTypes()const
 	else
 	{
 		vCString strs;
-		strs.push_back(L"U型");
-		strs.push_back(L"L型");
+		strs.push_back(L"不限");
 		strs.push_back(L"I型");
+		strs.push_back(L"L型");
+		strs.push_back(L"U型");
 		return strs;
 	}
 }

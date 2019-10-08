@@ -34,7 +34,7 @@ public:
 
 	// Constructor / Destructor
 	AttrBathroom();
-	AttrBathroom(double p_xLen, double p_yLen, E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, const CPrototypeInfo& p_protptype);
+	AttrBathroom(double p_xLen, double p_yLen, E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, const CProBathroom& p_protptype);
 	virtual ~AttrBathroom();
 
 	//{{AFX_ARX_METHODS(ZffDwgScale)
@@ -43,6 +43,8 @@ public:
 	//}}AFX_ARX_METHODS
 	virtual eRCType GetType() {return Bathroom;}
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
+
+	CProBathroom* GetProBathroom();
 
 public:
 	bool m_hasPaiQiDao; //是否含有排气道
