@@ -2,7 +2,7 @@
 #include "WindowWebData.h"
 #include "SunacCadWeb\soapArgumentSettingServiceSoapProxy.h"
 #include "../Common\ComFun_Str.h"
-#include "Common\ComFun_String.h"
+#include "..\Common\ComFun_String.h"
 #include <string>
 
 CWindowWebData::CWindowWebData()
