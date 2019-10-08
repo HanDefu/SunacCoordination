@@ -204,175 +204,122 @@ std::vector<AttrKitchen *> WebIO::GetAllKitchens()
 	return result;
 }
 
-std::vector<AttrBathroom *>  WebIO::GetBathrooms
-(
-    double width,//宽度，X方向
-    double height,//高度，Y方向
-    CString weiZhiGuanXi,//门窗位置关系
-    CString type,//卫生间类型
-    bool hasPaiQiDao//是否含有排气道
-)
+std::vector<CPrototypeInfo> WebIO::GetBathrooms(EBathroomType p_type, double p_xLen, double p_yLen, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir)
 {
-	std::vector<AttrBathroom *> result;
-#ifdef WORK_LOCAL//本地模式
-	CString localKitchenPath = TY_GetLocalFilePath();
-	CString localFile;
+	std::vector<CPrototypeInfo> ret;
 
-	if (type == L"I") //存在多个同时满足的情况，单独处理
+	int xLen = int(p_xLen + 0.5);
+	int yLen = int(p_yLen + 0.5);
+
+	CString sType;
+
+	switch (p_type)
 	{
-		if (height < 3200) //三件套
-		{
-			localFile = L"TI3.dwg";
-			type = L"I3";
-			AttrBathroom *pAttribute = new AttrBathroom();
-			pAttribute->m_prototypeCode.Format(L"T%s_%.0lf×%.0lf", type, width, height);
-			pAttribute->m_isJiTuan = true;
-			pAttribute->m_isDynamic = true;
-			pAttribute->m_type = L"卫生间";
-			pAttribute->m_fileName = localKitchenPath + pAttribute->m_prototypeCode + _T(".dwg");
-			pAttribute->m_BathroomType = type;
-			pAttribute->m_windowDoorPos = DUIKAI;
-			pAttribute->m_width = width;
-			pAttribute->m_height = height;
-
-			result.push_back(pAttribute);
-			pAttribute->close();
-		}
-		if (height >= 2750 && height <= 3200) //三件套干湿分离
-		{
-			localFile = L"TI3_g.dwg";
-			type = L"I3";
-			AttrBathroom *pAttribute = new AttrBathroom();
-			pAttribute->m_prototypeCode.Format(L"T%s_%.0lf×%.0lf_g", type, width, height);
-			pAttribute->m_isJiTuan = true;
-			pAttribute->m_isDynamic = true;
-			pAttribute->m_type = L"卫生间";
-			pAttribute->m_fileName = localKitchenPath + pAttribute->m_prototypeCode + _T(".dwg");
-			pAttribute->m_BathroomType = type;
-			pAttribute->m_windowDoorPos = DUIKAI;
-			pAttribute->m_width = width;
-			pAttribute->m_height = height;
-
-			result.push_back(pAttribute);
-			pAttribute->close();
-		}
-		if (height >= 3050 && height < 3650) //四件套
-		{
-			localFile = L"TI4.dwg";
-			type = L"I4";
-			AttrBathroom *pAttribute = new AttrBathroom();
-			pAttribute->m_prototypeCode.Format(L"T%s_%.0lf×%.0lf", type, width, height);
-			pAttribute->m_isJiTuan = true;
-			pAttribute->m_isDynamic = true;
-			pAttribute->m_type = L"卫生间";
-			pAttribute->m_fileName = localKitchenPath + pAttribute->m_prototypeCode + _T(".dwg");
-			pAttribute->m_BathroomType = type;
-			pAttribute->m_windowDoorPos = DUIKAI;
-			pAttribute->m_width = width;
-			pAttribute->m_height = height;
-
-			result.push_back(pAttribute);
-			pAttribute->close();
-		}
-		if (height >= 3500) //四件套干湿分离
-		{
-			localFile = L"TI4_g.dwg";
-			type = L"I4";
-			AttrBathroom *pAttribute = new AttrBathroom();
-			pAttribute->m_prototypeCode.Format(L"T%s_%.0lf×%.0lf_g", type, width, height);
-			pAttribute->m_isJiTuan = true;
-			pAttribute->m_isDynamic = true;
-			pAttribute->m_type = L"卫生间";
-			pAttribute->m_fileName = localKitchenPath + pAttribute->m_prototypeCode + _T(".dwg");
-			pAttribute->m_BathroomType = type;
-			pAttribute->m_windowDoorPos = DUIKAI;
-			pAttribute->m_width = width;
-			pAttribute->m_height = height;
-
-			result.push_back(pAttribute);
-			pAttribute->close();
-		}
+	case E_BATHROOM_I:
+		sType = L"TI";
+		break;
+	case E_BATHROOM_L:
+		sType = L"TL";
+		break;
+	case E_BATHROOM_U:
+		sType = L"TU";
+		break;
 	}
-	else 
-	{
-		if (type == L"L")
-		{
-			if (width >= 2000) //标准型
-			{
-				if (height >= 2450) //四件套
-				{
-					localFile = L"TL4_标准淋浴房.dwg";
-					type = L"L4";
-				}
-				else //三件套
-				{
-					localFile = L"TL3_标准淋浴房.dwg";
-					type = L"L3";
-				}
-			}
-			else //经济型
-			{
-				if (height >= 2450) //四件套
-				{
-					localFile = L"TL4.dwg";
-					type = L"L4";
-				}
-				else //三件套
-				{
-					localFile = L"TL3.dwg";
-					type = L"L3";
-				}
-			}
-		}
-		else if (type == L"U")
-		{
-			if (width == 1600 && height == 2450)
-			{
-				localFile = L"TU3-1600X2450.dwg";
-				type = L"U3";
-			}
-			else if (width == 1850 && height == 2000)
-			{
-				localFile = L"TU3-1850X2000.dwg";
-				type = L"U3";
-			}
-			else if (width == 1850 && height == 2750)
-			{
-				localFile = L"TU3-1850X2750.dwg";
-				type = L"U3";
-			}
-			else if (width == 2000 && height == 2000)
-			{
-				localFile = L"TU4-2000X2750.dwg";
-				type = L"U4";
-			}
-		}
-		AttrBathroom *pAttribute = new AttrBathroom();
-		pAttribute->m_prototypeCode.Format(L"T%s_%.0lf×%.0lf_g", type, width, height);
-		pAttribute->m_isJiTuan = true;
-		pAttribute->m_isDynamic = true;
-		pAttribute->m_type = L"卫生间";
-		pAttribute->m_fileName = localKitchenPath + pAttribute->m_prototypeCode + _T(".dwg");
-		pAttribute->m_BathroomType = type;
-		pAttribute->m_windowDoorPos = DUIKAI;
-		pAttribute->m_width = width;
-		pAttribute->m_height = height;
 
-		result.push_back(pAttribute);
-		pAttribute->close();
-	}
-	
-#else
+	std::vector<CPrototypeInfo> allBathrooms = WebIO::GetAllBathrooms();
 
-#endif
-	return result;
+	for (UINT i = 0; i < allBathrooms.size(); i++)
+		if (allBathrooms[i].m_sType.Left(2) == sType && allBathrooms[i].MatchPrototype(xLen, yLen, p_doorDir, p_windowDir))
+			ret.push_back(allBathrooms[i]);
+
+	return ret;
 }
 
-std::vector<AttrBathroom *> WebIO::GetAllBathrooms()
+std::vector<CPrototypeInfo> WebIO::GetAllBathrooms()
 {
-	std::vector<AttrBathroom *> result;
-#ifdef WORK_LOCAL//本地模式
-	result = GetBathrooms(0,0,L"",L"",0);
+	std::vector<CPrototypeInfo> result;
+
+#ifdef WORK_LOCAL
+	result.resize(12);
+
+	result[0].m_sFileName = L"TI3.dwg";
+	result[0].m_sType = L"TI3";
+	result[0].m_doorPos = E_DIR_BOTTOM;
+	result[0].m_windowPos = E_DIR_TOP;
+	result[0].AddSizeRange(1600, 2450, 1600, 3050);
+	result[0].AddSizeRange(1700, 2450, 1850, 3050);
+
+	result[1].m_sFileName = L"TI3_g.dwg";
+	result[1].m_sType = L"TI3G";
+	result[1].m_doorPos = E_DIR_BOTTOM;
+	result[1].m_windowPos = E_DIR_TOP;
+	result[1].AddSizeRange(1600, 2750, 1600, 3200);
+	result[1].AddSizeRange(1700, 2750, 1850, 3200);
+
+	result[2].m_sFileName = L"TI4.dwg";
+	result[2].m_sType = L"TI4";
+	result[2].m_doorPos = E_DIR_BOTTOM;
+	result[2].m_windowPos = E_DIR_TOP;
+	result[2].AddSizeRange(1600, 3050, 1600, 3500);
+	result[2].AddSizeRange(1700, 3050, 1850, 3500);
+
+	result[3].m_sFileName = L"TI4_g.dwg";
+	result[3].m_sType = L"TI4G";
+	result[3].m_doorPos = E_DIR_BOTTOM;
+	result[3].m_windowPos = E_DIR_TOP;
+	result[3].AddSizeRange(1600, 3500, 1600, 3650);
+	result[3].AddSizeRange(1700, 3500, 1850, 3650);
+
+	result[4].m_sFileName = L"TL3.dwg";
+	result[4].m_sType = L"TL3";
+	result[4].m_doorPos = E_DIR_BOTTOM;
+	result[4].m_windowPos = E_DIR_RIGHT;
+	result[4].AddSizeRange(1700, 1850, 1850, 2300);
+	//不支持以下尺寸
+	result[4].DeleteSize(1700, 1850);
+	result[4].DeleteSize(1700, 2000);
+
+	result[5].m_sFileName = L"TL3_标准淋浴房.dwg";
+	result[5].m_sType = L"TL3B";
+	result[5].m_doorPos = E_DIR_BOTTOM;
+	result[5].m_windowPos = E_DIR_RIGHT;
+	result[5].AddSizeRange(2000, 1850, 2150, 2300);
+
+	result[6].m_sFileName = L"TL4.dwg";
+	result[6].m_sType = L"TL4";
+	result[6].m_doorPos = E_DIR_BOTTOM;
+	result[6].m_windowPos = E_DIR_RIGHT;
+	result[6].AddSizeRange(1700, 2450, 1850, 2750);
+
+	result[7].m_sFileName = L"TL4_标准淋浴房.dwg";
+	result[7].m_sType = L"TL4B";
+	result[7].m_doorPos = E_DIR_BOTTOM;
+	result[7].m_windowPos = E_DIR_RIGHT;
+	result[7].AddSizeRange(2000, 2450, 2150, 2450);
+
+	result[8].m_sFileName = L"TU3-1600X2450.dwg";
+	result[8].m_sType = L"TU3";
+	result[8].m_doorPos = E_DIR_LEFT;
+	result[8].m_windowPos = E_DIR_RIGHT;
+	result[8].AddSize(1600, 2450);
+
+	result[9].m_sFileName = L"TU3-1850X2000.dwg";
+	result[9].m_sType = L"TU3";
+	result[9].m_doorPos = E_DIR_LEFT;
+	result[9].m_windowPos = E_DIR_TOP;
+	result[9].AddSize(1850, 2000);
+
+	result[10].m_sFileName = L"TU3-1850X2750.dwg";
+	result[10].m_sType = L"TU3";
+	result[10].m_doorPos = E_DIR_LEFT;
+	result[10].m_windowPos = E_DIR_TOP;
+	result[10].AddSize(1850, 2750);
+
+	result[11].m_sFileName = L"TU4-2000X2750";
+	result[11].m_sType = L"TU4";
+	result[11].m_doorPos = E_DIR_LEFT;
+	result[11].m_windowPos = E_DIR_TOP;
+	result[11].AddSize(2000, 2750);
 #else
 
 #endif

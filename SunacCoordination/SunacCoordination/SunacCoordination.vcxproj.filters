@@ -283,6 +283,9 @@
     <ClCompile Include="Object\Railing\RCRailingBoli.cpp">
       <Filter>Object\Railing</Filter>
     </ClCompile>
+    <ClCompile Include="Object\PrototypeInfo.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -648,6 +651,9 @@
     </ClInclude>
     <ClInclude Include="Object\Railing\RCRailingBoli.h">
       <Filter>Object\Railing</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\PrototypeInfo.h">
+      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

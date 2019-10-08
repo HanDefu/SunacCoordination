@@ -12,6 +12,7 @@
 #include "../AttrObject.h"
 #include "../../Sunac_def.h"
 #include "../PrototypeCommonDef.h"
+#include "../PrototypeInfo.h"
 
 #pragma warning(disable: 4275 4251)
 
@@ -33,10 +34,8 @@ public:
 
 	// Constructor / Destructor
 	AttrBathroom();
+	AttrBathroom(double p_xLen, double p_yLen, E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, const CPrototypeInfo& p_protptype);
 	virtual ~AttrBathroom();
-
-	AttrBathroom(const AttrBathroom &other);
-	AttrBathroom & operator=(const AttrBathroom &rhs);
 
 	//{{AFX_ARX_METHODS(ZffDwgScale)
 	virtual Acad::ErrorStatus dwgOutFields(AcDbDwgFiler* pFiler) const;
@@ -56,14 +55,14 @@ public:
 
 	bool m_isMirror; //镜像
 
-	CString m_BathroomType; //卫生间类型
+	CString m_sBathroomType; //卫生间类型
 	eWindowDoorPos m_windowDoorPos; //门窗位置关系
 
 	CString m_taipenWidth;//台盆宽度
 	CString m_matongWidth;//马桶宽度
 	double m_guanXiWidth; //盥洗区宽度
-	double m_width;//长度 面宽
-	double m_height;//宽度 进深
+	double m_width;//开间
+	double m_height;//进深
 };
 
 

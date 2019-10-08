@@ -51,14 +51,18 @@ public:
 	E_DIRECTION m_doorDir;
 	E_DIRECTION m_windowDir;
 	int m_isStd;
+	double m_angle;
+	AttrBathroom m_attrBathroom;
 
-	vector<AttrBathroom*> m_allBathrooms;
+	vector<AttrBathroom> m_allBathrooms;
+	vector<CPrototypeInfo> m_allPrototypes;
 	CBathroomGen* m_pBathroomGen;
 
 	void LoadDefaultValue();
 	E_DIRECTION GetDir(ads_point pt);
 	void EnableSetAirout(bool bEnable);
 	void EnableSetProperty(bool bEnable);
+	//void InitAttributeByPrototype(const CPrototypeInfo& p_prototype);
 
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);///---01
 	afx_msg void OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult);

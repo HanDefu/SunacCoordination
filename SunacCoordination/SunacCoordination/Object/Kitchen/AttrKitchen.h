@@ -56,6 +56,6 @@ public:
 	CString m_shuiPenType;//水盆类型
 	CString m_bingXiangType;//冰箱类型
 	CString m_zaoTaiType;//灶台宽度 
-	double m_width;//长度 面宽
-	double m_height;//宽度 进深
+	double m_width;//开间
+	double m_height;//进深
 };

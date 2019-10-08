@@ -9,6 +9,7 @@
 #include "ConfigDictionary.h"
 #include "WindowLocalData.h"
 #include "AirConditionLocalData.h"
+#include "../Object/PrototypeInfo.h"
 
 
 class WebIO
@@ -72,17 +73,9 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 	//注意外部需要释放返回的内存
 	static std::vector<AttrKitchen *> GetAllKitchens();
-	//注意外部需要释放返回的内存
-	static std::vector<AttrBathroom *> GetBathrooms
-	(
-		double width,//宽度，X方向
-		double height,//高度，Y方向
-		CString weiZhiGuanXi,//门窗位置关系
-		CString type,//卫生间类型
-		bool hasPaiQiDao//是否含有排气道
-	);
-	//注意外部需要释放返回的内存
-	static std::vector<AttrBathroom *> GetAllBathrooms();
+	//获取卫生间
+	static std::vector<CPrototypeInfo> GetBathrooms(EBathroomType p_type, double p_xLen, double p_yLen, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir);
+	static std::vector<CPrototypeInfo> GetAllBathrooms();
 	//注意外部需要释放返回的内存
 	static std::vector<AttrAirCon *> GetAirCons(double piShu,
 												CString weiZhi,//冷凝水管位置

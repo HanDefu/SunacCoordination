@@ -35,11 +35,6 @@ CBathroomDlg::CBathroomDlg(CWnd* pParent /*=NULL*/)
 
 CBathroomDlg::~CBathroomDlg()
 {
-	for (UINT i = 0; i < m_allBathrooms.size(); i++)
-	{
-		delete m_allBathrooms[i];
-	}
-
 	if (m_pBathroomGen != NULL)
 	{
 		delete m_pBathroomGen;
@@ -73,6 +68,7 @@ BEGIN_MESSAGE_MAP(CBathroomDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDC_BUTTON_DOORDIR, &CBathroomDlg::OnBnClickedButtonDoorDir)
 	ON_BN_CLICKED(IDC_BUTTON_WINDOWDIR, &CBathroomDlg::OnBnClickedButtonWindowDir)
 	ON_BN_CLICKED(IDC_BUTTON_SEARCH, &CBathroomDlg::OnBnClickedButtonSearch)
+	ON_BN_CLICKED(IDC_BUTTON_INSERTBATHROOM, &CBathroomDlg::OnBnClickedButtonInsert)
 	ON_NOTIFY(GVN_SELCHANGED, IDC_PREVIEW_BATHROOM, &CBathroomDlg::OnSelChanged)
 END_MESSAGE_MAP()
 
@@ -193,26 +189,26 @@ void CBathroomDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	NM_GRIDVIEW* pView = (NM_GRIDVIEW*)pNMHDR;
 	int nSel = pView->iRow;
 
-	int kaiJian = int(m_rect.GetWidth() + 0.5);
-	int jinShen = int(m_rect.GetHeight() + 0.5);
-	if (m_doorDir == E_DIR_LEFT || m_doorDir == E_DIR_RIGHT)
-		swap(kaiJian, jinShen);
+	double width = m_rect.GetWidth();
+	double height = m_rect.GetHeight();
 
-	if (nSel < 0 || nSel >= (int)m_allBathrooms.size())
+	if (nSel < 0 || nSel >= (int)m_allPrototypes.size())
 	{
 		EnableSetProperty(false);
 		return;
 	}
 
-	AttrBathroom* curSecBathroom = m_allBathrooms[nSel];
+	CPrototypeInfo& curSecProtoType = m_allPrototypes[nSel];
+	AttrBathroom& curSecBathroom = m_allBathrooms[nSel];
 
 	if (m_pBathroomGen != NULL)
 	{
 		delete m_pBathroomGen;
 	}
 
-	m_pBathroomGen = CBathroomMrg::GetInstance()->CreateBathroomGenByBathroomType(curSecBathroom);
-	if (m_pBathroomGen==NULL)
+	m_pBathroomGen = CBathroomMrg::CreateBathroomByAttribute(&curSecBathroom);
+
+	if (m_pBathroomGen == NULL)
 	{
 		MessageBox(_T("原型无法创建BathroomGen"));
 		EnableSetProperty(false);
@@ -220,32 +216,21 @@ void CBathroomDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	}
 
 	//设置属性区选项
-	TYUI_SetText(m_number, curSecBathroom->m_prototypeCode);
+	TYUI_SetText(m_number, curSecBathroom.m_prototypeCode);
 
 	TYUI_InitComboBox(m_basinWidth, m_pBathroomGen->GetTaipenOptions(), m_pBathroomGen->GetTaipenDefault());
 	TYUI_InitComboBox(m_toiletWidth, m_pBathroomGen->GetMatongOptions(), m_pBathroomGen->GetMatongDefault());
 	TYUI_InitComboBox(m_washWidth, m_pBathroomGen->GetGuanxiquOptions(), m_pBathroomGen->GetGuanxiquDefault());
 	EnableSetProperty(true);
 
-	if (curSecBathroom->m_windowDoorPos == CHUIZHIKAI)
-	{
-		if (m_doorDir == (m_windowDir + 1) % 4) //窗位于门的顺时针方向
-		{
-			curSecBathroom->m_isMirror = true;
-			m_isMirror.SetCheck(TRUE);
-		}
-		else
-		{
-			curSecBathroom->m_isMirror = false;
-			m_isMirror.SetCheck(FALSE);
-		}
+	bool bMirror;
+	curSecProtoType.GetRotateAngle(m_doorDir, m_windowDir, m_angle, bMirror);
+	m_isMirror.SetCheck(bMirror);
+
+	if (curSecProtoType.GetWindowDoorPos() == CHUIZHIKAI)
 		TYUI_Disable(m_isMirror);
-	}
 	else
-	{
-		m_isMirror.SetCheck(false);
-		TYUI_Enable(m_isMirror);
-	}
+		TYUI_Enable(m_isMirror);;
 }
 
 void CBathroomDlg::OnBnClickedButtonInsert()
@@ -266,13 +251,6 @@ void CBathroomDlg::OnBnClickedButtonInsert()
 
 	//1. 更新属性值
 
-	m_pBathroomGen->GetBathroomAtt()->m_width = m_rect.GetWidth();
-	m_pBathroomGen->GetBathroomAtt()->m_height = m_rect.GetHeight();
-	if (m_doorDir == E_DIR_LEFT || m_doorDir == E_DIR_RIGHT)
-		swap(m_pBathroomGen->GetBathroomAtt()->m_width, m_pBathroomGen->GetBathroomAtt()->m_height);
-	m_pBathroomGen->SetDoorDir(m_doorDir);
-	m_pBathroomGen->SetWindowDir(m_windowDir);
-
 	m_pBathroomGen->GetBathroomAtt()->m_taipenWidth = TYUI_GetComboBoxText(m_basinWidth);
 	m_pBathroomGen->GetBathroomAtt()->m_matongWidth = TYUI_GetComboBoxText(m_toiletWidth);
 	m_pBathroomGen->GetBathroomAtt()->m_guanXiWidth = _ttof(TYUI_GetComboBoxText(m_washWidth));
@@ -290,7 +268,7 @@ void CBathroomDlg::OnBnClickedButtonInsert()
 	AcGePoint3d origin = m_rect.GetLB();
 
 	//生成
-	m_pBathroomGen->GenBathroom(origin);
+	m_pBathroomGen->GenBathroom(origin, m_angle);
 
 	OnOK();
 }
@@ -420,27 +398,29 @@ void CBathroomDlg::OnBnClickedButtonSearch()
 
 	double width = m_rect.GetWidth();
 	double height = m_rect.GetHeight();
-	if (width < height)
-		swap(width, height);
-	m_allBathrooms = CBathroomMrg::GetInstance()->FilterBathroom(bathroomType, width, height, m_doorDir, m_windowDir, m_noAirOut.GetCheck() == FALSE);
+
+	m_allPrototypes = WebIO::GetBathrooms(bathroomType, width, height, m_doorDir, m_windowDir);
+	m_allBathrooms.clear();
+	for (UINT i = 0; i < m_allPrototypes.size(); i++)
+		m_allBathrooms.push_back(AttrBathroom(width, height, m_doorDir, m_windowDir, m_allPrototypes[i]));
 
 	//////////////////////////////////////////////////////////////////////////
 	//3. 显示原型
 	m_preBathroom.ClearAllPreviews();
-	if (m_allBathrooms.empty())
+	if (m_allPrototypes.empty())
 	{
 		AfxMessageBox(_T("未找到符合条件的记录\n"));
 		return;
 	}
-	m_preBathroom.SetRowCount((int)m_allBathrooms.size());
+	m_preBathroom.SetRowCount((int)m_allPrototypes.size());
 	m_preBathroom.SetColumnCount(1);
 	m_preBathroom.SetDisplayRows(3);
 	m_preBathroom.SetDisplayColumns(1);
-	for (UINT i = 0; i < m_allBathrooms.size(); i++)
+	for (UINT i = 0; i < m_allPrototypes.size(); i++)
 	{
 		CString str;
-		str.Format(_T("原型编号：%s\n厨房面积：%.2lf\n通风量要求：1.5\n动态类型：动态\n适用范围：集团"), m_allBathrooms[i]->m_prototypeCode, m_rect.GetWidth() * m_rect.GetHeight() / 1E6);
-		m_preBathroom.AddPreview(i, 0, TY_GetLocalFilePath() + m_allBathrooms[i]->m_fileName, str);
+		str.Format(_T("原型编号：%s\n厨房面积：%.2lf\n通风量要求：1.5\n动态类型：动态\n适用范围：集团"), m_allBathrooms[i].m_prototypeCode, m_rect.GetWidth() * m_rect.GetHeight() / 1E6);
+		m_preBathroom.AddPreview(i, 0, TY_GetLocalFilePath() + m_allPrototypes[i].m_sFileName, str);
 	}
 
 	m_preBathroom.SelectPreview(0, 0);
