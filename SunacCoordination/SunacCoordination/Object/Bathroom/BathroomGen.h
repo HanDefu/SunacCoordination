@@ -2,6 +2,7 @@
 #include <vector>
 #include "AttrBathroom.h"
 #include "..\PrototypeCommonDef.h"
+#include "../PrototypeInfo.h"
 
 using namespace std;
 
@@ -11,7 +12,7 @@ public:
 	CBathroomGen(AttrBathroom* p_att);
 	virtual ~CBathroomGen();
 
-	virtual AcDbObjectId GenBathroom(const AcGePoint3d p_pos); //生成并插入到指定点
+	virtual AcDbObjectId GenBathroom(const AcGePoint3d p_pos, int p_angle); //生成并插入到指定点
 
 	//////////////////////////////////////////////////////////////////////////
 	//属性值的设置选项
@@ -24,81 +25,55 @@ public:
 	virtual vCString GetGuanxiquOptions();
 	virtual CString GetGuanxiquDefault();
 
-
-	//////////////////////////////////////////////////////////////////////////
-	//设置基本属性
-	void SetDoorDir(E_DIRECTION p_doorDir){ m_doorDir = p_doorDir; }
-	void SetWindowDir(E_DIRECTION p_winDir){ m_windowDir = p_winDir; }
+	virtual bool CheckParameter() { return true; } //插入前检查参数合法性
 
 	//其余的属性值可以通过直接设置AttrBathroom对象的变量实现
 	AttrBathroom* GetBathroomAtt(){ return &m_attr; }
 
 protected:
-	virtual int SelectTaipen(AcDbObjectId bathroomId, CString taipen);
+	virtual void SelectTaipen(AcDbObjectId bathroomId, CString taipen);
+	virtual void SelectMatong(AcDbObjectId bathroomId, CString matong);
+	virtual void SelectGuanxiWidth(AcDbObjectId bathroomId, double width);
 
-	virtual int SelectMatong(AcDbObjectId bathroomId, CString matong);
+	virtual int SetMatongPos(AcDbObjectId bathroomId, double jinShen) { return 0; } //自动计算并设置马桶位置
 
-	virtual int SelectGuanxiqu(AcDbObjectId bathroomId, CString guanxiqu);
-
-	virtual int SetDoorPos(AcDbObjectId bathroomId, double kaiJian) = 0;
-
-	virtual int SetTaipenPos(AcDbObjectId bathroomId, double kaiJian, double jinShen, CString taipenWidth) = 0;
-
-	virtual int SetMatongPos(AcDbObjectId bathroomId, double kaiJian, double jinShen, CString matongType) = 0;
-
-	virtual void GetRotateAngle(double &angle, AcGeVector3d &offsetV); //处理旋转关系
-
-	virtual double GetXLength(){ return 0; } //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
-	virtual double GetYLength(){ return 0; } //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
+	virtual double GetXLength() { return min(m_attr.m_width, m_attr.m_height); } //短边位于X方向
+	virtual double GetYLength() { return max(m_attr.m_width, m_attr.m_height); } //长边位于Y方向
 
 protected:
 	AttrBathroom m_attr;
-
-	AcDbObjectId m_id; //生成并插入到图上的厨房块ID
-
-	E_DIRECTION m_doorDir;
-	E_DIRECTION m_windowDir;
-
-	double m_angle;
 };
 
 class CBathroomGenKI : public CBathroomGen
 {
-	//CBathroomGenKI(AttrBathroom* p_att);
+public:
+	CBathroomGenKI(AttrBathroom* p_att) : CBathroomGen(p_att) {}
 
-	int SetTaipenPos(AcDbObjectId bathroomId, double kaiJian, double jinShen, CString taipenWidth);
+	virtual int SetMatongPos(AcDbObjectId bathroomId, double yLen);
 
-	int SetMatongPos(AcDbObjectId bathroomId, double kaiJian, double jinShen, CString matongType);
+protected:
+	int SetMatongPos_I3(AcDbObjectId bathroomId, double yLen);
+	int SetMatongPos_I4(AcDbObjectId bathroomId, double yLen);
 };
 
 class CBathroomGenKU : public CBathroomGen
 {
-	//CBathroomGenKI(AttrBathroom* p_att);
+public:
+	CBathroomGenKU(AttrBathroom* p_att) : CBathroomGen(p_att) {}
 
-	int SetTaipenPos(AcDbObjectId bathroomId, double kaiJian, double jinShen, CString taipenWidth);
-
-	int SetMatongPos(AcDbObjectId bathroomId, double kaiJian, double jinShen, CString matongType);
+	//int SetMatongPos(AcDbObjectId bathroomId, double yLen);
 };
 
 class CBathroomGenKL : public CBathroomGen
 {
-	//CBathroomGenKI(AttrBathroom* p_att);
+public:
+	CBathroomGenKL(AttrBathroom* p_att) : CBathroomGen(p_att) {}
 
-	int SetTaipenPos(AcDbObjectId bathroomId, double kaiJian, double jinShen, CString taipenWidth);
-
-	int SetMatongPos(AcDbObjectId bathroomId, double kaiJian, double jinShen, CString matongType);
+	//int SetMatongPos(AcDbObjectId bathroomId, double yLen);
 };
 
 class CBathroomMrg
 {
 public:
-	static CBathroomMrg* GetInstance();
-
-	vector<AttrBathroom*> FilterBathroom(EBathroomType p_type, double p_width, double p_height, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir, bool p_bHasAirVent);
-
-protected:
-	//检查尺寸与方向
-	vector<AttrBathroom*> FilterBathroomTU(double p_width, double p_height, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir, bool p_bHasAirVent);
-	vector<AttrBathroom*> FilterBathroomTL(double p_width, double p_height, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir, bool p_bHasAirVent);
-	vector<AttrBathroom*> FilterBathroomTI(double p_width, double p_height, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir, bool p_bHasAirVent);
+	static CBathroomGen* CreateBathroomByAttribute(AttrBathroom* p_attr);
 };

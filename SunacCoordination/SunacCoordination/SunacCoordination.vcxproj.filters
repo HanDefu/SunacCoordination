@@ -292,6 +292,9 @@
     <ClCompile Include="WebIO\RailingWebData.cpp">
       <Filter>WebIO</Filter>
     </ClCompile>
+    <ClCompile Include="Object\PrototypeInfo.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -666,6 +669,9 @@
     </ClInclude>
     <ClInclude Include="WebIO\RailingWebData.h">
       <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\PrototypeInfo.h">
+      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

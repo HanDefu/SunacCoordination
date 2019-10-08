@@ -404,7 +404,7 @@ std::vector<AttrBathroom > CWindowWebData::ParseBathroomsFromXML(CMarkup xml)con
 				}
 				if (xml.FindElem(_T("BathroomType")))
 				{
-					BathroomAttr.m_BathroomType = xml.GetData();
+					BathroomAttr.m_sBathroomType = xml.GetData();
 				}
 				if (xml.FindElem(_T("HasAirvent")))
 				{

@@ -12,25 +12,33 @@ ACRX_DXF_DEFINE_MEMBERS(AttrBathroom, AcDbObject,
 						 AcDb::kDHL_CURRENT, AcDb::kMReleaseCurrent,
                         AcDbProxyObject::kNoOperation,
 						 ZFFDWGSCALEBathroom, ZffCustomObjectDBBathroom);
+
 AttrBathroom::AttrBathroom()
 {
 
 }
 
+AttrBathroom::AttrBathroom(double p_xLen, double p_yLen, E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, const CPrototypeInfo& p_protptype)
+{
+	m_type = L"ÎÀÉú¼ä";
+	m_sBathroomType = p_protptype.m_sType;
+	m_width = p_xLen;
+	m_height = p_yLen;
+	if (p_doorPos == E_DIR_LEFT || p_doorPos == E_DIR_RIGHT)
+		swap(m_width, m_height);
+
+	m_prototypeCode.Format(L"%s-%.0lf¡Á%.0lf", m_sBathroomType.Left(3), min(p_xLen, p_yLen), max(p_xLen, p_yLen));
+	if (m_sBathroomType.Find(L"_g") != -1)
+		m_prototypeCode += L"/g";
+
+	m_fileName = p_protptype.m_sFileName;
+	m_isDynamic = p_protptype.m_bIsDynamic;
+	m_isJiTuan = true;
+}
+
 AttrBathroom::~AttrBathroom()
 {
 
-}
-
-AttrBathroom::AttrBathroom(const AttrBathroom &other) : AttrObject(other)
-{
-
-}
-
-AttrBathroom & AttrBathroom::operator=(const AttrBathroom &rhs)
-{
-	AttrObject::operator=(rhs);
-	return *this;
 }
 
 Acad::ErrorStatus AttrBathroom::dwgInFields(AcDbDwgFiler* filer)
@@ -56,7 +64,6 @@ Acad::ErrorStatus AttrBathroom::dwgOutFields(AcDbDwgFiler* filer) const
 		return es;
 	}
 
-	
 	return filer->filerStatus();
 }
 

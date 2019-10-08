@@ -152,7 +152,6 @@ vCString TI4_GetTaiPens(AcDbObjectId BathroomId, double yLen, double maTongWidth
 
 	double lastY = yLen - y1 - y2 - zxt * 2 - maTongWidth - 650;//650为洗衣机宽度
 
-
 	vCString taiPens;
 	if (lastY > 650 )
 		taiPens.push_back(L"Sunac_台盆_650");
