@@ -65,6 +65,4 @@ public:
 	double m_height;//½øÉî
 };
 
-
-
 #endif // !defined(ARX__ZFFDWGSCALE_H__20140205_113541_Bathroom)

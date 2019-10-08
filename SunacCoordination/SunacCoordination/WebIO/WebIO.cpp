@@ -180,7 +180,7 @@ std::vector<CPrototypeInfo> WebIO::GetAllBathrooms()
 	result[0].AddSizeRange(1700, 2450, 1850, 3050);
 
 	result[1].m_sFileName = L"TI3_g.dwg";
-	result[1].m_sType = L"TI3G";
+	result[1].m_sType = L"TI3_g";
 	result[1].m_doorPos = E_DIR_BOTTOM;
 	result[1].m_windowPos = E_DIR_TOP;
 	result[1].AddSizeRange(1600, 2750, 1600, 3200);
@@ -194,7 +194,7 @@ std::vector<CPrototypeInfo> WebIO::GetAllBathrooms()
 	result[2].AddSizeRange(1700, 3050, 1850, 3500);
 
 	result[3].m_sFileName = L"TI4_g.dwg";
-	result[3].m_sType = L"TI4G";
+	result[3].m_sType = L"TI4_g";
 	result[3].m_doorPos = E_DIR_BOTTOM;
 	result[3].m_windowPos = E_DIR_TOP;
 	result[3].AddSizeRange(1600, 3500, 1600, 3650);
@@ -210,7 +210,7 @@ std::vector<CPrototypeInfo> WebIO::GetAllBathrooms()
 	result[4].DeleteSize(1700, 2000);
 
 	result[5].m_sFileName = L"TL3_标准淋浴房.dwg";
-	result[5].m_sType = L"TL3B";
+	result[5].m_sType = L"TL3_b";
 	result[5].m_doorPos = E_DIR_BOTTOM;
 	result[5].m_windowPos = E_DIR_RIGHT;
 	result[5].AddSizeRange(2000, 1850, 2150, 2300);
@@ -222,7 +222,7 @@ std::vector<CPrototypeInfo> WebIO::GetAllBathrooms()
 	result[6].AddSizeRange(1700, 2450, 1850, 2750);
 
 	result[7].m_sFileName = L"TL4_标准淋浴房.dwg";
-	result[7].m_sType = L"TL4B";
+	result[7].m_sType = L"TL4_b";
 	result[7].m_doorPos = E_DIR_BOTTOM;
 	result[7].m_windowPos = E_DIR_RIGHT;
 	result[7].AddSizeRange(2000, 2450, 2150, 2450);

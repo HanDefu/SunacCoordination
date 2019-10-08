@@ -25,7 +25,7 @@ public:
 
 	bool MatchPrototype(int p_xLen, int p_yLen, E_DIRECTION p_doorPos, E_DIRECTION p_windowPos);
 	eWindowDoorPos GetWindowDoorPos() const;
-	bool GetRotateAngle(E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, double& p_angle, bool& p_needMirror);
+	bool GetRotateAngle(E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, int& p_angle, bool& p_needMirror);
 
 	CString m_sFileName;
 	CString m_sType;

@@ -51,8 +51,7 @@ public:
 	E_DIRECTION m_doorDir;
 	E_DIRECTION m_windowDir;
 	int m_isStd;
-	double m_angle;
-	AttrBathroom m_attrBathroom;
+	int m_angle; //插入时旋转角，可能取值为0, 90, 180, 270
 
 	vector<AttrBathroom> m_allBathrooms;
 	vector<CPrototypeInfo> m_allPrototypes;
@@ -62,7 +61,6 @@ public:
 	E_DIRECTION GetDir(ads_point pt);
 	void EnableSetAirout(bool bEnable);
 	void EnableSetProperty(bool bEnable);
-	//void InitAttributeByPrototype(const CPrototypeInfo& p_prototype);
 
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);///---01
 	afx_msg void OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult);

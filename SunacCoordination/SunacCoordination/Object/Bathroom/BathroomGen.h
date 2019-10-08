@@ -12,7 +12,7 @@ public:
 	CBathroomGen(AttrBathroom* p_att);
 	virtual ~CBathroomGen();
 
-	virtual AcDbObjectId GenBathroom(const AcGePoint3d p_pos, double p_angle); //生成并插入到指定点
+	virtual AcDbObjectId GenBathroom(const AcGePoint3d p_pos, int p_angle); //生成并插入到指定点
 
 	//////////////////////////////////////////////////////////////////////////
 	//属性值的设置选项
@@ -31,19 +31,17 @@ public:
 	AttrBathroom* GetBathroomAtt(){ return &m_attr; }
 
 protected:
-	virtual int SelectTaipen(AcDbObjectId bathroomId, CString taipen);
-	virtual int SelectMatong(AcDbObjectId bathroomId, CString matong);
-	virtual int SelectGuanxiWidth(AcDbObjectId bathroomId, double width);
+	virtual void SelectTaipen(AcDbObjectId bathroomId, CString taipen);
+	virtual void SelectMatong(AcDbObjectId bathroomId, CString matong);
+	virtual void SelectGuanxiWidth(AcDbObjectId bathroomId, double width);
 
 	virtual int SetMatongPos(AcDbObjectId bathroomId, double jinShen) { return 0; } //自动计算并设置马桶位置
 
-	virtual double GetXLength(){ return m_attr.m_width; } //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
-	virtual double GetYLength(){ return m_attr.m_height; } //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
+	virtual double GetXLength() { return min(m_attr.m_width, m_attr.m_height); } //短边位于X方向
+	virtual double GetYLength() { return max(m_attr.m_width, m_attr.m_height); } //长边位于Y方向
 
 protected:
 	AttrBathroom m_attr;
-
-	AcDbObjectId m_id; //生成并插入到图上的厨房块ID
 };
 
 class CBathroomGenKI : public CBathroomGen

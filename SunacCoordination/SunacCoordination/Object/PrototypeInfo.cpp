@@ -74,7 +74,7 @@ eWindowDoorPos CPrototypeInfo::GetWindowDoorPos() const
 	return CHUIZHIKAI;
 }
 
-bool CPrototypeInfo::GetRotateAngle(E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, double& p_angle, bool& p_needMirror)
+bool CPrototypeInfo::GetRotateAngle(E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, int& p_angle, bool& p_needMirror)
 {
 	E_DIRECTION newWindowPos = E_DIRECTION((p_windowPos - p_doorPos + m_doorPos + 4) % 4);
 
@@ -85,7 +85,7 @@ bool CPrototypeInfo::GetRotateAngle(E_DIRECTION p_doorPos, E_DIRECTION p_windowP
 	else
 		p_needMirror = true;
 
-	p_angle = ((p_doorPos - m_doorPos + 4) % 4) * PI / 2;
+	p_angle = ((p_doorPos - m_doorPos + 4) % 4) * 90;
 
 	return true;
 }
