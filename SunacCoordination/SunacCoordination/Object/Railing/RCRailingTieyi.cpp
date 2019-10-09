@@ -238,7 +238,7 @@ double CRCRailingTieyi::GenStandardRailingTotalLen(double p_segLength, int p_sta
 
 double CRCRailingTieyi::GenK(double p_lenth, double p_segLength, int p_standardSegCount, int p_nonStandardUnitCount) const//侧边留空间隙 = 侧面立柱和结构墙间尺寸/2
 {
-	double nonStandardLen = p_nonStandardUnitCount * Getb(); //非标准段的单元花格总长度
+	double nonStandardLen = p_nonStandardUnitCount * 2 * Getb(); //非标准段的单元花格总长度
 	double k = (p_lenth - GenStandardRailingTotalLen(p_segLength, p_standardSegCount) - nonStandardLen - GetH()) / 2;
 	return k;
 }

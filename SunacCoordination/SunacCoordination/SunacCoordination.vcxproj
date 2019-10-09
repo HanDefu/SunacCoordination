@@ -169,7 +169,6 @@
     <ClCompile Include="Object\Kitchen\RCKitchen.cpp" />
     <ClCompile Include="Object\PrototypeInfo.cpp" />
     <ClCompile Include="Object\Railing\AttrRailing.cpp" />
-    <ClCompile Include="Object\Railing\RailingGen.cpp" />
     <ClCompile Include="Object\Railing\RCRailing.cpp" />
     <ClCompile Include="Object\Railing\RCRailingBoli.cpp" />
     <ClCompile Include="Object\Railing\RCRailingTieyi.cpp" />
@@ -275,7 +274,6 @@
     <ClInclude Include="Object\PrototypeCommonDef.h" />
     <ClInclude Include="Object\PrototypeInfo.h" />
     <ClInclude Include="Object\Railing\AttrRailing.h" />
-    <ClInclude Include="Object\Railing\RailingGen.h" />
     <ClInclude Include="Object\Railing\RCRailing.h" />
     <ClInclude Include="Object\Railing\RCRailingBoli.h" />
     <ClInclude Include="Object\Railing\RCRailingTieyi.h" />

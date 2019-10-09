@@ -292,6 +292,37 @@ bool DQ_SetDynamicAttribute(AcDbObjectId p_blockRefId, CString p_attributename, 
 	return err == Acad::eOk;
 }
 
+bool DQ_SetDynamicAttribute(AcDbObjectId p_blockRefId, CString p_attributename, CString p_value)
+{
+	if (p_blockRefId == AcDbObjectId::kNull)
+		return false;
+
+	AcDbDynBlockReference* pDynBlkRef = new AcDbDynBlockReference(p_blockRefId);
+	if (pDynBlkRef == NULL)
+		return false;
+
+	AcDbDynBlockReferencePropertyArray blkPropAry;
+	pDynBlkRef->getBlockProperties(blkPropAry);
+
+	Acad::ErrorStatus err = Acad::eInvalidInput;
+	for (long lIndex1 = 0L; lIndex1 < blkPropAry.length(); ++lIndex1)
+	{
+		AcDbDynBlockReferenceProperty blkProp = blkPropAry[lIndex1];
+		if (blkProp.readOnly())
+			continue;
+
+		if (wcscmp(blkProp.propertyName().kACharPtr(), p_attributename) == 0)
+		{
+			AcDbEvalVariant eval(p_value);
+			err = blkProp.setValue(eval);
+			break;
+		}
+	}
+
+	delete pDynBlkRef;
+
+	return err == Acad::eOk;
+}
 //±éÀú²Ù×÷
 int MD2010_GetAllTypedObjectsInLayer(vAcDbObjectId &allEntites, CString layname, eACDBOBJECTTYPE type, vAcDbObjectId &vids)
 {
