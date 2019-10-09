@@ -238,9 +238,6 @@
     <ClCompile Include="Object\Railing\AttrRailing.cpp">
       <Filter>Object\Railing</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Railing\RailingGen.cpp">
-      <Filter>Object\Railing</Filter>
-    </ClCompile>
     <ClCompile Include="Object\Railing\RCRailing.cpp">
       <Filter>Object\Railing</Filter>
     </ClCompile>
@@ -250,13 +247,7 @@
     <ClCompile Include="Object\AirCondition\RCAirCondition.cpp">
       <Filter>Object\AirCondition</Filter>
     </ClCompile>
-    <ClCompile Include="Object\WindowDoor\AttrDoor.cpp">
-      <Filter>Object\WindowDoor</Filter>
-    </ClCompile>
     <ClCompile Include="Object\WindowDoor\AttrWindow.cpp">
-      <Filter>Object\WindowDoor</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\WindowDoor\RCDoor.cpp">
       <Filter>Object\WindowDoor</Filter>
     </ClCompile>
     <ClCompile Include="Object\WindowDoor\RCWindow.cpp">
@@ -294,6 +285,9 @@
     </ClCompile>
     <ClCompile Include="Object\PrototypeInfo.cpp">
       <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\KitchenBathroomLocalData.cpp">
+      <Filter>WebIO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -616,9 +610,6 @@
     <ClInclude Include="Object\Railing\AttrRailing.h">
       <Filter>Object\Railing</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Railing\RailingGen.h">
-      <Filter>Object\Railing</Filter>
-    </ClInclude>
     <ClInclude Include="Object\Railing\RCRailing.h">
       <Filter>Object\Railing</Filter>
     </ClInclude>
@@ -628,13 +619,7 @@
     <ClInclude Include="Object\AirCondition\RCAirCondition.h">
       <Filter>Object\AirCondition</Filter>
     </ClInclude>
-    <ClInclude Include="Object\WindowDoor\AttrDoor.h">
-      <Filter>Object\WindowDoor</Filter>
-    </ClInclude>
     <ClInclude Include="Object\WindowDoor\AttrWindow.h">
-      <Filter>Object\WindowDoor</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\WindowDoor\RCDoor.h">
       <Filter>Object\WindowDoor</Filter>
     </ClInclude>
     <ClInclude Include="Object\WindowDoor\RCWindow.h">
@@ -672,6 +657,9 @@
     </ClInclude>
     <ClInclude Include="Object\PrototypeInfo.h">
       <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\KitchenBathroomLocalData.h">
+      <Filter>WebIO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

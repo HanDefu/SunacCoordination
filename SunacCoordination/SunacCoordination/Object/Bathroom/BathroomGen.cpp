@@ -13,7 +13,6 @@ CBathroomGen::CBathroomGen(AttrBathroom* p_att)
 
 CBathroomGen::~CBathroomGen()
 {
-
 }
 
 void CBathroomGen::SelectTaipen(AcDbObjectId bathroomId, CString taipen)

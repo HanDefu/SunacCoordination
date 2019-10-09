@@ -110,16 +110,29 @@ CRCRailing* CreateRailing(const AttrRailing p_railingAtt)
 		{
 			pRailing = new CRCRailingB1();
 		}
-		else if (p_railingAtt.m_prototypeCode.Find(_T("B2")) >= 0 ||
-			p_railingAtt.m_prototypeCode.Find(_T("B3")) >= 0)
+		else if (p_railingAtt.m_prototypeCode.Find(_T("B2")) >= 0 )
 		{
 			pRailing = new CRCRailingB2();
 		}
-		else if (p_railingAtt.m_prototypeCode.Find(_T("B4")) >= 0 ||
-			p_railingAtt.m_prototypeCode.Find(_T("B5")) >= 0 ||
-			p_railingAtt.m_prototypeCode.Find(_T("B6")) >= 0)
+		else if (p_railingAtt.m_prototypeCode.Find(_T("B3_1")) >= 0)
+		{
+			pRailing = new CRCRailingB3_1();
+		}
+		else if (p_railingAtt.m_prototypeCode.Find(_T("B3_2")) >= 0)
+		{
+			pRailing = new CRCRailingB3_2();
+		}
+		else if (p_railingAtt.m_prototypeCode.Find(_T("B4")) >= 0)
 		{
 			pRailing = new CRCRailingB4();
+		}
+		else if (p_railingAtt.m_prototypeCode.Find(_T("B5")) >= 0 )
+		{
+			pRailing = new CRCRailingB5();
+		}
+		else if (p_railingAtt.m_prototypeCode.Find(_T("B6")) >= 0)
+		{
+			pRailing = new CRCRailingB6();
 		}
 
 		break;

@@ -168,3 +168,8 @@ int AttrObject::GetFile(CString &filePathName)
 	return ret;
 }
 
+CProBase* AttrObject::GetPrototype()
+{
+	return CProMrg::GetInstance()->GetPrototypeByFileName(m_fileName);
+}
+

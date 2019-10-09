@@ -74,8 +74,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>D:\Autodesk\AutoCAD 2014\Support\</OutDir>
     <IntDir>$(SolutionDir)\Temp\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-x64;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-x64;$(LibraryPath)</LibraryPath>
     <TargetName>Sunac2019</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -101,7 +99,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>F:\Projects\SunacCoordination\SunacCoordination\SunacCoordination\SunacCoordination;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-x64;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-x64;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-x64;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <TreatWarningAsError>false</TreatWarningAsError>
@@ -111,7 +109,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-x64;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>.\props\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
       <AdditionalDependencies>acdbmgd.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -171,7 +169,6 @@
     <ClCompile Include="Object\Kitchen\RCKitchen.cpp" />
     <ClCompile Include="Object\PrototypeInfo.cpp" />
     <ClCompile Include="Object\Railing\AttrRailing.cpp" />
-    <ClCompile Include="Object\Railing\RailingGen.cpp" />
     <ClCompile Include="Object\Railing\RCRailing.cpp" />
     <ClCompile Include="Object\Railing\RCRailingBoli.cpp" />
     <ClCompile Include="Object\Railing\RCRailingTieyi.cpp" />
@@ -183,9 +180,7 @@
     <ClCompile Include="Object\RCStdFill.cpp" />
     <ClCompile Include="Object\RCWaterProof.cpp" />
     <ClCompile Include="Object\RCXianJiao.cpp" />
-    <ClCompile Include="Object\WindowDoor\AttrDoor.cpp" />
     <ClCompile Include="Object\WindowDoor\AttrWindow.cpp" />
-    <ClCompile Include="Object\WindowDoor\RCDoor.cpp" />
     <ClCompile Include="Object\WindowDoor\RCWindow.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -234,6 +229,7 @@
     <ClCompile Include="WebIO\AirConditionLocalData.cpp" />
     <ClCompile Include="WebIO\AirconditionWebData.cpp" />
     <ClCompile Include="WebIO\ConfigDictionary.cpp" />
+    <ClCompile Include="WebIO\KitchenBathroomLocalData.cpp" />
     <ClCompile Include="WebIO\KitchenBathroomWebData.cpp" />
     <ClCompile Include="WebIO\RailingWebData.cpp" />
     <ClCompile Include="WebIO\WindowLocalData.cpp" />
@@ -276,7 +272,6 @@
     <ClInclude Include="Object\PrototypeCommonDef.h" />
     <ClInclude Include="Object\PrototypeInfo.h" />
     <ClInclude Include="Object\Railing\AttrRailing.h" />
-    <ClInclude Include="Object\Railing\RailingGen.h" />
     <ClInclude Include="Object\Railing\RCRailing.h" />
     <ClInclude Include="Object\Railing\RCRailingBoli.h" />
     <ClInclude Include="Object\Railing\RCRailingTieyi.h" />
@@ -288,9 +283,7 @@
     <ClInclude Include="Object\RCStdFill.h" />
     <ClInclude Include="Object\RCWaterProof.h" />
     <ClInclude Include="Object\RCXianJiao.h" />
-    <ClInclude Include="Object\WindowDoor\AttrDoor.h" />
     <ClInclude Include="Object\WindowDoor\AttrWindow.h" />
-    <ClInclude Include="Object\WindowDoor\RCDoor.h" />
     <ClInclude Include="Object\WindowDoor\RCWindow.h" />
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="StdAfx.h" />
@@ -358,6 +351,7 @@
     <ClInclude Include="WebIO\AirConditionLocalData.h" />
     <ClInclude Include="WebIO\AirconditionWebData.h" />
     <ClInclude Include="WebIO\ConfigDictionary.h" />
+    <ClInclude Include="WebIO\KitchenBathroomLocalData.h" />
     <ClInclude Include="WebIO\KitchenBathroomWebData.h" />
     <ClInclude Include="WebIO\RailingWebData.h" />
     <ClInclude Include="WebIO\WindowLocalData.h" />

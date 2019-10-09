@@ -10,7 +10,6 @@
 #include <acedads.h>
 #include "../Common/TYRect.h"
 #include "../Object\WindowDoor\AttrWindow.h"
-#include "../Object\WindowDoor\AttrDoor.h"
 #include "../Object\AirCondition\AttrAirCon.h"
 #include "../Object\Kitchen\AttrKitchen.h"
 #include "../Object\Bathroom\AttrBathroom.h"
@@ -292,6 +291,37 @@ bool DQ_SetDynamicAttribute(AcDbObjectId p_blockRefId, CString p_attributename, 
 	return err == Acad::eOk;
 }
 
+bool DQ_SetDynamicAttribute(AcDbObjectId p_blockRefId, CString p_attributename, CString p_value)
+{
+	if (p_blockRefId == AcDbObjectId::kNull)
+		return false;
+
+	AcDbDynBlockReference* pDynBlkRef = new AcDbDynBlockReference(p_blockRefId);
+	if (pDynBlkRef == NULL)
+		return false;
+
+	AcDbDynBlockReferencePropertyArray blkPropAry;
+	pDynBlkRef->getBlockProperties(blkPropAry);
+
+	Acad::ErrorStatus err = Acad::eInvalidInput;
+	for (long lIndex1 = 0L; lIndex1 < blkPropAry.length(); ++lIndex1)
+	{
+		AcDbDynBlockReferenceProperty blkProp = blkPropAry[lIndex1];
+		if (blkProp.readOnly())
+			continue;
+
+		if (wcscmp(blkProp.propertyName().kACharPtr(), p_attributename) == 0)
+		{
+			AcDbEvalVariant eval(p_value);
+			err = blkProp.setValue(eval);
+			break;
+		}
+	}
+
+	delete pDynBlkRef;
+
+	return err == Acad::eOk;
+}
 //±éÀú²Ù×÷
 int MD2010_GetAllTypedObjectsInLayer(vAcDbObjectId &allEntites, CString layname, eACDBOBJECTTYPE type, vAcDbObjectId &vids)
 {
@@ -700,10 +730,6 @@ eRCType TY_GetType(AcDbBlockReference *pBlockReference)
 		if (pBath != 0)
 			return Bathroom;
 
-		AttrDoor * pDoor = dynamic_cast<AttrDoor *>(pDataEnt);
-		if (pDoor != 0)
-			return DOOR;
-
 		AttrRailing * pRail = dynamic_cast<AttrRailing *>(pDataEnt);
 		if (pRail != 0)
 			return RAILING;
@@ -758,15 +784,7 @@ bool TY_IsBathroom(AcDbObjectId Id)
 	return false;
 }
 
-bool TY_IsDoor(AcDbObjectId Id)
-{
-	AcDbObject * pDataEnt = 0;
-	TY_GetAttributeData(Id, pDataEnt);
-	AttrDoor * pKitchen = dynamic_cast<AttrDoor *>(pDataEnt);
-	if (pKitchen != 0)
-		return true;
-	return false;
-}
+
 
 int vFind(RCPairKeyDValue &A, vRCPairKeyDValue &B)
 {

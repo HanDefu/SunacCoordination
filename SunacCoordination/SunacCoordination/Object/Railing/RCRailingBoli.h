@@ -30,8 +30,6 @@ protected:
 	virtual double GetH() const { return 0; }				//单元之间的间距，默认为0
 	virtual double GetHandRailHeight()const { return 33; };	//扶手厚度高
 
-	virtual AcDbObjectId GenerateRailing_Left(AcGePoint3d pos);
-	virtual AcDbObjectId GenerateRailing_Right(AcGePoint3d pos);
 	virtual AcDbObjectIdArray GenerateRailing_Standard(AcGePoint3d pos);
 	virtual AcDbObjectId GenerateRailing_HandRail(AcGePoint3d pos);
 };
@@ -44,19 +42,14 @@ public:
 	CRCRailingB1();
 	~CRCRailingB1();
 
-	virtual double Get2K()const { return 275; }			//2K固定值275
 	virtual double GetK()const { return 275/2.0; }			//2K固定值275
 
 protected:
 	virtual int GenStandardSegCount(double p_lenth)const;		//计算标准栏杆数量
 	virtual double GenStandardRailingLen(double p_lenth)const;		//计算标准栏杆尺寸
 
-
-
-protected:
 	virtual double GetH() const { return 150; }		//单元之间的间距
-	double GetHandRailHeight()const { return 33; }	//扶手厚度高40
-
+	virtual double GetHandRailHeight()const { return 33; }	//扶手厚度高40
 
 };
 
@@ -72,6 +65,19 @@ public:
 protected:
 	int GenStandardSegCount(double p_lenth)const;			//计算标准栏杆数量
 	double GenStandardRailingLen(double p_lenth)const;		//计算标准栏杆尺寸
+
+	virtual double GetHandRailHeight()const { return 27.5; }	//扶手厚度高
+};
+
+class CRCRailingB3_1 : public CRCRailingB2
+{
+protected:
+	virtual double GetHandRailHeight()const { return 33.5; }	//扶手厚度高
+};
+class CRCRailingB3_2 : public CRCRailingB2
+{
+protected:
+	virtual double GetHandRailHeight()const { return 48; }	//扶手厚度高
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -81,11 +87,23 @@ public:
 	CRCRailingB4();
 	~CRCRailingB4();
 
-	virtual double Get2K()const { return 150; }
+	virtual double GetK()const { return 150/2.0; }
 	virtual double GetH() const { return 0; }
 
 protected:
 	int GenStandardSegCount(double p_lenth)const;			//计算标准栏杆数量
 	double GenStandardRailingLen(double p_lenth)const;		//计算标准栏杆尺寸
 
+	virtual double GetHandRailHeight()const { return 45; }	//扶手厚度高
+};
+
+class CRCRailingB5 : public CRCRailingB4
+{
+protected:
+	virtual double GetHandRailHeight()const { return 0; }	//扶手厚度高
+};
+class CRCRailingB6 : public CRCRailingB4
+{
+protected:
+	virtual double GetHandRailHeight()const { return 57.8; }	//扶手厚度高
 };

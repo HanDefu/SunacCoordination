@@ -10,6 +10,7 @@
 
 #include "dbmain.h"
 #include "../Sunac_def.h"
+#include "PrototypeInfo.h"
 
 #pragma warning(disable: 4275 4251)
 
@@ -51,6 +52,7 @@ public:
 	void SetInstanceCode(CString  bianHao) { m_instanceCode = bianHao; }
 	CString& GetInstanceCode() { return m_instanceCode; }
 
+	virtual CProBase* GetPrototype();
 	
 public:
 	Adesk::Int32 m_version;//文件版本 临时存储

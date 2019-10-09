@@ -158,9 +158,9 @@ bool CConfigDictionary::GetConfigFromWeb(wstring p_paraTypeName, vector<wstring>
 	_ns1__StandardDesignAttributeResponse attResult;
 
 	ArgumentSettingServiceSoapProxy cadWeb;
-	cadWeb.recv_timeout = 5;	//接受  (单位是秒)
-	cadWeb.send_timeout = 5;	//发送  (单位是秒)
-	cadWeb.connect_timeout = 5;	//连接(单位是秒)
+	cadWeb.recv_timeout = 2;	//接受  (单位是秒)
+	cadWeb.send_timeout = 2;	//发送  (单位是秒)
+	cadWeb.connect_timeout = 2;	//连接(单位是秒)
 	int nRet = cadWeb.StandardDesignAttribute(&desingAtt, attResult);
 	//判断当指针为空，未读到xml时，返回false
 	if (attResult.StandardDesignAttributeResult == NULL)
@@ -376,6 +376,7 @@ vCString CConfigDictionary::Kitchen_GetTypes()const
 	else
 	{
 		vCString strs;
+		strs.push_back(L"不限");
 		strs.push_back(L"U型");
 		strs.push_back(L"L型");
 		strs.push_back(L"I型");
@@ -441,9 +442,10 @@ vCString CConfigDictionary::Bathroom_GetTypes()const
 	else
 	{
 		vCString strs;
-		strs.push_back(L"U型");
-		strs.push_back(L"L型");
+		strs.push_back(L"不限");
 		strs.push_back(L"I型");
+		strs.push_back(L"L型");
+		strs.push_back(L"U型");
 		return strs;
 	}
 }

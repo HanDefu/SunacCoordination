@@ -25,7 +25,7 @@ WebIO::~WebIO()
 //gongNengQu,//功能区
 //tongFengLiang//通风量
 //读取门和窗
-std::vector<AttrWindow >  WebIO::GetWindows(double width, CString openType, int openNum, CString gongNengQu)const
+std::vector<AttrWindow>  WebIO::GetWindows(double width, CString openType, int openNum, CString gongNengQu)const
 {
 #ifdef WORK_LOCAL//本地模式
 	return m_windowLocalData.GetWindows(width, openType, openNum, gongNengQu);
@@ -33,111 +33,79 @@ std::vector<AttrWindow >  WebIO::GetWindows(double width, CString openType, int 
 	return m_windowWebData.GetWindows(width, openType, openNum, gongNengQu);
 #endif
 }
-
-std::vector<AttrWindow > WebIO::GetDoors(double width, CString openType, int openNum, CString gongNengQu)const
+std::vector<AttrWindow> WebIO::GetDoors(double width, CString openType, int openNum, CString gongNengQu)const
 {
 #ifdef WORK_LOCAL//本地模式
 	return m_windowLocalData.GetDoors(width, openType, openNum, gongNengQu);
 #else
-return m_windowWebData.GetDoors(width, openType, openNum, gongNengQu);
+	return m_windowWebData.GetDoors(width, openType, openNum, gongNengQu);
 #endif
 }
 
-std::vector<AttrKitchen *> WebIO::GetKitchens
-(
-  double kaiJian,//开间
-  double jinShen,//进深
-  CString weiZhiGuanXi,//门窗位置关系
-  CString type,//厨房类型
-  bool hasPaiQiDao,//是否含有排气道
-  bool bDynatic
-)
+std::vector<AttrKitchen> WebIO::GetKitchens(EKitchType p_type, double p_xLen, double p_yLen, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir, bool p_hasPaiQiDao)
 {
-	std::vector<AttrKitchen *> result;
+	std::vector<AttrKitchen> ret;
 
 #ifdef WORK_LOCAL//本地模式
-	if (bDynatic==false)
+	int xLen = int(p_xLen + 0.5);
+	int yLen = int(p_yLen + 0.5);
+
+	CString sType;
+
+	switch (p_type)
 	{
-		return result;
+	case E_KITCH_U:
+		sType = L"KU";
+		break;
+	case E_KITCH_L:
+		sType = L"KL";
+		break;
+	case E_KITCH_I:
+		sType = L"KI";
+		break;
 	}
 
-	CString localFile;
+	std::vector<CProKitchen> prototypes = CProMrg::GetInstance()->GetAllProKitchens();
 
-	if (type == L"U型")
+	for (UINT i = 0; i < prototypes.size(); i++)
 	{
-		if (kaiJian>jinShen)
+		if ((p_type == E_KITCH_ALL || prototypes[i].m_sType.Left(2) == sType) && prototypes[i].MatchPrototype(xLen, yLen, p_doorDir, p_windowDir) && prototypes[i].m_bHasPaiQiDao == p_hasPaiQiDao)
 		{
-			if (weiZhiGuanXi == L"门窗对开")
-			{
-				if (jinShen < 2000)
-					localFile = L"KUq_Dui.dwg";
-				else
-					localFile = L"KUq_Dui_ZhuanJIao.dwg";
-			}
-			else
-			{
-				if (jinShen < 2000)
-					localFile = L"KUq_Chui.dwg";
-				else
-					localFile = L"KUq_Chui_ZhuanJIao.dwg";
-			}
-		}
-		else
-		{
-			localFile = L"KUs.dwg";
+			AttrKitchen attr(p_xLen, p_yLen, p_doorDir, p_windowDir, prototypes[i]);
+			ret.push_back(attr);
 		}
 	}
-	else if (type == L"L型")
-		localFile = L"KL.dwg";
-	else if (type == L"L型")
-		localFile = L"KI.dwg";
-	else
-		return result;
-
-	if (hasPaiQiDao)
-		localFile.Replace(_T(".dwg"), _T("_P.dwg"));
-
-	AttrKitchen *pAttribute = new AttrKitchen();
-	if (type == L"U型")
-		pAttribute->m_prototypeCode.Format(L"%s_%.0lf×%.0lf", localFile.Left(3), kaiJian, jinShen);
-	else
-		pAttribute->m_prototypeCode.Format(L"%s_%.0lf×%.0lf", localFile.Left(2), kaiJian, jinShen);
-	if (weiZhiGuanXi == L"门窗垂直")
-		pAttribute->m_prototypeCode += L"_c";
-
-	pAttribute->m_isJiTuan = true;
-	pAttribute->m_isDynamic = true;
-	pAttribute->m_type = L"厨房";
-	pAttribute->m_fileName = localFile;
-	pAttribute->m_kitchenType = type;
-	pAttribute->m_windowDoorPos = weiZhiGuanXi;
-
-	result.push_back(pAttribute);
-	pAttribute->close();
 #else
 
 #endif
-	return result;
+
+	return ret;
 }
 
-std::vector<AttrKitchen *> WebIO::GetAllKitchens()
+std::vector<AttrKitchen> WebIO::GetAllKitchens()
 {
-	std::vector<AttrKitchen *> result;
-#ifdef WORK_LOCAL//本地模式
-	std::vector<AttrKitchen *> result1 = GetKitchens(0, 0, L"", L"", 0, false);
-	result.insert(result.end(), result1.begin(), result1.end());
+	std::vector<AttrKitchen> ret;
 
-	std::vector<AttrKitchen *> result2 = GetKitchens(0, 0, L"", L"", 0, true);
-	result.insert(result.end(), result2.begin(), result2.end());
+#ifdef WORK_LOCAL//本地模式
+	std::vector<CProKitchen> prototypes = CProMrg::GetInstance()->GetAllProKitchens();
+
+	for (UINT i = 0; i < prototypes.size(); i++)
+	{
+		AttrKitchen attr;
+		//只绑定原型，其余不填
+		attr.m_fileName = prototypes[i].m_sFileName;
+		ret.push_back(attr);
+	}
 #else
 
 #endif
-	return result;
+
+	return ret;
 }
 
-std::vector<CPrototypeInfo> WebIO::GetBathrooms(EBathroomType p_type, double p_xLen, double p_yLen, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir)
+std::vector<AttrBathroom> WebIO::GetBathrooms(EBathroomType p_type, double p_xLen, double p_yLen, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir)
 {
-	std::vector<CPrototypeInfo> ret;
+	std::vector<AttrBathroom> ret;
 
 	int xLen = int(p_xLen + 0.5);
 	int yLen = int(p_yLen + 0.5);
@@ -157,104 +125,34 @@ std::vector<CPrototypeInfo> WebIO::GetBathrooms(EBathroomType p_type, double p_x
 		break;
 	}
 
-	std::vector<CPrototypeInfo> allBathrooms = WebIO::GetAllBathrooms();
+	std::vector<CProBathroom> prototypes = CProMrg::GetInstance()->GetAllProBathrooms();
 
-	for (UINT i = 0; i < allBathrooms.size(); i++)
-		if (allBathrooms[i].m_sType.Left(2) == sType && allBathrooms[i].MatchPrototype(xLen, yLen, p_doorDir, p_windowDir))
-			ret.push_back(allBathrooms[i]);
+	for (UINT i = 0; i < prototypes.size(); i++)
+	{
+		if ((p_type == E_BATHROOM_ALL || prototypes[i].m_sType.Left(2) == sType) && prototypes[i].MatchPrototype(xLen, yLen, p_doorDir, p_windowDir))
+		{
+			AttrBathroom attr(p_xLen, p_yLen, p_doorDir, p_windowDir, prototypes[i]);
+			ret.push_back(attr);
+		}
+	}
 
 	return ret;
 }
 
-std::vector<CPrototypeInfo> WebIO::GetAllBathrooms()
+std::vector<AttrBathroom> WebIO::GetAllBathrooms()
 {
-	std::vector<CPrototypeInfo> result;
+	std::vector<AttrBathroom> ret;
+	std::vector<CProBathroom> prototypes = CProMrg::GetInstance()->GetAllProBathrooms();
 
-#ifdef WORK_LOCAL
-	result.resize(12);
+	for (UINT i = 0; i < prototypes.size(); i++)
+	{
+		AttrBathroom attr;
+		//只绑定原型，其余不填
+		attr.m_fileName = prototypes[i].m_sFileName;
+		ret.push_back(attr);
+	}
 
-	result[0].m_sFileName = L"TI3.dwg";
-	result[0].m_sType = L"TI3";
-	result[0].m_doorPos = E_DIR_BOTTOM;
-	result[0].m_windowPos = E_DIR_TOP;
-	result[0].AddSizeRange(1600, 2450, 1600, 3050);
-	result[0].AddSizeRange(1700, 2450, 1850, 3050);
-
-	result[1].m_sFileName = L"TI3_g.dwg";
-	result[1].m_sType = L"TI3_g";
-	result[1].m_doorPos = E_DIR_BOTTOM;
-	result[1].m_windowPos = E_DIR_TOP;
-	result[1].AddSizeRange(1600, 2750, 1600, 3200);
-	result[1].AddSizeRange(1700, 2750, 1850, 3200);
-
-	result[2].m_sFileName = L"TI4.dwg";
-	result[2].m_sType = L"TI4";
-	result[2].m_doorPos = E_DIR_BOTTOM;
-	result[2].m_windowPos = E_DIR_TOP;
-	result[2].AddSizeRange(1600, 3050, 1600, 3500);
-	result[2].AddSizeRange(1700, 3050, 1850, 3500);
-
-	result[3].m_sFileName = L"TI4_g.dwg";
-	result[3].m_sType = L"TI4_g";
-	result[3].m_doorPos = E_DIR_BOTTOM;
-	result[3].m_windowPos = E_DIR_TOP;
-	result[3].AddSizeRange(1600, 3500, 1600, 3650);
-	result[3].AddSizeRange(1700, 3500, 1850, 3650);
-
-	result[4].m_sFileName = L"TL3.dwg";
-	result[4].m_sType = L"TL3";
-	result[4].m_doorPos = E_DIR_BOTTOM;
-	result[4].m_windowPos = E_DIR_RIGHT;
-	result[4].AddSizeRange(1700, 1850, 1850, 2300);
-	//不支持以下尺寸
-	result[4].DeleteSize(1700, 1850);
-	result[4].DeleteSize(1700, 2000);
-
-	result[5].m_sFileName = L"TL3_标准淋浴房.dwg";
-	result[5].m_sType = L"TL3_b";
-	result[5].m_doorPos = E_DIR_BOTTOM;
-	result[5].m_windowPos = E_DIR_RIGHT;
-	result[5].AddSizeRange(2000, 1850, 2150, 2300);
-
-	result[6].m_sFileName = L"TL4.dwg";
-	result[6].m_sType = L"TL4";
-	result[6].m_doorPos = E_DIR_BOTTOM;
-	result[6].m_windowPos = E_DIR_RIGHT;
-	result[6].AddSizeRange(1700, 2450, 1850, 2750);
-
-	result[7].m_sFileName = L"TL4_标准淋浴房.dwg";
-	result[7].m_sType = L"TL4_b";
-	result[7].m_doorPos = E_DIR_BOTTOM;
-	result[7].m_windowPos = E_DIR_RIGHT;
-	result[7].AddSizeRange(2000, 2450, 2150, 2450);
-
-	result[8].m_sFileName = L"TU3-1600X2450.dwg";
-	result[8].m_sType = L"TU3";
-	result[8].m_doorPos = E_DIR_LEFT;
-	result[8].m_windowPos = E_DIR_RIGHT;
-	result[8].AddSize(1600, 2450);
-
-	result[9].m_sFileName = L"TU3-1850X2000.dwg";
-	result[9].m_sType = L"TU3";
-	result[9].m_doorPos = E_DIR_LEFT;
-	result[9].m_windowPos = E_DIR_TOP;
-	result[9].AddSize(1850, 2000);
-
-	result[10].m_sFileName = L"TU3-1850X2750.dwg";
-	result[10].m_sType = L"TU3";
-	result[10].m_doorPos = E_DIR_LEFT;
-	result[10].m_windowPos = E_DIR_TOP;
-	result[10].AddSize(1850, 2750);
-
-	result[11].m_sFileName = L"TU4-2000X2750";
-	result[11].m_sType = L"TU4";
-	result[11].m_doorPos = E_DIR_LEFT;
-	result[11].m_windowPos = E_DIR_TOP;
-	result[11].AddSize(2000, 2750);
-#else
-
-#endif
-	return result;
+	return ret;
 }
 
 std::vector<AttrAirCon *> WebIO::GetAirCons

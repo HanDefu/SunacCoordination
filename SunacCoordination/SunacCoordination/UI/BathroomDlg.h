@@ -3,10 +3,8 @@
 #include "../Common/ComFun_Sunac.h"
 #include "../Object/Bathroom/BathroomGen.h"
 #include "ComFun_MFC.h"
-#include "afxwin.h"
 
 // CBathroomDlg 对话框
-
 
 class CBathroomDlg : public CAcUiDialog
 {
@@ -54,7 +52,6 @@ public:
 	int m_angle; //插入时旋转角，可能取值为0, 90, 180, 270
 
 	vector<AttrBathroom> m_allBathrooms;
-	vector<CPrototypeInfo> m_allPrototypes;
 	CBathroomGen* m_pBathroomGen;
 
 	void LoadDefaultValue();

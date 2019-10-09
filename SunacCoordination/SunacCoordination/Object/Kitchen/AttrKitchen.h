@@ -28,8 +28,7 @@ public:
 	AttrKitchen();
 	virtual ~AttrKitchen();
 
-	AttrKitchen(const AttrKitchen &other);
-	AttrKitchen & operator=(const AttrKitchen &rhs);
+	AttrKitchen(double p_xLen, double p_yLen, E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, const CProKitchen& p_prototype);
 
 	//{{AFX_ARX_METHODS(ZffDwgScale)
 	virtual Acad::ErrorStatus dwgOutFields(AcDbDwgFiler* pFiler) const;
@@ -38,7 +37,8 @@ public:
 
 	virtual eRCType GetType() {return KITCHEN;}
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
-	virtual bool IsPrototypeEqual(const AttrKitchen& p_att);
+
+	CProKitchen* GetProKitchen();
 
 public:
 	bool m_hasPaiQiDao;//是否含有排气道

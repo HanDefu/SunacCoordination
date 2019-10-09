@@ -26,17 +26,23 @@ BOOL CloseRailingDlg()
 
 IMPLEMENT_DYNAMIC(CRailingDlg, CAcUiDialog)
 
-CRailingDlg::CRailingDlg(CWnd* pParent /*=NULL*/, bool p_bModeless)
+CRailingDlg::CRailingDlg(CWnd* pParent /*=NULL*/)
 	: CAcUiDialog(CRailingDlg::IDD, pParent)
 	, m_height(1200)
 	, m_heightBase(200)
 	, m_width(5400)
 {
-	m_isMoldless = p_bModeless;
+	m_isMoldless = true;
 }
 
 CRailingDlg::~CRailingDlg()
 {
+}
+
+INT_PTR CRailingDlg::DoModal()
+{
+	m_isMoldless = false;
+	return CAcUiDialog::DoModal();
 }
 
 void CRailingDlg::DoDataExchange(CDataExchange* pDX)
@@ -96,6 +102,31 @@ void CRailingDlg::UpdateSelectFile(CString selectFile)
 }
 */
 
+void Test(AttrRailing& railingAtt)
+{
+	static int n = 0; 
+	
+
+	railingAtt.m_railingType = E_RAILING_BOLI;
+	if (n==0)
+		railingAtt.m_prototypeCode = _T("Railing_B1");
+	else if (n == 1)
+		railingAtt.m_prototypeCode = _T("Railing_B2");
+	else if (n == 2)
+		railingAtt.m_prototypeCode = _T("Railing_B3_1");
+	else if (n == 3)
+		railingAtt.m_prototypeCode = _T("Railing_B3_2");
+	else if (n == 4)
+		railingAtt.m_prototypeCode = _T("Railing_B4");
+	else if (n == 5)
+		railingAtt.m_prototypeCode = _T("Railing_B5");
+	else if (n == 6)
+		railingAtt.m_prototypeCode = _T("Railing_B6");
+	
+
+	n = (n + 1) % 7;
+}
+
 void CRailingDlg::OnBnClickedInsertToCAD()
 {
 	UpdateData();
@@ -117,8 +148,10 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 	AttrRailing railingAtt;
 	railingAtt.m_height = m_height;
 	railingAtt.m_length = m_width;
-	railingAtt.m_prototypeCode = _T("Railing_T1"); //TODO 支持其他类型
-	railingAtt.m_railingType = E_RAILING_TIEYI;
+
+	//railingAtt.m_prototypeCode = _T("Railing_T1"); //TODO 支持其他类型
+	//railingAtt.m_railingType = E_RAILING_TIEYI;
+	Test(railingAtt);
 
 	CRCRailing* pRailing = CreateRailing(railingAtt);
 
@@ -137,6 +170,7 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 }
 
 
+
 LRESULT CRailingDlg::onAcadKeepFocus(WPARAM, LPARAM)
 {
 	return TRUE;
@@ -144,7 +178,8 @@ LRESULT CRailingDlg::onAcadKeepFocus(WPARAM, LPARAM)
 void CRailingDlg::OnOK()
 {
 	CAcUiDialog::OnOK();
-	DestroyWindow();
+	if (m_isMoldless)
+		DestroyWindow();
 }
 
 void CRailingDlg::OnCancel()
