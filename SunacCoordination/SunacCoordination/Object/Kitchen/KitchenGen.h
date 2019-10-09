@@ -159,6 +159,12 @@ class CKitchGenSTATIC: public CKitchGen////¾²Ì¬³ø·¿
 {
 public:
 	CKitchGenSTATIC(AttrKitchen* p_att);
+
+	virtual int SelectShuiPen(AcDbObjectId kitchenId, CString shuiPen) { return 0; }
+
+	virtual int SelectZaoTai(AcDbObjectId kitchenId, CString zaoTai) { return 0; }
+
+	virtual int SelectBingXiang(AcDbObjectId kitchenId, CString bingXiang) { return 0; }
 };
 
 

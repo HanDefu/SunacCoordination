@@ -142,11 +142,11 @@ void CTreeCtrlEx::OnLButtonDown(UINT nFlags, CPoint point)
 		//一级节点设置选中状态
 		SelectItem(hSel);
 		//收起其它项
-		for (HTREEITEM i = GetFirstVisibleItem(); i != NULL; i = GetNextVisibleItem(i))
+		/*for (HTREEITEM i = GetFirstVisibleItem(); i != NULL; i = GetNextVisibleItem(i))
 		{
 			if (hSel != i)
 				Expand(i, TVE_COLLAPSE);
-		}
+		}*/
 		Expand(hSel, TVE_TOGGLE);
 		Invalidate(FALSE);
 	}

@@ -25,7 +25,7 @@ public:
 	virtual vCString GetGuanxiquOptions();
 	virtual CString GetGuanxiquDefault();
 
-	virtual bool CheckParameter() { return true; } //插入前检查参数合法性
+	virtual bool CheckParameter(CString& errMsg); //插入前检查参数合法性
 
 	//其余的属性值可以通过直接设置AttrBathroom对象的变量实现
 	AttrBathroom* GetBathroomAtt(){ return &m_attr; }
@@ -60,6 +60,14 @@ class CBathroomGenKU : public CBathroomGen
 {
 public:
 	CBathroomGenKU(AttrBathroom* p_att) : CBathroomGen(p_att) {}
+
+	//U型为静态厨房，不需要检查
+	virtual bool CheckParameter(CString& errMsg) { return true; }
+
+	//U型为静态厨房，不用设置
+	virtual void SelectTaipen(AcDbObjectId bathroomId, CString taipen) {}
+	virtual void SelectMatong(AcDbObjectId bathroomId, CString matong) {}
+	virtual void SelectGuanxiWidth(AcDbObjectId bathroomId, double width) {}
 
 	//int SetMatongPos(AcDbObjectId bathroomId, double yLen);
 };
