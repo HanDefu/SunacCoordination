@@ -38,9 +38,8 @@ public:
 
 	//////////////////////////////////////////////////////////////////////////
 	virtual double GetLength()const { return m_railingAtt.m_length; } //获取栏杆总长度
-	virtual double Get2K()const { return 2 * m_K; }		//获取栏杆侧边留空间隙
 	virtual double GetK()const { return m_K; }		//获取栏杆侧边留空间隙
-	virtual double GetB()const { return m_B; }			//获取标准栏杆尺寸
+	virtual double GetB()const { return m_B; }		//获取标准栏杆尺寸
 	virtual int GetN()const { return m_N; }
 
 	virtual double GetStandardRailingTotalLen()const = 0;

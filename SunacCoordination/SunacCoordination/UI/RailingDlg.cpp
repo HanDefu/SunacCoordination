@@ -96,6 +96,31 @@ void CRailingDlg::UpdateSelectFile(CString selectFile)
 }
 */
 
+void Test(AttrRailing& railingAtt)
+{
+	static int n = 0; 
+	
+
+	railingAtt.m_railingType = E_RAILING_BOLI;
+	if (n==0)
+		railingAtt.m_prototypeCode = _T("Railing_B1");
+	else if (n == 1)
+		railingAtt.m_prototypeCode = _T("Railing_B2");
+	else if (n == 2)
+		railingAtt.m_prototypeCode = _T("Railing_B3_1");
+	else if (n == 3)
+		railingAtt.m_prototypeCode = _T("Railing_B3_2");
+	else if (n == 4)
+		railingAtt.m_prototypeCode = _T("Railing_B4");
+	else if (n == 5)
+		railingAtt.m_prototypeCode = _T("Railing_B5");
+	else if (n == 6)
+		railingAtt.m_prototypeCode = _T("Railing_B6");
+	
+
+	n = (n + 1) % 7;
+}
+
 void CRailingDlg::OnBnClickedInsertToCAD()
 {
 	UpdateData();
@@ -117,8 +142,10 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 	AttrRailing railingAtt;
 	railingAtt.m_height = m_height;
 	railingAtt.m_length = m_width;
-	railingAtt.m_prototypeCode = _T("Railing_T1"); //TODO 支持其他类型
-	railingAtt.m_railingType = E_RAILING_TIEYI;
+
+	//railingAtt.m_prototypeCode = _T("Railing_T1"); //TODO 支持其他类型
+	//railingAtt.m_railingType = E_RAILING_TIEYI;
+	Test(railingAtt);
 
 	CRCRailing* pRailing = CreateRailing(railingAtt);
 
@@ -135,6 +162,7 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 	//ShowWindow(TRUE);
 	OnOK();
 }
+
 
 
 LRESULT CRailingDlg::onAcadKeepFocus(WPARAM, LPARAM)

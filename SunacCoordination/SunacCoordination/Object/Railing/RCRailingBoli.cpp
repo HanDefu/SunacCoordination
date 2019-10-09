@@ -44,23 +44,14 @@ int CRCRailingBoli::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingId
 	AcDbObjectIdArray idsOut;
 	//2.1 左侧段
 	AcGePoint3d pos1 = AcGePoint3d(leftTopPt.x + GetK(), centerY, 0); //左上角点x方向上减去与结构墙间隙，y方向上减去扶手的厚度,然后考虑居中位置
-	AcDbObjectId id1 = GenerateRailing_Left(pos1);
-	idsOut.append(id1);
+
 
 	//2.2 标准段
 	AcDbObjectId id2;
-	AcGePoint3d pos2 = pos1;
-	pos2.x = pos1.x + GetB() +GetH();
-	AcDbObjectIdArray ids = GenerateRailing_Standard(pos2);
+	AcDbObjectIdArray ids = GenerateRailing_Standard(pos1);
 	idsOut.append(ids);
 
-
-	//2.3 非标段
-	AcGePoint3d pos3 = pos2;
-	pos3.x = pos2.x + GetB() + GetH();
-	AcDbObjectId id3 = GenerateRailing_Right(pos3);
-	idsOut.append(id3);
-
+	
 	//2.4 扶手
 	AcDbObjectId id4 = GenerateRailing_HandRail(leftTopPt);
 	idsOut.append(id4);
@@ -90,18 +81,6 @@ CString CRCRailingBoli::GetHandRailBlockName() const
 	return m_railingAtt.m_prototypeCode + _T("_Handrail");
 }
 
-AcDbObjectId CRCRailingBoli::GenerateRailing_Left(AcGePoint3d pos)
-{
-	//TODO
-	AcDbObjectId id;
-	return id;
-}
-AcDbObjectId CRCRailingBoli::GenerateRailing_Right(AcGePoint3d pos)
-{
-	//TODO
-	AcDbObjectId id;
-	return id;
-}
 
 AcDbObjectIdArray CRCRailingBoli::GenerateRailing_Standard(AcGePoint3d pos)
 {
@@ -118,6 +97,24 @@ AcDbObjectIdArray CRCRailingBoli::GenerateRailing_Standard(AcGePoint3d pos)
 
 		DQ_SetDynamicAttribute(id2, _T("H"), railH);
 		DQ_SetDynamicAttribute(id2, _T("L"), GetB());
+
+		if (i==0 && (i==GetN()-1))
+		{
+			DQ_SetDynamicAttribute(id2, _T("可见性"), _T("左右"));
+		}
+		else if (i == 0)
+		{
+			DQ_SetDynamicAttribute(id2, _T("可见性"), _T("左侧"));
+		}
+		else if ((i == GetN() - 1))
+		{
+			DQ_SetDynamicAttribute(id2, _T("可见性"), _T("右侧"));
+		}
+		else
+		{
+			DQ_SetDynamicAttribute(id2, _T("可见性"), _T("中心"));
+		}
+
 
 		idsOut.append(id2);
 

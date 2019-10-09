@@ -238,9 +238,6 @@
     <ClCompile Include="Object\Railing\AttrRailing.cpp">
       <Filter>Object\Railing</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Railing\RailingGen.cpp">
-      <Filter>Object\Railing</Filter>
-    </ClCompile>
     <ClCompile Include="Object\Railing\RCRailing.cpp">
       <Filter>Object\Railing</Filter>
     </ClCompile>
@@ -614,9 +611,6 @@
       <Filter>WebIO</Filter>
     </ClInclude>
     <ClInclude Include="Object\Railing\AttrRailing.h">
-      <Filter>Object\Railing</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Railing\RailingGen.h">
       <Filter>Object\Railing</Filter>
     </ClInclude>
     <ClInclude Include="Object\Railing\RCRailing.h">
