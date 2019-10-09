@@ -9,7 +9,6 @@
 CBathroomGen::CBathroomGen(AttrBathroom* p_att)
 : m_attr(*p_att)
 {
-	m_id = AcDbObjectId::kNull;
 }
 
 CBathroomGen::~CBathroomGen()
@@ -17,84 +16,45 @@ CBathroomGen::~CBathroomGen()
 
 }
 
-int CBathroomGen::SelectTaipen(AcDbObjectId bathroomId, CString taipen)
+void CBathroomGen::SelectTaipen(AcDbObjectId bathroomId, CString taipen)
 {
 	vCString hideBlockRecordNames;
-	if (taipen == L"650")
-	{
-		hideBlockRecordNames.push_back(L"Sunac_台盆750");
-		hideBlockRecordNames.push_back(L"Sunac_台盆800");
-		hideBlockRecordNames.push_back(L"Sunac_台盆900");
-		hideBlockRecordNames.push_back(L"Sunac_台盆1000");
-	}
-	else if (taipen == L"750")
-	{
-		hideBlockRecordNames.push_back(L"Sunac_台盆650");
-		hideBlockRecordNames.push_back(L"Sunac_台盆800");
-		hideBlockRecordNames.push_back(L"Sunac_台盆900");
-		hideBlockRecordNames.push_back(L"Sunac_台盆1000");
-	}
-	else if (taipen == L"800")
-	{
-		hideBlockRecordNames.push_back(L"Sunac_台盆650");
-		hideBlockRecordNames.push_back(L"Sunac_台盆750");
-		hideBlockRecordNames.push_back(L"Sunac_台盆900");
-		hideBlockRecordNames.push_back(L"Sunac_台盆1000");
-	}
-	else if (taipen == L"900")
-	{
-		hideBlockRecordNames.push_back(L"Sunac_台盆650");
-		hideBlockRecordNames.push_back(L"Sunac_台盆750");
-		hideBlockRecordNames.push_back(L"Sunac_台盆800");
-		hideBlockRecordNames.push_back(L"Sunac_台盆1000");
-	}
-	else if (taipen == L"1000")
-	{
-		hideBlockRecordNames.push_back(L"Sunac_台盆650");
-		hideBlockRecordNames.push_back(L"Sunac_台盆750");
-		hideBlockRecordNames.push_back(L"Sunac_台盆800");
-		hideBlockRecordNames.push_back(L"Sunac_台盆900");
-	}
-	else
-		return -1;
 
+	if (taipen != L"650")
+		hideBlockRecordNames.push_back(L"Sunac_台盆650");
+	if (taipen != L"750")
+		hideBlockRecordNames.push_back(L"Sunac_台盆750");
+	if (taipen != L"800")
+		hideBlockRecordNames.push_back(L"Sunac_台盆800");
+	if (taipen != L"900")
+		hideBlockRecordNames.push_back(L"Sunac_台盆900");
+	if (taipen != L"1000")
+		hideBlockRecordNames.push_back(L"Sunac_台盆1000");
 
 	TY_HideBlockReferencesInBlockReference(bathroomId, hideBlockRecordNames);
-
-	return 0;
 }
 
-int CBathroomGen::SelectMatong(AcDbObjectId bathroomId, CString matong)
+void CBathroomGen::SelectMatong(AcDbObjectId bathroomId, CString matong)
 {
 	vCString hideBlockRecordNames;
-	if (matong == L"800")
-	{
+	if (matong != L"750")
 		hideBlockRecordNames.push_back(L"Sunac_马桶750");
-	}
-	else if (matong == L"750")
-	{
+	if (matong != L"800")
 		hideBlockRecordNames.push_back(L"Sunac_马桶800");
-	}
-	else
-		return -1;
-
 
 	TY_HideBlockReferencesInBlockReference(bathroomId, hideBlockRecordNames);
-
-	return 0;
 }
 
-int CBathroomGen::SelectGuanxiWidth(AcDbObjectId bathroomId, double width)
+void CBathroomGen::SelectGuanxiWidth(AcDbObjectId bathroomId, double width)
 {
+	acDocManager->lockDocument(curDoc());
+
 	bool isG = (m_attr.m_fileName.Right(6) == _T("_g.dwg"));
 	//只有干湿分离的卫生间才有盥洗区
 	if (isG)
-	{
-		if (fabs(width - 950) > TOL && fabs(width - 1050) > TOL )
-			return -1;
 		TYCOM_SetDynamicBlockValue(bathroomId, L"盥洗区Y", width);
-	}
-	return 0;
+
+	acDocManager->unlockDocument(curDoc());
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -130,21 +90,20 @@ CString CBathroomGen::GetGuanxiquDefault()
 	return _T("950");
 }
 
-AcDbObjectId CBathroomGen::GenBathroom(const AcGePoint3d p_pos, double p_angle)
+AcDbObjectId CBathroomGen::GenBathroom(const AcGePoint3d p_pos, int p_angle)
 {
 	AcGeVector3d offsetXY;
 	const double xLen = GetXLength();
 	const double yLen = GetYLength();
-	int temp = int(p_angle / PI * 2 + 0.5);
-	switch (temp)
+	switch (p_angle)
 	{
-	case 1:
+	case 90:
 		offsetXY = AcGeVector3d(yLen, 0, 0);
 		break;
-	case 2:
+	case 180:
 		offsetXY = AcGeVector3d(xLen, yLen, 0);
 		break;
-	case 3:
+	case 270:
 		offsetXY = AcGeVector3d(0, xLen, 0);
 		break;
 	default:
@@ -156,8 +115,8 @@ AcDbObjectId CBathroomGen::GenBathroom(const AcGePoint3d p_pos, double p_angle)
 	//先插入到原点，最后再做镜像和旋转处理
 	AcDbObjectId id = oneBathroom.Insert(TY_GetLocalFilePath() + m_attr.m_fileName, p_pos, 0, L"0", 256);
 	oneBathroom.InitParameters();
-	oneBathroom.SetParameter(L"X边长", m_attr.m_width);
-	oneBathroom.SetParameter(L"Y边长", m_attr.m_height);
+	oneBathroom.SetParameter(L"X边长", xLen);
+	oneBathroom.SetParameter(L"Y边长", yLen);
 	//////////////////////////////////////////////////////////////////////////
 	//烟道
 	if (m_attr.m_hasPaiQiDao)
@@ -185,25 +144,24 @@ AcDbObjectId CBathroomGen::GenBathroom(const AcGePoint3d p_pos, double p_angle)
 	SelectMatong(id, m_attr.m_matongWidth);
 	SelectGuanxiWidth(id, m_attr.m_guanXiWidth);
 
-	SetMatongPos(id, GetYLength());
+	SetMatongPos(id, yLen);
 
 	//////////////////////////////////////////////////////////////////////////
 	//先镜像处理
 	if (m_attr.m_isMirror)
 	{
-		AcGePoint3d basePt(p_pos.x + GetXLength() / 2, 0, 0);
+		AcGePoint3d basePt(p_pos.x + xLen / 2, 0, 0);
 		TYCOM_Mirror(id, basePt, AcGeVector3d(0, 1, 0));
 	}
 
 	//再角度旋转
 	if (p_angle!=0)
 	{
-		TYCOM_Rotate(id, p_pos, p_angle);
+		TYCOM_Rotate(id, p_pos, p_angle * PI / 180);
 
 		//旋转后定义点不再是左下角，需要平移
 		TYCOM_Move(id, offsetXY);
 	}
-
 
 	//////////////////////////////////////////////////////////////////////////
 	//把UI的数据记录在图框的扩展字典中
@@ -211,7 +169,6 @@ AcDbObjectId CBathroomGen::GenBathroom(const AcGePoint3d p_pos, double p_angle)
 	oneBathroom.AddAttribute(pAttribute);
 	pAttribute->close();
 
-	m_id = id;
 	return id;
 }
 

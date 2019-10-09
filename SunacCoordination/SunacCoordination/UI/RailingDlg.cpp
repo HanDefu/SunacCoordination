@@ -26,17 +26,23 @@ BOOL CloseRailingDlg()
 
 IMPLEMENT_DYNAMIC(CRailingDlg, CAcUiDialog)
 
-CRailingDlg::CRailingDlg(CWnd* pParent /*=NULL*/, bool p_bModeless)
+CRailingDlg::CRailingDlg(CWnd* pParent /*=NULL*/)
 	: CAcUiDialog(CRailingDlg::IDD, pParent)
 	, m_height(1200)
 	, m_heightBase(200)
 	, m_width(5400)
 {
-	m_isMoldless = p_bModeless;
+	m_isMoldless = true;
 }
 
 CRailingDlg::~CRailingDlg()
 {
+}
+
+INT_PTR CRailingDlg::DoModal()
+{
+	m_isMoldless = false;
+	return CAcUiDialog::DoModal();
 }
 
 void CRailingDlg::DoDataExchange(CDataExchange* pDX)
@@ -172,7 +178,8 @@ LRESULT CRailingDlg::onAcadKeepFocus(WPARAM, LPARAM)
 void CRailingDlg::OnOK()
 {
 	CAcUiDialog::OnOK();
-	DestroyWindow();
+	if (m_isMoldless)
+		DestroyWindow();
 }
 
 void CRailingDlg::OnCancel()

@@ -11,14 +11,10 @@
 
 #include "stdafx.h"
 #include "AirconditionerDlg.h"
-#include "afxdialogex.h"
 #include "../WebIO/WebIO.h"
-#include "../GlobalSetting.h"
-#include "../WebIO/WindowLocalData.h"
 #include "../Object/AirCondition/AttrAirCon.h"
 #include "../Object/AirCondition/RCAirCondition.h"
 #include "../Common/ComFun_Sunac.h"
-#include "../GlobalSetting.h"
 #include "../Common/ComFun_Str.h"
 
 
@@ -111,6 +107,25 @@ BOOL CAirconditionerDlg::OnInitDialog()
 	UpdatePreview();
    // Air_GetPiShus();
 	return TRUE;
+}
+
+void CAirconditionerDlg::OnOK()
+{
+	CAcUiDialog::OnOK();
+	DestroyWindow();
+}
+
+void CAirconditionerDlg::OnCancel()
+{
+	CAcUiDialog::OnCancel();
+	DestroyWindow();
+}
+
+void CAirconditionerDlg::PostNcDestroy()
+{
+	CAcUiDialog::PostNcDestroy();
+	delete this;
+	g_airconditionerDlg = NULL;
 }
 
 //设置空调对话框中控件的默认值

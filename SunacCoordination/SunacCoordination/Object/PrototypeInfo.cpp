@@ -2,25 +2,25 @@
 #include "PrototypeInfo.h"
 
 
-CPrototypeInfo::CPrototypeInfo()
+CProBase::CProBase()
 {
 	m_bIsDynamic = true; //Ä¬ÈÏ¶¯Ì¬
 }
 
 
-CPrototypeInfo::~CPrototypeInfo()
+CProBase::~CProBase()
 {
 }
 
 
-void CPrototypeInfo::AddSizeRange(int p_minXLen, int p_minYLen, int p_maxXLen, int p_maxYLen, int p_step /*= 150*/)
+void CProBase::AddSizeRange(int p_minXLen, int p_minYLen, int p_maxXLen, int p_maxYLen, int p_step /*= 150*/)
 {
 	for (int i = p_minXLen; i <= p_maxXLen; i += p_step)
 		for (int j = p_minYLen; j <= p_maxYLen; j += p_step)
 			AddSize(i, j);
 }
 
-void CPrototypeInfo::AddSize(int p_xLen, int p_yLen)
+void CProBase::AddSize(int p_xLen, int p_yLen)
 {
 	PrototypeSize tempSize;
 	tempSize.xLen = p_xLen;
@@ -28,14 +28,14 @@ void CPrototypeInfo::AddSize(int p_xLen, int p_yLen)
 	m_sizeList.push_back(tempSize);
 }
 
-void CPrototypeInfo::DeleteSizeRange(int p_minXLen, int p_minYLen, int p_maxXLen, int p_maxYLen, int p_step /*= 150*/)
+void CProBase::DeleteSizeRange(int p_minXLen, int p_minYLen, int p_maxXLen, int p_maxYLen, int p_step /*= 150*/)
 {
 	for (int i = p_minXLen; i <= p_maxXLen; i += p_step)
 		for (int j = p_minYLen; j <= p_maxYLen; j += p_step)
 			DeleteSize(i, j);
 }
 
-void CPrototypeInfo::DeleteSize(int p_xLen, int p_yLen)
+void CProBase::DeleteSize(int p_xLen, int p_yLen)
 {
 	for (UINT i = 0; i < m_sizeList.size();)
 	{
@@ -46,7 +46,7 @@ void CPrototypeInfo::DeleteSize(int p_xLen, int p_yLen)
 	}
 }
 
-bool CPrototypeInfo::MatchPrototype(int p_xLen, int p_yLen, E_DIRECTION p_doorPos, E_DIRECTION p_windowPos)
+bool CProBase::MatchPrototype(int p_xLen, int p_yLen, E_DIRECTION p_doorPos, E_DIRECTION p_windowPos)
 {
 	if ((p_doorPos - m_doorPos) % 2 != 0)
 		swap(p_xLen, p_yLen);
@@ -67,14 +67,14 @@ bool CPrototypeInfo::MatchPrototype(int p_xLen, int p_yLen, E_DIRECTION p_doorPo
 	return true;
 }
 
-eWindowDoorPos CPrototypeInfo::GetWindowDoorPos() const
+eWindowDoorPos CProBase::GetWindowDoorPos() const
 {
 	if (abs(m_doorPos - m_windowPos) == 2)
 		return DUIKAI;
 	return CHUIZHIKAI;
 }
 
-bool CPrototypeInfo::GetRotateAngle(E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, double& p_angle, bool& p_needMirror)
+bool CProBase::GetRotateAngle(E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, int& p_angle, bool& p_needMirror)
 {
 	E_DIRECTION newWindowPos = E_DIRECTION((p_windowPos - p_doorPos + m_doorPos + 4) % 4);
 
@@ -85,7 +85,7 @@ bool CPrototypeInfo::GetRotateAngle(E_DIRECTION p_doorPos, E_DIRECTION p_windowP
 	else
 		p_needMirror = true;
 
-	p_angle = ((p_doorPos - m_doorPos + 4) % 4) * PI / 2;
+	p_angle = ((p_doorPos - m_doorPos + 4) % 4) * 90;
 
 	return true;
 }

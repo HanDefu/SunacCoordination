@@ -11,11 +11,11 @@ struct PrototypeSize
 	int yLen;
 };
 
-class CPrototypeInfo
+class CProBase
 {
 public:
-	CPrototypeInfo();
-	virtual ~CPrototypeInfo();
+	CProBase();
+	virtual ~CProBase();
 
 	void AddSizeRange(int p_minXLen, int p_minYLen, int p_maxXLen, int p_maxYLen, int p_step = 150);
 	void AddSize(int p_xLen, int p_yLen);
@@ -25,7 +25,7 @@ public:
 
 	bool MatchPrototype(int p_xLen, int p_yLen, E_DIRECTION p_doorPos, E_DIRECTION p_windowPos);
 	eWindowDoorPos GetWindowDoorPos() const;
-	bool GetRotateAngle(E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, double& p_angle, bool& p_needMirror);
+	bool GetRotateAngle(E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, int& p_angle, bool& p_needMirror);
 
 	CString m_sFileName;
 	CString m_sType;
@@ -39,3 +39,12 @@ protected:
 	vector<PrototypeSize> m_sizeList; //支持的尺寸列表
 };
 
+class CProBathroom : public CProBase
+{
+
+};
+
+class CProKitchen : public CProBase
+{
+
+};

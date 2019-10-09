@@ -1,7 +1,6 @@
 #pragma once
 #include "PreviewWithDetail.h"
 #include "GsPreviewCtrl.h"
-#include "afxwin.h"
 #include "../Object/AirCondition/AttrAirCon.h"
 #include "ComFun_MFC.h"
 
@@ -22,6 +21,9 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	virtual BOOL OnInitDialog();
+	virtual void OnOK();
+	virtual void OnCancel();
+	virtual void PostNcDestroy(); //释放非模态对话框内存
 
 	DECLARE_MESSAGE_MAP()
 

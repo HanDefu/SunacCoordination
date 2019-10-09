@@ -66,7 +66,6 @@ void CDoubleClickBlockReference::startEdit( AcDbEntity *pEnt, AcGePoint3d pt )
 		{
 		case WINDOW:
 			CWindowDlg dlg;
-			dlg.m_isMoldless = false;
 			dlg.DoModal();
 			break;
 		}

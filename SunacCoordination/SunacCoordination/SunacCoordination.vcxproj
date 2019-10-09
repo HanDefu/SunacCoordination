@@ -35,6 +35,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -71,7 +72,7 @@
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>C:\Program Files\Autodesk\AutoCAD 2014\Support\</OutDir>
+    <OutDir>D:\Autodesk\AutoCAD 2014\Support\</OutDir>
     <IntDir>$(SolutionDir)\Temp\$(Platform)\$(Configuration)\</IntDir>
     <IncludePath>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-x64;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-x64;$(LibraryPath)</LibraryPath>
@@ -100,10 +101,11 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-x64;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-x64;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>F:\Projects\SunacCoordination\SunacCoordination\SunacCoordination\SunacCoordination;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-x64;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-x64;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <TreatWarningAsError>false</TreatWarningAsError>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -231,6 +233,7 @@
     <ClCompile Include="WebIO\AirConditionLocalData.cpp" />
     <ClCompile Include="WebIO\AirconditionWebData.cpp" />
     <ClCompile Include="WebIO\ConfigDictionary.cpp" />
+    <ClCompile Include="WebIO\KitchenBathroomLocalData.cpp" />
     <ClCompile Include="WebIO\KitchenBathroomWebData.cpp" />
     <ClCompile Include="WebIO\RailingWebData.cpp" />
     <ClCompile Include="WebIO\WindowLocalData.cpp" />
@@ -354,6 +357,7 @@
     <ClInclude Include="WebIO\AirConditionLocalData.h" />
     <ClInclude Include="WebIO\AirconditionWebData.h" />
     <ClInclude Include="WebIO\ConfigDictionary.h" />
+    <ClInclude Include="WebIO\KitchenBathroomLocalData.h" />
     <ClInclude Include="WebIO\KitchenBathroomWebData.h" />
     <ClInclude Include="WebIO\RailingWebData.h" />
     <ClInclude Include="WebIO\WindowLocalData.h" />
