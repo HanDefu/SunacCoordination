@@ -25,7 +25,6 @@
 #include "accmd.h"
 #include "UI\menu\Menu_Def.h"
 #include "object\WindowDoor\AttrWindow.h"
-#include "object\WindowDoor\AttrDoor.h"
 #include "object\AirCondition\AttrAirCon.h"
 #include "object\Kitchen\AttrKitchen.h"
 #include "object\Bathroom\AttrBathroom.h"
@@ -177,7 +176,6 @@ void CMD_test()
 	CAirConditionWebData e;
 	//vAttrWindow window = b.GetWindows(width, height, "", 0, "");
 	std::vector<AttrWindow> window = b.GetAllWindows();
-	std::vector<AttrDoor> door = b.GetAllDoors();
 	std::vector<AttrKitchen> kitchen = c.GetAllKitchens();
 	std::vector<AttrBathroom> bathroom = c.GetAllBathrooms();
 	std::vector<AttrRailing> railing = d.GetRailings(E_RAILING_BOLI);
@@ -332,10 +330,6 @@ static void initApp()
 	acrxBuildClassHierarchy();
 	acrxRegisterService(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_WINDOW));
 
-	AttrDoor::rxInit();
-	acrxBuildClassHierarchy();
-	acrxRegisterService(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_DOOR));
-
 	AttrAirCon::rxInit();
 	acrxBuildClassHierarchy();
 	acrxRegisterService(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_AIRCON));
@@ -376,10 +370,7 @@ static void unloadApp()
 
 	deleteAcRxClass(AttrRailing::desc());
 	delete acrxServiceDictionary->remove(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_RAILING));
-
-	deleteAcRxClass(AttrDoor::desc());
-	delete acrxServiceDictionary->remove(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_DOOR));
-
+	
 	deleteAcRxClass(AttrKitchen::desc());
 	delete acrxServiceDictionary->remove(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_KITCHEN));
 

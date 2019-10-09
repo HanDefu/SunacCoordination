@@ -10,7 +10,6 @@
 #include <acedads.h>
 #include "../Common/TYRect.h"
 #include "../Object\WindowDoor\AttrWindow.h"
-#include "../Object\WindowDoor\AttrDoor.h"
 #include "../Object\AirCondition\AttrAirCon.h"
 #include "../Object\Kitchen\AttrKitchen.h"
 #include "../Object\Bathroom\AttrBathroom.h"
@@ -731,10 +730,6 @@ eRCType TY_GetType(AcDbBlockReference *pBlockReference)
 		if (pBath != 0)
 			return Bathroom;
 
-		AttrDoor * pDoor = dynamic_cast<AttrDoor *>(pDataEnt);
-		if (pDoor != 0)
-			return DOOR;
-
 		AttrRailing * pRail = dynamic_cast<AttrRailing *>(pDataEnt);
 		if (pRail != 0)
 			return RAILING;
@@ -789,15 +784,7 @@ bool TY_IsBathroom(AcDbObjectId Id)
 	return false;
 }
 
-bool TY_IsDoor(AcDbObjectId Id)
-{
-	AcDbObject * pDataEnt = 0;
-	TY_GetAttributeData(Id, pDataEnt);
-	AttrDoor * pKitchen = dynamic_cast<AttrDoor *>(pDataEnt);
-	if (pKitchen != 0)
-		return true;
-	return false;
-}
+
 
 int vFind(RCPairKeyDValue &A, vRCPairKeyDValue &B)
 {

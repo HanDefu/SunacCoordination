@@ -188,10 +188,10 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 	return windowAtts;
 }
 
-std::vector<AttrDoor> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
+std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 {
-	std::vector<AttrDoor> DoorAttrs;
-	AttrDoor Attrdoor;
+	std::vector<AttrWindow> DoorAttrs;
+	AttrWindow Attrdoor;
 
 	xml.ResetMainPos();
 	xml.FindElem();	//根节点
@@ -266,7 +266,7 @@ std::vector<AttrDoor> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 			}
 			if (xml.FindElem(_T("Doortype")))
 			{
-				Attrdoor.m_DoorType = xml.GetData();
+				Attrdoor.m_openType = xml.GetData();
 			}
 			if (xml.FindElem(_T("DoorSizeMin")))
 			{
@@ -407,10 +407,8 @@ std::vector<AttrWindow>  CWindowWebData::GetAllWindows()const
 
 }
 
-std::vector<AttrDoor >  CWindowWebData::GetAllDoors()const
+std::vector<AttrWindow >  CWindowWebData::GetAllDoors()const
 {
-
-
 	//std::wstring sDoorType = doorType;
 
 	_ns1__GetAllDoor ns;
@@ -424,7 +422,7 @@ std::vector<AttrDoor >  CWindowWebData::GetAllDoors()const
 	ArgumentSettingServiceSoapProxy cadWeb;
 	int nRet = cadWeb.GetAllDoor(&ns, nsResponse);
 
-	std::vector<AttrDoor> DoorAttrs;
+	std::vector<AttrWindow> DoorAttrs;
 
 	//判断返回结果是否成功
 	if (nsResponse.GetAllDoorResult == NULL)
@@ -432,11 +430,8 @@ std::vector<AttrDoor >  CWindowWebData::GetAllDoors()const
 		return DoorAttrs;
 	}
 	
-	AttrDoor Attrdoor;
-
 	//解析字符串出结果
 	CMarkup xml;	
-
 	xml.SetDoc((*(nsResponse.GetAllDoorResult)).c_str());
 
 	DoorAttrs = ParseDoorsFromXML(xml);

@@ -42,6 +42,7 @@ public:
 	//}}AFX_ARX_METHODS
 	virtual eRCType GetType() {return AIRCON;}
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
+	virtual bool IsPrototypeEqual(const AttrAirCon& p_att);
 
 private:
 
