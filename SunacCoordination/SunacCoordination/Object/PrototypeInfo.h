@@ -17,8 +17,8 @@ public:
 	CProBase();
 	virtual ~CProBase();
 
-	void AddSizeRange(int p_minXLen, int p_minYLen, int p_maxXLen, int p_maxYLen, int p_step = 150);
-	void AddSize(int p_xLen, int p_yLen);
+	virtual void AddSizeRange(int p_minXLen, int p_minYLen, int p_maxXLen, int p_maxYLen, int p_step = 150);
+	virtual void AddSize(int p_xLen, int p_yLen);
 	void DeleteSizeRange(int p_minXLen, int p_minYLen, int p_maxXLen, int p_maxYLen, int p_step = 150);
 	void DeleteSize(int p_xLen, int p_yLen);
 	void ClearSizeList() { m_sizeList.clear(); }
@@ -41,10 +41,32 @@ protected:
 
 class CProBathroom : public CProBase
 {
-
+public:
+	virtual void AddSize(int p_xLen, int p_yLen);
 };
 
 class CProKitchen : public CProBase
 {
+public:
+	bool m_bHasPaiQiDao;
+};
 
+class CProMrg
+{
+public:
+	static CProMrg* GetInstance();
+
+	CProBase* GetPrototypeByFileName(CString p_sFileName);
+
+	CProBathroom* GetProBathroomByFileName(CString p_sFileName);
+	vector<CProBathroom> GetAllProBathrooms() { return m_allProBathrooms; }
+	void AddProBathroom(const CProBathroom& p_proBathroom);
+
+	CProKitchen* GetProKitchenByFileName(CString p_sFileName);
+	vector<CProKitchen> GetAllProKitchens() { return m_allProKitchens; }
+	void AddProKitchen(const CProKitchen& p_proKitchen);
+
+protected:
+	vector<CProBathroom> m_allProBathrooms;
+	vector<CProKitchen> m_allProKitchens;
 };

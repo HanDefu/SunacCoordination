@@ -11,7 +11,7 @@ public:
 	CKitchGen(AttrKitchen* p_att);
 	virtual ~CKitchGen();
 
-	virtual AcDbObjectId GenKitchen(const AcGePoint3d p_pos); //生成并插入到指定点
+	virtual AcDbObjectId GenKitchen(const AcGePoint3d p_pos, int p_angle); //生成并插入到指定点
 
 	//////////////////////////////////////////////////////////////////////////
 	//属性值的设置选项
@@ -23,12 +23,6 @@ public:
 
 	virtual vCString GetZhaotaiOptions();// 获取灶台选项
 	virtual CString GetZhaotaiDefault();
-
-
-	//////////////////////////////////////////////////////////////////////////
-	//设置基本属性
-	void SetDoorDir(E_DIRECTION p_doorDir){ m_doorDir = p_doorDir; }
-	void SetWindowDir(E_DIRECTION p_winDir){ m_windowDir = p_winDir; }
 
 	//其余的属性值可以通过直接设置AttrKitchen对象的变量实现
 	AttrKitchen* GetKitchenAtt(){ return &m_attr; }
@@ -52,19 +46,11 @@ protected:
 	//设置水盆的位置
 	virtual int SetShuiPenPos(AcDbObjectId kitchenId, double kaiJian, double jinShen, CString shuiPenType){ return 0; }
 
-	virtual void GetRotateAngle(double &angle, AcGeVector3d &offsetX); //处理旋转关系
-	//virtual void InitMirror(); //主要针对门窗垂直开情况，门窗垂直原型的窗在门的右侧，若实际为左侧则需要对称 //改为对话框内判断
-
-	virtual double GetXLength(){ return m_attr.m_width; } //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
-	virtual double GetYLength(){ return m_attr.m_height; } //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
+	virtual double GetXLength(); //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
+	virtual double GetYLength(); //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
 
 protected:
 	AttrKitchen m_attr;
-
-	AcDbObjectId m_id; //生成并插入到图上的厨房块ID
-
-	E_DIRECTION m_doorDir;
-	E_DIRECTION m_windowDir;
 };
 //////////////////////////////////////////////////////////////////////////
 class CKitchGenKUQ : public CKitchGen	//浅U，门窗对开
@@ -143,9 +129,6 @@ public:
 
 	//virtual vCString GetZhaotaiOptions();// 获取灶台选项
 	//virtual CString GetZhaotaiDefault();
-	virtual void GetRotateAngle(double &angle, AcGeVector3d &offsetX); //L型门朝左，需要单独处理旋转关系
-	virtual double GetXLength(){ return m_attr.m_height; } //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
-	virtual double GetYLength(){ return m_attr.m_width; } //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
 
 protected:
 	int SetShuiPenPos(AcDbObjectId kitchenId, double kaiJian, double jinShen, CString shuiPenType);
@@ -167,12 +150,8 @@ public:
 	virtual vCString GetZhaotaiOptions();// 获取灶台选项
 	virtual CString GetZhaotaiDefault();
 
-	virtual double GetXLength(){ return m_attr.m_height; } //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
-	virtual double GetYLength(){ return m_attr.m_width; } //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
-
 protected:
 	int SetShuiPenPos(AcDbObjectId kitchenId, double kaiJian, double jinShen, CString shuiPenType);
-
 	int SetZaoTaiPos(AcDbObjectId kitchenId, double kaiJian, double jinShen, CString zaoTaiType);
 
 };
@@ -180,34 +159,13 @@ class CKitchGenSTATIC: public CKitchGen////静态厨房
 {
 public:
 	CKitchGenSTATIC(AttrKitchen* p_att);
-
-
-
 };
 
 
 //////////////////////////////////////////////////////////////////////////
 class CKitchMrg
 {
-	CKitchMrg();
 public:
-	static CKitchMrg *GetInstance();
-	~CKitchMrg();
-
-
-	//根据搜索条件返回原型
-	vector<AttrKitchen*> FilterKitch(EKitchType p_type, double p_width, double p_height, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir, bool p_bHasAirVent);
-
 	//根据原型创建厨房生成对象
-	CKitchGen* CreateKitchGenByKitchType(AttrKitchen* p_attKitchen);
-
-protected:
-	vector<AttrKitchen*> FilterKitch_Internal(EKitchType p_type, int p_width, int p_height, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir, bool p_bHasAirVent);
-	vector<AttrKitchen*> FilterStatic(int p_width, int p_height, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir, bool p_bHasAirVent);
-	vector<AttrKitchen*> FilterKUq(int p_width, int p_height, bool p_bHasAirVent);
-	vector<AttrKitchen*> FilterKUqc(int p_width, int p_height, bool p_bHasAirVent);
-	vector<AttrKitchen*> FilterKUs(int p_width, int p_height, bool p_bHasAirVent);
-	vector<AttrKitchen*> FilterKL(int p_width, int p_height, bool p_bHasAirVent);
-	vector<AttrKitchen*> FilterKI(int p_width, int p_height, bool p_bHasAirVent);
-
+	static CKitchGen* CreateKitchGenByKitchType(AttrKitchen* p_attr);
 };

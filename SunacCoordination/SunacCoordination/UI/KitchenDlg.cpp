@@ -36,11 +36,6 @@ CKitchenDlg::CKitchenDlg(CWnd* pParent /*=NULL*/)
 
 CKitchenDlg::~CKitchenDlg()
 {
-	for (UINT i = 0; i < m_allKitchens.size(); i++)
-	{
-		delete m_allKitchens[i];
-	}
-
 	if (m_pKitchGen != NULL)
 	{
 		delete m_pKitchGen;
@@ -146,13 +141,6 @@ void CKitchenDlg::OnBnClickedButtonInsert()
 
 	//1. 更新属性值
 
-	m_pKitchGen->GetKitchenAtt()->m_width = m_rect.GetWidth();
-	m_pKitchGen->GetKitchenAtt()->m_height = m_rect.GetHeight();
-	if (m_doorDir == E_DIR_LEFT || m_doorDir == E_DIR_RIGHT)
-		swap(m_pKitchGen->GetKitchenAtt()->m_width, m_pKitchGen->GetKitchenAtt()->m_height);
-	m_pKitchGen->SetDoorDir(m_doorDir);
-	m_pKitchGen->SetWindowDir(m_windowDir);
-
 	m_pKitchGen->GetKitchenAtt()->m_shuiPenType = TYUI_GetComboBoxText(m_basinType);
 	m_pKitchGen->GetKitchenAtt()->m_bingXiangType = TYUI_GetComboBoxText(m_fridgeType);
 	m_pKitchGen->GetKitchenAtt()->m_zaoTaiType = TYUI_GetComboBoxText(m_benchWidth);
@@ -165,12 +153,12 @@ void CKitchenDlg::OnBnClickedButtonInsert()
 	m_pKitchGen->GetKitchenAtt()->m_airVentW = TYUI_GetInt(m_customX);
 	m_pKitchGen->GetKitchenAtt()->m_airVentH = TYUI_GetInt(m_customY);
 
-	m_pKitchGen->GetKitchenAtt()->m_isMirror = m_isMirror.GetCheck()? true : false;
+	m_pKitchGen->GetKitchenAtt()->m_isMirror = m_isMirror.GetCheck() ? true : false;
 
 	AcGePoint3d origin = m_rect.GetLB();
 
 	//生成
-	m_pKitchGen->GenKitchen(origin);
+	m_pKitchGen->GenKitchen(origin, m_angle);
 
 	OnOK();
 }
@@ -315,7 +303,8 @@ void CKitchenDlg::OnBnClickedButtonSearch()
 
 	double width = m_rect.GetWidth();
 	double height = m_rect.GetHeight();
-	m_allKitchens = CKitchMrg::GetInstance()->FilterKitch(kitchenType, width, height, m_doorDir, m_windowDir, m_bNoAirout == FALSE);
+
+	m_allKitchens = WebIO::GetKitchens(kitchenType, width, height, m_doorDir, m_windowDir, m_bNoAirout == FALSE);
 	
 	//////////////////////////////////////////////////////////////////////////
 	//3. 显示原型
@@ -332,8 +321,8 @@ void CKitchenDlg::OnBnClickedButtonSearch()
 	for (UINT i = 0; i < m_allKitchens.size(); i++)
 	{
 		CString str;
-		str.Format(_T("原型编号：%s\n厨房面积：%.2lf\n通风量要求：1.5\n动态类型：动态\n适用范围：集团"), m_allKitchens[i]->m_prototypeCode, m_rect.GetWidth() * m_rect.GetHeight() / 1E6);
-		m_preKitchen.AddPreview(i, 0, TY_GetLocalFilePath() + m_allKitchens[i]->m_fileName, str);
+		str.Format(_T("原型编号：%s\n厨房面积：%.2lf\n通风量要求：1.5\n动态类型：动态\n适用范围：集团"), m_allKitchens[i].m_prototypeCode, m_rect.GetWidth() * m_rect.GetHeight() / 1E6);
+		m_preKitchen.AddPreview(i, 0, TY_GetLocalFilePath() + m_allKitchens[i].m_fileName, str);
 	}
 
 	m_preKitchen.SelectPreview(0, 0);
@@ -344,25 +333,22 @@ void CKitchenDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	NM_GRIDVIEW* pView = (NM_GRIDVIEW*)pNMHDR;
 	int nSel = pView->iRow;
 
-	int kaiJian = int(m_rect.GetWidth() + 0.5);
-	int jinShen = int(m_rect.GetHeight() + 0.5);
-	if (m_doorDir == E_DIR_LEFT || m_doorDir == E_DIR_RIGHT)
-		swap(kaiJian, jinShen);
-
 	if (nSel < 0 || nSel >= (int)m_allKitchens.size())
 	{
 		EnableSetProperty(false);
 		return;
 	}
 
-	AttrKitchen* curSecKitchen = m_allKitchens[nSel];
+	AttrKitchen* curSecKitchen = &m_allKitchens[nSel];
+	CProKitchen* pcurSelPrototype = curSecKitchen->GetProKitchen();
+	assert(pcurSelPrototype != NULL);
 
 	if (m_pKitchGen != NULL)
 	{
 		delete m_pKitchGen;
 	}
 
-	m_pKitchGen = CKitchMrg::GetInstance()->CreateKitchGenByKitchType(curSecKitchen);
+	m_pKitchGen = CKitchMrg::CreateKitchGenByKitchType(curSecKitchen);
 	if (m_pKitchGen==NULL)
 	{
 		MessageBox(_T("原型无法创建KitchGen"));
@@ -378,25 +364,14 @@ void CKitchenDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	TYUI_InitComboBox(m_benchWidth, m_pKitchGen->GetZhaotaiOptions(), m_pKitchGen->GetZhaotaiDefault());
 	EnableSetProperty(true);
 
-	if (curSecKitchen->m_windowDoorPos == _T("门窗垂直"))
-	{
-		if (m_doorDir == (m_windowDir + 1) % 4) //窗位于门的顺时针方向
-		{
-			curSecKitchen->m_isMirror = true;
-			m_isMirror.SetCheck(TRUE);
-		}
-		else
-		{
-			curSecKitchen->m_isMirror = false;
-			m_isMirror.SetCheck(FALSE);
-		}
+	bool bMirror;
+	pcurSelPrototype->GetRotateAngle(m_doorDir, m_windowDir, m_angle, bMirror);
+	m_isMirror.SetCheck(bMirror);
+
+	if (pcurSelPrototype->GetWindowDoorPos() == CHUIZHIKAI)
 		TYUI_Disable(m_isMirror);
-	}
 	else
-	{
-		m_isMirror.SetCheck(false);
 		TYUI_Enable(m_isMirror);
-	}
 }
 
 void CKitchenDlg::OnBnClickedAutoIndex()

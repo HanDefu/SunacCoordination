@@ -19,10 +19,10 @@ AttrBathroom::AttrBathroom()
 
 }
 
-AttrBathroom::AttrBathroom(double p_xLen, double p_yLen, E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, const CProBathroom& p_protptype)
+AttrBathroom::AttrBathroom(double p_xLen, double p_yLen, E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, const CProBathroom& p_prototype)
 {
 	m_type = L"卫生间";
-	m_sBathroomType = p_protptype.m_sType;
+	m_sBathroomType = p_prototype.m_sType;
 	m_width = p_xLen;
 	m_height = p_yLen;
 	if (p_doorPos == E_DIR_LEFT || p_doorPos == E_DIR_RIGHT)
@@ -32,8 +32,8 @@ AttrBathroom::AttrBathroom(double p_xLen, double p_yLen, E_DIRECTION p_doorPos, 
 	if (m_sBathroomType.Find(L"_g") != -1)
 		m_prototypeCode += L"/g";
 
-	m_fileName = p_protptype.m_sFileName;
-	m_isDynamic = p_protptype.m_bIsDynamic;
+	m_fileName = p_prototype.m_sFileName;
+	m_isDynamic = p_prototype.m_bIsDynamic;
 	m_isJiTuan = true;
 }
 
@@ -87,11 +87,5 @@ bool AttrBathroom::isEqualTo(AttrObject*other)
 
 CProBathroom* AttrBathroom::GetProBathroom()
 {
-	CProBathroom *pProBathroom = dynamic_cast<CProBathroom *>(GetPrototype());
-	if (NULL == pProBathroom)
-	{
-		//原型与原型实例的类型不匹配
-		assert(false);
-	}
-	return pProBathroom;
+	return CProMrg::GetInstance()->GetProBathroomByFileName(m_fileName);
 }

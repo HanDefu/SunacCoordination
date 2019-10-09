@@ -34,7 +34,7 @@ public:
 
 	// Constructor / Destructor
 	AttrBathroom();
-	AttrBathroom(double p_xLen, double p_yLen, E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, const CProBathroom& p_protptype);
+	AttrBathroom(double p_xLen, double p_yLen, E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, const CProBathroom& p_prototype);
 	virtual ~AttrBathroom();
 
 	//{{AFX_ARX_METHODS(ZffDwgScale)
