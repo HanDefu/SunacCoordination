@@ -46,17 +46,9 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 
 	//注意外部需要释放返回的内存
-	static std::vector<AttrKitchen *> GetKitchens (double kaiJian,//开间
-								double jinShen,//进深
-								CString weiZhiGuanXi,//门窗位置关系 门窗对开/门窗垂直开
-								CString type,//厨房类型 I型
-								bool hasPaiQiDao,//是否含有排气道
-								bool bDynatic); //是否动态
+	static std::vector<AttrKitchen> GetKitchens (EKitchType p_type, double p_xLen, double p_yLen, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir, bool p_hasPaiQiDao);
 	
-
-	//////////////////////////////////////////////////////////////////////////
-	//注意外部需要释放返回的内存
-	static std::vector<AttrKitchen *> GetAllKitchens();
+	static std::vector<AttrKitchen> GetAllKitchens();
 	//获取卫生间
 	static std::vector<AttrBathroom> GetBathrooms(EBathroomType p_type, double p_xLen, double p_yLen, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir);
 	static std::vector<AttrBathroom> GetAllBathrooms();
@@ -77,18 +69,14 @@ public:
 	//ok返回0 否则返回-1
 	static int DownLoadFile(CString id, CString filePathName);
 
-	//通过原型文件获取原型
-	static CProBase* GetPrototypeByFileName(CString p_sFileName);
-
 protected:
 	CConfigDictionary m_configDic;
 
 	CWindowLocalData m_windowLocalData;
 	CAirConditionLocalData m_airConLocalData;
-
+	CKitchenBathroomLocalData m_kitchenBathroomLocalData;
 
 	CWindowWebData m_windowWebData;
-
 }; 
 
 #define WEBINST (WebIO::GetInstance())

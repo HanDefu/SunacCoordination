@@ -33,39 +33,32 @@ AttrKitchen::AttrKitchen()
 	m_height = 0;//宽度 进深
 }
 
+AttrKitchen::AttrKitchen(double p_xLen, double p_yLen, E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, const CProKitchen& p_prototype)
+{
+	m_type = L"厨房";
+	m_kitchenType = p_prototype.m_sType;
+	m_width = p_xLen;
+	m_height = p_yLen;
+	if (p_doorPos == E_DIR_LEFT || p_doorPos == E_DIR_RIGHT)
+		swap(m_width, m_height);
+
+	int pos = m_kitchenType.Find(L'_');
+	CString sType = m_kitchenType;
+	if (pos != -1)
+		sType = m_kitchenType.Left(pos);
+
+	m_prototypeCode.Format(L"%s-%.0lf×%.0lf", sType, m_width, m_height);
+	if (m_kitchenType.Find(L"_c") != -1)
+		m_prototypeCode += L"/c";
+
+	m_fileName = p_prototype.m_sFileName;
+	m_isDynamic = p_prototype.m_bIsDynamic;
+	m_isJiTuan = true;
+}
+
 AttrKitchen::~AttrKitchen()
 {
 
-}
-
-AttrKitchen::AttrKitchen(const AttrKitchen &other) : AttrObject(other)
-{
-	*this = other;
-}
-
-AttrKitchen & AttrKitchen::operator=(const AttrKitchen &rhs)
-{
-	AttrObject::operator=(rhs);
-
-	m_floorRange = rhs.m_floorRange;//楼层选项
-	m_airVentW = rhs.m_airVentW;//排气道长度
-	m_airVentH = rhs.m_airVentH;//排气道宽度
-	m_airVentOffsetX = rhs.m_airVentOffsetX;//排气道长度
-	m_airVentOffsetY = rhs.m_airVentOffsetY;//排气道宽度
-	m_isMirror = rhs.m_isMirror;//镜像
-	m_hasPaiQiDao = rhs.m_hasPaiQiDao;//是否含有排气道
-	m_isGuoBiao = rhs.m_isGuoBiao;//排气道
-	m_kitchenType = rhs.m_kitchenType;//厨房类型
-	m_windowDoorPos = rhs.m_windowDoorPos;//门窗位置关系
-
-	//这些属性体现在图块中--可以从图块直接取出的 就不用从属性记录
-	m_shuiPenType = rhs.m_shuiPenType;//水盆类型
-	m_bingXiangType = rhs.m_bingXiangType;//冰箱类型
-	m_zaoTaiType = rhs.m_zaoTaiType;//灶台宽度 
-	m_width = rhs.m_width;//长度 面宽
-	m_height = rhs.m_height;//宽度 进深
-
-	return *this;
 }
 
 Acad::ErrorStatus AttrKitchen::dwgInFields(AcDbDwgFiler* filer)
@@ -164,5 +157,10 @@ bool AttrKitchen::isEqualTo(AttrObject*other)
 		m_airVentOffsetY == pRealObj->m_airVentOffsetY &&
 		m_isMirror == pRealObj->m_isMirror 
 		);
+}
+
+CProKitchen* AttrKitchen::GetProKitchen()
+{
+	return CProMrg::GetInstance()->GetProKitchenByFileName(m_fileName);
 }
 

@@ -51,11 +51,11 @@ public:
 	E_DIRECTION m_windowDir;
 	BOOL m_bNoAirout;// 是否含排气道
 	int m_isStd; //国标/自定义
+	int m_angle; //插入时旋转角，可能取值为0, 90, 180, 270
 
-	vector<AttrKitchen*> m_allKitchens;
+	vector<AttrKitchen> m_allKitchens;
 
 	CKitchGen* m_pKitchGen;
-
 
 	afx_msg void OnBnClickedOk();
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);///---01

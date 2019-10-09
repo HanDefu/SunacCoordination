@@ -6,34 +6,13 @@
 #include "..\..\Common/ComFun_DynamicBlock.h"
 
 
-//const CString c_ShuipenBlockNames[5] = { 
-//	L"水盆_单盆_600_420",
-//	L"水盆_单盆_800_420",
-//	L"水盆_双盆_900_450",
-//	L"水盆_双盆_1000_450",
-//	L"水盆_双盆_1200_450" };
-//
-//const CString c_BingxiangBlockNames[] = {
-//	L"冰箱_单开门_700",
-//	L"冰箱_双开门_800",
-//	L"冰箱_双开门_1000" };
-//
-//const CString c_ZhaotaiBlockNames[] = {
-//	L"灶台_800",
-//	L"灶台_1000"};
-
 CKitchGen::CKitchGen(AttrKitchen* p_att)
 : m_attr(*p_att)
 {
-	m_id = AcDbObjectId::kNull;
-
-	m_doorDir = E_DIR_BOTTOM;
-	m_windowDir = E_DIR_TOP;
 }
 
 CKitchGen::~CKitchGen()
 {
-
 }
 
 int CKitchGen::SelectShuiPen(AcDbObjectId kitchenId, CString shuiPen)
@@ -77,7 +56,6 @@ int CKitchGen::SelectShuiPen(AcDbObjectId kitchenId, CString shuiPen)
 	else
 		return -1;
 
-
 	TY_HideBlockReferencesInBlockReference(kitchenId, hideBlockRecordNames);
 
 	return 0;
@@ -96,7 +74,6 @@ int CKitchGen::SelectZaoTai(AcDbObjectId kitchenId, CString zaoTai)
 	}
 	else
 		return -1;
-
 
 	TY_HideBlockReferencesInBlockReference(kitchenId, hideBlockRecordNames);
 
@@ -129,12 +106,30 @@ int CKitchGen::SelectBingXiang(AcDbObjectId kitchenId, CString bingXiang)
 	return 0;
 }
 
+double CKitchGen::GetXLength()
+{
+	CProKitchen* pProKitchen = m_attr.GetProKitchen();
+	if (pProKitchen->m_doorPos == E_DIR_BOTTOM || pProKitchen->m_doorPos == E_DIR_TOP)
+		return m_attr.m_width;
+	else
+		return m_attr.m_height;
+}
+
+double CKitchGen::GetYLength()
+{
+	if (m_attr.m_width == GetXLength())
+		return m_attr.m_height;
+	else
+		return m_attr.m_width;
+}
+
 //////////////////////////////////////////////////////////////////////////
 vCString CKitchGen::GetShuipenOptions()// 获取台盆选型
 {
 	vCString options = WebIO::GetConfigDict()->Kitchen_GetShuiPenTypes();
 	return options;
 }
+
 CString CKitchGen::GetShuipenDefault()
 { 
 	return L"单盆600";
@@ -145,6 +140,7 @@ vCString CKitchGen::GetBinxiangOptions()// 获取冰箱选型
 	vCString options = WebIO::GetConfigDict()->Kitchen_GetBingXiangTypes();
 	return options;
 }
+
 CString CKitchGen::GetBinxiangDefault()
 {
 	return _T("对开门800");
@@ -156,70 +152,39 @@ vCString CKitchGen::GetZhaotaiOptions()// 获取灶台选型
 	return options;
 
 }
+
 CString CKitchGen::GetZhaotaiDefault()
 {
 	return _T("800");
 }
-void CKitchGen::GetRotateAngle(double &angle, AcGeVector3d &offsetX) //处理旋转及镜像关系
+
+AcDbObjectId CKitchGen::GenKitchen(const AcGePoint3d p_pos, int p_angle)
 {
-	angle = 0;
-	offsetX = AcGeVector3d(0, 0, 0);
+	AcGeVector3d offsetXY;
 	const double xLen = GetXLength();
 	const double yLen = GetYLength();
-
-	switch (m_doorDir)
+	switch (p_angle)
 	{
-	case E_DIR_TOP:
-		angle = PI;
-		offsetX = AcGeVector3d(xLen, yLen, 0);
+	case 90:
+		offsetXY = AcGeVector3d(yLen, 0, 0);
 		break;
-	case E_DIR_LEFT:
-		angle = -PI / 2;
-		offsetX = AcGeVector3d(0, xLen, 0);
+	case 180:
+		offsetXY = AcGeVector3d(xLen, yLen, 0);
 		break;
-	case E_DIR_BOTTOM:
-		angle = 0;
-		offsetX = AcGeVector3d(0, 0, 0);
-		break;
-	case E_DIR_RIGHT:
-		angle = PI / 2;
-		offsetX = AcGeVector3d(yLen, 0, 0);
+	case 270:
+		offsetXY = AcGeVector3d(0, xLen, 0);
 		break;
 	default:
-		break;
+		offsetXY = AcGeVector3d(0, 0, 0);
 	}
-}
-
-//改为在对话框内判断
-/*
-void CKitchGen::InitMirror() //主要针对门窗垂直开情况，门窗垂直原型的窗在门的右侧，若实际为左侧则需要对称
-{
-	if (abs(m_windowDir - m_doorDir)%2 == 1) //奇数差为门窗垂直开
-	{
-		if (m_windowDir > m_doorDir)
-		{
-			m_attr.m_isMirror = false;
-		}
-		else
-		{
-			m_attr.m_isMirror = true;
-		}
-	}
-}*/
-
-AcDbObjectId CKitchGen::GenKitchen(const AcGePoint3d p_pos)
-{
-	double angle = 0;
-	AcGeVector3d offsetXY = AcGeVector3d(0, 0, 0);
-	GetRotateAngle(angle, offsetXY);
 
 	RCKitchen oneKitchen;
 
 	//先插入到原点，最后再做镜像和旋转处理
-	AcDbObjectId id = oneKitchen.Insert(m_attr.m_fileName, p_pos, 0, L"0", 256);
+	AcDbObjectId id = oneKitchen.Insert(TY_GetLocalFilePath() + m_attr.m_fileName, p_pos, 0, L"0", 256);
 	oneKitchen.InitParameters();
-	oneKitchen.SetParameter(L"进深", m_attr.m_height);
 	oneKitchen.SetParameter(L"开间", m_attr.m_width);
+	oneKitchen.SetParameter(L"进深", m_attr.m_height);
 	//////////////////////////////////////////////////////////////////////////
 	//烟道
 	if (m_attr.m_hasPaiQiDao)
@@ -260,9 +225,9 @@ AcDbObjectId CKitchGen::GenKitchen(const AcGePoint3d p_pos)
 	}
 
 	//再角度旋转
-	if (angle!=0)
+	if (p_angle!=0)
 	{
-		TYCOM_Rotate(id, p_pos, angle);
+		TYCOM_Rotate(id, p_pos, p_angle * PI / 180);
 
 		//旋转后定义点不再是左下角，需要平移
 		TYCOM_Move(id, offsetXY);
@@ -275,7 +240,6 @@ AcDbObjectId CKitchGen::GenKitchen(const AcGePoint3d p_pos)
 	oneKitchen.AddAttribute(pAttribute);
 	pAttribute->close();
 
-	m_id = id;
 	return id;
 }
 //////////////////////////////////////////////////////////////////////////
@@ -285,6 +249,7 @@ CKitchGenKUQ::CKitchGenKUQ(AttrKitchen* p_att)
 {
 
 }
+
 vCString CKitchGenKUQ::GetShuipenOptions()// 获取台盆选型
 {
 	vCString options;
@@ -301,6 +266,7 @@ vCString CKitchGenKUQ::GetShuipenOptions()// 获取台盆选型
 	}
 	return options;
 }
+
 CString CKitchGenKUQ::GetShuipenDefault()
 {
 	if (m_attr.m_width < 2900)
@@ -308,8 +274,6 @@ CString CKitchGenKUQ::GetShuipenDefault()
 	else
 		return L"双盆900";
 }
-
-
 
 //kuq 对开 自动设置门的位置
 int CKitchGenKUQ::SetDoorPos(AcDbObjectId kitchenId, double kaiJian)
@@ -394,6 +358,7 @@ CKitchGenKUQ_C::CKitchGenKUQ_C(AttrKitchen* p_att)
 {
 
 }
+
 vCString CKitchGenKUQ_C::GetShuipenOptions()// 获取台盆选型
 {
 	vCString options;
@@ -410,6 +375,7 @@ vCString CKitchGenKUQ_C::GetShuipenOptions()// 获取台盆选型
 	}
 	return options;
 }
+
 CString CKitchGenKUQ_C::GetShuipenDefault()
 {
 	if (m_attr.m_height < 2150) //进深小于2150时单盆
@@ -490,12 +456,14 @@ int CKitchGenKUQ_C::SetShuiPenPos(AcDbObjectId kitchenId, double kaiJian, double
 
 	return 0;
 }
+
 //////////////////////////////////////////////////////////////////////////
 CKitchGenKUS::CKitchGenKUS(AttrKitchen* p_att)
 :CKitchGen(p_att)
 {
 
 }
+
 //kus 垂直开 自动设置水盆的位置
 int CKitchGenKUS::SetShuiPenPos(AcDbObjectId kitchenId, double kaiJian, double jinShen, CString shuiPenType)
 {
@@ -543,13 +511,13 @@ int CKitchGenKUS::SetZaoTaiPos(AcDbObjectId kitchenId, double kaiJian, double ji
 	return 0;
 }
 
-
 //////////////////////////////////////////////////////////////////////////
 CKitchGenKL::CKitchGenKL(AttrKitchen* p_att)
 :CKitchGen(p_att)
 {
 
 }
+
 vCString CKitchGenKL::GetBinxiangOptions()// 获取冰箱选项
 {
 	vCString options;
@@ -564,6 +532,7 @@ vCString CKitchGenKL::GetBinxiangOptions()// 获取冰箱选项
 	}
 	return options;
 }
+
 CString CKitchGenKL::GetBinxiangDefault()
 {
 	if (m_attr.m_height < 3200) //进深小于3200时单开门
@@ -573,37 +542,6 @@ CString CKitchGenKL::GetBinxiangDefault()
 	else
 	{
 		return _T("对开门800");
-	}
-}
-
-
-void CKitchGenKL::GetRotateAngle(double &angle, AcGeVector3d &offsetX)
-{
-	angle = 0;
-	offsetX = AcGeVector3d(0, 0, 0);
-	const double xLen = GetXLength();
-	const double yLen = GetYLength();
-
-	switch (m_doorDir)
-	{
-	case E_DIR_RIGHT:
-		angle = PI;
-		offsetX = AcGeVector3d(xLen, yLen, 0);
-		break;
-	case E_DIR_TOP:
-		angle = -PI / 2;
-		offsetX = AcGeVector3d(0, xLen, 0);
-		break;
-	case E_DIR_LEFT:
-		angle = 0;
-		offsetX = AcGeVector3d(0, 0, 0);
-		break;
-	case E_DIR_BOTTOM:
-		angle = PI / 2;
-		offsetX = AcGeVector3d(yLen, 0, 0);
-		break;
-	default:
-		break;
 	}
 }
 
@@ -633,8 +571,6 @@ int CKitchGenKL::SetShuiPenPos(AcDbObjectId kitchenId, double kaiJian, double ji
 	return 0;
 }
 
-
-
 //KL门窗对开设置灶台的位置 
 int CKitchGenKL::SetZaoTaiPos(AcDbObjectId kitchenId, double kaiJian, double jinShen, CString zaoTaiType)
 {
@@ -660,7 +596,6 @@ int CKitchGenKL::SetZaoTaiPos(AcDbObjectId kitchenId, double kaiJian, double jin
 
 	return 0;
 }
-
 //////////////////////////////////////////////////////////////////////////
 
 CKitchGenKI::CKitchGenKI(AttrKitchen* p_att)
@@ -685,6 +620,7 @@ vCString CKitchGenKI::GetShuipenOptions()// 获取台盆选型
 	}
 	return options;
 }
+
 CString CKitchGenKI::GetShuipenDefault()
 {
 	if (m_attr.m_height < 3350) //进深小于3350时单盆
@@ -692,6 +628,7 @@ CString CKitchGenKI::GetShuipenDefault()
 	else
 		return L"双盆900";
 }
+
 vCString CKitchGenKI::GetZhaotaiOptions() 
 {
 	vCString options;
@@ -706,6 +643,7 @@ vCString CKitchGenKI::GetZhaotaiOptions()
 	}
 	return options;
 }
+
 CString CKitchGenKI::GetZhaotaiDefault()
 {
 	if (m_attr.m_height < 3350) //进深小于3350时
@@ -717,8 +655,6 @@ CString CKitchGenKI::GetZhaotaiDefault()
 		return _T("900");
 	}
 }
-
-
 
 //KI门窗对开设置水盆的位置
 //shuiPen:"单盆600"/"单盆800"/双盆900/双盆1000/双盆1200
@@ -779,296 +715,18 @@ CKitchGenSTATIC::CKitchGenSTATIC(AttrKitchen* p_att)
 
 }
 
-//////////////////////////////////////////////////////////////////////////
-CKitchMrg* CKitchMrg::GetInstance()
+CKitchGen* CKitchMrg::CreateKitchGenByKitchType(AttrKitchen* p_attr)
 {
-	static CKitchMrg instance;
-	return &instance;
-}
-
-CKitchMrg::CKitchMrg()
-{
-
-}
-
-CKitchMrg::~CKitchMrg()
-{
-
-}
-
-//////////////////////////////////////////////////////////////////////////
-
-vector<AttrKitchen*> CKitchMrg::FilterKitch(EKitchType p_type, double p_width, double p_height, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir, bool p_bHasAirVent)
-{
-	//宽高取整数
-	int nWidth = int(p_width + 0.5);
-	int nHeight = int(p_height + 0.5);
-
-	//开间为门的方向，因此若门在侧边，需要交换宽高
-	if (p_doorDir == E_DIR_LEFT || p_doorDir == E_DIR_RIGHT)
-		swap(nWidth, nHeight);
-
-	vector<AttrKitchen*> allKitchOut = FilterStatic(nWidth, nHeight, p_doorDir, p_windowDir, p_bHasAirVent);
-
-	if (E_KITCH_ALL==p_type)
-	{
-		vector<AttrKitchen*> kitchenOut1 = FilterKitch_Internal(E_KITCH_U, nWidth, nHeight, p_doorDir, p_windowDir, p_bHasAirVent);
-		vector<AttrKitchen*> kitchenOut2 = FilterKitch_Internal(E_KITCH_L, nWidth, nHeight, p_doorDir, p_windowDir, p_bHasAirVent);
-		vector<AttrKitchen*> kitchenOut3 = FilterKitch_Internal(E_KITCH_I, nWidth, nHeight, p_doorDir, p_windowDir, p_bHasAirVent);
-
-		allKitchOut.insert(allKitchOut.end(), kitchenOut1.begin(), kitchenOut1.end());
-		allKitchOut.insert(allKitchOut.end(), kitchenOut2.begin(), kitchenOut2.end());
-		allKitchOut.insert(allKitchOut.end(), kitchenOut3.begin(), kitchenOut3.end());
-	}
+	if (p_attr->m_kitchenType.Left(3) == _T("KUq") || p_attr->m_kitchenType.Find(L"_c") == -1)
+		return new CKitchGenKUQ(p_attr);
+	else if (p_attr->m_kitchenType.Left(3) == _T("KUq"))
+		return new CKitchGenKUQ_C(p_attr);
+	else if (p_attr->m_kitchenType.Left(3) == _T("KUs"))
+		return new CKitchGenKUS(p_attr);
+	else if (p_attr->m_kitchenType.Left(2) == _T("KL"))
+		return new CKitchGenKUQ(p_attr);
+	else if (p_attr->m_kitchenType.Left(2) == _T("KI"))
+		return new CKitchGenKUQ(p_attr);
 	else
-	{
-		vector<AttrKitchen*> kitchenOut = FilterKitch_Internal(p_type, nWidth, nHeight, p_doorDir, p_windowDir, p_bHasAirVent);
-		allKitchOut.insert(allKitchOut.end(), kitchenOut.begin(), kitchenOut.end());
-	}
-
-	//对筛选的原型设置尺寸
-	for (UINT i = 0; i < allKitchOut.size();i++)
-	{
-		allKitchOut[i]->m_width = nWidth;
-		allKitchOut[i]->m_height = nHeight;		
-	}
-
-	return allKitchOut;
-}
-vector<AttrKitchen*> CKitchMrg::FilterKitch_Internal(EKitchType p_type, int nWidth, int nHeight, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir, bool p_bHasAirVent)
-{
-	bool bNotSupport = true;
-	bool bDoorWindowOpposite = abs(p_windowDir - p_doorDir) == 2;//门窗对开
-	if (E_KITCH_U==p_type)
-	{
-		if (nWidth > nHeight) //浅U
-		{
-			if (bDoorWindowOpposite)
-			{
-				return FilterKUq(nWidth, nHeight, p_bHasAirVent);
-			}
-			else
-			{
-				return FilterKUqc(nWidth, nHeight, p_bHasAirVent);
-			}
-		}
-		else //深U
-		{
-			if (bDoorWindowOpposite)
-			{
-				return FilterKUs(nWidth, nHeight, p_bHasAirVent);
-			}
-			else
-			{
-				bNotSupport = true;//不支持
-			}
-		}
-	}
-	else if (E_KITCH_L == p_type)
-	{
-		if (bDoorWindowOpposite)
-		{
-			return FilterKL(nWidth, nHeight, p_bHasAirVent);
-		}
-		else
-		{
-			bNotSupport = true;//不支持
-		}
-	}
-	else if (E_KITCH_I == p_type)
-	{
-		if (bDoorWindowOpposite)
-		{
-			return FilterKI(nWidth, nHeight, p_bHasAirVent);
-		}
-		else
-		{
-			bNotSupport = true;//不支持
-		}
-	}
-	else
-	{
-
-	}
-
-	return vector<AttrKitchen*>(); //返回空
-}
-
-
-vector<AttrKitchen*> CKitchMrg::FilterStatic(int p_width, int p_height, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir, bool p_bHasAirVent) //静态厨房
-{
-	bool bDoorWindowOpposite = abs(p_windowDir - p_doorDir) == 2;//门窗对开
-
-	return WebIO::GetInstance()->GetKitchens(p_width, p_height, bDoorWindowOpposite ? _T("门窗对开") : _T("门窗垂直"), _T(""), p_bHasAirVent, false); 
-}
-
-
-vector<AttrKitchen*> CKitchMrg::FilterKUq(int p_width, int p_height, bool p_bHasAirVent)
-{
-	vector<AttrKitchen*> attrKitchen;
-
-	//限定开间与进深的范围
-	if (p_width < 2450 || p_width > 3500)
-		return attrKitchen;
-	if (p_height < 1700 || p_height > 2600)
-		return attrKitchen;
-	if (p_width <= p_height)
-		return attrKitchen;
-
-	//不支持2450*1700
-	if (p_width == 2450 && p_height == 1700)
-		return attrKitchen;
-
-	//以150递增尺寸
-	if ((p_width - 2450) % 150 != 0)
-		return attrKitchen;
-	if ((p_height - 1700) % 150 != 0)
-		return attrKitchen;
-
-	return WebIO::GetInstance()->GetKitchens(p_width, p_height, _T("门窗对开"), _T("U型"), p_bHasAirVent, true);
-}
-
-vector<AttrKitchen*> CKitchMrg::FilterKUqc(int p_width, int p_height, bool p_bHasAirVent)
-{
-	vector<AttrKitchen*> attrKitchen;
-
-	//限定开间与进深的范围
-	if (p_width < 2450 || p_width > 3500)
-		return attrKitchen;
-	if (p_height < 1700 || p_height > 2450)
-		return attrKitchen;
-	if (p_width <= p_height)
-		return attrKitchen;
-
-	//不支持2450*1700
-	if (p_width == 2450 && p_height == 1700)
-		return attrKitchen;
-
-	//以150递增尺寸
-	if ((p_width - 2450) % 150 != 0)
-		return attrKitchen;
-	if ((p_height - 1700) % 150 != 0)
-		return attrKitchen;
-
-	return WebIO::GetInstance()->GetKitchens(p_width, p_height, _T("门窗垂直"), _T("U型"), p_bHasAirVent, true);
-}
-
-vector<AttrKitchen*> CKitchMrg::FilterKUs(int p_width, int p_height, bool p_bHasAirVent)
-{
-	vector<AttrKitchen*> attrKitchen;
-
-	//限定开间与进深的范围
-	if (p_width < 2300 || p_width > 2450)
-		return attrKitchen;
-	if (p_height < 2450 || p_height > 3200)
-		return attrKitchen;
-	if (p_width > p_height)
-		return attrKitchen;
-
-	//以150递增尺寸
-	if ((p_width - 2300) % 150 != 0)
-		return attrKitchen;
-	if ((p_height - 2450) % 150 != 0)
-		return attrKitchen;
-
-	return WebIO::GetInstance()->GetKitchens(p_width, p_height, _T("门窗对开"), _T("U型"), p_bHasAirVent, true);
-}
-
-vector<AttrKitchen*> CKitchMrg::FilterKL(int p_width, int p_height, bool p_bHasAirVent)
-{
-	vector<AttrKitchen*> attrKitchen;
-
-	//限定开间与进深的范围
-	if (p_width < 1700 || p_width > 2000)
-		return attrKitchen;
-	if (p_height < 2600 || p_height > 3950)
-		return attrKitchen;
-
-	//以150递增尺寸
-	if ((p_width - 1700) % 150 != 0)
-		return attrKitchen;
-	if ((p_height - 2600) % 150 != 0)
-		return attrKitchen;
-
-	return WebIO::GetInstance()->GetKitchens(p_width, p_height, _T("门窗对开"), _T("L型"), p_bHasAirVent, true);
-}
-
-vector<AttrKitchen*> CKitchMrg::FilterKI(int p_width, int p_height, bool p_bHasAirVent)
-{
-	vector<AttrKitchen*> attrKitchen;
-
-	//限定开间与进深的范围
-	if (p_width != 1700)
-		return attrKitchen;
-	if (p_height < 3050 || p_height > 4100)
-		return attrKitchen;
-
-	//以150递增尺寸
-	if ((p_height - 3050) % 150 != 0)
-		return attrKitchen;
-
-	return WebIO::GetInstance()->GetKitchens(p_width, p_height, _T("门窗对开"), _T("I型"), p_bHasAirVent, true);
-}
-
-CKitchGen* CKitchMrg::CreateKitchGenByKitchType(AttrKitchen* p_attKitchen)
-{
-	if (p_attKitchen==NULL)
-	{
-		assert(false);
 		return NULL;
-	}
-	
-	//确保厨房在传入前设置了尺寸
-	assert(p_attKitchen->m_width > 0 && p_attKitchen->m_height > 0);
-
-
-	//或者通过门窗编号创建对应的类
-	CKitchGen* pKitchenGen = NULL;
-
-	if (p_attKitchen->m_isDynamic)
-	{
-		if (p_attKitchen->m_kitchenType==_T("U型"))
-		{
-			if (p_attKitchen->m_windowDoorPos==_T("门窗对开"))
-			{
-				CString sName = p_attKitchen->m_prototypeCode;
-				sName.MakeUpper();
-				if (sName.Find(_T("KUS"))>=0)
-				{
-					pKitchenGen = new CKitchGenKUS(p_attKitchen); //深U
-				}
-				else
-				{
-					pKitchenGen = new CKitchGenKUQ(p_attKitchen);
-				}
-			}
-			else if (p_attKitchen->m_windowDoorPos == _T("门窗垂直"))
-			{
-				pKitchenGen = new CKitchGenKUQ_C(p_attKitchen);
-			}
-			else
-			{
-				return NULL;
-			}
-		}
-		else if (p_attKitchen->m_kitchenType == _T("L型"))
-		{
-			pKitchenGen = new CKitchGenKL(p_attKitchen);
-		}
-		else if (p_attKitchen->m_kitchenType == _T("I型"))
-		{
-			pKitchenGen = new CKitchGenSTATIC(p_attKitchen);
-		}
-		else
-		{
-			assert(false);
-		}
-	}
-	else
-	{
-		pKitchenGen = new CKitchGenSTATIC(p_attKitchen);
-	}
-
-
-	return pKitchenGen;
 }

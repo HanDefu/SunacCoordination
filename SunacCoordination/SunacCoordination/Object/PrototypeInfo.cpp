@@ -89,3 +89,79 @@ bool CProBase::GetRotateAngle(E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, in
 
 	return true;
 }
+
+
+CProMrg* CProMrg::GetInstance()
+{
+	static CProMrg instance;
+	return &instance;
+}
+
+CProBase* CProMrg::GetPrototypeByFileName(CString p_sFileName)
+{
+	//暂时只有厨卫
+	CProBase* pRet = NULL;
+
+	pRet = GetProKitchenByFileName(p_sFileName);
+	if (pRet != NULL)
+		return pRet;
+
+	pRet = GetProBathroomByFileName(p_sFileName);
+	return pRet;
+}
+
+CProBathroom* CProMrg::GetProBathroomByFileName(CString p_sFileName)
+{
+	for (UINT i = 0; i < m_allProBathrooms.size(); i++)
+	{
+		if (m_allProBathrooms[i].m_sFileName == p_sFileName)
+			return &m_allProBathrooms[i];
+	}
+	return NULL;
+}
+
+void CProMrg::AddProBathroom(const CProBathroom& p_proBathroom)
+{
+	for (UINT i = 0; i < m_allProBathrooms.size(); i++)
+	{
+		//如果原型已经存在，更新原型
+		if (m_allProBathrooms[i].m_sFileName == p_proBathroom.m_sFileName)
+		{
+			m_allProBathrooms[i] = p_proBathroom;
+			return;
+		}
+	}
+	m_allProBathrooms.push_back(p_proBathroom);
+}
+
+CProKitchen* CProMrg::GetProKitchenByFileName(CString p_sFileName)
+{
+	for (UINT i = 0; i < m_allProKitchens.size(); i++)
+	{
+		if (m_allProKitchens[i].m_sFileName == p_sFileName)
+			return &m_allProKitchens[i];
+	}
+	return NULL;
+}
+
+void CProMrg::AddProKitchen(const CProKitchen& p_proKitchen)
+{
+	for (UINT i = 0; i < m_allProKitchens.size(); i++)
+	{
+		//如果原型已经存在，更新原型
+		if (m_allProKitchens[i].m_sFileName == p_proKitchen.m_sFileName)
+		{
+			m_allProKitchens[i] = p_proKitchen;
+			return;
+		}
+	}
+	m_allProKitchens.push_back(p_proKitchen);
+}
+
+void CProBathroom::AddSize(int p_xLen, int p_yLen)
+{
+	//卫生间X边长不能大于Y边长
+	if (p_xLen > p_yLen)
+		return;
+	CProBase::AddSize(p_xLen, p_yLen);
+}

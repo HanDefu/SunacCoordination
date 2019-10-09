@@ -170,6 +170,6 @@ int AttrObject::GetFile(CString &filePathName)
 
 CProBase* AttrObject::GetPrototype()
 {
-	return WebIO::GetPrototypeByFileName(m_fileName);
+	return CProMrg::GetInstance()->GetPrototypeByFileName(m_fileName);
 }
 
