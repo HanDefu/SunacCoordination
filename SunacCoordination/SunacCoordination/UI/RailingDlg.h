@@ -1,6 +1,8 @@
 #pragma once
 #include "GridCtrlWithPreview.h"
 #include "afxwin.h"
+#include "../Object/Railing/AttrRailing.h"
+#include "ComFun_MFC.h"
 
 // CRailingDlg 对话框
 
@@ -41,6 +43,7 @@ public:
 	double m_height;// 栏杆高度	
 	double m_heightBase;// 反坎高度	
 	double m_width;// 栏杆长度
+	afx_msg void OnCbnSelchangeComboRailingtype();
 };
 
 extern CRailingDlg* g_railingDlg;

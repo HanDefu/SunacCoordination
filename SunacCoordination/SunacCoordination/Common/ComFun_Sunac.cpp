@@ -893,6 +893,16 @@ CString TY_GetLocalFilePath()
 #endif
 }
 
+CString TY_GetLocalImagePath()
+{
+	CString appPath = MD2010_GetAppPath();
+#ifdef WORK_LOCAL//本地模式
+	return appPath + L"\\support\\Sunac2019\\Image\\";
+#else
+	return appPath + L"\\support\\Sunac2019\\Files\\";
+#endif
+}
+
 /************************************************************************
 说明：
     在文件夹中查找文件（仅在指定文件夹查找，不递归）
