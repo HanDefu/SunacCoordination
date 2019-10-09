@@ -247,13 +247,7 @@
     <ClCompile Include="Object\AirCondition\RCAirCondition.cpp">
       <Filter>Object\AirCondition</Filter>
     </ClCompile>
-    <ClCompile Include="Object\WindowDoor\AttrDoor.cpp">
-      <Filter>Object\WindowDoor</Filter>
-    </ClCompile>
     <ClCompile Include="Object\WindowDoor\AttrWindow.cpp">
-      <Filter>Object\WindowDoor</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\WindowDoor\RCDoor.cpp">
       <Filter>Object\WindowDoor</Filter>
     </ClCompile>
     <ClCompile Include="Object\WindowDoor\RCWindow.cpp">
@@ -625,13 +619,7 @@
     <ClInclude Include="Object\AirCondition\RCAirCondition.h">
       <Filter>Object\AirCondition</Filter>
     </ClInclude>
-    <ClInclude Include="Object\WindowDoor\AttrDoor.h">
-      <Filter>Object\WindowDoor</Filter>
-    </ClInclude>
     <ClInclude Include="Object\WindowDoor\AttrWindow.h">
-      <Filter>Object\WindowDoor</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\WindowDoor\RCDoor.h">
       <Filter>Object\WindowDoor</Filter>
     </ClInclude>
     <ClInclude Include="Object\WindowDoor\RCWindow.h">

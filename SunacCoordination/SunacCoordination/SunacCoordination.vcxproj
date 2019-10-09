@@ -182,9 +182,7 @@
     <ClCompile Include="Object\RCStdFill.cpp" />
     <ClCompile Include="Object\RCWaterProof.cpp" />
     <ClCompile Include="Object\RCXianJiao.cpp" />
-    <ClCompile Include="Object\WindowDoor\AttrDoor.cpp" />
     <ClCompile Include="Object\WindowDoor\AttrWindow.cpp" />
-    <ClCompile Include="Object\WindowDoor\RCDoor.cpp" />
     <ClCompile Include="Object\WindowDoor\RCWindow.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -287,9 +285,7 @@
     <ClInclude Include="Object\RCStdFill.h" />
     <ClInclude Include="Object\RCWaterProof.h" />
     <ClInclude Include="Object\RCXianJiao.h" />
-    <ClInclude Include="Object\WindowDoor\AttrDoor.h" />
     <ClInclude Include="Object\WindowDoor\AttrWindow.h" />
-    <ClInclude Include="Object\WindowDoor\RCDoor.h" />
     <ClInclude Include="Object\WindowDoor\RCWindow.h" />
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="StdAfx.h" />

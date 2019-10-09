@@ -2,7 +2,6 @@
 
 #include <vector>
 #include "../Object/WindowDoor/AttrWindow.h"
-#include "../Object/WindowDoor/AttrDoor.h"
 #include "../Object/Bathroom/AttrBathroom.h"
 #include "../Object/Kitchen/AttrKitchen.h"
 #include "../Object/Railing/AttrRailing.h"
@@ -27,14 +26,14 @@ public:
 	std::vector<AttrWindow >  GetWindows(double p_width, double p_heigh, CString openType, int openNum, CString gongNengQu)const;
 	std::vector<AttrWindow >  GetAllWindows()const;
 
-	std::vector<AttrDoor >  GetAllDoors()const;
-	std::vector<AttrDoor >  GetDoors(double p_width, double p_heigh, CString doorType)const;
+	std::vector<AttrWindow >  GetAllDoors()const;
+	std::vector<AttrWindow >  GetDoors(double p_width, double p_heigh, CString doorType)const;
 
-
-	std::vector<AttrWindow > ParseWindowsFromXML(CMarkup xml)const;//从XML解析窗户信息
-	std::vector<AttrDoor > ParseDoorsFromXML(CMarkup xml)const;//从XML解析门信息
 
 protected:
+	std::vector<AttrWindow > ParseWindowsFromXML(CMarkup xml)const;//从XML解析窗户信息
+	std::vector<AttrWindow > ParseDoorsFromXML(CMarkup xml)const;//从XML解析门信息
+
 
 };
 

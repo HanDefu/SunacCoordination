@@ -73,7 +73,6 @@ bool TY_IsWindow(AcDbObjectId Id);
 bool TY_Iskitchen(AcDbObjectId Id);
 bool TY_IsBathroom(AcDbObjectId Id);
 bool TY_IsAirCon(AcDbObjectId Id);
-bool TY_IsDoor(AcDbObjectId Id);
 bool TY_IsRailing(AcDbObjectId Id);
 
 eRCType TY_GetType(AcDbBlockReference *pBlockReference);
