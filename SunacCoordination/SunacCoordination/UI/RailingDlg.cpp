@@ -7,6 +7,9 @@
 #include "../Common/ComFun_Sunac.h"
 //#include "RailingBaseDlg.h"
 #include "../Object/Railing/RCRailing.h"
+#include "../WebIO/WebIO.h"
+#include "../GlobalSetting.h"
+#include "atlimage.h"
 
 
 // CRailingDlg 对话框
@@ -62,6 +65,7 @@ BEGIN_MESSAGE_MAP(CRailingDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDC_BUTTON_INSERTRAILING, &CRailingDlg::OnBnClickedInsertToCAD)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
 	ON_BN_CLICKED(IDC_BUTTON_SELECTLINE, &CRailingDlg::OnBnClickedButtonSelectline)
+	ON_CBN_SELCHANGE(IDC_COMBO_RAILINGTYPE, &CRailingDlg::OnCbnSelchangeComboRailingtype)
 END_MESSAGE_MAP()
 
 
@@ -211,5 +215,38 @@ void CRailingDlg::OnBnClickedButtonSelectline()
 
 	double len = pnt2.x - pnt1.x;
 	m_width = len;
+	UpdateData(FALSE);
+}
+
+
+void CRailingDlg::OnCbnSelchangeComboRailingtype()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	UpdateData(TRUE);
+
+	//获取控件ComboBox中选的值
+	//eRailingType RailingType = E_RAILING_ALL;
+	CString type = TYUI_GetComboBoxText(m_type);
+
+	if (type == _T("铁艺栏杆"))
+	{
+		//RailingType = E_RAILING_ALL;
+
+		m_preRailing.ClearAllPreviews();
+		m_preRailing.SetColumnCount(1);
+		m_preRailing.SetDisplayRows(1);
+		m_preRailing.SetDisplayColumns(1);
+
+		for (UINT i = 0; i < 7; i++)
+		{
+			CString str;
+			str.Format(_T("原型编号：Railing_T1"));
+			m_preRailing.AddPreview(i, 0, TY_GetLocalImagePath() + "Railing_T1.png", str);
+		}
+	}
+
+
+	m_preRailing.SelectPreview(0, 0);
+
 	UpdateData(FALSE);
 }
