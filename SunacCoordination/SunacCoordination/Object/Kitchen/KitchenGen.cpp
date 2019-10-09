@@ -717,16 +717,16 @@ CKitchGenSTATIC::CKitchGenSTATIC(AttrKitchen* p_att)
 
 CKitchGen* CKitchMrg::CreateKitchGenByKitchType(AttrKitchen* p_attr)
 {
-	if (p_attr->m_kitchenType.Left(3) == _T("KUq") || p_attr->m_kitchenType.Find(L"_c") == -1)
+	if (p_attr->m_kitchenType.Left(3) == _T("KUq") && p_attr->m_kitchenType.Find(L"_c") == -1)
 		return new CKitchGenKUQ(p_attr);
 	else if (p_attr->m_kitchenType.Left(3) == _T("KUq"))
 		return new CKitchGenKUQ_C(p_attr);
 	else if (p_attr->m_kitchenType.Left(3) == _T("KUs"))
 		return new CKitchGenKUS(p_attr);
 	else if (p_attr->m_kitchenType.Left(2) == _T("KL"))
-		return new CKitchGenKUQ(p_attr);
+		return new CKitchGenKL(p_attr);
 	else if (p_attr->m_kitchenType.Left(2) == _T("KI"))
-		return new CKitchGenKUQ(p_attr);
+		return new CKitchGenKI(p_attr);
 	else
 		return NULL;
 }

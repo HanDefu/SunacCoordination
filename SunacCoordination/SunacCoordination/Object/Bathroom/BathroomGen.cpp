@@ -231,7 +231,7 @@ CBathroomGen* CBathroomMrg::CreateBathroomByAttribute(AttrBathroom* p_attr)
 	else if (p_attr->m_sBathroomType.Left(2) == _T("TL"))
 		return new CBathroomGenKL(p_attr);
 	else if (p_attr->m_sBathroomType.Left(2) == _T("TU"))
-		return new CBathroomGenKL(p_attr);
+		return new CBathroomGenKU(p_attr);
 	else
 		return NULL;
 }
