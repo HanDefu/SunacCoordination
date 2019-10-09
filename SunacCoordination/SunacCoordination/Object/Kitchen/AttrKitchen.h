@@ -38,6 +38,7 @@ public:
 
 	virtual eRCType GetType() {return KITCHEN;}
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
+	virtual bool IsPrototypeEqual(const AttrKitchen& p_att);
 
 public:
 	bool m_hasPaiQiDao;//是否含有排气道

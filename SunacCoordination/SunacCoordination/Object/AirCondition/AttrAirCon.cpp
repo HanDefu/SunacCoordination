@@ -85,3 +85,64 @@ bool AttrAirCon::isEqualTo(AttrObject*other)
 		);*/
 }
 
+bool AttrAirCon::IsPrototypeEqual(const AttrAirCon& p_att)
+{
+	if (p_att.m_airConHorseNumber != m_airConHorseNumber)
+	{
+		return false;
+	}
+	else if (p_att.m_airConId != m_airConId)
+	{
+		return false;
+	}
+	else if (p_att.m_airConPipePos != m_airConPipePos)
+	{
+		return false;
+	}
+	else if (p_att.m_airConRainRiser != m_airConRainRiser)
+	{
+		return false;
+	}
+	else if (p_att.m_airConRainRiserPos != m_airConRainRiserPos)
+	{
+		return false;
+	}
+	else if (p_att.m_airConInstallNetSize != m_airConInstallNetSize)
+	{
+		return false;
+	}
+	
+	else if (p_att.m_prototypeCode != m_prototypeCode)
+	{
+		return false;
+	}
+	else if (p_att.m_type != m_type)
+	{
+		return false;
+	}
+	else if (p_att.m_isDynamic != m_isDynamic)
+	{
+		return false;
+	}
+	else if (p_att.m_isJiTuan != m_isJiTuan)
+	{
+		return false;
+	}
+	else if (p_att.m_quyuId != m_quyuId)
+	{
+		return false;
+	}
+	else if (p_att.m_quyuName != m_quyuName)
+	{
+		return false;
+	}
+	else if (p_att.m_fileName != m_fileName)
+	{
+		return false;
+	}
+	else if (p_att.m_instanceCode != m_instanceCode)
+	{
+		return false;
+	}
+	else return true;
+}

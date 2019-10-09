@@ -43,6 +43,7 @@ public:
 	//}}AFX_ARX_METHODS
 	virtual eRCType GetType() {return Bathroom;}
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
+	virtual bool IsPrototypeEqual(const AttrBathroom& p_att);
 
 public:
 	bool m_hasPaiQiDao; //是否含有排气道

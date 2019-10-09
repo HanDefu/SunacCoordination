@@ -166,3 +166,100 @@ bool AttrKitchen::isEqualTo(AttrObject*other)
 		);
 }
 
+bool AttrKitchen::IsPrototypeEqual(const AttrKitchen& p_att)
+{
+	if (p_att.m_hasPaiQiDao != m_hasPaiQiDao)
+	{
+		return false;
+	}
+	else if (p_att.m_isGuoBiao != m_isGuoBiao)
+	{
+		return false;
+	}
+	else if (p_att.m_airVentW != m_airVentW)
+	{
+		return false;
+	}
+	else if (p_att.m_airVentH != m_airVentH)
+	{
+		return false;
+	}
+	else if (p_att.m_floorRange != m_floorRange)
+	{
+		return false;
+	}
+	else if (p_att.m_airVentOffsetX != m_airVentOffsetX)
+	{
+		return false;
+	}
+	else if (p_att.m_airVentOffsetY != m_airVentOffsetY)
+	{
+		return false;
+	}
+	else if (p_att.m_isMirror != m_isMirror)
+	{
+		return false;
+	}
+	else if (p_att.m_kitchenType != m_kitchenType)
+	{
+		return false;
+	}
+	else if (p_att.m_windowDoorPos != m_windowDoorPos)
+	{
+		return false;
+	}
+	else if (p_att.m_shuiPenType != m_shuiPenType)
+	{
+		return false;
+	}
+	else if (p_att.m_bingXiangType != m_bingXiangType)
+	{
+		return false;
+	}
+	else if (p_att.m_zaoTaiType != m_zaoTaiType)
+	{
+		return false;
+	}
+	else if (p_att.m_width != m_width)
+	{
+		return false;
+	}
+	else if (p_att.m_height != m_height)
+	{
+		return false;
+	}
+
+	else if (p_att.m_prototypeCode != m_prototypeCode)
+	{
+		return false;
+	}
+	else if (p_att.m_type != m_type)
+	{
+		return false;
+	}
+	else if (p_att.m_isDynamic != m_isDynamic)
+	{
+		return false;
+	}
+	else if (p_att.m_isJiTuan != m_isJiTuan)
+	{
+		return false;
+	}
+	else if (p_att.m_quyuId != m_quyuId)
+	{
+		return false;
+	}
+	else if (p_att.m_quyuName != m_quyuName)
+	{
+		return false;
+	}
+	else if (p_att.m_fileName != m_fileName)
+	{
+		return false;
+	}
+	else if (p_att.m_instanceCode != m_instanceCode)
+	{
+		return false;
+	}
+	else return true;
+}

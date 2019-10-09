@@ -35,6 +35,7 @@ public:
 
 	virtual eRCType GetType() {return WINDOW;}
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
+	virtual bool IsPrototypeEqual(const AttrWindow& p_att);
 
 public:
 	CString m_openType;		//开启类型
