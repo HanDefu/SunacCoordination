@@ -17,7 +17,7 @@
 #endif
 
 
-class DLLIMPEXP  AttrWindow : public AttrObject
+class DLLIMPEXP  AttrWindow : public AttrObject  //门窗共用AttrWindow
 {
 public:
 	ACRX_DECLARE_MEMBERS(AttrWindow);
@@ -35,20 +35,15 @@ public:
 
 	virtual eRCType GetType() {return WINDOW;}
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
+	virtual bool IsPrototypeEqual(const AttrWindow& p_att);
 
 public:
 	CString m_openType;		//开启类型
-	Adesk::Int32 m_openQty;	//开启扇数量
-	CString m_gongNengquType;//功能区类型
-
-	bool m_isZhuanJiao;		//是否转角窗
-	bool m_isMirrorWindow;	//是否对称窗型 
 
 	CString m_frontViewFile;	//原型立面文件, 展开图用基类的m_fileName
 	CString	m_topViewFile;		//原型俯视图文件
 	CString m_leftViewFile;		//原型侧视图文件
 	
-
 	//动态窗型属性
 	double m_minWid;//宽度尺寸最小值
 	double m_maxWid;//宽度尺寸最大值
@@ -61,12 +56,17 @@ public:
 
 	vSRCDimData m_dimData;
 
+	Adesk::Int32 m_openQty;	//开启扇数量
+	CString m_gongNengquType;//功能区类型
+
+	bool m_isZhuanJiao;		//是否转角窗
+	bool m_isMirrorWindow;	//是否对称窗型 
+
+
+
 	//////////////////////////////////////////////////////////////////////////
 	//算量相关
 	vSCalcData m_calFormulas;
-	
-
-
 
 
 	//////////////////////////////////////////////////////////////////////////

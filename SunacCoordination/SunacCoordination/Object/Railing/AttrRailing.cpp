@@ -78,3 +78,57 @@ bool AttrRailing::isEqualTo(AttrObject*other)
 	/*return (m_openType == pRealObj->m_openType
 		);*/
 }
+
+bool AttrRailing::IsPrototypeEqual(const AttrRailing& p_att)
+{
+	if (p_att.m_height != m_height)
+	{
+		return false;
+	}
+	else if (p_att.m_fanKanHeight != m_fanKanHeight)
+	{
+		return false;
+	}
+	else if (p_att.m_length != m_length)
+	{
+		return false;
+	}
+	else if (p_att.m_railingType != m_railingType)
+	{
+		return false;
+	}
+
+	else if (p_att.m_prototypeCode != m_prototypeCode)
+	{
+		return false;
+	}
+	else if (p_att.m_type != m_type)
+	{
+		return false;
+	}
+	else if (p_att.m_isDynamic != m_isDynamic)
+	{
+		return false;
+	}
+	else if (p_att.m_isJiTuan != m_isJiTuan)
+	{
+		return false;
+	}
+	else if (p_att.m_quyuId != m_quyuId)
+	{
+		return false;
+	}
+	else if (p_att.m_quyuName != m_quyuName)
+	{
+		return false;
+	}
+	else if (p_att.m_fileName != m_fileName)
+	{
+		return false;
+	}
+	else if (p_att.m_instanceCode != m_instanceCode)
+	{
+		return false;
+	}
+	else return true;
+}

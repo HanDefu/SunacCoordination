@@ -167,3 +167,177 @@ bool AttrWindow::isEqualTo(AttrObject*other)
 		);
 }
 
+bool AttrWindow::IsPrototypeEqual(const AttrWindow& p_att)
+{
+	if (p_att.m_dimData.empty()||m_dimData.empty())
+	{
+		auto it1 = p_att.m_dimData.begin();
+		auto it2 = m_dimData.begin();
+		while (it1 != p_att.m_dimData.end()&& it2 != m_dimData.end())
+		{
+			if (it1->values != it2->values)
+			{
+				return false;
+			}
+			if (it1->type != it2->type)
+			{
+				return false;
+			}
+			if (it1->sFomula != it2->sFomula)
+			{
+				return false;
+			}
+			if (it1->sCodeName != it2->sCodeName)
+			{
+				return false;
+			}
+			if (it1->prompt != it2->prompt)
+			{
+				return false;
+			}
+			if (it1->minValue != it2->minValue)
+			{
+				return false;
+			}
+			if (it1->maxValue != it2->maxValue)
+			{
+				return false;
+			}
+			if (it1->defaultValue != it2->defaultValue)
+			{
+				return false;
+			}
+			it1++;
+			it2++;
+		}
+	}
+	else 
+	{
+
+	}
+	if (p_att.m_calFormulas != m_calFormulas)
+	{
+		return false;
+	}
+	else if (p_att.m_fileName != m_fileName)
+	{
+		return false;
+	}
+	else if (p_att.m_frontViewFile != m_frontViewFile)
+	{
+		return false;
+	}
+	else if (p_att.m_gongNengquType != m_gongNengquType)
+	{
+		return false;
+	}
+	else if (p_att.m_instanceCode != m_instanceCode)
+	{
+		return false;
+	}
+	else if (p_att.m_isBayWindow != m_isBayWindow)
+	{
+		return false;
+	}
+	else if (p_att.m_isDynamic != m_isDynamic)
+	{
+		return false;
+	}
+	else if (p_att.m_isJiTuan != m_isJiTuan)
+	{
+		return false;
+	}
+	else if (p_att.m_isMirror != m_isMirror)
+	{
+		return false;
+	}
+	else if (p_att.m_isMirrorWindow != m_isMirrorWindow)
+	{
+		return false;
+	}
+	else if (p_att.m_isZhuanJiao != m_isZhuanJiao)
+	{
+		return false;
+	}
+	else if (p_att.m_leftViewFile != m_leftViewFile)
+	{
+		return false;
+	}
+	else if (p_att.m_maxWid != m_maxWid)
+	{
+		return false;
+	}
+	else if (p_att.m_minWid != m_minWid)
+	{
+		return false;
+	}
+	else if (p_att.m_openQty != m_openQty)
+	{
+		return false;
+	}
+	else if (p_att.m_openType != m_openType)
+	{
+		return false;
+	}
+	else if (p_att.m_openWindowSize != m_openWindowSize)
+	{
+		return false;
+	}
+	else if (p_att.m_plugslotSize != m_plugslotSize)
+	{
+		return false;
+	}
+	else if (p_att.m_prototypeCode != m_prototypeCode)
+	{
+		return false;
+	}
+	else if (p_att.m_quyuId != m_quyuId)
+	{
+		return false;
+	}
+	else if (p_att.m_quyuName != m_quyuName)
+	{
+		return false;
+	}
+	else if (p_att.m_staticHeight != m_staticHeight)
+	{
+		return false;
+	}
+	else if (p_att.m_staticTongFengQty != m_staticTongFengQty)
+	{
+		return false;
+	}
+	else if (p_att.m_staticWidth != m_staticWidth)
+	{
+		return false;
+	}
+	else if (p_att.m_tongFengFormula != m_tongFengFormula)
+	{
+		return false;
+	}
+	else if (p_att.m_topViewFile != m_topViewFile)
+	{
+		return false;
+	}
+	else if (p_att.m_type != m_type)
+	{
+		return false;
+	}
+	else if (p_att.m_version != m_version)
+	{
+		return false;
+	}
+	else if (p_att.m_viewDir != m_viewDir)
+	{
+		return false;
+	}
+	else if (p_att.m_wallDis != m_wallDis)
+	{
+		return false;
+	}
+	else if (p_att.m_windowH2 != m_windowH2)
+	{
+		return false;
+	}
+	else return true;
+}
