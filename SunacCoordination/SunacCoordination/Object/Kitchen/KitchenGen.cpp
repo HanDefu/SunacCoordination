@@ -181,7 +181,7 @@ AcDbObjectId CKitchGen::GenKitchen(const AcGePoint3d p_pos, int p_angle)
 	RCKitchen oneKitchen;
 
 	//先插入到原点，最后再做镜像和旋转处理
-	AcDbObjectId id = oneKitchen.Insert(TY_GetLocalFilePath() + m_attr.m_fileName, p_pos, 0, L"0", 256);
+	AcDbObjectId id = oneKitchen.InsertFromFile(TY_GetLocalFilePath() + m_attr.m_fileName, p_pos, 0, L"0", 256);
 	oneKitchen.InitParameters();
 	oneKitchen.SetParameter(L"开间", m_attr.m_width);
 	oneKitchen.SetParameter(L"进深", m_attr.m_height);
@@ -586,10 +586,11 @@ int CKitchGenKL::SetZaoTaiPos(AcDbObjectId kitchenId, double kaiJian, double jin
 	}
 	else
 	{
-		//进深≥2900时，灶台右侧距墙面装修完成面， 有多种解释
-		//1.灶台右侧距离左侧装修完成面1100
-		//2.灶台右侧距离右侧装修完成面1100
-		TYCOM_SetDynamicBlockValue(kitchenId, L"灶台距墙X", 1100 - ztt);
+		double zxt = 0;
+		TYCOM_GetDynamicBlockData(kitchenId, L"装修厚度", zxt);
+
+
+		TYCOM_SetDynamicBlockValue(kitchenId, L"灶台距墙X", jinShen - 2 * zxt - 1100 - ztt);
 	}
 
 	acDocManager->unlockDocument(curDoc());
