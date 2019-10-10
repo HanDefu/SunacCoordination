@@ -50,6 +50,12 @@ void CMD_SUNACWINDOW()
 	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
 	if (g_windowDlg == NULL)
 	{
+		//预览控件必须在当前文档下加载
+		if (acDocManager->documentCount() == 0)
+		{
+			AfxMessageBox(L"没有可以操作的文档");
+			return;
+		}
 		g_windowDlg = new CWindowDlg(acedGetAcadFrame());
 		g_windowDlg->Create(IDD_DIALOG_WINDOW);
 	}
@@ -64,6 +70,12 @@ void CMD_SUNACKITCHEN()
 	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
 	if (g_kitchenDlg == NULL)
 	{
+		//预览控件必须在当前文档下加载
+		if (acDocManager->documentCount() == 0)
+		{
+			AfxMessageBox(L"没有可以操作的文档");
+			return;
+		}
 		g_kitchenDlg = new CKitchenDlg(acedGetAcadFrame());
 		g_kitchenDlg->Create(IDD_DIALOG_KITCHEN);
 	}
@@ -78,6 +90,12 @@ void CMD_SUNACBATHROOM()
 	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
 	if (g_bathroomDlg == NULL)
 	{
+		//预览控件必须在当前文档下加载
+		if (acDocManager->documentCount() == 0)
+		{
+			AfxMessageBox(L"没有可以操作的文档");
+			return;
+		}
 		g_bathroomDlg = new CBathroomDlg(acedGetAcadFrame());
 		g_bathroomDlg->Create(IDD_DIALOG_BATHROOM);
 	}
@@ -101,6 +119,12 @@ void CMD_SUNACRAILING()
 	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
 	if (g_railingDlg == NULL)
 	{
+		//预览控件必须在当前文档下加载
+		if (acDocManager->documentCount() == 0)
+		{
+			AfxMessageBox(L"没有可以操作的文档");
+			return;
+		}
 		g_railingDlg = new CRailingDlg(acedGetAcadFrame());
 		g_railingDlg->Create(IDD_DIALOG_RAILING);
 	}
@@ -133,6 +157,12 @@ void CMD_SUNACAIRCONDITIONER()
 	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
 	if (g_airconditionerDlg == NULL)
 	{
+		//预览控件必须在当前文档下加载
+		if (acDocManager->documentCount() == 0)
+		{
+			AfxMessageBox(L"没有可以操作的文档");
+			return;
+		}
 		g_airconditionerDlg = new CAirconditionerDlg(acedGetAcadFrame());
 		g_airconditionerDlg->Create(IDD_DIALOG_AIRCONDITIONER);
 	}

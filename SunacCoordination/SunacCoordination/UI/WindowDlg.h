@@ -36,6 +36,7 @@ public:
 	afx_msg void OnBnClickedRadioDoor();
 	afx_msg void OnBnClickedCalculate();
 	afx_msg void OnBnClickedAutoIndex();
+	afx_msg void OnBnClickedSelOnDwg();
 	afx_msg void OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult);
 
 	void SetRadioDoor(int radioDoor);
