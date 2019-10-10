@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../res/resource.h"
-#include "afxcmn.h"
 #include "TreeCtrlEx.h"
 // DlgLeftBar dialog
 

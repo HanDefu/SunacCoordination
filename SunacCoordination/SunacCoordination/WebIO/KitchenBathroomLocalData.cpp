@@ -91,6 +91,7 @@ void CKitchenBathroomLocalData::InitBathroomLocalData()
 	proBathrooms[0].m_windowPos = E_DIR_TOP;
 	proBathrooms[0].AddSizeRange(1600, 2450, 1600, 3050);
 	proBathrooms[0].AddSizeRange(1700, 2450, 1850, 3050);
+	proBathrooms[0].m_bIsDynamic = true;
 
 	proBathrooms[1].m_sFileName = L"TI3_g.dwg";
 	proBathrooms[1].m_sType = L"TI3_g";
@@ -98,6 +99,7 @@ void CKitchenBathroomLocalData::InitBathroomLocalData()
 	proBathrooms[1].m_windowPos = E_DIR_TOP;
 	proBathrooms[1].AddSizeRange(1600, 2750, 1600, 3200);
 	proBathrooms[1].AddSizeRange(1700, 2750, 1850, 3200);
+	proBathrooms[1].m_bIsDynamic = true;
 
 	proBathrooms[2].m_sFileName = L"TI4.dwg";
 	proBathrooms[2].m_sType = L"TI4";
@@ -105,6 +107,7 @@ void CKitchenBathroomLocalData::InitBathroomLocalData()
 	proBathrooms[2].m_windowPos = E_DIR_TOP;
 	proBathrooms[2].AddSizeRange(1600, 3050, 1600, 3500);
 	proBathrooms[2].AddSizeRange(1700, 3050, 1850, 3500);
+	proBathrooms[2].m_bIsDynamic = true;
 
 	proBathrooms[3].m_sFileName = L"TI4_g.dwg";
 	proBathrooms[3].m_sType = L"TI4_g";
@@ -112,6 +115,7 @@ void CKitchenBathroomLocalData::InitBathroomLocalData()
 	proBathrooms[3].m_windowPos = E_DIR_TOP;
 	proBathrooms[3].AddSizeRange(1600, 3500, 1600, 3650);
 	proBathrooms[3].AddSizeRange(1700, 3500, 1850, 3650);
+	proBathrooms[3].m_bIsDynamic = true;
 
 	proBathrooms[4].m_sFileName = L"TL3.dwg";
 	proBathrooms[4].m_sType = L"TL3";
@@ -121,48 +125,56 @@ void CKitchenBathroomLocalData::InitBathroomLocalData()
 	//不支持以下尺寸
 	proBathrooms[4].DeleteSize(1700, 1850);
 	proBathrooms[4].DeleteSize(1700, 2000);
+	proBathrooms[4].m_bIsDynamic = true;
 
 	proBathrooms[5].m_sFileName = L"TL3_标准淋浴房.dwg";
 	proBathrooms[5].m_sType = L"TL3_b";
 	proBathrooms[5].m_doorPos = E_DIR_BOTTOM;
 	proBathrooms[5].m_windowPos = E_DIR_RIGHT;
 	proBathrooms[5].AddSizeRange(2000, 1850, 2150, 2300);
+	proBathrooms[5].m_bIsDynamic = true;
 
 	proBathrooms[6].m_sFileName = L"TL4.dwg";
 	proBathrooms[6].m_sType = L"TL4";
 	proBathrooms[6].m_doorPos = E_DIR_BOTTOM;
 	proBathrooms[6].m_windowPos = E_DIR_RIGHT;
 	proBathrooms[6].AddSizeRange(1700, 2450, 1850, 2750);
+	proBathrooms[6].m_bIsDynamic = true;
 
 	proBathrooms[7].m_sFileName = L"TL4_标准淋浴房.dwg";
 	proBathrooms[7].m_sType = L"TL4_b";
 	proBathrooms[7].m_doorPos = E_DIR_BOTTOM;
 	proBathrooms[7].m_windowPos = E_DIR_RIGHT;
 	proBathrooms[7].AddSizeRange(2000, 2450, 2150, 2450);
+	proBathrooms[7].m_bIsDynamic = true;
 
 	proBathrooms[8].m_sFileName = L"TU3-1600X2450.dwg";
 	proBathrooms[8].m_sType = L"TU3";
 	proBathrooms[8].m_doorPos = E_DIR_LEFT;
 	proBathrooms[8].m_windowPos = E_DIR_RIGHT;
 	proBathrooms[8].AddSize(1600, 2450);
+	proBathrooms[8].m_bIsDynamic = false;
 
 	proBathrooms[9].m_sFileName = L"TU3-1850X2000.dwg";
 	proBathrooms[9].m_sType = L"TU3";
 	proBathrooms[9].m_doorPos = E_DIR_LEFT;
 	proBathrooms[9].m_windowPos = E_DIR_TOP;
 	proBathrooms[9].AddSize(1850, 2000);
+	proBathrooms[9].m_bIsDynamic = false;
 
 	proBathrooms[10].m_sFileName = L"TU3-1850X2750.dwg";
 	proBathrooms[10].m_sType = L"TU3";
 	proBathrooms[10].m_doorPos = E_DIR_LEFT;
 	proBathrooms[10].m_windowPos = E_DIR_TOP;
 	proBathrooms[10].AddSize(1850, 2750);
+	proBathrooms[10].m_bIsDynamic = false;
 
 	proBathrooms[11].m_sFileName = L"TU4-2000X2750.dwg";
 	proBathrooms[11].m_sType = L"TU4";
 	proBathrooms[11].m_doorPos = E_DIR_LEFT;
 	proBathrooms[11].m_windowPos = E_DIR_TOP;
 	proBathrooms[11].AddSize(2000, 2750);
+	proBathrooms[11].m_bIsDynamic = false;
 
 	for (UINT i = 0; i < proBathrooms.size(); i++)
 		CProMrg::GetInstance()->AddProBathroom(proBathrooms[i]);

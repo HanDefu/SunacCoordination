@@ -155,6 +155,10 @@ void CKitchenDlg::OnBnClickedButtonInsert()
 
 	m_pKitchGen->GetKitchenAtt()->m_isMirror = m_isMirror.GetCheck() ? true : false;
 
+	CString newPrototypeCode = TYUI_GetText(m_number);
+	if (!m_bAutoIndex && !newPrototypeCode.IsEmpty())
+		m_pKitchGen->GetKitchenAtt()->m_prototypeCode = newPrototypeCode;
+
 	AcGePoint3d origin = m_rect.GetLB();
 
 	//Éú³É
