@@ -45,7 +45,7 @@ public:
 
 	virtual bool isEqualTo(RCObject*other = 0);//基础数据一致
 
-	virtual AcDbObjectId InsertFromFile(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color);
+	//virtual AcDbObjectId InsertFromFile(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color);
 
 public: 
 	vRCPairKeyDValue m_dKeyValues;

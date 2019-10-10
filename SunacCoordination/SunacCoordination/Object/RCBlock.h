@@ -25,7 +25,7 @@ public:
 	virtual bool isEqualTo(RCObject*other = 0);//基础数据一致
 	virtual RCBlock & operator=(const RCBlock &rhs);
 
-	virtual AcDbObjectId InsertFromFile(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color);
+	virtual AcDbObjectId Insert(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color);
 	AcDbObjectId RCBlock::Insert(CString layoutname, CString blockDefineName, 
 		AcGePoint3d origin, double angle, CString layerName, int color);
 

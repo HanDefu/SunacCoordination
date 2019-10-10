@@ -224,7 +224,7 @@ void CAirconditionerDlg::OnBnClickedButtonInsertac()
 
 	RCAirCondition blockAirCon;
 	//将块插入图形空间
-	blockAirCon.InsertFromFile(m_fileName, pnt, 0, L"0", 256);
+	blockAirCon.Insert(m_fileName, pnt, 0, L"0", 256);
 
 	//上下镜像
 	if (m_upDownImage.GetCheck())

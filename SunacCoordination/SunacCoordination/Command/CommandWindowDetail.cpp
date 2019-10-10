@@ -105,7 +105,7 @@ static int InsertTemplates(vRCWindow &allWindowsTypes, AcGePoint3d pnt, vSWindow
         SWindowDetailTemplate oneTemplate;
 		oneTemplate.pnt = oneTemplate.GetInsertPnt(pnt,rowIndex,columnIndex);
 		
-		AcDbObjectId id = oneTemplate.thisBlock.InsertFromFile(WindowDetailTemplate::GetTemplateFileName(),
+		AcDbObjectId id = oneTemplate.thisBlock.Insert(WindowDetailTemplate::GetTemplateFileName(),
 			oneTemplate.pnt,
 			0,
 			L"0",

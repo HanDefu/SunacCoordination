@@ -43,7 +43,7 @@ RCBlock & RCBlock::operator=(const RCBlock &other)
     return *this;
 } 
 
-AcDbObjectId RCBlock::InsertFromFile(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color)
+AcDbObjectId RCBlock::Insert(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color)
 {
 	WCHAR blockname[256] = L"";
 	CF_STR_get_file_name(fileName, blockname);

@@ -19,7 +19,7 @@ File description:
 #include <algorithm>
 #include "../Common/ComFun_DynamicBlock.h"
 #include "../Common/ComFun_Sunac.h"
-#include "../Common/ComFun_Str.h"
+//#include "../Common/ComFun_Str.h"
 //Constructor
 RCDynamicBlock::RCDynamicBlock(void)
 {
@@ -346,6 +346,7 @@ bool RCDynamicBlock::isEqualTo(RCObject*other)
 	return true;
 }
 
+/*
 
 AcDbObjectId RCDynamicBlock::InsertFromFile(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color)
 {
@@ -361,3 +362,4 @@ AcDbObjectId RCDynamicBlock::InsertFromFile(CString fileName, AcGePoint3d origin
 	acDocManager->unlockDocument(curDoc());
 	return m_id;
 }
+*/
