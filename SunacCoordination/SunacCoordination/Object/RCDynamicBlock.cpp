@@ -19,7 +19,7 @@ File description:
 #include <algorithm>
 #include "../Common/ComFun_DynamicBlock.h"
 #include "../Common/ComFun_Sunac.h"
-
+#include "../Common/ComFun_Str.h"
 //Constructor
 RCDynamicBlock::RCDynamicBlock(void)
 {
@@ -346,3 +346,18 @@ bool RCDynamicBlock::isEqualTo(RCObject*other)
 	return true;
 }
 
+
+AcDbObjectId RCDynamicBlock::InsertFromFile(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color)
+{
+	WCHAR blockname[256] = L"";
+	CF_STR_get_file_name(fileName, blockname);
+	CF_STR_get_file_name_2(blockname, blockname);
+	__time64_t tick = CTime::GetCurrentTime().GetTime();
+	CString str;
+	str.Format(L"_%d",tick);
+	m_blockRecordName = CString(blockname) + str;
+	acDocManager->lockDocument(curDoc());
+	MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, fileName, m_blockRecordName,  m_id, origin, angle, AcGeScale3d(1), layerName, color);
+	acDocManager->unlockDocument(curDoc());
+	return m_id;
+}
