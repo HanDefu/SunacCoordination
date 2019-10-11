@@ -1476,33 +1476,35 @@ int MD2010_GetCurrentMode()//1模型空间
 	acedGetVar(L"TILEMODE", &rb);
 	return rb.resval.rint;
 }
-
-int MD2010_CreateBlockDefine(const WCHAR* blockname, vAcDbObjectId &vids,AcGePoint3d ori, AcDbObjectId& blkDefId)
+//此函数存在问题，如果AcDbObjectIdArray中的实体已经加入到模型空间，则无法加入到新的块定义中
+int MD2010_CreateBlockDefine_old(const WCHAR* blockname, AcDbObjectIdArray &vids, AcGePoint3d ori, AcDbObjectId& blkDefId)
 {
+	Acad::ErrorStatus es;
+
 	AcDbBlockTable *pBlkTbl;
-	acdbHostApplicationServices()->workingDatabase()
-		->getBlockTable(pBlkTbl, AcDb::kForWrite);
+	acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForWrite);
 
-	AcDbBlockTableRecord *pBlkTblRcd;
-	pBlkTblRcd = new AcDbBlockTableRecord();
-
-	Acad::ErrorStatus es = pBlkTblRcd->setName(blockname);
-
-	//AcDbObjectId blkDefId;
+	AcDbBlockTableRecord *pBlkTblRcd = new AcDbBlockTableRecord();
 	es =pBlkTbl->add(blkDefId, pBlkTblRcd);
 	pBlkTbl->close();
 
+	es = pBlkTblRcd->setName(blockname);
+
 	AcDbObject *pObj = NULL;
 	AcDbObjectId id = 0;
-	for(int i = 0; i < (int)(vids.size()); i++)
+	for(int i = 0; i < vids.length(); i++)
 	{
-		acdbOpenAcDbObject(pObj,vids.at(i),AcDb::kForRead);
+		es = acdbOpenAcDbObject(pObj, vids.at(i),AcDb::kForRead);
 		AcDbEntity *pEnt = AcDbEntity ::cast(pObj);
 		if (pEnt == NULL)
 		{
-			pObj->close();
+			if (pObj!=NULL)
+			{
+				pObj->close();
+			}
 			continue;
 		}
+
 		es = pBlkTblRcd->appendAcDbEntity(id, pEnt);
 		pEnt->close();
 	}
@@ -1512,8 +1514,7 @@ int MD2010_CreateBlockDefine(const WCHAR* blockname, vAcDbObjectId &vids,AcGePoi
 	return 0;
 }
 
-Acad::ErrorStatus defineNewBlock(LPCTSTR blkName, AcDbBlockTableRecord*& newBlkRec,
-			   AcDbObjectId& newBlkRecId, AcDbDatabase* db)
+Acad::ErrorStatus defineNewBlock(LPCTSTR blkName, AcDbBlockTableRecord*& newBlkRec, AcDbObjectId& newBlkRecId, AcDbDatabase* db)
 {
 	ASSERT(db != NULL);
 
@@ -1679,7 +1680,7 @@ Acad::ErrorStatus cloneAndXformObjects(AcDbDatabase* db, const AcDbObjectIdArray
 	return Acad::eOk;
 }
 
-int MD2010_CreateBlockDefine_ExistEnts(const WCHAR* blockname, vAcDbObjectId &vids,AcGePoint3d ori, AcDbObjectId& blkDefId)
+int MD2010_CreateBlockDefine_ExistEnts(const WCHAR* blockname, AcDbObjectIdArray &vids, AcGePoint3d ori, AcDbObjectId& blkDefId)
 {
     if (MD2010_CheckBlockDefExist(blockname))
         return 1;
@@ -1690,16 +1691,11 @@ int MD2010_CreateBlockDefine_ExistEnts(const WCHAR* blockname, vAcDbObjectId &vi
 	// must transform entities to WCS origin to be correct block def
 	AcGeMatrix3d xformMat;
 	getUcsToWcsOriginMatrix(xformMat, ucsToWcs(ori), acdbHostApplicationServices()->workingDatabase());
-
-	 AcDbObjectIdArray entsToClone;
-	 for (int i = 0; i < (int)vids.size(); i++)
-	     entsToClone.append(vids[i]);
 	 
-	 if (cloneAndXformObjects(acdbHostApplicationServices()->workingDatabase(),entsToClone, blkDefId, xformMat, true) != Acad::eOk)
+	if (cloneAndXformObjects(acdbHostApplicationServices()->workingDatabase(), vids, blkDefId, xformMat, true) != Acad::eOk)
 		 return 1;
 
 	 return 0;
-
 }
 bool MD2010_CheckBlockDefExist(const WCHAR * blockname)
 {
@@ -1722,8 +1718,7 @@ bool MD2010_CheckBlockDefExist(const WCHAR * blockname)
 AcDbObjectId MD2010_GetBlockDefID(const WCHAR * blockname)
 {
 	AcDbBlockTable *pBlkTbl;
-	acdbHostApplicationServices()->workingDatabase()
-		->getBlockTable(pBlkTbl, AcDb::kForRead);
+	acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForRead);
 	if (!pBlkTbl->has(blockname))
 	{
 		acutPrintf(L"\n no %s", blockname);
@@ -1742,8 +1737,7 @@ int MD2010_InsertBlockReference_ModelSpace(const WCHAR * blockname, AcDbObjectId
 {
 	AcDbBlockTable *pBlkTbl;
 
-	acdbHostApplicationServices()->workingDatabase()
-		->getBlockTable(pBlkTbl, AcDb::kForRead);
+	acdbHostApplicationServices()->workingDatabase() ->getBlockTable(pBlkTbl, AcDb::kForRead);
 	if (!pBlkTbl->has(blockname))
 	{
 		acutPrintf(L"\n no %s", blockname);
@@ -1751,6 +1745,7 @@ int MD2010_InsertBlockReference_ModelSpace(const WCHAR * blockname, AcDbObjectId
 		return 1; 
 	}
 
+	acDocManager->lockDocument(curDoc());
 	// 获得用户指定的块表记录
 	AcDbObjectId blkDefId;
 	Acad::ErrorStatus es = pBlkTbl->getAt(blockname, blkDefId);
@@ -1773,6 +1768,9 @@ int MD2010_InsertBlockReference_ModelSpace(const WCHAR * blockname, AcDbObjectId
 	es =pBlkTblRcd->close();
 	es =pBlkTbl->close();
 
+
+	acDocManager->unlockDocument(curDoc());
+
 	return 0;
 }
 
@@ -1787,11 +1785,9 @@ int MD2010_InsertBlockReference_Layout(const WCHAR * layoutname, const WCHAR * b
 			if (MD2010_SetCurrentLayout(L"模型") == 1)
 				return 1;
 		}
-	}
-		
+	}		
 
-	acdbHostApplicationServices()->workingDatabase()
-		->getBlockTable(pBlkTbl, AcDb::kForRead);
+	acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForRead);
 	if (!pBlkTbl->has(blockname))
 	{
 		acutPrintf(L"\n no %s", blockname);

@@ -153,8 +153,8 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 	railingAtt.m_height = m_height;
 	railingAtt.m_length = m_width;
 
-	//railingAtt.m_prototypeCode = _T("Railing_T1"); //TODO 支持其他类型
-	//railingAtt.m_railingType = E_RAILING_TIEYI;
+	//railingAtt.m_prototypeCode = _T("Railing_B2"); //TODO 支持其他类型
+	//railingAtt.m_railingType = E_RAILING_BOLI;
 	Test(railingAtt);
 
 	CRCRailing* pRailing = CreateRailing(railingAtt);
