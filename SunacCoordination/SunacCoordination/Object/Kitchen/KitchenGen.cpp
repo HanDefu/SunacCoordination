@@ -586,10 +586,11 @@ int CKitchGenKL::SetZaoTaiPos(AcDbObjectId kitchenId, double kaiJian, double jin
 	}
 	else
 	{
-		//进深≥2900时，灶台右侧距墙面装修完成面， 有多种解释
-		//1.灶台右侧距离左侧装修完成面1100
-		//2.灶台右侧距离右侧装修完成面1100
-		TYCOM_SetDynamicBlockValue(kitchenId, L"灶台距墙X", 1100 - ztt);
+		double zxt = 0;
+		TYCOM_GetDynamicBlockData(kitchenId, L"装修厚度", zxt);
+
+
+		TYCOM_SetDynamicBlockValue(kitchenId, L"灶台距墙X", jinShen - 2 * zxt - 1100 - ztt);
 	}
 
 	acDocManager->unlockDocument(curDoc());
@@ -717,16 +718,16 @@ CKitchGenSTATIC::CKitchGenSTATIC(AttrKitchen* p_att)
 
 CKitchGen* CKitchMrg::CreateKitchGenByKitchType(AttrKitchen* p_attr)
 {
-	if (p_attr->m_kitchenType.Left(3) == _T("KUq") || p_attr->m_kitchenType.Find(L"_c") == -1)
+	if (p_attr->m_kitchenType.Left(3) == _T("KUq") && p_attr->m_kitchenType.Find(L"_c") == -1)
 		return new CKitchGenKUQ(p_attr);
 	else if (p_attr->m_kitchenType.Left(3) == _T("KUq"))
 		return new CKitchGenKUQ_C(p_attr);
 	else if (p_attr->m_kitchenType.Left(3) == _T("KUs"))
 		return new CKitchGenKUS(p_attr);
 	else if (p_attr->m_kitchenType.Left(2) == _T("KL"))
-		return new CKitchGenKUQ(p_attr);
+		return new CKitchGenKL(p_attr);
 	else if (p_attr->m_kitchenType.Left(2) == _T("KI"))
-		return new CKitchGenKUQ(p_attr);
+		return new CKitchGenKI(p_attr);
 	else
 		return NULL;
 }

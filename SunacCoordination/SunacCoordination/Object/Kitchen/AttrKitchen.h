@@ -4,6 +4,7 @@
 #include "dbmain.h"
 #include "../AttrObject.h"
 #include "..\PrototypeCommonDef.h"
+#include "..\KitchenBathroomProp.h"
 
 #pragma warning(disable: 4275 4251)
 
@@ -59,4 +60,6 @@ public:
 	CString m_zaoTaiType;//灶台宽度 
 	double m_width;//开间
 	double m_height;//进深
+
+	CKitchenBathroomProp m_sizeData;
 };

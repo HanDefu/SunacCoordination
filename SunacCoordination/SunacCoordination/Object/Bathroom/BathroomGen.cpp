@@ -89,6 +89,22 @@ CString CBathroomGen::GetGuanxiquDefault()
 	return _T("950");
 }
 
+bool CBathroomGen::CheckParameter(CString& errMsg)
+{
+	//检查台盆是否超出盥洗区
+	bool isG = (m_attr.m_fileName.Right(6) == _T("_g.dwg"));
+	if (!isG)
+		return true;
+	int taipenWidth = _ttoi(m_attr.m_taipenWidth);
+	int guanXiWidth = int(m_attr.m_guanXiWidth + 0.5);
+	if (taipenWidth > guanXiWidth)
+	{
+		errMsg = L"台盆宽度不能超过盥洗区宽度";
+		return false;
+	}
+	return true;
+}
+
 AcDbObjectId CBathroomGen::GenBathroom(const AcGePoint3d p_pos, int p_angle)
 {
 	AcGeVector3d offsetXY;
@@ -215,7 +231,7 @@ CBathroomGen* CBathroomMrg::CreateBathroomByAttribute(AttrBathroom* p_attr)
 	else if (p_attr->m_sBathroomType.Left(2) == _T("TL"))
 		return new CBathroomGenKL(p_attr);
 	else if (p_attr->m_sBathroomType.Left(2) == _T("TU"))
-		return new CBathroomGenKL(p_attr);
+		return new CBathroomGenKU(p_attr);
 	else
 		return NULL;
 }

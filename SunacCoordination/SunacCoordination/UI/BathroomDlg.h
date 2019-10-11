@@ -58,6 +58,7 @@ public:
 	E_DIRECTION GetDir(ads_point pt);
 	void EnableSetAirout(bool bEnable);
 	void EnableSetProperty(bool bEnable);
+	void EnableDynamic(bool bEnable);
 
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);///---01
 	afx_msg void OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult);
@@ -66,6 +67,7 @@ public:
 	afx_msg void OnBnClickedButtonDoorDir();
 	afx_msg void OnBnClickedButtonWindowDir();
 	afx_msg void OnBnClickedButtonSearch();
+	afx_msg void OnBnClickedAutoIndex();
 };
 
 extern CBathroomDlg* g_bathroomDlg;

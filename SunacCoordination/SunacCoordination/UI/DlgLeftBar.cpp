@@ -6,7 +6,6 @@
 #include "../Command/CommandWindowDetail.h"
 #include "../Command/CommandWindowTable.h"
 #include "DlgLeftBar.h"
-#include "afxdialogex.h"
 
 
 // DlgLeftBar dialog
@@ -43,23 +42,13 @@ END_MESSAGE_MAP()
 
 int DlgLeftBar::FillTreeItem()
 {
-	m_treeCtrlMenu.InsertItem(_T("标准化平面库"));
-	m_treeCtrlMenu.InsertItem(_T("标准化立面库"));
-
 	HTREEITEM hItem = m_treeCtrlMenu.InsertItem(_T("标准部品库"));
 	m_treeCtrlMenu.InsertItem(_T("门窗"), hItem);
 	m_treeCtrlMenu.InsertItem(_T("栏杆"), hItem);
-	m_treeCtrlMenu.InsertItem(_T("外墙涂料"), hItem);
-	m_treeCtrlMenu.InsertItem(_T("屋面瓦"), hItem);
 
 	hItem = m_treeCtrlMenu.InsertItem(_T("标准空间模块库"));
 	m_treeCtrlMenu.InsertItem(_T("厨卫"), hItem);
 	m_treeCtrlMenu.InsertItem(_T("空调"), hItem);
-	m_treeCtrlMenu.InsertItem(_T("大堂"), hItem);
-	m_treeCtrlMenu.InsertItem(_T("玄关"), hItem);
-
-	m_treeCtrlMenu.InsertItem(_T("标准构造"));
-	m_treeCtrlMenu.InsertItem(_T("标准审图"));
 
 	//绑定弹出菜单
 	m_treeCtrlMenu.SetMenuID(IDR_LEFTBAR_MENU);

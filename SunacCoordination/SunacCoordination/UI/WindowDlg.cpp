@@ -96,6 +96,7 @@ BEGIN_MESSAGE_MAP(CWindowDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDC_RADIO_WINDOW, &CWindowDlg::OnBnClickedRadioDoor)
 	ON_BN_CLICKED(IDC_BUTTON_CALCULATE, &CWindowDlg::OnBnClickedCalculate)
 	ON_BN_CLICKED(IDC_CHECK_AUTOINDEX, &CWindowDlg::OnBnClickedAutoIndex)
+	ON_BN_CLICKED(IDC_BUTTON_SELECT, &CWindowDlg::OnBnClickedSelOnDwg)
 	ON_NOTIFY(GVN_SELCHANGED, IDC_PREVIEW_WINDOW, &CWindowDlg::OnSelChanged)
 END_MESSAGE_MAP()
 
@@ -232,6 +233,16 @@ void CWindowDlg::OnBnClickedAutoIndex()
 		m_number.SetReadOnly(TRUE);
 	else
 		m_number.SetReadOnly(FALSE);
+}
+
+void CWindowDlg::OnBnClickedSelOnDwg()
+{
+	ShowWindow(false);
+	TYRect rect = TY_GetOneRect();
+	ShowWindow(true);
+
+	TYUI_SetDouble(m_width, rect.GetWidth());
+	TYUI_SetDouble(m_height, rect.GetHeight());
 }
 
 void CWindowDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
