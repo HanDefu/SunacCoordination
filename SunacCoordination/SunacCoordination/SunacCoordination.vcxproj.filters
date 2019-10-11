@@ -289,6 +289,9 @@
     <ClCompile Include="WebIO\KitchenBathroomLocalData.cpp">
       <Filter>WebIO</Filter>
     </ClCompile>
+    <ClCompile Include="Object\KitchenBathroomProp.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -660,6 +663,9 @@
     </ClInclude>
     <ClInclude Include="WebIO\KitchenBathroomLocalData.h">
       <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\KitchenBathroomProp.h">
+      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

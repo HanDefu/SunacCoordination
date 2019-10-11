@@ -39,3 +39,10 @@ enum E_FLOOR_RANGE
 };
 
 const double c_airVentSize[] = { 350, 400, 450, 500, 550 };
+
+
+struct PrototypeSize
+{
+	int xLen;
+	int yLen;
+};
