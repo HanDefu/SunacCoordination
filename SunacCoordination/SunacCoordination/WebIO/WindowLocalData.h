@@ -26,10 +26,11 @@ public:
 	std::vector<AttrWindow >  GetWindows(double width, CString openType, int openNum, CString gongNengQu)const;
 	std::vector<AttrWindow >  GetDoors(double width, CString openType, int openNum, CString gongNengQu)const;
 
+	vector<AttrWindow> GetAllWindows()const; //获取所有窗户
+	vector<AttrWindow> GetAllDoors()const;  //获取所有门
 
 protected:
-	vector<AttrWindow> GetAllWindows(); //获取所有窗户
-	vector<AttrWindow> GetAllDoors();  //获取所有门
+	
 
 
 protected:

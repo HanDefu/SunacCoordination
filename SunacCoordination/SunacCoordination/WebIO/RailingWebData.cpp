@@ -4,7 +4,7 @@
 #include "../Common\ComFun_Str.h"
 #include <string>
 
-std::vector<AttrRailing> CRailingWebData::GetRailings(eRailingType RailingType)
+std::vector<AttrRailing> CRailingWebData::GetRailings(eRailingType RailingType)const
 {
 /*
 	CString opNum;
@@ -88,7 +88,7 @@ std::vector<AttrRailing > CRailingWebData::ParseRailingsFromXML(CMarkup xml)cons
 			if (xml.FindElem(_T("Scope")))
 			{
 				CString flag = xml.GetData();
-				if (flag == "ÊÇ")
+				if (flag == "1")
 				{
 					RailingAttr.m_isJiTuan = TRUE;
 				}
@@ -107,8 +107,9 @@ std::vector<AttrRailing > CRailingWebData::ParseRailingsFromXML(CMarkup xml)cons
 				RailingAttr.m_railingType = ToERailingType(xml.GetData());
 			}
 			xml.OutOfElem();
+			vRailingAttrs.push_back(RailingAttr);	
 		}
-		vRailingAttrs.push_back(RailingAttr);	
+
 
 		xml.OutOfElem();
 	}

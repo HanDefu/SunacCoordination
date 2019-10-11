@@ -86,7 +86,7 @@ std::vector<AttrAirCon > CAirConditionWebData::ParseAirConditionersFromXML(CMark
 			if (xml.FindElem(_T("Scope")))
 			{
 				CString flag = xml.GetData();
-				if (flag == "ÊÇ")
+				if (flag == "1")
 				{
 					AirConAttr.m_isJiTuan = TRUE;
 				}
@@ -125,8 +125,9 @@ std::vector<AttrAirCon > CAirConditionWebData::ParseAirConditionersFromXML(CMark
 				AirConAttr.m_airConRainRiserPos = xml.GetData();
 			}
 			xml.OutOfElem();
+			vAirConAttrs.push_back(AirConAttr);	
 		}
-		vAirConAttrs.push_back(AirConAttr);	
+		
 
 		xml.OutOfElem();
 	}

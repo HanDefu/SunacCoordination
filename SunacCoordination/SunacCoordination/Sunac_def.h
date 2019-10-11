@@ -33,11 +33,11 @@ typedef enum eWindowDimType
 
 static eWindowDimType ToEWindowType(CString type)
 {
-	if (type == "固定值")
+	if (type == "固定值"|| type == "值")
 	{
 		return SINGLE;
 	} 
-	else if (type == "值系列")
+	else if (type == "值系列"|| type == "系列")
 	{
 		return MULTI;
 	}

@@ -18,7 +18,6 @@ CWindowWebData::~CWindowWebData()
 std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 {
 	std::vector<AttrWindow> windowAtts;
-	AttrWindow attrwindow;
 
 	xml.ResetMainPos();
 	xml.FindElem();	//根节点
@@ -38,6 +37,7 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 		while (xml.FindElem(_T("Window")))
 		{
 			xml.IntoElem();
+			AttrWindow attrwindow;
 			if (xml.FindElem(_T("DrawingCode")))
 			{
 				attrwindow.m_prototypeCode = xml.GetData();
@@ -65,13 +65,13 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 			if (xml.FindElem(_T("Scope")))
 			{
 				CString flag = xml.GetData();
-				if (flag == "是")
+				if (flag == "1")
 				{
 					attrwindow.m_isJiTuan = TRUE;
 				}
 				else attrwindow.m_isJiTuan = FALSE;
 			}
-			if (xml.FindElem(_T("Areaid")))
+			if (xml.FindElem(_T("AreaId")))
 			{
 				attrwindow.m_quyuId = xml.GetData();
 			}
@@ -86,24 +86,24 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 			if (xml.FindElem(_T("WindowDynamicType")))
 			{
 				CString flag = xml.GetData();
-				if (flag == "是")
+				if (flag == "1")
 				{
 					attrwindow.m_isDynamic = TRUE;
 				}
 				else attrwindow.m_isDynamic = FALSE;
 			}
-			if (xml.FindElem(_T("WindowOpenTypeid")))
+			if (xml.FindElem(_T("WindowOpenTypeName")))
 			{
 				attrwindow.m_openType = xml.GetData();
 			}
-			if (xml.FindElem(_T("WindowOpenQty")))
+			if (xml.FindElem(_T("WindowOpenQtyName")))
 			{
 				attrwindow.m_openQty = _ttoi(xml.GetData());
 			}
 			if (xml.FindElem(_T("WindowHasCorner")))
 			{
 				CString flag = xml.GetData();
-				if (flag == "是")
+				if (flag == "1")
 				{
 					attrwindow.m_isZhuanJiao = TRUE;
 				}
@@ -141,22 +141,31 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 				{
 					xml.IntoElem();
 					SRCDimData tempData;
-					if (xml.FindElem(_T("Code")))
+					if (xml.FindElem(_T("SizeNo")))
 					{
 						tempData.sCodeName = xml.GetData();
 					}
-					if (xml.FindElem(_T("ValueType")))
+					if (xml.FindElem(_T("ValueTypeName")))
 					{
 						tempData.type = ToEWindowType(xml.GetData());
 					}
-					if (xml.FindElem(_T("Value")))
+					if (xml.FindElem(_T("Val")))
 					{
 						CString value = xml.GetData();
-						std::vector<CString> strs = YT_SplitCString(value, L',');
-						for (UINT i = 0; i < strs.size(); i++)
+						if (tempData.type == MULTI)
 						{
-							tempData.values.push_back(_wtof(strs[i]));
+							std::vector<CString> strs = YT_SplitCString(value, L',');
+							for (UINT i = 0; i < strs.size(); i++)
+							{
+								tempData.values.push_back(_wtof(strs[i]));
+							}
 						}
+						else if (tempData.type == CALC)
+						{
+							tempData.sFomula = value;
+						}
+						else tempData.values.push_back(_ttof(value));
+
 					}
 					if (xml.FindElem(_T("MinValue")))
 					{
@@ -170,7 +179,7 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 					{
 						tempData.defaultValue =  _ttof(xml.GetData());
 					}
-					if (xml.FindElem(_T("ValueDescription")))
+					if (xml.FindElem(_T("Desc")))
 					{
 						tempData.prompt = xml.GetData();
 					}
@@ -191,7 +200,6 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 {
 	std::vector<AttrWindow> DoorAttrs;
-	AttrWindow Attrdoor;
 
 	xml.ResetMainPos();
 	xml.FindElem();	//根节点
@@ -209,6 +217,7 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 
 		while (xml.FindElem(_T("Door")))
 		{
+			AttrWindow Attrdoor;
 			xml.IntoElem();
 			if (xml.FindElem(_T("DrawingCode")))
 			{
@@ -218,7 +227,44 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 			{
 				//attrallwindow.m_name = xml.GetData();
 			}
-			if (xml.FindElem(_T("DrawingPathTop")))
+			if (xml.FindElem(_T("Drawings")))
+			{
+				xml.IntoElem();
+				{
+					while (xml.FindElem(_T("Drawing")))
+					{
+						xml.IntoElem();
+						{
+							if (xml.FindElem(_T("CADType")))
+							{
+								if (xml.GetData() == "FrontViewFile")
+								{
+									xml.FindElem(_T("FileClass"));
+									Attrdoor.m_frontViewFile = xml.GetData();
+								}
+								else if (xml.GetData() == "LeftViewFile")
+								{
+									xml.FindElem(_T("FileClass"));
+									Attrdoor.m_leftViewFile = xml.GetData();
+								}
+								else if (xml.GetData() == "TopViewFile")
+								{
+									xml.FindElem(_T("FileClass"));
+									Attrdoor.m_topViewFile = xml.GetData();
+								}
+								else if (xml.GetData() == "ExpandViewFile")
+								{
+									xml.FindElem(_T("FileClass"));
+									Attrdoor.m_fileName = xml.GetData();
+								}
+							}
+						}
+						xml.OutOfElem();
+					}
+				}
+				xml.OutOfElem();
+			}
+			/*if (xml.FindElem(_T("DrawingPathTop")))
 			{
 				Attrdoor.m_topViewFile = xml.GetData();
 			}
@@ -233,16 +279,17 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 			if (xml.FindElem(_T("DrawingPathExpanded")))
 			{
 				Attrdoor.m_fileName = xml.GetData();
-			}
+			}*/
 			if (xml.FindElem(_T("Scope")))
 			{
 				CString flag = xml.GetData();
-				if (flag == "是")
+				if (flag == "1")
 				{
 					Attrdoor.m_isJiTuan = TRUE;
 				}
 				else Attrdoor.m_isJiTuan = FALSE;
 			}
+/*TODO
 			if (xml.FindElem(_T("Areaid")))
 			{
 				Attrdoor.m_quyuId = xml.GetData();
@@ -250,29 +297,29 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 			if (xml.FindElem(_T("AreaName")))
 			{
 				Attrdoor.m_quyuName = xml.GetData();
-			}
+			}*/
 			if (xml.FindElem(_T("DrawingType")))
 			{
 				Attrdoor.m_type = xml.GetData();
 			}
-			if (xml.FindElem(_T("WindowDynamicType")))
+			if (xml.FindElem(_T("DynamicType")))
 			{
 				CString flag = xml.GetData();
-				if (flag == "是")
+				if (flag == "1")
 				{
 					Attrdoor.m_isDynamic = TRUE;
 				}
 				else Attrdoor.m_isDynamic = FALSE;
 			}
-			if (xml.FindElem(_T("Doortype")))
+			if (xml.FindElem(_T("DoorTypeName")))
 			{
 				Attrdoor.m_openType = xml.GetData();
 			}
-			if (xml.FindElem(_T("DoorSizeMin")))
+			if (xml.FindElem(_T("WindowSizeMin")))
 			{
 				Attrdoor.m_minWid = _ttof(xml.GetData());
 			}
-			if (xml.FindElem(_T("DoorSizeMax")))
+			if (xml.FindElem(_T("WindowSizeMax")))
 			{
 				Attrdoor.m_maxWid = _ttof(xml.GetData());
 			}
@@ -322,8 +369,9 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 				xml.OutOfElem();
 			}
 			xml.OutOfElem();
+			DoorAttrs.push_back(Attrdoor);
 		}
-		DoorAttrs.push_back(Attrdoor);	
+		
 
 		xml.OutOfElem();
 	}

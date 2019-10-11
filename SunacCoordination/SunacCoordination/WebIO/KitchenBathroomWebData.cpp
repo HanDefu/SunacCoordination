@@ -41,13 +41,13 @@ std::vector<AttrKitchen > CKitchenBathroomWebData::ParseKitchensFromXML(CMarkup 
 			if (xml.FindElem(_T("Scope")))
 			{
 				CString flag = xml.GetData();
-				if (flag == "是")
+				if (flag == "1")
 				{
 					KitchenAttr.m_isJiTuan = TRUE;
 				}
 				else KitchenAttr.m_isJiTuan = FALSE;
 			}
-			if (xml.FindElem(_T("Areaid")))
+			if (xml.FindElem(_T("AreaId")))
 			{
 				KitchenAttr.m_quyuId = xml.GetData();
 			}
@@ -55,54 +55,55 @@ std::vector<AttrKitchen > CKitchenBathroomWebData::ParseKitchensFromXML(CMarkup 
 			{
 				KitchenAttr.m_quyuName = xml.GetData();
 			}
-			if (xml.FindElem(_T("KitchenTypeId")))
+			if (xml.FindElem(_T("KitchenTypeName")))
 			{
 				KitchenAttr.m_kitchenType = xml.GetData();
 			}
-			if (xml.FindElem(_T("KitchenPositionId")))
+			if (xml.FindElem(_T("KitchenPositionName")))
 			{
 				KitchenAttr.m_windowDoorPos = xml.GetData();
 			}
 			if (xml.FindElem(_T("KitchenIsAirduct")))
 			{
 				CString flag = xml.GetData();
-				if (flag == "是")
+				if (flag == "1")
 				{
 					KitchenAttr.m_hasPaiQiDao = TRUE;
 				}
 				else KitchenAttr.m_hasPaiQiDao = FALSE;
 			}
-			if (xml.FindElem(_T("KitchenOpensizeMin")))
+			if (xml.FindElem(_T("KitchenOpenSizeMin")))
 			{
-				//KitchenAttr.m_ = _ttof(xml.GetData());
+				KitchenAttr.m_minWidth = _ttof(xml.GetData());
 			}
-			if (xml.FindElem(_T("KitchenOpensizeMax")))
+			if (xml.FindElem(_T("KitchenOpenSizeMax")))
 			{
-				//KitchenAttr.m_ = _ttof(xml.GetData());
+				KitchenAttr.m_maxwidth = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("KitchenDepthsizeMin")))
 			{
-				//KitchenAttr.m_ = _ttof(xml.GetData());
+				KitchenAttr.m_minHeight = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("KitchenDepthsizeMax")))
 			{
-				//KitchenAttr.m_ = _ttof(xml.GetData());
+				KitchenAttr.m_maxHeight = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("KitchenBasinSize")))
 			{
-				//KitchenAttr.m_BathroomType = xml.GetData();
+				KitchenAttr.m_BasinSize = _ttof(xml.GetData());
 			}
-			if (xml.FindElem(_T("KitchenFridgeSize")))
+			if (xml.FindElem(_T("KitchenFridgSize")))
 			{
-				//KitchenAttr.m_BathroomType = xml.GetData();
+				KitchenAttr.m_FridgeSize = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("KitchenHearthSize")))
 			{
-				//KitchenAttr.m_BathroomType = xml.GetData();
+				KitchenAttr.m_HearthSize = _ttof(xml.GetData());
 			}
 			xml.OutOfElem();
+			vKitchenAttrs.push_back(KitchenAttr);	
 		}
-		vKitchenAttrs.push_back(KitchenAttr);	
+
 
 		xml.OutOfElem();
 	}
@@ -147,7 +148,7 @@ std::vector<AttrBathroom > CKitchenBathroomWebData::ParseBathroomsFromXML(CMarku
 			if (xml.FindElem(_T("Scope")))
 			{
 				CString flag = xml.GetData();
-				if (flag == "是")
+				if (flag == "1")
 				{
 					BathroomAttr.m_isJiTuan = TRUE;
 				}
@@ -188,15 +189,16 @@ std::vector<AttrBathroom > CKitchenBathroomWebData::ParseBathroomsFromXML(CMarku
 			if (xml.FindElem(_T("HasAirvent")))
 			{
 				CString flag = xml.GetData();
-				if (flag == "是")
+				if (flag == "1")
 				{
 					BathroomAttr.m_hasPaiQiDao = TRUE;
 				}
 				else BathroomAttr.m_hasPaiQiDao = FALSE;
 			}
 			xml.OutOfElem();
+			vBathroomAttrs.push_back(BathroomAttr);	
 		}
-		vBathroomAttrs.push_back(BathroomAttr);	
+
 
 		xml.OutOfElem();
 	}
@@ -204,7 +206,7 @@ std::vector<AttrBathroom > CKitchenBathroomWebData::ParseBathroomsFromXML(CMarku
 	return vBathroomAttrs;
 }
 
-std::vector<AttrKitchen> CKitchenBathroomWebData::GetAllKitchens()
+std::vector<AttrKitchen> CKitchenBathroomWebData::GetAllKitchens()const
 {
 	_ns1__GetAllKitchen ns;
 	_ns1__GetAllKitchenResponse nsResponse;
@@ -230,7 +232,7 @@ std::vector<AttrKitchen> CKitchenBathroomWebData::GetAllKitchens()
 	return vKitchenAttrs;
 }
 
-std::vector<AttrBathroom> CKitchenBathroomWebData::GetAllBathrooms()
+std::vector<AttrBathroom> CKitchenBathroomWebData::GetAllBathrooms()const
 {
 	std::wstring sBathroomDoorWindowPosition, sToiletType;
 
