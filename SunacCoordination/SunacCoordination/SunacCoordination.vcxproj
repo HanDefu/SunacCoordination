@@ -230,6 +230,10 @@
     <ClCompile Include="WebIO\AirConditionLocalData.cpp" />
     <ClCompile Include="WebIO\AirconditionWebData.cpp" />
     <ClCompile Include="WebIO\ConfigDictionary.cpp" />
+    <ClCompile Include="WebIO\cpp_base64\src\Base64Decoder.cpp" />
+    <ClCompile Include="WebIO\cpp_base64\src\Base64Encoder.cpp" />
+    <ClCompile Include="WebIO\cpp_base64\src\cdecode.cpp" />
+    <ClCompile Include="WebIO\cpp_base64\src\cencode.cpp" />
     <ClCompile Include="WebIO\KitchenBathroomLocalData.cpp" />
     <ClCompile Include="WebIO\KitchenBathroomWebData.cpp" />
     <ClCompile Include="WebIO\RailingWebData.cpp" />
@@ -353,6 +357,10 @@
     <ClInclude Include="WebIO\AirConditionLocalData.h" />
     <ClInclude Include="WebIO\AirconditionWebData.h" />
     <ClInclude Include="WebIO\ConfigDictionary.h" />
+    <ClInclude Include="WebIO\cpp_base64\src\Base64Decoder.h" />
+    <ClInclude Include="WebIO\cpp_base64\src\Base64Encoder.h" />
+    <ClInclude Include="WebIO\cpp_base64\src\cdecode.h" />
+    <ClInclude Include="WebIO\cpp_base64\src\cencode.h" />
     <ClInclude Include="WebIO\KitchenBathroomLocalData.h" />
     <ClInclude Include="WebIO\KitchenBathroomWebData.h" />
     <ClInclude Include="WebIO\RailingWebData.h" />

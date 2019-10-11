@@ -4,8 +4,15 @@
 #include <acdocman.h>
 #include <dbxutil.h>
 #include <utility>
+#include <iostream>
+#include <fstream>
+#include <xstring>
+#include <atlconv.h> 
+#include <stdlib.h>
 #include "../Common/ComFun_Str.h"
 #include "../Common/ComFun_Sunac.h"
+#include "cpp_base64\src\Base64Decoder.h"
+#include "SunacCadWeb\soapArgumentSettingServiceSoapProxy.h"
 
 using namespace std;
 
@@ -236,7 +243,71 @@ std::vector<AttrRailing *> WebIO::GetAllRailings()
 }
 
 
-int WebIO::DownLoadFile(CString id, CString filePathName)
+//wstring=>string
+std::string WString2String(const std::wstring& ws)
 {
-	return 0;
+	std::string strLocale = setlocale(LC_ALL, "");
+	const wchar_t* wchSrc = ws.c_str();
+	size_t nDestSize = wcstombs((char*)NULL, wchSrc, 0) + 1;
+	char *chDest = new char[nDestSize];
+	memset(chDest, 0, nDestSize);
+	wcstombs(chDest, wchSrc, nDestSize);
+	std::string strResult = chDest;
+	delete[]chDest;
+	setlocale(LC_ALL, strLocale.c_str());
+	return strResult;
+}
+// string => wstring
+std::wstring String2WString(const std::string& s)
+{
+	std::string strLocale = setlocale(LC_ALL, "");
+	const char* chSrc = s.c_str();
+	size_t nDestSize = mbstowcs((wchar_t*)NULL, chSrc, 0) + 1;
+	wchar_t* wchDest = new wchar_t[nDestSize];
+	wmemset(wchDest, 0, nDestSize);
+	mbstowcs(wchDest, chSrc, nDestSize);
+	std::wstring wstrResult = wchDest;
+	delete[]wchDest;
+	setlocale(LC_ALL, strLocale.c_str());
+	return wstrResult;
+}
+
+bool WebIO::DownLoadFile(const int fileId, const CString filePathName)
+{
+	_ns1__CadFileDownload nsCadFile;
+	nsCadFile.Id = fileId;
+	_ns1__CadFileDownloadResponse cadFileResponse;
+
+	ArgumentSettingServiceSoapProxy cadWeb;
+	int nRet = cadWeb.CadFileDownload(&nsCadFile, cadFileResponse);
+
+	wstring* swReturn = cadFileResponse.CadFileDownloadResult;
+	if (swReturn == NULL)
+	{
+		return false;
+	}
+
+	std::string sReturn = WString2String(*swReturn);
+
+	Base64Decoder decoder;
+
+	wstring filenameOut = filePathName;
+	ofstream ofs(filenameOut, ofstream::out | ofstream::binary);
+	if (ofs)
+	{
+		UINT numberOfBytes = sReturn.length() + 1;
+		char* decodedBuffer = new char[numberOfBytes * 2];
+		memset(decodedBuffer, 0, numberOfBytes * 2);
+
+		int numberOfBytesDecoded = decoder.decode(sReturn.c_str(), numberOfBytes, decodedBuffer);
+		ofs.write(decodedBuffer, numberOfBytesDecoded);
+	}
+	else
+	{
+		wcout << L"Cannot open file: " << filenameOut << endl;
+	}
+
+	ofs.close();
+
+	return true;
 }
