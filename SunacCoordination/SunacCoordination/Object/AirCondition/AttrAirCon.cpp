@@ -116,10 +116,10 @@ bool AttrAirCon::IsPrototypeEqual(const AttrAirCon& p_att)
 	{
 		return false;
 	}
-	else if (p_att.m_type != m_type)
-	{
-		return false;
-	}
+	//else if (p_att.m_type != m_type)
+	//{
+	//	return false;
+	//}
 	else if (p_att.m_isDynamic != m_isDynamic)
 	{
 		return false;

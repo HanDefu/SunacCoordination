@@ -319,10 +319,10 @@ bool AttrWindow::IsPrototypeEqual(const AttrWindow& p_att)
 	{
 		return false;
 	}
-	else if (p_att.m_type != m_type)
-	{
-		return false;
-	}
+	//else if (p_att.m_type != m_type)
+	//{
+	//	return false;
+	//}
 	else if (p_att.m_version != m_version)
 	{
 		return false;

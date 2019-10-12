@@ -55,20 +55,22 @@ public:
 	virtual CProBase* GetPrototype();
 	
 public:
-	Adesk::Int32 m_version;//文件版本 临时存储
+	//序列化时使用，暂未填写
+	Adesk::Int32 m_version;		//文件版本 临时存储
 
-	CString m_prototypeCode;//原型编号
-	//CString m_name;			//原型名称， YUAN 1006注释，所有原型名称用原型编号
-	CString m_type;		//原型类型
-	bool m_isDynamic;	//是否动态块
+	//在原型初始化时填写
+	CString m_prototypeCode;	//原型编号 //所有原型名称用原型编号
+	CString m_fileName;			//原型文件名,包含.dwg，但不包含路径
+	//CString m_type;			//原型类型 //改为通过GetType函数返回
+	bool m_isDynamic;			//是否动态块
+	bool m_isJiTuan;			//是否集团
 
-	bool m_isJiTuan;//是否集团
-	CString m_quyuId;//区域ID
-	CString m_quyuName;//区域名称
+	//从Web获取数据后填写
+	CString m_quyuId;			//区域ID
+	CString m_quyuName;			//区域名称
 
-	CString m_fileName;//原型文件名,包含.dwg，但不包含路径
-	
-	CString m_instanceCode;//实例编号
+	//生成实例后填写
+	CString m_instanceCode;		//实例编号
 };
 
 

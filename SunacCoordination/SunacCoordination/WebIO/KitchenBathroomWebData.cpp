@@ -61,12 +61,12 @@ std::vector<AttrKitchen > CKitchenBathroomWebData::ParseKitchensFromXML(CMarkup 
 			}
 			if (xml.FindElem(_T("KitchenPositionId")))
 			{
-				KitchenAttr.m_windowDoorPos = xml.GetData();
+				KitchenAttr.m_windowDoorPos = (xml.GetData() == L"门窗对开" ? DUIKAI : CHUIZHIKAI);
 			}
 			if (xml.FindElem(_T("KitchenIsAirduct")))
 			{
 				CString flag = xml.GetData();
-				if (flag == "是")
+				if (flag == L"是")
 				{
 					KitchenAttr.m_hasPaiQiDao = TRUE;
 				}

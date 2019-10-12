@@ -40,7 +40,7 @@ AttrObject & AttrObject::operator=(const AttrObject &rhs)
 	m_isJiTuan = rhs.m_isJiTuan;
 	m_quyuId = rhs.m_quyuId;
 	m_quyuName = rhs.m_quyuName;
-	m_type = rhs.m_type;
+	//m_type = rhs.m_type;
 	m_isDynamic = rhs.m_isDynamic;
 	m_fileName = rhs.m_fileName;
 	m_instanceCode = rhs.m_instanceCode;
@@ -76,8 +76,8 @@ Acad::ErrorStatus AttrObject::dwgInFields(AcDbDwgFiler* filer)
 	filer->readItem(&tempStr);
 	m_quyuName = CString(tempStr);
 
-	filer->readItem(&tempStr);
-	m_type = CString(tempStr);
+	//filer->readItem(&tempStr);
+	//m_type = CString(tempStr);
 
 	filer->readItem(&m_isDynamic);
 
@@ -107,7 +107,7 @@ Acad::ErrorStatus AttrObject::dwgOutFields(AcDbDwgFiler* filer) const
 //	filer->writeItem(m_name);
 	filer->writeItem(m_isJiTuan);
 	filer->writeItem(m_quyuName);
-	filer->writeItem(m_type);
+//	filer->writeItem(m_type);
 	filer->writeItem(m_isDynamic);
 	filer->writeItem(m_fileName);
 	filer->writeItem(m_instanceCode);
@@ -136,8 +136,8 @@ bool AttrObject::isEqualTo(AttrObject*other)
 	if (m_quyuName != other->m_quyuName)
 		return false;
 
-	if (m_type != other->m_type)
-		return false;
+	//if (m_type != other->m_type)
+	//	return false;
 
 	if (m_isDynamic != other->m_isDynamic)
 		return false;
