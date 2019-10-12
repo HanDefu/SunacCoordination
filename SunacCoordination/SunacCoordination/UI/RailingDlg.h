@@ -41,6 +41,7 @@ public:
 	void UpdateTY();
 	void UpdateBL();
 	void UpdateAll();
+	CString RailingSize(int i);
 	double m_height;// 栏杆高度	
 	double m_heightBase;// 反坎高度	
 	double m_width;// 栏杆长度
