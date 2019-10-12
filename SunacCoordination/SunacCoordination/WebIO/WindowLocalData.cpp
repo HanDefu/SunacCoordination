@@ -296,7 +296,7 @@ std::vector<AttrWindow >  CWindowLocalData::GetDoors(double width, CString openT
 			continue;
 		}
 
-		if (width < m_windows[i].m_dimData[0].values[0] || width > m_windows[i].m_dimData[0].values[1])
+		if (width < m_windows[i].m_minWid || width > m_windows[i].m_maxWid)
 		{
 			continue;
 		}

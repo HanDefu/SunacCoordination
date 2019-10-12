@@ -312,12 +312,12 @@ void CWindowDlg::SetRadioDoor(int radioDoor)
 
 void CWindowDlg::LoadDefaultValue()
 {
-	const vCString& doorTypes = WebIO::GetConfigDict()->Door_GetTypes();
-	const vCString& openTypes = WebIO::GetConfigDict()->Window_GetOpenTypes();
-	const vCString& areaTypes = WebIO::GetConfigDict()->GetGongNengQus();
-	const vCString& openAmount = WebIO::GetConfigDict()->Window_GetOpenAmount();
-	const vCString& rate = WebIO::GetConfigDict()->Window_GetRate();
-	const vCString& wallDis = WebIO::GetConfigDict()->Window_GetWallDis();
+	const vCString& doorTypes = WebIO::GetInstance()->GetConfigDict()->Door_GetTypes();
+	const vCString& openTypes = WebIO::GetInstance()->GetConfigDict()->Window_GetOpenTypes();
+	const vCString& areaTypes = WebIO::GetInstance()->GetConfigDict()->GetGongNengQus();
+	const vCString& openAmount = WebIO::GetInstance()->GetConfigDict()->Window_GetOpenAmount();
+	const vCString& rate = WebIO::GetInstance()->GetConfigDict()->Window_GetRate();
+	const vCString& wallDis = WebIO::GetInstance()->GetConfigDict()->Window_GetWallDis();
 
 	TYUI_SetInt(m_width, 1500);
 	TYUI_SetInt(m_height, 1200);

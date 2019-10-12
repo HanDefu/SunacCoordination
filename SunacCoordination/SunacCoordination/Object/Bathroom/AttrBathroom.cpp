@@ -19,24 +19,6 @@ AttrBathroom::AttrBathroom()
 
 }
 
-AttrBathroom::AttrBathroom(double p_xLen, double p_yLen, E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, const CProBathroom& p_prototype)
-{
-	m_type = L"ÎÀÉú¼ä";
-	m_sBathroomType = p_prototype.m_sType;
-	m_width = p_xLen;
-	m_height = p_yLen;
-	if (p_doorPos == E_DIR_LEFT || p_doorPos == E_DIR_RIGHT)
-		swap(m_width, m_height);
-
-	m_prototypeCode.Format(L"%s-%.0lf¡Á%.0lf", m_sBathroomType.Left(3), min(p_xLen, p_yLen), max(p_xLen, p_yLen));
-	if (m_sBathroomType.Find(L"_g") != -1)
-		m_prototypeCode += L"/g";
-
-	m_fileName = p_prototype.m_sFileName;
-	m_isDynamic = p_prototype.m_bIsDynamic;
-	m_isJiTuan = true;
-}
-
 AttrBathroom::~AttrBathroom()
 {
 
@@ -83,9 +65,4 @@ bool AttrBathroom::isEqualTo(AttrObject*other)
 	return true;
 	/*return (m_openType == pRealObj->m_openType
 		);*/
-}
-
-CProBathroom* AttrBathroom::GetProBathroom()
-{
-	return CProMrg::GetInstance()->GetProBathroomByFileName(m_fileName);
 }

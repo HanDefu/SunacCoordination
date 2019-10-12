@@ -81,7 +81,7 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 			}
 			if (xml.FindElem(_T("DrawingType")))
 			{
-				attrwindow.m_type = xml.GetData();
+				//attrwindow.m_type = xml.GetData();
 			}
 			if (xml.FindElem(_T("WindowDynamicType")))
 			{
@@ -251,10 +251,10 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 			{
 				Attrdoor.m_quyuName = xml.GetData();
 			}
-			if (xml.FindElem(_T("DrawingType")))
-			{
-				Attrdoor.m_type = xml.GetData();
-			}
+			//if (xml.FindElem(_T("DrawingType")))
+			//{
+			//	Attrdoor.m_type = xml.GetData();
+			//}
 			if (xml.FindElem(_T("WindowDynamicType")))
 			{
 				CString flag = xml.GetData();

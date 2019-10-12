@@ -12,7 +12,7 @@
 #include "../AttrObject.h"
 #include "../../Sunac_def.h"
 #include "../PrototypeCommonDef.h"
-#include "../PrototypeInfo.h"
+#include "../KitchenBathroomProp.h"
 
 #pragma warning(disable: 4275 4251)
 
@@ -34,7 +34,6 @@ public:
 
 	// Constructor / Destructor
 	AttrBathroom();
-	AttrBathroom(double p_xLen, double p_yLen, E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, const CProBathroom& p_prototype);
 	virtual ~AttrBathroom();
 
 	//{{AFX_ARX_METHODS(ZffDwgScale)
@@ -44,27 +43,34 @@ public:
 	virtual eRCType GetType() {return Bathroom;}
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
 
-	CProBathroom* GetProBathroom();
-
 public:
-	bool m_hasPaiQiDao; //是否含有排气道
-	bool m_isGuoBiao; //排气道
-	E_FLOOR_RANGE m_floorRange; //楼层选项
-	double m_airVentW; //排气道长度
-	double m_airVentH; //排气道宽度
-	double m_airVentOffsetX; //排气道偏移x
-	double m_airVentOffsetY; //排气道偏移y
+	//原型相关属性，初始化时填写
+	CString m_sBathroomType;	//卫生间类型
+	eWindowDoorPos m_windowDoorPos;	//门窗位置关系
+	bool m_hasPaiQiDao;			//是否含有排气道
 
-	bool m_isMirror; //镜像
+	//原型数据，记录原型的支持尺寸和门窗初始位置，初始化时填写
+	CKitchenBathroomProp m_prop;
 
-	CString m_sBathroomType; //卫生间类型
-	eWindowDoorPos m_windowDoorPos; //门窗位置关系
+	//搜索到原型后填写
+	double m_width;				//开间
+	double m_height;			//进深
 
-	CString m_taipenWidth;//台盆宽度
-	CString m_matongWidth;//马桶宽度
-	double m_guanXiWidth; //盥洗区宽度
-	double m_width;//开间
-	double m_height;//进深
+	//插入时填写
+	CString m_taipenWidth;		//台盆宽度
+	CString m_matongWidth;		//马桶宽度
+	double m_guanXiWidth;		//盥洗区宽度
+
+	//排气道相关设置，插入时填写
+	E_FLOOR_RANGE m_floorRange;	//楼层选项
+	bool m_isGuoBiao;			//是否国标
+	double m_airVentW;			//排气道长度
+	double m_airVentH;			//排气道宽度
+	double m_airVentOffsetX;	//排气道偏移x
+	double m_airVentOffsetY;	//排气道偏移y
+
+	//插入时填写
+	bool m_isMirror;//镜像
 };
 
 #endif // !defined(ARX__ZFFDWGSCALE_H__20140205_113541_Bathroom)
