@@ -33,7 +33,6 @@ IMPLEMENT_DYNAMIC(CRailingDlg, CAcUiDialog)
 CRailingDlg::CRailingDlg(CWnd* pParent /*=NULL*/)
 	: CAcUiDialog(CRailingDlg::IDD, pParent)
 	, m_height(1200)
-	, m_heightBase(200)
 	, m_width(5400)
 {
 	m_isMoldless = true;
@@ -56,10 +55,9 @@ void CRailingDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_RAILINGTYPE, m_type);
 	DDX_Text(pDX, IDC_EDIT_RAILINGHEIGHT, m_height);
 	DDV_MinMaxDouble(pDX, m_height, 100, 10000);
-	DDX_Text(pDX, IDC_EDIT_REVERSERIDGE_HEIGHT, m_heightBase);
-	DDV_MinMaxDouble(pDX, m_heightBase, 0, 1000);
 	DDX_Text(pDX, IDC_EDIT_HOLEWIDTH, m_width);
 	DDV_MinMaxDouble(pDX, m_width, 100, 100000);
+	DDX_Control(pDX, IDC_EDIT_RAILINGNUMBER, m_railingNumber);
 }
 
 BEGIN_MESSAGE_MAP(CRailingDlg, CAcUiDialog)
@@ -67,6 +65,9 @@ BEGIN_MESSAGE_MAP(CRailingDlg, CAcUiDialog)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
 	ON_BN_CLICKED(IDC_BUTTON_SELECTLINE, &CRailingDlg::OnBnClickedButtonSelectline)
 	ON_CBN_SELCHANGE(IDC_COMBO_RAILINGTYPE, &CRailingDlg::OnCbnSelchangeComboRailingtype)
+	ON_BN_CLICKED(IDC_CHECK_AUTOINDEX, &CRailingDlg::OnBnClickedCheckAutoindex)
+	ON_NOTIFY(GVN_SELCHANGED, IDC_PREVIEW_RAILING, &CRailingDlg::OnSelChangedPreview)
+	ON_WM_LBUTTONDOWN()
 END_MESSAGE_MAP()
 
 
@@ -187,8 +188,6 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 	OnOK();
 }
 
-
-
 LRESULT CRailingDlg::onAcadKeepFocus(WPARAM, LPARAM)
 {
 	return TRUE;
@@ -279,6 +278,8 @@ void CRailingDlg::UpdateTY()
 	}
 
 	m_preRailing.SelectPreview(0, 0);
+	m_preRailing.SetDefCellMargin(20);
+	m_preRailing.SetBkColor(RGB(128, 128, 128));
 }
 
 void CRailingDlg::UpdateBL()
@@ -320,6 +321,8 @@ void CRailingDlg::UpdateBL()
 	}
 
 	m_preRailing.SelectPreview(0, 0);
+	m_preRailing.SetDefCellMargin(20);
+	m_preRailing.SetBkColor(RGB(128, 128, 128));
 }
 
 void CRailingDlg::UpdateAll()
@@ -374,6 +377,8 @@ void CRailingDlg::UpdateAll()
 	}
 
 	m_preRailing.SelectPreview(0, 0);
+	m_preRailing.SetDefCellMargin(20);
+	m_preRailing.SetBkColor(RGB(128, 128, 128));
 }
 
 CString CRailingDlg::RailingSize(int i)
@@ -390,4 +395,42 @@ CString CRailingDlg::RailingSize(int i)
 	else if(i == 6)
 		str = _T("1510,1716");
 	return str;
+}
+
+void CRailingDlg::OnBnClickedCheckAutoindex()
+{
+	int state =((CButton *)GetDlgItem(IDC_CHECK_AUTOINDEX))->GetCheck(); 
+	if (state == BST_CHECKED ) 
+	{
+		m_railingNumber.SetWindowTextW(_T(""));
+		TYUI_Disable(m_railingNumber);
+	}
+	else
+	{
+		TYUI_Enable(m_railingNumber);
+	}
+}
+
+
+void CRailingDlg::OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	UpdateData();
+
+	vector<CCellID> selCells = m_preRailing.GetSelectedCells();
+	if (selCells.empty())
+		return;
+	m_selectedRow = selCells[0].row;
+	m_selectedColoum = selCells[0].col;
+	CGridCellForPreview* pCell = m_preRailing.GetPreviewCell(m_selectedRow, m_selectedColoum);
+	if (pCell != NULL)
+	{
+		AttrRailing railingAtt;
+		railingAtt.m_height = m_height;
+		railingAtt.m_length = m_width;
+		CString sPrototypeName = pCell->GetName();
+		railingAtt.m_prototypeCode = sPrototypeName;
+		CString sRailingDefName;
+		sRailingDefName.Format(_T("%s_%d_%d"), railingAtt.m_prototypeCode, (int)(railingAtt.m_length), (int)(railingAtt.m_height));
+		m_railingNumber.SetWindowTextW(sRailingDefName);
+	}
 }
