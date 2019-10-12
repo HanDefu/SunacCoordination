@@ -34,7 +34,7 @@ public:
 	AttrRailing GetRailingAtt()const { return m_railingAtt; }
 
 	virtual bool SetLength(double p_length);
-	virtual int GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut) = 0;
+	virtual int GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut);
 
 	//////////////////////////////////////////////////////////////////////////
 	virtual double GetLength()const { return m_railingAtt.m_length; } //获取栏杆总长度
@@ -48,6 +48,8 @@ public:
 
 protected:
 	virtual bool GenRailing() = 0;
+
+	virtual AcDbObjectId CreateRailingBlockDefine(CString sRailingDefName)= 0;
 
 	CString GetPrototypeFilePath()const ;
 

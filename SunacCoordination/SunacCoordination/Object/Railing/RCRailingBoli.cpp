@@ -1,5 +1,3 @@
-
-
 #include "StdAfx.h"
 #include "RCRailingBoli.h"
 #include <float.h>
@@ -25,14 +23,9 @@ bool CRCRailingBoli::GenRailing()
 	return true;
 }
 
-
-
-int CRCRailingBoli::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut)
-{	//1. 计算各分段的值
-	bool bSuc = GenRailing();
-	if (bSuc == false)
-		return -1;
-
+AcDbObjectId CRCRailingBoli::CreateRailingBlockDefine(CString sRailingDefName)
+{
+	AcGePoint3d start = AcGePoint3d::kOrigin;
 	//2 插入到图形
 	acDocManager->lockDocument(curDoc());
 
@@ -51,17 +44,27 @@ int CRCRailingBoli::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingId
 	AcDbObjectIdArray ids = GenerateRailing_Standard(pos1);
 	idsOut.append(ids);
 
-	
+
 	//2.4 扶手
 	AcDbObjectId id4 = GenerateRailing_HandRail(leftTopPt);
 	idsOut.append(id4);
 
 	//////////////////////////////////////////////////////////////////////////
-	//3 组合为一个块，并给把属性设给当前块  TODO
+	//3 组合为一个块
+	AcDbObjectId blkDefId;
+	int nRet = MD2010_CreateBlockDefine_ExistEnts(sRailingDefName, idsOut, start, blkDefId);
+
+	//删除原来的块
+	JHCOM_DeleteCadObjectArray(idsOut);
+
+	//4 将栏杆属性赋值给此栏杆实例
+	AttrRailing* pAttRailing = new AttrRailing(m_railingAtt);
+	pAttRailing->SetInstanceCode(sRailingDefName);
+	TY_AddAttributeData(blkDefId, pAttRailing);
 
 	acDocManager->unlockDocument(curDoc());
 
-	return 0;
+	return blkDefId;
 }
 CString CRCRailingBoli::GetStandardBlockName() const
 {
@@ -80,7 +83,6 @@ CString CRCRailingBoli::GetHandRailBlockName() const
 {
 	return m_railingAtt.m_prototypeCode + _T("_Handrail");
 }
-
 
 AcDbObjectIdArray CRCRailingBoli::GenerateRailing_Standard(AcGePoint3d pos)
 {

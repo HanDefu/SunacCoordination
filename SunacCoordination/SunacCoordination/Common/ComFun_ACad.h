@@ -24,6 +24,7 @@ AcDbObjectId      JHCOM_PostToModelSpace(AcDbEntity* pEnt);
 * Return          : NULL.
 --------------------------------------------------------------------------*/
 void              JHCOM_DeleteCadObject(AcDbObjectId id);
+void              JHCOM_DeleteCadObjectArray(AcDbObjectIdArray ids);
 
 //Query functions
 /*-------------------------------------------------------------------------

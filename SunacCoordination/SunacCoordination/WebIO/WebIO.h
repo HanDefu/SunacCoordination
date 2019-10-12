@@ -64,9 +64,8 @@ public:
 	static std::vector<AttrRailing *> GetAllRailings();
 
 	//------其他---------//
-	//输入原型编号，下载到固定地址
-	//ok返回0 否则返回-1
-	static int DownLoadFile(CString id, CString filePathName);
+	//从web下载原型文件， ok返回0 否则返回-1
+	static bool DownLoadFile(const int fileId, const CString filePathName);
 
 protected:
 	CConfigDictionary m_configDic;

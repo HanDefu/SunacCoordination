@@ -292,6 +292,18 @@
     <ClCompile Include="Object\KitchenBathroomProp.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="WebIO\cpp_base64\src\Base64Decoder.cpp">
+      <Filter>WebIO\base64</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\cpp_base64\src\Base64Encoder.cpp">
+      <Filter>WebIO\base64</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\cpp_base64\src\cdecode.cpp">
+      <Filter>WebIO\base64</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\cpp_base64\src\cencode.cpp">
+      <Filter>WebIO\base64</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -667,6 +679,18 @@
     <ClInclude Include="Object\KitchenBathroomProp.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="WebIO\cpp_base64\src\Base64Decoder.h">
+      <Filter>WebIO\base64</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\cpp_base64\src\Base64Encoder.h">
+      <Filter>WebIO\base64</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\cpp_base64\src\cdecode.h">
+      <Filter>WebIO\base64</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\cpp_base64\src\cencode.h">
+      <Filter>WebIO\base64</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -728,6 +752,9 @@
     </Filter>
     <Filter Include="Object\AirCondition">
       <UniqueIdentifier>{0b2fa8ef-0928-40ce-bf66-c28118401bdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WebIO\base64">
+      <UniqueIdentifier>{f5231dd6-5804-4ed6-ab14-1a5811901ddf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

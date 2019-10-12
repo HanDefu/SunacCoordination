@@ -37,22 +37,6 @@ CRCRailing::~CRCRailing(void)
 
 }
 
-//CRCRailing::CRCRailing(const CRCRailing &other):RCStandBlock(other)
-//{
-//	*this = other;
-//}
-//
-//CRCRailing& CRCRailing::operator=(const CRCRailing &rhs)
-//{
-//	m_B = rhs.m_B;			//标准栏杆尺寸 1260或者1380
-//	m_N = rhs.m_B;			//标准栏杆段数量 
-//	m_n = rhs.m_B;			//标准栏杆两侧单元花格数量（两侧）
-//	m_K = rhs.m_B;			//侧边立柱与结构墙间尺寸（单边）
-//
-//	m_railingAtt = rhs.m_railingAtt;
-//
-//	return *this;
-//}
 
 void CRCRailing::SetRailingAtt(const AttrRailing p_railingAtt)
 {
@@ -68,8 +52,29 @@ CString CRCRailing::GetPrototypeFilePath()const
 	return MD2010_GetAppPath() + L"\\support\\Sunac2019\\LocalMode\\" + m_railingAtt.m_prototypeCode + L".dwg";
 }
 
-//////////////////////////////////////////////////////////////////////////
+//start 为栏杆的左下角
+int CRCRailing::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut)
+{
+	//1. 计算各分段的值
+	bool bSuc = GenRailing();
+	if (bSuc == false)
+		return -1;
 
+	CString sRailingDefName;
+	sRailingDefName.Format(_T("%s_%d_%d"), m_railingAtt.m_prototypeCode, (int)(m_railingAtt.m_length), (int)(m_railingAtt.m_height));
+	//若之前有，则直接插入
+	AcDbObjectId railingBlockDef = MD2010_GetBlockDefID(sRailingDefName);
+	if (railingBlockDef == AcDbObjectId::kNull)
+	{
+		AcDbObjectId blkDefId = CreateRailingBlockDefine(sRailingDefName);
+	}
+
+	MD2010_InsertBlockReference_ModelSpace(sRailingDefName, p_railingIdOut, start);
+
+	return 0;
+}
+
+//////////////////////////////////////////////////////////////////////////
 CRCRailing* CreateRailing(const AttrRailing p_railingAtt)
 {
 	CRCRailing* pRailing = NULL;

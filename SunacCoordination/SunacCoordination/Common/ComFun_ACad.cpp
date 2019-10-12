@@ -140,6 +140,23 @@ void JHCOM_DeleteCadObject(AcDbObjectId id)
 	acDocManager->unlockDocument(curDoc());
 }  
 
+void JHCOM_DeleteCadObjectArray(AcDbObjectIdArray ids)
+{
+	acDocManager->lockDocument(curDoc());
+
+	for (int i = 0; i < ids.length(); i++)
+	{
+		AcDbEntity* pDel = NULL;
+		if (Acad::eOk == acdbOpenObject(pDel, ids[i], AcDb::kForWrite))
+		{
+			pDel->erase();
+			pDel->close();
+		}
+	}
+
+	acDocManager->unlockDocument(curDoc());
+}
+
 /*-------------------------------------------------------------------------
 * Function Name   : JHCOM_GetStartPoint
 * Description     : This function get start point of a curve.
