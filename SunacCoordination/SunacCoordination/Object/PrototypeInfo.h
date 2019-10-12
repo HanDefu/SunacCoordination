@@ -5,11 +5,11 @@
 
 using namespace std;
 
-struct PrototypeSize
-{
-	int xLen;
-	int yLen;
-};
+//struct PrototypeSize
+//{
+//	int xLen;
+//	int yLen;
+//};
 
 class CProBase
 {

@@ -586,10 +586,11 @@ int CKitchGenKL::SetZaoTaiPos(AcDbObjectId kitchenId, double kaiJian, double jin
 	}
 	else
 	{
-		//进深≥2900时，灶台右侧距墙面装修完成面， 有多种解释
-		//1.灶台右侧距离左侧装修完成面1100
-		//2.灶台右侧距离右侧装修完成面1100
-		TYCOM_SetDynamicBlockValue(kitchenId, L"灶台距墙X", 1100 - ztt);
+		double zxt = 0;
+		TYCOM_GetDynamicBlockData(kitchenId, L"装修厚度", zxt);
+
+
+		TYCOM_SetDynamicBlockValue(kitchenId, L"灶台距墙X", jinShen - 2 * zxt - 1100 - ztt);
 	}
 
 	acDocManager->unlockDocument(curDoc());

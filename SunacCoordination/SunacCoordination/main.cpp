@@ -416,7 +416,6 @@ extern "C" AcRx::AppRetCode acrxEntryPoint( AcRx::AppMsgCode msg, void* appId)
 		acrxDynamicLinker->registerAppMDIAware(appId);
 		initApp(); 
 		InitMenu();
-		
 		break;
 	case AcRx::kUnloadAppMsg: 
 		CloseModelessDialogs();

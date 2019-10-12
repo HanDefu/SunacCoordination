@@ -580,11 +580,11 @@ TYRect TY_GetOneRect()
 {
 	ads_point pt,result;
 	acedInitGet(32,NULL);
-	if(acedGetPoint(NULL,L"\npoint\n",pt)!=RTNORM) //第一角点选择
+	if(acedGetPoint(NULL,L"\n请选择第一角点\n",pt)!=RTNORM) //第一角点选择
 	{
 		return TYRect();
 	}
-	if(acedGetCorner(pt,L"\ncorner\n",result)!=RTNORM)//框选
+	if(acedGetCorner(pt,L"\n请选择对角点\n",result)!=RTNORM)//框选
 	{
 		return TYRect();
 	}
