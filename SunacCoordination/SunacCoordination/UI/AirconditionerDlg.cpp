@@ -258,7 +258,7 @@ void CAirconditionerDlg::OnBnClickedButtonCalculate()
 	{
 		//将按钮控件移动位置
 		pWnd = GetDlgItem(IDC_BUTTON_CALCULATE);    //获取控件指针，IDC_BUTTON_CALCULATE为控件ID号
-		pWnd->SetWindowPos(NULL, 380, 23, 0, 0, SWP_NOZORDER | SWP_NOSIZE);    //把按钮移到窗口的(380,23)处
+		pWnd->SetWindowPos(NULL, 300, 23, 0, 0, SWP_NOZORDER | SWP_NOSIZE);    //把按钮移到窗口的(280,23)处
 
 		//将静态文本和编辑框显示
 		m_room.ShowWindow(TRUE);
