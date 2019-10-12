@@ -131,9 +131,9 @@ void CAirconditionerDlg::PostNcDestroy()
 //设置空调对话框中控件的默认值
 void CAirconditionerDlg::LoadDefaultValue()
 {
-	const vCString& pNum = WebIO::GetConfigDict()->Air_GetPiShus();
-	const vCString& lNTubePos = WebIO::GetConfigDict()->Air_GetLengNingShuiGuanPos();
-	const vCString& rainTubePos = WebIO::GetConfigDict()->Air_GetYuShuiGuanPos();
+	const vCString& pNum = WebIO::GetInstance()->GetConfigDict()->Air_GetPiShus();
+	const vCString& lNTubePos = WebIO::GetInstance()->GetConfigDict()->Air_GetLengNingShuiGuanPos();
+	const vCString& rainTubePos = WebIO::GetInstance()->GetConfigDict()->Air_GetYuShuiGuanPos();
 
 	TYUI_InitComboBox(m_pNum, pNum, pNum.empty() ? _T("") : pNum[0]);
 	TYUI_InitComboBox(m_lNTubePos, lNTubePos, lNTubePos.empty()? _T("") : lNTubePos[0]);
@@ -177,7 +177,7 @@ void CAirconditionerDlg::UpdatePreview() //当空调对话框中的控件的值�
 	CString strHasTube = hasRainTube > 0 ? L"有" : L"无";
 
 	//调用GetAirCon()函数来筛选符合条件的空调
-	m_allAirCons = WebIO::GetAirConditionLocalData()->GetAirCon(pNum, lNTubePos, strHasTube, rainTubePos);
+	m_allAirCons = WebIO::GetInstance()->GetAirConditionLocalData()->GetAirCon(pNum, lNTubePos, strHasTube, rainTubePos);
 
 	//当未查找到符合条件的空调时，对话框右侧图形为空，并且插入按钮变灰
 	if (m_allAirCons.empty())
@@ -268,7 +268,7 @@ void CAirconditionerDlg::OnBnClickedButtonCalculate()
 	}
 	else 
 	{
-		const vCString& pNum = WebIO::GetConfigDict()->Air_GetPiShus();	//	获取空调所有匹数
+		const vCString& pNum = WebIO::GetInstance()->GetConfigDict()->Air_GetPiShus();	//	获取空调所有匹数
 
 		//空调匹数计算方法
 		if (m_rSize > 0 && m_rSize <= 18)

@@ -51,115 +51,42 @@ std::vector<AttrWindow> WebIO::GetDoors(double width, CString openType, int open
 
 std::vector<AttrKitchen> WebIO::GetKitchens(EKitchType p_type, double p_xLen, double p_yLen, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir, bool p_hasPaiQiDao)
 {
-	std::vector<AttrKitchen> ret;
-
 #ifdef WORK_LOCAL//本地模式
-	int xLen = int(p_xLen + 0.5);
-	int yLen = int(p_yLen + 0.5);
-
-	CString sType;
-
-	switch (p_type)
-	{
-	case E_KITCH_U:
-		sType = L"KU";
-		break;
-	case E_KITCH_L:
-		sType = L"KL";
-		break;
-	case E_KITCH_I:
-		sType = L"KI";
-		break;
-	}
-
-	std::vector<CProKitchen> prototypes = CProMrg::GetInstance()->GetAllProKitchens();
-
-	for (UINT i = 0; i < prototypes.size(); i++)
-	{
-		if ((p_type == E_KITCH_ALL || prototypes[i].m_sType.Left(2) == sType) && prototypes[i].MatchPrototype(xLen, yLen, p_doorDir, p_windowDir) && prototypes[i].m_bHasPaiQiDao == p_hasPaiQiDao)
-		{
-			AttrKitchen attr(p_xLen, p_yLen, p_doorDir, p_windowDir, prototypes[i]);
-			ret.push_back(attr);
-		}
-	}
+	return m_kitchenBathroomLocalData.GetKitchens(p_type, p_xLen, p_yLen, p_doorDir, p_windowDir, p_hasPaiQiDao);
 #else
-
-#endif
-
+	std::vector<AttrKitchen> ret;
 	return ret;
+#endif
 }
 
 std::vector<AttrKitchen> WebIO::GetAllKitchens()
 {
-	std::vector<AttrKitchen> ret;
-
 #ifdef WORK_LOCAL//本地模式
-	std::vector<CProKitchen> prototypes = CProMrg::GetInstance()->GetAllProKitchens();
-
-	for (UINT i = 0; i < prototypes.size(); i++)
-	{
-		AttrKitchen attr;
-		//只绑定原型，其余不填
-		attr.m_fileName = prototypes[i].m_sFileName;
-		ret.push_back(attr);
-	}
+	return m_kitchenBathroomLocalData.GetAllKitchens();
 #else
-
-#endif
-
+	std::vector<AttrKitchen> ret;
 	return ret;
+#endif
 }
 
 std::vector<AttrBathroom> WebIO::GetBathrooms(EBathroomType p_type, double p_xLen, double p_yLen, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir)
 {
+#ifdef WORK_LOCAL//本地模式
+	return m_kitchenBathroomLocalData.GetBathrooms(p_type, p_xLen, p_yLen, p_doorDir, p_windowDir);
+#else
 	std::vector<AttrBathroom> ret;
-
-	int xLen = int(p_xLen + 0.5);
-	int yLen = int(p_yLen + 0.5);
-
-	CString sType;
-
-	switch (p_type)
-	{
-	case E_BATHROOM_I:
-		sType = L"TI";
-		break;
-	case E_BATHROOM_L:
-		sType = L"TL";
-		break;
-	case E_BATHROOM_U:
-		sType = L"TU";
-		break;
-	}
-
-	std::vector<CProBathroom> prototypes = CProMrg::GetInstance()->GetAllProBathrooms();
-
-	for (UINT i = 0; i < prototypes.size(); i++)
-	{
-		if ((p_type == E_BATHROOM_ALL || prototypes[i].m_sType.Left(2) == sType) && prototypes[i].MatchPrototype(xLen, yLen, p_doorDir, p_windowDir))
-		{
-			AttrBathroom attr(p_xLen, p_yLen, p_doorDir, p_windowDir, prototypes[i]);
-			ret.push_back(attr);
-		}
-	}
-
 	return ret;
+#endif
 }
 
 std::vector<AttrBathroom> WebIO::GetAllBathrooms()
 {
+#ifdef WORK_LOCAL//本地模式
+	return m_kitchenBathroomLocalData.GetAllBathrooms();
+#else
 	std::vector<AttrBathroom> ret;
-	std::vector<CProBathroom> prototypes = CProMrg::GetInstance()->GetAllProBathrooms();
-
-	for (UINT i = 0; i < prototypes.size(); i++)
-	{
-		AttrBathroom attr;
-		//只绑定原型，其余不填
-		attr.m_fileName = prototypes[i].m_sFileName;
-		ret.push_back(attr);
-	}
-
 	return ret;
+#endif
 }
 
 std::vector<AttrAirCon *> WebIO::GetAirCons
@@ -183,7 +110,7 @@ std::vector<AttrAirCon *> WebIO::GetAirCons
 		pAttribute->m_fileName = localFiles[i].first;
 		pAttribute->m_isJiTuan = true;
 		pAttribute->m_isDynamic = true;
-		pAttribute->m_type = L"空调";
+		//pAttribute->m_type = L"空调";
 
 		result.push_back(pAttribute);
 		pAttribute->close();
@@ -220,7 +147,7 @@ std::vector<AttrRailing *> WebIO::GetRailings(eRailingType type)//一次搜索所有的
 		pAttribute->m_fileName = localFiles[i].first;
 		pAttribute->m_isJiTuan = true;
 		pAttribute->m_isDynamic = true;
-		pAttribute->m_type = L"栏杆";
+		//pAttribute->m_type = L"栏杆";
 
 		result.push_back(pAttribute);
 		pAttribute->close();

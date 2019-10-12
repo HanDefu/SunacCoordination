@@ -59,7 +59,7 @@ void CBathroomGen::SelectGuanxiWidth(AcDbObjectId bathroomId, double width)
 //////////////////////////////////////////////////////////////////////////
 vCString CBathroomGen::GetTaipenOptions()
 {
-	return WebIO::GetConfigDict()->Bathroom_GetTaiPenWidths();
+	return WebIO::GetInstance()->GetConfigDict()->Bathroom_GetTaiPenWidths();
 }
 CString CBathroomGen::GetTaipenDefault()
 { 
@@ -68,7 +68,7 @@ CString CBathroomGen::GetTaipenDefault()
 
 vCString CBathroomGen::GetMatongOptions()
 {
-	return WebIO::GetConfigDict()->Bathroom_GetMaTongTypes();
+	return WebIO::GetInstance()->GetConfigDict()->Bathroom_GetMaTongTypes();
 }
 CString CBathroomGen::GetMatongDefault()
 {
@@ -81,7 +81,7 @@ vCString CBathroomGen::GetGuanxiquOptions()
 	bool isG = (m_attr.m_fileName.Right(6) == _T("_g.dwg"));
 	if (!isG)
 		return vCString(0);
-	return WebIO::GetConfigDict()->Bathroom_GetGuanXiWidths();
+	return WebIO::GetInstance()->GetConfigDict()->Bathroom_GetGuanXiWidths();
 
 }
 CString CBathroomGen::GetGuanxiquDefault()
@@ -226,11 +226,11 @@ int CBathroomGenKI::SetMatongPos_I4(AcDbObjectId bathroomId, double yLen)
 
 CBathroomGen* CBathroomMrg::CreateBathroomByAttribute(AttrBathroom* p_attr)
 {
-	if (p_attr->m_sBathroomType.Left(2) == _T("TI"))
+	if (p_attr->m_prototypeCode.Left(2) == _T("TI"))
 		return new CBathroomGenKI(p_attr);
-	else if (p_attr->m_sBathroomType.Left(2) == _T("TL"))
+	else if (p_attr->m_prototypeCode.Left(2) == _T("TL"))
 		return new CBathroomGenKL(p_attr);
-	else if (p_attr->m_sBathroomType.Left(2) == _T("TU"))
+	else if (p_attr->m_prototypeCode.Left(2) == _T("TU"))
 		return new CBathroomGenKU(p_attr);
 	else
 		return NULL;
