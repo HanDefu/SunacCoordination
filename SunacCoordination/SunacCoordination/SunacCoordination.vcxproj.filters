@@ -289,6 +289,9 @@
     <ClCompile Include="WebIO\KitchenBathroomLocalData.cpp">
       <Filter>WebIO</Filter>
     </ClCompile>
+    <ClCompile Include="UI\GridCellWithPicture.cpp">
+      <Filter>UI\PreviewCtrl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -660,6 +663,9 @@
     </ClInclude>
     <ClInclude Include="WebIO\KitchenBathroomLocalData.h">
       <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCellWithPicture.h">
+      <Filter>UI\PreviewCtrl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

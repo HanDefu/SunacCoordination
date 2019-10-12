@@ -72,7 +72,7 @@
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>C:\Program Files\Autodesk\AutoCAD 2014\Support\</OutDir>
+    <OutDir>C:\Autodesk\AutoCAD 2014\Support\</OutDir>
     <IntDir>$(SolutionDir)\Temp\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>Sunac2019</TargetName>
   </PropertyGroup>
@@ -202,6 +202,7 @@
     <ClCompile Include="UI\FacadeDlg.cpp" />
     <ClCompile Include="UI\FillingDlg.cpp" />
     <ClCompile Include="UI\GridCellForPreview.cpp" />
+    <ClCompile Include="UI\GridCellWithPicture.cpp" />
     <ClCompile Include="UI\GridCtrlEx.cpp" />
     <ClCompile Include="UI\GridCtrlWithPreview.cpp" />
     <ClCompile Include="UI\GridCtrl_src\GridCell.cpp" />
@@ -314,6 +315,7 @@
     <ClInclude Include="UI\FacadeDlg.h" />
     <ClInclude Include="UI\FillingDlg.h" />
     <ClInclude Include="UI\GridCellForPreview.h" />
+    <ClInclude Include="UI\GridCellWithPicture.h" />
     <ClInclude Include="UI\GridCtrlEx.h" />
     <ClInclude Include="UI\GridCtrlWithPreview.h" />
     <ClInclude Include="UI\GridCtrl_src\CellRange.h" />

@@ -41,10 +41,27 @@ void CPreviewWithDetail::SetLayoutMode(PREVIEW_LAYOUT_DIR dir, double rate)
 
 void CPreviewWithDetail::SetPreview(CString sPath)
 {
-	m_pGsPreviewCtrl = new CGsPreviewCtrl;
-	m_pGsPreviewCtrl->Create(_T(""), WS_CHILD | WS_VISIBLE, m_recPreview, this);
-	m_pGsPreviewCtrl->Init(theArxDLL.ModuleResourceInstance(), true);
+	if (m_pGsPreviewCtrl==NULL)
+	{
+		m_pGsPreviewCtrl = new CGsPreviewCtrl;
+		m_pGsPreviewCtrl->Create(_T(""), WS_CHILD | WS_VISIBLE, m_recPreview, this);
+		m_pGsPreviewCtrl->Init(theArxDLL.ModuleResourceInstance(), true);
+	}
 	m_pGsPreviewCtrl->SetDwgFile(sPath);
+}
+
+bool CPreviewWithDetail::SetPreviewImage(CString p_sFileName)
+{
+	if (!m_img.IsNull())
+		m_img.Destroy();
+
+	if (m_img.Load(p_sFileName) == S_OK)
+	{
+		m_sFileName = p_sFileName;
+		return true;
+	}
+	else
+		return false;
 }
 
 void CPreviewWithDetail::SetSelected(bool bSelected)
@@ -106,10 +123,20 @@ void CPreviewWithDetail::OnPaint()
 	bitmap.CreateCompatibleBitmap(&dc, clientRect.Width(), clientRect.Height());
 	CBitmap* pOldBmp = MemeDc.SelectObject(&bitmap);
 	DrawBackGround(&MemeDc);
+
+	if (!m_img.IsNull())
+	{
+		MemeDc.SetStretchBltMode(HALFTONE);
+		m_img.Draw(MemeDc, m_recPreview);
+	}
+
 	DrawText(&MemeDc);
 	dc.BitBlt(clientRect.left, clientRect.top, clientRect.Width(), clientRect.Height(), &MemeDc, 0, 0,SRCCOPY);
 	MemeDc.SelectObject(pOldBmp);
 	MemeDc.DeleteDC();
 
-	m_pGsPreviewCtrl->Invalidate();
+	if (m_pGsPreviewCtrl!=NULL)
+	{
+		m_pGsPreviewCtrl->Invalidate();
+	}
 }

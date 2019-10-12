@@ -17,7 +17,11 @@ public:
 	void SetPreviewRect(const CRect& recPreview) { m_recPreview = recPreview; }
 	void SetTextRect(const CRect& recText) { m_recText = recText; }
 	void SetLayoutMode(PREVIEW_LAYOUT_DIR dir, double rate = 0.5);
+
+
 	void SetPreview(CString sPath);
+	bool SetPreviewImage(CString sPath);
+
 	void SetSelected(bool bSelected);
 	void DrawText(CDC* pDC);
 	void DrawBackGround(CDC* pDC);
@@ -32,4 +36,9 @@ protected:
 	CRect m_recPreview;
 	CRect m_recText;
 	bool m_bSelected;
+
+
+
+	CImage m_img;
+	CString m_sFileName;
 };
