@@ -34,7 +34,7 @@ public:
 	//}}AFX_ARX_METHODS
 
 	virtual eRCType GetType() {return WINDOW;}
-	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
+	virtual bool isEqualTo(AttrObject*other);//窗型是否一致
 	virtual bool IsPrototypeEqual(const AttrWindow& p_att);
 
 public:
@@ -83,7 +83,6 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 	//二次深化属性
 	double m_plugslotSize;		//塞缝尺寸
-
 
 };
 

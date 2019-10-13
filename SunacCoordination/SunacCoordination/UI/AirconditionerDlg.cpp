@@ -1,8 +1,8 @@
 ﻿//m_name
 //m_name
 //m_name
-//m_airConHorseNumber
-//m_airConHorseNumber
+//m_power
+//m_power
 //m_prototypeCode
 //m_prototypeCode
 //m_name
@@ -177,7 +177,7 @@ void CAirconditionerDlg::UpdatePreview() //当空调对话框中的控件的值�
 	CString strHasTube = hasRainTube > 0 ? L"有" : L"无";
 
 	//调用GetAirCon()函数来筛选符合条件的空调
-	m_allAirCons = WebIO::GetInstance()->GetAirConditionLocalData()->GetAirCon(pNum, lNTubePos, strHasTube, rainTubePos);
+	m_allAirCons = WebIO::GetInstance()->GetAirCons(pNum, lNTubePos, strHasTube, rainTubePos);
 
 	//当未查找到符合条件的空调时，对话框右侧图形为空，并且插入按钮变灰
 	if (m_allAirCons.empty())

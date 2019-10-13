@@ -89,86 +89,63 @@ std::vector<AttrBathroom> WebIO::GetAllBathrooms()
 #endif
 }
 
-std::vector<AttrAirCon *> WebIO::GetAirCons
-(
-    double piShu,
-	CString weiZhi,//冷凝水管位置
-	bool hasYuShuiGuan,
-	CString yuShuiGuanWeizhi
-)
+//weiZhi冷凝水管位置
+std::vector<AttrAirCon> WebIO::GetAirCons(CString piShu, CString weiZhi, CString hasYuShuiGuan, CString yuShuiGuanWeizhi)
 {
-	std::vector<AttrAirCon *> result;
 #ifdef WORK_LOCAL//本地模式
-	CString localWindowPath = TY_GetLocalFilePath();
-	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"*.dwg",localWindowPath);
-	for (UINT i = 0; i < localFiles.size(); i++)
-	{
-		AttrAirCon *pAttribute = new AttrAirCon();
-		CString strid;
-		strid.Format(L"%s_%d", L"L_AIRCON_",i+1);
-		pAttribute->m_prototypeCode = strid;
-		pAttribute->m_fileName = localFiles[i].first;
-		pAttribute->m_isJiTuan = true;
-		pAttribute->m_isDynamic = true;
-		//pAttribute->m_type = L"空调";
-
-		result.push_back(pAttribute);
-		pAttribute->close();
-	}
+	return m_airConLocalData.GetAirCons(piShu, weiZhi, hasYuShuiGuan, yuShuiGuanWeizhi);
 #else
 
 #endif
-	return result;
 }
 
-std::vector<AttrAirCon *> WebIO::GetAllAirCons()
+std::vector<AttrAirCon> WebIO::GetAllAirCons()
 {
-	std::vector<AttrAirCon *> result;
 #ifdef WORK_LOCAL//本地模式
-	result = GetAirCons(0,L"",0,L"");
+	return m_airConLocalData.GetAllAirCons();
 #else
 
 #endif
-	return result;
 }
 
-std::vector<AttrRailing *> WebIO::GetRailings(eRailingType type)//一次搜索所有的
+std::vector<AttrRailing> WebIO::GetRailings(eRailingType type)//一次搜索所有的
 {
-	std::vector<AttrRailing *> result;
 #ifdef WORK_LOCAL//本地模式
+	std::vector<AttrRailing> result;
 	CString localWindowPath = TY_GetLocalFilePath();
 	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"_Railing1.dwg",localWindowPath);
 	for (UINT i = 0; i < localFiles.size(); i++)
 	{
-		AttrRailing *pAttribute = new AttrRailing();
+		AttrRailing pAttribute;
 		CString strid;
 		strid.Format(L"%s_%d", L"L_AIRCON_",i+1);
-		pAttribute->m_prototypeCode = strid;
-		pAttribute->m_fileName = localFiles[i].first;
-		pAttribute->m_isJiTuan = true;
-		pAttribute->m_isDynamic = true;
-		//pAttribute->m_type = L"栏杆";
+		pAttribute.m_prototypeCode = strid;
+		pAttribute.m_fileName = localFiles[i].first;
+		pAttribute.m_isJiTuan = true;
+		pAttribute.m_isDynamic = true;
+		pAttribute.close();
+
+		//TODO 补全栏杆其他的属性初始化
 
 		result.push_back(pAttribute);
-		pAttribute->close();
 	}
+	return result;
 #else
 
 #endif
-	return result;
 }
 
-std::vector<AttrRailing *> WebIO::GetAllRailings()
+std::vector<AttrRailing> WebIO::GetAllRailings()
 {
-	std::vector<AttrRailing *> result;
 #ifdef WORK_LOCAL//本地模式
-	result = GetRailings(E_RAILING_TIEYI);
+	std::vector<AttrRailing> result1 = GetRailings(E_RAILING_TIEYI);
+	std::vector<AttrRailing> result2 = GetRailings(E_RAILING_BOLI);
+	result1.insert(result1.end(), result2.begin(), result2.end());
+	return result1;
 #else
 
 #endif
-	return result;
 }
-
 
 //wstring=>string
 std::string WString2String(const std::wstring& ws)
@@ -199,7 +176,7 @@ std::wstring String2WString(const std::string& s)
 	return wstrResult;
 }
 
-bool WebIO::DownLoadFile(const int fileId, const CString filePathName)
+bool WebIO::DownloadFile(const int fileId, const CString filePathName)
 {
 	_ns1__CadFileDownload nsCadFile;
 	nsCadFile.Id = fileId;
