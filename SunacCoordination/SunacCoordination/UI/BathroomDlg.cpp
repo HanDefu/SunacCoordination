@@ -434,7 +434,7 @@ void CBathroomDlg::OnBnClickedButtonSearch()
 	{
 		CString str;
 		str.Format(_T("原型编号：%s\n厨房面积：%.2lf\n通风量要求：1.5\n动态类型：%s\n适用范围：集团"), m_allBathrooms[i].m_prototypeCode, m_rect.GetWidth() * m_rect.GetHeight() / 1E6, m_allBathrooms[i].m_isDynamic ? _T("动态") : _T("静态"));
-		m_preBathroom.AddPreview(i, 0, TY_GetLocalFilePath() + m_allBathrooms[i].m_fileName, str);
+		m_preBathroom.AddPreview(i, 0, TY_GetLocalFilePath() + m_allBathrooms[i].GetFileName(), str);
 	}
 
 	m_preBathroom.SelectPreview(0, 0);

@@ -112,23 +112,23 @@ std::vector<AttrRailing> WebIO::GetRailings(eRailingType type)//一次搜索所有的
 {
 #ifdef WORK_LOCAL//本地模式
 	std::vector<AttrRailing> result;
-	CString localWindowPath = TY_GetLocalFilePath();
-	vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"_Railing1.dwg",localWindowPath);
-	for (UINT i = 0; i < localFiles.size(); i++)
-	{
-		AttrRailing pAttribute;
-		CString strid;
-		strid.Format(L"%s_%d", L"L_AIRCON_",i+1);
-		pAttribute.m_prototypeCode = strid;
-		pAttribute.m_fileName = localFiles[i].first;
-		pAttribute.m_isJiTuan = true;
-		pAttribute.m_isDynamic = true;
-		pAttribute.close();
+	//CString localWindowPath = TY_GetLocalFilePath();
+	//vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"_Railing1.dwg",localWindowPath);
+	//for (UINT i = 0; i < localFiles.size(); i++)
+	//{
+	//	AttrRailing pAttribute;
+	//	CString strid;
+	//	strid.Format(L"%s_%d", L"L_AIRCON_",i+1);
+	//	pAttribute.m_prototypeCode = strid;
+	//	pAttribute.SetFileName(localFiles[i].first);
+	//	pAttribute.m_isJiTuan = true;
+	//	pAttribute.m_isDynamic = true;
+	//	pAttribute.close();
 
-		//TODO 补全栏杆其他的属性初始化
+	//	//TODO 补全栏杆其他的属性初始化
 
-		result.push_back(pAttribute);
-	}
+	//	result.push_back(pAttribute);
+	//}
 	return result;
 #else
 

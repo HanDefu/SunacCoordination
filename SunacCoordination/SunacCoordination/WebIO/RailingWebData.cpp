@@ -83,7 +83,7 @@ std::vector<AttrRailing > CRailingWebData::ParseRailingsFromXML(CMarkup xml)cons
 			}
 			if (xml.FindElem(_T("DrawingPath")))
 			{
-				RailingAttr.m_fileName = xml.GetData();
+				RailingAttr.SetFileName(xml.GetData()) ;
 			}
 			if (xml.FindElem(_T("Scope")))
 			{

@@ -181,7 +181,7 @@ AcDbObjectId CKitchGen::GenKitchen(const AcGePoint3d p_pos, int p_angle)
 	RCKitchen oneKitchen;
 
 	//先插入到原点，最后再做镜像和旋转处理
-	AcDbObjectId id = oneKitchen.Insert(TY_GetLocalFilePath() + m_attr.m_fileName, p_pos, 0, L"0", 256);
+	AcDbObjectId id = oneKitchen.Insert(TY_GetLocalFilePath() + m_attr.GetFileName(), p_pos, 0, L"0", 256);
 	oneKitchen.InitParameters();
 	oneKitchen.SetParameter(L"开间", m_attr.m_width);
 	oneKitchen.SetParameter(L"进深", m_attr.m_height);

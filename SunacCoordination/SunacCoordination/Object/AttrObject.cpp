@@ -42,7 +42,7 @@ AttrObject & AttrObject::operator=(const AttrObject &rhs)
 	m_quyuName = rhs.m_quyuName;
 	//m_type = rhs.m_type;
 	m_isDynamic = rhs.m_isDynamic;
-	m_fileName = rhs.m_fileName;
+	m_file = rhs.m_file;
 	m_instanceCode = rhs.m_instanceCode;
 	return *this;
 }
@@ -82,7 +82,7 @@ Acad::ErrorStatus AttrObject::dwgInFields(AcDbDwgFiler* filer)
 	filer->readItem(&m_isDynamic);
 
 	filer->readItem(&tempStr);
-	m_fileName = CString(tempStr);
+	//m_fileName = CString(tempStr);
 	filer->readItem(&tempStr);
 	m_instanceCode = CString(tempStr);
 
@@ -109,7 +109,7 @@ Acad::ErrorStatus AttrObject::dwgOutFields(AcDbDwgFiler* filer) const
 	filer->writeItem(m_quyuName);
 //	filer->writeItem(m_type);
 	filer->writeItem(m_isDynamic);
-	filer->writeItem(m_fileName);
+//	filer->writeItem(m_fileName);
 	filer->writeItem(m_instanceCode);
 
 	return filer->filerStatus();
@@ -156,7 +156,7 @@ bool AttrObject::isEqualTo(AttrObject*other)
 int AttrObject::GetFile(CString &filePathName)
 {
 	//首先本地搜索
-	bool has = GSINST->GetLocalFile(m_fileName, filePathName);
+	bool has = GSINST->GetLocalFile(m_file.fileName, filePathName);
 	if (has)
 		return 0;
 	
@@ -166,10 +166,5 @@ int AttrObject::GetFile(CString &filePathName)
 	//	filePathName = L"";
 
 	return 0;
-}
-
-CProBase* AttrObject::GetPrototype()
-{
-	return CProMrg::GetInstance()->GetPrototypeByFileName(m_fileName);
 }
 

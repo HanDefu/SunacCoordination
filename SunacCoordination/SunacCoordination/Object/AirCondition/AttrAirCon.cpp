@@ -127,10 +127,6 @@ bool AttrAirCon::IsPrototypeEqual(const AttrAirCon& p_att)
 	{
 		return false;
 	}
-	else if (p_att.m_fileName != m_fileName)
-	{
-		return false;
-	}
 	else if (p_att.m_instanceCode != m_instanceCode)
 	{
 		return false;

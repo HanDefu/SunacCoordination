@@ -78,7 +78,7 @@ std::vector<AttrAirCon > CAirConditionWebData::ParseAirConditionersFromXML(CMark
 			}
 			if (xml.FindElem(_T("DrawingPath")))
 			{
-				AirConAttr.m_fileName = xml.GetData();
+				AirConAttr.m_file.fileName = xml.GetData();
 			}
 			if (xml.FindElem(_T("Scope")))
 			{

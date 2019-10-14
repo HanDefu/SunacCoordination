@@ -48,7 +48,7 @@ void CBathroomGen::SelectGuanxiWidth(AcDbObjectId bathroomId, double width)
 {
 	acDocManager->lockDocument(curDoc());
 
-	bool isG = (m_attr.m_fileName.Right(6) == _T("_g.dwg"));
+	bool isG = (m_attr.GetFileName().Right(6) == _T("_g.dwg"));
 	//只有干湿分离的卫生间才有盥洗区
 	if (isG)
 		TYCOM_SetDynamicBlockValue(bathroomId, L"盥洗区Y", width);
@@ -78,7 +78,7 @@ CString CBathroomGen::GetMatongDefault()
 vCString CBathroomGen::GetGuanxiquOptions()
 {
 	//只有干湿分离的卫生间才有盥洗区
-	bool isG = (m_attr.m_fileName.Right(6) == _T("_g.dwg"));
+	bool isG = (m_attr.GetFileName().Right(6) == _T("_g.dwg"));
 	if (!isG)
 		return vCString(0);
 	return WebIO::GetInstance()->GetConfigDict()->Bathroom_GetGuanXiWidths();
@@ -92,7 +92,7 @@ CString CBathroomGen::GetGuanxiquDefault()
 bool CBathroomGen::CheckParameter(CString& errMsg)
 {
 	//检查台盆是否超出盥洗区
-	bool isG = (m_attr.m_fileName.Right(6) == _T("_g.dwg"));
+	bool isG = (m_attr.GetFileName().Right(6) == _T("_g.dwg"));
 	if (!isG)
 		return true;
 	int taipenWidth = _ttoi(m_attr.m_taipenWidth);
@@ -128,7 +128,7 @@ AcDbObjectId CBathroomGen::GenBathroom(const AcGePoint3d p_pos, int p_angle)
 	RCBathroom oneBathroom;
 
 	//先插入到原点，最后再做镜像和旋转处理
-	AcDbObjectId id = oneBathroom.Insert(TY_GetLocalFilePath() + m_attr.m_fileName, p_pos, 0, L"0", 256);
+	AcDbObjectId id = oneBathroom.Insert(TY_GetLocalFilePath() + m_attr.GetFileName(), p_pos, 0, L"0", 256);
 	oneBathroom.InitParameters();
 	oneBathroom.SetParameter(L"X边长", xLen);
 	oneBathroom.SetParameter(L"Y边长", yLen);
