@@ -44,11 +44,14 @@ public:
 	virtual bool IsPrototypeEqual(const AttrAirCon& p_att);
 
 public:
-	CString m_power;		//空调匹数 //TODO ZJY 改为double类型
+	double m_power;		//空调匹数 //TODO ZJY 改为double类型
 	CString m_pipePos;		//空调冷凝水管位置
-	CString m_hasRainPipe;	//空调是否有雨水立管穿过	//TODO ZJY 改为bool类型
+	bool m_hasRainPipe;	//空调是否有雨水立管穿过	//TODO ZJY 改为bool类型
 	CString m_rainPipePos;	//空调雨水管位置
-	CString m_installNetSize;	//空调安装净尺寸
+	//CString m_installNetSize;	//空调安装净尺寸
+	int m_airW;		//对应空调数据表格
+	int m_airH;
+	int m_airD;
 };
 
 #endif // !defined(ARX__ZFFDWGSCALE_H__20140205_113541_AIRCON)

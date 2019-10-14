@@ -46,7 +46,7 @@ public:
 	std::vector<AttrBathroom> GetAllBathrooms();
 
 	//weiZhi¿‰ƒ˝ÀÆπ‹Œª÷√
-	std::vector<AttrAirCon> GetAirCons(CString piShu, CString weiZhi, CString hasYuShuiGuan, CString yuShuiGuanWeizhi);
+	std::vector<AttrAirCon> GetAirCons(double piShu, CString weiZhi, CString hasYuShuiGuan, CString yuShuiGuanWeizhi);
 	std::vector<AttrAirCon > GetAllAirCons();
 
 	std::vector<AttrRailing> GetRailings(eRailingType type);

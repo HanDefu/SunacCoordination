@@ -90,7 +90,7 @@ std::vector<AttrBathroom> WebIO::GetAllBathrooms()
 }
 
 //weiZhi冷凝水管位置
-std::vector<AttrAirCon> WebIO::GetAirCons(CString piShu, CString weiZhi, CString hasYuShuiGuan, CString yuShuiGuanWeizhi)
+std::vector<AttrAirCon> WebIO::GetAirCons(double piShu, CString weiZhi, CString hasYuShuiGuan, CString yuShuiGuanWeizhi)
 {
 #ifdef WORK_LOCAL//本地模式
 	return m_airConLocalData.GetAirCons(piShu, weiZhi, hasYuShuiGuan, yuShuiGuanWeizhi);

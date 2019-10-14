@@ -99,7 +99,7 @@ std::vector<AttrAirCon > CAirConditionWebData::ParseAirConditionersFromXML(CMark
 			}
 			if (xml.FindElem(_T("AirconditionerPower")))
 			{
-				AirConAttr.m_power = xml.GetData();
+				AirConAttr.m_power = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("AirconditionerMinWidth")))
 			{
@@ -115,7 +115,8 @@ std::vector<AttrAirCon > CAirConditionWebData::ParseAirConditionersFromXML(CMark
 			}
 			if (xml.FindElem(_T("AirconditionerIsRainpipe")))
 			{
-				AirConAttr.m_hasRainPipe = xml.GetData();
+				CString str = xml.GetData();
+				AirConAttr.m_hasRainPipe = (str==_T("ÊÇ"))? true : false;
 			}
 			if (xml.FindElem(_T("AirconditionerRainpipePostion")))
 			{
