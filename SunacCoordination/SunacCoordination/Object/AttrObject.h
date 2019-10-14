@@ -55,8 +55,7 @@ public:
 	virtual CProBase* GetPrototype();
 	
 public:
-	//序列化时使用，暂未填写
-	Adesk::Int32 m_version;		//文件版本 临时存储
+	Adesk::Int32 m_version;		//文件版本 序列化时使用
 
 	//在原型初始化时填写
 	CString m_prototypeCode;	//原型编号 //所有原型名称用原型编号
@@ -69,7 +68,8 @@ public:
 	CString m_quyuId;			//区域ID
 	CString m_quyuName;			//区域名称
 
-	//生成实例后填写
+	//////////////////////////////////////////////////////////////////////////
+	//具体实例的属性
 	CString m_instanceCode;		//实例编号
 };
 

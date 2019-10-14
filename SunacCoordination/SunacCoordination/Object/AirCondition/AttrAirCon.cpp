@@ -24,17 +24,12 @@ AttrAirCon::~AttrAirCon()
 
 AttrAirCon::AttrAirCon(const AttrAirCon &other) : AttrObject(other)
 {
-	//push_back复制
-	m_airConId = other.m_airConId;						//空调序号
 	m_prototypeCode = other.m_prototypeCode;	//空调原型编号
-//	m_name = other.m_name;//空调原型文件
-	m_airConHorseNumber = other.m_airConHorseNumber;	//空调匹数
-	m_airConPipePos = other.m_airConPipePos;			//空调冷凝水管位置
-	m_airConRainRiser = other.m_airConRainRiser;		//空调是否有雨水立管穿过
-	m_airConRainRiserPos = other.m_airConRainRiserPos;	//空调雨水管位置
-	m_airConInstallNetSize = other.m_airConInstallNetSize;//空调安装净尺寸
-
-
+	m_power = other.m_power;				//空调匹数
+	m_pipePos = other.m_pipePos;			//空调冷凝水管位置
+	m_hasRainPipe = other.m_hasRainPipe;		//空调是否有雨水立管穿过
+	m_rainPipePos = other.m_rainPipePos;	//空调雨水管位置
+	m_installNetSize = other.m_installNetSize;//空调安装净尺寸
 }
 
 AttrAirCon & AttrAirCon::operator=(const AttrAirCon &rhs)
@@ -87,27 +82,23 @@ bool AttrAirCon::isEqualTo(AttrObject*other)
 
 bool AttrAirCon::IsPrototypeEqual(const AttrAirCon& p_att)
 {
-	if (p_att.m_airConHorseNumber != m_airConHorseNumber)
+	if (p_att.m_power != m_power)
 	{
 		return false;
 	}
-	else if (p_att.m_airConId != m_airConId)
+	else if (p_att.m_pipePos != m_pipePos)
 	{
 		return false;
 	}
-	else if (p_att.m_airConPipePos != m_airConPipePos)
+	else if (p_att.m_hasRainPipe != m_hasRainPipe)
 	{
 		return false;
 	}
-	else if (p_att.m_airConRainRiser != m_airConRainRiser)
+	else if (p_att.m_rainPipePos != m_rainPipePos)
 	{
 		return false;
 	}
-	else if (p_att.m_airConRainRiserPos != m_airConRainRiserPos)
-	{
-		return false;
-	}
-	else if (p_att.m_airConInstallNetSize != m_airConInstallNetSize)
+	else if (p_att.m_installNetSize != m_installNetSize)
 	{
 		return false;
 	}

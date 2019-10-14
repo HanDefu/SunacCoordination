@@ -307,6 +307,9 @@
     <ClCompile Include="WebIO\cpp_base64\src\cencode.cpp">
       <Filter>WebIO\base64</Filter>
     </ClCompile>
+    <ClCompile Include="Object\WindowDoor\WindowAutoName.cpp">
+      <Filter>Object\WindowDoor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -696,6 +699,9 @@
     </ClInclude>
     <ClInclude Include="WebIO\cpp_base64\src\cencode.h">
       <Filter>WebIO\base64</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\WindowAutoName.h">
+      <Filter>Object\WindowDoor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

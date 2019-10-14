@@ -251,29 +251,28 @@ void CWindowDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	int nSel = pView->iRow;
 	if (nSel >= 0 && nSel < (int)m_allWindows.size())
 	{
-		vSRCDimData& vDimData = m_allWindows[nSel].m_dimData;
-		for (UINT i = 0; i < vDimData.size(); i++)
+		const CWindowsDimData* dimW1 = m_allWindows[nSel].GetDimData(_T("W1"));
+		if (dimW1!=NULL)
 		{
-			if (vDimData[i].sCodeName == _T("W1"))
+			if ((dimW1->type == SINGLE) || (dimW1->type == MULTI))
 			{
-				if ((vDimData[i].type == SINGLE) || (vDimData[i].type == MULTI))
-				{
-					TYUI_Enable(m_openWidth);
-					TYUI_InitComboBox(m_openWidth, vDimData[i].values, vDimData[i].defaultValue);
-				}
-				else
-					TYUI_Disable(m_openWidth);
+				TYUI_Enable(m_openWidth);
+				TYUI_InitComboBox(m_openWidth, dimW1->valueOptions, dimW1->defaultValue);
 			}
-			if (vDimData[i].sCodeName == _T("H2"))
+			else
+				TYUI_Disable(m_openWidth);
+		}
+
+		const CWindowsDimData* dimH2 = m_allWindows[nSel].GetDimData(_T("H2"));
+		if (dimH2 != NULL)
+		{
+			if ((dimH2->type == SINGLE) || (dimH2->type == MULTI))
 			{
-				if ((vDimData[i].type == SINGLE) || (vDimData[i].type == MULTI))
-				{
-					TYUI_Enable(m_H2);
-					TYUI_InitComboBox(m_H2, vDimData[i].values, vDimData[i].defaultValue);
-				}
-				else
-					TYUI_Disable(m_H2);
+				TYUI_Enable(m_H2);
+				TYUI_InitComboBox(m_H2, dimH2->valueOptions, dimH2->defaultValue);
 			}
+			else
+				TYUI_Disable(m_H2);
 		}
 
 		TYUI_SetText(m_number, m_allWindows[nSel].m_prototypeCode);

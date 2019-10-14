@@ -161,7 +161,7 @@ int AttrObject::GetFile(CString &filePathName)
 		return 0;
 	
 	////如果本地不存在这个文件 去服务器下载一个文件到本地
-	//int ret = WebIO::DownLoadFile(m_prototypeCode, filePathName);
+	//int ret = WebIO::DownloadFile(m_prototypeCode, filePathName);
 	//if (ret != 0)
 	//	filePathName = L"";
 
