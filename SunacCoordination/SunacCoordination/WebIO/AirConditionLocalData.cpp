@@ -37,11 +37,14 @@ void CAirConditionLocalData::LoadDataFromExcel(CString p_file)
 			break;
 
 		attrAirCon.m_fileName = xls.GetCellValue(i, 3);
-		attrAirCon.m_power = xls.GetCellValue(i, 4);
+		attrAirCon.m_power = _ttof(xls.GetCellValue(i, 4));
 		attrAirCon.m_pipePos = xls.GetCellValue(i, 5);
-		attrAirCon.m_hasRainPipe = xls.GetCellValue(i, 6);
+		CString str = xls.GetCellValue(i, 6);
+		attrAirCon.m_hasRainPipe = (str==_T("是"))? true : false;
 		attrAirCon.m_rainPipePos = xls.GetCellValue(i, 7);
-		attrAirCon.m_installNetSize = xls.GetCellValue(i, 8);
+		attrAirCon.m_airW = _ttoi(xls.GetCellValue(i, 8));
+		attrAirCon.m_airH = _ttoi(xls.GetCellValue(i, 9));
+		attrAirCon.m_airD = _ttoi(xls.GetCellValue(i, 10));
 		
 		m_allAirconditions.push_back(attrAirCon); //将数据添加到vector数组m_allAirconditions
 	}
@@ -83,7 +86,7 @@ vector<AttrAirCon> CAirConditionLocalData::GetAllAirCons() const  //获取所有空调
 }
 
 //获取满足筛选条件的空调
-std::vector<AttrAirCon >  CAirConditionLocalData::GetAirCons(CString p_airConHorseNumber, CString p_airConPipePos, CString p_airConRainRiser, CString p_airConRainRiserPos)const
+std::vector<AttrAirCon >  CAirConditionLocalData::GetAirCons(double p_airConHorseNumber, CString p_airConPipePos, CString p_airConRainRiser, CString p_airConRainRiserPos)const
 {
 	std::vector<AttrAirCon> data;
 
