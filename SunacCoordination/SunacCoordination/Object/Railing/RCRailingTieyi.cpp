@@ -185,20 +185,41 @@ bool CRCRailingTieyi::GenRailing()  //对栏杆总长进行判断，如果栏杆总长小于1550，
 	double k2 = GenK(GetLength(), B2(), N_2, n_2);
 
 	//对k(栏杆侧边留空间隙)进行判断，如果大于105，那么标准栏杆尺寸就为1380，否则就为1260
-	if (k1 <= 105)
+	if (k1 <= 105 && k1 > 0)
 	{
-		m_B = B1();
+		m_B = m_B1;
 		m_N = N_1;
+
+		if (n_1 < 0)
+		{
+			AfxMessageBox(_T("输出的栏杆长度有误"));
+			return false;
+		}
+
 		m_n = n_1;
 		m_K = k1;
 	}
-	else
+	else  
 	{
-		m_B = B2();
+		m_B = m_B2;
 		m_N = N_2;
+
+		if (n_2 < 0)
+		{
+			AfxMessageBox(_T("输出的栏杆长度有误"));
+			return false;
+		}
+
 		m_n = n_2;
+
+		if (k2 > 105 || k2 < 0)	//对K2进行判断，如果K2大于105，返回false
+		{
+			AfxMessageBox(_T("输出的栏杆长度有误"));
+			return false;
+		}
 		m_K = k2;
 	}
+
 	return true;
 }
 
