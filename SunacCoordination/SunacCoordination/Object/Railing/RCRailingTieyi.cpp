@@ -205,7 +205,7 @@ bool CRCRailingTieyi::GenRailing()  //对栏杆总长进行判断，如果栏杆总长小于1550，
 int CRCRailingTieyi::GenStandardSegCount(double p_lenth, double p_segLength)const		//计算标准栏杆数量，p_lenth为栏杆长，p_segLength为栏杆的标准段长
 {
 	int nCount = 0;
-	if ((int)(p_lenth / p_segLength == 1))
+	if ((int)(p_lenth / p_segLength) == 1)
 	{
 		nCount = 1;
 	}
