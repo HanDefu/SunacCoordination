@@ -1,9 +1,12 @@
+#pragma once
 #include "StdAfx.h"
+#include <string>
 #include "WindowWebData.h"
 #include "SunacCadWeb\soapArgumentSettingServiceSoapProxy.h"
 #include "../Common\ComFun_Str.h"
 #include "..\Common\ComFun_String.h"
-#include <string>
+#include "WebIO.h"
+
 
 CWindowWebData::CWindowWebData()
 {
@@ -13,6 +16,22 @@ CWindowWebData::CWindowWebData()
 CWindowWebData::~CWindowWebData()
 {
 
+}
+
+CString GetFileName(const WCHAR *fullname)
+{
+	WCHAR filename[256]; 
+	WCHAR name[256];
+	wcscpy_s(name,fullname);
+	WCHAR *p = wcstok(name,L"/");
+	WCHAR *pre = NULL;
+	while(p != NULL)
+	{
+		pre = p;
+		p = wcstok(NULL, L"/");
+	}
+	wcscpy_s(filename,pre);
+	return filename;
 }
 
 std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
@@ -42,26 +61,65 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 			{
 				attrwindow.m_prototypeCode = xml.GetData();
 			}
+
 			if (xml.FindElem(_T("DrawingName")))
 			{
 				//attrallwindow.m_name = xml.GetData();
 			}
-			if (xml.FindElem(_T("DrawingPathTop")))
+			if (xml.FindElem(_T("Drawings")))
 			{
-				attrwindow.m_topViewFile = xml.GetData();
+				xml.IntoElem();
+				{
+					while (xml.FindElem(_T("Drawing")))
+					{
+						xml.IntoElem();
+						{
+							CString sFileType, tempString, sFileName, sFileID;
+							if (xml.FindElem(_T("Id")))
+							{
+								sFileID = xml.GetData();
+							}
+							if (xml.FindElem(_T("CADPath")))
+							{
+								tempString = xml.GetData();
+								if (tempString != "")
+								{
+									sFileName = GetFileName(tempString);//获得带扩展名的文件名
+								}
+							}
+							if (xml.FindElem(_T("CADType")))
+							{
+								sFileType = xml.GetData();
+							}
+							if (sFileType == "FrontViewFile")
+							{
+								attrwindow.m_frontViewFile = sFileName;
+							}
+							else if (sFileType == "LeftViewFile")
+							{
+								attrwindow.m_leftViewFile = sFileName;
+							}
+							else if (sFileType == "TopViewFile")
+							{
+								attrwindow.m_topViewFile = sFileName;
+							}
+							else if (sFileType == "ExpandViewFile")
+							{
+								attrwindow.m_fileName = sFileName;
+							}
+							//检查文件是否存在，不存在则下载
+							CString sFilePath = MD2010_GetAppPath() + L"\\support\\Sunac2019\\WebMode\\" + sFileName;
+							if (!JHCom_FileExist(sFilePath))
+							{
+								WebIO::DownLoadFile(_ttoi(sFileID), sFilePath);
+							}
+						}
+						xml.OutOfElem();
+					}
+				}
+				xml.OutOfElem();
 			}
-			if (xml.FindElem(_T("DrawingPathFront")))
-			{
-				attrwindow.m_frontViewFile = xml.GetData();
-			}
-			if (xml.FindElem(_T("DrawingPathLeft")))
-			{
-				attrwindow.m_leftViewFile = xml.GetData();
-			}
-			if (xml.FindElem(_T("DrawingPathExpanded")))
-			{
-				attrwindow.m_fileName = xml.GetData();
-			}
+
 			if (xml.FindElem(_T("Scope")))
 			{
 				CString flag = xml.GetData();
@@ -233,33 +291,52 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 				{
 					while (xml.FindElem(_T("Drawing")))
 					{
-						xml.IntoElem();
+						while (xml.FindElem(_T("Drawing")))
 						{
-							if (xml.FindElem(_T("CADType")))
+							xml.IntoElem();
 							{
-								if (xml.GetData() == "FrontViewFile")
+								CString sFileType, tempString, sFileName, sFileID;
+								if (xml.FindElem(_T("Id")))
 								{
-									xml.FindElem(_T("FileClass"));
-									Attrdoor.m_frontViewFile = xml.GetData();
+									sFileID = xml.GetData();
 								}
-								else if (xml.GetData() == "LeftViewFile")
+								if (xml.FindElem(_T("CADPath")))
 								{
-									xml.FindElem(_T("FileClass"));
-									Attrdoor.m_leftViewFile = xml.GetData();
+									tempString = xml.GetData();
+									if (tempString != "")
+									{
+										sFileName = GetFileName(tempString);//获得带扩展名的文件名
+									}
 								}
-								else if (xml.GetData() == "TopViewFile")
+								if (xml.FindElem(_T("CADType")))
 								{
-									xml.FindElem(_T("FileClass"));
-									Attrdoor.m_topViewFile = xml.GetData();
+									sFileType = xml.GetData();
 								}
-								else if (xml.GetData() == "ExpandViewFile")
+								if (sFileType == "FrontViewFile")
 								{
-									xml.FindElem(_T("FileClass"));
-									Attrdoor.m_fileName = xml.GetData();
+									Attrdoor.m_frontViewFile = sFileName;
+								}
+								else if (sFileType == "LeftViewFile")
+								{
+									Attrdoor.m_leftViewFile = sFileName;
+								}
+								else if (sFileType == "TopViewFile")
+								{
+									Attrdoor.m_topViewFile = sFileName;
+								}
+								else if (sFileType == "ExpandViewFile")
+								{
+									Attrdoor.m_fileName = sFileName;
+								}
+								//检查文件是否存在，不存在则下载
+								CString sFilePath = MD2010_GetAppPath() + L"\\support\\Sunac2019\\WebMode\\" + sFileName;
+								if (!JHCom_FileExist(sFilePath))
+								{
+									WebIO::DownLoadFile(_ttoi(sFileID), sFilePath);
 								}
 							}
+							xml.OutOfElem();
 						}
-						xml.OutOfElem();
 					}
 				}
 				xml.OutOfElem();
@@ -387,10 +464,18 @@ std::vector<AttrWindow> CWindowWebData::GetWindows(double p_width, double p_heig
 	CString opNum;
 	opNum.Format(_T("%d"),openNum);
 
+	if (openType == "不限")
+	{
+		openType = "";
+	}
+	if (gongNengQu == "不限")
+	{
+		openType = "";
+	}
+
 	std::wstring sOpenType = openType;
 	std::wstring sOpenNum = opNum.GetString();
 	std::wstring sGongnengqu = gongNengQu;
-
 	_ns1__GetWindows ns;
 	ns.width = p_width;
 	ns.height = p_heigh;
@@ -486,4 +571,3 @@ std::vector<AttrWindow >  CWindowWebData::GetAllDoors()const
 
 	return DoorAttrs;
 }
-
