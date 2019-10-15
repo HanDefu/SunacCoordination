@@ -319,7 +319,7 @@ void CWindowDlg::LoadDefaultValue()
 	const vCString& wallDis = WebIO::GetInstance()->GetConfigDict()->Window_GetWallDis();
 
 	TYUI_SetInt(m_width, 1500);
-	TYUI_SetInt(m_height, 1200);
+	TYUI_SetInt(m_height, 1800);
 	TYUI_SetInt(m_ventilation, 2);
 	TYUI_SetInt(m_area, 8);
 	

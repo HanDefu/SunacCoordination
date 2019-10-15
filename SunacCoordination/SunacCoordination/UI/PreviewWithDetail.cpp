@@ -46,6 +46,7 @@ void CPreviewWithDetail::SetPreview(CString sPath)
 		m_pGsPreviewCtrl = new CGsPreviewCtrl;
 		m_pGsPreviewCtrl->Create(_T(""), WS_CHILD | WS_VISIBLE, m_recPreview, this);
 		m_pGsPreviewCtrl->Init(theArxDLL.ModuleResourceInstance(), true);
+		m_pGsPreviewCtrl->SetMouseWheel(false);
 	}
 	m_pGsPreviewCtrl->SetDwgFile(sPath);
 }
