@@ -249,3 +249,5 @@ bool MD2012_CheckIsCurve(AcDbObjectId id, AcGePoint3d *startpt = NULL, AcGePoint
 bool MD2012_CheckIsPolyline(AcDbObjectId id, vAcGePoint3d *pts=NULL);
 
 void testfunc();
+
+bool CreateThumbnailBmp(CString p_sDwgFilePath, CString p_sBmpFilePath);

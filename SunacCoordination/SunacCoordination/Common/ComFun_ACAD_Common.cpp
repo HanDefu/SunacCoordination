@@ -3441,3 +3441,48 @@ void testfunc()
 	AcDbObjectId id = MD2010_AddHatchRectangle(AcGePoint3d( 0,0,0), AcGePoint3d(300,300,0));
 	MD2010_SetEntityColor(id, 8);
 }
+
+bool CreateThumbnailBmp(CString p_sDwgFilePath, CString p_sBmpFilePath)
+{
+	CFile dwgFile;
+	if(!dwgFile.Open(p_sDwgFilePath, CFile::modeRead))
+		return false;
+
+	int iPosSentinel;
+	dwgFile.Seek(13, CFile::begin);
+	dwgFile.Read(&iPosSentinel, 4);
+	char iNum;
+	dwgFile.Seek(iPosSentinel + 20, CFile::begin);
+	dwgFile.Read(&iNum, 1);
+	for(char i = 0; i < iNum; i++)
+	{
+		char iType;
+		int iPos, iLen;
+		dwgFile.Read(&iType, 1);
+		dwgFile.Read(&iPos, 4);
+		dwgFile.Read(&iLen, 4);
+		if(iType == 2)
+		{
+			dwgFile.Seek(iPos, CFile::begin);
+			char* bmpData = new char[iLen];
+			dwgFile.Read(bmpData, iLen);
+
+			BITMAPFILEHEADER fileHead;
+			fileHead.bfType = 0x4D42;
+			fileHead.bfOffBits = 0x436;
+			fileHead.bfSize = fileHead.bfOffBits + iLen;
+
+			CFile bmpFile;
+			bmpFile.Open(p_sBmpFilePath, CFile::modeCreate|CFile::modeWrite);
+			bmpFile.Write(&fileHead, sizeof(fileHead));
+			bmpFile.Write(bmpData, iLen);
+
+			delete[] bmpData;
+			dwgFile.Close();
+			bmpFile.Close();
+			return true;
+		}
+	}
+	dwgFile.Close();
+	return false;
+}

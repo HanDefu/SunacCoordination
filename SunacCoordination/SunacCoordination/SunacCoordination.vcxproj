@@ -72,8 +72,8 @@
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>C:\Program Files\Autodesk\AutoCAD 2014\Support</OutDir>
-    <IntDir>$(SolutionDir)\Temp\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>C:\Program Files\Autodesk\AutoCAD 2014\Support\</OutDir>
+    <IntDir>$(SolutionDir)Temp\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>Sunac2019</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
