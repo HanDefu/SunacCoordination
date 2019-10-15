@@ -122,6 +122,7 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 			}
 
 			CWindowsDimData dimDataW;
+			dimDataW.sCodeName = L"W";
 			if (attrwindow.m_isDynamic)
 			{
 				dimDataW.type = SCOPE;
@@ -136,6 +137,7 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 			attrwindow.SetDimData(dimDataW);
 
 			CWindowsDimData dimDataH;
+			dimDataH.sCodeName = L"H";
 			if (attrwindow.m_isDynamic)
 			{
 				dimDataH.type = UNLIMIT;
@@ -313,6 +315,7 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 			}
 
 			CWindowsDimData dimDataW;
+			dimDataW.sCodeName = L"W";
 			if (Attrdoor.m_isDynamic)
 			{
 				dimDataW.type = SCOPE;
@@ -327,6 +330,7 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 			Attrdoor.SetDimData(dimDataW);
 
 			CWindowsDimData dimDataH;
+			dimDataH.sCodeName = L"H";
 			if (Attrdoor.m_isDynamic)
 			{
 				dimDataH.type = UNLIMIT;
