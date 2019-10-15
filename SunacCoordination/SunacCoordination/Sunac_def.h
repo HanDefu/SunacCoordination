@@ -104,3 +104,15 @@ typedef struct SCalcData//门窗算量数据
 
 typedef std::vector<eWindowCalcType> vSCalcData;
 
+
+struct CDwgFileInfo
+{
+	CString fileName;	// 文件名,不含路径
+	CString previewFile; //预览图,不含路径
+	int id; //在服务器中的id，用于下载文件
+
+	CDwgFileInfo()
+	{
+		id = 0;
+	}
+};

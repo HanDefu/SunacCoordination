@@ -279,23 +279,8 @@ bool AttrWindow::IsPrototypeEqual(const AttrWindow& p_att)
 			it2++;
 		}
 	}
-	else 
-	{
 
-	}
 	if (p_att.m_calFormulas != m_calFormulas)
-	{
-		return false;
-	}
-	else if (p_att.m_fileName != m_fileName)
-	{
-		return false;
-	}
-	else if (p_att.m_frontViewFile != m_frontViewFile)
-	{
-		return false;
-	}
-	else if (p_att.m_gongNengquType != m_gongNengquType)
 	{
 		return false;
 	}
@@ -324,10 +309,6 @@ bool AttrWindow::IsPrototypeEqual(const AttrWindow& p_att)
 		return false;
 	}
 	else if (p_att.m_isZhuanJiao != m_isZhuanJiao)
-	{
-		return false;
-	}
-	else if (p_att.m_leftViewFile != m_leftViewFile)
 	{
 		return false;
 	}
@@ -363,14 +344,6 @@ bool AttrWindow::IsPrototypeEqual(const AttrWindow& p_att)
 	{
 		return false;
 	}
-	else if (p_att.m_topViewFile != m_topViewFile)
-	{
-		return false;
-	}
-	//else if (p_att.m_type != m_type)
-	//{
-	//	return false;
-	//}
 	else if (p_att.m_version != m_version)
 	{
 		return false;

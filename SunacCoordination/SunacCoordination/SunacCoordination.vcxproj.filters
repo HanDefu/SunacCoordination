@@ -310,6 +310,18 @@
     <ClCompile Include="Object\WindowDoor\WindowAutoName.cpp">
       <Filter>Object\WindowDoor</Filter>
     </ClCompile>
+    <ClCompile Include="Object\WindowStatistic\AluminumSeries.cpp">
+      <Filter>Object\WindowStatictic</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowStatistic\DeductedSize.cpp">
+      <Filter>Object\WindowStatictic</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowStatistic\WindowMaterialUsage.cpp">
+      <Filter>Object\WindowStatictic</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowStatistic\WindowStatictic.cpp">
+      <Filter>Object\WindowStatictic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -703,6 +715,18 @@
     <ClInclude Include="Object\WindowDoor\WindowAutoName.h">
       <Filter>Object\WindowDoor</Filter>
     </ClInclude>
+    <ClInclude Include="Object\WindowStatistic\AluminumSeries.h">
+      <Filter>Object\WindowStatictic</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowStatistic\DeductedSize.h">
+      <Filter>Object\WindowStatictic</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowStatistic\WindowMaterialUsage.h">
+      <Filter>Object\WindowStatictic</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowStatistic\WindowStatictic.h">
+      <Filter>Object\WindowStatictic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -767,6 +791,9 @@
     </Filter>
     <Filter Include="WebIO\base64">
       <UniqueIdentifier>{f5231dd6-5804-4ed6-ab14-1a5811901ddf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\WindowStatictic">
+      <UniqueIdentifier>{5c95edbc-ba71-4098-94e7-fa1cd929d900}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

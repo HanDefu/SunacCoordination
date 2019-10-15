@@ -184,6 +184,10 @@
     <ClCompile Include="Object\WindowDoor\AttrWindow.cpp" />
     <ClCompile Include="Object\WindowDoor\RCWindow.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowAutoName.cpp" />
+    <ClCompile Include="Object\WindowStatistic\AluminumSeries.cpp" />
+    <ClCompile Include="Object\WindowStatistic\DeductedSize.cpp" />
+    <ClCompile Include="Object\WindowStatistic\WindowMaterialUsage.cpp" />
+    <ClCompile Include="Object\WindowStatistic\WindowStatictic.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -294,6 +298,10 @@
     <ClInclude Include="Object\WindowDoor\AttrWindow.h" />
     <ClInclude Include="Object\WindowDoor\RCWindow.h" />
     <ClInclude Include="Object\WindowDoor\WindowAutoName.h" />
+    <ClInclude Include="Object\WindowStatistic\AluminumSeries.h" />
+    <ClInclude Include="Object\WindowStatistic\DeductedSize.h" />
+    <ClInclude Include="Object\WindowStatistic\WindowMaterialUsage.h" />
+    <ClInclude Include="Object\WindowStatistic\WindowStatictic.h" />
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="Sunac_def.h" />

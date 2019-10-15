@@ -170,7 +170,7 @@ void CAirconditionerDlg::UpdatePreview() //当空调对话框中的控件的值�
 	UpdateData(FALSE);
 
 	//获取控件ComboBox中选的值
-	CString pNum = TYUI_GetComboBoxText(m_pNum);
+	double pNum = _ttof(TYUI_GetComboBoxText(m_pNum));
 	CString lNTubePos = TYUI_GetComboBoxText(m_lNTubePos);
 	CString rainTubePos = TYUI_GetComboBoxText(m_rainTubePos);
 	int hasRainTube = m_hasRainTube.GetCheck();

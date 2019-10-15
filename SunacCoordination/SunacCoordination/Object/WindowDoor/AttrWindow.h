@@ -78,7 +78,7 @@ public:
 	virtual eRCType GetType() {return WINDOW;}
 	virtual bool isEqualTo(AttrObject*other);//窗型是否一致
 	virtual bool IsPrototypeEqual(const AttrWindow& p_att);
-
+	
 	//////////////////////////////////////////////////////////////////////////
 	const CWindowsDimData* GetDimData(CString p_sCode)const;
 	void SetDimData(const CWindowsDimData& p_dataOut);
@@ -108,9 +108,9 @@ protected:
 public:
 	CString m_openType;		//开启类型
 
-	CString m_frontViewFile;	//原型立面文件, 展开图用基类的m_fileName
-	CString	m_topViewFile;		//原型俯视图文件
-	CString m_leftViewFile;		//原型侧视图文件
+	CDwgFileInfo m_frontViewFile;	//原型立面文件, 展开图用基类的m_fileName
+	CDwgFileInfo m_topViewFile;		//原型俯视图文件
+	CDwgFileInfo m_leftViewFile;		//原型侧视图文件
 	
 	CString m_tongFengFormula;//通风量计算公式,主要用于动态原型
 	double m_tongFengQty;	//通风量

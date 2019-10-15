@@ -123,7 +123,7 @@ void CWindowLocalData::LoadDataFromExcel(CString p_file)
 		if (attrwindow.m_prototypeCode.GetLength() == 0)  //对原型编号的长度进行判断，当原型编号为空的时候结束循环
 			break;
 
-		attrwindow.m_fileName = xls.GetCellValue(i, 3);
+		attrwindow.SetFileName(xls.GetCellValue(i, 3));
 		attrwindow.m_quyuName = xls.GetCellValue(i, 4);
 		if (attrwindow.m_quyuName.Find(_T("全部"))>=0 ||
 			attrwindow.m_quyuName.Find(_T("集团")) >= 0)
@@ -148,12 +148,14 @@ void CWindowLocalData::LoadDataFromExcel(CString p_file)
 		CWindowsDimData dimDataW;
 		if (attrwindow.m_isDynamic)
 		{
+			dimDataW.sCodeName = L"W";
 			dimDataW.type = SCOPE;
 			dimDataW.minValue = _ttof(xls.GetCellValue(i, 9));
 			dimDataW.maxValue = _ttof(xls.GetCellValue(i, 10));
 		}
 		else
 		{
+			dimDataW.sCodeName = L"W";
 			dimDataW.type = SINGLE;
 			dimDataW.value = _ttof(xls.GetCellValue(i, 12)); //宽度
 		}
@@ -191,9 +193,9 @@ void CWindowLocalData::LoadDataFromExcel(CString p_file)
 		attrwindow.SetDimData(rcDimData);
 
 		//////////////////////////////////////////////////////////////////////////
-		attrwindow.m_frontViewFile = xls.GetCellValue(i, 51);
-		attrwindow.m_topViewFile = xls.GetCellValue(i, 52);
-		attrwindow.m_leftViewFile = xls.GetCellValue(i, 53);
+		attrwindow.m_frontViewFile.fileName = xls.GetCellValue(i, 51);
+		attrwindow.m_topViewFile.fileName = xls.GetCellValue(i, 52);
+		attrwindow.m_leftViewFile.fileName = xls.GetCellValue(i, 53);
 
 		//////////////////////////////////////////////////////////////////////////
 		m_windows.push_back(attrwindow); 
@@ -221,7 +223,7 @@ bool  CWindowLocalData::GetWindowByFileName(CString p_sFileName, AttrWindow&valu
 {
 	for (UINT i = 0; i < m_windows.size(); i++)
 	{
-		if (m_windows[i].m_fileName == p_sFileName)
+		if (m_windows[i].GetFileName() == p_sFileName)
 		{
 			value = m_windows[i];
 			return true;

@@ -36,7 +36,7 @@ std::vector<AttrKitchen > CKitchenBathroomWebData::ParseKitchensFromXML(CMarkup 
 			}
 			if (xml.FindElem(_T("DrawingPathTop")))
 			{
-				KitchenAttr.m_fileName = xml.GetData();
+				KitchenAttr.SetFileName(xml.GetData());
 			}
 			if (xml.FindElem(_T("Scope")))
 			{
@@ -142,7 +142,7 @@ std::vector<AttrBathroom > CKitchenBathroomWebData::ParseBathroomsFromXML(CMarku
 			}
 			if (xml.FindElem(_T("DrawingPathTop")))
 			{
-				BathroomAttr.m_fileName = xml.GetData();
+				BathroomAttr.SetFileName(xml.GetData());
 			}
 			if (xml.FindElem(_T("Scope")))
 			{

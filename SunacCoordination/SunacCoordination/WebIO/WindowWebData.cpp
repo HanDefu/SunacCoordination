@@ -48,19 +48,19 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 			}
 			if (xml.FindElem(_T("DrawingPathTop")))
 			{
-				attrwindow.m_topViewFile = xml.GetData();
+				attrwindow.m_topViewFile.fileName = xml.GetData();
 			}
 			if (xml.FindElem(_T("DrawingPathFront")))
 			{
-				attrwindow.m_frontViewFile = xml.GetData();
+				attrwindow.m_frontViewFile.fileName = xml.GetData();
 			}
 			if (xml.FindElem(_T("DrawingPathLeft")))
 			{
-				attrwindow.m_leftViewFile = xml.GetData();
+				attrwindow.m_leftViewFile.fileName = xml.GetData();
 			}
 			if (xml.FindElem(_T("DrawingPathExpanded")))
 			{
-				attrwindow.m_fileName = xml.GetData();
+				attrwindow.m_file.fileName = xml.GetData();
 			}
 			if (xml.FindElem(_T("Scope")))
 			{
@@ -252,19 +252,19 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 			}
 			if (xml.FindElem(_T("DrawingPathTop")))
 			{
-				Attrdoor.m_topViewFile = xml.GetData();
+				Attrdoor.m_topViewFile.fileName = xml.GetData();
 			}
 			if (xml.FindElem(_T("DrawingPathFront")))
 			{
-				Attrdoor.m_frontViewFile = xml.GetData();
+				Attrdoor.m_frontViewFile.fileName = xml.GetData();
 			}
 			if (xml.FindElem(_T("DrawingPathLeft")))
 			{
-				Attrdoor.m_leftViewFile = xml.GetData();
+				Attrdoor.m_leftViewFile.fileName = xml.GetData();
 			}
 			if (xml.FindElem(_T("DrawingPathExpanded")))
 			{
-				Attrdoor.m_fileName = xml.GetData();
+				Attrdoor.m_file.fileName = xml.GetData();
 			}
 			if (xml.FindElem(_T("Scope")))
 			{

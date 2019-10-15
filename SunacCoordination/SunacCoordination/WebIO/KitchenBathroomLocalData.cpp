@@ -97,7 +97,7 @@ void CKitchenBathroomLocalData::InitKitchenLocalData()
 	CKitchenBathroomProp* pProp = &pKitchen->m_prop;
 	//AttrObject基类属性
 	pKitchen->m_prototypeCode = L"KUq";
-	pKitchen->m_fileName = L"KUq_Dui.dwg";
+	pKitchen->SetFileName(L"KUq_Dui.dwg");
 	pKitchen->m_isDynamic = true;
 	pKitchen->m_isJiTuan = true;
 	//AttrBathroom类属性
@@ -114,7 +114,7 @@ void CKitchenBathroomLocalData::InitKitchenLocalData()
 	pProp = &pKitchen->m_prop;
 	//AttrObject基类属性
 	pKitchen->m_prototypeCode = L"KUq_z";
-	pKitchen->m_fileName = L"KUq_Dui_ZhuanJiao.dwg";
+	pKitchen->SetFileName(L"KUq_Dui_ZhuanJiao.dwg");
 	pKitchen->m_isDynamic = true;
 	pKitchen->m_isJiTuan = true;
 	//AttrBathroom类属性
@@ -130,7 +130,7 @@ void CKitchenBathroomLocalData::InitKitchenLocalData()
 	pProp = &pKitchen->m_prop;
 	//AttrObject基类属性
 	pKitchen->m_prototypeCode = L"KUq_c";
-	pKitchen->m_fileName = L"KUq_Chui.dwg";
+	pKitchen->SetFileName(L"KUq_Chui.dwg");
 	pKitchen->m_isDynamic = true;
 	pKitchen->m_isJiTuan = true;
 	//AttrBathroom类属性
@@ -147,7 +147,7 @@ void CKitchenBathroomLocalData::InitKitchenLocalData()
 	pProp = &pKitchen->m_prop;
 	//AttrObject基类属性
 	pKitchen->m_prototypeCode = L"KUq_c_z";
-	pKitchen->m_fileName = L"KUq_Chui_ZhuanJiao.dwg";
+	pKitchen->SetFileName(L"KUq_Chui_ZhuanJiao.dwg");
 	pKitchen->m_isDynamic = true;
 	pKitchen->m_isJiTuan = true;
 	//AttrBathroom类属性
@@ -163,7 +163,7 @@ void CKitchenBathroomLocalData::InitKitchenLocalData()
 	pProp = &pKitchen->m_prop;
 	//AttrObject基类属性
 	pKitchen->m_prototypeCode = L"KUs";
-	pKitchen->m_fileName = L"KUs.dwg";
+	pKitchen->SetFileName(L"KUs.dwg");
 	pKitchen->m_isDynamic = true;
 	pKitchen->m_isJiTuan = true;
 	//AttrBathroom类属性
@@ -179,7 +179,7 @@ void CKitchenBathroomLocalData::InitKitchenLocalData()
 	pProp = &pKitchen->m_prop;
 	//AttrObject基类属性
 	pKitchen->m_prototypeCode = L"KL";
-	pKitchen->m_fileName = L"KL.dwg";
+	pKitchen->SetFileName(L"KL.dwg");
 	pKitchen->m_isDynamic = true;
 	pKitchen->m_isJiTuan = true;
 	//AttrBathroom类属性
@@ -195,7 +195,7 @@ void CKitchenBathroomLocalData::InitKitchenLocalData()
 	pProp = &pKitchen->m_prop;
 	//AttrObject基类属性
 	pKitchen->m_prototypeCode = L"KI";
-	pKitchen->m_fileName = L"KI.dwg";
+	pKitchen->SetFileName(L"KI.dwg");
 	pKitchen->m_isDynamic = true;
 	pKitchen->m_isJiTuan = true;
 	//AttrBathroom类属性
@@ -213,7 +213,11 @@ void CKitchenBathroomLocalData::InitKitchenLocalData()
 	{
 		AttrKitchen newKitchen(m_allKitchens[i]);
 		newKitchen.m_prototypeCode += L"_p";
-		newKitchen.m_fileName.Replace(L".dwg", L"_P.dwg");
+
+		CString sName = newKitchen.GetFileName();
+		sName.Replace(L".dwg", L"_P.dwg");
+		newKitchen.SetFileName(sName);
+
 		newKitchen.m_hasPaiQiDao = true;
 		m_allKitchens.push_back(newKitchen);
 	}
@@ -227,7 +231,7 @@ void CKitchenBathroomLocalData::InitBathroomLocalData()
 	CKitchenBathroomProp* pProp = &pBathroom->m_prop;
 	//AttrObject基类属性
 	pBathroom->m_prototypeCode = L"TI3";
-	pBathroom->m_fileName = L"TI3.dwg";
+	pBathroom->SetFileName(L"TI3.dwg");
 	pBathroom->m_isDynamic = true;
 	pBathroom->m_isJiTuan = true;
 	//AttrBathroom类属性
@@ -244,7 +248,7 @@ void CKitchenBathroomLocalData::InitBathroomLocalData()
 	pProp = &pBathroom->m_prop;
 	//AttrObject基类属性
 	pBathroom->m_prototypeCode = L"TI3_g";
-	pBathroom->m_fileName = L"TI3_g.dwg";
+	pBathroom->SetFileName(L"TI3_g.dwg");
 	pBathroom->m_isDynamic = true;
 	pBathroom->m_isJiTuan = true;
 	//AttrBathroom类属性
@@ -261,7 +265,7 @@ void CKitchenBathroomLocalData::InitBathroomLocalData()
 	pProp = &pBathroom->m_prop;
 	//AttrObject基类属性
 	pBathroom->m_prototypeCode = L"TI4";
-	pBathroom->m_fileName = L"TI4.dwg";
+	pBathroom->SetFileName(L"TI4.dwg");
 	pBathroom->m_isDynamic = true;
 	pBathroom->m_isJiTuan = true;
 	//AttrBathroom类属性
@@ -278,7 +282,7 @@ void CKitchenBathroomLocalData::InitBathroomLocalData()
 	pProp = &pBathroom->m_prop;
 	//AttrObject基类属性
 	pBathroom->m_prototypeCode = L"TI4_g";
-	pBathroom->m_fileName = L"TI4_g.dwg";
+	pBathroom->SetFileName(L"TI4_g.dwg");
 	pBathroom->m_isDynamic = true;
 	pBathroom->m_isJiTuan = true;
 	//AttrBathroom类属性
@@ -295,7 +299,7 @@ void CKitchenBathroomLocalData::InitBathroomLocalData()
 	pProp = &pBathroom->m_prop;
 	//AttrObject基类属性
 	pBathroom->m_prototypeCode = L"TL3";
-	pBathroom->m_fileName = L"TL3.dwg";
+	pBathroom->SetFileName(L"TL3.dwg");
 	pBathroom->m_isDynamic = true;
 	pBathroom->m_isJiTuan = true;
 	//AttrBathroom类属性
@@ -312,7 +316,7 @@ void CKitchenBathroomLocalData::InitBathroomLocalData()
 	pProp = &pBathroom->m_prop;
 	//AttrObject基类属性
 	pBathroom->m_prototypeCode = L"TL3_b";
-	pBathroom->m_fileName = L"TL3_标准淋浴房.dwg";
+	pBathroom->SetFileName(L"TL3_标准淋浴房.dwg");
 	pBathroom->m_isDynamic = true;
 	pBathroom->m_isJiTuan = true;
 	//AttrBathroom类属性
@@ -328,7 +332,7 @@ void CKitchenBathroomLocalData::InitBathroomLocalData()
 	pProp = &pBathroom->m_prop;
 	//AttrObject基类属性
 	pBathroom->m_prototypeCode = L"TL4";
-	pBathroom->m_fileName = L"TL4.dwg";
+	pBathroom->SetFileName(L"TL4.dwg");
 	pBathroom->m_isDynamic = true;
 	pBathroom->m_isJiTuan = true;
 	//AttrBathroom类属性
@@ -344,7 +348,7 @@ void CKitchenBathroomLocalData::InitBathroomLocalData()
 	pProp = &pBathroom->m_prop;
 	//AttrObject基类属性
 	pBathroom->m_prototypeCode = L"TL4_b";
-	pBathroom->m_fileName = L"TL4_标准淋浴房.dwg";
+	pBathroom->SetFileName(L"TL4_标准淋浴房.dwg");
 	pBathroom->m_isDynamic = true;
 	pBathroom->m_isJiTuan = true;
 	//AttrBathroom类属性
@@ -360,7 +364,7 @@ void CKitchenBathroomLocalData::InitBathroomLocalData()
 	pProp = &pBathroom->m_prop;
 	//AttrObject基类属性
 	pBathroom->m_prototypeCode = L"TU3";
-	pBathroom->m_fileName = L"TU3-1600X2450.dwg";
+	pBathroom->SetFileName(L"TU3-1600X2450.dwg");
 	pBathroom->m_isDynamic = false;
 	pBathroom->m_isJiTuan = true;
 	//AttrBathroom类属性
@@ -376,7 +380,7 @@ void CKitchenBathroomLocalData::InitBathroomLocalData()
 	pProp = &pBathroom->m_prop;
 	//AttrObject基类属性
 	pBathroom->m_prototypeCode = L"TU3";
-	pBathroom->m_fileName = L"TU3-1850X2000.dwg";
+	pBathroom->SetFileName(L"TU3-1850X2000.dwg");
 	pBathroom->m_isDynamic = false;
 	pBathroom->m_isJiTuan = true;
 	//AttrBathroom类属性
@@ -392,7 +396,7 @@ void CKitchenBathroomLocalData::InitBathroomLocalData()
 	pProp = &pBathroom->m_prop;
 	//AttrObject基类属性
 	pBathroom->m_prototypeCode = L"TU3";
-	pBathroom->m_fileName = L"TU3-1850X2750.dwg";
+	pBathroom->SetFileName(L"TU3-1850X2750.dwg");
 	pBathroom->m_isDynamic = false;
 	pBathroom->m_isJiTuan = true;
 	//AttrBathroom类属性
@@ -408,7 +412,7 @@ void CKitchenBathroomLocalData::InitBathroomLocalData()
 	pProp = &pBathroom->m_prop;
 	//AttrObject基类属性
 	pBathroom->m_prototypeCode = L"TU4";
-	pBathroom->m_fileName = L"TU4-2000X2750.dwg";
+	pBathroom->SetFileName(L"TU4-2000X2750.dwg");
 	pBathroom->m_isDynamic = false;
 	pBathroom->m_isJiTuan = true;
 	//AttrBathroom类属性

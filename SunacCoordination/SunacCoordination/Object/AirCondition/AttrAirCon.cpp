@@ -29,7 +29,10 @@ AttrAirCon::AttrAirCon(const AttrAirCon &other) : AttrObject(other)
 	m_pipePos = other.m_pipePos;			//空调冷凝水管位置
 	m_hasRainPipe = other.m_hasRainPipe;		//空调是否有雨水立管穿过
 	m_rainPipePos = other.m_rainPipePos;	//空调雨水管位置
-	m_installNetSize = other.m_installNetSize;//空调安装净尺寸
+	//m_installNetSize = other.m_installNetSize;//空调安装净尺寸
+	m_airW = other.m_airW;
+	m_airH = other.m_airH;
+	m_airD = other.m_airD;
 }
 
 AttrAirCon & AttrAirCon::operator=(const AttrAirCon &rhs)
@@ -98,7 +101,15 @@ bool AttrAirCon::IsPrototypeEqual(const AttrAirCon& p_att)
 	{
 		return false;
 	}
-	else if (p_att.m_installNetSize != m_installNetSize)
+	else if (p_att.m_airW != m_airW)
+	{
+		return false;
+	}
+	else if (p_att.m_airH != m_airH)
+	{
+		return false;
+	}
+	else if (p_att.m_airD != m_airD)
 	{
 		return false;
 	}
@@ -124,10 +135,6 @@ bool AttrAirCon::IsPrototypeEqual(const AttrAirCon& p_att)
 		return false;
 	}
 	else if (p_att.m_quyuName != m_quyuName)
-	{
-		return false;
-	}
-	else if (p_att.m_fileName != m_fileName)
 	{
 		return false;
 	}
