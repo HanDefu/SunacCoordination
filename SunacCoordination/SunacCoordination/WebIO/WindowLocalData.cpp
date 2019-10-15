@@ -146,22 +146,22 @@ void CWindowLocalData::LoadDataFromExcel(CString p_file)
 
 		//////////////////////////////////////////////////////////////////////////
 		CWindowsDimData dimDataW;
+		dimDataW.sCodeName = L"W";
 		if (attrwindow.m_isDynamic)
 		{
-			dimDataW.sCodeName = L"W";
 			dimDataW.type = SCOPE;
 			dimDataW.minValue = _ttof(xls.GetCellValue(i, 9));
 			dimDataW.maxValue = _ttof(xls.GetCellValue(i, 10));
 		}
 		else
 		{
-			dimDataW.sCodeName = L"W";
 			dimDataW.type = SINGLE;
 			dimDataW.value = _ttof(xls.GetCellValue(i, 12)); //¿í¶È
 		}
 		attrwindow.SetDimData(dimDataW);
 
 		CWindowsDimData dimDataH;
+		dimDataH.sCodeName = L"H";
 		if (attrwindow.m_isDynamic)
 		{
 			dimDataH.type = UNLIMIT;
