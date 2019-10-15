@@ -103,6 +103,7 @@ BOOL CAirconditionerDlg::OnInitDialog()
 
 	m_preAirCon.SubclassDlgItem(IDC_STATIC_AC, this);		// 控件和资源的关联
 	m_preAirCon.Init(theArxDLL.ModuleResourceInstance(), true);
+	m_preAirCon.SetMouseWheel(false);
 
 	UpdatePreview();
    // Air_GetPiShus();
