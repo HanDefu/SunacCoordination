@@ -115,7 +115,7 @@ public:
     CGsPreviewCtrl() : CStatic(), 
                    mpManager(NULL), mpFactory(NULL), mpDevice(NULL), mpView(NULL), 
                    mpModel(NULL),mbModelCreated(false),mbPanning(false),mbOrbiting(false), 
-				   m_pDb(NULL) {} 
+				   m_pDb(NULL),mMouseWheel(true) {} 
     
     virtual ~CGsPreviewCtrl() {clearAll();}
 
@@ -132,6 +132,9 @@ public:
     AcGsDevice* device()    { return mpDevice; }
     AcGsModel*  model()     { return mpModel; }
     void setModel(AcGsModel* pModel);
+
+	//是否相应鼠标滚轮操作
+	void SetMouseWheel(bool mouseWheel){mMouseWheel = mouseWheel;}
 	// Generated message map functions
 
 private:
@@ -178,6 +181,7 @@ public:
     bool mbPanning;
     bool mbOrbiting;
     CPoint mStartPt;
+	bool mMouseWheel;//是否相应鼠标滚轮操作
 
 	AcDbDatabase *m_pDb;
 };

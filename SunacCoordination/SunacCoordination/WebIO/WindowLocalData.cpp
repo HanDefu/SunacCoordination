@@ -146,6 +146,7 @@ void CWindowLocalData::LoadDataFromExcel(CString p_file)
 
 		//////////////////////////////////////////////////////////////////////////
 		CWindowsDimData dimDataW;
+		dimDataW.sCodeName = L"W";
 		if (attrwindow.m_isDynamic)
 		{
 			dimDataW.sCodeName = L"W";
@@ -161,6 +162,7 @@ void CWindowLocalData::LoadDataFromExcel(CString p_file)
 		attrwindow.SetDimData(dimDataW);
 
 		CWindowsDimData dimDataH;
+		dimDataH.sCodeName = L"H";
 		if (attrwindow.m_isDynamic)
 		{
 			dimDataH.type = UNLIMIT;

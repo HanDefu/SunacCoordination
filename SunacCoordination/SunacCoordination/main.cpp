@@ -47,6 +47,7 @@
 #include "Common\ComFun_Str.h"
 #include "Tool\MarkupXml\Markup.h"
 #include <string>
+#include "WebIO/WebIO.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -444,6 +445,8 @@ static void initApp()
 	AcDbBlockReference::desc()->addX(AcDbDoubleClickEdit::desc(), pCircleEdit);	
 
 	LoadManagedDll(MD2010_GetAppPath() + L"\\support\\Sunac2019\\rcdc.dll");
+
+	WEBINST;
 
 	mThreadHandle = (HANDLE)_beginthread(&SyncDataWithService, 0, 0);
 
