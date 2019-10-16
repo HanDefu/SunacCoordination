@@ -35,3 +35,5 @@ void CMD_SUNACWATERPROOF();
 //退出前关闭所有非模态对话框
 void CloseModelessDialogs();
 
+void CMD_TEST();
+

@@ -59,6 +59,7 @@ public:
 	void EnableSetAirout(bool bEnable);
 	void EnableSetProperty(bool bEnable);
 	void EnableDynamic(bool bEnable);
+	void ClearPreviews();
 
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);///---01
 	afx_msg void OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult);

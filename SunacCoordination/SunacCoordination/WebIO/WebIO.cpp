@@ -238,7 +238,7 @@ bool WebIO::DownloadFile(const int fileId, CString type, CString filePathName)
 	ofstream ofs(filenameOut, ofstream::out | ofstream::binary);
 	if (ofs)
 	{
-		UINT numberOfBytes = sReturn.length() + 1;
+		int numberOfBytes = (int)sReturn.length() + 1;
 		char* decodedBuffer = new char[numberOfBytes * 2];
 		memset(decodedBuffer, 0, numberOfBytes * 2);
 

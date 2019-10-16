@@ -170,16 +170,51 @@ void CKitchenDlg::OnBnClickedButtonRange()
 {
 	ShowWindow(false);
 	TYRect rect = TY_GetOneRect();
-	ShowWindow(true);
 
 	if (IsKitchRectValid(rect)==false)
 	{
 		AfxMessageBox(_T("所选厨房范围无效\n"));
+		ShowWindow(true);
 		return;
 	}
 
 	m_rect = rect;
 
+	if (m_doorDir == E_DIR_UNKNOWN)
+	{
+		ads_point pt;
+		acedInitGet(32,NULL);
+		if(acedGetPoint(NULL,L"\n选择门的位置\n",pt)!=RTNORM) //第一角点选择
+		{
+			ShowWindow(true);
+			return;
+		}
+		m_doorDir = GetDir(pt);
+	}
+
+	if (m_windowDir == E_DIR_UNKNOWN)
+	{
+		do
+		{
+			ads_point pt;
+			acedInitGet(32,NULL);
+			if(acedGetPoint(NULL,L"\n选择窗的位置\n",pt)!=RTNORM) //第一角点选择
+			{
+				ShowWindow(true);
+				return;
+			}
+			m_windowDir = GetDir(pt);
+			if (m_doorDir == m_windowDir)
+				AfxMessageBox(_T("门窗方向不能相同\n"));
+		}
+		while (m_doorDir == m_windowDir);
+
+		if ((abs(m_windowDir - m_doorDir) % 2)==0)
+			GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗对开"));
+		else
+			GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗垂直开"));
+	}
+	ShowWindow(true);
 	ClearPreviews();
 }
 
