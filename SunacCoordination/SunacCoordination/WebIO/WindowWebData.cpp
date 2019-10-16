@@ -540,10 +540,12 @@ std::vector<AttrWindow> CWindowWebData::GetWindows(double p_width, double p_heig
 	{
 		openType = "";
 	}
+
 	if (gongNengQu == "²»ÏÞ")
 	{
 		gongNengQu = "";
 	}
+
 	if (openNum == 0)
 	{
 		opNum = "";

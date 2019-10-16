@@ -34,11 +34,11 @@ WebIO::~WebIO()
 //读取门和窗
 std::vector<AttrWindow>  WebIO::GetWindows(double width, CString openType, int openNum, CString gongNengQu)const
 {
-	vAttrWindow Local,Web;
-/*#ifdef WORK_LOCAL*///本地模式
-	Local = m_windowLocalData.GetWindows(width, openType, openNum, gongNengQu);
-/*#else*/
-	Web = m_windowWebData.GetWindows(width, 0, openType, openNum, gongNengQu);
+#ifdef WORK_LOCAL		//本地模式
+	vAttrWindow Local = m_windowLocalData.GetWindows(width, openType, openNum, gongNengQu);
+#else
+	vAttrWindow Local = m_windowLocalData.GetWindows(width, openType, openNum, gongNengQu);
+	vAttrWindow Web = m_windowWebData.GetWindows(width, 0, openType, openNum, gongNengQu);
 
 	for(int i = 0; i < Web.size(); i++ )
 	{
@@ -65,7 +65,7 @@ std::vector<AttrWindow>  WebIO::GetWindows(double width, CString openType, int o
 
 	}
 	return Local;
-/*#endif*/
+#endif
 }
 std::vector<AttrWindow> WebIO::GetDoors(double width, CString openType, int openNum, CString gongNengQu)const
 {
