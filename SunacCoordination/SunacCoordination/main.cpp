@@ -38,6 +38,7 @@
 #include "WebIO\ConfigDictionary.h"
 #include "Tool\DoubleClickBlockReference.h"
 #include "Common\ComFun_Str.h"
+#include "WebIO\WebIO.h"
 #include "WebIO\KitchenBathroomWebData.h"
 #include "WebIO\RailingWebData.h"
 #include "WebIO\AirconditionWebData.h"
@@ -171,16 +172,108 @@ void CMD_test()
 	double height = 1800;
 	CString doorType = "";
 
-	CWindowWebData b;
-	CKitchenBathroomWebData c;
-	CRailingWebData d;
-	CAirConditionWebData e;
+	CWindowWebData WindowFromWeb;
+	CWindowLocalData WindowFromLocal;
+
+	CWindowWebData DoorFromWeb;
+	CWindowLocalData DoorFromLocal;
+
+	CKitchenBathroomWebData KitchenFromWeb;
+	CKitchenBathroomWebData BathroomFromWeb;
+	CRailingWebData RailingFromWeb;
+	CAirConditionWebData AirConFromWeb;
 	//vAttrWindow window = b.GetWindows(width, height, "", 0, "");
-	std::vector<AttrWindow> window = b.GetAllWindows();
-	std::vector<AttrKitchen> kitchen = c.GetAllKitchens();
-	std::vector<AttrBathroom> bathroom = c.GetAllBathrooms();
-	std::vector<AttrRailing> railing = d.GetRailings(E_RAILING_BOLI);
-	std::vector<AttrAirCon> aircon = e.GetAirCons(0,"",0 ,"");
+	std::vector<AttrWindow> WindowFromWebData = WindowFromWeb.GetAllWindows();
+	std::vector<AttrWindow> WindowFromLocalData = WindowFromLocal.GetAllWindows();
+
+	//比较windows1, windows2
+/*
+	for(int i = 0; i < WindowFromWebData.size(); i++ )
+	{
+		AttrWindow &curWebWin = WindowFromWebData[i];
+
+		//从window1找到相同编号的
+		bool bFind = false;
+		for (UINT j = 0; j < WindowFromLocalData.size(); j++)
+		{
+			if (curWebWin.m_prototypeCode == WindowFromLocalData[j].m_prototypeCode)
+			{
+				bFind = true;
+				if(WindowFromLocalData[j].IsWindowPrototypeEqual(WindowFromWebData[i]))
+				{
+					AfxMessageBox(L"确实相等！");
+				}
+				else
+				{
+					AfxMessageBox(L"不完全相等！");
+				}
+				break;
+			}
+		}
+
+		assert(bFind==true);
+	}*/
+
+	std::vector<AttrWindow> DoorFromWebData = DoorFromWeb.GetAllDoors();
+	std::vector<AttrWindow> DoorFromLocalData = DoorFromLocal.GetAllDoors();
+/*
+	for(int i = 0; i < DoorFromWebData.size(); i++ )
+	{
+		AttrWindow &curWebWin = DoorFromWebData[i];
+
+		//从window1找到相同编号的
+		bool bFind = false;
+		for (UINT j = 0; j < DoorFromLocalData.size(); j++)
+		{
+			if (curWebWin.m_prototypeCode == DoorFromLocalData[j].m_prototypeCode)
+			{
+				bFind = true;
+				if(DoorFromLocalData[j].IsDoorPrototypeEqual(DoorFromWebData[i]))
+				{
+					AfxMessageBox(L"确实相等！");
+				}
+				else
+				{
+					AfxMessageBox(L"不完全相等！");
+				}
+				break;
+			}
+		}
+
+		assert(bFind==true);
+	}*/
+
+	std::vector<AttrKitchen> KitchenFromLocalData = WebIO::GetInstance()->GetAllKitchens();
+	std::vector<AttrKitchen> KitchenFromWebData = KitchenFromWeb.GetAllKitchens();
+	/*
+	for(int i = 0; i < attrs2.size(); i++ )
+	{
+		AttrKitchen &curWebAttr = attrs2[i];
+
+		//从attr1找到相同编号的
+		bool bFind = false;
+		for (UINT j = 0; j < attrs1.size(); j++)
+		{
+			if (curWebAttr.m_prototypeCode == attrs1[j].m_prototypeCode)
+			{
+				bFind = true;
+				if(attrs1[i].IsKitchenPrototypeEqual(attrs2[j]))
+				{
+					AfxMessageBox(L"确实相等！");
+				}
+				else
+				{
+					AfxMessageBox(L"不完全相等！");
+				}
+				break;
+			}
+		}
+
+	}*/
+
+	std::vector<AttrBathroom> BathroomFromWebData = BathroomFromWeb.GetAllBathrooms();
+	std::vector<AttrRailing> RailingFromWebData = RailingFromWeb.GetRailings(E_RAILING_BOLI);
+	std::vector<AttrAirCon> AirConFromWebData = AirConFromWeb.GetAirCons(0,"",0 ,"");
 	return;
 }
 

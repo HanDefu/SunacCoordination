@@ -110,6 +110,7 @@ struct CDwgFileInfo
 	CString fileName;	// 文件名,不含路径
 	CString previewFile; //预览图,不含路径
 	int id; //在服务器中的id，用于下载文件
+	int PreviewID;//缩略图的ID，用于下载缩略图
 
 	CDwgFileInfo()
 	{

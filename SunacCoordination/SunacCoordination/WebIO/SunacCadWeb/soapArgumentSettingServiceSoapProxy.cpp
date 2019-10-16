@@ -10,7 +10,8 @@ compiling, linking, and/or using OpenSSL is allowed.
 A commercial use license is available from Genivia Inc., contact@genivia.com
 --------------------------------------------------------------------------------
 */
-#include "stdafx.h"
+#include "StdAfx.h"
+
 #include "soapArgumentSettingServiceSoapProxy.h"
 
 ArgumentSettingServiceSoapProxy::ArgumentSettingServiceSoapProxy() : soap(SOAP_IO_DEFAULT)
@@ -848,6 +849,65 @@ int ArgumentSettingServiceSoapProxy::recv_CadFileDownload(_ns1__CadFileDownloadR
 	return soap_closesock(soap);
 }
 
+int ArgumentSettingServiceSoapProxy::send_CadImgDownload(const char *soap_endpoint_url, const char *soap_action, _ns1__CadImgDownload *ns1__CadImgDownload)
+{
+	struct soap *soap = this;
+	struct __ns1__CadImgDownload soap_tmp___ns1__CadImgDownload;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/CadImgDownload";
+	soap_tmp___ns1__CadImgDownload.ns1__CadImgDownload = ns1__CadImgDownload;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__CadImgDownload(soap, &soap_tmp___ns1__CadImgDownload);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__CadImgDownload(soap, &soap_tmp___ns1__CadImgDownload, "-ns1:CadImgDownload", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__CadImgDownload(soap, &soap_tmp___ns1__CadImgDownload, "-ns1:CadImgDownload", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_CadImgDownload(_ns1__CadImgDownloadResponse &ns1__CadImgDownloadResponse)
+{
+	struct soap *soap = this;
+	ns1__CadImgDownloadResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__CadImgDownloadResponse.soap_get(soap, "ns1:CadImgDownloadResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
 int ArgumentSettingServiceSoapProxy::send_StandardDesignAttribute_(const char *soap_endpoint_url, const char *soap_action, _ns1__StandardDesignAttribute *ns1__StandardDesignAttribute)
 {
 	struct soap *soap = this;
@@ -1547,6 +1607,65 @@ int ArgumentSettingServiceSoapProxy::recv_CadFileDownload_(_ns1__CadFileDownload
 	 || soap_body_begin_in(soap))
 		return soap_closesock(soap);
 	ns1__CadFileDownloadResponse.soap_get(soap, "ns1:CadFileDownloadResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_CadImgDownload_(const char *soap_endpoint_url, const char *soap_action, _ns1__CadImgDownload *ns1__CadImgDownload)
+{
+	struct soap *soap = this;
+	struct __ns1__CadImgDownload_ soap_tmp___ns1__CadImgDownload_;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/CadImgDownload";
+	soap_tmp___ns1__CadImgDownload_.ns1__CadImgDownload = ns1__CadImgDownload;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__CadImgDownload_(soap, &soap_tmp___ns1__CadImgDownload_);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__CadImgDownload_(soap, &soap_tmp___ns1__CadImgDownload_, "-ns1:CadImgDownload", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__CadImgDownload_(soap, &soap_tmp___ns1__CadImgDownload_, "-ns1:CadImgDownload", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_CadImgDownload_(_ns1__CadImgDownloadResponse &ns1__CadImgDownloadResponse)
+{
+	struct soap *soap = this;
+	ns1__CadImgDownloadResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__CadImgDownloadResponse.soap_get(soap, "ns1:CadImgDownloadResponse", NULL);
 	if (soap->error)
 		return soap_recv_fault(soap, 0);
 	if (soap_body_end_in(soap)

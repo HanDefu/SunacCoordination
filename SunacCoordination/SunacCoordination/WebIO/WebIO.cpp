@@ -34,10 +34,37 @@ WebIO::~WebIO()
 //读取门和窗
 std::vector<AttrWindow>  WebIO::GetWindows(double width, CString openType, int openNum, CString gongNengQu)const
 {
-#ifdef WORK_LOCAL//本地模式
-	return m_windowLocalData.GetWindows(width, openType, openNum, gongNengQu);
+#ifdef WORK_LOCAL		//本地模式
+	vAttrWindow Local = m_windowLocalData.GetWindows(width, openType, openNum, gongNengQu);
 #else
-	return m_windowWebData.GetWindows(width, openType, openNum, gongNengQu);
+	vAttrWindow Local = m_windowLocalData.GetWindows(width, openType, openNum, gongNengQu);
+	vAttrWindow Web = m_windowWebData.GetWindows(width, 0, openType, openNum, gongNengQu);
+
+	for(int i = 0; i < Web.size(); i++ )
+	{
+		AttrWindow &curWebWin = Web[i];
+
+		//从window1找到相同编号的
+		bool bFind = false;
+		for (UINT j = 0; j < Local.size(); j++)
+		{
+			if (curWebWin.m_prototypeCode == Local[j].m_prototypeCode)
+			{
+				bFind = true;
+				if(Local[j].IsPrototypeEqual(Web[i]))
+				{
+					AfxMessageBox(L"确实相等！");
+				}
+				else
+				{
+					AfxMessageBox(L"不完全相等！");
+				}
+				break;
+			}
+		}
+
+	}
+	return Local;
 #endif
 }
 std::vector<AttrWindow> WebIO::GetDoors(double width, CString openType, int openNum, CString gongNengQu)const

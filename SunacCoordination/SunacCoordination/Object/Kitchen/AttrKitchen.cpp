@@ -32,6 +32,15 @@ AttrKitchen::AttrKitchen()
 	//m_zaoTaiType;//灶台宽度 
 	m_width = 0;//长度 面宽
 	m_height = 0;//宽度 进深
+	m_width = 0;//长度 面宽
+	m_height = 0;//宽度 进深
+	m_minWidth = 0;//最小开间
+	m_maxwidth = 0;//最大开间
+	m_maxHeight = 0;//最大进深
+	m_minHeight = 0;//最小进深
+	m_BasinSize = 0;//厨房水盆尺寸
+	m_FridgeSize = 0;//厨房冰箱尺寸
+	m_HearthSize = 0;//厨房灶台尺寸
 }
 
 AttrKitchen::~AttrKitchen()

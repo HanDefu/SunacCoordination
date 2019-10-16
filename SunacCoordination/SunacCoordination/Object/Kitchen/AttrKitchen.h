@@ -65,4 +65,15 @@ public:
 
 	//插入时填写
 	bool m_isMirror;			//镜像
+
+	//////////////////////////////////////////////////////////////////////////
+	//原型文件属性
+	double m_minWidth;//最小开间
+	double m_maxwidth;//最大开间
+	double m_maxHeight;//最大进深
+	double m_minHeight;//最小进深
+
+	double m_BasinSize;//厨房水盆尺寸
+	double m_FridgeSize;//厨房冰箱尺寸
+	double m_HearthSize;//厨房灶台尺寸
 };

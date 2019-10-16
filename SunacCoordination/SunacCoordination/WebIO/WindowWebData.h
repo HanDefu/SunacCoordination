@@ -1,12 +1,17 @@
 #pragma once
 
 #include <vector>
+#include <atlconv.h>
 #include "../Object/WindowDoor/AttrWindow.h"
 #include "../Object/Bathroom/AttrBathroom.h"
 #include "../Object/Kitchen/AttrKitchen.h"
 #include "../Object/Railing/AttrRailing.h"
 #include "../Object/AirCondition/AttrAirCon.h"
 #include "..\Tool\MarkupXml\Markup.h"
+#include "..\Common\ComFun_String.h"
+#include "..\Common\ComFun_Convert.h"
+//#include "..\WebIO\WebIO.h"
+
 
 class CWindowWebData
 {
