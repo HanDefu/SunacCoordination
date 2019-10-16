@@ -29,8 +29,6 @@ public:
 	AttrKitchen();
 	virtual ~AttrKitchen();
 
-	AttrKitchen(double p_xLen, double p_yLen, E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, const CProKitchen& p_prototype);
-
 	//{{AFX_ARX_METHODS(ZffDwgScale)
 	virtual Acad::ErrorStatus dwgOutFields(AcDbDwgFiler* pFiler) const;
 	virtual Acad::ErrorStatus dwgInFields(AcDbDwgFiler* pFiler);
@@ -39,29 +37,34 @@ public:
 	virtual eRCType GetType() {return KITCHEN;}
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
 
-	CProKitchen* GetProKitchen();
-
 public:
-	bool m_hasPaiQiDao;//是否含有排气道
-	bool m_isGuoBiao;//排气道
-	E_FLOOR_RANGE m_floorRange;//楼层选项
-	double m_airVentW;//排气道长度
-	double m_airVentH;//排气道宽度
-	double m_airVentOffsetX;//排气道偏移x
-	double m_airVentOffsetY;//排气道偏移y
+	//原型相关属性，初始化时填写
+	CString m_kitchenType;		//厨房类型
+	eWindowDoorPos m_windowDoorPos;	//门窗位置关系
+	bool m_hasPaiQiDao;			//是否含有排气道
 
-	bool m_isMirror;//镜像
+	//原型数据，记录原型的支持尺寸和门窗初始位置，初始化时填写
+	CKitchenBathroomProp m_prop;
 
-	CString m_kitchenType;//厨房类型
-	CString m_windowDoorPos;//门窗位置关系
+	//搜索到原型后填写
+	double m_width;				//开间
+	double m_height;			//进深
 
-	CString m_shuiPenType;//水盆类型
-	CString m_bingXiangType;//冰箱类型
-	CString m_zaoTaiType;//灶台宽度 
-	double m_width;//开间
-	double m_height;//进深
+	//插入时填写
+	CString m_shuiPenType;		//水盆类型
+	CString m_bingXiangType;	//冰箱类型
+	CString m_zaoTaiType;		//灶台宽度 
 
-	CKitchenBathroomProp m_sizeData;
+	//排气道相关设置，插入时填写
+	E_FLOOR_RANGE m_floorRange;	//楼层选项
+	bool m_isGuoBiao;			//是否国标
+	double m_airVentW;			//排气道长度
+	double m_airVentH;			//排气道宽度
+	double m_airVentOffsetX;	//排气道偏移x
+	double m_airVentOffsetY;	//排气道偏移y
+
+	//插入时填写
+	bool m_isMirror;			//镜像
 
 	//////////////////////////////////////////////////////////////////////////
 	//原型文件属性

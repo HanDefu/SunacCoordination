@@ -13,169 +13,414 @@ CKitchenBathroomLocalData::~CKitchenBathroomLocalData()
 {
 }
 
-void CKitchenBathroomLocalData::InitKitchenLocalData()
+std::vector<AttrKitchen> CKitchenBathroomLocalData::GetKitchens(EKitchType p_type, double p_xLen, double p_yLen, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir, bool p_hasPaiQiDao)
 {
-	vector<CProKitchen> proKitchens(7);
+	vector<AttrKitchen> ret;
 
-	proKitchens[0].m_sFileName = L"KUq_Dui.dwg";
-	proKitchens[0].m_sType = L"KUq";
-	proKitchens[0].m_doorPos = E_DIR_BOTTOM;
-	proKitchens[0].m_windowPos = E_DIR_TOP;
-	proKitchens[0].AddSizeRange(2450, 1700, 3500, 1850);
-	proKitchens[0].DeleteSize(2450, 1700);
+	int xLen = int(p_xLen + 0.5);
+	int yLen = int(p_yLen + 0.5);
+	int width = xLen;
+	int height = yLen;
+	if (p_doorDir == E_DIR_LEFT || p_doorDir == E_DIR_RIGHT)
+		swap(width, height);
 
-	proKitchens[1].m_sFileName = L"KUq_Dui_ZhuanJiao.dwg";
-	proKitchens[1].m_sType = L"KUq_z";
-	proKitchens[1].m_doorPos = E_DIR_BOTTOM;
-	proKitchens[1].m_windowPos = E_DIR_TOP;
-	proKitchens[1].AddSizeRange(2450, 2000, 3500, 2600);
-
-	proKitchens[2].m_sFileName = L"KUq_Chui.dwg";
-	proKitchens[2].m_sType = L"KUq_c";
-	proKitchens[2].m_doorPos = E_DIR_BOTTOM;
-	proKitchens[2].m_windowPos = E_DIR_RIGHT;
-	proKitchens[2].AddSizeRange(2450, 1700, 3500, 1850);
-	proKitchens[2].DeleteSize(2450, 1700);
-
-	proKitchens[3].m_sFileName = L"KUq_Chui_ZhuanJiao.dwg";
-	proKitchens[3].m_sType = L"KUq_c_z";
-	proKitchens[3].m_doorPos = E_DIR_BOTTOM;
-	proKitchens[3].m_windowPos = E_DIR_RIGHT;
-	proKitchens[3].AddSizeRange(2450, 2000, 3500, 2450);
-
-	proKitchens[4].m_sFileName = L"KUs.dwg";
-	proKitchens[4].m_sType = L"KUs";
-	proKitchens[4].m_doorPos = E_DIR_BOTTOM;
-	proKitchens[4].m_windowPos = E_DIR_TOP;
-	proKitchens[4].AddSizeRange(2300, 2450, 2450, 3200);
-
-	proKitchens[5].m_sFileName = L"KL.dwg";
-	proKitchens[5].m_sType = L"KL";
-	proKitchens[5].m_doorPos = E_DIR_LEFT;
-	proKitchens[5].m_windowPos = E_DIR_RIGHT;
-	proKitchens[5].AddSizeRange(2600, 1700, 3950, 2000);
-
-	proKitchens[6].m_sFileName = L"KI.dwg";
-	proKitchens[6].m_sType = L"KI";
-	proKitchens[6].m_doorPos = E_DIR_LEFT;
-	proKitchens[6].m_windowPos = E_DIR_RIGHT;
-	proKitchens[6].AddSizeRange(3050, 1700, 4100, 1700);
-
-	for (UINT i = 0; i < proKitchens.size(); i++)
-		proKitchens[i].m_bHasPaiQiDao = false;
-
-	//创建包含排气道的原型
-	vector<CProKitchen> proKitchens_P = proKitchens;
-
-	for (UINT i = 0; i < proKitchens_P.size(); i++)
+	CString sType;
+	switch (p_type)
 	{
-		proKitchens_P[i].m_sFileName.Replace(L".dwg", L"_P.dwg");
-		proKitchens_P[i].m_sType += L"_p";
-		proKitchens_P[i].m_bHasPaiQiDao = true;
+	case E_KITCH_U:
+		sType = L"TI";
+		break;
+	case E_KITCH_L:
+		sType = L"TL";
+		break;
+	case E_KITCH_I:
+		sType = L"TU";
+		break;
 	}
 
-	for (UINT i = 0; i < proKitchens.size(); i++)
+	for (UINT i = 0; i < m_allKitchens.size(); i++)
 	{
-		CProMrg::GetInstance()->AddProKitchen(proKitchens[i]);
-		CProMrg::GetInstance()->AddProKitchen(proKitchens_P[i]);
+		if ((p_type == E_KITCH_ALL || m_allKitchens[i].m_prototypeCode.Left(2) == sType) && m_allKitchens[i].m_prop.MatchPrototype(xLen, yLen, p_doorDir, p_windowDir) && p_hasPaiQiDao == m_allKitchens[i].m_hasPaiQiDao)
+		{
+			ret.push_back(m_allKitchens[i]);
+			ret.back().m_width = width;
+			ret.back().m_height = height;
+		}
+	}
+
+	return ret;
+}
+
+std::vector<AttrBathroom> CKitchenBathroomLocalData::GetBathrooms(EBathroomType p_type, double p_xLen, double p_yLen, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir)
+{
+	vector<AttrBathroom> ret;
+
+	int xLen = int(p_xLen + 0.5);
+	int yLen = int(p_yLen + 0.5);
+	int width = xLen;
+	int height = yLen;
+	if (p_doorDir == E_DIR_LEFT || p_doorDir == E_DIR_RIGHT)
+		swap(width, height);
+
+	CString sType;
+	switch (p_type)
+	{
+	case E_BATHROOM_I:
+		sType = L"TI";
+		break;
+	case E_BATHROOM_L:
+		sType = L"TL";
+		break;
+	case E_BATHROOM_U:
+		sType = L"TU";
+		break;
+	}
+
+	for (UINT i = 0; i < m_allBathrooms.size(); i++)
+	{
+		if ((p_type == E_BATHROOM_ALL || m_allBathrooms[i].m_prototypeCode.Left(2) == sType) && m_allBathrooms[i].m_prop.MatchPrototype(xLen, yLen, p_doorDir, p_windowDir))
+		{
+			ret.push_back(m_allBathrooms[i]);
+			ret.back().m_width = width;
+			ret.back().m_height = height;
+		}
+	}
+
+	return ret;
+}
+
+void CKitchenBathroomLocalData::InitKitchenLocalData()
+{
+	m_allKitchens.resize(7);
+
+	AttrKitchen* pKitchen = &m_allKitchens[0];
+	CKitchenBathroomProp* pProp = &pKitchen->m_prop;
+	//AttrObject基类属性
+	pKitchen->m_prototypeCode = L"KUq";
+	pKitchen->SetFileName(L"KUq_Dui.dwg");
+	pKitchen->m_isDynamic = true;
+	pKitchen->m_isJiTuan = true;
+	//AttrBathroom类属性
+	pKitchen->m_kitchenType = L"浅U型";
+	pKitchen->m_windowDoorPos = DUIKAI;
+	pKitchen->m_hasPaiQiDao = false;
+	//原型尺寸与门窗初始位置
+	pProp->m_doorPos = E_DIR_BOTTOM;
+	pProp->m_windowPos = E_DIR_TOP;
+	pProp->AddSizeRange(2450, 1700, 3500, 1850);
+	pProp->DeleteSize(2450, 1700);
+
+	pKitchen = &m_allKitchens[1];
+	pProp = &pKitchen->m_prop;
+	//AttrObject基类属性
+	pKitchen->m_prototypeCode = L"KUq_z";
+	pKitchen->SetFileName(L"KUq_Dui_ZhuanJiao.dwg");
+	pKitchen->m_isDynamic = true;
+	pKitchen->m_isJiTuan = true;
+	//AttrBathroom类属性
+	pKitchen->m_kitchenType = L"浅U型";
+	pKitchen->m_windowDoorPos = DUIKAI;
+	pKitchen->m_hasPaiQiDao = false;
+	//原型尺寸与门窗初始位置
+	pProp->m_doorPos = E_DIR_BOTTOM;
+	pProp->m_windowPos = E_DIR_TOP;
+	pProp->AddSizeRange(2450, 2000, 3500, 2600);
+
+	pKitchen = &m_allKitchens[2];
+	pProp = &pKitchen->m_prop;
+	//AttrObject基类属性
+	pKitchen->m_prototypeCode = L"KUq_c";
+	pKitchen->SetFileName(L"KUq_Chui.dwg");
+	pKitchen->m_isDynamic = true;
+	pKitchen->m_isJiTuan = true;
+	//AttrBathroom类属性
+	pKitchen->m_kitchenType = L"浅U型";
+	pKitchen->m_windowDoorPos = CHUIZHIKAI;
+	pKitchen->m_hasPaiQiDao = false;
+	//原型尺寸与门窗初始位置
+	pProp->m_doorPos = E_DIR_BOTTOM;
+	pProp->m_windowPos = E_DIR_RIGHT;
+	pProp->AddSizeRange(2450, 1700, 3500, 1850);
+	pProp->DeleteSize(2450, 1700);
+
+	pKitchen = &m_allKitchens[3];
+	pProp = &pKitchen->m_prop;
+	//AttrObject基类属性
+	pKitchen->m_prototypeCode = L"KUq_c_z";
+	pKitchen->SetFileName(L"KUq_Chui_ZhuanJiao.dwg");
+	pKitchen->m_isDynamic = true;
+	pKitchen->m_isJiTuan = true;
+	//AttrBathroom类属性
+	pKitchen->m_kitchenType = L"浅U型";
+	pKitchen->m_windowDoorPos = CHUIZHIKAI;
+	pKitchen->m_hasPaiQiDao = false;
+	//原型尺寸与门窗初始位置
+	pProp->m_doorPos = E_DIR_BOTTOM;
+	pProp->m_windowPos = E_DIR_RIGHT;
+	pProp->AddSizeRange(2450, 2000, 3500, 2450);
+
+	pKitchen = &m_allKitchens[4];
+	pProp = &pKitchen->m_prop;
+	//AttrObject基类属性
+	pKitchen->m_prototypeCode = L"KUs";
+	pKitchen->SetFileName(L"KUs.dwg");
+	pKitchen->m_isDynamic = true;
+	pKitchen->m_isJiTuan = true;
+	//AttrBathroom类属性
+	pKitchen->m_kitchenType = L"深U型";
+	pKitchen->m_windowDoorPos = DUIKAI;
+	pKitchen->m_hasPaiQiDao = false;
+	//原型尺寸与门窗初始位置
+	pProp->m_doorPos = E_DIR_BOTTOM;
+	pProp->m_windowPos = E_DIR_TOP;
+	pProp->AddSizeRange(2300, 2450, 2450, 3200);
+
+	pKitchen = &m_allKitchens[5];
+	pProp = &pKitchen->m_prop;
+	//AttrObject基类属性
+	pKitchen->m_prototypeCode = L"KL";
+	pKitchen->SetFileName(L"KL.dwg");
+	pKitchen->m_isDynamic = true;
+	pKitchen->m_isJiTuan = true;
+	//AttrBathroom类属性
+	pKitchen->m_kitchenType = L"L型";
+	pKitchen->m_windowDoorPos = DUIKAI;
+	pKitchen->m_hasPaiQiDao = false;
+	//原型尺寸与门窗初始位置
+	pProp->m_doorPos = E_DIR_LEFT;
+	pProp->m_windowPos = E_DIR_RIGHT;
+	pProp->AddSizeRange(2600, 1700, 3950, 2000);
+
+	pKitchen = &m_allKitchens[6];
+	pProp = &pKitchen->m_prop;
+	//AttrObject基类属性
+	pKitchen->m_prototypeCode = L"KI";
+	pKitchen->SetFileName(L"KI.dwg");
+	pKitchen->m_isDynamic = true;
+	pKitchen->m_isJiTuan = true;
+	//AttrBathroom类属性
+	pKitchen->m_kitchenType = L"I型";
+	pKitchen->m_windowDoorPos = DUIKAI;
+	pKitchen->m_hasPaiQiDao = false;
+	//原型尺寸与门窗初始位置
+	pProp->m_doorPos = E_DIR_LEFT;
+	pProp->m_windowPos = E_DIR_RIGHT;
+	pProp->AddSizeRange(3050, 1700, 4100, 1700);
+
+	//创建包含排气道的原型
+	int kitchenCount = (int)m_allKitchens.size();
+	for (int i = 0; i < kitchenCount; i++)
+	{
+		AttrKitchen newKitchen(m_allKitchens[i]);
+		newKitchen.m_prototypeCode += L"_p";
+
+		CString sName = newKitchen.GetFileName();
+		sName.Replace(L".dwg", L"_P.dwg");
+		newKitchen.SetFileName(sName);
+
+		newKitchen.m_hasPaiQiDao = true;
+		m_allKitchens.push_back(newKitchen);
 	}
 }
 
 void CKitchenBathroomLocalData::InitBathroomLocalData()
 {
-	vector<CProBathroom> proBathrooms(12);
+	m_allBathrooms.resize(12);
 
-	proBathrooms[0].m_sFileName = L"TI3.dwg";
-	proBathrooms[0].m_sType = L"TI3";
-	proBathrooms[0].m_doorPos = E_DIR_BOTTOM;
-	proBathrooms[0].m_windowPos = E_DIR_TOP;
-	proBathrooms[0].AddSizeRange(1600, 2450, 1600, 3050);
-	proBathrooms[0].AddSizeRange(1700, 2450, 1850, 3050);
-	proBathrooms[0].m_bIsDynamic = true;
+	AttrBathroom* pBathroom = &m_allBathrooms[0];
+	CKitchenBathroomProp* pProp = &pBathroom->m_prop;
+	//AttrObject基类属性
+	pBathroom->m_prototypeCode = L"TI3";
+	pBathroom->SetFileName(L"TI3.dwg");
+	pBathroom->m_isDynamic = true;
+	pBathroom->m_isJiTuan = true;
+	//AttrBathroom类属性
+	pBathroom->m_sBathroomType = L"I型";
+	pBathroom->m_windowDoorPos = DUIKAI;
+	pBathroom->m_hasPaiQiDao = true;
+	//原型尺寸与门窗初始位置
+	pProp->m_doorPos = E_DIR_BOTTOM;
+	pProp->m_windowPos = E_DIR_TOP;
+	pProp->AddSizeRange(1600, 2450, 1600, 3050);
+	pProp->AddSizeRange(1700, 2450, 1850, 3050);
 
-	proBathrooms[1].m_sFileName = L"TI3_g.dwg";
-	proBathrooms[1].m_sType = L"TI3_g";
-	proBathrooms[1].m_doorPos = E_DIR_BOTTOM;
-	proBathrooms[1].m_windowPos = E_DIR_TOP;
-	proBathrooms[1].AddSizeRange(1600, 2750, 1600, 3200);
-	proBathrooms[1].AddSizeRange(1700, 2750, 1850, 3200);
-	proBathrooms[1].m_bIsDynamic = true;
+	pBathroom = &m_allBathrooms[1];
+	pProp = &pBathroom->m_prop;
+	//AttrObject基类属性
+	pBathroom->m_prototypeCode = L"TI3_g";
+	pBathroom->SetFileName(L"TI3_g.dwg");
+	pBathroom->m_isDynamic = true;
+	pBathroom->m_isJiTuan = true;
+	//AttrBathroom类属性
+	pBathroom->m_sBathroomType = L"I型";
+	pBathroom->m_windowDoorPos = DUIKAI;
+	pBathroom->m_hasPaiQiDao = true;
+	//原型尺寸与门窗初始位置
+	pProp->m_doorPos = E_DIR_BOTTOM;
+	pProp->m_windowPos = E_DIR_TOP;
+	pProp->AddSizeRange(1600, 2750, 1600, 3200);
+	pProp->AddSizeRange(1700, 2750, 1850, 3200);
 
-	proBathrooms[2].m_sFileName = L"TI4.dwg";
-	proBathrooms[2].m_sType = L"TI4";
-	proBathrooms[2].m_doorPos = E_DIR_BOTTOM;
-	proBathrooms[2].m_windowPos = E_DIR_TOP;
-	proBathrooms[2].AddSizeRange(1600, 3050, 1600, 3500);
-	proBathrooms[2].AddSizeRange(1700, 3050, 1850, 3500);
-	proBathrooms[2].m_bIsDynamic = true;
+	pBathroom = &m_allBathrooms[2];
+	pProp = &pBathroom->m_prop;
+	//AttrObject基类属性
+	pBathroom->m_prototypeCode = L"TI4";
+	pBathroom->SetFileName(L"TI4.dwg");
+	pBathroom->m_isDynamic = true;
+	pBathroom->m_isJiTuan = true;
+	//AttrBathroom类属性
+	pBathroom->m_sBathroomType = L"I型";
+	pBathroom->m_windowDoorPos = DUIKAI;
+	pBathroom->m_hasPaiQiDao = true;
+	//原型尺寸与门窗初始位置
+	pProp->m_doorPos = E_DIR_BOTTOM;
+	pProp->m_windowPos = E_DIR_TOP;
+	pProp->AddSizeRange(1600, 3050, 1600, 3500);
+	pProp->AddSizeRange(1700, 3050, 1850, 3500);
 
-	proBathrooms[3].m_sFileName = L"TI4_g.dwg";
-	proBathrooms[3].m_sType = L"TI4_g";
-	proBathrooms[3].m_doorPos = E_DIR_BOTTOM;
-	proBathrooms[3].m_windowPos = E_DIR_TOP;
-	proBathrooms[3].AddSizeRange(1600, 3500, 1600, 3650);
-	proBathrooms[3].AddSizeRange(1700, 3500, 1850, 3650);
-	proBathrooms[3].m_bIsDynamic = true;
+	pBathroom = &m_allBathrooms[3];
+	pProp = &pBathroom->m_prop;
+	//AttrObject基类属性
+	pBathroom->m_prototypeCode = L"TI4_g";
+	pBathroom->SetFileName(L"TI4_g.dwg");
+	pBathroom->m_isDynamic = true;
+	pBathroom->m_isJiTuan = true;
+	//AttrBathroom类属性
+	pBathroom->m_sBathroomType = L"I型";
+	pBathroom->m_windowDoorPos = DUIKAI;
+	pBathroom->m_hasPaiQiDao = true;
+	//原型尺寸与门窗初始位置
+	pProp->m_doorPos = E_DIR_BOTTOM;
+	pProp->m_windowPos = E_DIR_TOP;
+	pProp->AddSizeRange(1600, 3500, 1600, 3650);
+	pProp->AddSizeRange(1700, 3500, 1850, 3650);
 
-	proBathrooms[4].m_sFileName = L"TL3.dwg";
-	proBathrooms[4].m_sType = L"TL3";
-	proBathrooms[4].m_doorPos = E_DIR_BOTTOM;
-	proBathrooms[4].m_windowPos = E_DIR_RIGHT;
-	proBathrooms[4].AddSizeRange(1700, 1850, 1850, 2300);
-	//不支持以下尺寸
-	proBathrooms[4].DeleteSize(1700, 1850);
-	proBathrooms[4].DeleteSize(1700, 2000);
-	proBathrooms[4].m_bIsDynamic = true;
+	pBathroom = &m_allBathrooms[4];
+	pProp = &pBathroom->m_prop;
+	//AttrObject基类属性
+	pBathroom->m_prototypeCode = L"TL3";
+	pBathroom->SetFileName(L"TL3.dwg");
+	pBathroom->m_isDynamic = true;
+	pBathroom->m_isJiTuan = true;
+	//AttrBathroom类属性
+	pBathroom->m_sBathroomType = L"L型";
+	pBathroom->m_windowDoorPos = CHUIZHIKAI;
+	pBathroom->m_hasPaiQiDao = true;
+	//原型尺寸与门窗初始位置
+	pProp->m_doorPos = E_DIR_BOTTOM;
+	pProp->m_windowPos = E_DIR_RIGHT;
+	pProp->AddSizeRange(1700, 2150, 1700, 2300);
+	pProp->AddSizeRange(1850, 1850, 1850, 2300);
 
-	proBathrooms[5].m_sFileName = L"TL3_标准淋浴房.dwg";
-	proBathrooms[5].m_sType = L"TL3_b";
-	proBathrooms[5].m_doorPos = E_DIR_BOTTOM;
-	proBathrooms[5].m_windowPos = E_DIR_RIGHT;
-	proBathrooms[5].AddSizeRange(2000, 1850, 2150, 2300);
-	proBathrooms[5].m_bIsDynamic = true;
+	pBathroom = &m_allBathrooms[5];
+	pProp = &pBathroom->m_prop;
+	//AttrObject基类属性
+	pBathroom->m_prototypeCode = L"TL3_b";
+	pBathroom->SetFileName(L"TL3_标准淋浴房.dwg");
+	pBathroom->m_isDynamic = true;
+	pBathroom->m_isJiTuan = true;
+	//AttrBathroom类属性
+	pBathroom->m_sBathroomType = L"L型";
+	pBathroom->m_windowDoorPos = CHUIZHIKAI;
+	pBathroom->m_hasPaiQiDao = true;
+	//原型尺寸与门窗初始位置
+	pProp->m_doorPos = E_DIR_BOTTOM;
+	pProp->m_windowPos = E_DIR_RIGHT;
+	pProp->AddSizeRange(2000, 1850, 2150, 2300);
 
-	proBathrooms[6].m_sFileName = L"TL4.dwg";
-	proBathrooms[6].m_sType = L"TL4";
-	proBathrooms[6].m_doorPos = E_DIR_BOTTOM;
-	proBathrooms[6].m_windowPos = E_DIR_RIGHT;
-	proBathrooms[6].AddSizeRange(1700, 2450, 1850, 2750);
-	proBathrooms[6].m_bIsDynamic = true;
+	pBathroom = &m_allBathrooms[6];
+	pProp = &pBathroom->m_prop;
+	//AttrObject基类属性
+	pBathroom->m_prototypeCode = L"TL4";
+	pBathroom->SetFileName(L"TL4.dwg");
+	pBathroom->m_isDynamic = true;
+	pBathroom->m_isJiTuan = true;
+	//AttrBathroom类属性
+	pBathroom->m_sBathroomType = L"L型";
+	pBathroom->m_windowDoorPos = CHUIZHIKAI;
+	pBathroom->m_hasPaiQiDao = true;
+	//原型尺寸与门窗初始位置
+	pProp->m_doorPos = E_DIR_BOTTOM;
+	pProp->m_windowPos = E_DIR_RIGHT;
+	pProp->AddSizeRange(1700, 2450, 1850, 2750);
 
-	proBathrooms[7].m_sFileName = L"TL4_标准淋浴房.dwg";
-	proBathrooms[7].m_sType = L"TL4_b";
-	proBathrooms[7].m_doorPos = E_DIR_BOTTOM;
-	proBathrooms[7].m_windowPos = E_DIR_RIGHT;
-	proBathrooms[7].AddSizeRange(2000, 2450, 2150, 2450);
-	proBathrooms[7].m_bIsDynamic = true;
+	pBathroom = &m_allBathrooms[7];
+	pProp = &pBathroom->m_prop;
+	//AttrObject基类属性
+	pBathroom->m_prototypeCode = L"TL4_b";
+	pBathroom->SetFileName(L"TL4_标准淋浴房.dwg");
+	pBathroom->m_isDynamic = true;
+	pBathroom->m_isJiTuan = true;
+	//AttrBathroom类属性
+	pBathroom->m_sBathroomType = L"L型";
+	pBathroom->m_windowDoorPos = CHUIZHIKAI;
+	pBathroom->m_hasPaiQiDao = true;
+	//原型尺寸与门窗初始位置
+	pProp->m_doorPos = E_DIR_BOTTOM;
+	pProp->m_windowPos = E_DIR_RIGHT;
+	pProp->AddSizeRange(2000, 2450, 2150, 2450);
 
-	proBathrooms[8].m_sFileName = L"TU3-1600X2450.dwg";
-	proBathrooms[8].m_sType = L"TU3";
-	proBathrooms[8].m_doorPos = E_DIR_LEFT;
-	proBathrooms[8].m_windowPos = E_DIR_RIGHT;
-	proBathrooms[8].AddSize(1600, 2450);
-	proBathrooms[8].m_bIsDynamic = false;
+	pBathroom = &m_allBathrooms[8];
+	pProp = &pBathroom->m_prop;
+	//AttrObject基类属性
+	pBathroom->m_prototypeCode = L"TU3";
+	pBathroom->SetFileName(L"TU3-1600X2450.dwg");
+	pBathroom->m_isDynamic = false;
+	pBathroom->m_isJiTuan = true;
+	//AttrBathroom类属性
+	pBathroom->m_sBathroomType = L"U型";
+	pBathroom->m_windowDoorPos = DUIKAI;
+	pBathroom->m_hasPaiQiDao = true;
+	//原型尺寸与门窗初始位置
+	pProp->m_doorPos = E_DIR_LEFT;
+	pProp->m_windowPos = E_DIR_RIGHT;
+	pProp->AddSize(1600, 2450);
 
-	proBathrooms[9].m_sFileName = L"TU3-1850X2000.dwg";
-	proBathrooms[9].m_sType = L"TU3";
-	proBathrooms[9].m_doorPos = E_DIR_LEFT;
-	proBathrooms[9].m_windowPos = E_DIR_TOP;
-	proBathrooms[9].AddSize(1850, 2000);
-	proBathrooms[9].m_bIsDynamic = false;
+	pBathroom = &m_allBathrooms[9];
+	pProp = &pBathroom->m_prop;
+	//AttrObject基类属性
+	pBathroom->m_prototypeCode = L"TU3";
+	pBathroom->SetFileName(L"TU3-1850X2000.dwg");
+	pBathroom->m_isDynamic = false;
+	pBathroom->m_isJiTuan = true;
+	//AttrBathroom类属性
+	pBathroom->m_sBathroomType = L"U型";
+	pBathroom->m_windowDoorPos = CHUIZHIKAI;
+	pBathroom->m_hasPaiQiDao = true;
+	//原型尺寸与门窗初始位置
+	pProp->m_doorPos = E_DIR_LEFT;
+	pProp->m_windowPos = E_DIR_TOP;
+	pProp->AddSize(1850, 2000);
 
-	proBathrooms[10].m_sFileName = L"TU3-1850X2750.dwg";
-	proBathrooms[10].m_sType = L"TU3";
-	proBathrooms[10].m_doorPos = E_DIR_LEFT;
-	proBathrooms[10].m_windowPos = E_DIR_TOP;
-	proBathrooms[10].AddSize(1850, 2750);
-	proBathrooms[10].m_bIsDynamic = false;
+	pBathroom = &m_allBathrooms[10];
+	pProp = &pBathroom->m_prop;
+	//AttrObject基类属性
+	pBathroom->m_prototypeCode = L"TU3";
+	pBathroom->SetFileName(L"TU3-1850X2750.dwg");
+	pBathroom->m_isDynamic = false;
+	pBathroom->m_isJiTuan = true;
+	//AttrBathroom类属性
+	pBathroom->m_sBathroomType = L"U型";
+	pBathroom->m_windowDoorPos = CHUIZHIKAI;
+	pBathroom->m_hasPaiQiDao = true;
+	//原型尺寸与门窗初始位置
+	pProp->m_doorPos = E_DIR_LEFT;
+	pProp->m_windowPos = E_DIR_TOP;
+	pProp->AddSize(1850, 2750);
 
-	proBathrooms[11].m_sFileName = L"TU4-2000X2750.dwg";
-	proBathrooms[11].m_sType = L"TU4";
-	proBathrooms[11].m_doorPos = E_DIR_LEFT;
-	proBathrooms[11].m_windowPos = E_DIR_TOP;
-	proBathrooms[11].AddSize(2000, 2750);
-	proBathrooms[11].m_bIsDynamic = false;
-
-	for (UINT i = 0; i < proBathrooms.size(); i++)
-		CProMrg::GetInstance()->AddProBathroom(proBathrooms[i]);
+	pBathroom = &m_allBathrooms[10];
+	pProp = &pBathroom->m_prop;
+	//AttrObject基类属性
+	pBathroom->m_prototypeCode = L"TU4";
+	pBathroom->SetFileName(L"TU4-2000X2750.dwg");
+	pBathroom->m_isDynamic = false;
+	pBathroom->m_isJiTuan = true;
+	//AttrBathroom类属性
+	pBathroom->m_sBathroomType = L"U型";
+	pBathroom->m_windowDoorPos = CHUIZHIKAI;
+	pBathroom->m_hasPaiQiDao = true;
+	//原型尺寸与门窗初始位置
+	pProp->m_doorPos = E_DIR_LEFT;
+	pProp->m_windowPos = E_DIR_TOP;
+	pProp->AddSize(2000, 2750);
 }

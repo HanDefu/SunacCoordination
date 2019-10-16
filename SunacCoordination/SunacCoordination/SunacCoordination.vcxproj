@@ -72,7 +72,7 @@
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>C:\Program Files\Autodesk\AutoCAD 2014\Support\</OutDir>
+    <OutDir>C:\Program Files\Autodesk\AutoCAD 2014\Support</OutDir>
     <IntDir>$(SolutionDir)\Temp\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>Sunac2019</TargetName>
   </PropertyGroup>
@@ -183,6 +183,11 @@
     <ClCompile Include="Object\RCXianJiao.cpp" />
     <ClCompile Include="Object\WindowDoor\AttrWindow.cpp" />
     <ClCompile Include="Object\WindowDoor\RCWindow.cpp" />
+    <ClCompile Include="Object\WindowDoor\WindowAutoName.cpp" />
+    <ClCompile Include="Object\WindowStatistic\AluminumSeries.cpp" />
+    <ClCompile Include="Object\WindowStatistic\DeductedSize.cpp" />
+    <ClCompile Include="Object\WindowStatistic\WindowMaterialUsage.cpp" />
+    <ClCompile Include="Object\WindowStatistic\WindowStatictic.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -203,6 +208,7 @@
     <ClCompile Include="UI\FacadeDlg.cpp" />
     <ClCompile Include="UI\FillingDlg.cpp" />
     <ClCompile Include="UI\GridCellForPreview.cpp" />
+    <ClCompile Include="UI\GridCellWithPicture.cpp" />
     <ClCompile Include="UI\GridCtrlEx.cpp" />
     <ClCompile Include="UI\GridCtrlWithPreview.cpp" />
     <ClCompile Include="UI\GridCtrl_src\GridCell.cpp" />
@@ -291,6 +297,11 @@
     <ClInclude Include="Object\RCXianJiao.h" />
     <ClInclude Include="Object\WindowDoor\AttrWindow.h" />
     <ClInclude Include="Object\WindowDoor\RCWindow.h" />
+    <ClInclude Include="Object\WindowDoor\WindowAutoName.h" />
+    <ClInclude Include="Object\WindowStatistic\AluminumSeries.h" />
+    <ClInclude Include="Object\WindowStatistic\DeductedSize.h" />
+    <ClInclude Include="Object\WindowStatistic\WindowMaterialUsage.h" />
+    <ClInclude Include="Object\WindowStatistic\WindowStatictic.h" />
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="Sunac_def.h" />
@@ -320,6 +331,7 @@
     <ClInclude Include="UI\FacadeDlg.h" />
     <ClInclude Include="UI\FillingDlg.h" />
     <ClInclude Include="UI\GridCellForPreview.h" />
+    <ClInclude Include="UI\GridCellWithPicture.h" />
     <ClInclude Include="UI\GridCtrlEx.h" />
     <ClInclude Include="UI\GridCtrlWithPreview.h" />
     <ClInclude Include="UI\GridCtrl_src\CellRange.h" />

@@ -2,7 +2,7 @@
 #include <vector>
 #include "AttrBathroom.h"
 #include "..\PrototypeCommonDef.h"
-#include "../PrototypeInfo.h"
+//#include "../PrototypeInfo.h"
 
 using namespace std;
 

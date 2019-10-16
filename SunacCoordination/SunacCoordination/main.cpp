@@ -184,6 +184,7 @@ void CMD_test()
 	//vAttrWindow window = b.GetWindows(width, height, "", 0, "");
 	std::vector<AttrWindow> WindowFromWebData = WindowFromWeb.GetAllWindows();
 	std::vector<AttrWindow> WindowFromLocalData = WindowFromLocal.GetAllWindows();
+
 	//±È½Ïwindows1, windows2
 /*
 	for(int i = 0; i < WindowFromWebData.size(); i++ )

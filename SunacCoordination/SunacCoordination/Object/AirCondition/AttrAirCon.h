@@ -26,10 +26,8 @@
 class DLLIMPEXP  AttrAirCon : public AttrObject
 {
 public:
-
 	ACRX_DECLARE_MEMBERS(AttrAirCon);
 
-	// Constructor / Destructor
 	AttrAirCon();
 	virtual ~AttrAirCon();
 
@@ -40,28 +38,20 @@ public:
 	virtual Acad::ErrorStatus dwgOutFields(AcDbDwgFiler* pFiler) const;
 	virtual Acad::ErrorStatus dwgInFields(AcDbDwgFiler* pFiler);
 	//}}AFX_ARX_METHODS
+
 	virtual eRCType GetType() {return AIRCON;}
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
 	virtual bool IsPrototypeEqual(const AttrAirCon& p_att);
 
-private:
-
-
 public:
-	//double m_piShu;
-	//CString m_lengNingShuiGuanPos;//冷凝水管位置---不确定
-	//bool m_hasYuShuiGuan;//是否有雨水管
-
-
-	//外窗数据表格第二张表单空调 变量
-	CString m_airConId;				//空调序号
-	//CString m_prototypeCode;	//空调原型编号
-	//CString m_name;	//空调原型文件
-	CString m_airConHorseNumber;	//空调匹数
-	CString m_airConPipePos;		//空调冷凝水管位置
-	CString m_airConRainRiser;		//空调是否有雨水立管穿过
-	CString m_airConRainRiserPos;	//空调雨水管位置
-	CString m_airConInstallNetSize;	//空调安装净尺寸
+	double m_power;		//空调匹数 //TODO ZJY 改为double类型
+	CString m_pipePos;		//空调冷凝水管位置
+	bool m_hasRainPipe;	//空调是否有雨水立管穿过	//TODO ZJY 改为bool类型
+	CString m_rainPipePos;	//空调雨水管位置
+	//CString m_installNetSize;	//空调安装净尺寸
+	int m_airW;		//对应空调数据表格
+	int m_airH;
+	int m_airD;
 };
 
 #endif // !defined(ARX__ZFFDWGSCALE_H__20140205_113541_AIRCON)

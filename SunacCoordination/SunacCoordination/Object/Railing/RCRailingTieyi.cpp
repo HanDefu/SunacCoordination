@@ -53,13 +53,9 @@ CString CRCRailingTieyi::GetHandRailBlockName() const
 }
 
 
-//start 为栏杆的左下角
-int CRCRailingTieyi::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut)
+AcDbObjectId CRCRailingTieyi::CreateRailingBlockDefine(CString sRailingDefName)
 {
-	//1. 计算各分段的值
-	bool bSuc = GenRailing();
-	if (bSuc==false)
-		return -1;
+	AcGePoint3d start = AcGePoint3d::kOrigin;
 
 	//2 插入到图形
 	acDocManager->lockDocument(curDoc());
@@ -68,20 +64,20 @@ int CRCRailingTieyi::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingI
 	const double railH = m_railingAtt.m_height - GetHandRailHeight();//扣除扶手的高度
 	const double centerY = leftTopPt.y - GetHandRailHeight() - railH / 2;
 
-	
+
 	AcDbObjectIdArray idsOut;
 	//2.1 非标段
 	AcGePoint3d pos1 = AcGePoint3d(leftTopPt.x + GetK(), centerY, 0); //左上角点x方向上减去与结构墙间隙，y方向上减去扶手的厚度,然后考虑居中位置
-	AcDbObjectId id1 = GenerateRailing_NonStandard(pos1);	
+	AcDbObjectId id1 = GenerateRailing_NonStandard(pos1);
 	idsOut.append(id1);
 
 	//2.2 标准段
 	AcDbObjectId id2;
 	AcGePoint3d pos2 = pos1;
 	pos2.x = pos1.x + GetNonstandardLen() - GetPillarWidth();
-	AcDbObjectIdArray ids =  GenerateRailing_Standard(pos2);
+	AcDbObjectIdArray ids = GenerateRailing_Standard(pos2);
 	idsOut.append(ids);
-	
+
 
 	//2.3 非标段
 	AcGePoint3d pos3 = pos2;
@@ -94,11 +90,21 @@ int CRCRailingTieyi::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingI
 	idsOut.append(id4);
 
 	//////////////////////////////////////////////////////////////////////////
-	//3 组合为一个块，并给把属性设给当前块  TODO
+	//3 组合为一个块
+	AcDbObjectId blkDefId;
+	int nRet = MD2010_CreateBlockDefine_ExistEnts(sRailingDefName, idsOut, start, blkDefId);
+	
+	//删除原来的块
+	JHCOM_DeleteCadObjectArray(idsOut);
+
+	//4 将栏杆属性赋值给此栏杆实例
+	AttrRailing* pAttRailing = new AttrRailing(m_railingAtt);
+	pAttRailing->SetInstanceCode(sRailingDefName);
+	TY_AddAttributeData(blkDefId, pAttRailing);
 
 	acDocManager->unlockDocument(curDoc());
 
-	return 0;
+	return blkDefId;
 }
 
 AcDbObjectId CRCRailingTieyi::GenerateRailing_NonStandard(AcGePoint3d p_pos)
@@ -199,7 +205,7 @@ bool CRCRailingTieyi::GenRailing()  //对栏杆总长进行判断，如果栏杆总长小于1550，
 int CRCRailingTieyi::GenStandardSegCount(double p_lenth, double p_segLength)const		//计算标准栏杆数量，p_lenth为栏杆长，p_segLength为栏杆的标准段长
 {
 	int nCount = 0;
-	if ((int)(p_lenth / p_segLength == 1))
+	if ((int)(p_lenth / p_segLength) == 1)
 	{
 		nCount = 1;
 	}

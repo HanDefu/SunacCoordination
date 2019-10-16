@@ -37,8 +37,8 @@ protected:
 	void LoadDataFromExcel(CString p_file); //从表格中把数据传到m_windows中
 
 	//从excel内读出一条尺寸的6个CString转换成dimdata
-	RCDimData ReadDimData(Excel::CExcelUtil &xls, CString code, int p_row, int p_colum);
-	RCDimData ConvertStringToDimData (CString code, CString  valueType,	CString value, CString defaultValue, CString state)const;
+	CWindowsDimData ReadDimData(Excel::CExcelUtil &xls, CString code, int p_row, int p_colum);
+	CWindowsDimData ConvertStringToDimData (CString code, CString  valueType,	CString value, CString defaultValue, CString state)const;
 
 protected:
 	vector<AttrWindow> m_windows; //所有门窗

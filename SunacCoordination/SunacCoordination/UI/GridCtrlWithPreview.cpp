@@ -63,6 +63,26 @@ bool CGridCtrlWithPreview::AddPreview(int nRow, int nCol, CString sPath, CString
 	pCell->SetPreview(pPreview);
 	return true;
 }
+CGridCellForPreview* CGridCtrlWithPreview::AddPreviewPng(int nRow, int nCol, CString sPath, CString sText, PREVIEW_LAYOUT_DIR dir)
+{
+	if (nRow >= GetRowCount() || nCol >= GetColumnCount())
+		return NULL;
+
+	if (GetPreviewCell(nRow, nCol) == NULL)
+		SetCellType(nRow, nCol, RUNTIME_CLASS(CGridCellForPreview));
+	CGridCellForPreview* pCell = GetPreviewCell(nRow, nCol);
+
+	CRect gridRect;
+	GetCellRect(nRow, nCol, gridRect);
+	CPreviewWithDetail* pPreview = new CPreviewWithDetail;
+	pPreview->Create(_T(""), WS_CHILD, gridRect, this);
+	pPreview->SetLayoutMode(dir);
+	pPreview->SetPreviewImage(sPath);
+	pPreview->SetText(sText);
+
+	pCell->SetPreview(pPreview);
+	return pCell;
+}
 
 void CGridCtrlWithPreview::ClearAllPreviews()
 {

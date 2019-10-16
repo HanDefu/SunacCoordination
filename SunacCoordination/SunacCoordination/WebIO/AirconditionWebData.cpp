@@ -37,12 +37,9 @@ std::vector<AttrAirCon> CAirConditionWebData::GetAirCons(double piShu, CString w
 	{
 		return AirConAtts;
 	}
-
-	//AttrWindow attrwindow;
-
+	
 	//解析字符串出结果
-	CMarkup xml;	
-
+	CMarkup xml;
 	xml.SetDoc((*(nsResponse.GetAllAirconditionerByParamResult)).c_str());
 
 	AirConAtts = ParseAirConditionersFromXML(xml);
@@ -81,7 +78,7 @@ std::vector<AttrAirCon > CAirConditionWebData::ParseAirConditionersFromXML(CMark
 			}
 			if (xml.FindElem(_T("DrawingPath")))
 			{
-				AirConAttr.m_fileName = xml.GetData();
+				AirConAttr.m_file.fileName = xml.GetData();
 			}
 			if (xml.FindElem(_T("Scope")))
 			{
@@ -102,7 +99,7 @@ std::vector<AttrAirCon > CAirConditionWebData::ParseAirConditionersFromXML(CMark
 			}
 			if (xml.FindElem(_T("AirconditionerPower")))
 			{
-				AirConAttr.m_airConHorseNumber = xml.GetData();
+				AirConAttr.m_power = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("AirconditionerMinWidth")))
 			{
@@ -114,15 +111,16 @@ std::vector<AttrAirCon > CAirConditionWebData::ParseAirConditionersFromXML(CMark
 			}
 			if (xml.FindElem(_T("AirconditionerPipePosition")))
 			{
-				AirConAttr.m_airConPipePos = xml.GetData();
+				AirConAttr.m_pipePos = xml.GetData();
 			}
 			if (xml.FindElem(_T("AirconditionerIsRainpipe")))
 			{
-				AirConAttr.m_airConRainRiser = xml.GetData();
+				CString str = xml.GetData();
+				AirConAttr.m_hasRainPipe = (str==_T("是"))? true : false;
 			}
 			if (xml.FindElem(_T("AirconditionerRainpipePostion")))
 			{
-				AirConAttr.m_airConRainRiserPos = xml.GetData();
+				AirConAttr.m_rainPipePos = xml.GetData();
 			}
 			xml.OutOfElem();
 			vAirConAttrs.push_back(AirConAttr);	

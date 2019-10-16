@@ -20,50 +20,6 @@ typedef enum eRCType
 	TYPENUM
 }eRCType;
 
-//门窗取值参数类型
-typedef enum eWindowDimType
-{
-	SINGLE,//固定值
-	MULTI,//值系列
-	SCOPE,//范围
-	UNLIMIT,//不限
-	CALC,//公式
-	NOVALUE //无
-}eWindowDimType;
-
-static eWindowDimType ToEWindowType(CString type)
-{
-	if (type == "固定值"|| type == "值")
-	{
-		return SINGLE;
-	} 
-	else if (type == "值系列"|| type == "系列")
-	{
-		return MULTI;
-	}
-	else if (type == "范围")
-	{
-		return SCOPE;
-	}
-	else if (type == "不限")
-	{
-		return UNLIMIT;
-	}
-	else if (type == "公式")
-	{
-		return CALC;
-	}
-	else if(type == "无")
-	{
-		return NOVALUE;
-	}
-	else
-	{
-		ASSERT(FALSE);
-		return NOVALUE;
-	}
-	
-}
 
 typedef enum eViewDir
 {
@@ -148,15 +104,16 @@ typedef struct SCalcData//门窗算量数据
 
 typedef std::vector<eWindowCalcType> vSCalcData;
 
-typedef struct RCDimData
+
+struct CDwgFileInfo
 {
-	CString sCodeName; //代号 W W1 W2 W3 H H1 H2 H3
-	eWindowDimType type;//值类型
-	vdouble values;  //根据值类型，可存储单个值、系列
-	double minValue;
-	double maxValue;
-	CString sFomula;	//公式
-	double defaultValue;
-	CString prompt;  //说明
-}SRCDimData;
-typedef std::vector<SRCDimData> vSRCDimData;
+	CString fileName;	// 文件名,不含路径
+	CString previewFile; //预览图,不含路径
+	int id; //在服务器中的id，用于下载文件
+	int PreviewID;//缩略图的ID，用于下载缩略图
+
+	CDwgFileInfo()
+	{
+		id = 0;
+	}
+};

@@ -23,48 +23,37 @@ public:
 		return &instance;
 	}
 
-	static const CConfigDictionary* GetConfigDict() { return &(GetInstance()->m_configDic); }
+	const CConfigDictionary* GetConfigDict() { return &m_configDic; }
 	//static const CWindowLocalData* GetWindowLocalData() { return &(GetInstance()->m_windowLocalData); }
-	static const CAirConditionLocalData* GetAirConditionLocalData() { return &(GetInstance()->m_airConLocalData); }
+	//const CAirConditionLocalData* GetAirConditionLocalData() { return &m_airConLocalData; }
 
 public:
-	////-----------------原型搜索函数--------------//
-	//width,//宽度值，注意高度值不作为搜索条件 
-	//openType, //开启类型
-	//openNum,//开启扇数量
-	//gongNengQu,//功能区
-	//tongFengLiang//通风量
-	//读取门和窗
+	//width宽度值，注意高度值不作为搜索条件 
+	//openType开启类型，openNum开启扇数量， gongNengQu功能区， tongFengLiang通风量
 	std::vector<AttrWindow >  GetWindows(double width, CString openType, int openNum, CString gongNengQu)const;
 	std::vector<AttrWindow >  GetDoors(double width, CString openType, int openNum, CString gongNengQu)const;
 
-	vector<AttrWindow> GetAllWindows(); //获取所有窗户
-	vector<AttrWindow> GetAllDoors();  //获取所有门
+	std::vector<AttrWindow> GetAllWindows(); //获取所有窗户
+	std::vector<AttrWindow> GetAllDoors();  //获取所有门
 
 	//////////////////////////////////////////////////////////////////////////
 
-	//注意外部需要释放返回的内存
-	static std::vector<AttrKitchen> GetKitchens (EKitchType p_type, double p_xLen, double p_yLen, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir, bool p_hasPaiQiDao);
-	
-	static std::vector<AttrKitchen> GetAllKitchens();
-	//获取卫生间
-	static std::vector<AttrBathroom> GetBathrooms(EBathroomType p_type, double p_xLen, double p_yLen, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir);
-	static std::vector<AttrBathroom> GetAllBathrooms();
-	//注意外部需要释放返回的内存
-	static std::vector<AttrAirCon *> GetAirCons(double piShu,
-												CString weiZhi,//冷凝水管位置
-												bool hasYuShuiGuan,
-												CString yuShuiGuanWeizhi);
-	//注意外部需要释放返回的内存
-	static std::vector<AttrAirCon *> GetAllAirCons();
-	//注意外部需要释放返回的内存
-	static std::vector<AttrRailing *> GetRailings(eRailingType type);
-	//注意外部需要释放返回的内存
-	static std::vector<AttrRailing *> GetAllRailings();
+	std::vector<AttrKitchen> GetKitchens (EKitchType p_type, double p_xLen, double p_yLen, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir, bool p_hasPaiQiDao);
+	std::vector<AttrKitchen> GetAllKitchens();
 
-	//------其他---------//
+	std::vector<AttrBathroom> GetBathrooms(EBathroomType p_type, double p_xLen, double p_yLen, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir);
+	std::vector<AttrBathroom> GetAllBathrooms();
+
+	//weiZhi冷凝水管位置
+	std::vector<AttrAirCon> GetAirCons(double piShu, CString weiZhi, CString hasYuShuiGuan, CString yuShuiGuanWeizhi);
+	std::vector<AttrAirCon > GetAllAirCons();
+
+	std::vector<AttrRailing> GetRailings(eRailingType type);
+	std::vector<AttrRailing> GetAllRailings();
+
+
 	//从web下载原型文件， ok返回0 否则返回-1
-	static bool DownLoadFile(const int fileId, const CString filePathName);
+	bool DownloadFile(const int fileId, const CString filePathName);
 
 protected:
 	CConfigDictionary m_configDic;

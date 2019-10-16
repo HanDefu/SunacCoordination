@@ -142,11 +142,11 @@ void CWindowDlg::OnBnClickedButtonInsert()
 			
 		int sel = m_viewDir.GetCurSel();
 		if (sel == 0)
-			oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].m_frontViewFile, origin, 0, L"0", 256);
+			oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].m_frontViewFile.fileName, origin, 0, L"0", 256);
 		else if (sel == 1)
-            oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].m_topViewFile, origin, 0, L"0", 256);
+			oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].m_topViewFile.fileName, origin, 0, L"0", 256);
 		else
-			oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].m_leftViewFile, origin, 0, L"0", 256);
+			oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].m_leftViewFile.fileName, origin, 0, L"0", 256);
 
 		oneWindow.InitParameters();
 		oneWindow.SetParameter(L"H", height);
@@ -201,7 +201,7 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 	{
 		CString str;
 		str.Format(_T("原型编号：%s\n窗户面积：%.2lf\n通风量：0.9\n动态类型：动态\n适用范围：集团"), m_allWindows[i].m_prototypeCode, width * height / 1E6);
-		m_preWindow.AddPreview(i, 0, TY_GetLocalFilePath() + m_allWindows[i].m_fileName, str);
+		m_preWindow.AddPreview(i, 0, TY_GetLocalFilePath() + m_allWindows[i].GetFileName(), str);
 	}
 
 	m_preWindow.SelectPreview(0, 0);
@@ -251,29 +251,28 @@ void CWindowDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	int nSel = pView->iRow;
 	if (nSel >= 0 && nSel < (int)m_allWindows.size())
 	{
-		vSRCDimData& vDimData = m_allWindows[nSel].m_dimData;
-		for (UINT i = 0; i < vDimData.size(); i++)
+		const CWindowsDimData* dimW1 = m_allWindows[nSel].GetDimData(_T("W1"));
+		if (dimW1!=NULL)
 		{
-			if (vDimData[i].sCodeName == _T("W1"))
+			if ((dimW1->type == SINGLE) || (dimW1->type == MULTI))
 			{
-				if ((vDimData[i].type == SINGLE) || (vDimData[i].type == MULTI))
-				{
-					TYUI_Enable(m_openWidth);
-					TYUI_InitComboBox(m_openWidth, vDimData[i].values, vDimData[i].defaultValue);
-				}
-				else
-					TYUI_Disable(m_openWidth);
+				TYUI_Enable(m_openWidth);
+				TYUI_InitComboBox(m_openWidth, dimW1->valueOptions, dimW1->defaultValue);
 			}
-			if (vDimData[i].sCodeName == _T("H2"))
+			else
+				TYUI_Disable(m_openWidth);
+		}
+
+		const CWindowsDimData* dimH2 = m_allWindows[nSel].GetDimData(_T("H2"));
+		if (dimH2 != NULL)
+		{
+			if ((dimH2->type == SINGLE) || (dimH2->type == MULTI))
 			{
-				if ((vDimData[i].type == SINGLE) || (vDimData[i].type == MULTI))
-				{
-					TYUI_Enable(m_H2);
-					TYUI_InitComboBox(m_H2, vDimData[i].values, vDimData[i].defaultValue);
-				}
-				else
-					TYUI_Disable(m_H2);
+				TYUI_Enable(m_H2);
+				TYUI_InitComboBox(m_H2, dimH2->valueOptions, dimH2->defaultValue);
 			}
+			else
+				TYUI_Disable(m_H2);
 		}
 
 		TYUI_SetText(m_number, m_allWindows[nSel].m_prototypeCode);
@@ -312,12 +311,12 @@ void CWindowDlg::SetRadioDoor(int radioDoor)
 
 void CWindowDlg::LoadDefaultValue()
 {
-	const vCString& doorTypes = WebIO::GetConfigDict()->Door_GetTypes();
-	const vCString& openTypes = WebIO::GetConfigDict()->Window_GetOpenTypes();
-	const vCString& areaTypes = WebIO::GetConfigDict()->GetGongNengQus();
-	const vCString& openAmount = WebIO::GetConfigDict()->Window_GetOpenAmount();
-	const vCString& rate = WebIO::GetConfigDict()->Window_GetRate();
-	const vCString& wallDis = WebIO::GetConfigDict()->Window_GetWallDis();
+	const vCString& doorTypes = WebIO::GetInstance()->GetConfigDict()->Door_GetTypes();
+	const vCString& openTypes = WebIO::GetInstance()->GetConfigDict()->Window_GetOpenTypes();
+	const vCString& areaTypes = WebIO::GetInstance()->GetConfigDict()->GetGongNengQus();
+	const vCString& openAmount = WebIO::GetInstance()->GetConfigDict()->Window_GetOpenAmount();
+	const vCString& rate = WebIO::GetInstance()->GetConfigDict()->Window_GetRate();
+	const vCString& wallDis = WebIO::GetInstance()->GetConfigDict()->Window_GetWallDis();
 
 	TYUI_SetInt(m_width, 1500);
 	TYUI_SetInt(m_height, 1200);

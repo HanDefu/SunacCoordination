@@ -36,12 +36,12 @@ std::vector<AttrKitchen > CKitchenBathroomWebData::ParseKitchensFromXML(CMarkup 
 			}
 			if (xml.FindElem(_T("DrawingPathTop")))
 			{
-				KitchenAttr.m_fileName = xml.GetData();
+				KitchenAttr.SetFileName(xml.GetData());
 			}
 			if (xml.FindElem(_T("Scope")))
 			{
 				CString flag = xml.GetData();
-				if (flag == "1")
+				if (flag == "1" || flag == L"是")
 				{
 					KitchenAttr.m_isJiTuan = TRUE;
 				}
@@ -61,12 +61,12 @@ std::vector<AttrKitchen > CKitchenBathroomWebData::ParseKitchensFromXML(CMarkup 
 			}
 			if (xml.FindElem(_T("KitchenPositionName")))
 			{
-				KitchenAttr.m_windowDoorPos = xml.GetData();
+				KitchenAttr.m_windowDoorPos = (xml.GetData() == L"门窗对开" ? DUIKAI : CHUIZHIKAI);
 			}
 			if (xml.FindElem(_T("KitchenIsAirduct")))
 			{
 				CString flag = xml.GetData();
-				if (flag == "1")
+				if (flag == "1" || flag == L"是")
 				{
 					KitchenAttr.m_hasPaiQiDao = TRUE;
 				}
@@ -143,12 +143,12 @@ std::vector<AttrBathroom > CKitchenBathroomWebData::ParseBathroomsFromXML(CMarku
 			}
 			if (xml.FindElem(_T("DrawingPathTop")))
 			{
-				BathroomAttr.m_fileName = xml.GetData();
+				BathroomAttr.SetFileName(xml.GetData());
 			}
 			if (xml.FindElem(_T("Scope")))
 			{
 				CString flag = xml.GetData();
-				if (flag == "1")
+				if (flag == "1" || flag == L"是")
 				{
 					BathroomAttr.m_isJiTuan = TRUE;
 				}
@@ -189,7 +189,7 @@ std::vector<AttrBathroom > CKitchenBathroomWebData::ParseBathroomsFromXML(CMarku
 			if (xml.FindElem(_T("HasAirvent")))
 			{
 				CString flag = xml.GetData();
-				if (flag == "1")
+				if (flag == "1" || flag == L"是")
 				{
 					BathroomAttr.m_hasPaiQiDao = TRUE;
 				}

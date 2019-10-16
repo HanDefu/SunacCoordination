@@ -128,7 +128,7 @@ void CKitchenDlg::OnBnClickedButtonInsert()
 	UpdateData(TRUE);
 	if (m_pKitchGen==NULL)
 	{
-		MessageBox(_T("请选择原型\n"));
+		AfxMessageBox(_T("请选择原型\n"));
 		return;
 	}
 
@@ -140,12 +140,10 @@ void CKitchenDlg::OnBnClickedButtonInsert()
 	}
 
 	//1. 更新属性值
-
 	m_pKitchGen->GetKitchenAtt()->m_shuiPenType = TYUI_GetComboBoxText(m_basinType);
 	m_pKitchGen->GetKitchenAtt()->m_bingXiangType = TYUI_GetComboBoxText(m_fridgeType);
 	m_pKitchGen->GetKitchenAtt()->m_zaoTaiType = TYUI_GetComboBoxText(m_benchWidth);
 
-	m_pKitchGen->GetKitchenAtt()->m_hasPaiQiDao = !m_bNoAirout;
 	m_pKitchGen->GetKitchenAtt()->m_isGuoBiao = (m_isStd == 0);
 	m_pKitchGen->GetKitchenAtt()->m_floorRange = (E_FLOOR_RANGE)m_floorRange.GetCurSel();
 	m_pKitchGen->GetKitchenAtt()->m_airVentOffsetX = TYUI_GetInt(m_offsetX);
@@ -308,7 +306,7 @@ void CKitchenDlg::OnBnClickedButtonSearch()
 	double width = m_rect.GetWidth();
 	double height = m_rect.GetHeight();
 
-	m_allKitchens = WebIO::GetKitchens(kitchenType, width, height, m_doorDir, m_windowDir, m_bNoAirout == FALSE);
+	m_allKitchens = WebIO::GetInstance()->GetKitchens(kitchenType, width, height, m_doorDir, m_windowDir, m_bNoAirout == FALSE);
 	
 	//////////////////////////////////////////////////////////////////////////
 	//3. 显示原型
@@ -325,8 +323,8 @@ void CKitchenDlg::OnBnClickedButtonSearch()
 	for (UINT i = 0; i < m_allKitchens.size(); i++)
 	{
 		CString str;
-		str.Format(_T("原型编号：%s\n厨房面积：%.2lf\n通风量要求：1.5\n动态类型：动态\n适用范围：集团"), m_allKitchens[i].m_prototypeCode, m_rect.GetWidth() * m_rect.GetHeight() / 1E6);
-		m_preKitchen.AddPreview(i, 0, TY_GetLocalFilePath() + m_allKitchens[i].m_fileName, str);
+		str.Format(_T("原型编号：%s\n厨房面积：%.2lf\n通风量要求：1.5\n动态类型：%s\n适用范围：集团"), m_allKitchens[i].m_prototypeCode, m_rect.GetWidth() * m_rect.GetHeight() / 1E6, m_allKitchens[i].m_isDynamic ? _T("动态") : _T("静态"));
+		m_preKitchen.AddPreview(i, 0, TY_GetLocalFilePath() + m_allKitchens[i].GetFileName(), str);
 	}
 
 	m_preKitchen.SelectPreview(0, 0);
@@ -344,8 +342,7 @@ void CKitchenDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	}
 
 	AttrKitchen* curSecKitchen = &m_allKitchens[nSel];
-	CProKitchen* pcurSelPrototype = curSecKitchen->GetProKitchen();
-	assert(pcurSelPrototype != NULL);
+	CKitchenBathroomProp* pcurSelPrototype = &curSecKitchen->m_prop;
 
 	if (m_pKitchGen != NULL)
 	{
@@ -419,7 +416,7 @@ E_DIRECTION CKitchenDlg::GetDir(ads_point pt)
 
 void CKitchenDlg::LoadDefaultValue()
 {
-	const vCString& kitchenTypes = WebIO::GetConfigDict()->Kitchen_GetTypes();
+	const vCString& kitchenTypes = WebIO::GetInstance()->GetConfigDict()->Kitchen_GetTypes();
 	TYUI_InitComboBox(m_kitchenType, kitchenTypes, kitchenTypes.empty() ? _T("") : kitchenTypes[0]);
 	m_bAutoIndex = TRUE;
 	m_number.SetReadOnly(TRUE);

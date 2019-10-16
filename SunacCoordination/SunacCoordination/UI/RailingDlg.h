@@ -35,15 +35,22 @@ public:
 	afx_msg void OnBnClickedInsertToCAD();
 	afx_msg void OnBnClickedButtonSelectline();
 
-
 	CGridCtrlWithPreview m_preRailing;
 	CString m_selectedFile;
 	CComboBox m_type;
-	
+	void UpdateTY();
+	void UpdateBL();
+	void UpdateAll();
+	CString RailingSize(int i);
 	double m_height;// 栏杆高度	
-	double m_heightBase;// 反坎高度	
 	double m_width;// 栏杆长度
+	CString sPrototypeName;
+	int m_selectedRow;
+	int m_selectedColoum;
 	afx_msg void OnCbnSelchangeComboRailingtype();
+	afx_msg void OnBnClickedCheckAutoindex();
+	CEdit m_railingNumber;
+	afx_msg void OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult);
 };
 
 extern CRailingDlg* g_railingDlg;

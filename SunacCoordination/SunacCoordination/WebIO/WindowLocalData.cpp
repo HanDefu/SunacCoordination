@@ -18,7 +18,7 @@ CWindowLocalData::~CWindowLocalData()
 {
 }
 
-RCDimData CWindowLocalData::ReadDimData(Excel::CExcelUtil &xls, CString code, int p_row, int p_colum)
+CWindowsDimData CWindowLocalData::ReadDimData(Excel::CExcelUtil &xls, CString code, int p_row, int p_colum)
 {
 	CString valueType = xls.GetCellValue(p_row, p_colum);
 	CString sValue = xls.GetCellValue(p_row, p_colum + 1);
@@ -27,7 +27,7 @@ RCDimData CWindowLocalData::ReadDimData(Excel::CExcelUtil &xls, CString code, in
 	double defaultValue = _wtof(xls.GetCellValue(p_row, p_colum + 4));
 	CString sComment = xls.GetCellValue(p_row, p_colum + 5);   //说明
 
-	RCDimData  data;
+	CWindowsDimData  data;
 	data.sCodeName = code;
 	data.defaultValue = defaultValue;
 	data.minValue = minValue;
@@ -46,7 +46,7 @@ RCDimData CWindowLocalData::ReadDimData(Excel::CExcelUtil &xls, CString code, in
 	else if (valueType == L"固定值")
 	{
 		data.type = SINGLE;
-		data.values.push_back(_wtof(sValue));
+		data.valueOptions.push_back(_wtof(sValue));
 	}
 	else if (valueType == L"值系列")
 	{
@@ -55,7 +55,7 @@ RCDimData CWindowLocalData::ReadDimData(Excel::CExcelUtil &xls, CString code, in
 		std::vector<CString> strs = YT_SplitCString(sValue, L',');
 		for (UINT i = 0; i < strs.size(); i++)
 		{
-			data.values.push_back(_wtof(strs[i]));
+			data.valueOptions.push_back(_wtof(strs[i]));
 		}
 	}
 	
@@ -63,9 +63,9 @@ RCDimData CWindowLocalData::ReadDimData(Excel::CExcelUtil &xls, CString code, in
 }
 
 //门窗
-RCDimData CWindowLocalData::ConvertStringToDimData ( CString code, CString  valueType, CString value, CString defaultValue,	CString state) const
+CWindowsDimData CWindowLocalData::ConvertStringToDimData ( CString code, CString  valueType, CString value, CString defaultValue,	CString state) const
 {
-	RCDimData  data;
+	CWindowsDimData  data;
 	if (valueType == "无")
 	{
 		data.sCodeName = code;
@@ -80,7 +80,7 @@ RCDimData CWindowLocalData::ConvertStringToDimData ( CString code, CString  valu
 	{
 		data.sCodeName = code;
 		data.type = SINGLE;
-		data.values.push_back(_wtof(value));
+		data.valueOptions.push_back(_wtof(value));
 		data.defaultValue = _wtof(defaultValue);
 		data.prompt = state;
 	}
@@ -92,7 +92,7 @@ RCDimData CWindowLocalData::ConvertStringToDimData ( CString code, CString  valu
 		std::vector<CString> strs = YT_SplitCString(value, L',');
 		for (UINT i = 0; i < strs.size(); i++)
 		{
-			data.values.push_back(_wtof(strs[i]));
+			data.valueOptions.push_back(_wtof(strs[i]));
 		}
 		data.defaultValue = _wtof(defaultValue);
 		data.prompt = state;
@@ -123,7 +123,7 @@ void CWindowLocalData::LoadDataFromExcel(CString p_file)
 		if (attrwindow.m_prototypeCode.GetLength() == 0)  //对原型编号的长度进行判断，当原型编号为空的时候结束循环
 			break;
 
-		attrwindow.m_fileName = xls.GetCellValue(i, 3);
+		attrwindow.SetFileName(xls.GetCellValue(i, 3));
 		attrwindow.m_quyuName = xls.GetCellValue(i, 4);
 		if (attrwindow.m_quyuName.Find(_T("全部"))>=0 ||
 			attrwindow.m_quyuName.Find(_T("集团")) >= 0)
@@ -141,35 +141,60 @@ void CWindowLocalData::LoadDataFromExcel(CString p_file)
 		attrwindow.m_gongNengquType = xls.GetCellValue(i, 6);
 		attrwindow.m_openType = xls.GetCellValue(i, 7);
 		attrwindow.m_openQty = _ttoi(xls.GetCellValue(i, 8));
-		attrwindow.m_minWid =  _ttof(xls.GetCellValue(i, 9));
-		attrwindow.m_maxWid =  _ttof(xls.GetCellValue(i, 10));
 		attrwindow.m_tongFengFormula = xls.GetCellValue(i, 11);
-		attrwindow.m_staticWidth = _ttof(xls.GetCellValue(i, 12));
-		attrwindow.m_staticHeight = _ttof(xls.GetCellValue(i, 13));
-		attrwindow.m_staticTongFengQty = _ttof(xls.GetCellValue(i, 14));
-		
-		RCDimData rcDimData = ReadDimData(xls, L"W1", i, 15);		
-		attrwindow.m_dimData.push_back(rcDimData);
+		attrwindow.m_tongFengQty = _ttof(xls.GetCellValue(i, 14));
+
+		//////////////////////////////////////////////////////////////////////////
+		CWindowsDimData dimDataW;
+		if (attrwindow.m_isDynamic)
+		{
+			dimDataW.sCodeName = L"W";
+			dimDataW.type = SCOPE;
+			dimDataW.minValue = _ttof(xls.GetCellValue(i, 9));
+			dimDataW.maxValue = _ttof(xls.GetCellValue(i, 10));
+		}
+		else
+		{
+			dimDataW.type = SINGLE;
+			dimDataW.value = _ttof(xls.GetCellValue(i, 12)); //宽度
+		}
+		attrwindow.SetDimData(dimDataW);
+
+		CWindowsDimData dimDataH;
+		if (attrwindow.m_isDynamic)
+		{
+			dimDataH.type = UNLIMIT;
+		}
+		else
+		{
+			dimDataH.type = SINGLE;
+			dimDataH.value = _ttof(xls.GetCellValue(i, 13)); //宽度
+		}
+		attrwindow.SetDimData(dimDataH);
+
+		//////////////////////////////////////////////////////////////////////////
+		CWindowsDimData rcDimData = ReadDimData(xls, L"W1", i, 15);		
+		attrwindow.SetDimData(rcDimData);
 
 		rcDimData = ReadDimData(xls, L"W2", i, 21);
-		attrwindow.m_dimData.push_back(rcDimData);
+		attrwindow.SetDimData(rcDimData);
 
 		rcDimData = ReadDimData(xls, L"W3", i, 27);
-		attrwindow.m_dimData.push_back(rcDimData);
+		attrwindow.SetDimData(rcDimData);
 
 		rcDimData = ReadDimData(xls, L"H1", i, 33);
-		attrwindow.m_dimData.push_back(rcDimData);
+		attrwindow.SetDimData(rcDimData);
 
 		rcDimData = ReadDimData(xls, L"H2", i, 39);
-		attrwindow.m_dimData.push_back(rcDimData);
+		attrwindow.SetDimData(rcDimData);
 
 		rcDimData = ReadDimData(xls, L"H3", i, 45);
-		attrwindow.m_dimData.push_back(rcDimData);
+		attrwindow.SetDimData(rcDimData);
 
-
-		attrwindow.m_frontViewFile = xls.GetCellValue(i, 51);
-		attrwindow.m_topViewFile = xls.GetCellValue(i, 52);
-		attrwindow.m_leftViewFile = xls.GetCellValue(i, 53);
+		//////////////////////////////////////////////////////////////////////////
+		attrwindow.m_frontViewFile.fileName = xls.GetCellValue(i, 51);
+		attrwindow.m_topViewFile.fileName = xls.GetCellValue(i, 52);
+		attrwindow.m_leftViewFile.fileName = xls.GetCellValue(i, 53);
 
 		//////////////////////////////////////////////////////////////////////////
 		m_windows.push_back(attrwindow); 
@@ -197,7 +222,7 @@ bool  CWindowLocalData::GetWindowByFileName(CString p_sFileName, AttrWindow&valu
 {
 	for (UINT i = 0; i < m_windows.size(); i++)
 	{
-		if (m_windows[i].m_fileName == p_sFileName)
+		if (m_windows[i].GetFileName() == p_sFileName)
 		{
 			value = m_windows[i];
 			return true;
@@ -246,7 +271,8 @@ std::vector<AttrWindow >  CWindowLocalData::GetWindows(double width, CString ope
 			continue;
 		}
 
-		if (width < m_windows[i].m_minWid || width > m_windows[i].m_maxWid)
+		const CWindowsDimData* pDiwW = m_windows[i].GetDimData(_T("W"));
+		if (width < pDiwW->minValue || width > pDiwW->maxValue)
 		{
 			continue;
 		}
@@ -298,7 +324,8 @@ std::vector<AttrWindow >  CWindowLocalData::GetDoors(double width, CString openT
 			continue;
 		}
 
-		if (width < m_windows[i].m_dimData[0].values[0] || width > m_windows[i].m_dimData[0].values[1])
+		const CWindowsDimData* pDiwW = m_windows[i].GetDimData(_T("W"));
+		if (width < pDiwW->minValue || width > pDiwW->maxValue)
 		{
 			continue;
 		}

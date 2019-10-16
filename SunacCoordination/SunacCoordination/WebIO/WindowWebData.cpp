@@ -93,25 +93,29 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 							}
 							if (sFileType == "FrontViewFile")
 							{
-								attrwindow.m_frontViewFile = sFileName;
+								attrwindow.m_frontViewFile.id = _ttoi(sFileID);
+								attrwindow.m_frontViewFile.fileName = sFileName;
 							}
 							else if (sFileType == "LeftViewFile")
 							{
-								attrwindow.m_leftViewFile = sFileName;
+								attrwindow.m_leftViewFile.id = _ttoi(sFileID);
+								attrwindow.m_leftViewFile.fileName = sFileName;
 							}
 							else if (sFileType == "TopViewFile")
 							{
-								attrwindow.m_topViewFile = sFileName;
+								attrwindow.m_topViewFile.id = _ttoi(sFileID);
+								attrwindow.m_topViewFile.fileName = sFileName;
 							}
 							else if (sFileType == "ExpandViewFile")
 							{
-								attrwindow.m_fileName = sFileName;
+								attrwindow.m_file.id = _ttoi(sFileID);
+								attrwindow.m_file.fileName = sFileName;
 							}
 							//检查文件是否存在，不存在则下载
 							CString sFilePath = MD2010_GetAppPath() + L"\\support\\Sunac2019\\WebMode\\" + sFileName;
 							if (!JHCom_FileExist(sFilePath))
 							{
-								WebIO::DownLoadFile(_ttoi(sFileID), sFilePath);
+								WEBINST->DownloadFile(_ttoi(sFileID), sFilePath);
 							}
 						}
 						xml.OutOfElem();
@@ -123,7 +127,7 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 			if (xml.FindElem(_T("Scope")))
 			{
 				CString flag = xml.GetData();
-				if (flag == "1")
+				if (flag == "1" || flag == L"是")
 				{
 					attrwindow.m_isJiTuan = TRUE;
 				}
@@ -139,12 +143,12 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 			}
 			if (xml.FindElem(_T("DrawingType")))
 			{
-				attrwindow.m_type = xml.GetData();
+				//attrwindow.m_type = xml.GetData();
 			}
 			if (xml.FindElem(_T("WindowDynamicType")))
 			{
 				CString flag = xml.GetData();
-				if (flag == "1")
+				if (flag == "1" || flag == L"是")
 				{
 					attrwindow.m_isDynamic = TRUE;
 				}
@@ -161,27 +165,58 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 			if (xml.FindElem(_T("WindowHasCorner")))
 			{
 				CString flag = xml.GetData();
-				if (flag == "1")
+				if (flag == "1" || flag == L"是")
 				{
 					attrwindow.m_isZhuanJiao = TRUE;
 				}
 				else attrwindow.m_isZhuanJiao = FALSE;
 			}
+
+			double minVaule = 0;
+			double maxValue = 100000;
 			if (xml.FindElem(_T("WindowSizeMin")))
 			{
-				attrwindow.m_minWid = _ttof(xml.GetData());
+				minVaule = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("WindowSizeMax")))
 			{
-				attrwindow.m_maxWid = _ttof(xml.GetData());
+				maxValue = _ttof(xml.GetData());
 			}
+
+			CWindowsDimData dimDataW;
+			if (attrwindow.m_isDynamic)
+			{
+				dimDataW.type = SCOPE;
+				dimDataW.minValue = minVaule;
+				dimDataW.maxValue = maxValue;
+			}
+			//else //TODO 支持静态的数据
+			//{
+			//	dimDataW.type = SINGLE;
+			//	dimDataW.value = _ttof(xls.GetCellValue(i, 12)); //宽度
+			//}
+			attrwindow.SetDimData(dimDataW);
+
+			CWindowsDimData dimDataH;
+			if (attrwindow.m_isDynamic)
+			{
+				dimDataH.type = UNLIMIT;
+			}
+			//else
+			//{
+			//	dimDataH.type = SINGLE;
+			//	dimDataH.value = _ttof(xls.GetCellValue(i, 13)); //宽度
+			//}
+			attrwindow.SetDimData(dimDataH);
+
+			//////////////////////////////////////////////////////////////////////////
 			if (xml.FindElem(_T("WindowDesignFormula")))
 			{
 				attrwindow.m_tongFengFormula = xml.GetData();
 			}
 			if (xml.FindElem(_T("WindowVentilationQuantity")))
 			{
-				attrwindow.m_staticTongFengQty = _ttof(xml.GetData());
+				attrwindow.m_tongFengQty = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("WindowPlugslotSize")))
 			{
@@ -198,7 +233,7 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 				while (xml.FindElem(_T("Item")))
 				{
 					xml.IntoElem();
-					SRCDimData tempData;
+					CWindowsDimData tempData;
 					if (xml.FindElem(_T("SizeNo")))
 					{
 						tempData.sCodeName = xml.GetData();
@@ -215,14 +250,14 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 							std::vector<CString> strs = YT_SplitCString(value, L',');
 							for (UINT i = 0; i < strs.size(); i++)
 							{
-								tempData.values.push_back(_wtof(strs[i]));
+								tempData.valueOptions.push_back(_wtof(strs[i]));
 							}
 						}
 						else if (tempData.type == CALC)
 						{
 							tempData.sFomula = value;
 						}
-						else tempData.values.push_back(_ttof(value));
+						else tempData.valueOptions.push_back(_ttof(value));
 
 					}
 					if (xml.FindElem(_T("MinValue")))
@@ -241,7 +276,8 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 					{
 						tempData.prompt = xml.GetData();
 					}
-					attrwindow.m_dimData.push_back(tempData);
+					attrwindow.SetDimData(tempData);
+
 					xml.OutOfElem();
 				}
 				xml.OutOfElem();
@@ -314,25 +350,25 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 								}
 								if (sFileType == "FrontViewFile")
 								{
-									Attrdoor.m_frontViewFile = sFileName;
+									Attrdoor.m_frontViewFile.fileName = sFileName;
 								}
 								else if (sFileType == "LeftViewFile")
 								{
-									Attrdoor.m_leftViewFile = sFileName;
+									Attrdoor.m_leftViewFile.fileName = sFileName;
 								}
 								else if (sFileType == "TopViewFile")
 								{
-									Attrdoor.m_topViewFile = sFileName;
+									Attrdoor.m_topViewFile.fileName = sFileName;
 								}
 								else if (sFileType == "ExpandViewFile")
 								{
-									Attrdoor.m_fileName = sFileName;
+									Attrdoor.m_file.fileName = sFileName;
 								}
 								//检查文件是否存在，不存在则下载
 								CString sFilePath = MD2010_GetAppPath() + L"\\support\\Sunac2019\\WebMode\\" + sFileName;
 								if (!JHCom_FileExist(sFilePath))
 								{
-									WebIO::DownLoadFile(_ttoi(sFileID), sFilePath);
+									WEBINST->DownloadFile(_ttoi(sFileID), sFilePath);
 								}
 							}
 							xml.OutOfElem();
@@ -347,20 +383,20 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 			}
 			if (xml.FindElem(_T("DrawingPathFront")))
 			{
-				Attrdoor.m_frontViewFile = xml.GetData();
+				Attrdoor.m_frontViewFile.fileName = xml.GetData();
 			}
 			if (xml.FindElem(_T("DrawingPathLeft")))
 			{
-				Attrdoor.m_leftViewFile = xml.GetData();
+				Attrdoor.m_leftViewFile.fileName = xml.GetData();
 			}
 			if (xml.FindElem(_T("DrawingPathExpanded")))
 			{
-				Attrdoor.m_fileName = xml.GetData();
+				Attrdoor.m_file.fileName = xml.GetData();
 			}*/
 			if (xml.FindElem(_T("Scope")))
 			{
 				CString flag = xml.GetData();
-				if (flag == "1")
+				if (flag == "1" || flag == L"是")
 				{
 					Attrdoor.m_isJiTuan = TRUE;
 				}
@@ -375,14 +411,14 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 			{
 				Attrdoor.m_quyuName = xml.GetData();
 			}*/
-			if (xml.FindElem(_T("DrawingType")))
-			{
-				Attrdoor.m_type = xml.GetData();
-			}
+			//if (xml.FindElem(_T("DrawingType")))
+			//{
+			//	Attrdoor.m_type = xml.GetData();
+			//}
 			if (xml.FindElem(_T("DynamicType")))
 			{
 				CString flag = xml.GetData();
-				if (flag == "1")
+				if (flag == "1" || flag == L"是")
 				{
 					Attrdoor.m_isDynamic = TRUE;
 				}
@@ -392,21 +428,53 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 			{
 				Attrdoor.m_openType = xml.GetData();
 			}
-			if (xml.FindElem(_T("WindowSizeMin")))
+
+			double minValue = 0; 
+			double maxValue = 10000;
+			if (xml.FindElem(_T("DoorSizeMin")))
 			{
-				Attrdoor.m_minWid = _ttof(xml.GetData());
+				minValue = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("WindowSizeMax")))
 			{
-				Attrdoor.m_maxWid = _ttof(xml.GetData());
+				maxValue = _ttof(xml.GetData());
 			}
+
+			CWindowsDimData dimDataW;
+			if (Attrdoor.m_isDynamic)
+			{
+				dimDataW.type = SCOPE;
+				dimDataW.minValue = minValue;
+				dimDataW.maxValue = maxValue;
+			}
+			//else //TODO 支持静态的数据
+			//{
+			//	dimDataW.type = SINGLE;
+			//	dimDataW.value = _ttof(xls.GetCellValue(i, 12)); //宽度
+			//}
+			Attrdoor.SetDimData(dimDataW);
+
+			CWindowsDimData dimDataH;
+			if (Attrdoor.m_isDynamic)
+			{
+				dimDataH.type = UNLIMIT;
+			}
+			//else
+			//{
+			//	dimDataH.type = SINGLE;
+			//	dimDataH.value = _ttof(xls.GetCellValue(i, 13)); //宽度
+			//}
+			Attrdoor.SetDimData(dimDataH);
+
+
+			//////////////////////////////////////////////////////////////////////////
 			if (xml.FindElem(_T("SizePara")))
 			{
 				xml.IntoElem();
 				while (xml.FindElem(_T("Item")))
 				{
 					xml.IntoElem();
-					SRCDimData tempData;
+					CWindowsDimData tempData;
 					if (xml.FindElem(_T("Code")))
 					{
 						tempData.sCodeName = xml.GetData();
@@ -421,7 +489,7 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 						std::vector<CString> strs = YT_SplitCString(value, L',');
 						for (UINT i = 0; i < strs.size(); i++)
 						{
-							tempData.values.push_back(_wtof(strs[i]));
+							tempData.valueOptions.push_back(_wtof(strs[i]));
 						}
 					}
 					if (xml.FindElem(_T("MinValue")))
@@ -440,7 +508,7 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 					{
 						tempData.prompt = xml.GetData();
 					}
-					Attrdoor.m_dimData.push_back(tempData);
+					Attrdoor.SetDimData(tempData);
 					xml.OutOfElem();
 				}
 				xml.OutOfElem();
@@ -470,7 +538,11 @@ std::vector<AttrWindow> CWindowWebData::GetWindows(double p_width, double p_heig
 	}
 	if (gongNengQu == "不限")
 	{
-		openType = "";
+		gongNengQu = "";
+	}
+	if (openNum == 0)
+	{
+		opNum = "";
 	}
 
 	std::wstring sOpenType = openType;

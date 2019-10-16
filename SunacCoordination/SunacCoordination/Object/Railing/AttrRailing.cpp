@@ -102,10 +102,10 @@ bool AttrRailing::IsPrototypeEqual(const AttrRailing& p_att)
 	{
 		return false;
 	}
-	else if (p_att.m_type != m_type)
-	{
-		return false;
-	}
+	//else if (p_att.m_type != m_type)
+	//{
+	//	return false;
+	//}
 	else if (p_att.m_isDynamic != m_isDynamic)
 	{
 		return false;
@@ -119,10 +119,6 @@ bool AttrRailing::IsPrototypeEqual(const AttrRailing& p_att)
 		return false;
 	}
 	else if (p_att.m_quyuName != m_quyuName)
-	{
-		return false;
-	}
-	else if (p_att.m_fileName != m_fileName)
 	{
 		return false;
 	}

@@ -153,7 +153,7 @@ void CBathroomDlg::EnableSetAirout(bool bEnable)
 
 void CBathroomDlg::LoadDefaultValue()
 {
-	const vCString& bathroomTypes = WebIO::GetConfigDict()->Bathroom_GetTypes();
+	const vCString& bathroomTypes = WebIO::GetInstance()->GetConfigDict()->Bathroom_GetTypes();
 	TYUI_InitComboBox(m_bathroomType, bathroomTypes, bathroomTypes.empty() ? _T("") : bathroomTypes[0]);
 	m_autoIndex.SetCheck(TRUE);
 	m_number.SetReadOnly(TRUE);
@@ -205,8 +205,7 @@ void CBathroomDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	}
 
 	AttrBathroom* curSelBathroom = &m_allBathrooms[nSel];
-	CProBathroom* pcurSelPrototype = curSelBathroom->GetProBathroom();
-	assert(pcurSelPrototype != NULL);
+	CKitchenBathroomProp* pcurSelPrototype = &curSelBathroom->m_prop;
 
 	if (m_pBathroomGen != NULL)
 	{
@@ -226,7 +225,7 @@ void CBathroomDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	//设置属性区选项
 	TYUI_SetText(m_number, curSelBathroom->m_prototypeCode);
 
-	if (pcurSelPrototype->m_bIsDynamic)
+	if (curSelBathroom->m_isDynamic)
 	{
 		TYUI_InitComboBox(m_basinWidth, m_pBathroomGen->GetTaipenOptions(), m_pBathroomGen->GetTaipenDefault());
 		TYUI_InitComboBox(m_toiletWidth, m_pBathroomGen->GetMatongOptions(), m_pBathroomGen->GetMatongDefault());
@@ -263,7 +262,6 @@ void CBathroomDlg::OnBnClickedButtonInsert()
 	m_pBathroomGen->GetBathroomAtt()->m_matongWidth = TYUI_GetComboBoxText(m_toiletWidth);
 	m_pBathroomGen->GetBathroomAtt()->m_guanXiWidth = _ttof(TYUI_GetComboBoxText(m_washWidth));
 
-	m_pBathroomGen->GetBathroomAtt()->m_hasPaiQiDao = (m_noAirOut.GetCheck() == FALSE);
 	m_pBathroomGen->GetBathroomAtt()->m_isGuoBiao = (m_isStd == 0);
 	m_pBathroomGen->GetBathroomAtt()->m_floorRange = (E_FLOOR_RANGE)m_floorRange.GetCurSel();
 	m_pBathroomGen->GetBathroomAtt()->m_airVentOffsetX = TYUI_GetInt(m_offsetX);
@@ -285,7 +283,6 @@ void CBathroomDlg::OnBnClickedButtonInsert()
 		return;
 	}
 
-
 	AcGePoint3d origin = m_rect.GetLB();
 
 	//生成
@@ -300,13 +297,12 @@ void CBathroomDlg::OnBnClickedButtonRange()
 	TYRect rect = TY_GetOneRect();
 	ShowWindow(true);
 
-	if (m_rect.IsSame(rect, TOL))
-		return;
-	if (rect.GetWidth() < TOL || rect.GetHeight() < TOL)
+	if (IsBathroomRectValid(rect) == false)
 	{
-		acutPrintf(_T("所选卫生间范围无效\n"));
+		AfxMessageBox(_T("所选卫生间范围无效\n"));
 		return;
 	}
+
 	m_rect = rect;
 
 	//更新范围后清空原有搜索列表
@@ -315,9 +311,9 @@ void CBathroomDlg::OnBnClickedButtonRange()
 
 void CBathroomDlg::OnBnClickedButtonDoorDir()
 {
-	if (m_rect.GetWidth() < TOL || m_rect.GetHeight() < TOL)
+	if (IsBathroomRectValid(m_rect) == false)
 	{
-		acutPrintf(_T("请先选择卫生间范围\n"));
+		AfxMessageBox(_T("请先选择卫生间范围\n"));
 		return;
 	}
 
@@ -352,9 +348,9 @@ void CBathroomDlg::OnBnClickedButtonDoorDir()
 
 void CBathroomDlg::OnBnClickedButtonWindowDir()
 {
-	if (m_rect.GetWidth() < TOL || m_rect.GetHeight() < TOL)
+	if (IsBathroomRectValid(m_rect) == false)
 	{
-		acutPrintf(_T("请先选择卫生间范围\n"));
+		AfxMessageBox(_T("请先选择卫生间范围\n"));
 		return;
 	}
 
@@ -420,7 +416,7 @@ void CBathroomDlg::OnBnClickedButtonSearch()
 	double width = m_rect.GetWidth();
 	double height = m_rect.GetHeight();
 
-	m_allBathrooms = WebIO::GetBathrooms(bathroomType, width, height, m_doorDir, m_windowDir);
+	m_allBathrooms = WebIO::GetInstance()->GetBathrooms(bathroomType, width, height, m_doorDir, m_windowDir);
 	
 	//////////////////////////////////////////////////////////////////////////
 	//3. 显示原型
@@ -437,8 +433,8 @@ void CBathroomDlg::OnBnClickedButtonSearch()
 	for (UINT i = 0; i < m_allBathrooms.size(); i++)
 	{
 		CString str;
-		str.Format(_T("原型编号：%s\n厨房面积：%.2lf\n通风量要求：1.5\n动态类型：动态\n适用范围：集团"), m_allBathrooms[i].m_prototypeCode, m_rect.GetWidth() * m_rect.GetHeight() / 1E6);
-		m_preBathroom.AddPreview(i, 0, TY_GetLocalFilePath() + m_allBathrooms[i].m_fileName, str);
+		str.Format(_T("原型编号：%s\n厨房面积：%.2lf\n通风量要求：1.5\n动态类型：%s\n适用范围：集团"), m_allBathrooms[i].m_prototypeCode, m_rect.GetWidth() * m_rect.GetHeight() / 1E6, m_allBathrooms[i].m_isDynamic ? _T("动态") : _T("静态"));
+		m_preBathroom.AddPreview(i, 0, TY_GetLocalFilePath() + m_allBathrooms[i].GetFileName(), str);
 	}
 
 	m_preBathroom.SelectPreview(0, 0);

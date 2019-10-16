@@ -108,7 +108,7 @@ int CKitchGen::SelectBingXiang(AcDbObjectId kitchenId, CString bingXiang)
 
 double CKitchGen::GetXLength()
 {
-	CProKitchen* pProKitchen = m_attr.GetProKitchen();
+	CKitchenBathroomProp* pProKitchen = &m_attr.m_prop;
 	if (pProKitchen->m_doorPos == E_DIR_BOTTOM || pProKitchen->m_doorPos == E_DIR_TOP)
 		return m_attr.m_width;
 	else
@@ -126,7 +126,7 @@ double CKitchGen::GetYLength()
 //////////////////////////////////////////////////////////////////////////
 vCString CKitchGen::GetShuipenOptions()// 获取台盆选型
 {
-	vCString options = WebIO::GetConfigDict()->Kitchen_GetShuiPenTypes();
+	vCString options = WebIO::GetInstance()->GetConfigDict()->Kitchen_GetShuiPenTypes();
 	return options;
 }
 
@@ -137,7 +137,7 @@ CString CKitchGen::GetShuipenDefault()
 
 vCString CKitchGen::GetBinxiangOptions()// 获取冰箱选型
 {
-	vCString options = WebIO::GetConfigDict()->Kitchen_GetBingXiangTypes();
+	vCString options = WebIO::GetInstance()->GetConfigDict()->Kitchen_GetBingXiangTypes();
 	return options;
 }
 
@@ -148,7 +148,7 @@ CString CKitchGen::GetBinxiangDefault()
 
 vCString CKitchGen::GetZhaotaiOptions()// 获取灶台选型
 {
-	vCString options = WebIO::GetConfigDict()->Kitchen_GetZaoTaiWidths();
+	vCString options = WebIO::GetInstance()->GetConfigDict()->Kitchen_GetZaoTaiWidths();
 	return options;
 
 }
@@ -181,7 +181,7 @@ AcDbObjectId CKitchGen::GenKitchen(const AcGePoint3d p_pos, int p_angle)
 	RCKitchen oneKitchen;
 
 	//先插入到原点，最后再做镜像和旋转处理
-	AcDbObjectId id = oneKitchen.Insert(TY_GetLocalFilePath() + m_attr.m_fileName, p_pos, 0, L"0", 256);
+	AcDbObjectId id = oneKitchen.Insert(TY_GetLocalFilePath() + m_attr.GetFileName(), p_pos, 0, L"0", 256);
 	oneKitchen.InitParameters();
 	oneKitchen.SetParameter(L"开间", m_attr.m_width);
 	oneKitchen.SetParameter(L"进深", m_attr.m_height);
@@ -718,15 +718,15 @@ CKitchGenSTATIC::CKitchGenSTATIC(AttrKitchen* p_att)
 
 CKitchGen* CKitchMrg::CreateKitchGenByKitchType(AttrKitchen* p_attr)
 {
-	if (p_attr->m_kitchenType.Left(3) == _T("KUq") && p_attr->m_kitchenType.Find(L"_c") == -1)
+	if (p_attr->m_prototypeCode.Left(3) == _T("KUq") && p_attr->m_prototypeCode.Find(L"_c") == -1)
 		return new CKitchGenKUQ(p_attr);
-	else if (p_attr->m_kitchenType.Left(3) == _T("KUq"))
+	else if (p_attr->m_prototypeCode.Left(3) == _T("KUq"))
 		return new CKitchGenKUQ_C(p_attr);
-	else if (p_attr->m_kitchenType.Left(3) == _T("KUs"))
+	else if (p_attr->m_prototypeCode.Left(3) == _T("KUs"))
 		return new CKitchGenKUS(p_attr);
-	else if (p_attr->m_kitchenType.Left(2) == _T("KL"))
+	else if (p_attr->m_prototypeCode.Left(2) == _T("KL"))
 		return new CKitchGenKL(p_attr);
-	else if (p_attr->m_kitchenType.Left(2) == _T("KI"))
+	else if (p_attr->m_prototypeCode.Left(2) == _T("KI"))
 		return new CKitchGenKI(p_attr);
 	else
 		return NULL;
