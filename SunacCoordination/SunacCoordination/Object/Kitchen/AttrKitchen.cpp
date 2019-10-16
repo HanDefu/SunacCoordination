@@ -24,7 +24,7 @@ AttrKitchen::AttrKitchen()
 	 m_hasPaiQiDao = true;//是否含有排气道
 	 m_isGuoBiao = true;//排气道
 	//m_kitchenType;//厨房类型
-	m_windowDoorPos = DUIKAI;//门窗位置关系
+	 m_windowDoorPos = DUIKAI;//门窗位置关系
 
 	//这些属性体现在图块中--可以从图块直接取出的 就不用从属性记录
 	//m_shuiPenType;//水盆类型

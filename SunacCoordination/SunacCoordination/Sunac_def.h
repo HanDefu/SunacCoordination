@@ -37,11 +37,11 @@ typedef enum eRailingType
 
 static eRailingType ToERailingType(CString type)
 {
-	if (type == "沺眙")
+	if (type == "沺眙" || type == "沺眙戲裝")
 	{
 		return E_RAILING_TIEYI;
 	} 
-	else if (type == "產薛")
+	else if (type == "產薛" || type == "產薛戲裝")
 	{
 		return E_RAILING_BOLI;
 	}

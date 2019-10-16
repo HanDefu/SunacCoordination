@@ -5,6 +5,7 @@
 #include "AttrWindow.h"
 #include "../../Common/ComFun_Sunac.h"
 #include "../../Common/ComFun_Math.h"
+#include "../../Common/TYFormula.h"
 
 CWindowsDimData::CWindowsDimData()
 {
@@ -141,6 +142,7 @@ const CWindowsDimData* AttrWindow::GetDimData(CString p_sCode)const
 	assert(false);
 	return NULL;
 }
+
 void AttrWindow::SetDimData(const CWindowsDimData& p_dim)
 {
 	for (UINT i = 0; i < m_dimData.size(); i++)
@@ -153,6 +155,145 @@ void AttrWindow::SetDimData(const CWindowsDimData& p_dim)
 	}
 
 	m_dimData.push_back(p_dim);
+}
+
+double AttrWindow::GetTongFengQty(bool bDefaultValue/* = false*/)
+{
+	if (m_isDynamic)
+	{
+		CFormulaParser parser(m_tongFengFormula);
+		double ret;
+		E_ParserStatus es;
+		while ((es = parser.TryParse(ret)) == E_PS_UnknownVars)
+		{
+			vCString vars = parser.GetUnknownVars();
+			for (UINT i = 0; i < vars.size(); i++)
+			{
+				parser.SetVar(vars[i], GetValue(vars[i], bDefaultValue));
+			}
+		}
+		if (es == E_PS_InvalidFormula)
+		{
+			CString errMsg = L"通风量公式格式错误，无法计算\n";
+			acutPrintf(errMsg);
+			return 0;
+		}
+		else if (es == E_PS_PaserOverflow)
+		{
+			CString errMsg = L"通风量公式存在循环推导，无法计算\n";
+			acutPrintf(errMsg);
+			return 0;
+		}
+		else if (es == E_PS_Success)
+		{
+			return ret;
+		}
+		else
+		{
+			assert(false);
+			return 0;
+		}
+	}
+	else
+	{
+		return m_tongFengQty;
+	}
+}
+
+double AttrWindow::GetValue(CString p_sCode, bool bDefaultValue/* = false*/)
+{
+	if (p_sCode.CompareNoCase(L"A") == 0)
+		return GetA(bDefaultValue);
+	const CWindowsDimData* pDimData = GetDimData(p_sCode);
+	assert(pDimData);
+	assert(pDimData->type != NOVALUE);
+	if (pDimData->type == CALC)
+	{
+		CFormulaParser parser(pDimData->sFomula);
+		double ret;
+		E_ParserStatus es;
+		while ((es = parser.TryParse(ret)) == E_PS_UnknownVars)
+		{
+			vCString vars = parser.GetUnknownVars();
+			for (UINT i = 0; i < vars.size(); i++)
+			{
+				parser.SetVar(vars[i], GetValue(vars[i], bDefaultValue));
+			}
+		}
+		if (es == E_PS_InvalidFormula)
+		{
+			CString errMsg;
+			errMsg.Format(L"参数%s的公式格式错误，无法计算\n", pDimData->sCodeName);
+			acutPrintf(errMsg);
+			return 0;
+		}
+		else if (es == E_PS_PaserOverflow)
+		{
+			CString errMsg;
+			errMsg.Format(L"参数%s的公式存在循环推导，无法计算\n", pDimData->sCodeName);
+			acutPrintf(errMsg);
+			return 0;
+		}
+		else if (es == E_PS_Success)
+		{
+			return ret;
+		}
+		else
+		{
+			assert(false);
+			return 0;
+		}
+	}
+	else if (bDefaultValue)
+	{
+		return pDimData->defaultValue;
+	}
+	else
+	{
+		return pDimData->value;
+	}
+}
+
+bool AttrWindow::SetValue(CString p_sCode, double p_dValue)
+{
+	const CWindowsDimData* pDimData = GetDimData(p_sCode);
+	assert(pDimData);
+	assert(pDimData->type != NOVALUE);
+	CWindowsDimData newDimData(*pDimData);
+	//公式值和固定值不能设置
+	if ((newDimData.type == CALC) || (newDimData.type == SINGLE))
+		return false;
+	if (newDimData.type == UNLIMIT)
+	{
+		newDimData.value = p_dValue;
+		SetDimData(newDimData);
+		return true;
+	}
+	if (newDimData.type == MULTI)
+	{
+		for (UINT i = 0; i < newDimData.valueOptions.size(); i++)
+		{
+			if (newDimData.valueOptions[i] == p_dValue)
+			{
+				newDimData.value = p_dValue;
+				SetDimData(newDimData);
+				return true;
+			}
+		}
+		return false;
+	}
+	if (newDimData.type == SCOPE)
+	{
+		if ((newDimData.minValue <= p_dValue) && (newDimData.maxValue >= p_dValue))
+		{
+			newDimData.value = p_dValue;
+			SetDimData(newDimData);
+			return true;
+		}
+		return false;
+	}
+	assert(false);
+	return false;
 }
 
 Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)

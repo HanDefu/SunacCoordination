@@ -238,7 +238,7 @@ bool WebIO::DownloadFile(const int fileId, CString type, CString filePathName)
 	ofstream ofs(filenameOut, ofstream::out | ofstream::binary);
 	if (ofs)
 	{
-		UINT numberOfBytes = sReturn.length() + 1;
+		int numberOfBytes = (int)sReturn.length() + 1;
 		char* decodedBuffer = new char[numberOfBytes * 2];
 		memset(decodedBuffer, 0, numberOfBytes * 2);
 
@@ -253,4 +253,20 @@ bool WebIO::DownloadFile(const int fileId, CString type, CString filePathName)
 	ofs.close();
 
 	return true;
+}
+
+CString WebIO::GetFileName(const WCHAR *fullname)
+{
+	WCHAR filename[256]; 
+	WCHAR name[256];
+	wcscpy_s(name,fullname);
+	WCHAR *p = wcstok(name,L"/");
+	WCHAR *pre = NULL;
+	while(p != NULL)
+	{
+		pre = p;
+		p = wcstok(NULL, L"/");
+	}
+	wcscpy_s(filename,pre);
+	return filename;
 }

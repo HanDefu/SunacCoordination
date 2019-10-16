@@ -72,8 +72,8 @@
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-win32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>C:\Program Files\Autodesk\AutoCAD 2014\Support</OutDir>
-    <IntDir>$(SolutionDir)\Temp\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>C:\Program Files\Autodesk\AutoCAD 2014\Support\</OutDir>
+    <IntDir>$(SolutionDir)Temp\$(Platform)\$(Configuration)\</IntDir>
     <TargetName>Sunac2019</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -154,6 +154,7 @@
     <ClCompile Include="Common\ComFun_Str.cpp" />
     <ClCompile Include="Common\ComFun_String.cpp" />
     <ClCompile Include="Common\ComFun_Sunac.cpp" />
+    <ClCompile Include="Common\TYFormula.cpp" />
     <ClCompile Include="Common\TYRect.cpp" />
     <ClCompile Include="GlobalSetting.cpp" />
     <ClCompile Include="main.cpp" />
@@ -267,6 +268,7 @@
     <ClInclude Include="Common\ComFun_Str.h" />
     <ClInclude Include="Common\ComFun_String.h" />
     <ClInclude Include="Common\ComFun_Sunac.h" />
+    <ClInclude Include="Common\TYFormula.h" />
     <ClInclude Include="Common\TYRect.h" />
     <ClInclude Include="GlobalSetting.h" />
     <ClInclude Include="main.h" />

@@ -142,7 +142,7 @@ typedef std::vector<RCPairKeyDValue> vRCPairKeyDValue;
 typedef std::vector<RCPairKeyIValue> vRCPairKeyIValue;
 typedef std::vector<RCPairKeyStrValue> vRCPairKeyStrValue;
 
-#define  RAY_LEN 10000000//һǧė
+#define  RAY_LEN 10000000
 
 #include <adscodes.h>
 #include <rxmfcapi.h>

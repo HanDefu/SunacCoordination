@@ -416,6 +416,15 @@ static void initApp()
 		-1,
 		theArxDLL.ModuleResourceInstance());
 
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("test"),
+		_T("test"),
+		ACRX_CMD_SESSION,
+		CMD_TEST,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
 	AttrObject::rxInit();
 	acrxBuildClassHierarchy();
 	acrxRegisterService(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_OBJECT));
