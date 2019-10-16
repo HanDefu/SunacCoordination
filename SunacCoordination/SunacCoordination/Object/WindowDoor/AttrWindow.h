@@ -128,14 +128,14 @@ public:
 	double GetA(bool bDefaultValue = false) { return bDefaultValue ? 0 : m_plugslotSize; } //Èû·ì³ß´ç
 
 	bool SetValue(CString p_sCode, double p_dValue);
-	bool SetH(double newValue);
-	bool SetH1(double newValue);
-	bool SetH2(double newValue);
-	bool SetW(double newValue);
-	bool SetW1(double newValue);
-	bool SetW2(double newValue);
-	bool SetW3(double newValue);
-	bool SetA(double newValue);//Èû·ì³ß´ç
+	bool SetH(double newValue) { return SetValue(L"H", newValue); }
+	bool SetH1(double newValue) { return SetValue(L"H1", newValue); }
+	bool SetH2(double newValue) { return SetValue(L"H2", newValue); }
+	bool SetW(double newValue) { return SetValue(L"W", newValue); }
+	bool SetW1(double newValue) { return SetValue(L"W1", newValue); }
+	bool SetW2(double newValue) { return SetValue(L"W2", newValue); }
+	bool SetW3(double newValue) { return SetValue(L"W3", newValue); }
+	bool SetA(double newValue) { m_plugslotSize = newValue; }//Èû·ì³ß´ç
 
 protected:
 	vWindowDimData m_dimData; //´æ´¢W/W1/W2/W3   H/H1/H2/H3 RµÄ³ß´çÊý¾Ý

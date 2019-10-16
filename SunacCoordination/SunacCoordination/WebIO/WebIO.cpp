@@ -127,7 +127,7 @@ std::vector<AttrAirCon> WebIO::GetAirCons(double piShu, CString weiZhi, CString 
 #ifdef WORK_LOCAL//本地模式
 	return m_airConLocalData.GetAirCons(piShu, weiZhi, hasYuShuiGuan, yuShuiGuanWeizhi);
 #else
-	return m_airConWebData.GetAirCons(piShu, weiZhi, hasYuShuiGuan, yuShuiGuanWeizhi);
+	return m_airConWebData.GetAirCons(piShu, weiZhi, (hasYuShuiGuan == L"有"), yuShuiGuanWeizhi);
 #endif
 }
 
