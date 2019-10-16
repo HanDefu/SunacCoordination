@@ -254,3 +254,19 @@ bool WebIO::DownloadFile(const int fileId, CString type, CString filePathName)
 
 	return true;
 }
+
+CString WebIO::GetFileName(const WCHAR *fullname)
+{
+	WCHAR filename[256]; 
+	WCHAR name[256];
+	wcscpy_s(name,fullname);
+	WCHAR *p = wcstok(name,L"/");
+	WCHAR *pre = NULL;
+	while(p != NULL)
+	{
+		pre = p;
+		p = wcstok(NULL, L"/");
+	}
+	wcscpy_s(filename,pre);
+	return filename;
+}

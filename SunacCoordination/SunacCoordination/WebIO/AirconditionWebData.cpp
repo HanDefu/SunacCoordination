@@ -2,6 +2,8 @@
 #include "AirconditionWebData.h"
 #include "SunacCadWeb\soapArgumentSettingServiceSoapProxy.h"
 #include "../Common\ComFun_Str.h"
+#include "..\Common\ComFun_String.h"
+#include "WebIO.h"
 #include <string>
 
 std::vector<AttrAirCon> CAirConditionWebData::GetAirCons(double piShu, CString weiZhi, bool hasYuShuiGuan, CString yuShuiGuanWeizhi)
@@ -76,9 +78,61 @@ std::vector<AttrAirCon > CAirConditionWebData::ParseAirConditionersFromXML(CMark
 			{
 				//attrallwindow.m_name = xml.GetData();
 			}
-			if (xml.FindElem(_T("DrawingPath")))
+			if (xml.FindElem(_T("Drawings")))
 			{
-				AirConAttr.m_file.fileName = xml.GetData();
+				xml.IntoElem();
+				{
+					while (xml.FindElem(_T("Drawing")))
+					{
+						xml.IntoElem();
+						{
+							CString sFileType, tempString, sFileName, sFileID, sImgFileName;
+							if (xml.FindElem(_T("Id")))
+							{
+								sFileID = xml.GetData();
+							}
+							if (xml.FindElem(_T("ImgPath")))
+							{
+								tempString = xml.GetData();
+								if (tempString != "")
+								{
+									sImgFileName = WEBINST->GetFileName(tempString);//获得带扩展名的文件名
+								}
+							}
+							if (xml.FindElem(_T("CADPath")))
+							{
+								tempString = xml.GetData();
+								if (tempString != "")
+								{
+									sFileName = WEBINST->GetFileName(tempString);//获得带扩展名的文件名
+								}
+							}
+							if (xml.FindElem(_T("CADType")))
+							{
+								sFileType = xml.GetData();
+							}
+							if (sFileType == "ExpandViewFile")
+							{
+								AirConAttr.m_file.id = _ttoi(sFileID);
+								AirConAttr.m_file.fileName = sFileName;
+							}
+							//检查文件是否存在，不存在则下载
+							CString sDWGFilePath = MD2010_GetAppPath() + L"\\support\\Sunac2019\\WebMode\\" + sFileName;
+							CString sImgFilePath = MD2010_GetAppPath() + L"\\support\\Sunac2019\\WebMode\\" + sImgFileName;
+							if (!JHCom_FileExist(sDWGFilePath))
+							{
+								WEBINST->DownloadFile(_ttoi(sFileID), "CAD", sDWGFilePath);
+							}
+
+							if (!JHCom_FileExist(sImgFilePath))
+							{
+								WEBINST->DownloadFile(_ttoi(sFileID), "Img", sImgFilePath);
+							}
+						}
+						xml.OutOfElem();
+					}
+				}
+				xml.OutOfElem();
 			}
 			if (xml.FindElem(_T("Scope")))
 			{
@@ -97,9 +151,11 @@ std::vector<AttrAirCon > CAirConditionWebData::ParseAirConditionersFromXML(CMark
 			{
 				AirConAttr.m_quyuName = xml.GetData();
 			}
-			if (xml.FindElem(_T("AirconditionerPower")))
+			if (xml.FindElem(_T("AirconditionerPowerName")))
 			{
-				AirConAttr.m_power = _ttof(xml.GetData());
+				CString Power = xml.GetData();
+				Power.Delete(Power.GetLength()-1, 1);
+				AirConAttr.m_power = _ttof(Power);
 			}
 			if (xml.FindElem(_T("AirconditionerMinWidth")))
 			{
@@ -109,7 +165,7 @@ std::vector<AttrAirCon > CAirConditionWebData::ParseAirConditionersFromXML(CMark
 			{
 				//AirConAttr.m_ = xml.GetData();
 			}
-			if (xml.FindElem(_T("AirconditionerPipePosition")))
+			if (xml.FindElem(_T("AirconditionerPipePositionName")))
 			{
 				AirConAttr.m_pipePos = xml.GetData();
 			}
