@@ -32,6 +32,21 @@ void CF_STR_get_file_name_2(const WCHAR *filename, WCHAR *filename2)
 	return;
 }
 
+void CF_STR_get_file_name_3(const WCHAR *filename, WCHAR *filename3)
+{
+	WCHAR name[256];
+	wcscpy_s(name,filename);
+	WCHAR *p = wcstok(name,L".dwg");
+	/*WCHAR *pre = NULL;
+	while(p != NULL)
+	{
+		pre = p;
+		p = wcstok(NULL, L"\\");
+	}*/
+	wcscpy(filename3,p);
+	return;
+}
+
 CString CF_STR_get_single_font_str_from_str(const WCHAR* instr, const WCHAR* font, double scale1, double scale2)
 {
     if (font == NULL)//Ä¬ÈÏ·µ»Ø¿Õ
