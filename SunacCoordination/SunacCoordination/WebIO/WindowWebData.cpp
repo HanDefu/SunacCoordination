@@ -18,21 +18,6 @@ CWindowWebData::~CWindowWebData()
 
 }
 
-CString GetFileName(const WCHAR *fullname)
-{
-	WCHAR filename[256]; 
-	WCHAR name[256];
-	wcscpy_s(name,fullname);
-	WCHAR *p = wcstok(name,L"/");
-	WCHAR *pre = NULL;
-	while(p != NULL)
-	{
-		pre = p;
-		p = wcstok(NULL, L"/");
-	}
-	wcscpy_s(filename,pre);
-	return filename;
-}
 
 std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 {
@@ -84,7 +69,7 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 								tempString = xml.GetData();
 								if (tempString != "")
 								{
-									sImgFileName = GetFileName(tempString);//获得带扩展名的文件名
+									sImgFileName = WEBINST->GetFileName(tempString);//获得带扩展名的文件名
 								}
 							}
 							if (xml.FindElem(_T("CADPath")))
@@ -92,7 +77,7 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 								tempString = xml.GetData();
 								if (tempString != "")
 								{
-									sFileName = GetFileName(tempString);//获得带扩展名的文件名
+									sFileName = WEBINST->GetFileName(tempString);//获得带扩展名的文件名
 								}
 							}
 							if (xml.FindElem(_T("CADType")))
@@ -347,17 +332,25 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 						{
 							xml.IntoElem();
 							{
-								CString sFileType, tempString, sFileName, sFileID;
+								CString sFileType, tempString, sFileName, sFileID, sImgFileName;
 								if (xml.FindElem(_T("Id")))
 								{
 									sFileID = xml.GetData();
+								}
+								if (xml.FindElem(_T("ImgPath")))
+								{
+									tempString = xml.GetData();
+									if (tempString != "")
+									{
+										sImgFileName = WEBINST->GetFileName(tempString);//获得带扩展名的文件名
+									}
 								}
 								if (xml.FindElem(_T("CADPath")))
 								{
 									tempString = xml.GetData();
 									if (tempString != "")
 									{
-										sFileName = GetFileName(tempString);//获得带扩展名的文件名
+										sFileName = WEBINST->GetFileName(tempString);//获得带扩展名的文件名
 									}
 								}
 								if (xml.FindElem(_T("CADType")))
@@ -381,10 +374,16 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 									Attrdoor.m_file.fileName = sFileName;
 								}
 								//检查文件是否存在，不存在则下载
-								CString sFilePath = MD2010_GetAppPath() + L"\\support\\Sunac2019\\WebMode\\" + sFileName;
-								if (!JHCom_FileExist(sFilePath))
+								CString sDWGFilePath = MD2010_GetAppPath() + L"\\support\\Sunac2019\\WebMode\\" + sFileName;
+								CString sImgFilePath = MD2010_GetAppPath() + L"\\support\\Sunac2019\\WebMode\\" + sImgFileName;
+								if (!JHCom_FileExist(sDWGFilePath))
 								{
-									WEBINST->DownloadFile(_ttoi(sFileID), "CAD", sFilePath);
+									WEBINST->DownloadFile(_ttoi(sFileID), "CAD", sDWGFilePath);
+								}
+
+								if (!JHCom_FileExist(sImgFilePath))
+								{
+									WEBINST->DownloadFile(_ttoi(sFileID), "Img", sImgFilePath);
 								}
 							}
 							xml.OutOfElem();

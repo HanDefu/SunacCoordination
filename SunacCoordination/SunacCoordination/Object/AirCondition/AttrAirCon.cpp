@@ -14,7 +14,9 @@ ACRX_DXF_DEFINE_MEMBERS(AttrAirCon, AcDbObject,
 
 AttrAirCon::AttrAirCon()
 {
-
+	m_airW = 0;		//对应空调数据表格
+	m_airH = 0;
+	m_airD = 0;
 }
 
 AttrAirCon::~AttrAirCon()

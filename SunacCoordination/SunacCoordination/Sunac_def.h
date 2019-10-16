@@ -5,7 +5,7 @@
 #define  SUNAC_COMMON_STR_LEN (256)
 #define  FILE_VERSION ((Adesk::Int32)1)
 
-//#define  WORK_LOCAL//是否本地工作模式
+#define  WORK_LOCAL//是否本地工作模式
 #define CHECK_USE//是否检测权限
 
 //模块类型
@@ -37,11 +37,11 @@ typedef enum eRailingType
 
 static eRailingType ToERailingType(CString type)
 {
-	if (type == "铁艺")
+	if (type == "铁艺" || type == "铁艺栏杆")
 	{
 		return E_RAILING_TIEYI;
 	} 
-	else if (type == "玻璃")
+	else if (type == "玻璃" || type == "玻璃栏杆")
 	{
 		return E_RAILING_BOLI;
 	}

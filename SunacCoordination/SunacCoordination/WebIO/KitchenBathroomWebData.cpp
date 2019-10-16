@@ -2,7 +2,10 @@
 #include "KitchenBathroomWebData.h"
 #include "SunacCadWeb\soapArgumentSettingServiceSoapProxy.h"
 #include "../Common\ComFun_Str.h"
+#include "..\Common\ComFun_String.h"
+#include "WebIO.h"
 #include <string>
+
 
 std::vector<AttrKitchen > CKitchenBathroomWebData::ParseKitchensFromXML(CMarkup xml)const
 {
@@ -34,9 +37,61 @@ std::vector<AttrKitchen > CKitchenBathroomWebData::ParseKitchensFromXML(CMarkup 
 			{
 				//attrallwindow.m_name = xml.GetData();
 			}
-			if (xml.FindElem(_T("DrawingPathTop")))
+			if (xml.FindElem(_T("Drawings")))
 			{
-				KitchenAttr.SetFileName(xml.GetData());
+				xml.IntoElem();
+				{
+					while (xml.FindElem(_T("Drawing")))
+					{
+						xml.IntoElem();
+						{
+							CString sFileType, tempString, sFileName, sFileID, sImgFileName;
+							if (xml.FindElem(_T("Id")))
+							{
+								sFileID = xml.GetData();
+							}
+							if (xml.FindElem(_T("ImgPath")))
+							{
+								tempString = xml.GetData();
+								if (tempString != "")
+								{
+									sImgFileName = WEBINST->GetFileName(tempString);//获得带扩展名的文件名
+								}
+							}
+							if (xml.FindElem(_T("CADPath")))
+							{
+								tempString = xml.GetData();
+								if (tempString != "")
+								{
+									sFileName = WEBINST->GetFileName(tempString);//获得带扩展名的文件名
+								}
+							}
+							if (xml.FindElem(_T("CADType")))
+							{
+								sFileType = xml.GetData();
+							}
+							if (sFileType == "ExpandViewFile")
+							{
+								KitchenAttr.m_file.id = _ttoi(sFileID);
+								KitchenAttr.m_file.fileName = sFileName;
+							}
+							//检查文件是否存在，不存在则下载
+							CString sDWGFilePath = MD2010_GetAppPath() + L"\\support\\Sunac2019\\WebMode\\" + sFileName;
+							CString sImgFilePath = MD2010_GetAppPath() + L"\\support\\Sunac2019\\WebMode\\" + sImgFileName;
+							if (!JHCom_FileExist(sDWGFilePath))
+							{
+								WEBINST->DownloadFile(_ttoi(sFileID), "CAD", sDWGFilePath);
+							}
+
+							if (!JHCom_FileExist(sImgFilePath))
+							{
+								WEBINST->DownloadFile(_ttoi(sFileID), "Img", sImgFilePath);
+							}
+						}
+						xml.OutOfElem();
+					}
+				}
+				xml.OutOfElem();
 			}
 			if (xml.FindElem(_T("Scope")))
 			{
@@ -141,9 +196,61 @@ std::vector<AttrBathroom > CKitchenBathroomWebData::ParseBathroomsFromXML(CMarku
 			{
 				//attrallwindow.m_name = xml.GetData();
 			}
-			if (xml.FindElem(_T("DrawingPathTop")))
+			if (xml.FindElem(_T("Drawings")))
 			{
-				BathroomAttr.SetFileName(xml.GetData());
+				xml.IntoElem();
+				{
+					while (xml.FindElem(_T("Drawing")))
+					{
+						xml.IntoElem();
+						{
+							CString sFileType, tempString, sFileName, sFileID, sImgFileName;
+							if (xml.FindElem(_T("Id")))
+							{
+								sFileID = xml.GetData();
+							}
+							if (xml.FindElem(_T("ImgPath")))
+							{
+								tempString = xml.GetData();
+								if (tempString != "")
+								{
+									sImgFileName = WEBINST->GetFileName(tempString);//获得带扩展名的文件名
+								}
+							}
+							if (xml.FindElem(_T("CADPath")))
+							{
+								tempString = xml.GetData();
+								if (tempString != "")
+								{
+									sFileName = WEBINST->GetFileName(tempString);//获得带扩展名的文件名
+								}
+							}
+							if (xml.FindElem(_T("CADType")))
+							{
+								sFileType = xml.GetData();
+							}
+							if (sFileType == "ExpandViewFile")
+							{
+								BathroomAttr.m_file.id = _ttoi(sFileID);
+								BathroomAttr.m_file.fileName = sFileName;
+							}
+							//检查文件是否存在，不存在则下载
+							CString sDWGFilePath = MD2010_GetAppPath() + L"\\support\\Sunac2019\\WebMode\\" + sFileName;
+							CString sImgFilePath = MD2010_GetAppPath() + L"\\support\\Sunac2019\\WebMode\\" + sImgFileName;
+							if (!JHCom_FileExist(sDWGFilePath))
+							{
+								WEBINST->DownloadFile(_ttoi(sFileID), "CAD", sDWGFilePath);
+							}
+
+							if (!JHCom_FileExist(sImgFilePath))
+							{
+								WEBINST->DownloadFile(_ttoi(sFileID), "Img", sImgFilePath);
+							}
+						}
+						xml.OutOfElem();
+					}
+				}
+				xml.OutOfElem();
 			}
 			if (xml.FindElem(_T("Scope")))
 			{
@@ -161,6 +268,10 @@ std::vector<AttrBathroom > CKitchenBathroomWebData::ParseBathroomsFromXML(CMarku
 			if (xml.FindElem(_T("AreaName")))
 			{
 				BathroomAttr.m_quyuName = xml.GetData();
+			}
+			if (xml.FindElem(_T("BathroomTypeName")))
+			{
+				BathroomAttr.m_sBathroomType = xml.GetData();
 			}
 			if (xml.FindElem(_T("BathroomShortsideSizeMin")))
 			{
@@ -181,10 +292,6 @@ std::vector<AttrBathroom > CKitchenBathroomWebData::ParseBathroomsFromXML(CMarku
 			if (xml.FindElem(_T("BathroomDoorWindowPosition")))
 			{
 				BathroomAttr.m_windowDoorPos = ToEWindowDoorPos(xml.GetData());
-			}
-			if (xml.FindElem(_T("BathroomType")))
-			{
-				BathroomAttr.m_sBathroomType = xml.GetData();
 			}
 			if (xml.FindElem(_T("HasAirvent")))
 			{
