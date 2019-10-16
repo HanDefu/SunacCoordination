@@ -1,27 +1,33 @@
 #pragma once
 #include "..\WindowDoor\AttrWindow.h"
-
-enum E_WindowDoorType
-{
-	E_WindowDoor_NC,
-	E_WindowDoor_WC,
-};
+#include "..\..\Tool\Excel\Excel.h"
+#include "DeductedSize.h"
+#include "AluminumSeries.h"
 
 
+
+//窗单价组合分析表
 class CWindowMaterialUsage
 {
 public:
-	CWindowMaterialUsage(const AttrWindow& p_winAtt);
+	CWindowMaterialUsage(const AttrWindow& p_winAtt, int p_nCount);  //p_nCount表示当前窗型的数量
 	virtual ~CWindowMaterialUsage();
-	
-	//virtual void SetWindonAtt();
 
+	virtual void CalcMateriaUsage() = 0;
+	virtual bool ExportReportToExcel(CString p_sReportFile) = 0; //导出到excel报表
+	virtual bool ExportReportToExcel(Excel::CExcelUtil& p_excel) = 0; //导出到excel报表
+	
+	//////////////////////////////////////////////////////////////////////////
+	//以下函数用于填写汇总表
 	double GetHoleArea()const;
 	double GetWindowFrameArea()const;
-	CString GetAluminumeSeries()const ;//获取该窗户的型材系列
+	CString GetAluminumeSeries()const ;		//获取该窗户的型材系列
 
 	double GetAluminumeUsageAmount()const ; //获取该窗户的型材用量
-	double GetGlassUsageAmount()const ; //获取该窗户的玻璃用量
+	double GetGlassUsageAmount()const ;		//获取该窗户的玻璃用量
+
+
+	//////////////////////////////////////////////////////////////////////////
 
 
 protected:
@@ -37,12 +43,18 @@ protected:
 
 
 protected:
+	AttrWindow m_winAtt;
+	int m_nCount;
+	//////////////////////////////////////////////////////////////////////////
 		//总计数量:
 		//断桥隔热铝型材
 		//非断桥隔热铝型材
 		//阳极氧化铝型材
+
 		//玻璃合计
+
 		//五金套数
+
 		//发泡剂
 		//中性硅酮密封胶
 		//中性硅酮密封胶
@@ -50,10 +62,8 @@ protected:
 		//组角胶
 		//密封胶条
 		//密封胶条
+		//密封毛边
 		//窗制作安装辅材费
-
-
-
 };
 
 //////////////////////////////////////////////////////////////////////////
