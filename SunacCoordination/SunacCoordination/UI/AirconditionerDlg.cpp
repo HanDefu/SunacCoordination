@@ -217,16 +217,18 @@ void CAirconditionerDlg::OnCbnSelchangeComboRaintubepos()
 
 
 void CAirconditionerDlg::OnBnClickedButtonInsertac()
-{
+{	
+	UpdatePreview();
+
 	ShowWindow(FALSE);
-	
+
 	AcGeVector3d offsetXY;
 	//获取插入点
 	AcGePoint3d pnt = TY_GetPoint();
 
 	RCAirCondition blockAirCon;
 	//将块插入图形空间
-	blockAirCon.Insert(m_fileName, pnt, 0, L"0", 256);
+	blockAirCon.AirInsert(m_fileName, pnt, 0, L"0", 256);
 
 	//上下镜像
 	if (m_upDownImage.GetCheck())
