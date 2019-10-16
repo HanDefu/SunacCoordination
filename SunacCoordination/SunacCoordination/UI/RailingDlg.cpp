@@ -140,29 +140,19 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 	vector<CCellID> selCells = m_preRailing.GetSelectedCells();
 	if (selCells.empty())
 		return;
-	m_selectedRow = selCells[0].row;
-	m_selectedColoum = selCells[0].col;
 
-	CGridCellForPreview* pCell = m_preRailing.GetPreviewCell(m_selectedRow, m_selectedColoum);
+	int selectedRow = selCells[0].row;
+	int selectedColoum = selCells[0].col;
+
+	CGridCellForPreview* pCell = m_preRailing.GetPreviewCell(selectedRow, selectedColoum);
 	if (pCell==NULL)
 	{
-		acutPrintf(_T("没有选择原型，请重新选择或者双击原型\n"));
+		AfxMessageBox(_T("没有选择原型，请重新选择或者双击原型\n"));
 		return;
 	}
 
 	CString sPrototypeName = pCell->GetName();
-
-	//检查数据
 	
-
-	//if (m_width<1500)
-	//{
-	//	AfxMessageBox(_T("栏杆长度太短"));
-	//	return;
-	//}
-
-	ShowWindow(FALSE);
-
 	CString path;
 	AttrRailing railingAtt;
 	railingAtt.m_height = m_height;
@@ -171,10 +161,15 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 	railingAtt.m_railingType = sPrototypeName.Find(_T("_T"))>0 ? E_RAILING_TIEYI : E_RAILING_BOLI;
 
 	//生成
-	
-	//Test(railingAtt);
-
 	CRCRailing* pRailing = CreateRailing(railingAtt);
+	//检查数据
+	if (pRailing->CheckLengthWidth()==false)
+	{
+		delete pRailing;
+		AfxMessageBox(_T("栏杆长度或高度不符合要求"));
+		//ShowWindow(TRUE);
+		return;
+	}
 
 	//选择插入点
 	ShowWindow(FALSE);
@@ -182,11 +177,8 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 	pnt = TY_GetPoint();
 
 	AcDbObjectId railingId;
-	pRailing->GenerateRailing(pnt, railingId);
-
-	delete pRailing;
-
-	//ShowWindow(TRUE);
+	int nRet = pRailing->GenerateRailing(pnt, railingId);
+	
 	OnOK();
 }
 
@@ -421,9 +413,10 @@ void CRailingDlg::OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult)
 	vector<CCellID> selCells = m_preRailing.GetSelectedCells();
 	if (selCells.empty())
 		return;
-	m_selectedRow = selCells[0].row;
-	m_selectedColoum = selCells[0].col;
-	CGridCellForPreview* pCell = m_preRailing.GetPreviewCell(m_selectedRow, m_selectedColoum);
+
+	int selectedRow = selCells[0].row;
+	int selectedColoum = selCells[0].col;
+	CGridCellForPreview* pCell = m_preRailing.GetPreviewCell(selectedRow, selectedColoum);
 	if (pCell != NULL)
 	{
 		AttrRailing railingAtt;

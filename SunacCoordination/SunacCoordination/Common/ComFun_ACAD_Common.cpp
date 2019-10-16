@@ -1707,7 +1707,6 @@ bool MD2010_CheckBlockDefExist(const WCHAR * blockname)
 		->getBlockTable(pBlkTbl, AcDb::kForRead);
 	if (!pBlkTbl->has(blockname))
 	{
-		acutPrintf(L"\n no %s", blockname);
 		pBlkTbl->close();
 		return false; 
 	}
@@ -1721,7 +1720,6 @@ AcDbObjectId MD2010_GetBlockDefID(const WCHAR * blockname)
 	acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForRead);
 	if (!pBlkTbl->has(blockname))
 	{
-		acutPrintf(L"\n no %s", blockname);
 		pBlkTbl->close();
 		return 0; 
 	}
@@ -1740,7 +1738,7 @@ int MD2010_InsertBlockReference_ModelSpace(const WCHAR * blockname, AcDbObjectId
 	acdbHostApplicationServices()->workingDatabase() ->getBlockTable(pBlkTbl, AcDb::kForRead);
 	if (!pBlkTbl->has(blockname))
 	{
-		acutPrintf(L"\n no %s", blockname);
+		acutPrintf(L"\n no blockdef %s\n", blockname);
 		pBlkTbl->close();
 		return 1; 
 	}
@@ -1790,7 +1788,7 @@ int MD2010_InsertBlockReference_Layout(const WCHAR * layoutname, const WCHAR * b
 	acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForRead);
 	if (!pBlkTbl->has(blockname))
 	{
-		acutPrintf(L"\n no %s", blockname);
+		acutPrintf(L"no blockdef %s\n", blockname);
 		pBlkTbl->close();
 		return 1; 
 	}

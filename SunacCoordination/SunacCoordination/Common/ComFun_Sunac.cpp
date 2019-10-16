@@ -1163,6 +1163,8 @@ AcDbObjectId CopyBlockDefFromDatabase(AcDbDatabase* pSourceDb, AcDbDatabase* pDe
 
 AcDbObjectId CopyBlockDefFromDwg(const TCHAR* fileName, const TCHAR* blkDefName)
 {
+	CDocLock docLock;
+
 	AcDbObjectId blockRefId = AcDbObjectId::kNull;
 
 	// 使用_SH_DENYNO参数打开图形(只读打开)，允许其它用户读写该文件

@@ -94,7 +94,11 @@ AcDbObjectIdArray CRCRailingBoli::GenerateRailing_Standard(AcGePoint3d pos)
 	AcDbObjectId id2;
 	for (int i = 0; i < GetN(); i++)
 	{
-		id2 = InsertBlockRefFromDwg(fileName, sStandardBlockName, ACDB_MODEL_SPACE, pos);
+		if (i==0)
+			id2 = InsertBlockRefFromDwg(fileName, sStandardBlockName, ACDB_MODEL_SPACE, pos);
+		else
+			MD2010_InsertBlockReference_ModelSpace(sStandardBlockName, id2, pos);
+
 		assert(id2 != AcDbObjectId::kNull);
 
 		DQ_SetDynamicAttribute(id2, _T("H"), railH);

@@ -115,7 +115,16 @@ AcDbObjectId CRCRailingTieyi::GenerateRailing_NonStandard(AcGePoint3d p_pos)
 	const CString fileName = GetPrototypeFilePath();
 	const CString sNonStandardBlockName = GetNonStandardBlockName();
 
-	id1 = InsertBlockRefFromDwg(fileName, sNonStandardBlockName, ACDB_MODEL_SPACE, p_pos);
+
+	if (MD2010_CheckBlockDefExist(sNonStandardBlockName))
+	{
+		MD2010_InsertBlockReference_ModelSpace(sNonStandardBlockName, id1, p_pos);
+	}
+	else
+	{
+		id1 = InsertBlockRefFromDwg(fileName, sNonStandardBlockName, ACDB_MODEL_SPACE, p_pos);
+	}
+
 	assert(id1 != AcDbObjectId::kNull);
 
 	//设置非标段长度
@@ -137,7 +146,10 @@ AcDbObjectIdArray CRCRailingTieyi::GenerateRailing_Standard(AcGePoint3d pos)
 	AcDbObjectId id2;
 	for (int i = 0; i < GetN(); i++)
 	{
-		id2 = InsertBlockRefFromDwg(fileName, sStandardBlockName, ACDB_MODEL_SPACE, pos);
+		if (i == 0)
+			id2 = InsertBlockRefFromDwg(fileName, sStandardBlockName, ACDB_MODEL_SPACE, pos);
+		else
+			MD2010_InsertBlockReference_ModelSpace(sStandardBlockName, id2, pos);
 		assert(id2 != AcDbObjectId::kNull);
 
 		DQ_SetDynamicAttribute(id2, _T("H"), railH);
@@ -313,7 +325,14 @@ AcDbObjectId CRCRailingT4::GenerateRailing_NonStandard(AcGePoint3d p_pos)
 	const CString fileName = GetPrototypeFilePath();
 	const CString sNonStandardBlockName = GetNonStandardBlockName();
 
-	id1 = InsertBlockRefFromDwg(fileName, sNonStandardBlockName, ACDB_MODEL_SPACE, p_pos);
+	if (MD2010_CheckBlockDefExist(sNonStandardBlockName))
+	{
+		MD2010_InsertBlockReference_ModelSpace(sNonStandardBlockName, id1, p_pos);
+	}
+	else
+	{
+		id1 = InsertBlockRefFromDwg(fileName, sNonStandardBlockName, ACDB_MODEL_SPACE, p_pos);
+	}
 	assert(id1 != AcDbObjectId::kNull);
 
 	double L = GetNonstandardLen();
@@ -349,7 +368,10 @@ AcDbObjectIdArray CRCRailingT4::GenerateRailing_Standard(AcGePoint3d pos)
 	AcDbObjectId id2;
 	for (int i = 0; i < GetN(); i++)
 	{
-		id2 = InsertBlockRefFromDwg(fileName, sStandardBlockName, ACDB_MODEL_SPACE, pos);
+		if (i==0)
+			id2 = InsertBlockRefFromDwg(fileName, sStandardBlockName, ACDB_MODEL_SPACE, pos);
+		else
+			MD2010_InsertBlockReference_ModelSpace(sStandardBlockName, id2, pos);
 		assert(id2 != AcDbObjectId::kNull);
 
 		DQ_SetDynamicAttribute(id2, _T("H"), railH);
@@ -380,7 +402,14 @@ AcDbObjectId CRCRailingT5::GenerateRailing_NonStandard(AcGePoint3d p_pos)
 	const CString fileName = GetPrototypeFilePath();
 	const CString sNonStandardBlockName = GetNonStandardBlockName();
 
-	id1 = InsertBlockRefFromDwg(fileName, sNonStandardBlockName, ACDB_MODEL_SPACE, p_pos);
+	if (MD2010_CheckBlockDefExist(sNonStandardBlockName))
+	{
+		MD2010_InsertBlockReference_ModelSpace(sNonStandardBlockName, id1, p_pos);
+	}
+	else
+	{
+		id1 = InsertBlockRefFromDwg(fileName, sNonStandardBlockName, ACDB_MODEL_SPACE, p_pos);
+	}
 	assert(id1 != AcDbObjectId::kNull);
 
 	double L = GetNonstandardLen();
@@ -392,6 +421,12 @@ AcDbObjectId CRCRailingT5::GenerateRailing_NonStandard(AcGePoint3d p_pos)
 	DQ_SetDynamicAttribute(id1, _T("Ln"), Ln1);
 	DQ_SetDynamicAttribute(id1, _T("Ln2"), Ln2);
 	DQ_SetDynamicAttribute(id1, _T("H"), railH);
+
+	//判断最后一根是朝上还是朝下
+	int n1 = (int)(Ln1 / (Getb() * 2));
+	int n2 = (int)(Ln2 / (Getb() * 2));
+	bool bUp = n1 > n2;
+	DQ_SetDynamicAttribute(id1, _T("可见性"), bUp ? _T("向上") : _T("向下"));
 
 	return id1;
 }
@@ -411,18 +446,37 @@ AcDbObjectId CRCRailingT6::GenerateRailing_NonStandard(AcGePoint3d p_pos)
 	const CString fileName = GetPrototypeFilePath();
 	const CString sNonStandardBlockName = GetNonStandardBlockName();
 
-	id1 = InsertBlockRefFromDwg(fileName, sNonStandardBlockName, ACDB_MODEL_SPACE, p_pos);
+	if (MD2010_CheckBlockDefExist(sNonStandardBlockName))
+	{
+		MD2010_InsertBlockReference_ModelSpace(sNonStandardBlockName, id1, p_pos);
+	}
+	else
+	{
+		id1 = InsertBlockRefFromDwg(fileName, sNonStandardBlockName, ACDB_MODEL_SPACE, p_pos);
+	}
 	assert(id1 != AcDbObjectId::kNull);
 
 	double L = GetNonstandardLen();
-	double Ln1 = L - GetPillarWidth() * 2;		//因两侧都留有一个杆，因此不用加
-	double Ln2 = L - GetPillarWidth() * 2 - 200;
+	double Ln1 = L - GetPillarWidth() * 2 + Getb()/2;		//因两侧都留有一个杆，因此不用加
+	double Ln2 = Ln1 - Getb();
 
 	//设置非标段长度
 	DQ_SetDynamicAttribute(id1, _T("L"), L);
 	DQ_SetDynamicAttribute(id1, _T("Ln"), Ln1);
 	DQ_SetDynamicAttribute(id1, _T("Ln2"), Ln2);
 	DQ_SetDynamicAttribute(id1, _T("H"), railH);
+
+	//判断最后一根是朝上还是朝下
+	int n1 = (int)(Ln1 / (Getb() * 2));
+	int n2 = (int)(Ln2 / (Getb() * 2));
+	if (n1>0 && n2 ==0) //
+	{
+		DQ_SetDynamicAttribute(id1, _T("可见性"),_T("2个"));
+	}
+	else if (n1==0 && n2 ==0)
+	{
+		DQ_SetDynamicAttribute(id1, _T("可见性"), _T("1个"));
+	}
 
 	return id1;
 }

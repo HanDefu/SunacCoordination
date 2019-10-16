@@ -34,6 +34,7 @@ public:
 	AttrRailing GetRailingAtt()const { return m_railingAtt; }
 
 	virtual bool SetLength(double p_length);
+	virtual bool CheckLengthWidth();
 	virtual int GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut);
 
 	//////////////////////////////////////////////////////////////////////////
@@ -45,6 +46,9 @@ public:
 	virtual double GetStandardRailingTotalLen()const = 0;
 	virtual double GetNonstandardLen()const = 0;	//获取非标段栏杆长度，含两侧立柱
 
+
+	virtual double GetMinWidth()const { return 0; }
+	virtual double GetMinHeight()const { return 400; }
 
 protected:
 	virtual bool GenRailing() = 0;

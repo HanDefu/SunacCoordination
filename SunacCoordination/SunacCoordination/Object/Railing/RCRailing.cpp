@@ -51,10 +51,18 @@ CString CRCRailing::GetPrototypeFilePath()const
 {
 	return MD2010_GetAppPath() + L"\\support\\Sunac2019\\LocalMode\\" + m_railingAtt.m_prototypeCode + L".dwg";
 }
-
+bool CRCRailing::CheckLengthWidth()
+{
+	return (m_railingAtt.m_length > GetMinWidth()) && (m_railingAtt.m_height > GetMinHeight());
+}
 //start 为栏杆的左下角
 int CRCRailing::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut)
 {
+	if (CheckLengthWidth()==false)
+	{
+		return -1;
+	}
+
 	//1. 计算各分段的值
 	bool bSuc = GenRailing();
 	if (bSuc == false)
