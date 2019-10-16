@@ -199,6 +199,8 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 	m_preWindow.SetDisplayColumns(1);
 	for (UINT i = 0; i < m_allWindows.size(); i++)
 	{
+		m_allWindows[i].SetW(width);
+		m_allWindows[i].SetH(height);
 		CString str;
 		str.Format(_T("原型编号：%s\n窗户面积：%.2lf\n通风量：%.2lf\n动态类型：动态\n适用范围：集团"), m_allWindows[i].m_prototypeCode, width * height / 1E6, m_allWindows[i].GetTongFengQty(false));
 		CString dwgPath = TY_GetLocalFilePath() + m_allWindows[i].GetFileName();

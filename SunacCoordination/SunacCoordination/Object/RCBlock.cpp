@@ -55,6 +55,18 @@ AcDbObjectId RCBlock::Insert(CString fileName, AcGePoint3d origin, double angle,
 	return m_id;
 }
 
+AcDbObjectId RCBlock::AirInsert(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color)
+{
+	WCHAR blockname[256] = L"";
+	CF_STR_get_file_name(fileName, blockname);
+	CF_STR_get_file_name_3(blockname, blockname);
+	m_blockRecordName = CString(blockname);
+	acDocManager->lockDocument(curDoc());
+	MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, fileName, m_blockRecordName,  m_id, origin, angle, AcGeScale3d(1), layerName, color);
+	acDocManager->unlockDocument(curDoc());
+	return m_id;
+}
+
 //对于已经存在的图块定义的插入
 AcDbObjectId RCBlock::Insert(CString layoutname, CString blockDefineName, 
 	AcGePoint3d origin, double angle, CString layerName, int color)

@@ -186,7 +186,7 @@ double AttrWindow::GetTongFengQty(bool bDefaultValue/* = false*/)
 		}
 		else if (es == E_PS_Success)
 		{
-			return ret;
+			return ret / 1E6;
 		}
 		else
 		{
@@ -524,4 +524,5 @@ bool AttrWindow::IsPrototypeEqual(const AttrWindow& p_att)
 		return false;
 	}
 	else return true;*/
+	return true;
 }
