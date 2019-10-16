@@ -82,17 +82,20 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 	const CWindowsDimData* GetDimData(CString p_sCode)const;
 	void SetDimData(const CWindowsDimData& p_dataOut);
-	
-	//TODO
-	double GetH();
-	double GetH1();
-	double GetH2();
-	double GetW();
-	double GetW1();
-	double GetW2();
-	double GetW3();
-	double GetA(); //Èû·ì³ß´ç
 
+	double GetTongFengQty(bool bDefaultValue = false);
+	
+	double GetValue(CString p_sCode, bool bDefaultValue = false);
+	double GetH(bool bDefaultValue = false) { return GetValue(L"H", bDefaultValue); }
+	double GetH1(bool bDefaultValue = false) { return GetValue(L"H1", bDefaultValue); }
+	double GetH2(bool bDefaultValue = false) { return GetValue(L"H2", bDefaultValue); }
+	double GetW(bool bDefaultValue = false) { return GetValue(L"W", bDefaultValue); }
+	double GetW1(bool bDefaultValue = false) { return GetValue(L"W1", bDefaultValue); }
+	double GetW2(bool bDefaultValue = false) { return GetValue(L"W2", bDefaultValue); }
+	double GetW3(bool bDefaultValue = false) { return GetValue(L"W3", bDefaultValue); }
+	double GetA(bool bDefaultValue = false) { return bDefaultValue ? 0 : m_plugslotSize; } //Èû·ì³ß´ç
+
+	bool SetValue(CString p_sCode, double p_dValue);
 	bool SetH(double newValue);
 	bool SetH1(double newValue);
 	bool SetH2(double newValue);

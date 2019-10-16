@@ -185,6 +185,13 @@ void CBathroomDlg::EnableDynamic(bool bEnable)
 	EnableSetAirout(bEnable && (m_noAirOut.GetCheck() == FALSE));
 }
 
+void CBathroomDlg::ClearPreviews()
+{
+	m_allBathrooms.clear();
+	m_preBathroom.ClearAllPreviews();
+	EnableSetProperty(false);
+}
+
 LRESULT CBathroomDlg::onAcadKeepFocus(WPARAM, LPARAM)
 {
 	return TRUE;
@@ -295,18 +302,52 @@ void CBathroomDlg::OnBnClickedButtonRange()
 {
 	ShowWindow(false);
 	TYRect rect = TY_GetOneRect();
-	ShowWindow(true);
 
-	if (IsBathroomRectValid(rect) == false)
+	if (IsBathroomRectValid(rect)==false)
 	{
 		AfxMessageBox(_T("所选卫生间范围无效\n"));
+		ShowWindow(true);
 		return;
 	}
 
 	m_rect = rect;
 
-	//更新范围后清空原有搜索列表
-	m_preBathroom.ClearAllPreviews();
+	if (m_doorDir == E_DIR_UNKNOWN)
+	{
+		ads_point pt;
+		acedInitGet(32,NULL);
+		if(acedGetPoint(NULL,L"\n选择门的位置\n",pt)!=RTNORM) //第一角点选择
+		{
+			ShowWindow(true);
+			return;
+		}
+		m_doorDir = GetDir(pt);
+	}
+
+	if (m_windowDir == E_DIR_UNKNOWN)
+	{
+		do
+		{
+			ads_point pt;
+			acedInitGet(32,NULL);
+			if(acedGetPoint(NULL,L"\n选择窗的位置\n",pt)!=RTNORM) //第一角点选择
+			{
+				ShowWindow(true);
+				return;
+			}
+			m_windowDir = GetDir(pt);
+			if (m_doorDir == m_windowDir)
+				AfxMessageBox(_T("门窗方向不能相同\n"));
+		}
+		while (m_doorDir == m_windowDir);
+
+		if ((abs(m_windowDir - m_doorDir) % 2)==0)
+			GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗对开"));
+		else
+			GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗垂直开"));
+	}
+	ShowWindow(true);
+	ClearPreviews();
 }
 
 void CBathroomDlg::OnBnClickedButtonDoorDir()

@@ -5,6 +5,7 @@
 #include "WindowDlg.h"
 #include "afxdialogex.h"
 #include "../Common/ComFun_Sunac.h"
+#include "../Common/ComFun_Math.h"
 #include "../Object/WindowDoor/RCWindow.h"
 #include "../Object/WindowDoor/AttrWindow.h"
 #include "../WebIO/WebIO.h"
@@ -111,7 +112,7 @@ BOOL CWindowDlg::OnInitDialog()
 	m_preWindow.LoadDefaltSettings();
 
 	LoadDefaultValue();
-	SetRadioDoor(0);
+	SetRadioDoor(1);
 
 	return TRUE;
 }
@@ -200,8 +201,21 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 	for (UINT i = 0; i < m_allWindows.size(); i++)
 	{
 		CString str;
-		str.Format(_T("原型编号：%s\n窗户面积：%.2lf\n通风量：0.9\n动态类型：动态\n适用范围：集团"), m_allWindows[i].m_prototypeCode, width * height / 1E6);
-		m_preWindow.AddPreview(i, 0, TY_GetLocalFilePath() + m_allWindows[i].GetFileName(), str);
+		str.Format(_T("原型编号：%s\n窗户面积：%.2lf\n通风量：%.2lf\n动态类型：动态\n适用范围：集团"), m_allWindows[i].m_prototypeCode, width * height / 1E6, m_allWindows[i].GetTongFengQty(false));
+		CString dwgPath = TY_GetLocalFilePath() + m_allWindows[i].GetFileName();
+		CString pngPath = dwgPath;
+		pngPath.Replace(L"\\LocalMode", L"\\Image");
+		pngPath.Replace(L".dwg", L".png");
+		if (PathFileExists(pngPath))
+			m_preWindow.AddPreviewPng(i, 0, pngPath, str);
+		else if (PathFileExists(dwgPath))
+			m_preWindow.AddPreview(i, 0, TY_GetLocalFilePath() + m_allWindows[i].GetFileName(), str);
+		else
+		{
+			acutPrintf(L"原型文件" + m_allWindows[i].GetFileName() + L"未找到\n");
+			m_allWindows.erase(m_allWindows.begin() + i);
+			i--;
+		}
 	}
 
 	m_preWindow.SelectPreview(0, 0);
@@ -320,8 +334,8 @@ void CWindowDlg::LoadDefaultValue()
 
 	TYUI_SetInt(m_width, 1500);
 	TYUI_SetInt(m_height, 1200);
-	TYUI_SetInt(m_ventilation, 2);
-	TYUI_SetInt(m_area, 8);
+	TYUI_SetInt(m_ventilation, 0);
+	TYUI_SetInt(m_area, 0);
 	
 	TYUI_InitComboBox(m_doorType, doorTypes, doorTypes.empty() ? _T("") : doorTypes[0]);
 	TYUI_InitComboBox(m_openType, openTypes, openTypes.empty()? _T("") : openTypes[0]);

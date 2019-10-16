@@ -87,12 +87,6 @@ END_MESSAGE_MAP()
 BOOL CAirconditionerDlg::OnInitDialog()
 {
 	CAcUiDialog::OnInitDialog();
-	//测试用
-	//m_preAC.SubclassDlgItem(IDC_STATIC_AC, this);
-	//m_preAC.SetLayoutMode(PREVIEW_LAYOUT_HORIZONTAL);
-	//m_preAC.SetPreview(_T("D:\\Projects\\Sunac\\Support\\Sunac2019\\LocalMode\\Window_N_7_0.dwg"));
-	//m_preAC.SetText(_T("预览图"));
-	//m_preAC.Invalidate();
 
 	TYUI_Disable(m_rainTubePos); //默认灰掉雨水管位置下拉框
 
@@ -105,7 +99,7 @@ BOOL CAirconditionerDlg::OnInitDialog()
 	m_preAirCon.Init(theArxDLL.ModuleResourceInstance(), true);
 
 	UpdatePreview();
-   // Air_GetPiShus();
+
 	return TRUE;
 }
 
@@ -145,22 +139,9 @@ void CAirconditionerDlg::OnBnClickedCheckHasraintube()
 {
 	// TODO: 在此添加控件通知处理程序代码
 
-	int state =((CButton *)GetDlgItem(IDC_CHECK_HASRAINTUBE))->GetCheck(); 
+	BOOL state = m_hasRainTube.GetCheck(); 
 
-	/*将过滤复选框的状态赋值给state
-	当state == BST_UNCHECKED 时表示该复选框没有被选中；
-	当state == BST_CHECKED 时表示该复选框被选中；
-	当state == BST_INDETERMINATE 时表示不确定*/
-
-
-	if (state == BST_CHECKED )  //如果过滤复选框处于选中状态，那么将通过生产日期对任务进行筛选
-	{
-		TYUI_Enable(m_rainTubePos);
-	}
-	else
-	{
-		TYUI_Disable(m_rainTubePos);
-	}
+	m_hasRainTube.EnableWindow(state);
 
 	UpdatePreview();
 }
@@ -183,20 +164,16 @@ void CAirconditionerDlg::UpdatePreview() //当空调对话框中的控件的值�
 	if (m_allAirCons.empty())
 	{
 		acutPrintf(_T("未找到符合条件的记录\n"));
-		m_preAirCon.SetDatabase(NULL);
+		m_preAirCon.clearAll();
 		m_btnInbsert.EnableWindow(FALSE);
-		return;
 	}
-
-	Acad::ErrorStatus es=acDocManager->lockDocument(curDoc());
-	AcDbDatabase *pDatabase = new AcDbDatabase();
-	//图形文件路径
-	m_fileName = MD2010_GetAppPath() + L"\\support\\Sunac2019\\LocalMode\\" + m_allAirCons[0].m_prototypeCode + L".dwg";
-	es = pDatabase->readDwgFile(m_fileName);
-	//DrawSolid(zhu, pDatabase,false);
-	m_preAirCon.SetDatabase(pDatabase);
-	acDocManager->unlockDocument(curDoc());
-	m_btnInbsert.EnableWindow(TRUE);
+	else
+	{
+		//图形文件路径
+		m_fileName = TY_GetLocalFilePath() + m_allAirCons[0].m_prototypeCode + L".dwg";
+		m_preAirCon.SetDwgFile(m_fileName);
+		m_btnInbsert.EnableWindow(TRUE);
+	}
 }
 
 void CAirconditionerDlg::OnCbnSelchangeComboPnum()
@@ -232,11 +209,6 @@ void CAirconditionerDlg::OnBnClickedButtonInsertac()
 	//左右镜像
 	if (m_leftRightImage.GetCheck())
 		TYCOM_Mirror(blockAirCon.m_id, pnt, AcGeVector3d(0,1,0));
-	//上下左右镜像
-	if (m_upDownImage.GetCheck() && m_leftRightImage.GetCheck())
-	{
-		TYCOM_Mirror(blockAirCon.m_id, pnt, AcGeVector3d(0,0,0));
-	}
 
 	//把UI的数据记录在图框的扩展字典中
 	AttrAirCon * pAirCon = new AttrAirCon(m_allAirCons[0]);
@@ -289,7 +261,7 @@ void CAirconditionerDlg::OnBnClickedButtonCalculate()
 		}
 		else
 		{
-			MessageBox(TEXT("您的输入不符合实际要求，房间面积应大于0m²"), TEXT("温馨提示"), MB_YESNO | MB_ICONQUESTION);
+			AfxMessageBox(TEXT("房间面积应大于0m²"));
 		}
 	}
 
