@@ -5,7 +5,7 @@
 #define  SUNAC_COMMON_STR_LEN (256)
 #define  FILE_VERSION ((Adesk::Int32)1)
 
-#define  WORK_LOCAL//是否本地工作模式
+//#define  WORK_LOCAL//是否本地工作模式
 #define CHECK_USE//是否检测权限
 
 //模块类型

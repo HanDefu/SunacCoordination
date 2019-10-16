@@ -32,7 +32,7 @@ public:
 	std::vector<AttrWindow >  GetAllWindows()const;
 
 	std::vector<AttrWindow >  GetAllDoors()const;
-	std::vector<AttrWindow >  GetDoors(double p_width, double p_heigh, CString doorType)const;
+	std::vector<AttrWindow >  GetDoors(double p_width, double p_heigh, CString doorType, int openNum, CString gongNengQu)const;
 
 
 protected:

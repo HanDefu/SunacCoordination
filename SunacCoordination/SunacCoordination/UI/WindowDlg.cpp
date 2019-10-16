@@ -183,9 +183,9 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 	CString areaType = TYUI_GetText(m_areaType);
 
 	if (m_radioDoor == 0)
-	    m_allWindows = WebIO::GetInstance()->GetDoors(width, openType, openNum, areaType);
+	    m_allWindows = WebIO::GetInstance()->GetDoors(width, height, openType, openNum, areaType);
 	else
-		m_allWindows = WebIO::GetInstance()->GetWindows(width, openType, openNum, areaType);
+		m_allWindows = WebIO::GetInstance()->GetWindows(width, height, openType, openNum, areaType);
 
 	m_preWindow.ClearAllPreviews();
 	if (m_allWindows.empty())
