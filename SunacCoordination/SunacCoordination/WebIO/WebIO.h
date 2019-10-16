@@ -7,9 +7,12 @@
 #include "../Object/WindowDoor/AttrWindow.h"
 #include "ConfigDictionary.h"
 #include "WindowLocalData.h"
-#include "WindowWebData.h"
 #include "AirConditionLocalData.h"
 #include "KitchenBathroomLocalData.h"
+#include "WindowWebData.h"
+#include "AirconditionWebData.h"
+#include "KitchenBathroomWebData.h"
+#include "RailingWebData.h"
 
 
 class WebIO
@@ -31,8 +34,8 @@ public:
 public:
 	//width宽度值，注意高度值不作为搜索条件 
 	//openType开启类型，openNum开启扇数量， gongNengQu功能区， tongFengLiang通风量
-	std::vector<AttrWindow >  GetWindows(double width, CString openType, int openNum, CString gongNengQu)const;
-	std::vector<AttrWindow >  GetDoors(double width, CString openType, int openNum, CString gongNengQu)const;
+	std::vector<AttrWindow >  GetWindows(double width, double height, CString openType, int openNum, CString gongNengQu)const;
+	std::vector<AttrWindow >  GetDoors(double width, double height, CString openType, int openNum, CString gongNengQu)const;
 
 	std::vector<AttrWindow> GetAllWindows(); //获取所有窗户
 	std::vector<AttrWindow> GetAllDoors();  //获取所有门
@@ -54,7 +57,7 @@ public:
 
 
 	//从web下载原型文件， ok返回0 否则返回-1
-	bool DownloadFile(const int fileId, const CString filePathName);
+	bool DownloadFile(const int fileId, CString type, CString filePathName);
 
 protected:
 	CConfigDictionary m_configDic;
@@ -64,6 +67,9 @@ protected:
 	CKitchenBathroomLocalData m_kitchenBathroomLocalData;
 
 	CWindowWebData m_windowWebData;
+	CAirConditionWebData m_airConWebData;
+	CKitchenBathroomWebData m_kitchenBathroomWebData;
+	
 }; 
 
 #define WEBINST (WebIO::GetInstance())

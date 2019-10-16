@@ -83,7 +83,7 @@ std::vector<AttrAirCon > CAirConditionWebData::ParseAirConditionersFromXML(CMark
 			if (xml.FindElem(_T("Scope")))
 			{
 				CString flag = xml.GetData();
-				if (flag == "是")
+				if (flag == "1")
 				{
 					AirConAttr.m_isJiTuan = TRUE;
 				}
@@ -123,11 +123,37 @@ std::vector<AttrAirCon > CAirConditionWebData::ParseAirConditionersFromXML(CMark
 				AirConAttr.m_rainPipePos = xml.GetData();
 			}
 			xml.OutOfElem();
+			vAirConAttrs.push_back(AirConAttr);	
 		}
-		vAirConAttrs.push_back(AirConAttr);	
+		
 
 		xml.OutOfElem();
 	}
 	xml.OutOfElem();
 	return vAirConAttrs;
+}
+
+std::vector<AttrAirCon> CAirConditionWebData::GetAllAirCons()
+{
+	_ns1__GetAllAirconditionerByParam ns;
+
+	_ns1__GetAllAirconditionerByParamResponse nsResponse;
+
+	ArgumentSettingServiceSoapProxy cadWeb;
+	int nRet = cadWeb.GetAllAirconditionerByParam(&ns, nsResponse);
+
+	std::vector<AttrAirCon> AirConAtts;
+
+	//判断返回结果是否成功
+	if (nsResponse.GetAllAirconditionerByParamResult == NULL)
+	{
+		return AirConAtts;
+	}
+
+	//解析字符串出结果
+	CMarkup xml;
+	xml.SetDoc((*(nsResponse.GetAllAirconditionerByParamResult)).c_str());
+
+	AirConAtts = ParseAirConditionersFromXML(xml);
+	return AirConAtts;
 }

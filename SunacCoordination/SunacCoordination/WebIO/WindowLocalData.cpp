@@ -146,6 +146,7 @@ void CWindowLocalData::LoadDataFromExcel(CString p_file)
 
 		//////////////////////////////////////////////////////////////////////////
 		CWindowsDimData dimDataW;
+		dimDataW.sCodeName = L"W";
 		if (attrwindow.m_isDynamic)
 		{
 			dimDataW.sCodeName = L"W";
@@ -155,13 +156,13 @@ void CWindowLocalData::LoadDataFromExcel(CString p_file)
 		}
 		else
 		{
-			dimDataW.sCodeName = L"W";
 			dimDataW.type = SINGLE;
 			dimDataW.value = _ttof(xls.GetCellValue(i, 12)); //宽度
 		}
 		attrwindow.SetDimData(dimDataW);
 
 		CWindowsDimData dimDataH;
+		dimDataH.sCodeName = L"H";
 		if (attrwindow.m_isDynamic)
 		{
 			dimDataH.type = UNLIMIT;
@@ -232,30 +233,32 @@ bool  CWindowLocalData::GetWindowByFileName(CString p_sFileName, AttrWindow&valu
 	return false;
 }
 
-vector<AttrWindow> CWindowLocalData::GetAllWindows() //获取所有窗户
+vector<AttrWindow> CWindowLocalData::GetAllWindows()const //获取所有窗户
 {
+	vector<AttrWindow>  allwin;
 	for (UINT i = 0; i < m_windows.size(); i++)
 	{
 		std::vector<CString> strs = YT_SplitCString(m_windows[i].m_prototypeCode, L'_');  //用"_"拆分
 		if (strs[0] == "Window")
 		{
-			m_wins.push_back(m_windows[i]);
+			allwin.push_back(m_windows[i]);
 		}
 	}
-	return m_wins;
+	return allwin;
 }
 
-vector<AttrWindow> CWindowLocalData::GetAllDoors()  //获取所有门
+vector<AttrWindow> CWindowLocalData::GetAllDoors()const  //获取所有门
 {
+	vector<AttrWindow> alldoor;
 	for (UINT i = 0; i < m_windows.size(); i++)
 	{
 		std::vector<CString> strs = YT_SplitCString(m_windows[i].m_prototypeCode, L'_');
 		if (strs[0] == "Door")
 		{
-			m_doors.push_back(m_windows[i]);
+			alldoor.push_back(m_windows[i]);
 		}
 	}
-	return m_doors;
+	return alldoor;
 }
 
 std::vector<AttrWindow >  CWindowLocalData::GetWindows(double width, CString openType, int openNum, CString gongNengQu)const

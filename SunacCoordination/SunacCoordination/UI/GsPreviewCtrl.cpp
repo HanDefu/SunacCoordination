@@ -219,7 +219,7 @@ void CGsPreviewCtrl::OnSize(UINT nType, int cx, int cy)
 
 BOOL CGsPreviewCtrl::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt) 
 {
-	if (mpView)
+	if (mpView && mMouseWheel)
 	{
 		if (zDelta<0)
 			mpView->zoom(0.5);

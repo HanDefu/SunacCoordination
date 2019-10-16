@@ -58,7 +58,7 @@
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="1" maxOccurs="1" name="width" type="s:double" />
-            <s:element minOccurs="1" maxOccurs="1" name="doorType" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="doorType" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -84,9 +84,9 @@
           <s:sequence>
             <s:element minOccurs="1" maxOccurs="1" name="Width" type="s:double" />
             <s:element minOccurs="1" maxOccurs="1" name="Height" type="s:double" />
-            <s:element minOccurs="1" maxOccurs="1" name="KitchenDoorWindowPosition" type="s:int" />
-            <s:element minOccurs="1" maxOccurs="1" name="KitchenType" type="s:int" />
-            <s:element minOccurs="1" maxOccurs="1" name="AirVent" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="KitchenDoorWindowPosition" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="KitchenType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="AirVent" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -112,9 +112,9 @@
           <s:sequence>
             <s:element minOccurs="1" maxOccurs="1" name="Width" type="s:double" />
             <s:element minOccurs="1" maxOccurs="1" name="Height" type="s:double" />
-            <s:element minOccurs="1" maxOccurs="1" name="BathroomDoorWindowPosition" type="s:int" />
-            <s:element minOccurs="1" maxOccurs="1" name="ToiletType" type="s:int" />
-            <s:element minOccurs="1" maxOccurs="1" name="AirVent" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="BathroomDoorWindowPosition" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ToiletType" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="AirVent" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -128,7 +128,7 @@
       <s:element name="GetAllHandrailByParam">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="RailingType" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="RailingType" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -142,10 +142,10 @@
       <s:element name="GetAllAirconditionerByParam">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="1" maxOccurs="1" name="AirconditionerPower" type="s:int" />
-            <s:element minOccurs="1" maxOccurs="1" name="AirconditionerPipePosition" type="s:int" />
-            <s:element minOccurs="1" maxOccurs="1" name="AirconditionerIsRainpipe" type="s:int" />
-            <s:element minOccurs="1" maxOccurs="1" name="RainpipePosition" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="AirconditionerPower" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="AirconditionerPipePosition" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="AirconditionerIsRainpipe" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="RainpipePosition" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -160,6 +160,7 @@
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Type" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -167,6 +168,20 @@
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="CadFileDownloadResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CadImgDownload">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CadImgDownloadResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CadImgDownloadResult" type="s:string" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -244,6 +259,12 @@
   <wsdl:message name="CadFileDownloadSoapOut">
     <wsdl:part name="parameters" element="tns:CadFileDownloadResponse" />
   </wsdl:message>
+  <wsdl:message name="CadImgDownloadSoapIn">
+    <wsdl:part name="parameters" element="tns:CadImgDownload" />
+  </wsdl:message>
+  <wsdl:message name="CadImgDownloadSoapOut">
+    <wsdl:part name="parameters" element="tns:CadImgDownloadResponse" />
+  </wsdl:message>
   <wsdl:portType name="ArgumentSettingServiceSoap">
     <wsdl:operation name="StandardDesignAttribute">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">标准模块属性；1、标准部品库：外窗、门、栏杆;2、厨房、卫生间、空调</wsdl:documentation>
@@ -304,6 +325,11 @@
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">标准部品库[ CAD文件下载]</wsdl:documentation>
       <wsdl:input message="tns:CadFileDownloadSoapIn" />
       <wsdl:output message="tns:CadFileDownloadSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CadImgDownload">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">标准部品库[原型文件缩略图下载]</wsdl:documentation>
+      <wsdl:input message="tns:CadImgDownloadSoapIn" />
+      <wsdl:output message="tns:CadImgDownloadSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="ArgumentSettingServiceSoap" type="tns:ArgumentSettingServiceSoap">
@@ -416,6 +442,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="CadImgDownload">
+      <soap:operation soapAction="http://tempuri.org/CadImgDownload" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="ArgumentSettingServiceSoap12" type="tns:ArgumentSettingServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -520,6 +555,15 @@
     </wsdl:operation>
     <wsdl:operation name="CadFileDownload">
       <soap12:operation soapAction="http://tempuri.org/CadFileDownload" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CadImgDownload">
+      <soap12:operation soapAction="http://tempuri.org/CadImgDownload" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

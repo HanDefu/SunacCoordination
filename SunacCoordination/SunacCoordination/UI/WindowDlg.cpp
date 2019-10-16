@@ -5,7 +5,6 @@
 #include "WindowDlg.h"
 #include "afxdialogex.h"
 #include "../Common/ComFun_Sunac.h"
-#include "../Common/ComFun_Math.h"
 #include "../Object/WindowDoor/RCWindow.h"
 #include "../Object/WindowDoor/AttrWindow.h"
 #include "../WebIO/WebIO.h"
@@ -184,9 +183,9 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 	CString areaType = TYUI_GetText(m_areaType);
 
 	if (m_radioDoor == 0)
-	    m_allWindows = WebIO::GetInstance()->GetDoors(width, openType, openNum, areaType);
+	    m_allWindows = WebIO::GetInstance()->GetDoors(width, height, openType, openNum, areaType);
 	else
-		m_allWindows = WebIO::GetInstance()->GetWindows(width, openType, openNum, areaType);
+		m_allWindows = WebIO::GetInstance()->GetWindows(width, height, openType, openNum, areaType);
 
 	m_preWindow.ClearAllPreviews();
 	if (m_allWindows.empty())
@@ -333,7 +332,7 @@ void CWindowDlg::LoadDefaultValue()
 	const vCString& wallDis = WebIO::GetInstance()->GetConfigDict()->Window_GetWallDis();
 
 	TYUI_SetInt(m_width, 1500);
-	TYUI_SetInt(m_height, 1200);
+	TYUI_SetInt(m_height, 1800);
 	TYUI_SetInt(m_ventilation, 0);
 	TYUI_SetInt(m_area, 0);
 	

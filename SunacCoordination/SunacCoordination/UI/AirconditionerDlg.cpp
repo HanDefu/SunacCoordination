@@ -97,6 +97,7 @@ BOOL CAirconditionerDlg::OnInitDialog()
 
 	m_preAirCon.SubclassDlgItem(IDC_STATIC_AC, this);		// 控件和资源的关联
 	m_preAirCon.Init(theArxDLL.ModuleResourceInstance(), true);
+	m_preAirCon.SetMouseWheel(false);
 
 	UpdatePreview();
 
@@ -196,6 +197,7 @@ void CAirconditionerDlg::OnBnClickedButtonInsertac()
 {
 	ShowWindow(FALSE);
 	
+	AcGeVector3d offsetXY;
 	//获取插入点
 	AcGePoint3d pnt = TY_GetPoint();
 
@@ -205,10 +207,23 @@ void CAirconditionerDlg::OnBnClickedButtonInsertac()
 
 	//上下镜像
 	if (m_upDownImage.GetCheck())
+	{
 		TYCOM_Mirror(blockAirCon.m_id, pnt, AcGeVector3d(1,0,0));
+		offsetXY = AcGeVector3d(0, m_allAirCons[0].m_airD, 0);
+		TYCOM_Move(blockAirCon.m_id, offsetXY);
+	}
 	//左右镜像
 	if (m_leftRightImage.GetCheck())
+	{
 		TYCOM_Mirror(blockAirCon.m_id, pnt, AcGeVector3d(0,1,0));
+		offsetXY = AcGeVector3d(m_allAirCons[0].m_airW, 0, 0);
+		TYCOM_Move(blockAirCon.m_id, offsetXY);
+	}
+	//上下左右镜像
+	if (m_upDownImage.GetCheck() && m_leftRightImage.GetCheck())
+	{
+		TYCOM_Mirror(blockAirCon.m_id, pnt, AcGeVector3d(0,0,0));
+	}
 
 	//把UI的数据记录在图框的扩展字典中
 	AttrAirCon * pAirCon = new AttrAirCon(m_allAirCons[0]);

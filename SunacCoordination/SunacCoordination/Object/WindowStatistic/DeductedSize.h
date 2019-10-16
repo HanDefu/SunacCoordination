@@ -1,8 +1,8 @@
 #pragma once
-#include "WindowMaterialUsage.h"
+#include "AluminumSeries.h"
 
 
-//¿Û¼õ³ß´ç
+//¿Û¼õ³ß´ç±í
 class CDeductedSize
 {
 public:

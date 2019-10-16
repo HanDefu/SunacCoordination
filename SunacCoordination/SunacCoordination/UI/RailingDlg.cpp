@@ -153,11 +153,13 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 	CString sPrototypeName = pCell->GetName();
 
 	//检查数据
-	if (m_width<1500)
-	{
-		AfxMessageBox(_T("栏杆长度太短"));
-		return;
-	}
+	
+
+	//if (m_width<1500)
+	//{
+	//	AfxMessageBox(_T("栏杆长度太短"));
+	//	return;
+	//}
 
 	ShowWindow(FALSE);
 

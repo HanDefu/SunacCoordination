@@ -13,7 +13,7 @@ bool CRCRailingBoli::GenRailing()
 {
 	if (GetLength() < 300)
 	{
-		return false;    //对栏杆总长进行判断，如果栏杆总长小于1550，返回false
+		return false;    //对栏杆总长进行判断，如果栏杆总长小于300，返回false
 	}
 
 	m_B = GenStandardRailingLen(GetLength());

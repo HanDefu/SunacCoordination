@@ -1,20 +1,44 @@
 #pragma once
-#include "WindowMaterialUsage.h"
 
+enum E_WindowDoorType
+{
+	E_WindowDoor_NC = 0,	//内开窗
+	E_WindowDoor_WC,		//外开窗
+	E_WindowDoor_TC,		//推拉窗
 
+	E_WindowDoor_WM = 0x10,	//外开门
+	E_WindowDoor_TLM1,		//推拉门
+	E_WindowDoor_TLM2,		//提升推拉门
+};
+
+enum E_AluminumType
+{
+	E_断桥隔热铝型材,
+	E_非断桥隔热铝型材,
+	E_阳极氧化铝型材,
+};
+
+//型材数据
 struct CAluminumData
 {
 	CString sCode; //型材代号
-	CString sName; 
-	CString sSerial;
+	E_WindowDoorType windowDoorType;   //门窗类型
+	CString sName;  //型材名称
+	CString sSerial; //型材系列
 	double weightPerMeter; //米重
+	double wastageRate; //损耗率
+	E_AluminumType aluminumType; //型材类型
 
 	CAluminumData()
 	{
 		weightPerMeter = 0;
+		windowDoorType = E_WindowDoor_NC;
+		wastageRate = 0.125;
+		aluminumType = E_断桥隔热铝型材;
 	}
 }; 
 
+//型材系列
 class CAluminumSeries
 {
 public:

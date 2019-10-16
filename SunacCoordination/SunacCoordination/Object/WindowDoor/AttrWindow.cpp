@@ -7,38 +7,6 @@
 #include "../../Common/ComFun_Math.h"
 #include "../../Common/TYFormula.h"
 
-eWindowDimType ToEWindowType(CString type)
-{
-	if (type == "固定值")
-	{
-		return SINGLE;
-	}
-	else if (type == "值系列")
-	{
-		return MULTI;
-	}
-	else if (type == "范围")
-	{
-		return SCOPE;
-	}
-	else if (type == "不限")
-	{
-		return UNLIMIT;
-	}
-	else if (type == "公式")
-	{
-		return CALC;
-	}
-	else if (type == "无")
-	{
-		return NOVALUE;
-	}
-	else
-	{
-		ASSERT(FALSE);
-		return NOVALUE;
-	}
-}
 CWindowsDimData::CWindowsDimData()
 {
 	type = NOVALUE;
@@ -405,97 +373,155 @@ bool AttrWindow::isEqualTo(AttrObject*other)
 
 bool AttrWindow::IsPrototypeEqual(const AttrWindow& p_att)
 {
-	if (p_att.m_dimData.empty()||m_dimData.empty())
+	AttrWindow LocalData = *this;
+	if (!p_att.m_dimData.empty() && !m_dimData.empty())
 	{
 		vector<CWindowsDimData>::const_iterator it1 = p_att.m_dimData.begin();
 		vector<CWindowsDimData>::iterator it2 = m_dimData.begin();
-		while (it1 != p_att.m_dimData.end()&& it2 != m_dimData.end())
+		while (it1 != p_att.m_dimData.end() && it2 != m_dimData.end())
 		{
-			if ((*it1)==(*it2)==false)
+			for(;it1->sCodeName == it2->sCodeName; it1++)
 			{
-				return false;
+				if (it1->value != it2->value)
+				{
+					assert(FALSE);
+					return false;
+				}
+				if (it1->type != it2->type)
+				{
+					assert(FALSE);
+					return false;
+				}
+				if (it1->sFomula != it2->sFomula)
+				{
+					assert(FALSE);
+					return false;
+				}
+				if (it1->prompt != it2->prompt)
+				{
+					assert(FALSE);
+					return false;
+				}
+				if (it1->minValue != it2->minValue)
+				{
+					assert(FALSE);
+					return false;
+				}
+				if (it1->maxValue != it2->maxValue)
+				{
+					assert(FALSE);
+					return false;
+				}
+				/*if (it1->defaultValue != it2->defaultValue)
+				{
+					assert(FALSE);
+					return false;
+				}*/ //网页端无法输入默认值
 			}
 
-			it1++;
 			it2++;
 		}
 	}
 
 	if (p_att.m_calFormulas != m_calFormulas)
 	{
+		assert(FALSE);
 		return false;
 	}
 	else if (p_att.m_instanceCode != m_instanceCode)
 	{
+		assert(FALSE);
 		return false;
 	}
 	else if (p_att.m_isBayWindow != m_isBayWindow)
 	{
+		assert(FALSE);
 		return false;
 	}
 	else if (p_att.m_isDynamic != m_isDynamic)
 	{
+		assert(FALSE);
 		return false;
 	}
+/*
 	else if (p_att.m_isJiTuan != m_isJiTuan)
 	{
+		assert(FALSE);
 		return false;
-	}
+	}*/
 	else if (p_att.m_isMirror != m_isMirror)
 	{
+		assert(FALSE);
 		return false;
 	}
 	else if (p_att.m_isMirrorWindow != m_isMirrorWindow)
 	{
+		assert(FALSE);
 		return false;
 	}
+/*
 	else if (p_att.m_isZhuanJiao != m_isZhuanJiao)
 	{
+		assert(FALSE);
 		return false;
-	}
+	}*/
 	else if (p_att.m_openQty != m_openQty)
 	{
+		assert(FALSE);
 		return false;
 	}
 	else if (p_att.m_openType != m_openType)
 	{
+		assert(FALSE);
 		return false;
 	}
 	else if (p_att.m_plugslotSize != m_plugslotSize)
 	{
+		assert(FALSE);
 		return false;
 	}
 	else if (p_att.m_prototypeCode != m_prototypeCode)
 	{
+		assert(FALSE);
 		return false;
 	}
+/*
 	else if (p_att.m_quyuId != m_quyuId)
 	{
+		assert(FALSE);
 		return false;
-	}
+	}*/
+/*
 	else if (p_att.m_quyuName != m_quyuName)
 	{
 		return false;
-	}
+	}*/
 	else if (p_att.m_tongFengQty != m_tongFengQty)
 	{
+		assert(FALSE);
 		return false;
 	}
+/*
 	else if (p_att.m_tongFengFormula != m_tongFengFormula)
 	{
+		assert(FALSE);
 		return false;
-	}
+	}*/
+/*
 	else if (p_att.m_version != m_version)
 	{
+		assert(FALSE);
 		return false;
 	}
 	else if (p_att.m_viewDir != m_viewDir)
 	{
+		assert(FALSE);
 		return false;
 	}
 	else if (p_att.m_wallDis != m_wallDis)
 	{
+		assert(FALSE);
 		return false;
 	}
-	else return true;
+	else return true;*/
 }

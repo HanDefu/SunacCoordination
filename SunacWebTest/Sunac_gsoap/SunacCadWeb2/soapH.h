@@ -378,6 +378,190 @@ inline int soap_POST_recv_std__wstring(struct soap *soap, std::wstring *p)
 }
 #endif
 
+#ifndef SOAP_TYPE__ns1__CadImgDownloadResponse_DEFINED
+#define SOAP_TYPE__ns1__CadImgDownloadResponse_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__CadImgDownloadResponse(struct soap*, const char*, int, const _ns1__CadImgDownloadResponse *, const char*);
+SOAP_FMAC3 _ns1__CadImgDownloadResponse * SOAP_FMAC4 soap_in__ns1__CadImgDownloadResponse(struct soap*, const char*, _ns1__CadImgDownloadResponse *, const char*);
+SOAP_FMAC1 _ns1__CadImgDownloadResponse * SOAP_FMAC2 soap_instantiate__ns1__CadImgDownloadResponse(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__CadImgDownloadResponse * soap_new__ns1__CadImgDownloadResponse(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__CadImgDownloadResponse(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__CadImgDownloadResponse * soap_new_req__ns1__CadImgDownloadResponse(
+	struct soap *soap)
+{
+	_ns1__CadImgDownloadResponse *_p = ::soap_new__ns1__CadImgDownloadResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__CadImgDownloadResponse * soap_new_set__ns1__CadImgDownloadResponse(
+	struct soap *soap,
+	std::wstring *CadImgDownloadResult)
+{
+	_ns1__CadImgDownloadResponse *_p = ::soap_new__ns1__CadImgDownloadResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__CadImgDownloadResponse::CadImgDownloadResult = CadImgDownloadResult;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__CadImgDownloadResponse(struct soap *soap, _ns1__CadImgDownloadResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:CadImgDownloadResponse", p->soap_type() == SOAP_TYPE__ns1__CadImgDownloadResponse ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__CadImgDownloadResponse(struct soap *soap, const char *URL, _ns1__CadImgDownloadResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:CadImgDownloadResponse", p->soap_type() == SOAP_TYPE__ns1__CadImgDownloadResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__CadImgDownloadResponse(struct soap *soap, const char *URL, _ns1__CadImgDownloadResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:CadImgDownloadResponse", p->soap_type() == SOAP_TYPE__ns1__CadImgDownloadResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__CadImgDownloadResponse(struct soap *soap, const char *URL, _ns1__CadImgDownloadResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:CadImgDownloadResponse", p->soap_type() == SOAP_TYPE__ns1__CadImgDownloadResponse ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__CadImgDownloadResponse * SOAP_FMAC4 soap_get__ns1__CadImgDownloadResponse(struct soap*, _ns1__CadImgDownloadResponse *, const char*, const char*);
+
+inline int soap_read__ns1__CadImgDownloadResponse(struct soap *soap, _ns1__CadImgDownloadResponse *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__CadImgDownloadResponse(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__CadImgDownloadResponse(struct soap *soap, const char *URL, _ns1__CadImgDownloadResponse *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__CadImgDownloadResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__CadImgDownloadResponse(struct soap *soap, _ns1__CadImgDownloadResponse *p)
+{
+	if (::soap_read__ns1__CadImgDownloadResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__CadImgDownload_DEFINED
+#define SOAP_TYPE__ns1__CadImgDownload_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__CadImgDownload(struct soap*, const char*, int, const _ns1__CadImgDownload *, const char*);
+SOAP_FMAC3 _ns1__CadImgDownload * SOAP_FMAC4 soap_in__ns1__CadImgDownload(struct soap*, const char*, _ns1__CadImgDownload *, const char*);
+SOAP_FMAC1 _ns1__CadImgDownload * SOAP_FMAC2 soap_instantiate__ns1__CadImgDownload(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__CadImgDownload * soap_new__ns1__CadImgDownload(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__CadImgDownload(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__CadImgDownload * soap_new_req__ns1__CadImgDownload(
+	struct soap *soap,
+	int Id)
+{
+	_ns1__CadImgDownload *_p = ::soap_new__ns1__CadImgDownload(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__CadImgDownload::Id = Id;
+	}
+	return _p;
+}
+
+inline _ns1__CadImgDownload * soap_new_set__ns1__CadImgDownload(
+	struct soap *soap,
+	int Id)
+{
+	_ns1__CadImgDownload *_p = ::soap_new__ns1__CadImgDownload(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__CadImgDownload::Id = Id;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__CadImgDownload(struct soap *soap, _ns1__CadImgDownload const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:CadImgDownload", p->soap_type() == SOAP_TYPE__ns1__CadImgDownload ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__CadImgDownload(struct soap *soap, const char *URL, _ns1__CadImgDownload const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:CadImgDownload", p->soap_type() == SOAP_TYPE__ns1__CadImgDownload ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__CadImgDownload(struct soap *soap, const char *URL, _ns1__CadImgDownload const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:CadImgDownload", p->soap_type() == SOAP_TYPE__ns1__CadImgDownload ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__CadImgDownload(struct soap *soap, const char *URL, _ns1__CadImgDownload const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:CadImgDownload", p->soap_type() == SOAP_TYPE__ns1__CadImgDownload ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__CadImgDownload * SOAP_FMAC4 soap_get__ns1__CadImgDownload(struct soap*, _ns1__CadImgDownload *, const char*, const char*);
+
+inline int soap_read__ns1__CadImgDownload(struct soap *soap, _ns1__CadImgDownload *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__CadImgDownload(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__CadImgDownload(struct soap *soap, const char *URL, _ns1__CadImgDownload *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__CadImgDownload(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__CadImgDownload(struct soap *soap, _ns1__CadImgDownload *p)
+{
+	if (::soap_read__ns1__CadImgDownload(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
 #ifndef SOAP_TYPE__ns1__CadFileDownloadResponse_DEFINED
 #define SOAP_TYPE__ns1__CadFileDownloadResponse_DEFINED
 SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__CadFileDownloadResponse(struct soap*, const char*, int, const _ns1__CadFileDownloadResponse *, const char*);
@@ -494,12 +678,14 @@ inline _ns1__CadFileDownload * soap_new_req__ns1__CadFileDownload(
 
 inline _ns1__CadFileDownload * soap_new_set__ns1__CadFileDownload(
 	struct soap *soap,
-	int Id)
+	int Id,
+	std::wstring *Type)
 {
 	_ns1__CadFileDownload *_p = ::soap_new__ns1__CadFileDownload(soap);
 	if (_p)
 	{	_p->soap_default(soap);
 		_p->_ns1__CadFileDownload::Id = Id;
+		_p->_ns1__CadFileDownload::Type = Type;
 	}
 	return _p;
 }
@@ -665,29 +851,21 @@ inline _ns1__GetAllAirconditionerByParam * soap_new__ns1__GetAllAirconditionerBy
 }
 
 inline _ns1__GetAllAirconditionerByParam * soap_new_req__ns1__GetAllAirconditionerByParam(
-	struct soap *soap,
-	int AirconditionerPower,
-	int AirconditionerPipePosition,
-	int AirconditionerIsRainpipe,
-	int RainpipePosition)
+	struct soap *soap)
 {
 	_ns1__GetAllAirconditionerByParam *_p = ::soap_new__ns1__GetAllAirconditionerByParam(soap);
 	if (_p)
 	{	_p->soap_default(soap);
-		_p->_ns1__GetAllAirconditionerByParam::AirconditionerPower = AirconditionerPower;
-		_p->_ns1__GetAllAirconditionerByParam::AirconditionerPipePosition = AirconditionerPipePosition;
-		_p->_ns1__GetAllAirconditionerByParam::AirconditionerIsRainpipe = AirconditionerIsRainpipe;
-		_p->_ns1__GetAllAirconditionerByParam::RainpipePosition = RainpipePosition;
 	}
 	return _p;
 }
 
 inline _ns1__GetAllAirconditionerByParam * soap_new_set__ns1__GetAllAirconditionerByParam(
 	struct soap *soap,
-	int AirconditionerPower,
-	int AirconditionerPipePosition,
-	int AirconditionerIsRainpipe,
-	int RainpipePosition)
+	std::wstring *AirconditionerPower,
+	std::wstring *AirconditionerPipePosition,
+	std::wstring *AirconditionerIsRainpipe,
+	std::wstring *RainpipePosition)
 {
 	_ns1__GetAllAirconditionerByParam *_p = ::soap_new__ns1__GetAllAirconditionerByParam(soap);
 	if (_p)
@@ -861,20 +1039,18 @@ inline _ns1__GetAllHandrailByParam * soap_new__ns1__GetAllHandrailByParam(struct
 }
 
 inline _ns1__GetAllHandrailByParam * soap_new_req__ns1__GetAllHandrailByParam(
-	struct soap *soap,
-	int RailingType)
+	struct soap *soap)
 {
 	_ns1__GetAllHandrailByParam *_p = ::soap_new__ns1__GetAllHandrailByParam(soap);
 	if (_p)
 	{	_p->soap_default(soap);
-		_p->_ns1__GetAllHandrailByParam::RailingType = RailingType;
 	}
 	return _p;
 }
 
 inline _ns1__GetAllHandrailByParam * soap_new_set__ns1__GetAllHandrailByParam(
 	struct soap *soap,
-	int RailingType)
+	std::wstring *RailingType)
 {
 	_ns1__GetAllHandrailByParam *_p = ::soap_new__ns1__GetAllHandrailByParam(soap);
 	if (_p)
@@ -1047,19 +1223,13 @@ inline _ns1__GetAllBathroomByParam * soap_new__ns1__GetAllBathroomByParam(struct
 inline _ns1__GetAllBathroomByParam * soap_new_req__ns1__GetAllBathroomByParam(
 	struct soap *soap,
 	double Width,
-	double Height,
-	int BathroomDoorWindowPosition,
-	int ToiletType,
-	int AirVent)
+	double Height)
 {
 	_ns1__GetAllBathroomByParam *_p = ::soap_new__ns1__GetAllBathroomByParam(soap);
 	if (_p)
 	{	_p->soap_default(soap);
 		_p->_ns1__GetAllBathroomByParam::Width = Width;
 		_p->_ns1__GetAllBathroomByParam::Height = Height;
-		_p->_ns1__GetAllBathroomByParam::BathroomDoorWindowPosition = BathroomDoorWindowPosition;
-		_p->_ns1__GetAllBathroomByParam::ToiletType = ToiletType;
-		_p->_ns1__GetAllBathroomByParam::AirVent = AirVent;
 	}
 	return _p;
 }
@@ -1068,9 +1238,9 @@ inline _ns1__GetAllBathroomByParam * soap_new_set__ns1__GetAllBathroomByParam(
 	struct soap *soap,
 	double Width,
 	double Height,
-	int BathroomDoorWindowPosition,
-	int ToiletType,
-	int AirVent)
+	std::wstring *BathroomDoorWindowPosition,
+	std::wstring *ToiletType,
+	std::wstring *AirVent)
 {
 	_ns1__GetAllBathroomByParam *_p = ::soap_new__ns1__GetAllBathroomByParam(soap);
 	if (_p)
@@ -1427,19 +1597,13 @@ inline _ns1__GetAllKitchenParam * soap_new__ns1__GetAllKitchenParam(struct soap 
 inline _ns1__GetAllKitchenParam * soap_new_req__ns1__GetAllKitchenParam(
 	struct soap *soap,
 	double Width,
-	double Height,
-	int KitchenDoorWindowPosition,
-	int KitchenType,
-	int AirVent)
+	double Height)
 {
 	_ns1__GetAllKitchenParam *_p = ::soap_new__ns1__GetAllKitchenParam(soap);
 	if (_p)
 	{	_p->soap_default(soap);
 		_p->_ns1__GetAllKitchenParam::Width = Width;
 		_p->_ns1__GetAllKitchenParam::Height = Height;
-		_p->_ns1__GetAllKitchenParam::KitchenDoorWindowPosition = KitchenDoorWindowPosition;
-		_p->_ns1__GetAllKitchenParam::KitchenType = KitchenType;
-		_p->_ns1__GetAllKitchenParam::AirVent = AirVent;
 	}
 	return _p;
 }
@@ -1448,9 +1612,9 @@ inline _ns1__GetAllKitchenParam * soap_new_set__ns1__GetAllKitchenParam(
 	struct soap *soap,
 	double Width,
 	double Height,
-	int KitchenDoorWindowPosition,
-	int KitchenType,
-	int AirVent)
+	std::wstring *KitchenDoorWindowPosition,
+	std::wstring *KitchenType,
+	std::wstring *AirVent)
 {
 	_ns1__GetAllKitchenParam *_p = ::soap_new__ns1__GetAllKitchenParam(soap);
 	if (_p)
@@ -1806,14 +1970,12 @@ inline _ns1__GetAllDoorByParam * soap_new__ns1__GetAllDoorByParam(struct soap *s
 
 inline _ns1__GetAllDoorByParam * soap_new_req__ns1__GetAllDoorByParam(
 	struct soap *soap,
-	double width,
-	int doorType)
+	double width)
 {
 	_ns1__GetAllDoorByParam *_p = ::soap_new__ns1__GetAllDoorByParam(soap);
 	if (_p)
 	{	_p->soap_default(soap);
 		_p->_ns1__GetAllDoorByParam::width = width;
-		_p->_ns1__GetAllDoorByParam::doorType = doorType;
 	}
 	return _p;
 }
@@ -1821,7 +1983,7 @@ inline _ns1__GetAllDoorByParam * soap_new_req__ns1__GetAllDoorByParam(
 inline _ns1__GetAllDoorByParam * soap_new_set__ns1__GetAllDoorByParam(
 	struct soap *soap,
 	double width,
-	int doorType)
+	std::wstring *doorType)
 {
 	_ns1__GetAllDoorByParam *_p = ::soap_new__ns1__GetAllDoorByParam(soap);
 	if (_p)
@@ -3140,6 +3302,100 @@ inline int soap_POST_recv_SOAP_ENV__Header(struct soap *soap, struct SOAP_ENV__H
 
 #endif
 
+#ifndef SOAP_TYPE___ns1__CadImgDownload__DEFINED
+#define SOAP_TYPE___ns1__CadImgDownload__DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__CadImgDownload_(struct soap*, struct __ns1__CadImgDownload_ *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__CadImgDownload_(struct soap*, const struct __ns1__CadImgDownload_ *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__CadImgDownload_(struct soap*, const char*, int, const struct __ns1__CadImgDownload_ *, const char*);
+SOAP_FMAC3 struct __ns1__CadImgDownload_ * SOAP_FMAC4 soap_in___ns1__CadImgDownload_(struct soap*, const char*, struct __ns1__CadImgDownload_ *, const char*);
+SOAP_FMAC1 struct __ns1__CadImgDownload_ * SOAP_FMAC2 soap_instantiate___ns1__CadImgDownload_(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__CadImgDownload_ * soap_new___ns1__CadImgDownload_(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__CadImgDownload_(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__CadImgDownload_ * soap_new_req___ns1__CadImgDownload_(
+	struct soap *soap)
+{
+	struct __ns1__CadImgDownload_ *_p = ::soap_new___ns1__CadImgDownload_(soap);
+	if (_p)
+	{	::soap_default___ns1__CadImgDownload_(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__CadImgDownload_ * soap_new_set___ns1__CadImgDownload_(
+	struct soap *soap,
+	_ns1__CadImgDownload *ns1__CadImgDownload)
+{
+	struct __ns1__CadImgDownload_ *_p = ::soap_new___ns1__CadImgDownload_(soap);
+	if (_p)
+	{	::soap_default___ns1__CadImgDownload_(soap, _p);
+		_p->ns1__CadImgDownload = ns1__CadImgDownload;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__CadImgDownload_(struct soap*, const struct __ns1__CadImgDownload_ *, const char*, const char*);
+
+inline int soap_write___ns1__CadImgDownload_(struct soap *soap, struct __ns1__CadImgDownload_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__CadImgDownload_(soap, p), 0) || ::soap_put___ns1__CadImgDownload_(soap, p, "-ns1:CadImgDownload", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__CadImgDownload_(struct soap *soap, const char *URL, struct __ns1__CadImgDownload_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__CadImgDownload_(soap, p), 0) || ::soap_put___ns1__CadImgDownload_(soap, p, "-ns1:CadImgDownload", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__CadImgDownload_(struct soap *soap, const char *URL, struct __ns1__CadImgDownload_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__CadImgDownload_(soap, p), 0) || ::soap_put___ns1__CadImgDownload_(soap, p, "-ns1:CadImgDownload", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__CadImgDownload_(struct soap *soap, const char *URL, struct __ns1__CadImgDownload_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__CadImgDownload_(soap, p), 0) || ::soap_put___ns1__CadImgDownload_(soap, p, "-ns1:CadImgDownload", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__CadImgDownload_ * SOAP_FMAC4 soap_get___ns1__CadImgDownload_(struct soap*, struct __ns1__CadImgDownload_ *, const char*, const char*);
+
+inline int soap_read___ns1__CadImgDownload_(struct soap *soap, struct __ns1__CadImgDownload_ *p)
+{
+	if (p)
+	{	::soap_default___ns1__CadImgDownload_(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__CadImgDownload_(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__CadImgDownload_(struct soap *soap, const char *URL, struct __ns1__CadImgDownload_ *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__CadImgDownload_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__CadImgDownload_(struct soap *soap, struct __ns1__CadImgDownload_ *p)
+{
+	if (::soap_read___ns1__CadImgDownload_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
 #ifndef SOAP_TYPE___ns1__CadFileDownload__DEFINED
 #define SOAP_TYPE___ns1__CadFileDownload__DEFINED
 SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__CadFileDownload_(struct soap*, struct __ns1__CadFileDownload_ *);
@@ -4263,6 +4519,100 @@ inline int soap_GET___ns1__StandardDesignAttribute_(struct soap *soap, const cha
 inline int soap_POST_recv___ns1__StandardDesignAttribute_(struct soap *soap, struct __ns1__StandardDesignAttribute_ *p)
 {
 	if (::soap_read___ns1__StandardDesignAttribute_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__CadImgDownload_DEFINED
+#define SOAP_TYPE___ns1__CadImgDownload_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__CadImgDownload(struct soap*, struct __ns1__CadImgDownload *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__CadImgDownload(struct soap*, const struct __ns1__CadImgDownload *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__CadImgDownload(struct soap*, const char*, int, const struct __ns1__CadImgDownload *, const char*);
+SOAP_FMAC3 struct __ns1__CadImgDownload * SOAP_FMAC4 soap_in___ns1__CadImgDownload(struct soap*, const char*, struct __ns1__CadImgDownload *, const char*);
+SOAP_FMAC1 struct __ns1__CadImgDownload * SOAP_FMAC2 soap_instantiate___ns1__CadImgDownload(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__CadImgDownload * soap_new___ns1__CadImgDownload(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__CadImgDownload(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__CadImgDownload * soap_new_req___ns1__CadImgDownload(
+	struct soap *soap)
+{
+	struct __ns1__CadImgDownload *_p = ::soap_new___ns1__CadImgDownload(soap);
+	if (_p)
+	{	::soap_default___ns1__CadImgDownload(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__CadImgDownload * soap_new_set___ns1__CadImgDownload(
+	struct soap *soap,
+	_ns1__CadImgDownload *ns1__CadImgDownload)
+{
+	struct __ns1__CadImgDownload *_p = ::soap_new___ns1__CadImgDownload(soap);
+	if (_p)
+	{	::soap_default___ns1__CadImgDownload(soap, _p);
+		_p->ns1__CadImgDownload = ns1__CadImgDownload;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__CadImgDownload(struct soap*, const struct __ns1__CadImgDownload *, const char*, const char*);
+
+inline int soap_write___ns1__CadImgDownload(struct soap *soap, struct __ns1__CadImgDownload const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__CadImgDownload(soap, p), 0) || ::soap_put___ns1__CadImgDownload(soap, p, "-ns1:CadImgDownload", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__CadImgDownload(struct soap *soap, const char *URL, struct __ns1__CadImgDownload const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__CadImgDownload(soap, p), 0) || ::soap_put___ns1__CadImgDownload(soap, p, "-ns1:CadImgDownload", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__CadImgDownload(struct soap *soap, const char *URL, struct __ns1__CadImgDownload const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__CadImgDownload(soap, p), 0) || ::soap_put___ns1__CadImgDownload(soap, p, "-ns1:CadImgDownload", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__CadImgDownload(struct soap *soap, const char *URL, struct __ns1__CadImgDownload const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__CadImgDownload(soap, p), 0) || ::soap_put___ns1__CadImgDownload(soap, p, "-ns1:CadImgDownload", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__CadImgDownload * SOAP_FMAC4 soap_get___ns1__CadImgDownload(struct soap*, struct __ns1__CadImgDownload *, const char*, const char*);
+
+inline int soap_read___ns1__CadImgDownload(struct soap *soap, struct __ns1__CadImgDownload *p)
+{
+	if (p)
+	{	::soap_default___ns1__CadImgDownload(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__CadImgDownload(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__CadImgDownload(struct soap *soap, const char *URL, struct __ns1__CadImgDownload *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__CadImgDownload(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__CadImgDownload(struct soap *soap, struct __ns1__CadImgDownload *p)
+{
+	if (::soap_read___ns1__CadImgDownload(soap, p))
 		return soap_closesock(soap);
 	return soap_closesock(soap);
 }
@@ -5433,6 +5783,15 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerToSOAP_ENV__Code(struct soap*, struct 
 SOAP_FMAC3 struct SOAP_ENV__Code ** SOAP_FMAC4 soap_get_PointerToSOAP_ENV__Code(struct soap*, struct SOAP_ENV__Code **, const char*, const char*);
 #endif
 
+#endif
+
+#ifndef SOAP_TYPE_PointerTo_ns1__CadImgDownload_DEFINED
+#define SOAP_TYPE_PointerTo_ns1__CadImgDownload_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__CadImgDownload(struct soap*, _ns1__CadImgDownload *const*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__CadImgDownload(struct soap*, const char *, int, _ns1__CadImgDownload *const*, const char *);
+SOAP_FMAC3 _ns1__CadImgDownload ** SOAP_FMAC4 soap_in_PointerTo_ns1__CadImgDownload(struct soap*, const char*, _ns1__CadImgDownload **, const char*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__CadImgDownload(struct soap*, _ns1__CadImgDownload *const*, const char*, const char*);
+SOAP_FMAC3 _ns1__CadImgDownload ** SOAP_FMAC4 soap_get_PointerTo_ns1__CadImgDownload(struct soap*, _ns1__CadImgDownload **, const char*, const char*);
 #endif
 
 #ifndef SOAP_TYPE_PointerTo_ns1__CadFileDownload_DEFINED

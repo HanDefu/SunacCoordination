@@ -13,6 +13,10 @@
 #include "../Common/ComFun_Sunac.h"
 #include "cpp_base64\src\Base64Decoder.h"
 #include "SunacCadWeb\soapArgumentSettingServiceSoapProxy.h"
+#include "WindowWebData.h"
+#include "AirconditionWebData.h"
+#include "KitchenBathroomWebData.h"
+#include "RailingWebData.h"
 
 using namespace std;
 
@@ -32,20 +36,48 @@ WebIO::~WebIO()
 //gongNengQu,//功能区
 //tongFengLiang//通风量
 //读取门和窗
-std::vector<AttrWindow>  WebIO::GetWindows(double width, CString openType, int openNum, CString gongNengQu)const
+std::vector<AttrWindow>  WebIO::GetWindows(double width, double height, CString openType, int openNum, CString gongNengQu)const
 {
-#ifdef WORK_LOCAL//本地模式
-	return m_windowLocalData.GetWindows(width, openType, openNum, gongNengQu);
+#ifdef WORK_LOCAL		//本地模式
+	vAttrWindow Local = m_windowLocalData.GetWindows(width, openType, openNum, gongNengQu);
+	return Local;
 #else
-	return m_windowWebData.GetWindows(width, openType, openNum, gongNengQu);
+	vAttrWindow Local = m_windowLocalData.GetWindows(width, openType, openNum, gongNengQu);
+	vAttrWindow Web = m_windowWebData.GetWindows(width, height, openType, openNum, gongNengQu);
+
+	for(int i = 0; i < Web.size(); i++ )
+	{
+		AttrWindow &curWebWin = Web[i];
+
+		//从window1找到相同编号的
+		bool bFind = false;
+		for (UINT j = 0; j < Local.size(); j++)
+		{
+			if (curWebWin.m_prototypeCode == Local[j].m_prototypeCode)
+			{
+				bFind = true;
+				if(Local[j].IsPrototypeEqual(Web[i]))
+				{
+					AfxMessageBox(L"确实相等！");
+				}
+				else
+				{
+					AfxMessageBox(L"不完全相等！");
+				}
+				break;
+			}
+		}
+
+	}
+	return Local;
 #endif
 }
-std::vector<AttrWindow> WebIO::GetDoors(double width, CString openType, int openNum, CString gongNengQu)const
+std::vector<AttrWindow> WebIO::GetDoors(double width, double height, CString openType, int openNum, CString gongNengQu)const
 {
 #ifdef WORK_LOCAL//本地模式
 	return m_windowLocalData.GetDoors(width, openType, openNum, gongNengQu);
 #else
-	return m_windowWebData.GetDoors(width, openType, openNum, gongNengQu);
+	return m_windowWebData.GetDoors(width, height, openType, openNum, gongNengQu);
 #endif
 }
 
@@ -95,7 +127,7 @@ std::vector<AttrAirCon> WebIO::GetAirCons(double piShu, CString weiZhi, CString 
 #ifdef WORK_LOCAL//本地模式
 	return m_airConLocalData.GetAirCons(piShu, weiZhi, hasYuShuiGuan, yuShuiGuanWeizhi);
 #else
-
+	return m_airConWebData.GetAirCons(piShu, weiZhi, hasYuShuiGuan, yuShuiGuanWeizhi);
 #endif
 }
 
@@ -104,7 +136,7 @@ std::vector<AttrAirCon> WebIO::GetAllAirCons()
 #ifdef WORK_LOCAL//本地模式
 	return m_airConLocalData.GetAllAirCons();
 #else
-
+	return m_airConWebData.GetAllAirCons();
 #endif
 }
 
@@ -131,7 +163,8 @@ std::vector<AttrRailing> WebIO::GetRailings(eRailingType type)//一次搜索所有的
 	//}
 	return result;
 #else
-
+	std::vector<AttrRailing> result;
+	return result;
 #endif
 }
 
@@ -143,7 +176,10 @@ std::vector<AttrRailing> WebIO::GetAllRailings()
 	result1.insert(result1.end(), result2.begin(), result2.end());
 	return result1;
 #else
-
+	std::vector<AttrRailing> result1 = GetRailings(E_RAILING_TIEYI);
+	std::vector<AttrRailing> result2 = GetRailings(E_RAILING_BOLI);
+	result1.insert(result1.end(), result2.begin(), result2.end());
+	return result1;
 #endif
 }
 
@@ -176,10 +212,13 @@ std::wstring String2WString(const std::string& s)
 	return wstrResult;
 }
 
-bool WebIO::DownloadFile(const int fileId, const CString filePathName)
+bool WebIO::DownloadFile(const int fileId, CString type, CString filePathName)
 {
+	std::wstring sType = type;
+
 	_ns1__CadFileDownload nsCadFile;
 	nsCadFile.Id = fileId;
+	nsCadFile.Type = &sType;
 	_ns1__CadFileDownloadResponse cadFileResponse;
 
 	ArgumentSettingServiceSoapProxy cadWeb;
