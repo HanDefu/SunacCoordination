@@ -49,6 +49,11 @@ public:
 	//通过门窗类型、型材系列，型材名称获取型材数据,获取失败返回false
 	bool GetAluminumDataBySeriesAndName(E_WindowDoorType p_winType, CString p_serials, CString sName, CAluminumData& p_dataOut);
 
+	//通过型材编号获取当前型材编号所属的系列
+	bool GetAluminumSerialByCode(CString p_code, CString& p_serialOut);
+
+	//获得门窗类型下的型材系列选项
+	vector<CString> GetAluminumSerialsByWindowType(E_WindowDoorType p_winType);
 
 protected:
 

@@ -76,7 +76,6 @@ AttrWindow::AttrWindow()
 	m_isMirror = false;
 	m_viewDir = E_VIEW_FRONT;
 	m_isBayWindow = false;
-	m_plugslotSize = 0;
 	m_wallDis = 0.0;
 }
 
@@ -139,10 +138,38 @@ const CWindowsDimData* AttrWindow::GetDimData(CString p_sCode)const
 		}
 	}
 
-	assert(false);
+	//assert(false);
 	return NULL;
 }
 
+
+void AttrWindow::CheckAndComplementDimeData() //检查并补全Dim数据，W/H/a确保都有
+{
+	if (GetDimData(_T("W"))==NULL)
+	{
+		CWindowsDimData dimData;
+		dimData.sCodeName = _T("W");
+		dimData.type = UNLIMIT;
+		dimData.defaultValue = 1200;
+		dimData.value = 1200;
+	}
+	if (GetDimData(_T("H")) == NULL)
+	{
+		CWindowsDimData dimData;
+		dimData.sCodeName = _T("W");
+		dimData.type = UNLIMIT;
+		dimData.defaultValue = 1500;
+		dimData.value = 1500;
+	}
+	if (GetDimData(_T("a")) == NULL)
+	{
+		CWindowsDimData dimData;
+		dimData.sCodeName = _T("a");
+		dimData.type = UNLIMIT;
+		dimData.defaultValue = 0;
+		dimData.value = 0;
+	}
+}
 void AttrWindow::SetDimData(const CWindowsDimData& p_dim)
 {
 	for (UINT i = 0; i < m_dimData.size(); i++)
@@ -202,8 +229,6 @@ double AttrWindow::GetTongFengQty(bool bDefaultValue/* = false*/)
 
 double AttrWindow::GetValue(CString p_sCode, bool bDefaultValue/* = false*/)
 {
-	if (p_sCode.CompareNoCase(L"A") == 0)
-		return GetA(bDefaultValue);
 	const CWindowsDimData* pDimData = GetDimData(p_sCode);
 	assert(pDimData);
 	assert(pDimData->type != NOVALUE);
@@ -260,9 +285,11 @@ bool AttrWindow::SetValue(CString p_sCode, double p_dValue)
 	assert(pDimData);
 	assert(pDimData->type != NOVALUE);
 	CWindowsDimData newDimData(*pDimData);
+
 	//公式值和固定值不能设置
 	if ((newDimData.type == CALC) || (newDimData.type == SINGLE))
 		return false;
+
 	if (newDimData.type == UNLIMIT)
 	{
 		newDimData.value = p_dValue;
@@ -423,11 +450,6 @@ bool AttrWindow::IsPrototypeEqual(const AttrWindow& p_att)
 		}
 	}
 
-	if (p_att.m_calFormulas != m_calFormulas)
-	{
-		assert(FALSE);
-		return false;
-	}
 	else if (p_att.m_instanceCode != m_instanceCode)
 	{
 		assert(FALSE);
@@ -471,11 +493,6 @@ bool AttrWindow::IsPrototypeEqual(const AttrWindow& p_att)
 		return false;
 	}
 	else if (p_att.m_openType != m_openType)
-	{
-		assert(FALSE);
-		return false;
-	}
-	else if (p_att.m_plugslotSize != m_plugslotSize)
 	{
 		assert(FALSE);
 		return false;

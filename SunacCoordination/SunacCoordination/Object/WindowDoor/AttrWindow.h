@@ -81,12 +81,25 @@ public:
 public:
 	CWindowsDimData();
 	bool operator==(const CWindowsDimData &rhs) const;
-
 	bool IsValueEqual(const CWindowsDimData &rhs)const;
-
 };
 
 typedef std::vector<CWindowsDimData> vWindowDimData;
+
+//////////////////////////////////////////////////////////////////////////
+
+struct CWindowMaterial	//门窗材料系列
+{
+	CString sAluminumSerial; //型材系列
+	CString sGlassSerial;
+	bool bHasAuxiliaryFrame; //是否有附框
+	CString sAuxiliaryFrame; //附框系列
+
+	CWindowMaterial()
+	{
+		bHasAuxiliaryFrame = false;
+	}
+};
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -114,6 +127,7 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 	const CWindowsDimData* GetDimData(CString p_sCode)const;
 	void SetDimData(const CWindowsDimData& p_dataOut);
+	void CheckAndComplementDimeData(); //检查并补全Dim数据，W/H/a确保都有
 
 	double GetTongFengQty(bool bDefaultValue = false);
 	
@@ -125,7 +139,8 @@ public:
 	double GetW1(bool bDefaultValue = false) { return GetValue(L"W1", bDefaultValue); }
 	double GetW2(bool bDefaultValue = false) { return GetValue(L"W2", bDefaultValue); }
 	double GetW3(bool bDefaultValue = false) { return GetValue(L"W3", bDefaultValue); }
-	double GetA(bool bDefaultValue = false) { return bDefaultValue ? 0 : m_plugslotSize; } //塞缝尺寸
+	double GetA(bool bDefaultValue = false) { return GetValue(L"a", bDefaultValue); } //塞缝尺寸
+	double GetR(bool bDefaultValue = false) { return GetValue(L"R", bDefaultValue); }
 
 	bool SetValue(CString p_sCode, double p_dValue);
 	bool SetH(double newValue) { return SetValue(L"H", newValue); }
@@ -135,7 +150,8 @@ public:
 	bool SetW1(double newValue) { return SetValue(L"W1", newValue); }
 	bool SetW2(double newValue) { return SetValue(L"W2", newValue); }
 	bool SetW3(double newValue) { return SetValue(L"W3", newValue); }
-	bool SetA(double newValue) { m_plugslotSize = newValue; }//塞缝尺寸
+	bool SetA(double newValue) { return SetValue(L"a", newValue); }//塞缝尺寸
+	bool SetR(double newValue) { return SetValue(L"R", newValue); }
 
 protected:
 	vWindowDimData m_dimData; //存储W/W1/W2/W3   H/H1/H2/H3 R的尺寸数据
@@ -145,7 +161,7 @@ public:
 
 	CDwgFileInfo m_frontViewFile;	//原型立面文件, 展开图用基类的m_fileName
 	CDwgFileInfo m_topViewFile;		//原型俯视图文件
-	CDwgFileInfo m_leftViewFile;		//原型侧视图文件
+	CDwgFileInfo m_leftViewFile;	//原型侧视图文件
 	
 	CString m_tongFengFormula;//通风量计算公式,主要用于动态原型
 	double m_tongFengQty;	//通风量
@@ -158,7 +174,7 @@ public:
 
 	//////////////////////////////////////////////////////////////////////////
 	//算量相关
-	vSCalcData m_calFormulas;
+	CWindowMaterial m_material;
 
 	//////////////////////////////////////////////////////////////////////////
 	//以下属性为具体外窗插入时才设置,单个窗户实例的属性，非原型属性
@@ -168,10 +184,6 @@ public:
 
 	bool   m_isBayWindow;	 //是否凸窗
 	double m_wallDis;		 //外墙距离
-
-	//////////////////////////////////////////////////////////////////////////
-	//二次深化属性
-	double m_plugslotSize;		//塞缝尺寸
 
 };
 

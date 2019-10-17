@@ -219,10 +219,6 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 			{
 				attrwindow.m_tongFengQty = _ttof(xml.GetData());
 			}
-			if (xml.FindElem(_T("WindowPlugslotSize")))
-			{
-				attrwindow.m_plugslotSize = _ttof(xml.GetData());
-			}
 			if (xml.FindElem(_T("WindowFunctionalArea")))
 			{
 				attrwindow.m_gongNengquType = xml.GetData();
@@ -281,9 +277,14 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 
 					xml.OutOfElem();
 				}
+
+
 				xml.OutOfElem();
 			}
 			xml.OutOfElem();
+
+			attrwindow.CheckAndComplementDimeData();
+
 			windowAtts.push_back(attrwindow);
 		}
 		xml.OutOfElem();
@@ -528,12 +529,15 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 					Attrdoor.SetDimData(tempData);
 					xml.OutOfElem();
 				}
+
+
 				xml.OutOfElem();
 			}
 			xml.OutOfElem();
+
+			Attrdoor.CheckAndComplementDimeData();
 			DoorAttrs.push_back(Attrdoor);
-		}
-		
+		}		
 
 		xml.OutOfElem();
 	}
