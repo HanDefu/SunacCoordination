@@ -84,8 +84,6 @@ public:
 	bool IsValueEqual(const CWindowsDimData &rhs)const;
 };
 
-typedef std::vector<CWindowsDimData> vWindowDimData;
-
 //////////////////////////////////////////////////////////////////////////
 
 struct CWindowMaterial	//门窗材料系列
@@ -154,7 +152,7 @@ public:
 	bool SetR(double newValue) { return SetValue(L"R", newValue); }
 
 protected:
-	vWindowDimData m_dimData; //存储W/W1/W2/W3   H/H1/H2/H3 R的尺寸数据
+	vector<CWindowsDimData> m_dimData; //存储W/W1/W2/W3   H/H1/H2/H3 R的尺寸数据
 
 public:
 	CString m_openType;		//开启类型
