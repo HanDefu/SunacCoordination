@@ -12,7 +12,10 @@ class CRCRailingBoli : public CRCRailing
 public:
 	virtual double GetNonstandardLen()const{ return 0; }//没有非标准段
 	virtual double GetStandardRailingTotalLen()const{ return GetLength(); } //没有非标准段
-	
+
+	virtual double GetMinWidth()const { return 0; }
+	virtual double GetMinHeight()const { return 300; }
+
 protected:
 	virtual bool GenRailing();
 	virtual int GenStandardSegCount(double p_lenth)const = 0;			//计算标准栏杆数量
@@ -41,14 +44,15 @@ public:
 	CRCRailingB1();
 	~CRCRailingB1();
 
+	virtual double GetMinHeight()const { return 400; }
 
 protected:
 	virtual int GenStandardSegCount(double p_lenth)const;		//计算标准栏杆数量
 	virtual double GenStandardRailingLen(double p_lenth)const;		//计算标准栏杆尺寸
 
 	virtual double GetK()const { return 275/2.0; }			//2K固定值275
-	virtual double GetH() const { return 150; }		//单元之间的间距
-	virtual double GetHandRailHeight()const { return 33; }	//扶手厚度高40
+	virtual double GetH() const { return 150; }				//单元之间的间距
+	virtual double GetHandRailHeight()const { return 33; }	//扶手厚度高
 
 };
 
@@ -61,7 +65,7 @@ public:
 
 	virtual double GetK()const { return 275 / 2.0; }			//2K固定值275
 	virtual double GetH() const { return 0; }
-
+	
 protected:
 	int GenStandardSegCount(double p_lenth)const;			//计算标准栏杆数量
 	double GenStandardRailingLen(double p_lenth)const;		//计算标准栏杆尺寸
@@ -101,9 +105,13 @@ class CRCRailingB5 : public CRCRailingB4
 {
 protected:
 	virtual double GetHandRailHeight()const { return 0; }	//扶手厚度高
+
+	virtual double GetMinHeight()const { return 500; }
 };
 class CRCRailingB6 : public CRCRailingB4
 {
 protected:
 	virtual double GetHandRailHeight()const { return 57.8; }	//扶手厚度高
+
+	virtual double GetMinHeight()const { return 700; }
 };

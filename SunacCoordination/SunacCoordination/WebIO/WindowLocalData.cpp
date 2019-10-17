@@ -193,6 +193,8 @@ void CWindowLocalData::LoadDataFromExcel(CString p_file)
 		rcDimData = ReadDimData(xls, L"H3", i, 45);
 		attrwindow.SetDimData(rcDimData);
 
+		attrwindow.CheckAndComplementDimeData();
+
 		//////////////////////////////////////////////////////////////////////////
 		attrwindow.m_frontViewFile.fileName = xls.GetCellValue(i, 51);
 		attrwindow.m_topViewFile.fileName = xls.GetCellValue(i, 52);

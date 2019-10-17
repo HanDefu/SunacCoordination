@@ -23,6 +23,14 @@
 #define ZFFCUSTOMOBJECTDB_DBXSERVICE_AIRCON "ZFFCUSTOMOBJECTDB_DBXSERVICE_AIRCON"
 #endif
 
+
+typedef enum eLengNingShuiGuanPos//冷凝水管位置
+{
+	AIRCON_CEBIAN,//侧边
+	AIRCON_HOUBIAN//后边
+}eLingNingShuiGuanPos;
+
+
 class DLLIMPEXP  AttrAirCon : public AttrObject
 {
 public:

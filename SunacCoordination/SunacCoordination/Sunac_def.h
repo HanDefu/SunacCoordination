@@ -6,7 +6,7 @@
 #define  FILE_VERSION ((Adesk::Int32)1)
 
 #define  WORK_LOCAL//是否本地工作模式
-#define CHECK_USE//是否检测权限
+#define	 CHECK_USE//是否检测权限
 
 //模块类型
 typedef enum eRCType
@@ -35,7 +35,7 @@ typedef enum eRailingType
 	E_RAILING_BOLI,//玻璃
 }eRailingType;
 
-static eRailingType ToERailingType(CString type)
+inline eRailingType ToERailingType(CString type)
 {
 	if (type == "铁艺" || type == "铁艺栏杆")
 	{
@@ -50,7 +50,6 @@ static eRailingType ToERailingType(CString type)
 		ASSERT(FALSE);
 		return E_RAILING_TIEYI;
 	}
-
 }
 
 enum E_Prototype_Type
@@ -65,7 +64,7 @@ typedef enum eWindowDoorPos//门窗位置关系
 	CHUIZHIKAI//垂直开
 } eWindowDoorPos;
 
-static eWindowDoorPos ToEWindowDoorPos(CString type)
+inline eWindowDoorPos ToEWindowDoorPos(CString type)
 {
 	if (type == "对开")
 	{
@@ -82,29 +81,6 @@ static eWindowDoorPos ToEWindowDoorPos(CString type)
 	}
 }
 
-typedef enum eLengNingShuiGuanPos//冷凝水管位置
-{
-	AIRCON_CEBIAN,//侧边
-	AIRCON_HOUBIAN//后边
-}eLingNingShuiGuanPos;
-
-typedef enum eWindowCalcType//门窗算量类型
-{
-	CALC_XINGCAI,//型材
-	CALC_BOLI,//玻璃
-	CALC_WUJIN,//五金
-	CALC_FUCAI//辅材
-}eWindowCalcType;
-
-typedef struct SCalcData//门窗算量数据
-{
-    eWindowCalcType calcType;
-	CString formula;
-}SCalcData;
-
-typedef std::vector<eWindowCalcType> vSCalcData;
-
-
 struct CDwgFileInfo
 {
 	CString fileName;	// 文件名,不含路径
@@ -115,5 +91,6 @@ struct CDwgFileInfo
 	CDwgFileInfo()
 	{
 		id = 0;
+		PreviewID = 0;
 	}
 };

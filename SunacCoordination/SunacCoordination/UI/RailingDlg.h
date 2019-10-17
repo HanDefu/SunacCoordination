@@ -45,8 +45,6 @@ public:
 	double m_height;// 栏杆高度	
 	double m_width;// 栏杆长度
 	CString sPrototypeName;
-	int m_selectedRow;
-	int m_selectedColoum;
 	afx_msg void OnCbnSelchangeComboRailingtype();
 	afx_msg void OnBnClickedCheckAutoindex();
 	CEdit m_railingNumber;

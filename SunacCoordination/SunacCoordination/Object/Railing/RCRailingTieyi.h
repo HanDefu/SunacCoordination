@@ -38,6 +38,9 @@ public:
 	virtual double GetStandardRailingTotalLen()const;
 	virtual double GetNonstandardLen()const;				//获取非标段栏杆长度，含两侧立柱
 
+	virtual double GetMinWidth()const { return 0; }
+	virtual double GetMinHeight()const { return 400; }
+
 protected:
 	virtual bool GenRailing(); //计算各段的长度
 	virtual int GenStandardSegCount(double p_lenth, double p_segLength)const; //计算标准栏杆数量，p_lenth为栏杆长，p_segLength为栏杆的标准段长
@@ -100,6 +103,8 @@ public:
 	virtual double GetSmallPillarWidth()const { return 14; }//小竖杆尺寸
 	virtual double GetHandRailHeight()const { return 40; };	//扶手厚度高
 
+	virtual double GetMinHeight()const { return 800; }
+
 protected:
 	virtual AcDbObjectId GenerateRailing_NonStandard(AcGePoint3d pos);
 	virtual AcDbObjectIdArray GenerateRailing_Standard(AcGePoint3d pos);
@@ -116,6 +121,9 @@ public:
 	virtual double GetPillarWidth()const { return 40; }	//立柱尺寸
 	virtual double GetSmallPillarWidth()const { return 15; }//小竖杆尺寸
 	virtual double GetHandRailHeight()const { return 40; };	//扶手厚度高
+
+
+	virtual double GetMinHeight()const { return 500; }
 
 protected:
 	virtual AcDbObjectId GenerateRailing_NonStandard(AcGePoint3d pos);
@@ -134,6 +142,7 @@ public:
 	virtual double GetSmallPillarWidth()const { return 15; }//小竖杆尺寸
 	virtual double GetHandRailHeight()const { return 40; };	//扶手厚度高
 
+	virtual double GetMinHeight()const { return 800; }
 protected:
 	virtual AcDbObjectId GenerateRailing_NonStandard(AcGePoint3d pos);
 };
@@ -151,5 +160,6 @@ public:
 	virtual double GetSmallPillarWidth()const { return 12; }//小竖杆尺寸
 	virtual double GetHandRailHeight()const { return 100; };	//扶手厚度高
 
+	virtual double GetMinHeight()const { return 1000; }
 };
 

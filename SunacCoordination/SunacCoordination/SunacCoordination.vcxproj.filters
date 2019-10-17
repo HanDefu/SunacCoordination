@@ -325,6 +325,9 @@
     <ClCompile Include="Common\TYFormula.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="Object\WindowStatistic\WindowFormula.cpp">
+      <Filter>Object\WindowStatictic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -732,6 +735,9 @@
     </ClInclude>
     <ClInclude Include="Common\TYFormula.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowStatistic\WindowFormula.h">
+      <Filter>Object\WindowStatictic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

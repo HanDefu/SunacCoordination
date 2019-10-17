@@ -3,10 +3,11 @@
 #include "..\..\Tool\Excel\Excel.h"
 #include "DeductedSize.h"
 #include "AluminumSeries.h"
+#include "WindowFormula.h"
 
 
 
-//窗单价组合分析表
+//窗单价组合分析表  //ZJY
 class CWindowMaterialUsage
 {
 public:
@@ -31,20 +32,14 @@ public:
 
 
 protected:
-	//根据原型名称p_propotypeName，材料名称p_sMatName查找计算公式
-	CString LookUpFomula(CString p_propotypeName, CString p_sMatName);
-
-	//根据原型名称p_propotypeName，材料名称p_sMatName查找数量
-	CString LookUpCount(CString p_propotypeName, CString p_sMatName);
-
-
 	//解析公式
 	void ParseFomula(CString p_sFomula);
 
 
 protected:
-	AttrWindow m_winAtt;
+	const AttrWindow m_winAtt;
 	int m_nCount;
+
 	//////////////////////////////////////////////////////////////////////////
 		//总计数量:
 		//断桥隔热铝型材
