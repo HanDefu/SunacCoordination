@@ -3,6 +3,8 @@
 
 CGridCtrlWithPreview::CGridCtrlWithPreview()
 {
+	m_nDisplayRows = 1;
+	m_nDisplayCols = 1;
 }
 
 
@@ -29,6 +31,7 @@ void CGridCtrlWithPreview::SetDisplayRows(int nRows)
 	CRect clientRect;
 	GetClientRect(clientRect);
 	int height = clientRect.Height() / nRows;
+	SetDefCellHeight(height);
 	for (int i = 0; i < GetRowCount(); i++)
 		SetRowHeight(i, height);
 }
@@ -39,6 +42,7 @@ void CGridCtrlWithPreview::SetDisplayColumns(int nCols)
 	CRect clientRect;
 	GetClientRect(clientRect);
 	int width = clientRect.Width() / nCols;
+	SetDefCellWidth(width);
 	for (int i = 0; i < GetColumnCount(); i++)
 		SetColumnWidth(i, width);
 }
@@ -116,8 +120,20 @@ void CGridCtrlWithPreview::OnPaint()
 	CCellID topLeftCell = GetTopleftNonFixedCell();
 	int stRow = topLeftCell.row;
 	int stCol = topLeftCell.col;
+	int edRow = GetRowCount() - stRow;
 
+	if (edRow < m_nDisplayRows)
+	{
+		CRect clientRect;
+		CPoint cellOrigin;
+		GetClientRect(&clientRect);
+		GetCellOrigin(edRow, 0, &cellOrigin);
+		clientRect.top = cellOrigin.y;
+		dc.FillSolidRect(clientRect, GetBkColor());
+	}
+	
 	for (int i = 0; i < GetRowCount(); i++)
+	{
 		for (int j = 0; j < GetColumnCount(); j++)
 		{
 			CRect cellRect;
@@ -129,4 +145,5 @@ void CGridCtrlWithPreview::OnPaint()
 			else
 				dc.FillSolidRect(cellRect, dc.GetBkColor());
 		}
+	}
 }

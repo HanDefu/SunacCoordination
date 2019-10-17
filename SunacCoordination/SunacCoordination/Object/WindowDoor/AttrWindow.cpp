@@ -152,6 +152,7 @@ void AttrWindow::CheckAndComplementDimeData() //检查并补全Dim数据，W/H/a确保都有
 		dimData.type = UNLIMIT;
 		dimData.defaultValue = 1200;
 		dimData.value = 1200;
+		SetDimData(dimData);
 	}
 	if (GetDimData(_T("H")) == NULL)
 	{
@@ -160,14 +161,16 @@ void AttrWindow::CheckAndComplementDimeData() //检查并补全Dim数据，W/H/a确保都有
 		dimData.type = UNLIMIT;
 		dimData.defaultValue = 1500;
 		dimData.value = 1500;
+		SetDimData(dimData);
 	}
 	if (GetDimData(_T("a")) == NULL)
 	{
 		CWindowsDimData dimData;
-		dimData.sCodeName = _T("a");
+		dimData.sCodeName = _T("A");
 		dimData.type = UNLIMIT;
 		dimData.defaultValue = 0;
 		dimData.value = 0;
+		SetDimData(dimData);
 	}
 }
 void AttrWindow::SetDimData(const CWindowsDimData& p_dim)

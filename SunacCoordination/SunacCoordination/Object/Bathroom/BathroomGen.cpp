@@ -140,8 +140,8 @@ AcDbObjectId CBathroomGen::GenBathroom(const AcGePoint3d p_pos, int p_angle)
 		double airVentH = 0;
 		if (m_attr.m_isGuoBiao) //ЙњБъ
 		{
-			airVentW = m_attr.m_airVentOffsetX + c_airVentSize[m_attr.m_floorRange];
-			airVentH = m_attr.m_airVentOffsetY + c_airVentSize[m_attr.m_floorRange];
+			airVentW = m_attr.m_airVentOffsetX + c_bathroomAirVentSize[m_attr.m_floorRange];
+			airVentH = m_attr.m_airVentOffsetY + c_bathroomAirVentSize[m_attr.m_floorRange];
 		}
 		else
 		{

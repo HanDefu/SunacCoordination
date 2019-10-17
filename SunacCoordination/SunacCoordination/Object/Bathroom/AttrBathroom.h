@@ -62,7 +62,7 @@ public:
 	double m_guanXiWidth;		//盥洗区宽度
 
 	//排气道相关设置，插入时填写
-	E_FLOOR_RANGE m_floorRange;	//楼层选项
+	E_BATHROOM_FLOOR_RANGE m_floorRange;	//楼层选项
 	bool m_isGuoBiao;			//是否国标
 	double m_airVentW;			//排气道长度
 	double m_airVentH;			//排气道宽度
