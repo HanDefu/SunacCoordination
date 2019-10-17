@@ -96,20 +96,11 @@ void CGridCtrlWithPreview::SelectPreview(int nRow, int nCol)
 	if (nCol < 0 || nCol >= GetColumnCount())
 		return;
 
-	UINT state;
-	for (int i = 0; i < GetRowCount(); i++)
-	{
-		for (int j = 0; j < GetColumnCount(); j++)
-		{
-			state = GetContentItemState(i, j);
-			SetContentItemState(i, j, state & ~GVIS_SELECTED & ~GVIS_FOCUSED);
-		}
-	}
-
-	state = GetContentItemState(nRow, nCol);
-	SetContentItemState(nRow, nCol, state | GVIS_SELECTED | GVIS_FOCUSED);
-
-	SendMessageToParent(nRow, nCol, GVN_SELCHANGED);
+	EnsureVisible(nRow, nCol);
+	CPoint origin;
+	GetCellOrigin(nRow, nCol, &origin);
+	OnLButtonDown(MK_LBUTTON, origin);
+	OnLButtonUp(MK_LBUTTON, origin);
 }
 
 CGridCellForPreview* CGridCtrlWithPreview::GetPreviewCell(int nRow, int nCol)
@@ -120,38 +111,22 @@ CGridCellForPreview* CGridCtrlWithPreview::GetPreviewCell(int nRow, int nCol)
 
 void CGridCtrlWithPreview::OnPaint()
 {
-	CRect clientRect;
-	GetClientRect(&clientRect);
 	CPaintDC dc(this);
-	EraseBkgnd(&dc);
+
+	CCellID topLeftCell = GetTopleftNonFixedCell();
+	int stRow = topLeftCell.row;
+	int stCol = topLeftCell.col;
+
 	for (int i = 0; i < GetRowCount(); i++)
 		for (int j = 0; j < GetColumnCount(); j++)
 		{
 			CRect cellRect;
-			GetCellRect(i, j, &cellRect);
-			if (!clientRect.PtInRect(cellRect.BottomRight()) || !clientRect.PtInRect(cellRect.TopLeft()))
-				cellRect.SetRectEmpty();
+			if ((i >= stRow) && (i < stRow + m_nDisplayRows) && (j >= stCol) && (j < stCol + m_nDisplayCols))
+				GetCellRect(i, j, &cellRect);
 			CGridCellForPreview* pCell = GetPreviewCell(i, j);
 			if (pCell != NULL)
 				pCell->Draw(&dc, i, j, cellRect, 0);
+			else
+				dc.FillSolidRect(cellRect, dc.GetBkColor());
 		}
 }
-
-BOOL CGridCtrlWithPreview::PreTranslateMessage(MSG* pMsg)
-{
-	if (pMsg->message == WM_LBUTTONDOWN)
-	{
-		CPoint point(pMsg->pt);
-		ScreenToClient(&point);
-		CCellID cellID = GetCellFromPt(point);
-		SelectPreview(cellID.row, cellID.col);
-
-		return TRUE;
-	}
-	else if (pMsg->message == WM_LBUTTONUP)
-	{
-		return TRUE;
-	}
-	return CGridCtrlEx::PreTranslateMessage(pMsg);
-}
-

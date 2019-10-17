@@ -17,7 +17,7 @@ IMPLEMENT_DYNAMIC(CWindowDlg, CAcUiDialog)
 
 CWindowDlg::CWindowDlg(CWnd* pParent /*=NULL*/)
 	: CAcUiDialog(CWindowDlg::IDD, pParent)
-	, m_radioDoor(0)
+	, m_radioDoor(1)
 	, m_radioYes(0)
 	, m_autoIndex(FALSE)
 {
@@ -111,7 +111,7 @@ BOOL CWindowDlg::OnInitDialog()
 	m_preWindow.LoadDefaltSettings();
 
 	LoadDefaultValue();
-	SetRadioDoor(1);
+	UpdateEnable();
 
 	return TRUE;
 }
@@ -188,15 +188,27 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 		m_allWindows = WebIO::GetInstance()->GetWindows(width, height, openType, openNum, areaType);
 
 	m_preWindow.ClearAllPreviews();
+
+	for (UINT i = 0; i < m_allWindows.size(); i++)
+	{
+		CString dwgPath = TY_GetLocalFilePath() + m_allWindows[i].GetFileName();
+		if (!PathFileExists(dwgPath))
+		{
+			acutPrintf(L"原型文件" + m_allWindows[i].GetFileName() + L"未找到\n");
+			m_allWindows.erase(m_allWindows.begin() + i--);
+		}
+	}
 	if (m_allWindows.empty())
 	{
 		acutPrintf(_T("未找到符合条件的记录\n"));
 		return;
 	}
+
 	m_preWindow.SetRowCount((int)m_allWindows.size());
 	m_preWindow.SetColumnCount(1);
 	m_preWindow.SetDisplayRows(3);
 	m_preWindow.SetDisplayColumns(1);
+
 	for (UINT i = 0; i < m_allWindows.size(); i++)
 	{
 		m_allWindows[i].SetW(width);
@@ -209,14 +221,8 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 		pngPath.Replace(L".dwg", L".png");
 		if (PathFileExists(pngPath))
 			m_preWindow.AddPreviewPng(i, 0, pngPath, str);
-		else if (PathFileExists(dwgPath))
-			m_preWindow.AddPreview(i, 0, TY_GetLocalFilePath() + m_allWindows[i].GetFileName(), str);
 		else
-		{
-			acutPrintf(L"原型文件" + m_allWindows[i].GetFileName() + L"未找到\n");
-			m_allWindows.erase(m_allWindows.begin() + i);
-			i--;
-		}
+			m_preWindow.AddPreview(i, 0, dwgPath, str);
 	}
 
 	m_preWindow.SelectPreview(0, 0);
@@ -225,7 +231,7 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 void CWindowDlg::OnBnClickedRadioDoor()
 {
 	UpdateData(TRUE);
-	SetRadioDoor(m_radioDoor);
+	UpdateEnable();
 }
 
 void CWindowDlg::OnBnClickedCalculate()
@@ -296,13 +302,9 @@ void CWindowDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	}
 }
 
-void CWindowDlg::SetRadioDoor(int radioDoor)
+void CWindowDlg::UpdateEnable()
 {
-	if (radioDoor < 0 || radioDoor > 1)
-		return;
-	m_radioDoor = radioDoor;
-
-	if (radioDoor == 0)
+	if (m_radioDoor == 0)
 	{
 		TYUI_Enable(m_doorType);
 
