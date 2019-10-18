@@ -11,6 +11,8 @@ enum E_WindowDoorType
 	E_WindowDoor_TLM2,		//提升推拉门
 };
 
+E_WindowDoorType GetWindowDoorType(CString sOpenType);
+
 enum E_AluminumType
 {
 	E_断桥隔热铝型材,

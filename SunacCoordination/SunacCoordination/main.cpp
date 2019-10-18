@@ -48,6 +48,7 @@
 #include "Tool\MarkupXml\Markup.h"
 #include <string>
 #include "WebIO/WebIO.h"
+#include "Object/WindowStatistic/WindowMaterialUsage.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -145,6 +146,71 @@ void InitMenu()
 		e->Delete();
 	}
 	END_CATCH;
+}
+
+void ZJYTest()
+{
+	CString localWindowPath = TY_GetLocalFilePath();
+	AttrWindow attrwindow;
+
+	attrwindow.m_quyuName = _T("全部");
+	attrwindow.m_isJiTuan = true;
+	attrwindow.m_isDynamic = true;
+
+	attrwindow.m_gongNengquType = _T("全部");
+	attrwindow.m_openType = _T("内开窗");
+	attrwindow.m_openQty = 1;
+
+	CWindowsDimData dimdata1;
+	dimdata1.sCodeName = _T("W");
+	dimdata1.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata1);
+	CWindowsDimData dimdata2;
+	dimdata2.sCodeName = _T("H");
+	dimdata2.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata2);
+	CWindowsDimData dimdata3;
+	dimdata3.sCodeName = _T("a");
+	dimdata3.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata3);
+
+	//CWindowsDimData dimdata1;
+	dimdata1.sCodeName = _T("W1");
+	dimdata1.type = CALC;
+	dimdata1.sFomula = _T("W-2a");
+	attrwindow.SetDimData(dimdata1);
+
+	//CWindowsDimData dimdata2;
+	dimdata2.sCodeName = _T("H1");
+	dimdata2.type = CALC;
+	dimdata2.sFomula = _T("H-2a");
+	attrwindow.SetDimData(dimdata2);
+	attrwindow.CheckAndComplementDimeData();
+
+	attrwindow.SetW(800);
+	attrwindow.SetW1(500);
+	attrwindow.SetH(1500);
+	attrwindow.SetH1(500);
+	attrwindow.SetA(50);
+
+	attrwindow.m_material.sAluminumSerial = _T("SN55系列");
+
+
+	CWindowMaterialUsageNC winUsageNC(attrwindow, 1);
+
+	Excel::CExcelUtil xls;
+	CString filter=L"参数文件(*.xlsx)|*.xlsx|All Files(*.*)|*.*||";  
+	CFileDialog dlg(FALSE, L"xlsx", L"*.xlsx", NULL, filter); 
+	if(dlg.DoModal()==IDOK)
+	{
+		CString pathName = dlg.GetFileName();
+		winUsageNC.ExportReportToExcel(pathName);
+		xls.SaveAs(WCHARTOCHAR(pathName.GetBuffer()));
+	}
+	else
+	{
+		return;
+	}
 }
 
 void CMD_test()
@@ -286,6 +352,15 @@ static void initApp()
 		_T("tes"),
 		ACRX_CMD_MODAL,
 		CMD_test,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("zjy"),
+		_T("zjy"),
+		ACRX_CMD_MODAL,
+		ZJYTest,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());

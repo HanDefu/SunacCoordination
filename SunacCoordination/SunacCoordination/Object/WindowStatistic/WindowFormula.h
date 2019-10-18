@@ -27,7 +27,7 @@ public:
 	CString m_glassClassify; //玻璃分类
 	CString m_name; //玻璃名称
 	CString m_widthFormula; //宽公式
-	CString m_hightFormula; //宽公式
+	CString m_hightFormula; //高公式
 	int m_nCount;
 };
 
