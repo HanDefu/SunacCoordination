@@ -48,6 +48,10 @@
 #include "Tool\MarkupXml\Markup.h"
 #include <string>
 #include "WebIO/WebIO.h"
+#include "Object/WindowStatistic/WindowMaterialUsage.h"
+#include "Object/WindowStatistic/WindowFormula.h"
+#include "Object/WindowStatistic/AluminumSeries.h"
+#include "Object/WindowStatistic/DeductedSize.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -145,6 +149,71 @@ void InitMenu()
 		e->Delete();
 	}
 	END_CATCH;
+}
+
+void ZJYTest()
+{
+	CString localWindowPath = TY_GetLocalFilePath();
+	AttrWindow attrwindow;
+
+	attrwindow.m_quyuName = _T("全部");
+	attrwindow.m_isJiTuan = true;
+	attrwindow.m_isDynamic = true;
+
+	attrwindow.m_gongNengquType = _T("全部");
+	attrwindow.m_openType = _T("内开窗");
+	attrwindow.m_openQty = 1;
+
+	CWindowsDimData dimdata1;
+	dimdata1.sCodeName = _T("W");
+	dimdata1.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata1);
+	CWindowsDimData dimdata2;
+	dimdata2.sCodeName = _T("H");
+	dimdata2.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata2);
+	CWindowsDimData dimdata3;
+	dimdata3.sCodeName = _T("a");
+	dimdata3.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata3);
+
+	//CWindowsDimData dimdata1;
+	dimdata1.sCodeName = _T("W1");
+	dimdata1.type = CALC;
+	dimdata1.sFomula = _T("W-2a");
+	attrwindow.SetDimData(dimdata1);
+
+	//CWindowsDimData dimdata2;
+	dimdata2.sCodeName = _T("H1");
+	dimdata2.type = CALC;
+	dimdata2.sFomula = _T("H-2a");
+	attrwindow.SetDimData(dimdata2);
+	attrwindow.CheckAndComplementDimeData();
+
+	attrwindow.SetW(800);
+	attrwindow.SetW1(500);
+	attrwindow.SetH(1500);
+	attrwindow.SetH1(500);
+	attrwindow.SetA(50);
+
+	attrwindow.m_material.sAluminumSerial = _T("SN55系列");
+
+
+	CWindowMaterialUsageNC winUsageNC(attrwindow, 1);
+
+	Excel::CExcelUtil xls;
+	CString filter=L"参数文件(*.xlsx)|*.xlsx|All Files(*.*)|*.*||";  
+	CFileDialog dlg(FALSE, L"xlsx", L"*.xlsx", NULL, filter); 
+	if(dlg.DoModal()==IDOK)
+	{
+		CString pathName = dlg.GetFileName();
+		winUsageNC.ExportReportToExcel(pathName);
+		xls.SaveAs(WCHARTOCHAR(pathName.GetBuffer()));
+	}
+	else
+	{
+		return;
+	}
 }
 
 void CMD_test()
@@ -277,6 +346,25 @@ void CMD_test()
 	return;
 }
 
+void CMD_TEST2()
+{
+	vector<CAluminumFormula> vAlFormula;
+	vector<CGlassFormula> vGlassFormula;
+	vector<CHardwareData> vHardwareFormula;
+	vector<CString> vAlSeries;
+	CAluminumData AlData;
+	CString AlSeries;
+	double DeductedSizeData;
+	vAlFormula = CWindowFormula::Instance()->GetAluminumFormulas(L"Window_NC1");
+	vGlassFormula = CWindowFormula::Instance()->GetGlassFormulas(L"Window_NC1");
+	vHardwareFormula = CWindowFormula::Instance()->GetHardwareData(L"Window_NC1");
+	CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(E_WindowDoor_NC, "SN65A系列", "M1", DeductedSizeData);
+	CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName("外开窗", "SN65A系列", "M1", DeductedSizeData);
+	CAluminumSeries::Instance()->GetAluminumDataBySeriesAndName(E_WindowDoor_NC, "SN60系列", "假中梃", AlData);
+	CAluminumSeries::Instance()->GetAluminumSerialByCode("SN60T002", AlSeries);
+	vAlSeries = CAluminumSeries::Instance()->GetAluminumSerialsByWindowType(E_WindowDoor_NC);
+}
+
 static void initApp()
 {
 	CAcModuleResourceOverride resOverride;
@@ -286,6 +374,15 @@ static void initApp()
 		_T("tes"),
 		ACRX_CMD_MODAL,
 		CMD_test,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("zjy"),
+		_T("zjy"),
+		ACRX_CMD_MODAL,
+		ZJYTest,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());
@@ -425,6 +522,15 @@ static void initApp()
 		-1,
 		theArxDLL.ModuleResourceInstance());
 
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("te"),
+		_T("te"),
+		ACRX_CMD_SESSION,
+		CMD_TEST2,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
 	AttrObject::rxInit();
 	acrxBuildClassHierarchy();
 	acrxRegisterService(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_OBJECT));
@@ -498,6 +604,7 @@ static void unloadApp()
 extern "C" int APIENTRY
 	DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 {
+	//SetDllDirectory(L"D:\\sqlite\\sqlite");
 	// Remove this if you use lpReserved
 	UNREFERENCED_PARAMETER(lpReserved);
 

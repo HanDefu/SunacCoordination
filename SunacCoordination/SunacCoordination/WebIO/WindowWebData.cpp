@@ -669,6 +669,37 @@ std::vector<AttrWindow >  CWindowWebData::GetAllDoors()const
 
 std::vector<AttrWindow> CWindowWebData::GetDoors(double p_width, double p_heigh, CString doorType, int openNum, CString gongNengQu)const
 {
-	vAttrWindow R;
-	return R;
+	if (doorType == "不限")
+	{
+		doorType = "";
+	}
+
+	std::wstring sOpenType = doorType;
+	_ns1__GetAllDoorByParam ns;
+	ns.width = p_width;
+	ns.doorType = &sOpenType;
+
+	_ns1__GetAllDoorByParamResponse nsResponse;
+
+	ArgumentSettingServiceSoapProxy cadWeb;
+	int nRet = cadWeb.GetAllDoorByParam(&ns, nsResponse);
+
+	std::vector<AttrWindow> doorAtts;
+
+	//判断返回结果是否成功
+	if (nsResponse.GetAllDoorByParamResult == NULL)
+	{
+		return doorAtts;
+	}
+
+	//AttrWindow attrwindow;
+
+	//解析字符串出结果
+	CMarkup xml;	
+
+	xml.SetDoc((*(nsResponse.GetAllDoorByParamResult)).c_str());
+
+	doorAtts = ParseDoorsFromXML(xml);
+
+	return doorAtts;
 }

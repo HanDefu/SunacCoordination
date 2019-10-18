@@ -8,7 +8,7 @@ public:
 
 public:
 	CString m_prototypeCode;   //原型编号
-	CString m_alumunumClassify; //型材分类
+	CString m_aluminumClassify; //型材分类
 	CString m_name; //型材名称
 	CString m_pos;	//位置
 	CString m_formula; //公式
@@ -27,7 +27,7 @@ public:
 	CString m_glassClassify; //玻璃分类
 	CString m_name; //玻璃名称
 	CString m_widthFormula; //宽公式
-	CString m_hightFormula; //宽公式
+	CString m_heightFormula; //宽公式
 	int m_nCount;
 };
 
@@ -46,7 +46,7 @@ public:
 
 //////////////////////////////////////////////////////////////////////////
 
-//窗型公式查询库  //YMY
+//窗型公式查询库  //YMY  
 class CWindowFormula
 {
 	CWindowFormula();
@@ -54,11 +54,13 @@ public:
 	static CWindowFormula* Instance();
 	virtual ~CWindowFormula();
 
-	vector<CAluminumFormula> GetAluminumFormulas(CString p_sPrototypeCode);
-	vector<CGlassFormula> GetGlassFormulas(CString p_sPrototypeCode);
-	vector<CHardwareData> GetHardwareData(CString p_sPrototypeCode);
-
+	vector<CAluminumFormula> GetAluminumFormulas(CString p_sPrototypeCode);//使用表AluminumFormulas
+	vector<CGlassFormula> GetGlassFormulas(CString p_sPrototypeCode);//使用表GlassFormulas
+	vector<CHardwareData> GetHardwareData(CString p_sPrototypeCode);//使用表HardwareData
 
 protected:
 
 };
+
+CString GBKToUTF8(const std::string& strGBK);
+CString UTF8ToGBK(const std::string& strUTF8);
