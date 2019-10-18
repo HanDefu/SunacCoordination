@@ -220,7 +220,7 @@ void AttrWindow::SetDimData(const CWindowsDimData& p_dim)
 	m_dimData.push_back(p_dim);
 }
 
-double AttrWindow::GetTongFengQty(bool bDefaultValue/* = false*/)
+double AttrWindow::GetTongFengQty(bool bDefaultValue/* = false*/) const
 {
 	if (m_isDynamic)
 	{
@@ -263,7 +263,7 @@ double AttrWindow::GetTongFengQty(bool bDefaultValue/* = false*/)
 	}
 }
 
-double AttrWindow::GetValue(CString p_sCode, bool bDefaultValue/* = false*/)
+double AttrWindow::GetValue(CString p_sCode, bool bDefaultValue/* = false*/) const
 {
 	const CWindowsDimData* pDimData = GetDimData(p_sCode);
 	assert(pDimData);
