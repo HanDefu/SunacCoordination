@@ -326,6 +326,8 @@
     <ClInclude Include="Tool\Excel\Excel.h" />
     <ClInclude Include="Tool\MarkupXml\Markup.h" />
     <ClInclude Include="Tool\Regedit.h" />
+    <ClInclude Include="Tool\SQLite\sqlite3.h" />
+    <ClInclude Include="Tool\SQLite\sqlite3ext.h" />
     <ClInclude Include="UI\AirconditionerDlg.h" />
     <ClInclude Include="UI\BathroomDlg.h" />
     <ClInclude Include="UI\ComFun_MFC.h" />
@@ -409,8 +411,12 @@
     <None Include="res\windowdir.bmp" />
     <None Include="search.bmp" />
     <None Include="selOne.bmp" />
+    <None Include="Tool\SQLite\sqlite3.dll" />
     <None Include="WebIO\SunacCadWeb\ArgumentSettingServiceSoap.nsmap" />
     <None Include="windowdir.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="Tool\SQLite\sqlite3.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
