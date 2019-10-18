@@ -7,6 +7,39 @@
 #include "../../Common/ComFun_Math.h"
 #include "../../Common/TYFormula.h"
 
+eWindowDimType ToEWindowType(CString type)
+{
+	if (type == "固定值" || type == "值")
+	{
+		return SINGLE;
+	}
+	else if (type == "值系列" || type == "系列")
+	{
+		return MULTI;
+	}
+	else if (type == "范围")
+	{
+		return SCOPE;
+	}
+	else if (type == "不限")
+	{
+		return UNLIMIT;
+	}
+	else if (type == "公式")
+	{
+		return CALC;
+	}
+	else if (type == "无")
+	{
+		return NOVALUE;
+	}
+	else
+	{
+		ASSERT(FALSE);
+		return NOVALUE;
+	}
+}
+
 CWindowsDimData::CWindowsDimData()
 {
 	type = NOVALUE;
