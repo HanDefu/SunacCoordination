@@ -50,6 +50,7 @@ CWindowFormula::~CWindowFormula()
 vector<CAluminumFormula> vAluminumFormulas;
 vector<CGlassFormula> vGlassFormulas;
 vector<CHardwareData> vHardwareFormulas;
+sqlite3 * pDB = NULL;
 
 CString GBKToUTF8(const std::string& strGBK)
 {
@@ -122,11 +123,10 @@ static int OutputAlFormula(void *NotUsed, int nCol, char **value, char **ColName
 	return 0;
 }
 
-sqlite3 * pDB = NULL;
-
 vector<CAluminumFormula> CWindowFormula::GetAluminumFormulas(CString p_sPrototypeCode)
 {
-	int nRes = sqlite3_open("D:/sqlite/RCData.db", &pDB);
+	vAluminumFormulas.clear();
+	int nRes = sqlite3_open("C:/Program Files/Autodesk/AutoCAD 2014/Support/Sunac2019/RCData.db", &pDB);
 	
 	if (nRes != SQLITE_OK)
 	{
@@ -146,6 +146,7 @@ vector<CAluminumFormula> CWindowFormula::GetAluminumFormulas(CString p_sPrototyp
 		return vAluminumFormulas;
 	}
 
+	sqlite3_close(pDB);
 	return vAluminumFormulas;
 }
 
@@ -185,7 +186,8 @@ static int OutputGlassFormula(void *NotUsed, int nCol, char **value, char **ColN
 
 vector<CGlassFormula> CWindowFormula::GetGlassFormulas(CString p_sPrototypeCode)
 {
-	int nRes = sqlite3_open("D:/sqlite/RCData.db", &pDB);
+	vGlassFormulas.clear();
+	int nRes = sqlite3_open("C:/Program Files/Autodesk/AutoCAD 2014/Support/Sunac2019/RCData.db", &pDB);
 
 	if (nRes != SQLITE_OK)
 	{
@@ -205,6 +207,7 @@ vector<CGlassFormula> CWindowFormula::GetGlassFormulas(CString p_sPrototypeCode)
 		return vGlassFormulas;
 	}
 
+	sqlite3_close(pDB);
 	return vGlassFormulas;
 }
 
@@ -232,7 +235,8 @@ static int OutputHardwareFormula(void *NotUsed, int nCol, char **value, char **C
 
 vector<CHardwareData> CWindowFormula::GetHardwareData(CString p_sPrototypeCode)
 {
-	int nRes = sqlite3_open("D:/sqlite/RCData.db", &pDB);
+	vHardwareFormulas.clear();
+	int nRes = sqlite3_open("C:/Program Files/Autodesk/AutoCAD 2014/Support/Sunac2019/RCData.db", &pDB);
 
 	if (nRes != SQLITE_OK)
 	{
@@ -252,5 +256,6 @@ vector<CHardwareData> CWindowFormula::GetHardwareData(CString p_sPrototypeCode)
 		return vHardwareFormulas;
 	}
 
+	sqlite3_close(pDB);
 	return vHardwareFormulas;
 }

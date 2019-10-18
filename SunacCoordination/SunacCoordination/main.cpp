@@ -49,6 +49,8 @@
 #include <string>
 #include "WebIO/WebIO.h"
 #include "Object/WindowStatistic/WindowFormula.h"
+#include "Object/WindowStatistic/AluminumSeries.h"
+#include "Object/WindowStatistic/DeductedSize.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -283,9 +285,18 @@ void CMD_TEST2()
 	vector<CAluminumFormula> vAlFormula;
 	vector<CGlassFormula> vGlassFormula;
 	vector<CHardwareData> vHardwareFormula;
+	vector<CString> vAlSeries;
+	CAluminumData AlData;
+	CString AlSeries;
+	double DeductedSizeData;
 	vAlFormula = CWindowFormula::Instance()->GetAluminumFormulas(L"Window_NC1");
 	vGlassFormula = CWindowFormula::Instance()->GetGlassFormulas(L"Window_NC1");
 	vHardwareFormula = CWindowFormula::Instance()->GetHardwareData(L"Window_NC1");
+	CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(E_WindowDoor_NC, "SN65A系列", "M1", DeductedSizeData);
+	CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName("外开窗", "SN65A系列", "M1", DeductedSizeData);
+	CAluminumSeries::Instance()->GetAluminumDataBySeriesAndName(E_WindowDoor_NC, "SN60系列", "假中梃", AlData);
+	CAluminumSeries::Instance()->GetAluminumSerialByCode("SN60T002", AlSeries);
+	vAlSeries = CAluminumSeries::Instance()->GetAluminumSerialsByWindowType(E_WindowDoor_NC);
 }
 
 static void initApp()

@@ -11,12 +11,22 @@ enum E_WindowDoorType
 	E_WindowDoor_TLM2,		//提升推拉门
 };
 
+E_WindowDoorType ToE_WindowDoorType(CString type);
+
+CString WindowTypeToCString(E_WindowDoorType type);
+
+
+
 enum E_AluminumType
 {
 	E_断桥隔热铝型材,
 	E_非断桥隔热铝型材,
 	E_阳极氧化铝型材,
 };
+
+E_AluminumType ToE_AluminumType(CString type);
+
+CString AluminumTypeToCSting(E_AluminumType type);
 
 //型材数据
 struct CAluminumData

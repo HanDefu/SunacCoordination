@@ -58,7 +58,9 @@ public:
 	vector<CGlassFormula> GetGlassFormulas(CString p_sPrototypeCode);//使用表GlassFormulas
 	vector<CHardwareData> GetHardwareData(CString p_sPrototypeCode);//使用表HardwareData
 
-
 protected:
 
 };
+
+CString GBKToUTF8(const std::string& strGBK);
+CString UTF8ToGBK(const std::string& strUTF8);
