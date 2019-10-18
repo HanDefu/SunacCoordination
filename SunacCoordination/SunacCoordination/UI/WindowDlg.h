@@ -39,7 +39,7 @@ public:
 	afx_msg void OnBnClickedSelOnDwg();
 	afx_msg void OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult);
 
-	void SetRadioDoor(int radioDoor);
+	void UpdateEnable();
 	void LoadDefaultValue();
 
 protected:

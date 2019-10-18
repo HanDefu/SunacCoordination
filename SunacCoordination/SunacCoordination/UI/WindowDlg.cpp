@@ -17,7 +17,7 @@ IMPLEMENT_DYNAMIC(CWindowDlg, CAcUiDialog)
 
 CWindowDlg::CWindowDlg(CWnd* pParent /*=NULL*/)
 	: CAcUiDialog(CWindowDlg::IDD, pParent)
-	, m_radioDoor(0)
+	, m_radioDoor(1)
 	, m_radioYes(0)
 	, m_autoIndex(FALSE)
 {
@@ -111,7 +111,7 @@ BOOL CWindowDlg::OnInitDialog()
 	m_preWindow.LoadDefaltSettings();
 
 	LoadDefaultValue();
-	SetRadioDoor(1);
+	UpdateEnable();
 
 	return TRUE;
 }
@@ -121,7 +121,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	vector<int> sels = m_preWindow.GetSelectedRows();
 	if (sels.size() == 0)
 	{
-		acutPrintf(_T("没有选择原型，请重新选择或者双击原型\n"));
+		AfxMessageBox(L"没有选择原型，请重新选择或者双击原型\n");
 		return;
 	}
 
@@ -188,35 +188,41 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 		m_allWindows = WebIO::GetInstance()->GetWindows(width, height, openType, openNum, areaType);
 
 	m_preWindow.ClearAllPreviews();
+
+	for (UINT i = 0; i < m_allWindows.size(); i++)
+	{
+		CString dwgPath = TY_GetLocalFilePath() + m_allWindows[i].GetFileName();
+		if (!PathFileExists(dwgPath))
+		{
+			acutPrintf(L"\n原型文件" + m_allWindows[i].GetFileName() + L"未找到\n");
+			m_allWindows.erase(m_allWindows.begin() + i--);
+		}
+	}
 	if (m_allWindows.empty())
 	{
-		acutPrintf(_T("未找到符合条件的记录\n"));
+		AfxMessageBox(L"未找到符合条件的记录\n");
 		return;
 	}
+
 	m_preWindow.SetRowCount((int)m_allWindows.size());
 	m_preWindow.SetColumnCount(1);
 	m_preWindow.SetDisplayRows(3);
 	m_preWindow.SetDisplayColumns(1);
+
 	for (UINT i = 0; i < m_allWindows.size(); i++)
 	{
 		m_allWindows[i].SetW(width);
 		m_allWindows[i].SetH(height);
 		CString str;
-		str.Format(_T("原型编号：%s\n窗户面积：%.2lf\n通风量：%.2lf\n动态类型：动态\n适用范围：集团"), m_allWindows[i].m_prototypeCode, width * height / 1E6, m_allWindows[i].GetTongFengQty(false));
+		str.Format(L"原型编号：%s\n窗户面积：%.2lf\n通风量：%.2lf\n动态类型：动态\n适用范围：集团", m_allWindows[i].m_prototypeCode, width * height / 1E6, m_allWindows[i].GetTongFengQty(false));
 		CString dwgPath = TY_GetLocalFilePath() + m_allWindows[i].GetFileName();
 		CString pngPath = dwgPath;
 		pngPath.Replace(L"\\LocalMode", L"\\Image");
 		pngPath.Replace(L".dwg", L".png");
 		if (PathFileExists(pngPath))
 			m_preWindow.AddPreviewPng(i, 0, pngPath, str);
-		else if (PathFileExists(dwgPath))
-			m_preWindow.AddPreview(i, 0, TY_GetLocalFilePath() + m_allWindows[i].GetFileName(), str);
 		else
-		{
-			acutPrintf(L"原型文件" + m_allWindows[i].GetFileName() + L"未找到\n");
-			m_allWindows.erase(m_allWindows.begin() + i);
-			i--;
-		}
+			m_preWindow.AddPreview(i, 0, dwgPath, str);
 	}
 
 	m_preWindow.SelectPreview(0, 0);
@@ -225,7 +231,7 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 void CWindowDlg::OnBnClickedRadioDoor()
 {
 	UpdateData(TRUE);
-	SetRadioDoor(m_radioDoor);
+	UpdateEnable();
 }
 
 void CWindowDlg::OnBnClickedCalculate()
@@ -234,7 +240,7 @@ void CWindowDlg::OnBnClickedCalculate()
 
 	CString sRate = TYUI_GetText(m_rate);
 	double rate = _ttof(sRate);
-	int pos = sRate.Find(_T('/'));
+	int pos = sRate.Find(L'/');
 	if (pos != -1)
 		rate /= _ttof(sRate.Mid(pos + 1));
 
@@ -266,7 +272,7 @@ void CWindowDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	int nSel = pView->iRow;
 	if (nSel >= 0 && nSel < (int)m_allWindows.size())
 	{
-		const CWindowsDimData* dimW1 = m_allWindows[nSel].GetDimData(_T("W1"));
+		const CWindowsDimData* dimW1 = m_allWindows[nSel].GetDimData(L"W1");
 		if (dimW1!=NULL)
 		{
 			if ((dimW1->type == SINGLE) || (dimW1->type == MULTI))
@@ -278,7 +284,7 @@ void CWindowDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 				TYUI_Disable(m_openWidth);
 		}
 
-		const CWindowsDimData* dimH2 = m_allWindows[nSel].GetDimData(_T("H2"));
+		const CWindowsDimData* dimH2 = m_allWindows[nSel].GetDimData(L"H2");
 		if (dimH2 != NULL)
 		{
 			if ((dimH2->type == SINGLE) || (dimH2->type == MULTI))
@@ -292,17 +298,24 @@ void CWindowDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 
 		TYUI_SetText(m_number, m_allWindows[nSel].m_prototypeCode);
 		m_radioYes = (m_allWindows[nSel].m_isBayWindow ? 0 : 1);
+
+		m_viewDir.ResetContent();
+		if (PathFileExists(TY_GetLocalFilePath() + m_allWindows[nSel].m_frontViewFile.fileName))
+			m_viewDir.AddString(L"立面");
+		if (PathFileExists(TY_GetLocalFilePath() + m_allWindows[nSel].m_topViewFile.fileName))
+			m_viewDir.AddString(L"平面");
+		if (PathFileExists(TY_GetLocalFilePath() + m_allWindows[nSel].m_leftViewFile.fileName))
+			m_viewDir.AddString(L"侧视");
+		if (m_viewDir.GetCount() > 0)
+			m_viewDir.SetCurSel(0);
+
 		UpdateData(FALSE);
 	}
 }
 
-void CWindowDlg::SetRadioDoor(int radioDoor)
+void CWindowDlg::UpdateEnable()
 {
-	if (radioDoor < 0 || radioDoor > 1)
-		return;
-	m_radioDoor = radioDoor;
-
-	if (radioDoor == 0)
+	if (m_radioDoor == 0)
 	{
 		TYUI_Enable(m_doorType);
 
@@ -338,12 +351,12 @@ void CWindowDlg::LoadDefaultValue()
 	TYUI_SetInt(m_ventilation, 0);
 	TYUI_SetInt(m_area, 0);
 	
-	TYUI_InitComboBox(m_doorType, doorTypes, doorTypes.empty() ? _T("") : doorTypes[0]);
-	TYUI_InitComboBox(m_openType, openTypes, openTypes.empty()? _T("") : openTypes[0]);
-	TYUI_InitComboBox(m_areaType, areaTypes, areaTypes.empty() ? _T("") : areaTypes[0]);
-	TYUI_InitComboBox(m_openAmount, openAmount, openAmount.empty() ? _T("") : openAmount[0]);
-	TYUI_InitComboBox(m_rate, rate, rate.empty() ? _T("") : rate[0]);
-	TYUI_InitComboBox(m_distance, wallDis, wallDis.empty() ? _T("") : wallDis[0]);
+	TYUI_InitComboBox(m_doorType, doorTypes, doorTypes.empty() ? L"" : doorTypes[0]);
+	TYUI_InitComboBox(m_openType, openTypes, openTypes.empty()? L"" : openTypes[0]);
+	TYUI_InitComboBox(m_areaType, areaTypes, areaTypes.empty() ? L"" : areaTypes[0]);
+	TYUI_InitComboBox(m_openAmount, openAmount, openAmount.empty() ? L"" : openAmount[0]);
+	TYUI_InitComboBox(m_rate, rate, rate.empty() ? L"" : rate[0]);
+	TYUI_InitComboBox(m_distance, wallDis, wallDis.empty() ? L"" : wallDis[0]);
 
 	m_viewDir.SetCurSel(0);
 	m_autoIndex = TRUE;

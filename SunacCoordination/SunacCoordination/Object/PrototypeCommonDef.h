@@ -29,17 +29,25 @@ enum E_DIRECTION
 };
 
 //Â¥²ãÇø¼ä
-enum E_FLOOR_RANGE
+enum E_KITCHEN_FLOOR_RANGE
 {
-	E_FLOOR_1_7 = 0,
-	E_FLOOR_8_14,
-	E_FLOOR_15_21,
-	E_FLOOR_22_28,
-	E_FLOOR_29_35,
+	E_KITCHEN_FLOOR_1_7 = 0,
+	E_KITCHEN_FLOOR_8_14,
+	E_KITCHEN_FLOOR_15_21,
+	E_KITCHEN_FLOOR_22_28,
+	E_KITCHEN_FLOOR_29_35,
 };
 
-const double c_airVentSize[] = { 350, 400, 450, 500, 550 };
+enum E_BATHROOM_FLOOR_RANGE
+{
+	E_BATHROOM_FLOOR_1_14 = 0,
+	E_BATHROOM_FLOOR_15_28,
+	E_BATHROOM_FLOOR_29_35,
+};
 
+const double c_kitchenAirVentSize[] = { 250, 300, 400, 450, 500 };
+
+const double c_bathroomAirVentSize[] = { 250, 300, 400 };
 
 struct PrototypeSize
 {

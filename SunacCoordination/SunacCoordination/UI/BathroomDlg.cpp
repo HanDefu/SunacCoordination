@@ -270,7 +270,7 @@ void CBathroomDlg::OnBnClickedButtonInsert()
 	m_pBathroomGen->GetBathroomAtt()->m_guanXiWidth = _ttof(TYUI_GetComboBoxText(m_washWidth));
 
 	m_pBathroomGen->GetBathroomAtt()->m_isGuoBiao = (m_isStd == 0);
-	m_pBathroomGen->GetBathroomAtt()->m_floorRange = (E_FLOOR_RANGE)m_floorRange.GetCurSel();
+	m_pBathroomGen->GetBathroomAtt()->m_floorRange = (E_BATHROOM_FLOOR_RANGE)m_floorRange.GetCurSel();
 	m_pBathroomGen->GetBathroomAtt()->m_airVentOffsetX = TYUI_GetInt(m_offsetX);
 	m_pBathroomGen->GetBathroomAtt()->m_airVentOffsetY = TYUI_GetInt(m_offsetY);
 	m_pBathroomGen->GetBathroomAtt()->m_airVentW = TYUI_GetInt(m_customX);
