@@ -135,7 +135,7 @@ int              MD2010_GetCurrentMode();//1模型空间
 05. 这里的遍历函数可以作为遍历一个空间(块)的标准函数
 06. AcDbBlockTableRecord == 块定义*/
 
-//int              MD2010_CreateBlockDefine_old(const WCHAR* blockname, AcDbObjectIdArray &vids, AcGePoint3d ori, AcDbObjectId& blkDefId);
+int              MD2010_CreateBlockDefine_old(const WCHAR* blockname, AcDbObjectIdArray &vids, AcGePoint3d ori, AcDbObjectId& blkDefId);
 int              MD2010_CreateBlockDefine_ExistEnts(const WCHAR* blockname, AcDbObjectIdArray &vids, AcGePoint3d ori, AcDbObjectId& blkDefId);
 bool             MD2010_CheckBlockDefExist(const WCHAR * blockname);
 AcDbObjectId     MD2010_GetBlockDefID(const WCHAR * blockname);

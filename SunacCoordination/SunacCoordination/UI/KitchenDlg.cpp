@@ -145,7 +145,7 @@ void CKitchenDlg::OnBnClickedButtonInsert()
 	m_pKitchGen->GetKitchenAtt()->m_zaoTaiType = TYUI_GetComboBoxText(m_benchWidth);
 
 	m_pKitchGen->GetKitchenAtt()->m_isGuoBiao = (m_isStd == 0);
-	m_pKitchGen->GetKitchenAtt()->m_floorRange = (E_FLOOR_RANGE)m_floorRange.GetCurSel();
+	m_pKitchGen->GetKitchenAtt()->m_floorRange = (E_KITCHEN_FLOOR_RANGE)m_floorRange.GetCurSel();
 	m_pKitchGen->GetKitchenAtt()->m_airVentOffsetX = TYUI_GetInt(m_offsetX);
 	m_pKitchGen->GetKitchenAtt()->m_airVentOffsetY = TYUI_GetInt(m_offsetY);
 	m_pKitchGen->GetKitchenAtt()->m_airVentW = TYUI_GetInt(m_customX);
@@ -504,8 +504,8 @@ bool CKitchenDlg::CheckValid(CString& errMsg)
 	int nSel = m_floorRange.GetCurSel();
 	if (m_isStd == 0)
 	{
-		ventX = TYUI_GetDouble(m_offsetX) + c_airVentSize[nSel];
-		ventY = TYUI_GetDouble(m_offsetY) + c_airVentSize[nSel];
+		ventX = TYUI_GetDouble(m_offsetX) + c_kitchenAirVentSize[nSel];
+		ventY = TYUI_GetDouble(m_offsetY) + c_kitchenAirVentSize[nSel];
 	}
 	else
 	{

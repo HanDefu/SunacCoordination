@@ -20,7 +20,7 @@ CFormulaParser::~CFormulaParser()
 
 E_ParserStatus CFormulaParser::TryParse(double& ret)
 {
-	m_UnknownVars.clear();
+	m_unknownVars.clear();
 	if (s_instanceCount > 10000)
 		return E_PS_PaserOverflow;
 	return ParsePartition(m_formula, ret);
@@ -135,7 +135,7 @@ E_ParserStatus CFormulaParser::ParsePartition(CString p_sFomula, double& ret)
 				return E_PS_Success;
 			else
 			{
-				m_UnknownVars.push_back(p_sFomula);
+				AddUnknownVar(p_sFomula);
 				return E_PS_UnknownVars;
 			}
 		}
@@ -181,12 +181,18 @@ bool CFormulaParser::IsValidVar(CString p_sVar)
 
 int CFormulaParser::SplitVar(CString p_sVar)
 {
-	for (int i = 1; i < p_sVar.GetLength(); i++)
-	{
-		if (IsNum(p_sVar[i-1]) && (IsLetter(p_sVar[i]) || p_sVar[i] == L'_'))
-			return i;
-	}
-	return -1;
+	CString sNum = p_sVar.SpanIncluding(L"0123456789.");
+	if (sNum.IsEmpty() || (sNum == p_sVar))
+		return -1;
+	return sNum.GetLength();
+}
+
+void CFormulaParser::AddUnknownVar(CString p_sName)
+{
+	for (UINT i = 0; i < m_unknownVars.size(); i++)
+		if (m_unknownVars[i] == p_sName)
+			return;
+	m_unknownVars.push_back(p_sName);
 }
 
 int CFormulaParser::GetPriorityLevel(wchar_t p_c)

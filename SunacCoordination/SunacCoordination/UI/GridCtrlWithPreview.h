@@ -24,8 +24,6 @@ public:
 protected:
 	DECLARE_MESSAGE_MAP()
 
-	virtual BOOL PreTranslateMessage(MSG* pMsg);
-
 	int m_nDisplayRows;
 	int m_nDisplayCols;
 };

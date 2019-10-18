@@ -7,6 +7,39 @@
 #include "../../Common/ComFun_Math.h"
 #include "../../Common/TYFormula.h"
 
+eWindowDimType ToEWindowType(CString type)
+{
+	if (type == "固定值" || type == "值")
+	{
+		return SINGLE;
+	}
+	else if (type == "值系列" || type == "系列")
+	{
+		return MULTI;
+	}
+	else if (type == "范围")
+	{
+		return SCOPE;
+	}
+	else if (type == "不限")
+	{
+		return UNLIMIT;
+	}
+	else if (type == "公式")
+	{
+		return CALC;
+	}
+	else if (type == "无")
+	{
+		return NOVALUE;
+	}
+	else
+	{
+		ASSERT(FALSE);
+		return NOVALUE;
+	}
+}
+
 CWindowsDimData::CWindowsDimData()
 {
 	type = NOVALUE;
@@ -152,6 +185,7 @@ void AttrWindow::CheckAndComplementDimeData() //检查并补全Dim数据，W/H/a确保都有
 		dimData.type = UNLIMIT;
 		dimData.defaultValue = 1200;
 		dimData.value = 1200;
+		SetDimData(dimData);
 	}
 	if (GetDimData(_T("H")) == NULL)
 	{
@@ -160,14 +194,16 @@ void AttrWindow::CheckAndComplementDimeData() //检查并补全Dim数据，W/H/a确保都有
 		dimData.type = UNLIMIT;
 		dimData.defaultValue = 1500;
 		dimData.value = 1500;
+		SetDimData(dimData);
 	}
 	if (GetDimData(_T("a")) == NULL)
 	{
 		CWindowsDimData dimData;
-		dimData.sCodeName = _T("a");
+		dimData.sCodeName = _T("A");
 		dimData.type = UNLIMIT;
 		dimData.defaultValue = 0;
 		dimData.value = 0;
+		SetDimData(dimData);
 	}
 }
 void AttrWindow::SetDimData(const CWindowsDimData& p_dim)
@@ -184,7 +220,7 @@ void AttrWindow::SetDimData(const CWindowsDimData& p_dim)
 	m_dimData.push_back(p_dim);
 }
 
-double AttrWindow::GetTongFengQty(bool bDefaultValue/* = false*/)
+double AttrWindow::GetTongFengQty(bool bDefaultValue/* = false*/) const
 {
 	if (m_isDynamic)
 	{
@@ -227,7 +263,7 @@ double AttrWindow::GetTongFengQty(bool bDefaultValue/* = false*/)
 	}
 }
 
-double AttrWindow::GetValue(CString p_sCode, bool bDefaultValue/* = false*/)
+double AttrWindow::GetValue(CString p_sCode, bool bDefaultValue/* = false*/) const
 {
 	const CWindowsDimData* pDimData = GetDimData(p_sCode);
 	assert(pDimData);

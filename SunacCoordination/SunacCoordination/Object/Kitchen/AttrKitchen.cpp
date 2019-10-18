@@ -15,7 +15,7 @@ ACRX_DXF_DEFINE_MEMBERS(AttrKitchen, AcDbObject,
 
 AttrKitchen::AttrKitchen()
 {
-	m_floorRange = E_FLOOR_1_7;//楼层选项
+	m_floorRange = E_KITCHEN_FLOOR_1_7;//楼层选项
 	 m_airVentW = 0;//排气道长度
 	 m_airVentH = 0;//排气道宽度
 	 m_airVentOffsetX = 0;//排气道长度

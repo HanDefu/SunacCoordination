@@ -621,23 +621,24 @@ int TY_GetTwoPoints(AcGePoint3d &pnt1, AcGePoint3d &pnt2)
 
 AcDbObjectId TY_GetExtensionDictionaryID(AcDbObjectId id)
 {
-	AcDbObject *pObj;
 	acDocManager->lockDocument(curDoc());
 
+	AcDbObjectId dicId = AcDbObjectId::kNull;
+
+	AcDbObject *pObj = NULL;
 	if(acdbOpenObject(pObj, id, AcDb::kForWrite)==Acad::eOk)
 	{
-		if (pObj->createExtensionDictionary()==Acad::eOk||pObj->createExtensionDictionary()==Acad::eAlreadyInDb)
+		Acad::ErrorStatus es = pObj->createExtensionDictionary();
+		if (es == Acad::eOk || es == Acad::eAlreadyInDb)
 		{
-			pObj->close();
-			acDocManager->unlockDocument(curDoc());
-			return pObj->extensionDictionary();
+			dicId = pObj->extensionDictionary();
 		}
-		else
-			pObj->close();
+		pObj->close();
 	}
 
 	acDocManager->unlockDocument(curDoc());
-	return 0;
+
+	return dicId;
 }
 
 //把UI的信息数据写入图框
@@ -646,31 +647,30 @@ int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt)
 	if (pDataEnt == 0)
 		return -2;
 
-	AcDbObjectId m_dicID = TY_GetExtensionDictionaryID(Id);
-	if (m_dicID == 0)
+	AcDbObjectId dicID = TY_GetExtensionDictionaryID(Id);
+	if (dicID == 0)
 		return -1;
 
-	AcDbObject *pObj = NULL;
-	AcDbObjectId patternID = NULL;
-	AcDbDictionary *pDict = NULL;
 
 	//注意这里有时候加入不进去， 是因为没有注册
 	Acad::ErrorStatus es = acDocManager->lockDocument(curDoc());
-	if(acdbOpenObject(pDict, m_dicID, AcDb::kForWrite)==Acad::eOk)
+
+	AcDbDictionary *pDict = NULL;
+	if (acdbOpenObject(pDict, dicID, AcDb::kForWrite) == Acad::eOk)
 	{
+		AcDbObjectId patternID = NULL;
 		es =pDict->setAt(SUNAC_ATTRIBUTE_ENTITY, pDataEnt, patternID);
 		pDict->close();
+		pDataEnt->close();
+
 		acDocManager->unlockDocument(curDoc());
 		return 0;
 	}
 	else
 	{
-		//pObj->close();
 		acDocManager->unlockDocument(curDoc());
 		return -3;
 	}
-	acDocManager->unlockDocument(curDoc());
-	return 0;
 }
 
 int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt)
@@ -1147,7 +1147,7 @@ AcDbObjectId CopyBlockDefFromDatabase(AcDbDatabase* pSourceDb, AcDbDatabase* pDe
 		assert(es == Acad::eOk);
 
 		// 把该临时图形数据库作为块插入到当前dwg
-		es = pDestDb->insert(blockRefId, blkDefName, pTempDb);
+		es = pDestDb->insert(blockRefId, blkDefName, pTempDb, false);
 		assert(es == Acad::eOk);
 		delete pTempDb;
 		pTempDb = NULL;
