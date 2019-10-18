@@ -61,6 +61,7 @@ AcDbObjectId CRCRailingBoli::CreateRailingBlockDefine(CString sRailingDefName)
 	AttrRailing* pAttRailing = new AttrRailing(m_railingAtt);
 	pAttRailing->SetInstanceCode(sRailingDefName);
 	TY_AddAttributeData(blkDefId, pAttRailing);
+	pAttRailing->close();
 
 	acDocManager->unlockDocument(curDoc());
 

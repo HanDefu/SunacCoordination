@@ -1631,33 +1631,30 @@ void getUcsToWcsOriginMatrix(AcGeMatrix3d& m,
 	}
 }
 
-Acad::ErrorStatus cloneAndXformObjects(AcDbDatabase* db, const AcDbObjectIdArray& entsToClone,
-								       const AcDbObjectId& ownerBlockId,
+Acad::ErrorStatus cloneAndXformObjects(AcDbDatabase* db, AcDbObjectIdArray& entsToClone,
+								       AcDbObjectId& ownerBlockId,
 								       const AcGeMatrix3d& xformMat, bool debugSpeak)
 {
 	ASSERT(db != NULL);
 
 	AcDbIdMapping idMap;
-	Acad::ErrorStatus es = db->deepCloneObjects(
-		const_cast<AcDbObjectIdArray&>(entsToClone),
-		const_cast<AcDbObjectId&>(ownerBlockId), idMap);
-
+	Acad::ErrorStatus es = db->deepCloneObjects(entsToClone, ownerBlockId, idMap);
 	if (es != Acad::eOk) 
 	{
 		//ArxDbgUtils::rxErrorMsg(es);
 		return es;
 	}
 
-	AcDbEntity* clonedEnt;
-	AcDbIdPair idPair;
 	AcDbIdMappingIter iter(idMap);
 	for (iter.start(); !iter.done(); iter.next()) 
 	{
+		AcDbIdPair idPair;
 		if (!iter.getMap(idPair))
 			return Acad::eInvalidInput;
 
 		if (idPair.isCloned()) 
 		{
+			AcDbEntity* clonedEnt;
 			es = acdbOpenAcDbEntity(clonedEnt, idPair.value(), AcDb::kForWrite);
 			if (es == Acad::eOk) 
 			{
@@ -1665,7 +1662,6 @@ Acad::ErrorStatus cloneAndXformObjects(AcDbDatabase* db, const AcDbObjectIdArray
 				{
 					//if (debugSpeak)
 						//acutPrintf(_T("\nCloned And Transformed: %s"), ArxDbgUtils::objToClassStr(clonedEnt));
-
 					clonedEnt->transformBy(xformMat);
 				}
 				//else if (debugSpeak)
