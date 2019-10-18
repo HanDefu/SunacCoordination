@@ -49,6 +49,9 @@
 #include <string>
 #include "WebIO/WebIO.h"
 #include "Object/WindowStatistic/WindowMaterialUsage.h"
+#include "Object/WindowStatistic/WindowFormula.h"
+#include "Object/WindowStatistic/AluminumSeries.h"
+#include "Object/WindowStatistic/DeductedSize.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -343,6 +346,25 @@ void CMD_test()
 	return;
 }
 
+void CMD_TEST2()
+{
+	vector<CAluminumFormula> vAlFormula;
+	vector<CGlassFormula> vGlassFormula;
+	vector<CHardwareData> vHardwareFormula;
+	vector<CString> vAlSeries;
+	CAluminumData AlData;
+	CString AlSeries;
+	double DeductedSizeData;
+	vAlFormula = CWindowFormula::Instance()->GetAluminumFormulas(L"Window_NC1");
+	vGlassFormula = CWindowFormula::Instance()->GetGlassFormulas(L"Window_NC1");
+	vHardwareFormula = CWindowFormula::Instance()->GetHardwareData(L"Window_NC1");
+	CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(E_WindowDoor_NC, "SN65A系列", "M1", DeductedSizeData);
+	CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName("外开窗", "SN65A系列", "M1", DeductedSizeData);
+	CAluminumSeries::Instance()->GetAluminumDataBySeriesAndName(E_WindowDoor_NC, "SN60系列", "假中梃", AlData);
+	CAluminumSeries::Instance()->GetAluminumSerialByCode("SN60T002", AlSeries);
+	vAlSeries = CAluminumSeries::Instance()->GetAluminumSerialsByWindowType(E_WindowDoor_NC);
+}
+
 static void initApp()
 {
 	CAcModuleResourceOverride resOverride;
@@ -500,6 +522,15 @@ static void initApp()
 		-1,
 		theArxDLL.ModuleResourceInstance());
 
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("te"),
+		_T("te"),
+		ACRX_CMD_SESSION,
+		CMD_TEST2,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
 	AttrObject::rxInit();
 	acrxBuildClassHierarchy();
 	acrxRegisterService(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_OBJECT));
@@ -573,6 +604,7 @@ static void unloadApp()
 extern "C" int APIENTRY
 	DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 {
+	SetDllDirectory(L"D:\\sqlite\\sqlite");
 	// Remove this if you use lpReserved
 	UNREFERENCED_PARAMETER(lpReserved);
 

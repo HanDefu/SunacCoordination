@@ -121,7 +121,7 @@ void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öÐÍ²ÄÊý¾
 	int nRow = 17;
 	for (UINT i=0; i<alFormulas.size(); i++, nRow++)
 	{
-		p_excel.SetCellValue(nRow, 2, alFormulas[i].m_alumunumClassify);
+		p_excel.SetCellValue(nRow, 2, alFormulas[i].m_aluminumClassify);
 
 		//ÐÍ²Ä±àºÅ
 		CAluminumData dataOut;

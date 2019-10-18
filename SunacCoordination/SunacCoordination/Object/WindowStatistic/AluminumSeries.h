@@ -13,12 +13,22 @@ enum E_WindowDoorType
 
 E_WindowDoorType GetWindowDoorType(CString sOpenType);
 
+E_WindowDoorType ToE_WindowDoorType(CString type);
+
+CString WindowTypeToCString(E_WindowDoorType type);
+
+
+
 enum E_AluminumType
 {
 	E_断桥隔热铝型材,
 	E_非断桥隔热铝型材,
 	E_阳极氧化铝型材,
 };
+
+E_AluminumType ToE_AluminumType(CString type);
+
+CString AluminumTypeToCSting(E_AluminumType type);
 
 //型材数据
 struct CAluminumData
@@ -56,6 +66,8 @@ public:
 
 	//获得门窗类型下的型材系列选项
 	vector<CString> GetAluminumSerialsByWindowType(E_WindowDoorType p_winType);
+
+	//使用表AluminumSeries
 
 protected:
 
