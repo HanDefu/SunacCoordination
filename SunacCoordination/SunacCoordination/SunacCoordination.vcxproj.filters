@@ -739,6 +739,12 @@
     <ClInclude Include="Object\WindowStatistic\WindowFormula.h">
       <Filter>Object\WindowStatictic</Filter>
     </ClInclude>
+    <ClInclude Include="Tool\SQLite\sqlite3.h">
+      <Filter>Tool\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\SQLite\sqlite3ext.h">
+      <Filter>Tool\SQLite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -807,6 +813,9 @@
     <Filter Include="Object\WindowStatictic">
       <UniqueIdentifier>{5c95edbc-ba71-4098-94e7-fa1cd929d900}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tool\SQLite">
+      <UniqueIdentifier>{8cd2ce61-5c60-42ee-9024-cc8b020d3978}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\SunacCoordination.rc">
@@ -869,5 +878,13 @@
       <Filter>bmp</Filter>
     </None>
     <None Include="WebIO\SunacCadWeb\ArgumentSettingServiceSoap.nsmap" />
+    <None Include="Tool\SQLite\sqlite3.dll">
+      <Filter>Tool\SQLite</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="Tool\SQLite\sqlite3.lib">
+      <Filter>Tool\SQLite</Filter>
+    </Library>
   </ItemGroup>
 </Project>

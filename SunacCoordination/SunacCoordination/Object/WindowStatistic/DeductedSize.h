@@ -14,7 +14,7 @@ public:
 	bool GetDeductedSizeBySeriesAndName(E_WindowDoorType p_winType, CString p_serials, CString sDeductedName, double &p_valueOut);
 	bool GetDeductedSizeBySeriesAndName(CString p_sWinType, CString p_serials, CString sDeductedName, double &p_valueOut);
 
-
+	// π”√±ÌDeductedSize
 protected:
 
 };
