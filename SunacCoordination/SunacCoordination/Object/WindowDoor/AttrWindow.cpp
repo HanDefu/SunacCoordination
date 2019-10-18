@@ -2,6 +2,7 @@
 #include "dbproxy.h"
 #include "geassign.h"
 #include "acgi.h"
+#include <algorithm>
 #include "AttrWindow.h"
 #include "../../Common/ComFun_Sunac.h"
 #include "../../Common/ComFun_Math.h"
@@ -43,6 +44,11 @@ bool CWindowsDimData::operator==(const CWindowsDimData &rhs) const
 	return true;
 }
 
+bool CWindowsDimData::operator<(const CWindowsDimData &rhs) const
+{
+	return sCodeName < rhs.sCodeName;
+}
+
 bool CWindowsDimData::IsValueEqual(const CWindowsDimData &rhs)const
 {
 	if (type==NOVALUE)
@@ -53,6 +59,20 @@ bool CWindowsDimData::IsValueEqual(const CWindowsDimData &rhs)const
 	{
 		return JHCOM_equ(value, rhs.value, 0.1);
 	}
+}
+
+bool CWindowsDimData::IsParaEqual(const CWindowsDimData &rhs) const
+{
+	if (sCodeName != rhs.sCodeName)
+		return false;
+	if (type != rhs.type)
+		return false;
+	if (type == NOVALUE)
+		return true;
+	if (type == CALC)
+		return sFomula == rhs.sFomula;
+	else
+		return value == rhs.value;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -230,7 +250,7 @@ double AttrWindow::GetTongFengQty(bool bDefaultValue/* = false*/)
 	}
 }
 
-double AttrWindow::GetValue(CString p_sCode, bool bDefaultValue/* = false*/)
+double AttrWindow::GetValue(CString p_sCode, bool bDefaultValue/* = false*/) const
 {
 	const CWindowsDimData* pDimData = GetDimData(p_sCode);
 	assert(pDimData);
@@ -544,5 +564,25 @@ bool AttrWindow::IsPrototypeEqual(const AttrWindow& p_att)
 		return false;
 	}
 	else return true;*/
+	return true;
+}
+
+bool AttrWindow::IsInstanceEqual(const AttrWindow& p_att) const
+{
+	if (m_prototypeCode != p_att.m_prototypeCode)
+		return false;
+	
+	vector<CWindowsDimData> dim1 = m_dimData;
+	vector<CWindowsDimData> dim2 = p_att.m_dimData;
+	sort(dim1.begin(), dim1.end());
+	sort(dim2.begin(), dim2.end());
+
+	if (dim1.size() != dim2.size())
+		return false;
+	for (UINT i = 0; i < dim1.size(); i++)
+	{
+		if (!dim1[i].IsParaEqual(dim2[i]))
+			return false;
+	}
 	return true;
 }
