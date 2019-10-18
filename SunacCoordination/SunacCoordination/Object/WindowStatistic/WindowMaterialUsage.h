@@ -17,6 +17,7 @@ public:
 	virtual void CalcMateriaUsage() = 0;
 	virtual bool ExportReportToExcel(CString p_sReportFile) = 0; //导出到excel报表
 	virtual bool ExportReportToExcel(Excel::CExcelUtil& p_excel) = 0; //导出到excel报表
+	void GetAllData();
 	
 	//////////////////////////////////////////////////////////////////////////
 	//以下函数用于填写汇总表
@@ -35,30 +36,39 @@ protected:
 	//解析公式
 	void ParseFomula(CString p_sFomula);
 
+	double GetVauleByFomula(CString p_sFomula);
+
+	void ExportWindowInfo(Excel::CExcelUtil& p_excel);//输出基本信息
+	void ExprotAlInfo(Excel::CExcelUtil& p_excel);//输出型材数据
+	void ExportGlassInfo(Excel::CExcelUtil& p_excel); //输出玻璃数据
+	void ExportHardwareInfo(Excel::CExcelUtil& p_excel) ;//输出五金数据
+	void ExportFuliaoInfo(Excel::CExcelUtil& p_excel) ;//输出辅料数据
+
+
 
 protected:
 	const AttrWindow m_winAtt;
 	int m_nCount;
-
+	
 	//////////////////////////////////////////////////////////////////////////
-		//总计数量:
-		//断桥隔热铝型材
-		//非断桥隔热铝型材
-		//阳极氧化铝型材
+	double m_alTotalQTY;  //总计数量:
+	double m_broAlQTY;    //断桥隔热铝型材
+	double m_nonBroAlQTY; //非断桥隔热铝型材
+	double m_anoAlQTY;	  //阳极氧化铝型材
 
-		//玻璃合计
+	double m_glassTotalQTY;	//玻璃合计
 
-		//五金套数
+	int m_hardwareNumber;	//五金套数
 
-		//发泡剂
-		//中性硅酮密封胶
-		//中性硅酮密封胶
-		//中性硅酮密封胶
-		//组角胶
-		//密封胶条
-		//密封胶条
-		//密封毛边
-		//窗制作安装辅材费
+	double m_foamingQTY;	//发泡剂
+	double m_glassSealantQTY; //中性硅酮密封胶(玻璃处耐候胶)
+	double m_inSealantQTY;  //中性硅酮密封胶(内墙胶)
+	double m_exSealantQTY;  //中性硅酮密封胶(外墙胶)
+	double m_comGlueQTY;	//组角胶
+	double m_sealStripQTY;	//密封胶条(m)
+	double m_squSealStripQTY;//密封胶条(㎡)
+	double m_sealBurrsQTY;	//密封毛边
+	double m_windowCost;		//窗制作安装辅材费
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -66,11 +76,14 @@ protected:
 class CWindowMaterialUsageNC :public CWindowMaterialUsage
 {
 public:
-	CWindowMaterialUsageNC();
-	~CWindowMaterialUsageNC();
+	CWindowMaterialUsageNC(const AttrWindow& p_winAtt, int p_nCount) : CWindowMaterialUsage(p_winAtt, p_nCount) {}
+	~CWindowMaterialUsageNC() {}
 
+	void CalcMateriaUsage();
+	virtual bool ExportReportToExcel(CString p_sReportFile);
+	virtual bool ExportReportToExcel(Excel::CExcelUtil& p_excel);
 protected:
-
+	
 };
 
 

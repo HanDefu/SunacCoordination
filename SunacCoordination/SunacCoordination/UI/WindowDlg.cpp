@@ -173,7 +173,6 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	OnOK();
 }
 
-
 void CWindowDlg::OnBnClickedButtonSearchwindow()
 {
 	double width = TYUI_GetDouble(m_width);
