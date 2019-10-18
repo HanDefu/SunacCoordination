@@ -108,7 +108,10 @@ void CWindowMaterialUsage::ExportWindowInfo(Excel::CExcelUtil& p_excel)//Êä³ö»ù±
 	str.Format(_T("%d"),(int)(m_winAtt.GetW()));
 	p_excel.SetCellValue(5, 8, str);
 
-	double area = m_winAtt.GetH()* m_winAtt.GetW()/1e6;
+	double area = m_winAtt.GetH()* m_winAtt.GetW()/1e6; //µ¥Î»©O
+	str.Format(_T("%.2f"),area);
+	p_excel.SetCellValue(2, 12, str);
+	p_excel.SetCellValue(14, 9, str);
 
 }
 void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öÐÍ²ÄÊý¾Ý
