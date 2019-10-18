@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "DeductedSize.h"
 #include "WindowFormula.h"
-#include "Object\WindowStatistic\AluminumSeries.h"
+#include "AluminumSeries.h"
 #include "..\..\Tool\SQLite\sqlite3.h"
 
 
