@@ -50,6 +50,10 @@ public:
 	CWindowsDimData();
 	bool operator==(const CWindowsDimData &rhs) const;
 	bool IsValueEqual(const CWindowsDimData &rhs)const;
+	bool IsParaEqual(const CWindowsDimData &rhs)const;
+
+	//≈≈–Ú”√
+	bool operator<(const CWindowsDimData &rhs) const;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -89,6 +93,7 @@ public:
 	virtual eRCType GetType() {return WINDOW;}
 	virtual bool isEqualTo(AttrObject*other);//¥∞–Õ «∑Ò“ª÷¬
 	virtual bool IsPrototypeEqual(const AttrWindow& p_att);
+	virtual bool IsInstanceEqual(const AttrWindow& p_att) const;
 	
 	//////////////////////////////////////////////////////////////////////////
 	const CWindowsDimData* GetDimData(CString p_sCode)const;
@@ -99,12 +104,12 @@ public:
 	
 	double GetValue(CString p_sCode, bool bDefaultValue = false) const;
 	double GetH(bool bDefaultValue = false) const { return GetValue(L"H", bDefaultValue); }
-	double GetH1(bool bDefaultValue = false)  const{ return GetValue(L"H1", bDefaultValue); }
+	double GetH1(bool bDefaultValue = false) const { return GetValue(L"H1", bDefaultValue); }
 	double GetH2(bool bDefaultValue = false) const { return GetValue(L"H2", bDefaultValue); }
 	double GetW(bool bDefaultValue = false) const { return GetValue(L"W", bDefaultValue); }
 	double GetW1(bool bDefaultValue = false) const { return GetValue(L"W1", bDefaultValue); }
-	double GetW2(bool bDefaultValue = false)  const{ return GetValue(L"W2", bDefaultValue); }
-	double GetW3(bool bDefaultValue = false)  const{ return GetValue(L"W3", bDefaultValue); }
+	double GetW2(bool bDefaultValue = false) const { return GetValue(L"W2", bDefaultValue); }
+	double GetW3(bool bDefaultValue = false) const { return GetValue(L"W3", bDefaultValue); }
 	double GetA(bool bDefaultValue = false) const { return GetValue(L"a", bDefaultValue); } //»˚∑Ï≥ﬂ¥Á
 	double GetR(bool bDefaultValue = false) const { return GetValue(L"R", bDefaultValue); }
 

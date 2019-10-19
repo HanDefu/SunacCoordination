@@ -3,13 +3,12 @@
 
 #include "stdafx.h"
 #include "WindowDlg.h"
-#include "afxdialogex.h"
 #include "../Common/ComFun_Sunac.h"
 #include "../Object/WindowDoor/RCWindow.h"
 #include "../Object/WindowDoor/AttrWindow.h"
 #include "../WebIO/WebIO.h"
 #include "../GlobalSetting.h"
-#include "../WebIO/WindowLocalData.h"
+#include "../Object/WindowDoor/WindowAutoName.h"
 
 // CWindowDlg 对话框
 
@@ -97,7 +96,9 @@ BEGIN_MESSAGE_MAP(CWindowDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDC_BUTTON_CALCULATE, &CWindowDlg::OnBnClickedCalculate)
 	ON_BN_CLICKED(IDC_CHECK_AUTOINDEX, &CWindowDlg::OnBnClickedAutoIndex)
 	ON_BN_CLICKED(IDC_BUTTON_SELECT, &CWindowDlg::OnBnClickedSelOnDwg)
-	ON_NOTIFY(GVN_SELCHANGED, IDC_PREVIEW_WINDOW, &CWindowDlg::OnSelChanged)
+	ON_NOTIFY(GVN_SELCHANGED, IDC_PREVIEW_WINDOW, &CWindowDlg::OnSelChangedPreview)
+	ON_CBN_SELCHANGE(IDC_COMBO_OPENWIDTH, &CWindowDlg::OnSelChangedW1)
+	ON_CBN_SELCHANGE(IDC_COMBO_FIXEDVALUE, &CWindowDlg::OnSelChangedH2)
 END_MESSAGE_MAP()
 
 
@@ -124,10 +125,10 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		AfxMessageBox(L"没有选择原型，请重新选择或者双击原型\n");
 		return;
 	}
+	AttrWindow &selWindow = m_allWindows[sels[0]];
 
 	ShowWindow(FALSE);
 
-	// TODO: 在此添加控件通知处理程序代码
 	AcGePoint3d origin = TY_GetPoint();
 	acedPostCommandPrompt();
 
@@ -136,40 +137,38 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	double W1 = TYUI_GetDouble(m_openWidth);
 	double H2 = TYUI_GetDouble(m_H2);
 
-	if (sels.size() > 0)
-	{
-		RCWindow oneWindow;
-			
-		int sel = m_viewDir.GetCurSel();
-		if (sel == 0)
-			oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].m_frontViewFile.fileName, origin, 0, L"0", 256);
-		else if (sel == 1)
-			oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].m_topViewFile.fileName, origin, 0, L"0", 256);
-		else
-			oneWindow.Insert(TY_GetLocalFilePath() + m_allWindows[sels[0]].m_leftViewFile.fileName, origin, 0, L"0", 256);
+	selWindow.SetW1(W1);
+	selWindow.SetH2(H2);
 
-		oneWindow.InitParameters();
-		oneWindow.SetParameter(L"H", height);
-		oneWindow.SetParameter(L"W", width);
+	RCWindow oneWindow;
 
-		oneWindow.SetParameter(L"W1", W1);
-		oneWindow.SetParameter(L"H2", H2);
+	int sel = m_viewDir.GetCurSel();
+	if (sel == 0)
+		oneWindow.Insert(TY_GetLocalFilePath() + selWindow.m_frontViewFile.fileName, origin, 0, L"0", 256);
+	else if (sel == 1)
+		oneWindow.Insert(TY_GetLocalFilePath() + selWindow.m_topViewFile.fileName, origin, 0, L"0", 256);
+	else
+		oneWindow.Insert(TY_GetLocalFilePath() + selWindow.m_leftViewFile.fileName, origin, 0, L"0", 256);
 
-		oneWindow.RunParameters();
+	oneWindow.InitParameters();
 
-		CString str;
-		str.Format(L"%d_%d",(int)(oneWindow.GetW()), (int)(oneWindow.GetH()));
-			
-		if (m_isMirror.GetCheck())
-		    TYCOM_Mirror(oneWindow.m_id, origin, AcGeVector3d(0,1,0));
+	oneWindow.SetParameter(L"H", height);
+	oneWindow.SetParameter(L"W", width);
+	oneWindow.SetParameter(L"W1", W1);
+	oneWindow.SetParameter(L"H2", H2);
 
-		//把UI的数据记录在图框的扩展字典中
-		AttrWindow * pWindow = new AttrWindow(m_allWindows[sels[0]]);
-		oneWindow.AddAttribute(pWindow);
-		pWindow->close();
+	oneWindow.RunParameters();
 
-		oneWindow.SetInstanceCode(m_allWindows[sels[0]].m_prototypeCode + str);
-	}
+	if (m_isMirror.GetCheck())
+		TYCOM_Mirror(oneWindow.m_id, origin, AcGeVector3d(0,1,0));
+
+	CWindowAutoName::GetInstance()->AddWindowType(selWindow);
+
+	//把UI的数据记录在图框的扩展字典中
+	AttrWindow * pWindow = new AttrWindow(m_allWindows[sels[0]]);
+	oneWindow.AddAttribute(pWindow);
+	pWindow->close();
+
 	OnOK();
 }
 
@@ -212,6 +211,7 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 	{
 		m_allWindows[i].SetW(width);
 		m_allWindows[i].SetH(height);
+		m_allWindows[i].m_instanceCode = CWindowAutoName::GetInstance()->GetWindowName(m_allWindows[i]);
 		CString str;
 		str.Format(L"原型编号：%s\n窗户面积：%.2lf\n通风量：%.2lf\n动态类型：动态\n适用范围：集团", m_allWindows[i].m_prototypeCode, width * height / 1E6, m_allWindows[i].GetTongFengQty(false));
 		CString dwgPath = TY_GetLocalFilePath() + m_allWindows[i].GetFileName();
@@ -265,7 +265,7 @@ void CWindowDlg::OnBnClickedSelOnDwg()
 	TYUI_SetDouble(m_height, rect.GetHeight());
 }
 
-void CWindowDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
+void CWindowDlg::OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	NM_GRIDVIEW* pView = (NM_GRIDVIEW*)pNMHDR;
 	int nSel = pView->iRow;
@@ -295,7 +295,7 @@ void CWindowDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 				TYUI_Disable(m_H2);
 		}
 
-		TYUI_SetText(m_number, m_allWindows[nSel].m_prototypeCode);
+		TYUI_SetText(m_number, m_allWindows[nSel].m_instanceCode);
 		m_radioYes = (m_allWindows[nSel].m_isBayWindow ? 0 : 1);
 
 		m_viewDir.ResetContent();
@@ -310,6 +310,32 @@ void CWindowDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 
 		UpdateData(FALSE);
 	}
+}
+
+void CWindowDlg::OnSelChangedW1()
+{
+	vector<int> sels = m_preWindow.GetSelectedRows();
+	if (sels.empty())
+		return;
+	int nSel = sels[0];
+
+	CString sSel = TYUI_GetComboBoxText(m_openWidth);
+	m_allWindows[nSel].SetW1(_ttoi(sSel));
+	m_allWindows[nSel].m_instanceCode = CWindowAutoName::GetInstance()->GetWindowName(m_allWindows[nSel]);
+	TYUI_SetText(m_number, m_allWindows[nSel].m_instanceCode);
+}
+
+void CWindowDlg::OnSelChangedH2()
+{
+	vector<int> sels = m_preWindow.GetSelectedRows();
+	if (sels.empty())
+		return;
+	int nSel = sels[0];
+
+	CString sSel = TYUI_GetComboBoxText(m_H2);
+	m_allWindows[nSel].SetH2(_ttoi(sSel));
+	m_allWindows[nSel].m_instanceCode = CWindowAutoName::GetInstance()->GetWindowName(m_allWindows[nSel]);
+	TYUI_SetText(m_number, m_allWindows[nSel].m_instanceCode);
 }
 
 void CWindowDlg::UpdateEnable()
