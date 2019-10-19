@@ -127,7 +127,10 @@ void CWindowMaterialUsage::ExportWindowInfo(Excel::CExcelUtil& p_excel)//Êä³ö»ù±
 {
 	CString str;
 
-	p_excel.SetCellValue(2, 2, m_winAtt.m_prototypeCode);	
+	p_excel.SetCellValue(2, 2, m_winAtt.m_prototypeCode);
+
+	//ÐÍ²ÄÏµÁÐ
+	p_excel.SetCellValue(2, 5, m_winAtt.m_material.sAluminumSerial);
 	
 	//¸ß¶È
 	str.Format(_T("%d"),(int)(m_winAtt.GetH()));
@@ -226,15 +229,7 @@ void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öÐÍ²ÄÊý¾
 			//ÐÍ²Ä±àºÅ
 			p_excel.SetCellValue(nRow, 5, dataOut.sCode);
 		}
-
-		CString serialOut;
-		bSuc = CAluminumSeries::Instance()->GetAluminumSerialByCode(dataOut.sCode, serialOut);
-		if (bSuc)
-		{
-			//ÐÍ²ÄÏµÁÐ
-			p_excel.SetCellValue(2, 5, serialOut);
-		}
-
+		
 		//³¤¶È
 		double length = GetVauleByFomula(alFormulas[i].m_formula);
 		str.Format(_T("%d"),(int)(length));
