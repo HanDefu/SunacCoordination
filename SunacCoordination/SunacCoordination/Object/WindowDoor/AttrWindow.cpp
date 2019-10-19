@@ -283,10 +283,21 @@ double AttrWindow::GetTongFengQty(bool bDefaultValue/* = false*/) const
 	}
 }
 
+bool AttrWindow::HasValue(CString p_sCode)const
+{
+	const CWindowsDimData* pDimData = GetDimData(p_sCode);
+	return pDimData != NULL;
+}
+
 double AttrWindow::GetValue(CString p_sCode, bool bDefaultValue/* = false*/) const
 {
 	const CWindowsDimData* pDimData = GetDimData(p_sCode);
-	assert(pDimData);
+	if (pDimData == NULL)
+	{
+		assert(pDimData);
+		return 0;
+	}
+	
 	assert(pDimData->type != NOVALUE);
 	if (pDimData->type == CALC)
 	{

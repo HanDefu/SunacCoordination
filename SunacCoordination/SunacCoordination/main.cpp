@@ -196,25 +196,19 @@ void ZJYTest()
 	attrwindow.SetW1(500);
 	attrwindow.SetH(1400);
 	attrwindow.SetH1(500);
-	attrwindow.SetA(50);
+	attrwindow.SetA(25);
 
 	attrwindow.m_material.sAluminumSerial = _T("SN55系列");
 
 
 	CWindowMaterialUsageNC winUsageNC(attrwindow, 1);
 
-	Excel::CExcelUtil xls;
 	CString filter=L"参数文件(*.xlsx)|*.xlsx|All Files(*.*)|*.*||";  
 	CFileDialog dlg(FALSE, L"xlsx", L"*.xlsx", NULL, filter); 
 	if(dlg.DoModal()==IDOK)
 	{
 		CString pathName = dlg.GetFileName();
-		winUsageNC.ExportReportToExcel(localWindowPath + _T("门窗算量表格"));
-		xls.SaveAs(WCHARTOCHAR(pathName.GetBuffer()));
-	}
-	else
-	{
-		return;
+		winUsageNC.ExportReportToExcel(pathName);
 	}
 }
 
