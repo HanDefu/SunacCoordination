@@ -68,7 +68,14 @@ protected:
 	double m_sealStripQTY;	//密封胶条(m)
 	double m_squSealStripQTY;//密封胶条(㎡)
 	double m_sealBurrsQTY;	//密封毛边
-	double m_windowCost;		//窗制作安装辅材费
+	double m_windowCost;	//窗制作安装辅材费
+
+	
+	double m_yShuliaoTotallength;//压线竖料总长
+	double m_yHengliaoTotallength;//压线横料总长
+
+	double m_cShuliaoTotallength;//窗扇竖料总长
+	double m_cHengliaoTotallength;//窗扇横料总长
 };
 
 //////////////////////////////////////////////////////////////////////////

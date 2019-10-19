@@ -156,6 +156,7 @@ void ZJYTest()
 	CString localWindowPath = TY_GetLocalFilePath();
 	AttrWindow attrwindow;
 
+	attrwindow.m_prototypeCode = _T("Window_NC1");
 	attrwindow.m_quyuName = _T("全部");
 	attrwindow.m_isJiTuan = true;
 	attrwindow.m_isDynamic = true;
@@ -173,9 +174,10 @@ void ZJYTest()
 	dimdata2.type = UNLIMIT;
 	attrwindow.SetDimData(dimdata2);
 	CWindowsDimData dimdata3;
-	dimdata3.sCodeName = _T("a");
+	/*dimdata3.sCodeName = _T("a");
 	dimdata3.type = UNLIMIT;
-	attrwindow.SetDimData(dimdata3);
+	attrwindow.SetDimData(dimdata3);*/
+
 
 	//CWindowsDimData dimdata1;
 	dimdata1.sCodeName = _T("W1");
@@ -192,7 +194,7 @@ void ZJYTest()
 
 	attrwindow.SetW(800);
 	attrwindow.SetW1(500);
-	attrwindow.SetH(1500);
+	attrwindow.SetH(1400);
 	attrwindow.SetH1(500);
 	attrwindow.SetA(50);
 
@@ -207,7 +209,7 @@ void ZJYTest()
 	if(dlg.DoModal()==IDOK)
 	{
 		CString pathName = dlg.GetFileName();
-		winUsageNC.ExportReportToExcel(pathName);
+		winUsageNC.ExportReportToExcel(localWindowPath + _T("门窗算量表格"));
 		xls.SaveAs(WCHARTOCHAR(pathName.GetBuffer()));
 	}
 	else
