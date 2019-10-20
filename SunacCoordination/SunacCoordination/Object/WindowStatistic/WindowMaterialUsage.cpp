@@ -128,6 +128,9 @@ void CWindowMaterialUsage::ExportWindowInfo(Excel::CExcelUtil& p_excel)//Êä³ö»ù±
 	CString str;
 
 	p_excel.SetCellValue(2, 2, m_winAtt.m_prototypeCode);	
+
+	//ÐÍ²ÄÏµÁÐ
+	p_excel.SetCellValue(2, 5, m_winAtt.m_material.sAluminumSerial);
 	
 	//¸ß¶È
 	str.Format(_T("%d"),(int)(m_winAtt.GetH()));
@@ -141,9 +144,9 @@ void CWindowMaterialUsage::ExportWindowInfo(Excel::CExcelUtil& p_excel)//Êä³ö»ù±
 
 
 	//´°¿ò³ß´ç
-	str.Format(_T("%d"), (int)((m_winAtt.GetH()) - m_winAtt.GetA() * 2));
+	str.Format(_T("%d"), (int)((m_winAtt.GetH() - m_winAtt.GetA() * 2)));
 	p_excel.SetCellValue(4, 9, str);
-	str.Format(_T("%d"), (int)((m_winAtt.GetW()) - m_winAtt.GetA() * 2));
+	str.Format(_T("%d"), (int)((m_winAtt.GetW() - m_winAtt.GetA() * 2)));
 	p_excel.SetCellValue(5, 9, str);
 
 	//H1
@@ -188,7 +191,7 @@ void CWindowMaterialUsage::ExportWindowInfo(Excel::CExcelUtil& p_excel)//Êä³ö»ù±
 	}
 
 	//a
-	str.Format(_T("%d"),(int)(m_winAtt.GetA()*2));
+	str.Format(_T("%d"),(int)(m_winAtt.GetA()));
 	p_excel.SetCellValue(13, 9, str);
 
 	//ÃÅ´°Ãæ»ý
@@ -200,7 +203,7 @@ void CWindowMaterialUsage::ExportWindowInfo(Excel::CExcelUtil& p_excel)//Êä³ö»ù±
 	p_excel.SetCellValue(73, 9, str);
 
 	//ÃÅ´°ÖÜ³¤
-	double circumference = (m_winAtt.GetH() + m_winAtt.GetW()) * 2;
+	double circumference = (m_winAtt.GetH() + m_winAtt.GetW()) * 2 / 1000;
 	str.Format(_T("%.2f"), circumference);
 	p_excel.SetCellValue(15, 9, str);
 }
@@ -227,14 +230,6 @@ void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öÐÍ²ÄÊý¾
 			p_excel.SetCellValue(nRow, 5, dataOut.sCode);
 		}
 
-		CString serialOut;
-		bSuc = CAluminumSeries::Instance()->GetAluminumSerialByCode(dataOut.sCode, serialOut);
-		if (bSuc)
-		{
-			//ÐÍ²ÄÏµÁÐ
-			p_excel.SetCellValue(2, 5, serialOut);
-		}
-
 		//³¤¶È
 		double length = GetVauleByFomula(alFormulas[i].m_formula);
 		str.Format(_T("%d"),(int)(length));
@@ -249,35 +244,32 @@ void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öÐÍ²ÄÊý¾
 		p_excel.SetCellValue(nRow, 8, str);
 
 		//×ÜÖØ
-		double totalWeight = length * alFormulas[i].m_nCount * dataOut.weightPerMeter /1000;
-		str.Format(_T("%.3f"),totalWeight);
+		double totalWeight = length * alFormulas[i].m_nCount * dataOut.weightPerMeter / 1000;
+		str.Format(_T("%.2f"),totalWeight);
 		p_excel.SetCellValue(nRow, 9, str);
 
-		//Ë°Ç°µ¥¼Û
-		p_excel.SetCellValue(nRow, 10, "0.00");
-
-		//Ë°Ç°×Ü¼Û
-		p_excel.SetCellValue(nRow, 11, "0.00");
-
 		//ºÄËð
-		str.Format(_T("%.3f"),dataOut.wastageRate);
+		str.Format(_T("%.2f%%"),dataOut.wastageRate*100);
 		p_excel.SetCellValue(nRow, 12, str);
 
 		//ÐÍ²ÄÖÖÀà
-		str.Format(_T("%.lf"),dataOut.aluminumType);
-		p_excel.SetCellValue(nRow, 13, str);
+		//str.Format(_T("%.lf"),dataOut.aluminumType);
+		//p_excel.SetCellValue(nRow, 13, str);
 		
 		//¼ÆËã¶ÏÇÅ¸ôÈÈÂÁÐÍ²ÄµÈµÄ×ÜÖØ							
 		if (0 == dataOut.aluminumType)
 		{
+			p_excel.SetCellValue(nRow, 13, _T("¶ÏÇÅ¸ôÈÈÂÁÐÍ²Ä"));
 			m_broAlQTY += totalWeight;
 		}
 		if (1 == dataOut.aluminumType)
 		{
+			p_excel.SetCellValue(nRow, 13, _T("·Ç¶ÏÇÅ¸ôÈÈÂÁÐÍ²Ä"));
 			m_nonBroAlQTY += totalWeight;
 		}
-		if (2 == dataOut.aluminumType)
+		if (E_Ñô¼«Ñõ»¯ÂÁÐÍ²Ä == dataOut.aluminumType)
 		{
+			p_excel.SetCellValue(nRow, 13, _T("Ñô¼«Ñõ»¯ÂÁÐÍ²Ä"));
 			m_anoAlQTY += totalWeight;
 		}
 
@@ -354,9 +346,6 @@ void CWindowMaterialUsage::ExportGlassInfo(Excel::CExcelUtil& p_excel) //Êä³ö²£Á
 		str.Format(_T("%.2f"),area);
 		p_excel.SetCellValue(nRow, 9, str);
 		m_glassTotalQTY += area;
-
-		//Ë°Ç°×Ü¼Û
-		p_excel.SetCellValue(nRow, 11, "0.00");
 	}
 	//²£Á§ºÏ¼Æ
 	str.Format(_T("%.2f"),m_glassTotalQTY);
@@ -375,13 +364,9 @@ void CWindowMaterialUsage::ExportHardwareInfo(Excel::CExcelUtil& p_excel) //Êä³ö
 		p_excel.SetCellValue(nRow, 7, _T("Ì×"));
 
 		//Îå½ðÊýÁ¿
-		str.Format(_T("%.2f"),hardwareFormulas[i].m_nCount);
+		str.Format(_T("%.2f"),(double)hardwareFormulas[i].m_nCount);
 		p_excel.SetCellValue(nRow, 9, str);
 		m_hardwareNumber += hardwareFormulas[i].m_nCount;
-
-		//Ë°Ç°µ¥¼Û/×Ü¼Û
-		p_excel.SetCellValue(nRow, 10, "0.00");
-		p_excel.SetCellValue(nRow, 11, "0.00");
 	}
 	//Îå½ð¼þºÏ¼Æ
 	str.Format(_T("%.2f"),m_hardwareNumber);
@@ -393,58 +378,42 @@ void CWindowMaterialUsage::ExportFuliaoInfo(Excel::CExcelUtil& p_excel) //Êä³ö¸¨
 	CString str;
 
 	//·¢ÅÝ¼Á
-	m_foamingQTY = (m_winAtt.GetH() + m_winAtt.GetW())*2;
+	m_foamingQTY = (m_winAtt.GetH() + m_winAtt.GetW())*2/1000;
 	str.Format(_T("%.2f"),m_foamingQTY);
 	p_excel.SetCellValue(60, 9, str);
-	p_excel.SetCellValue(60, 10, "0.00");
-	p_excel.SetCellValue(60, 11, "0.00");
 
 	//ÖÐÐÔ¹èÍªÃÜ·â½º(²£Á§´¦ÄÍºò½º)
 	m_glassSealantQTY = (m_yShuliaoTotallength + m_yHengliaoTotallength)*2/1000;
 	str.Format(_T("%.2f"),m_glassSealantQTY);
 	p_excel.SetCellValue(61, 9, str);
-	p_excel.SetCellValue(61, 10, "0.00");
-	p_excel.SetCellValue(61, 11, "0.00");
 
 	//ÖÐÐÔ¹èÍªÃÜ·â½º(ÄÚÇ½½º)
 	m_inSealantQTY = m_foamingQTY/10;
 	str.Format(_T("%.2f"),m_inSealantQTY);
 	p_excel.SetCellValue(62, 9, str);
-	p_excel.SetCellValue(62, 10, "0.00");
-	p_excel.SetCellValue(62, 11, "0.00");
 
 	//ÖÐÐÔ¹èÍªÃÜ·â½º(ÍâÇ½½º)
 	m_exSealantQTY = m_foamingQTY/8;
 	str.Format(_T("%.2f"),m_exSealantQTY);
 	p_excel.SetCellValue(63, 9, str);
-	p_excel.SetCellValue(63, 10, "0.00");
-	p_excel.SetCellValue(63, 11, "0.00");
 
 	//×é½Ç½º
 	str.Format(_T("%.2f"),m_comGlueQTY);
 	p_excel.SetCellValue(64, 9, str);
-	p_excel.SetCellValue(64, 10, "0.00");
-	p_excel.SetCellValue(64, 11, "0.00");
 	
 	//ÃÜ·â½ºÌõ(m)
 	m_sealStripQTY = (m_cShuliaoTotallength + m_cHengliaoTotallength)*2/1000;
 	str.Format(_T("%.2f"),m_sealStripQTY);
 	p_excel.SetCellValue(65, 9, str);
-	p_excel.SetCellValue(65, 10, "0.00");
-	p_excel.SetCellValue(65, 11, "0.00");
 
 	//ÃÜ·â½ºÌõ(©O)
 	m_squSealStripQTY = (m_cShuliaoTotallength + m_cHengliaoTotallength)/1000;
 	str.Format(_T("%.2f"),m_squSealStripQTY);
 	p_excel.SetCellValue(66, 9, str);
-	p_excel.SetCellValue(66, 10, "0.00");
-	p_excel.SetCellValue(66, 11, "0.00");
 
 	//´°ÖÆ×÷°²×°¸¨²Ä·Ñ
 	m_windowCost = m_winAtt.GetH()* m_winAtt.GetW()/1e6;
 	str.Format(_T("%.2f"),m_windowCost);
 	p_excel.SetCellValue(67, 9, str);
-	p_excel.SetCellValue(67, 10, "0.00");
-	p_excel.SetCellValue(67, 11, "0.00");
 }
 

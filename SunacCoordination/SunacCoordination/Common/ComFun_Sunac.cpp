@@ -887,9 +887,9 @@ CString TY_GetLocalFilePath()
 {
 	CString appPath = MD2010_GetAppPath();
 #ifdef WORK_LOCAL//本地模式
-	return appPath + L"\\support\\Sunac2019\\LocalMode\\";
+	return appPath + L"\\Support\\Sunac2019\\LocalMode\\";
 #else
-	return appPath + L"\\support\\Sunac2019\\Files\\";
+	return appPath + L"\\Support\\Sunac2019\\Files\\";
 #endif
 }
 

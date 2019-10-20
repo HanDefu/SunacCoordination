@@ -185,20 +185,41 @@ void ZJYTest()
 	dimdata1.sFomula = _T("W-2a");
 	attrwindow.SetDimData(dimdata1);
 
+	dimdata1.sCodeName = _T("W2");
+	dimdata1.type = CALC;
+	dimdata1.sFomula = _T("W-2a-W1-W3");
+	attrwindow.SetDimData(dimdata1);
+
+	dimdata1.sCodeName = _T("W3");
+	dimdata1.type = CALC;
+	dimdata1.sFomula = _T("W-2a");
+	attrwindow.SetDimData(dimdata1);
+
 	//CWindowsDimData dimdata2;
 	dimdata2.sCodeName = _T("H1");
 	dimdata2.type = CALC;
 	dimdata2.sFomula = _T("H-2a");
 	attrwindow.SetDimData(dimdata2);
+
+	dimdata2.sCodeName = _T("H2");
+	dimdata2.type = CALC;
+	dimdata2.sFomula = _T("H-2a");
+	attrwindow.SetDimData(dimdata2);
+
+	dimdata2.sCodeName = _T("H3");
+	dimdata2.type = CALC;
+	dimdata2.sFomula = _T("H-2a");
+	attrwindow.SetDimData(dimdata2);
+
 	attrwindow.CheckAndComplementDimeData();
 
-	attrwindow.SetW(800);
+	attrwindow.SetW(600);
 	attrwindow.SetW1(500);
 	attrwindow.SetH(1400);
 	attrwindow.SetH1(500);
-	attrwindow.SetA(25);
+	attrwindow.SetA(50);
 
-	attrwindow.m_material.sAluminumSerial = _T("SN55系列");
+	attrwindow.m_material.sAluminumSerial = _T("SN65A系列");
 
 
 	CWindowMaterialUsageNC winUsageNC(attrwindow, 1);
