@@ -142,7 +142,7 @@ void CAirconditionerDlg::OnBnClickedCheckHasraintube()
 
 	BOOL state = m_hasRainTube.GetCheck(); 
 
-	m_hasRainTube.EnableWindow(state);
+	m_rainTubePos.EnableWindow(state);
 
 	UpdatePreview();
 }
@@ -156,7 +156,7 @@ void CAirconditionerDlg::UpdatePreview() //当空调对话框中的控件的值�
 	CString lNTubePos = TYUI_GetComboBoxText(m_lNTubePos);
 	CString rainTubePos = TYUI_GetComboBoxText(m_rainTubePos);
 	int hasRainTube = m_hasRainTube.GetCheck();
-	CString strHasTube = hasRainTube > 0 ? L"有" : L"无";
+	CString strHasTube = hasRainTube > 0 ? L"是" : L"否";
 
 	//调用GetAirCon()函数来筛选符合条件的空调
 	m_allAirCons = WebIO::GetInstance()->GetAirCons(pNum, lNTubePos, strHasTube, rainTubePos);

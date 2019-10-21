@@ -47,27 +47,7 @@ void CGridCtrlWithPreview::SetDisplayColumns(int nCols)
 		SetColumnWidth(i, width);
 }
 
-bool CGridCtrlWithPreview::AddPreview(int nRow, int nCol, CString sPath, CString sText, PREVIEW_LAYOUT_DIR dir)
-{
-	if (nRow >= GetRowCount() || nCol >= GetColumnCount())
-		return false;
-
-	if (GetPreviewCell(nRow, nCol) == NULL)
-		SetCellType(nRow, nCol, RUNTIME_CLASS(CGridCellForPreview));
-	CGridCellForPreview* pCell = GetPreviewCell(nRow, nCol);
-
-	CRect gridRect;
-	GetCellRect(nRow, nCol, gridRect);
-	CPreviewWithDetail* pPreview = new CPreviewWithDetail;
-	pPreview->Create(_T(""), WS_CHILD, gridRect, this);
-	pPreview->SetLayoutMode(dir);
-	pPreview->SetPreview(sPath);
-	pPreview->SetText(sText);
-
-	pCell->SetPreview(pPreview);
-	return true;
-}
-CGridCellForPreview* CGridCtrlWithPreview::AddPreviewPng(int nRow, int nCol, CString sPath, CString sText, PREVIEW_LAYOUT_DIR dir)
+CGridCellForPreview* CGridCtrlWithPreview::AddPreview(int nRow, int nCol, CString sPath, CString sText, PREVIEW_LAYOUT_DIR dir /*= PREVIEW_LAYOUT_HORIZONTAL*/)
 {
 	if (nRow >= GetRowCount() || nCol >= GetColumnCount())
 		return NULL;
@@ -81,7 +61,10 @@ CGridCellForPreview* CGridCtrlWithPreview::AddPreviewPng(int nRow, int nCol, CSt
 	CPreviewWithDetail* pPreview = new CPreviewWithDetail;
 	pPreview->Create(_T(""), WS_CHILD, gridRect, this);
 	pPreview->SetLayoutMode(dir);
-	pPreview->SetPreviewImage(sPath);
+	if (sPath.Right(4) == L".dwg")
+		pPreview->SetPreview(sPath);
+	else
+		pPreview->SetPreviewImage(sPath);
 	pPreview->SetText(sText);
 
 	pCell->SetPreview(pPreview);

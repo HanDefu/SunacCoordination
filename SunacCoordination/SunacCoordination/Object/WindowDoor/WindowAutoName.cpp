@@ -20,10 +20,7 @@ CWindowAutoName* CWindowAutoName::GetInstance()
 CString CWindowAutoName::GetWindowName(const AttrWindow& p_att) const
 {
 	CString sWindowName;
-	CString sWidth, sHeight;
-	sWidth.Format(L"%02.0lf", p_att.GetW());
-	sHeight.Format(L"%02.0lf", p_att.GetH());
-	sWindowName.Format(L"%s_%s%s", p_att.m_prototypeCode.Mid(7), sWidth.Left(2), sHeight.Left(2));
+	sWindowName.Format(L"%s_%02.0lf%02.0lf", p_att.m_prototypeCode.Mid(7), p_att.GetW() / 100, p_att.GetH() / 100);
 	int count = 0;
 
 	for (UINT i = 0; i < m_allTypeWindows.size(); i++)
@@ -60,6 +57,8 @@ void CWindowAutoName::AddWindowType(const AttrWindow& p_att)
 
 bool CWindowAutoName::IsUserNameValid(const AttrWindow& p_att, CString p_sName)
 {
+	if (p_sName.IsEmpty())
+		return false;
 	for (UINT i = 0; i < m_allTypeWindows.size(); i++)
 	{
 		if ((p_att.m_instanceCode == m_allTypeWindows[i].m_instanceCode) && !m_allTypeWindows[i].IsInstanceEqual(p_att))
