@@ -2,16 +2,21 @@
 #include "..\WindowDoor\AttrWindow.h"
 #include "WindowMaterialUsage.h"
 
-class CWindowAttCount
+//单个窗型的属性、数量及用量
+class CWindowUsage
 {
+public:
+	CWindowUsage();
+	virtual ~CWindowUsage();
+
+
+	void InitWindMaterialUsage();
+
 public:
 	AttrWindow winAtt;
 	int nCount;
 
-	CWindowAttCount()
-	{
-		nCount = 1;
-	}
+	CWindowMaterialUsage* m_pMaterialUsage;
 };
 
 
@@ -25,15 +30,14 @@ public:
 	void Statictic(const vector<AttrWindow>& p_winAtts, CString p_sReportFile); //统计并生成统计报表文件
 
 protected:
-	vector<CWindowAttCount> WindowClassify(const vector<AttrWindow>& p_winAtts);
+	void WindowClassify(const vector<AttrWindow>& p_winAtts);
 
-	void InitWindowMatrialUsage(const vector<CWindowAttCount>& p_winows);
+	void InitWindowMatrialUsage(vector<CWindowUsage>& p_winows);
 
+	bool ExportWindowReport(CString p_sReportFile);
 	bool GenerateReport(CString p_sReportFile);
 
-	void ClearAllWindowMaterialUsage();
-
 protected:
-	vector<CWindowMaterialUsage*> m_allWindowMatUsage; //所有类型的窗型的算量对象
+	vector<CWindowUsage> m_windows;
 };
 

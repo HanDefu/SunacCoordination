@@ -4,6 +4,7 @@
 #include "dbmain.h"
 #include "..\AttrObject.h"
 #include "../../Sunac_def.h"
+#include "../WindowStatistic/AluminumSeries.h"
 #pragma warning(disable: 4275 4251)
 
 #ifdef _CUSTOMOBJECTDB_
@@ -94,6 +95,8 @@ public:
 	virtual bool isEqualTo(AttrObject*other);//¥∞–Õ «∑Ò“ª÷¬
 	virtual bool IsPrototypeEqual(const AttrWindow& p_att);
 	virtual bool IsInstanceEqual(const AttrWindow& p_att) const;
+
+	E_WindowDoorType GetWindowDoorType()const {	return ToWindowDoorType(m_openType); }
 	
 	//////////////////////////////////////////////////////////////////////////
 	const CWindowsDimData* GetDimData(CString p_sCode)const;
