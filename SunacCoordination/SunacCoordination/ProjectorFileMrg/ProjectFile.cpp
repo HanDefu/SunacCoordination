@@ -3,6 +3,7 @@
 
 CPrjNode::CPrjNode()
 {
+	m_id = -1;
 	m_parent = NULL;
 }
 

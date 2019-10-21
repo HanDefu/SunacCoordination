@@ -22,10 +22,12 @@ public:
 	CProjectData();
 	~CProjectData();
 
+	static bool DownloadFile(const CString& strFileURLInServer, const CString & strFileLocalFullPath);
 	static bool DownloadFile(CProjectFile p_prjFile);
 	static bool UploadFile(CString p_sFileName, CString p_saveName);
 
-	bool UploadFile(CString p_sFileName, CString p_saveName, CProjectorDir*  p_sParentDir);
+	bool UploadFile(CString p_sFileName, CString p_saveName, CString  p_sParentDir); //p_sParentDir 为完整的父目录
+	bool UploadFile(CString p_sFileName, CString p_saveName, CProjectorDir*  p_parentDir);
 		
 protected:
 	CProjectInfo m_prjInfo;

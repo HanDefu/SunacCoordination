@@ -14,6 +14,7 @@ public:
 	virtual bool IsDirectory()const = 0;
 
 public:
+	int m_id;	//ID主要用于从web后台操作处理用
 	CString m_sName; //文件名或文件夹名
 	CProjectorDir* m_parent;  //父文件夹
 };
