@@ -3,6 +3,7 @@
 #include "WindowFormula.h"
 #include "AluminumSeries.h"
 #include "..\..\Tool\SQLite\sqlite3.h"
+#include "..\..\Common\ComFun_Sunac.h"
 
 
 CDeductedSize* CDeductedSize::Instance()
@@ -54,7 +55,8 @@ static int OutputDeductedSize(void *NotUsed, int nCol, char **value, char **ColN
 
 bool CDeductedSize::GetDeductedSizeBySeriesAndName(E_WindowDoorType p_winType, CString p_serials, CString sDeductedName, double &p_valueOut)
 {
-	int nRes = sqlite3_open("C:/Program Files/Autodesk/AutoCAD 2014/Support/Sunac2019/RCData.db", &pDB2);
+	const char * path = TY_GetAluminumDatabasePath();
+	int nRes = sqlite3_open(path, &pDB2);
 
 	if (nRes != SQLITE_OK)
 	{
@@ -85,7 +87,8 @@ bool CDeductedSize::GetDeductedSizeBySeriesAndName(E_WindowDoorType p_winType, C
 
 bool CDeductedSize::GetDeductedSizeBySeriesAndName(CString p_winType, CString p_serials, CString sDeductedName, double &p_valueOut)
 {
-	int nRes = sqlite3_open("C:/Program Files/Autodesk/AutoCAD 2014/Support/Sunac2019/RCData.db", &pDB2);
+	const char * path = TY_GetAluminumDatabasePath();
+	int nRes = sqlite3_open(path, &pDB2);
 
 	if (nRes != SQLITE_OK)
 	{

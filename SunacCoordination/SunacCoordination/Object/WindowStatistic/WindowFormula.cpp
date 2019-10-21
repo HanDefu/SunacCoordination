@@ -3,6 +3,7 @@
 #include "..\..\Tool\SQLite\sqlite3.h"
 #include <afxwin.h>
 #include <string>
+#include "..\..\Common\ComFun_Sunac.h"
 
 CAluminumFormula::CAluminumFormula()
 {
@@ -50,7 +51,7 @@ CWindowFormula::~CWindowFormula()
 vector<CAluminumFormula> vAluminumFormulas;
 vector<CGlassFormula> vGlassFormulas;
 vector<CHardwareData> vHardwareFormulas;
-sqlite3 * pDB = NULL;
+
 
 CString GBKToUTF8(const std::string& strGBK)
 {
@@ -125,8 +126,10 @@ static int OutputAlFormula(void *NotUsed, int nCol, char **value, char **ColName
 
 vector<CAluminumFormula> CWindowFormula::GetAluminumFormulas(CString p_sPrototypeCode)
 {
+	sqlite3 * pDB = NULL;
 	vAluminumFormulas.clear();
-	int nRes = sqlite3_open("C:/Program Files/Autodesk/AutoCAD 2014/Support/Sunac2019/RCData.db", &pDB);
+	char * path = TY_GetAluminumDatabasePath();
+	int nRes = sqlite3_open(path, &pDB);
 	
 	if (nRes != SQLITE_OK)
 	{
@@ -137,7 +140,7 @@ vector<CAluminumFormula> CWindowFormula::GetAluminumFormulas(CString p_sPrototyp
 	CString sqlString;
 	sqlString.Format(L"select * from `AluminumFormulas` where `PrototypeCode` = '%s';", p_sPrototypeCode);
 	USES_CONVERSION;
-	char* sql = T2A(sqlString);
+	char* sql = W2A(sqlString);
 	int res = sqlite3_exec(pDB, sql, OutputAlFormula , 0 , &cErrMsg);  
 
 	if (res != SQLITE_OK)
@@ -186,8 +189,10 @@ static int OutputGlassFormula(void *NotUsed, int nCol, char **value, char **ColN
 
 vector<CGlassFormula> CWindowFormula::GetGlassFormulas(CString p_sPrototypeCode)
 {
+	sqlite3 * pDB = NULL;
 	vGlassFormulas.clear();
-	int nRes = sqlite3_open("C:/Program Files/Autodesk/AutoCAD 2014/Support/Sunac2019/RCData.db", &pDB);
+	const char * path = "C:\\Program Files\\Autodesk\\AutoCAD 2014\\Support\\Sunac2019\\RCData.db";
+	int nRes = sqlite3_open(path, &pDB);
 
 	if (nRes != SQLITE_OK)
 	{
@@ -235,8 +240,10 @@ static int OutputHardwareFormula(void *NotUsed, int nCol, char **value, char **C
 
 vector<CHardwareData> CWindowFormula::GetHardwareData(CString p_sPrototypeCode)
 {
+	sqlite3 * pDB = NULL;
 	vHardwareFormulas.clear();
-	int nRes = sqlite3_open("C:/Program Files/Autodesk/AutoCAD 2014/Support/Sunac2019/RCData.db", &pDB);
+	const char * path = TY_GetAluminumDatabasePath();
+	int nRes = sqlite3_open(path, &pDB);
 
 	if (nRes != SQLITE_OK)
 	{
