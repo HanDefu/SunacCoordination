@@ -3,6 +3,7 @@
 #include "..\..\Tool\SQLite\sqlite3.h"
 #include "DeductedSize.h"
 #include "WindowFormula.h"
+#include "..\..\Common\ComFun_Sunac.h"
 
 
 
@@ -198,7 +199,8 @@ static int OutputAlSeriesFromWindowType(void *NotUsed, int nCol, char **value, c
 bool CAluminumSeries::GetAluminumDataBySeriesAndName(E_WindowDoorType p_winType, CString p_serials, CString sName, CAluminumData& p_dataOut)
 {
 	sqlite3 * pDB3 = NULL;
-	int nRes = sqlite3_open("C:/Program Files/Autodesk/AutoCAD 2014/Support/Sunac2019/RCData.db", &pDB3);
+	const char* path = TY_GetAluminumDatabasePath();
+	int nRes = sqlite3_open(path, &pDB3);
 
 	if (nRes != SQLITE_OK)
 	{
@@ -209,7 +211,7 @@ bool CAluminumSeries::GetAluminumDataBySeriesAndName(E_WindowDoorType p_winType,
 	CString sWinType = WindowTypeToCString(p_winType);
 	CString sqlString;
 	sqlString.Format(L"select * from `AluminumSeries` where `WindowDoorType` = '%s' and `Serial` = '%s' and `Name` = '%s';", sWinType, p_serials, sName);
-	USES_CONVERSION;
+	
 	char* sql;
 	ConvertStringToUTF8(sqlString, sql);
 	int res = sqlite3_exec(pDB3, sql, OutputAlData , 0 , &cErrMsg);  
@@ -228,7 +230,8 @@ bool CAluminumSeries::GetAluminumDataBySeriesAndName(E_WindowDoorType p_winType,
 bool CAluminumSeries::GetAluminumSerialByCode(CString p_code, CString& p_serialOut)
 {
 	sqlite3 * pDB3 = NULL;
-	int nRes = sqlite3_open("C:/Program Files/Autodesk/AutoCAD 2014/Support/Sunac2019/RCData.db", &pDB3);
+	const char * path = TY_GetAluminumDatabasePath();
+	int nRes = sqlite3_open(path, &pDB3);
 
 	if (nRes != SQLITE_OK)
 	{
@@ -238,7 +241,6 @@ bool CAluminumSeries::GetAluminumSerialByCode(CString p_code, CString& p_serialO
 	char* cErrMsg;
 	CString sqlString;
 	sqlString.Format(L"select Serial from `AluminumSeries` where `Code` = '%s';", p_code);
-	USES_CONVERSION;
 	char* sql;
 	ConvertStringToUTF8(sqlString, sql);
 	int res = sqlite3_exec(pDB3, sql, OutputAlSerial , 0 , &cErrMsg);  
@@ -258,7 +260,8 @@ vector<CString> CAluminumSeries::GetAluminumSerialsByWindowType(E_WindowDoorType
 {
 	AlSeries.clear();
 	sqlite3 * pDB3 = NULL;
-	int nRes = sqlite3_open("C:/Program Files/Autodesk/AutoCAD 2014/Support/Sunac2019/RCData.db", &pDB3);
+	const char * path = TY_GetAluminumDatabasePath();
+	int nRes = sqlite3_open(path, &pDB3);
 
 	if (nRes != SQLITE_OK)
 	{
@@ -269,7 +272,7 @@ vector<CString> CAluminumSeries::GetAluminumSerialsByWindowType(E_WindowDoorType
 	CString sWinType = WindowTypeToCString(p_winType);
 	CString sqlString;
 	sqlString.Format(L"select distinct Serial  from `AluminumSeries` where `WindowDoorType` = '%s' and `Serial`  !='';", sWinType);
-	USES_CONVERSION;
+	
 	char* sql;
 	ConvertStringToUTF8(sqlString, sql);
 	int res = sqlite3_exec(pDB3, sql, OutputAlSeriesFromWindowType , 0 , &cErrMsg);  
