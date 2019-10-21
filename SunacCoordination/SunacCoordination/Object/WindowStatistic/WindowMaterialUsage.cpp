@@ -219,7 +219,7 @@ void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öÐÍ²ÄÊý¾
 
 	const vector<CAluminumFormula> alFormulas = CWindowFormula::Instance()->GetAluminumFormulas(m_winAtt.m_prototypeCode);
 
-	E_WindowDoorType winType = GetWindowDoorType(m_winAtt.m_openType);
+	E_WindowDoorType winType = ToWindowDoorType(m_winAtt.m_openType);
 
 	int nRow = 17; //ÐÍ²ÄÊý¾Ý¿ªÊ¼ÐÐºÅÎª17
 	for (UINT i=0; i<alFormulas.size(); i++, nRow++)
