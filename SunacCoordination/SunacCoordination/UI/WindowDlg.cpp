@@ -122,10 +122,16 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	vector<int> sels = m_preWindow.GetSelectedRows();
 	if (sels.size() == 0)
 	{
-		AfxMessageBox(L"没有选择原型，请重新选择或者双击原型\n");
+		AfxMessageBox(L"没有选择原型，请重新选择或者双击原型");
 		return;
 	}
 	AttrWindow &selWindow = m_allWindows[sels[0]];
+
+	if (!m_autoIndex && !CWindowAutoName::GetInstance()->IsUserNameValid(selWindow, TYUI_GetText(m_number)))
+	{
+		AfxMessageBox(L"不能使用此原型名称");
+		return;
+	}
 
 	ShowWindow(FALSE);
 
@@ -219,7 +225,7 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 		pngPath.Replace(L"\\LocalMode", L"\\Image");
 		pngPath.Replace(L".dwg", L".png");
 		if (PathFileExists(pngPath))
-			m_preWindow.AddPreviewPng(i, 0, pngPath, str);
+			m_preWindow.AddPreview(i, 0, pngPath, str);
 		else
 			m_preWindow.AddPreview(i, 0, dwgPath, str);
 	}
