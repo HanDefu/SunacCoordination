@@ -36,7 +36,7 @@ CWindowMaterialUsage::~CWindowMaterialUsage()
 {
 }
 
-void CWindowMaterialUsageNC::CalcMateriaUsage()
+void CWindowMaterialUsage::CalcMateriaUsage()
 {
 
 }
@@ -46,29 +46,27 @@ double CWindowMaterialUsage::GetVauleByFomula(CString p_sFomula)
 {
 	//p_sFomula.MakeUpper();
 	CFormulaParser parser(p_sFomula);
-	double ret;
-	E_ParserStatus es;
-	while ((es = parser.TryParse(ret)) == E_PS_UnknownVars)
+	vCString vars = parser.GetUnknownVars();
+	for (UINT i = 0; i < vars.size(); i++)
 	{
-		vCString vars = parser.GetUnknownVars();
-		for (UINT i = 0; i < vars.size(); i++)
+		CString sParaName = vars[i];
+		double valueOut = 0;
+		//W.. H..a  R  µÄ²ÎÊý´Óm_winAtt È¡
+		if (sParaName.Find(_T("W")) >= 0 || sParaName.Find(_T("H")) >= 0 || sParaName.CompareNoCase(_T("a")) == 0 || sParaName.Compare(_T("R")) == 0)
 		{
-			CString sParaName = vars[i];
-			double valueOut = 0;
-			//W.. H..a  R  µÄ²ÎÊý´Óm_winAtt È¡
-			if (sParaName.Find(_T("W")) >= 0 || sParaName.Find(_T("H")) >= 0 || sParaName.CompareNoCase(_T("a")) == 0 || sParaName.Compare(_T("R")) == 0)
-			{
-				valueOut = m_winAtt.GetValue(sParaName);
-			}
-			else
-			{
-				//ÆäËûµÄ´Ó¿Û¼õ³ß´ç±ßÀïÈ¡
-				bool bSuc = CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(m_winAtt.m_openType, m_winAtt.m_material.sAluminumSerial, sParaName, valueOut);
-				assert(bSuc);
-			}
-			parser.SetVar(sParaName, valueOut);
+			valueOut = m_winAtt.GetValue(sParaName);
 		}
+		else
+		{
+			//ÆäËûµÄ´Ó¿Û¼õ³ß´ç±ßÀïÈ¡
+			bool bSuc = CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(m_winAtt.m_openType, m_winAtt.m_material.sAluminumSerial, sParaName, valueOut);
+			assert(bSuc);
+		}
+		parser.SetVar(sParaName, valueOut);
 	}
+
+	double ret = 0;
+	E_ParserStatus es = parser.TryParse(ret);
 	if (es == E_PS_InvalidFormula)
 	{
 		CString errMsg;
@@ -94,7 +92,7 @@ double CWindowMaterialUsage::GetVauleByFomula(CString p_sFomula)
 	}
 }
 
-bool CWindowMaterialUsageNC::ExportReportToExcel(CString p_sReportFile)
+bool CWindowMaterialUsage::ExportReportToExcel(CString p_sReportFile)
 {
 	CString reportTemplateXlsFile = TY_GetLocalFilePath() + _T("ÃÅ´°ËãÁ¿±í¸ñ.xlsx");
 
@@ -110,7 +108,7 @@ bool CWindowMaterialUsageNC::ExportReportToExcel(CString p_sReportFile)
 	return true;
 }
 
-bool CWindowMaterialUsageNC::ExportReportToExcel(Excel::CExcelUtil& p_excel)
+bool CWindowMaterialUsage::ExportReportToExcel(Excel::CExcelUtil& p_excel)
 {
 	//p_excel.SetActiveSheet(2); //´ò¿ªµÚ¶þÕÅ±í
 
@@ -214,11 +212,16 @@ void CWindowMaterialUsage::ExportWindowInfo(Excel::CExcelUtil& p_excel)//Êä³ö»ù±
 void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öÐÍ²ÄÊý¾Ý
 {
 	CString str;
+	m_alTotalQTY = 0;
+	m_broAlQTY = 0;
+	m_nonBroAlQTY = 0;
+	m_anoAlQTY = 0;
+
 	const vector<CAluminumFormula> alFormulas = CWindowFormula::Instance()->GetAluminumFormulas(m_winAtt.m_prototypeCode);
 
 	E_WindowDoorType winType = GetWindowDoorType(m_winAtt.m_openType);
 
-	int nRow = 17;
+	int nRow = 17; //ÐÍ²ÄÊý¾Ý¿ªÊ¼ÐÐºÅÎª17
 	for (UINT i=0; i<alFormulas.size(); i++, nRow++)
 	{
 		p_excel.SetCellValue(nRow, 2, alFormulas[i].m_aluminumClassify);
@@ -227,6 +230,11 @@ void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öÐÍ²ÄÊý¾
 
 		CAluminumData dataOut;
 		bool bSuc = CAluminumSeries::Instance()->GetAluminumDataBySeriesAndName(winType, m_winAtt.m_material.sAluminumSerial, alFormulas[i].m_name, dataOut);
+		if (bSuc == false) //Ã»ÓÐÔò²éÑ¯ÏµÁÐÎª¿ÕµÄÊý¾Ý
+		{
+			bSuc = CAluminumSeries::Instance()->GetAluminumDataBySeriesAndName(winType, _T(""), alFormulas[i].m_name, dataOut);
+		}
+		assert(bSuc);
 		if (bSuc)
 		{
 			//ÐÍ²Ä±àºÅ
@@ -257,23 +265,19 @@ void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öÐÍ²ÄÊý¾
 		p_excel.SetCellValue(nRow, 12, str);
 
 		//ÐÍ²ÄÖÖÀà
-		//str.Format(_T("%.lf"),dataOut.aluminumType);
-		//p_excel.SetCellValue(nRow, 13, str);
-		
+		p_excel.SetCellValue(nRow, 13, AluminumTypeToCSting(dataOut.aluminumType));
+
 		//¼ÆËã¶ÏÇÅ¸ôÈÈÂÁÐÍ²ÄµÈµÄ×ÜÖØ							
-		if (0 == dataOut.aluminumType)
+		if (E_¶ÏÇÅ¸ôÈÈÂÁÐÍ²Ä == dataOut.aluminumType)
 		{
-			p_excel.SetCellValue(nRow, 13, _T("¶ÏÇÅ¸ôÈÈÂÁÐÍ²Ä"));
 			m_broAlQTY += totalWeight;
 		}
-		if (1 == dataOut.aluminumType)
+		else if (E_·Ç¶ÏÇÅ¸ôÈÈÂÁÐÍ²Ä == dataOut.aluminumType)
 		{
-			p_excel.SetCellValue(nRow, 13, _T("·Ç¶ÏÇÅ¸ôÈÈÂÁÐÍ²Ä"));
 			m_nonBroAlQTY += totalWeight;
 		}
-		if (2 == dataOut.aluminumType)
+		if (E_Ñô¼«Ñõ»¯ÂÁÐÍ²Ä == dataOut.aluminumType)
 		{
-			p_excel.SetCellValue(nRow, 13, _T("Ñô¼«Ñõ»¯ÂÁÐÍ²Ä"));
 			m_anoAlQTY += totalWeight;
 		}
 
