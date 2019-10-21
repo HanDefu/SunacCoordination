@@ -22,6 +22,7 @@ public:
 	CProjectData();
 	~CProjectData();
 
+	static CString GenerateGuid();
 	static bool DownloadFile(const CString& strFileURLInServer, const CString & strFileLocalFullPath);
 	static bool DownloadFile(CProjectFile p_prjFile);
 	static bool UploadFile(CString p_sFileName, CString p_saveName);

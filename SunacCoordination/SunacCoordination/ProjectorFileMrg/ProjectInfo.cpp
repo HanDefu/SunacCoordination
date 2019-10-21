@@ -21,6 +21,22 @@ CProjectData::~CProjectData()
 {
 }
 
+CString CProjectData::GenerateGuid()
+{
+	GUID guid;
+	CoCreateGuid(&guid);
+
+	CString sGuid;
+	sGuid.Format(_T("{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}"),
+		guid.Data1, guid.Data2,
+		guid.Data3, guid.Data4[0],
+		guid.Data4[1], guid.Data4[2],
+		guid.Data4[3], guid.Data4[4],
+		guid.Data4[5], guid.Data4[6],
+		guid.Data4[7]);
+	return sGuid;
+}
+
 bool CProjectData::DownloadFile(const CString& strFileURLInServer, //待下载文件的URL
 	const CString & strFileLocalFullPath)//存放到本地的路径
 {
