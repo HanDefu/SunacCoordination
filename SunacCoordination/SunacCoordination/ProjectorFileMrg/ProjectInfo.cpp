@@ -134,3 +134,29 @@ bool CProjectData::DownloadFile(const CString& strFileURLInServer, //´ýÏÂÔØÎÄ¼þµ
 	return true;
 }
 
+bool CProjectData::UploadFile(CString p_sFileName, CString p_saveName)
+{
+	CFtpConnection *m_pFtpConnection = NULL;
+	CInternetSession *m_pInetsession = new CInternetSession(NULL, 1, PRE_CONFIG_INTERNET_ACCESS);
+	try
+	{
+		//TODO ·þÎñÆ÷µØÖ·ºÍÓÃ»§Ãû¡¢ÃÜÂëÐèÉèÖÃ
+		m_pFtpConnection = m_pInetsession->GetFtpConnection(L"127.0.0.1", NULL, NULL, 38);
+		//MessageBox("Á¬½Ó³É¹¦");
+
+		m_pFtpConnection->PutFile(p_sFileName, p_saveName, FTP_TRANSFER_TYPE_BINARY, 1);
+	}
+	catch (CInternetException *pEx)
+	{
+		TCHAR szError[1024];
+		if (pEx->GetErrorMessage(szError, 1024))
+			AfxMessageBox(szError);
+		else
+			AfxMessageBox(L"There was an exception");
+		pEx->Delete();
+		m_pFtpConnection = NULL;
+		return false;
+	}
+
+	return true;
+}
