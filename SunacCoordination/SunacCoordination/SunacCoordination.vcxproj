@@ -190,6 +190,9 @@
     <ClCompile Include="Object\WindowStatistic\WindowFormula.cpp" />
     <ClCompile Include="Object\WindowStatistic\WindowMaterialUsage.cpp" />
     <ClCompile Include="Object\WindowStatistic\WindowStatictic.cpp" />
+    <ClCompile Include="ProjectorFileMrg\ProjectFile.cpp" />
+    <ClCompile Include="ProjectorFileMrg\ProjectFileMrg.cpp" />
+    <ClCompile Include="ProjectorFileMrg\ProjectInfo.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -306,6 +309,9 @@
     <ClInclude Include="Object\WindowStatistic\WindowFormula.h" />
     <ClInclude Include="Object\WindowStatistic\WindowMaterialUsage.h" />
     <ClInclude Include="Object\WindowStatistic\WindowStatictic.h" />
+    <ClInclude Include="ProjectorFileMrg\ProjectFile.h" />
+    <ClInclude Include="ProjectorFileMrg\ProjectFileMrg.h" />
+    <ClInclude Include="ProjectorFileMrg\ProjectInfo.h" />
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="Sunac_def.h" />

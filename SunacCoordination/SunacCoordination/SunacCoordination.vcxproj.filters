@@ -328,6 +328,15 @@
     <ClCompile Include="Object\WindowStatistic\WindowFormula.cpp">
       <Filter>Object\WindowStatictic</Filter>
     </ClCompile>
+    <ClCompile Include="ProjectorFileMrg\ProjectInfo.cpp">
+      <Filter>ProjectorFileMrg</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectorFileMrg\ProjectFile.cpp">
+      <Filter>ProjectorFileMrg</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectorFileMrg\ProjectFileMrg.cpp">
+      <Filter>ProjectorFileMrg</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -745,6 +754,15 @@
     <ClInclude Include="Tool\SQLite\sqlite3ext.h">
       <Filter>Tool\SQLite</Filter>
     </ClInclude>
+    <ClInclude Include="ProjectorFileMrg\ProjectInfo.h">
+      <Filter>ProjectorFileMrg</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectorFileMrg\ProjectFile.h">
+      <Filter>ProjectorFileMrg</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectorFileMrg\ProjectFileMrg.h">
+      <Filter>ProjectorFileMrg</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -815,6 +833,9 @@
     </Filter>
     <Filter Include="Tool\SQLite">
       <UniqueIdentifier>{8f280fbe-bcb8-4af5-aa59-5d4b4cbf26a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ProjectorFileMrg">
+      <UniqueIdentifier>{5c6ebdc3-2fdc-433d-b3d8-97c74c37618a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
