@@ -14,10 +14,10 @@ public:
 	CWindowMaterialUsage(const AttrWindow& p_winAtt, int p_nCount);  //p_nCount表示当前窗型的数量
 	virtual ~CWindowMaterialUsage();
 
-	virtual void CalcMateriaUsage();
-	virtual bool ExportReportToExcel(CString p_sReportFile); //导出到excel报表
-	virtual bool ExportReportToExcel(Excel::CExcelUtil& p_excel); //导出到excel报表
-	void GetAllData();
+	//virtual void CalcMateriaUsage();
+	bool ExportReportToExcel(CString p_sReportFile); //导出到excel报表
+	bool ExportReportToExcel(Excel::CExcelUtil& p_excel); //导出到excel报表
+
 	
 	//////////////////////////////////////////////////////////////////////////
 	//以下函数用于填写汇总表
@@ -28,14 +28,7 @@ public:
 	double GetAluminumeUsageAmount()const ; //获取该窗户的型材用量
 	double GetGlassUsageAmount()const ;		//获取该窗户的玻璃用量
 
-
-	//////////////////////////////////////////////////////////////////////////
-
-
 protected:
-	//解析公式
-	void ParseFomula(CString p_sFomula);
-
 	double GetVauleByFomula(CString p_sFomula);
 
 	virtual void ExportWindowInfo(Excel::CExcelUtil& p_excel);//输出基本信息
@@ -43,8 +36,6 @@ protected:
 	virtual void ExportGlassInfo(Excel::CExcelUtil& p_excel); //输出玻璃数据
 	virtual void ExportHardwareInfo(Excel::CExcelUtil& p_excel);//输出五金数据
 	virtual void ExportFuliaoInfo(Excel::CExcelUtil& p_excel);//输出辅料数据
-
-
 
 protected:
 	const AttrWindow m_winAtt;
@@ -84,7 +75,7 @@ class CWindowMaterialUsageNC :public CWindowMaterialUsage
 {
 public:
 	CWindowMaterialUsageNC(const AttrWindow& p_winAtt, int p_nCount) : CWindowMaterialUsage(p_winAtt, p_nCount) {}
-	~CWindowMaterialUsageNC() {}
+
 
 protected:
 	
@@ -96,8 +87,8 @@ protected:
 class CWindowMaterialUsageWC :public CWindowMaterialUsage
 {
 public:
-	CWindowMaterialUsageWC();
-	~CWindowMaterialUsageWC();
+	CWindowMaterialUsageWC(const AttrWindow& p_winAtt, int p_nCount) : CWindowMaterialUsage(p_winAtt, p_nCount) {}
+
 
 protected:
 
@@ -108,20 +99,28 @@ protected:
 class CWindowMaterialUsageTC :public CWindowMaterialUsage
 {
 public:
-	CWindowMaterialUsageTC();
-	~CWindowMaterialUsageTC();
+	CWindowMaterialUsageTC(const AttrWindow& p_winAtt, int p_nCount) : CWindowMaterialUsage(p_winAtt, p_nCount) {}
 
 protected:
 
 };
 
 //////////////////////////////////////////////////////////////////////////
-//推拉门,含提升推拉门
+//推拉门
 class CWindowMaterialUsageTLM :public CWindowMaterialUsage
 {
 public:
-	CWindowMaterialUsageTLM();
-	~CWindowMaterialUsageTLM();
+	CWindowMaterialUsageTLM(const AttrWindow& p_winAtt, int p_nCount) : CWindowMaterialUsage(p_winAtt, p_nCount) {}
+
+protected:
+
+};
+
+//提升推拉门
+class CWindowMaterialUsageTSTLM :public CWindowMaterialUsage
+{
+public:
+	CWindowMaterialUsageTSTLM(const AttrWindow& p_winAtt, int p_nCount) : CWindowMaterialUsage(p_winAtt, p_nCount) {}
 
 protected:
 
@@ -132,8 +131,7 @@ protected:
 class CWindowMaterialUsageWM :public CWindowMaterialUsage
 {
 public:
-	CWindowMaterialUsageWM();
-	~CWindowMaterialUsageWM();
+	CWindowMaterialUsageWM(const AttrWindow& p_winAtt, int p_nCount) : CWindowMaterialUsage(p_winAtt, p_nCount) {}
 
 protected:
 

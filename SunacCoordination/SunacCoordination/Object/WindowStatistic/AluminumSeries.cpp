@@ -26,14 +26,15 @@ E_WindowDoorType ToWindowDoorType(CString type)
 	}
 	else if (type == "推拉门")
 	{
-		return E_WindowDoor_TLM1;
+		return E_WindowDoor_TLM;
 	}
 	else if (type == "提升推拉门")
 	{
-		return E_WindowDoor_TLM2;
+		return E_WindowDoor_TSTLM;
 	}
 	else
 	{
+		assert(false);
 		return E_WindowDoor_NC;
 	}
 }
@@ -62,12 +63,12 @@ CString WindowTypeToCString(E_WindowDoorType type)
 							return L"外开门";
 							break;
 	}
-	case E_WindowDoor_TLM1:
+	case E_WindowDoor_TLM:
 	{
 							  return L"推拉门";
 							  break;
 	}
-	case E_WindowDoor_TLM2:
+	case E_WindowDoor_TSTLM:
 	{
 							  return L"提升推拉门";
 							  break;

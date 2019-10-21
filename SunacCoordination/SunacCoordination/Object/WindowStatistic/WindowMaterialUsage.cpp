@@ -36,10 +36,10 @@ CWindowMaterialUsage::~CWindowMaterialUsage()
 {
 }
 
-void CWindowMaterialUsage::CalcMateriaUsage()
-{
-
-}
+//void CWindowMaterialUsage::CalcMateriaUsage()
+//{
+//
+//}
 
 
 double CWindowMaterialUsage::GetVauleByFomula(CString p_sFomula)

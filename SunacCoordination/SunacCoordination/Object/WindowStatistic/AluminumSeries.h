@@ -7,8 +7,8 @@ enum E_WindowDoorType
 	E_WindowDoor_TC,		//推拉窗
 
 	E_WindowDoor_WM = 0x10,	//外开门
-	E_WindowDoor_TLM1,		//推拉门
-	E_WindowDoor_TLM2,		//提升推拉门
+	E_WindowDoor_TLM,		//推拉门
+	E_WindowDoor_TSTLM,		//提升推拉门
 };
 
 E_WindowDoorType ToWindowDoorType(CString type);
