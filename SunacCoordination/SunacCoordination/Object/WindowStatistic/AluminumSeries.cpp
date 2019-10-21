@@ -5,34 +5,8 @@
 #include "WindowFormula.h"
 
 
-E_WindowDoorType GetWindowDoorType(CString sOpenType)
-{
 
-	//TODO 叶明远
-
-	return E_WindowDoor_NC;
-}
-
-CAluminumSeries* CAluminumSeries::Instance()
-{
-	static CAluminumSeries instance;
-	return &instance;
-}
-
-CAluminumSeries::CAluminumSeries()
-{
-}
-
-CAluminumSeries::~CAluminumSeries()
-{
-}
-
-CAluminumData AluminumData;
-sqlite3 * pDB3 = NULL;
-CString AlString;
-vector<CString> AlSeries;
-
-E_WindowDoorType ToE_WindowDoorType(CString type)
+E_WindowDoorType ToWindowDoorType(CString type)
 {
 	if (type == "内开窗")
 	{
@@ -66,46 +40,61 @@ E_WindowDoorType ToE_WindowDoorType(CString type)
 
 CString WindowTypeToCString(E_WindowDoorType type)
 {
-	switch(type)
+	switch (type)
 	{
 	case E_WindowDoor_NC:
-		{
-			return L"内开窗";
-			break;
-		}
+	{
+							return L"内开窗";
+							break;
+	}
 	case E_WindowDoor_WC:
-		{
-			return L"外开窗";
-			break;
-		}
+	{
+							return L"外开窗";
+							break;
+	}
 	case E_WindowDoor_TC:
-		{
-			return L"推拉窗";
-			break;
-		}
+	{
+							return L"推拉窗";
+							break;
+	}
 	case E_WindowDoor_WM:
-		{
-			return L"外开门";
-			break;
-		}
+	{
+							return L"外开门";
+							break;
+	}
 	case E_WindowDoor_TLM1:
-		{
-			return L"推拉门";
-			break;
-		}
+	{
+							  return L"推拉门";
+							  break;
+	}
 	case E_WindowDoor_TLM2:
-		{
-			return L"提升推拉门";
-			break;
-		}
+	{
+							  return L"提升推拉门";
+							  break;
+	}
 	default:
-		{
-			return L"内开窗";
-			break;
-		}
-
+	{
+			   return L"内开窗";
+			   break;
+	}
 	}
 }
+
+CAluminumSeries* CAluminumSeries::Instance()
+{
+	static CAluminumSeries instance;
+	return &instance;
+}
+
+CAluminumSeries::CAluminumSeries()
+{
+}
+
+CAluminumSeries::~CAluminumSeries()
+{
+}
+
+
 
 E_AluminumType ToE_AluminumType(CString type)
 {
@@ -151,13 +140,20 @@ CString AluminumTypeToCSting(E_AluminumType type)
 	}
 }
 
+//////////////////////////////////////////////////////////////////////////
+
+
+CAluminumData AluminumData;
+CString AlString;
+vector<CString> AlSeries;
+
 static int OutputAlData(void *NotUsed, int nCol, char **value, char **ColName)
 {
 	for (int i = 0; i < nCol; i++)
 	{
 		if (strcmp(ColName[i], "WindowDoorType") == 0)
 		{
-			AluminumData.windowDoorType = ToE_WindowDoorType(UTF8ToGBK(value[i]));
+			AluminumData.windowDoorType = ToWindowDoorType(UTF8ToGBK(value[i]));
 		}
 		else if (strcmp(ColName[i],"Code") == 0)
 		{
@@ -201,6 +197,7 @@ static int OutputAlSeriesFromWindowType(void *NotUsed, int nCol, char **value, c
 
 bool CAluminumSeries::GetAluminumDataBySeriesAndName(E_WindowDoorType p_winType, CString p_serials, CString sName, CAluminumData& p_dataOut)
 {
+	sqlite3 * pDB3 = NULL;
 	int nRes = sqlite3_open("C:/Program Files/Autodesk/AutoCAD 2014/Support/Sunac2019/RCData.db", &pDB3);
 
 	if (nRes != SQLITE_OK)
@@ -230,6 +227,7 @@ bool CAluminumSeries::GetAluminumDataBySeriesAndName(E_WindowDoorType p_winType,
 
 bool CAluminumSeries::GetAluminumSerialByCode(CString p_code, CString& p_serialOut)
 {
+	sqlite3 * pDB3 = NULL;
 	int nRes = sqlite3_open("C:/Program Files/Autodesk/AutoCAD 2014/Support/Sunac2019/RCData.db", &pDB3);
 
 	if (nRes != SQLITE_OK)
@@ -259,6 +257,7 @@ bool CAluminumSeries::GetAluminumSerialByCode(CString p_code, CString& p_serialO
 vector<CString> CAluminumSeries::GetAluminumSerialsByWindowType(E_WindowDoorType p_winType)
 {
 	AlSeries.clear();
+	sqlite3 * pDB3 = NULL;
 	int nRes = sqlite3_open("C:/Program Files/Autodesk/AutoCAD 2014/Support/Sunac2019/RCData.db", &pDB3);
 
 	if (nRes != SQLITE_OK)

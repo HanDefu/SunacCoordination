@@ -11,10 +11,7 @@ enum E_WindowDoorType
 	E_WindowDoor_TLM2,		//提升推拉门
 };
 
-E_WindowDoorType GetWindowDoorType(CString sOpenType);
-
-E_WindowDoorType ToE_WindowDoorType(CString type);
-
+E_WindowDoorType ToWindowDoorType(CString type);
 CString WindowTypeToCString(E_WindowDoorType type);
 
 
@@ -69,5 +66,4 @@ public:
 	//使用表AluminumSeries
 
 protected:
-
 };
