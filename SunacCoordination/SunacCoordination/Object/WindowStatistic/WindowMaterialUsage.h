@@ -14,9 +14,9 @@ public:
 	CWindowMaterialUsage(const AttrWindow& p_winAtt, int p_nCount);  //p_nCount表示当前窗型的数量
 	virtual ~CWindowMaterialUsage();
 
-	virtual void CalcMateriaUsage() = 0;
-	virtual bool ExportReportToExcel(CString p_sReportFile) = 0; //导出到excel报表
-	virtual bool ExportReportToExcel(Excel::CExcelUtil& p_excel) = 0; //导出到excel报表
+	virtual void CalcMateriaUsage();
+	virtual bool ExportReportToExcel(CString p_sReportFile); //导出到excel报表
+	virtual bool ExportReportToExcel(Excel::CExcelUtil& p_excel); //导出到excel报表
 	void GetAllData();
 	
 	//////////////////////////////////////////////////////////////////////////
@@ -38,11 +38,11 @@ protected:
 
 	double GetVauleByFomula(CString p_sFomula);
 
-	void ExportWindowInfo(Excel::CExcelUtil& p_excel);//输出基本信息
-	void ExprotAlInfo(Excel::CExcelUtil& p_excel);//输出型材数据
-	void ExportGlassInfo(Excel::CExcelUtil& p_excel); //输出玻璃数据
-	void ExportHardwareInfo(Excel::CExcelUtil& p_excel) ;//输出五金数据
-	void ExportFuliaoInfo(Excel::CExcelUtil& p_excel) ;//输出辅料数据
+	virtual void ExportWindowInfo(Excel::CExcelUtil& p_excel);//输出基本信息
+	virtual void ExprotAlInfo(Excel::CExcelUtil& p_excel);//输出型材数据
+	virtual void ExportGlassInfo(Excel::CExcelUtil& p_excel); //输出玻璃数据
+	virtual void ExportHardwareInfo(Excel::CExcelUtil& p_excel);//输出五金数据
+	virtual void ExportFuliaoInfo(Excel::CExcelUtil& p_excel);//输出辅料数据
 
 
 
@@ -86,9 +86,6 @@ public:
 	CWindowMaterialUsageNC(const AttrWindow& p_winAtt, int p_nCount) : CWindowMaterialUsage(p_winAtt, p_nCount) {}
 	~CWindowMaterialUsageNC() {}
 
-	void CalcMateriaUsage();
-	virtual bool ExportReportToExcel(CString p_sReportFile);
-	virtual bool ExportReportToExcel(Excel::CExcelUtil& p_excel);
 protected:
 	
 };
