@@ -604,7 +604,6 @@ static void unloadApp()
 extern "C" int APIENTRY
 	DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 {
-	//SetDllDirectory(L"D:\\sqlite\\sqlite");
 	// Remove this if you use lpReserved
 	UNREFERENCED_PARAMETER(lpReserved);
 
