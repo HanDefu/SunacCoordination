@@ -31,6 +31,8 @@ protected:
 
 	bool GenerateReport(CString p_sReportFile);
 
+	void ClearAllWindowMaterialUsage();
+
 protected:
 	vector<CWindowMaterialUsage*> m_allWindowMatUsage; //所有类型的窗型的算量对象
 };

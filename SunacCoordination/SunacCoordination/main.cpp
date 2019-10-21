@@ -156,6 +156,7 @@ void ZJYTest()
 	CString localWindowPath = TY_GetLocalFilePath();
 	AttrWindow attrwindow;
 
+	attrwindow.m_prototypeCode = _T("Window_NC1");
 	attrwindow.m_quyuName = _T("全部");
 	attrwindow.m_isJiTuan = true;
 	attrwindow.m_isDynamic = true;
@@ -173,12 +174,23 @@ void ZJYTest()
 	dimdata2.type = UNLIMIT;
 	attrwindow.SetDimData(dimdata2);
 	CWindowsDimData dimdata3;
-	dimdata3.sCodeName = _T("a");
+	/*dimdata3.sCodeName = _T("a");
 	dimdata3.type = UNLIMIT;
-	attrwindow.SetDimData(dimdata3);
+	attrwindow.SetDimData(dimdata3);*/
+
 
 	//CWindowsDimData dimdata1;
 	dimdata1.sCodeName = _T("W1");
+	dimdata1.type = CALC;
+	dimdata1.sFomula = _T("W-2a");
+	attrwindow.SetDimData(dimdata1);
+
+	dimdata1.sCodeName = _T("W2");
+	dimdata1.type = CALC;
+	dimdata1.sFomula = _T("W-2a-W1-W3");
+	attrwindow.SetDimData(dimdata1);
+
+	dimdata1.sCodeName = _T("W3");
 	dimdata1.type = CALC;
 	dimdata1.sFomula = _T("W-2a");
 	attrwindow.SetDimData(dimdata1);
@@ -188,31 +200,36 @@ void ZJYTest()
 	dimdata2.type = CALC;
 	dimdata2.sFomula = _T("H-2a");
 	attrwindow.SetDimData(dimdata2);
+
+	dimdata2.sCodeName = _T("H2");
+	dimdata2.type = CALC;
+	dimdata2.sFomula = _T("H-2a");
+	attrwindow.SetDimData(dimdata2);
+
+	dimdata2.sCodeName = _T("H3");
+	dimdata2.type = CALC;
+	dimdata2.sFomula = _T("H-2a");
+	attrwindow.SetDimData(dimdata2);
+
 	attrwindow.CheckAndComplementDimeData();
 
-	attrwindow.SetW(800);
+	attrwindow.SetW(600);
 	attrwindow.SetW1(500);
-	attrwindow.SetH(1500);
+	attrwindow.SetH(1400);
 	attrwindow.SetH1(500);
 	attrwindow.SetA(50);
 
-	attrwindow.m_material.sAluminumSerial = _T("SN55系列");
+	attrwindow.m_material.sAluminumSerial = _T("SN65A系列");
 
 
 	CWindowMaterialUsageNC winUsageNC(attrwindow, 1);
 
-	Excel::CExcelUtil xls;
 	CString filter=L"参数文件(*.xlsx)|*.xlsx|All Files(*.*)|*.*||";  
 	CFileDialog dlg(FALSE, L"xlsx", L"*.xlsx", NULL, filter); 
 	if(dlg.DoModal()==IDOK)
 	{
 		CString pathName = dlg.GetFileName();
 		winUsageNC.ExportReportToExcel(pathName);
-		xls.SaveAs(WCHARTOCHAR(pathName.GetBuffer()));
-	}
-	else
-	{
-		return;
 	}
 }
 

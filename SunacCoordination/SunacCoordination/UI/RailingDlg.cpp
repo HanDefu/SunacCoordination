@@ -267,7 +267,7 @@ void CRailingDlg::UpdateTY()
 		CString standradRailingSize = RailingSize(i);
 		str.Format(_T("Ô­ÐÍ±àºÅ£º%s\nÀ¸¸ËÀàÐÍ£ºÌúÒÕÀ¸¸Ë\n±ê×¼À¸¸Ë³¤£º%s\n"),sPrototypeName, standradRailingSize);
 		path.Format(TY_GetLocalImagePath() + ("Railing_T%d.png"),i+1);
-		CGridCellForPreview* pCell = m_preRailing.AddPreviewPng(i/2, i%2, path, str);
+		CGridCellForPreview* pCell = m_preRailing.AddPreview(i/2, i%2, path, str);
 		pCell->SetName(sPrototypeName);
 	}
 
@@ -293,7 +293,7 @@ void CRailingDlg::UpdateBL()
 			sPrototypeName.Format(_T("Railing_B%d"),i+1);
 			str.Format(_T("Ô­ÐÍ±àºÅ£º%s\nÀ¸¸ËÀàÐÍ£º²£Á§À¸¸Ë\n"),sPrototypeName);
 			path.Format(TY_GetLocalImagePath() + ("Railing_B%d.png"),i+1);
-			CGridCellForPreview* pCell = m_preRailing.AddPreviewPng(i/2, i%2, path, str);
+			CGridCellForPreview* pCell = m_preRailing.AddPreview(i/2, i%2, path, str);
 			pCell->SetName(sPrototypeName);
 		}
 		else if (i > 1 && i < 4)
@@ -301,7 +301,7 @@ void CRailingDlg::UpdateBL()
 			sPrototypeName.Format(_T("Railing_B3_%d"),i-1);
 			str.Format(_T("Ô­ÐÍ±àºÅ£º%s\nÀ¸¸ËÀàÐÍ£º²£Á§À¸¸Ë"),sPrototypeName);
 			path.Format(TY_GetLocalImagePath() + ("Railing_B3_%d.png"),i-1);
-			CGridCellForPreview* pCell = m_preRailing.AddPreviewPng(i/2, i%2, path, str);	
+			CGridCellForPreview* pCell = m_preRailing.AddPreview(i/2, i%2, path, str);	
 			pCell->SetName(sPrototypeName);
 		}
 		else
@@ -309,7 +309,7 @@ void CRailingDlg::UpdateBL()
 			sPrototypeName.Format(_T("Railing_B%d"),i);
 			str.Format(_T("Ô­ÐÍ±àºÅ£º%s\nÀ¸¸ËÀàÐÍ£º²£Á§À¸¸Ë\n"),sPrototypeName);
 			path.Format(TY_GetLocalImagePath() + ("Railing_B%d.png"),i);
-			CGridCellForPreview* pCell = m_preRailing.AddPreviewPng(i/2, i%2, path, str);
+			CGridCellForPreview* pCell = m_preRailing.AddPreview(i/2, i%2, path, str);
 			pCell->SetName(sPrototypeName);
 		}
 	}
@@ -339,7 +339,7 @@ void CRailingDlg::UpdateAll()
 				sPrototypeName.Format(_T("Railing_B%d"),i+1);
 				str.Format(_T("Ô­ÐÍ±àºÅ£º%s\nÀ¸¸ËÀàÐÍ£º²£Á§À¸¸Ë\n"),sPrototypeName);
 				path.Format(TY_GetLocalImagePath() + ("Railing_B%d.png"),i+1);
-				CGridCellForPreview* pCell = m_preRailing.AddPreviewPng(i/2, i%2, path, str);
+				CGridCellForPreview* pCell = m_preRailing.AddPreview(i/2, i%2, path, str);
 				pCell->SetName(sPrototypeName);
 			}
 			else if (i > 1 && i < 4)
@@ -347,7 +347,7 @@ void CRailingDlg::UpdateAll()
 				sPrototypeName.Format(_T("Railing_B3_%d"),i-1);
 				str.Format(_T("Ô­ÐÍ±àºÅ£º%s\nÀ¸¸ËÀàÐÍ£º²£Á§À¸¸Ë"),sPrototypeName);
 				path.Format(TY_GetLocalImagePath() + ("Railing_B3_%d.png"),i-1);
-				CGridCellForPreview* pCell = m_preRailing.AddPreviewPng(i/2, i%2, path, str);	
+				CGridCellForPreview* pCell = m_preRailing.AddPreview(i/2, i%2, path, str);	
 				pCell->SetName(sPrototypeName);
 			}
 			else
@@ -355,7 +355,7 @@ void CRailingDlg::UpdateAll()
 				sPrototypeName.Format(_T("Railing_B%d"),i);
 				str.Format(_T("Ô­ÐÍ±àºÅ£º%s\nÀ¸¸ËÀàÐÍ£º²£Á§À¸¸Ë\n"),sPrototypeName);
 				path.Format(TY_GetLocalImagePath() + ("Railing_B%d.png"),i);
-				CGridCellForPreview* pCell = m_preRailing.AddPreviewPng(i/2, i%2, path, str);
+				CGridCellForPreview* pCell = m_preRailing.AddPreview(i/2, i%2, path, str);
 				pCell->SetName(sPrototypeName);
 			}
 		}
@@ -365,7 +365,7 @@ void CRailingDlg::UpdateAll()
 			CString standradRailingSize = RailingSize(i-7);
 			str.Format(_T("Ô­ÐÍ±àºÅ£º%s\nÀ¸¸ËÀàÐÍ£ºÌúÒÕÀ¸¸Ë\n±ê×¼À¸¸Ë³¤£º%s\n"),sPrototypeName, standradRailingSize);
 			path.Format(TY_GetLocalImagePath() + ("Railing_T%d.png"),i-6);
-			CGridCellForPreview* pCell = m_preRailing.AddPreviewPng(i/2, i%2, path, str);
+			CGridCellForPreview* pCell = m_preRailing.AddPreview(i/2, i%2, path, str);
 			pCell->SetName(sPrototypeName);
 		}
 	}

@@ -482,7 +482,7 @@ static CHAR* WCHARTOCHAR(const WCHAR * pchar)
 	return m_pchar;
 }
 
-BOOL CExcelUtil::IsFileExist(char* pFilename, BOOL bDir)
+BOOL CExcelUtil::IsFileExist(CString p_sFileName, BOOL bDir)
 {
 	HANDLE h;
 	LPWIN32_FIND_DATA pFD=new WIN32_FIND_DATA;
@@ -490,8 +490,7 @@ BOOL CExcelUtil::IsFileExist(char* pFilename, BOOL bDir)
 
 	if (pFD)
 	{
-		WCHAR *pw = CharToWchar(pFilename);
-		h=FindFirstFile(pw, pFD);
+		h = FindFirstFile(p_sFileName, pFD);
 		bFound=(h!=INVALID_HANDLE_VALUE);
 		if (bFound)
 		{
@@ -499,26 +498,23 @@ BOOL CExcelUtil::IsFileExist(char* pFilename, BOOL bDir)
 				bFound= (pFD->dwFileAttributes&FILE_ATTRIBUTE_DIRECTORY)!=NULL;
 			FindClose(h);
 		}
-		delete [] pw;
-		pw = NULL;
 		delete pFD;
 	}
 
 	return bFound;
 }
 
-BOOL CExcelUtil::SaveAs(char* pFileSavePath)
+BOOL CExcelUtil::SaveAs(CString p_sFileName)
 {
-	if (IsFileExist(pFileSavePath,FALSE) == TRUE)
+	if (IsFileExist(p_sFileName, FALSE) == TRUE)
 	{
-		DeleteFileA(pFileSavePath);
+		DeleteFile(p_sFileName);
 	}
 
 	COleVariant vtMissing((long)DISP_E_PARAMNOTFOUND,VT_ERROR),
 		vtTrue((short)TRUE),vtFalse((short)FALSE);
 
-	WCHAR *pw = CharToWchar(pFileSavePath);
-	m_excelBook.SaveAs(COleVariant(pw),
+	m_excelBook.SaveAs(COleVariant(p_sFileName),
 		vtMissing,
 		vtMissing,
 		vtMissing,
@@ -530,8 +526,7 @@ BOOL CExcelUtil::SaveAs(char* pFileSavePath)
 		vtMissing,
 		vtMissing,
 		vtMissing);
-	out_file_name = pFileSavePath;
-	delete [] pw;
+	out_file_name = p_sFileName;
 	return TRUE;
 }
 

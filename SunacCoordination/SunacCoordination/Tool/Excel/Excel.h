@@ -114,8 +114,8 @@ namespace Excel
 		int SetSheetCellValue(long iSheetName, long irow, long icol,VARIANT &vt);
 		int GetSheetCellValue(long iSheetName, long irow, long icol,VARIANT &vt);
 		int GetSheetCellValue(long irow, long icol,VARIANT &vt);
-		BOOL SaveAs(char* pFileSavePath);
-		BOOL IsFileExist(char* pFilename, BOOL bDir);
+		BOOL SaveAs(CString sFileSavePath);
+		BOOL IsFileExist(CString p_sFileName, BOOL bDir);
 
     };
 }

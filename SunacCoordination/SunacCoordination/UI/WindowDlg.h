@@ -37,8 +37,9 @@ public:
 	afx_msg void OnBnClickedCalculate();
 	afx_msg void OnBnClickedAutoIndex();
 	afx_msg void OnBnClickedSelOnDwg();
-	afx_msg void OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult);
-
+	afx_msg void OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnSelChangedW1();
+	afx_msg void OnSelChangedH2();
 	void UpdateEnable();
 	void LoadDefaultValue();
 
