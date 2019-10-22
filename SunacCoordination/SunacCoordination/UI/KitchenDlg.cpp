@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "KitchenDlg.h"
 #include "../WebIO/WebIO.h"
+#include "../Object/Kitchen/KitchenAutoName.h"
 
 // CKitchenDlg 对话框
 
@@ -97,6 +98,16 @@ BEGIN_MESSAGE_MAP(CKitchenDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDC_CHECK_AUTOINDEX, &CKitchenDlg::OnBnClickedAutoIndex)
 	ON_BN_CLICKED(IDC_CHECK_AIROUT, &CKitchenDlg::OnBnClickedNoAirout)
 	ON_CBN_SELCHANGE(IDC_COMBO_KITCHENTYPE, &CKitchenDlg::ClearPreviews)
+	ON_CBN_SELCHANGE(IDC_COMBO_BASINTYPE, &CKitchenDlg::UpdateAttribute)
+	ON_CBN_SELCHANGE(IDC_COMBO_FRIDGETYPE, &CKitchenDlg::UpdateAttribute)
+	ON_CBN_SELCHANGE(IDC_COMBO_BENCHWIDTH, &CKitchenDlg::UpdateAttribute)
+	ON_CBN_SELCHANGE(IDC_COMBO_FLOORRANGE, &CKitchenDlg::UpdateAttribute)
+	ON_BN_CLICKED(IDC_CHECK_IMAGE, &CKitchenDlg::UpdateAttribute)
+	ON_BN_CLICKED(IDC_RADIO_STANDARD, &CKitchenDlg::UpdateAttribute)
+	ON_EN_CHANGE(IDC_EDIT_OFFSETX, &CKitchenDlg::UpdateAttribute)
+	ON_EN_CHANGE(IDC_EDIT_OFFSETY, &CKitchenDlg::UpdateAttribute)
+	ON_EN_CHANGE(IDC_EDIT_X, &CKitchenDlg::UpdateAttribute)
+	ON_EN_CHANGE(IDC_EDIT_Y, &CKitchenDlg::UpdateAttribute)
 	ON_NOTIFY(GVN_SELCHANGED, IDC_PREVIEW_KITCHEN, &CKitchenDlg::OnSelChanged)
 END_MESSAGE_MAP()
 
@@ -139,28 +150,25 @@ void CKitchenDlg::OnBnClickedButtonInsert()
 		return;
 	}
 
-	//1. 更新属性值
-	m_pKitchGen->GetKitchenAtt()->m_shuiPenType = TYUI_GetComboBoxText(m_basinType);
-	m_pKitchGen->GetKitchenAtt()->m_bingXiangType = TYUI_GetComboBoxText(m_fridgeType);
-	m_pKitchGen->GetKitchenAtt()->m_zaoTaiType = TYUI_GetComboBoxText(m_benchWidth);
+	CString newInstanceCode = TYUI_GetText(m_number);
+	if (!CKitchenAutoName::GetInstance()->IsNameValid(*m_pKitchGen->GetKitchenAtt(), newInstanceCode))
+	{
+		AfxMessageBox(L"此编号已被占用");
+		return;
+	}
 
-	m_pKitchGen->GetKitchenAtt()->m_isGuoBiao = (m_isStd == 0);
-	m_pKitchGen->GetKitchenAtt()->m_floorRange = (E_KITCHEN_FLOOR_RANGE)m_floorRange.GetCurSel();
-	m_pKitchGen->GetKitchenAtt()->m_airVentOffsetX = TYUI_GetInt(m_offsetX);
-	m_pKitchGen->GetKitchenAtt()->m_airVentOffsetY = TYUI_GetInt(m_offsetY);
-	m_pKitchGen->GetKitchenAtt()->m_airVentW = TYUI_GetInt(m_customX);
-	m_pKitchGen->GetKitchenAtt()->m_airVentH = TYUI_GetInt(m_customY);
-
-	m_pKitchGen->GetKitchenAtt()->m_isMirror = m_isMirror.GetCheck() ? true : false;
-
-	CString newPrototypeCode = TYUI_GetText(m_number);
-	if (!m_bAutoIndex && !newPrototypeCode.IsEmpty())
-		m_pKitchGen->GetKitchenAtt()->m_prototypeCode = newPrototypeCode;
+	UpdateAttribute();
+	if (!m_bAutoIndex)
+	{
+		m_pKitchGen->GetKitchenAtt()->SetInstanceCode(newInstanceCode);
+		CKitchenAutoName::GetInstance()->RenameKitchen(*m_pKitchGen->GetKitchenAtt());
+	}
 
 	AcGePoint3d origin = m_rect.GetLB();
 
 	//生成
 	m_pKitchGen->GenKitchen(origin, m_angle);
+	CKitchenAutoName::GetInstance()->AddKitchenType(*m_pKitchGen->GetKitchenAtt());
 
 	OnOK();
 }
@@ -393,21 +401,35 @@ void CKitchenDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	}
 
 	//设置属性区选项
-	TYUI_SetText(m_number, curSecKitchen->m_prototypeCode);
-
 	TYUI_InitComboBox(m_basinType, m_pKitchGen->GetShuipenOptions(), m_pKitchGen->GetShuipenDefault());
 	TYUI_InitComboBox(m_fridgeType, m_pKitchGen->GetBinxiangOptions(), m_pKitchGen->GetBinxiangDefault());
 	TYUI_InitComboBox(m_benchWidth, m_pKitchGen->GetZhaotaiOptions(), m_pKitchGen->GetZhaotaiDefault());
 	EnableSetProperty(true);
+	curSecKitchen->m_shuiPenType = m_pKitchGen->GetShuipenDefault();
+	curSecKitchen->m_bingXiangType = m_pKitchGen->GetBinxiangDefault();
+	curSecKitchen->m_zaoTaiType = m_pKitchGen->GetZhaotaiDefault();
 
-	bool bMirror;
-	pcurSelPrototype->GetRotateAngle(m_doorDir, m_windowDir, m_angle, bMirror);
-	m_isMirror.SetCheck(bMirror);
-
+	pcurSelPrototype->GetRotateAngle(m_doorDir, m_windowDir, m_angle, curSecKitchen->m_isMirror);
+	m_isMirror.SetCheck(curSecKitchen->m_isMirror);
 	if (pcurSelPrototype->GetWindowDoorPos() == CHUIZHIKAI)
 		TYUI_Disable(m_isMirror);
 	else
 		TYUI_Enable(m_isMirror);
+
+	m_isStd = 0;
+	m_floorRange.SetCurSel(0);
+	TYUI_SetInt(m_offsetX, 0);
+	TYUI_SetInt(m_offsetY, 0);
+	TYUI_SetInt(m_customX, 450);
+	TYUI_SetInt(m_customY, 350);
+	curSecKitchen->m_isGuoBiao = true;
+	curSecKitchen->m_floorRange = E_KITCHEN_FLOOR_1_7;
+	curSecKitchen->m_airVentOffsetX = 0;
+	curSecKitchen->m_airVentOffsetY = 0;
+
+	curSecKitchen->m_instanceCode = CKitchenAutoName::GetInstance()->GetKitchenName(*curSecKitchen);
+	TYUI_SetText(m_number, curSecKitchen->m_instanceCode);
+	UpdateData(FALSE);
 }
 
 void CKitchenDlg::OnBnClickedAutoIndex()
@@ -425,6 +447,33 @@ void CKitchenDlg::OnBnClickedNoAirout()
 	//修改排气道设置后重新搜索
 	if (m_allKitchens.size() > 0)
 		OnBnClickedButtonSearch();
+}
+
+void CKitchenDlg::UpdateAttribute()
+{
+	UpdateData(TRUE);
+
+	if (m_pKitchGen == NULL)
+		return;
+
+	m_pKitchGen->GetKitchenAtt()->m_shuiPenType = TYUI_GetComboBoxText(m_basinType);
+	m_pKitchGen->GetKitchenAtt()->m_bingXiangType = TYUI_GetComboBoxText(m_fridgeType);
+	m_pKitchGen->GetKitchenAtt()->m_zaoTaiType = TYUI_GetComboBoxText(m_benchWidth);
+
+	m_pKitchGen->GetKitchenAtt()->m_isGuoBiao = (m_isStd == 0);
+	m_pKitchGen->GetKitchenAtt()->m_floorRange = (E_KITCHEN_FLOOR_RANGE)m_floorRange.GetCurSel();
+	m_pKitchGen->GetKitchenAtt()->m_airVentOffsetX = TYUI_GetInt(m_offsetX);
+	m_pKitchGen->GetKitchenAtt()->m_airVentOffsetY = TYUI_GetInt(m_offsetY);
+	m_pKitchGen->GetKitchenAtt()->m_airVentW = TYUI_GetInt(m_customX);
+	m_pKitchGen->GetKitchenAtt()->m_airVentH = TYUI_GetInt(m_customY);
+
+	m_pKitchGen->GetKitchenAtt()->m_isMirror = m_isMirror.GetCheck() ? true : false;
+
+	if (m_bAutoIndex)
+	{
+		m_pKitchGen->GetKitchenAtt()->m_instanceCode = CKitchenAutoName::GetInstance()->GetKitchenName(*m_pKitchGen->GetKitchenAtt());
+		TYUI_SetText(m_number, m_pKitchGen->GetKitchenAtt()->m_instanceCode);
+	}
 }
 
 E_DIRECTION CKitchenDlg::GetDir(ads_point pt)

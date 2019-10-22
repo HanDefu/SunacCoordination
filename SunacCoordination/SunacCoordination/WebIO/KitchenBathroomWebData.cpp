@@ -145,15 +145,15 @@ std::vector<AttrKitchen > CKitchenBathroomWebData::ParseKitchensFromXML(CMarkup 
 			}
 			if (xml.FindElem(_T("KitchenBasinSize")))
 			{
-				KitchenAttr.m_BasinSize = _ttof(xml.GetData());
+				KitchenAttr.m_shuiPenType = xml.GetData();
 			}
 			if (xml.FindElem(_T("KitchenFridgSize")))
 			{
-				KitchenAttr.m_FridgeSize = _ttof(xml.GetData());
+				KitchenAttr.m_bingXiangType = xml.GetData();
 			}
 			if (xml.FindElem(_T("KitchenHearthSize")))
 			{
-				KitchenAttr.m_HearthSize = _ttof(xml.GetData());
+				KitchenAttr.m_zaoTaiType = xml.GetData();
 			}
 			xml.OutOfElem();
 			vKitchenAttrs.push_back(KitchenAttr);	

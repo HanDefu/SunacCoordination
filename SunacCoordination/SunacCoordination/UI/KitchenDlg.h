@@ -68,6 +68,7 @@ public:
 	afx_msg void OnBnClickedAutoIndex();
 	afx_msg void OnBnClickedNoAirout();
 
+	void UpdateAttribute();
 	E_DIRECTION GetDir(ads_point pt);
 	void LoadDefaultValue();
 	void EnableSetProperty(bool bEnable);

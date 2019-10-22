@@ -54,6 +54,7 @@ public:
 	vector<AttrBathroom> m_allBathrooms;
 	CBathroomGen* m_pBathroomGen;
 
+	void UpdateAttribute();
 	void LoadDefaultValue();
 	E_DIRECTION GetDir(ads_point pt);
 	void EnableSetAirout(bool bEnable);

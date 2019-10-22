@@ -628,5 +628,9 @@ bool AttrWindow::IsInstanceEqual(const AttrWindow& p_att) const
 		if (!dim1[i].IsParaEqual(dim2[i]))
 			return false;
 	}
+
+	if (!m_isMirrorWindow && m_isMirror != p_att.m_isMirror)
+		return false;
+
 	return true;
 }

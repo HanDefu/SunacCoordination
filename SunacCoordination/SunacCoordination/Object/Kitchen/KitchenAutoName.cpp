@@ -20,42 +20,52 @@ CKitchenAutoName* CKitchenAutoName::GetInstance()
 CString CKitchenAutoName::GetKitchenName(const AttrKitchen& p_att) const
 {
 	CString sKitchenName;
-	sKitchenName.Format(L"%s_%02.0lf%02.0lf", p_att.m_prototypeCode.Mid(7), p_att.m_width / 100, p_att.m_height / 100);
-	int count = 0;
+	//去除原型编号中的后缀
+	CString prototype = p_att.m_prototypeCode;
+	int pos = prototype.Find(L'_');
+	if (pos != -1)
+		prototype = prototype.Left(pos);
+	//根据"原型编号_尺寸编号"生成门窗编号
+	sKitchenName.Format(L"%s-%.0lf×%.0lf", prototype, p_att.m_width, p_att.m_height);
 
+	if (prototype.Find(L"_c"))
+		sKitchenName += L"/c";
+
+	//镜像厨房增加"_m"后缀
+	CString sMirror;
+	if (p_att.m_isMirror)
+		sMirror = L"_m";
+
+	CString sKitchenFullName = sKitchenName + sMirror;
+
+	//查找已存在的厨房
 	for (UINT i = 0; i < m_allTypeKitchens.size(); i++)
 	{
 		if (m_allTypeKitchens[i].IsInstanceEqual(p_att))
-		{
-			sKitchenName = m_allTypeKitchens[i].m_instanceCode;
-			sKitchenName.TrimRight(L"Mm");
-			if (p_att.m_isMirror)
-				sKitchenName += L"m";
-			return sKitchenName;
-		}
-		if (m_allTypeKitchens[i].m_instanceCode.Find(sKitchenName) == 0)
-			count++;
+			return m_allTypeKitchens[i].m_instanceCode;
 	}
 
-	if (count > 0)
+	//查找一个未被占用的门窗编号
+	for (int i = 1; !IsNameValid(p_att, sKitchenFullName); i++)
 	{
-		CString sNum;
-		sNum.Format(L"_%d", count);
-		sKitchenName += sNum;
+		sKitchenFullName.Format(L"%s_%d%s", sKitchenName, i, sMirror);
 	}
 
-	if (p_att.m_isMirror)
-		sKitchenName += L"m";
-
-	return sKitchenName;
+	return sKitchenFullName;
 }
 
 void CKitchenAutoName::AddKitchenType(const AttrKitchen& p_att)
 {
+	//插入前确保不重名
+	for (UINT i = 0; i < m_allTypeKitchens.size(); i++)
+	{
+		if (m_allTypeKitchens[i].m_instanceCode == p_att.m_instanceCode)
+			return;
+	}
 	m_allTypeKitchens.push_back(p_att);
 }
 
-bool CKitchenAutoName::IsUserNameValid(const AttrKitchen& p_att, CString p_sName)
+bool CKitchenAutoName::IsNameValid(const AttrKitchen& p_att, CString p_sName) const
 {
 	if (p_sName.IsEmpty())
 		return false;
@@ -65,4 +75,32 @@ bool CKitchenAutoName::IsUserNameValid(const AttrKitchen& p_att, CString p_sName
 			return false;
 	}
 	return true;
+}
+
+void CKitchenAutoName::AutoNameAllKitchen()
+{
+	vector<AttrKitchen> temp = m_allTypeKitchens;
+	m_allTypeKitchens.clear();
+	for (UINT i = 0; i < temp.size(); i++)
+	{
+		temp[i].m_instanceCode = GetKitchenName(temp[i]);
+		AddKitchenType(temp[i]);
+	}
+}
+
+bool CKitchenAutoName::RenameKitchen(const AttrKitchen& p_att)
+{
+	if (!IsNameValid(p_att, p_att.m_instanceCode))
+		return false;
+
+	for (UINT i = 0; i < m_allTypeKitchens.size(); i++)
+	{
+		if (m_allTypeKitchens[i].IsInstanceEqual(p_att))
+		{
+			m_allTypeKitchens[i].m_instanceCode = p_att.m_instanceCode;
+			return true;
+		}
+	}
+
+	return false;
 }
