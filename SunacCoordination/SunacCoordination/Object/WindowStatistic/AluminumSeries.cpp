@@ -96,8 +96,6 @@ CAluminumSeries::~CAluminumSeries()
 {
 }
 
-
-
 E_AluminumType ToE_AluminumType(CString type)
 {
 	if (type == "¶ÏÇÅ¸ôÈÈÂÁĞÍ²Ä")
@@ -149,6 +147,17 @@ CAluminumData AluminumData;
 CString AlString;
 vector<CString> AlSeries;
 
+void CAluminumSeries::InitAluminum()
+{
+	AluminumData.sCode = "";
+	AluminumData.sName = "";
+	AluminumData.sSerial = "";
+	AluminumData.weightPerMeter = 0;
+	AluminumData.windowDoorType = E_WindowDoor_NC;
+	AluminumData.wastageRate = 0.125;
+	AluminumData.aluminumType = E_¶ÏÇÅ¸ôÈÈÂÁĞÍ²Ä;
+}
+
 static int OutputAlData(void *NotUsed, int nCol, char **value, char **ColName)
 {
 	for (int i = 0; i < nCol; i++)
@@ -199,6 +208,7 @@ static int OutputAlSeriesFromWindowType(void *NotUsed, int nCol, char **value, c
 
 bool CAluminumSeries::GetAluminumDataBySeriesAndName(E_WindowDoorType p_winType, CString p_serials, CString sName, CAluminumData& p_dataOut)
 {
+	InitAluminum();
 	sqlite3 * pDB3 = NULL;
 	const char* path = TY_GetAluminumDatabasePath();
 	int nRes = sqlite3_open(path, &pDB3);
@@ -211,7 +221,7 @@ bool CAluminumSeries::GetAluminumDataBySeriesAndName(E_WindowDoorType p_winType,
 	char* cErrMsg;
 	CString sWinType = WindowTypeToCString(p_winType);
 	CString sqlString;
-	sqlString.Format(L"select * from `AluminumSeries` where `WindowDoorType` = '%s' and `Serial` = '%s' and `Name` = '%s';", sWinType, p_serials, sName);
+	sqlString.Format(L"select * from `AluminumSeries` where `WindowDoorType` = '%s' and `Serial` = '%s' and `Name` = '%s' limit 1;", sWinType, p_serials, sName);
 	
 	char* sql;
 	ConvertStringToUTF8(sqlString, sql);
@@ -224,6 +234,11 @@ bool CAluminumSeries::GetAluminumDataBySeriesAndName(E_WindowDoorType p_winType,
 	}
 
 	p_dataOut = AluminumData;
+	if (p_dataOut.sCode == "" && p_dataOut.sName == "" && p_dataOut.sSerial == "")
+	{
+		return false;
+	}
+
 	sqlite3_close(pDB3);
 	return true;
 }

@@ -271,6 +271,16 @@ void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öÐÍ²ÄÊý¾
 	{
 		p_excel.SetCellValue(nRow, 2, alFormulas[i].m_aluminumClassify);
 		p_excel.SetCellValue(nRow, 3, alFormulas[i].m_name);
+
+		if (_T("¿ò½ÇÂë") == alFormulas[i].m_name || _T("ÉÈ½ÇÂë1") == alFormulas[i].m_name || _T("ÉÈ½ÇÂë2") == alFormulas[i].m_name)
+		{
+			p_excel.SetCellValue(nRow, 3, _T("½ÇÂë"));
+		}
+		if (_T("ÖÐèè½ÇÂë1") == alFormulas[i].m_name || _T("ÖÐèè½ÇÂë2") == alFormulas[i].m_name )
+		{
+			p_excel.SetCellValue(nRow, 3, _T("ÖÐèè½ÇÂë"));
+		}
+		
 		p_excel.SetCellValue(nRow, 4, alFormulas[i].m_pos);
 
 		CAluminumData dataOut;
@@ -297,7 +307,7 @@ void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öÐÍ²ÄÊý¾
 
 		//³¤¶È
 		double length = GetVauleByFomula(alFormulas[i].m_formula);
-		str.Format(_T("%d"),(int)(length));
+		str.Format(_T("%.2f"),length);
 		p_excel.SetCellValue(nRow, 6, str);
 
 		//ÊýÁ¿
@@ -314,7 +324,7 @@ void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öÐÍ²ÄÊý¾
 		p_excel.SetCellValue(nRow, 9, str);
 
 		//ºÄËð
-		str.Format(_T("%.2f%%"),dataOut.wastageRate*100);
+		str.Format(_T("%.2f%%"),dataOut.wastageRate);
 		p_excel.SetCellValue(nRow, 12, str);
 
 		//ÐÍ²ÄÖÖÀà
@@ -329,7 +339,8 @@ void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öÐÍ²ÄÊý¾
 		{
 			m_nonBroAlQTY += totalWeight;
 		}
-		else
+		else 
+			//if(E_Ñô¼«Ñõ»¯ÂÁÐÍ²Ä == dataOut.aluminumType)
 		{
 			m_anoAlQTY += totalWeight;
 		}
@@ -376,7 +387,7 @@ void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öÐÍ²ÄÊý¾
 	//ÂÁÐÍ²Ä×Ü¼Æ
 	m_alTotalQTY = m_broAlQTY + m_nonBroAlQTY + m_anoAlQTY;
 	str.Format(_T("%.2f"),m_alTotalQTY);
-	p_excel.SetCellValue(46, 9, str);
+	p_excel.SetCellValue(47, 9, str);
 }
 
 void CWindowMaterialUsage::ExportGlassInfo(Excel::CExcelUtil& p_excel) //Êä³ö²£Á§Êý¾Ý

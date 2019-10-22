@@ -102,7 +102,7 @@ std::vector<AttrAirCon >  CAirConditionLocalData::GetAirCons(double p_airConHors
 			continue;
 		}
 
-		if (p_airConRainRiser != L"нч")
+		if (p_airConRainRiser != L"╥Я")
 		{
 			if (p_airConRainRiserPos !=  m_allAirconditions[i].m_rainPipePos)
 			{

@@ -54,6 +54,8 @@ public:
 	static CAluminumSeries* Instance();
 	virtual ~CAluminumSeries();
 
+	void InitAluminum();
+
 	//通过门窗类型、型材系列，型材名称获取型材数据,获取失败返回false
 	bool GetAluminumDataBySeriesAndName(E_WindowDoorType p_winType, CString p_serials, CString sName, CAluminumData& p_dataOut);
 
