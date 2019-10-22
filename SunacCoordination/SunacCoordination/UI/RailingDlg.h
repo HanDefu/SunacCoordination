@@ -1,8 +1,8 @@
 #pragma once
-#include "GridCtrlWithPreview.h"
 #include "afxwin.h"
-#include "../Object/Railing/AttrRailing.h"
 #include "ComFun_MFC.h"
+#include "GridCtrlWithPreview.h"
+#include "../Object/Railing/AttrRailing.h"
 
 // CRailingDlg 对话框
 
@@ -34,21 +34,18 @@ protected:
 public:
 	afx_msg void OnBnClickedInsertToCAD();
 	afx_msg void OnBnClickedButtonSelectline();
+	afx_msg void OnCbnSelchangeComboRailingtype();
+	afx_msg void OnBnClickedCheckAutoindex();
+	afx_msg void OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult);
+	void UpdateRailingToGrid(eRailingType p_railetype);
+	CString RailingSize(int i);
 
 	CGridCtrlWithPreview m_preRailing;
 	CString m_selectedFile;
 	CComboBox m_type;
-	void UpdateTY();
-	void UpdateBL();
-	void UpdateAll();
-	CString RailingSize(int i);
 	double m_height;// 栏杆高度	
 	double m_width;// 栏杆长度
-	CString sPrototypeName;
-	afx_msg void OnCbnSelchangeComboRailingtype();
-	afx_msg void OnBnClickedCheckAutoindex();
 	CEdit m_railingNumber;
-	afx_msg void OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult);
 };
 
 extern CRailingDlg* g_railingDlg;

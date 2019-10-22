@@ -29,6 +29,7 @@ protected:
 
 	bool IsBathroomRectValid(TYRect rect);
 
+	void ShowInfo();
 public:
 	CGridCtrlWithPreview m_preBathroom;
 	CComboBox m_bathroomType;

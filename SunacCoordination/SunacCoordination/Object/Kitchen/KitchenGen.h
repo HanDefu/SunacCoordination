@@ -121,8 +121,8 @@ class CKitchGenKL : public CKitchGen////L型，门窗对开
 public:
 	CKitchGenKL(AttrKitchen* p_att);
 
-	//virtual vCString GetShuipenOptions();// 获取水盆选项
-	//virtual CString GetShuipenDefault(); //水盆默认值
+	virtual vCString GetShuipenOptions();// 获取水盆选项
+	virtual CString GetShuipenDefault(); //水盆默认值
 
 	virtual vCString GetBinxiangOptions();// 获取冰箱选项
 	virtual CString GetBinxiangDefault();
