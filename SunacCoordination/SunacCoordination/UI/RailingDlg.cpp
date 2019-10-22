@@ -5,7 +5,6 @@
 #include "RailingDlg.h"
 #include "afxdialogex.h"
 #include "../Common/ComFun_Sunac.h"
-//#include "RailingBaseDlg.h"
 #include "../Object/Railing/RCRailing.h"
 #include "../Object/Railing/RCRailingTieyi.h"
 #include "../Object/Railing/RCRailingBoli.h"
@@ -92,7 +91,7 @@ BOOL CRailingDlg::OnInitDialog()
 	m_type.AddString(_T("≤£¡ß¿∏∏À"));
 	m_type.SetCurSel(0);
 
-	UpdateAll();
+	UpdateRailingToGrid(E_RAILING_ALL);
 
 	//((CMFCButton*)GetDlgItem(IDC_MFCBUTTON_LIB))->SetImage(IDB_BITMAP37);
 	//((CMFCButton*)GetDlgItem(IDC_MFCBUTTON_CANCEL))->SetImage(IDB_BITMAP37);
@@ -235,137 +234,80 @@ void CRailingDlg::OnCbnSelchangeComboRailingtype()
 
 	if (type == _T("≤ªœﬁ"))
 	{
-		UpdateAll();
+		UpdateRailingToGrid(E_RAILING_ALL);
 	}
 
 	if (type == _T("Ã˙“’¿∏∏À"))
 	{
-		UpdateTY();
+		UpdateRailingToGrid(E_RAILING_TIEYI);
 	}
 
 	if (type == _T("≤£¡ß¿∏∏À"))
 	{
-		UpdateBL();
+		UpdateRailingToGrid(E_RAILING_BOLI);
 	}
 
 	UpdateData(FALSE);
 }
 
-void CRailingDlg::UpdateTY()
+void CRailingDlg::UpdateRailingToGrid(eRailingType p_railetype)
 {
+	int nRowCount = 4;
+	if (p_railetype == E_RAILING_ALL)
+		nRowCount = 7;
+
 	m_preRailing.ClearAllPreviews();
-	m_preRailing.SetRowCount(4);
+	m_preRailing.SetRowCount(nRowCount);
 	m_preRailing.SetColumnCount(2);
 	m_preRailing.SetDisplayRows(2);
 	m_preRailing.SetDisplayColumns(2);
+	m_preRailing.SetRowsPerWheelNotch(2);
 
-	for (UINT i = 0; i < 7; i++)
+	CString str;
+	CString path;
+	CString sPrototypeName;
+
+	int nCount = 0;
+	//Ã˙“’
+	if (p_railetype==E_RAILING_TIEYI || p_railetype==E_RAILING_ALL)
 	{
-		CString str;
-		CString path;
-		sPrototypeName.Format(_T("Railing_T%d"),i+1);
-		CString standradRailingSize = RailingSize(i);
-		str.Format(_T("‘≠–Õ±‡∫≈£∫%s\n¿∏∏À¿‡–Õ£∫Ã˙“’¿∏∏À\n±Í◊º¿∏∏À≥§£∫%s\n"),sPrototypeName, standradRailingSize);
-		path.Format(TY_GetLocalImagePath() + ("Railing_T%d.png"),i+1);
-		CGridCellForPreview* pCell = m_preRailing.AddPreview(i/2, i%2, path, str);
-		pCell->SetName(sPrototypeName);
-	}
-
-	m_preRailing.SelectPreview(0, 0);
-	m_preRailing.SetDefCellMargin(20);
-	m_preRailing.SetBkColor(RGB(128, 128, 128));
-}
-
-void CRailingDlg::UpdateBL()
-{
-	m_preRailing.ClearAllPreviews();
-	m_preRailing.SetRowCount(4);
-	m_preRailing.SetColumnCount(2);
-	m_preRailing.SetDisplayRows(2);
-	m_preRailing.SetDisplayColumns(2);
-
-	for (UINT i = 0; i < 7; i++)
-	{
-		CString str;
-		CString path;
-		if (i <= 1)
+		for (UINT i = 0; i < 7; i++, nCount++)
 		{
-			sPrototypeName.Format(_T("Railing_B%d"),i+1);
-			str.Format(_T("‘≠–Õ±‡∫≈£∫%s\n¿∏∏À¿‡–Õ£∫≤£¡ß¿∏∏À\n"),sPrototypeName);
-			path.Format(TY_GetLocalImagePath() + ("Railing_B%d.png"),i+1);
-			CGridCellForPreview* pCell = m_preRailing.AddPreview(i/2, i%2, path, str);
-			pCell->SetName(sPrototypeName);
-		}
-		else if (i > 1 && i < 4)
-		{
-			sPrototypeName.Format(_T("Railing_B3_%d"),i-1);
-			str.Format(_T("‘≠–Õ±‡∫≈£∫%s\n¿∏∏À¿‡–Õ£∫≤£¡ß¿∏∏À"),sPrototypeName);
-			path.Format(TY_GetLocalImagePath() + ("Railing_B3_%d.png"),i-1);
-			CGridCellForPreview* pCell = m_preRailing.AddPreview(i/2, i%2, path, str);	
-			pCell->SetName(sPrototypeName);
-		}
-		else
-		{
-			sPrototypeName.Format(_T("Railing_B%d"),i);
-			str.Format(_T("‘≠–Õ±‡∫≈£∫%s\n¿∏∏À¿‡–Õ£∫≤£¡ß¿∏∏À\n"),sPrototypeName);
-			path.Format(TY_GetLocalImagePath() + ("Railing_B%d.png"),i);
-			CGridCellForPreview* pCell = m_preRailing.AddPreview(i/2, i%2, path, str);
+			sPrototypeName.Format(_T("Railing_T%d"), i + 1);
+			CString standradRailingSize = RailingSize(i);
+			str.Format(_T("‘≠–Õ±‡∫≈£∫%s\n¿∏∏À¿‡–Õ£∫Ã˙“’¿∏∏À\n±Í◊º¿∏∏À≥§£∫%s\n"), sPrototypeName, standradRailingSize);
+			path.Format(TY_GetLocalImagePath() + ("Railing_T%d.png"), i + 1);
+
+			CGridCellForPreview* pCell = m_preRailing.AddPreview(nCount / 2, nCount % 2, path, str);
 			pCell->SetName(sPrototypeName);
 		}
 	}
 
-	m_preRailing.SelectPreview(0, 0);
-	m_preRailing.SetDefCellMargin(20);
-	m_preRailing.SetBkColor(RGB(128, 128, 128));
-}
-
-void CRailingDlg::UpdateAll()
-{
-	m_preRailing.ClearAllPreviews();
-	m_preRailing.SetRowCount(7);
-	m_preRailing.SetColumnCount(2);
-	m_preRailing.SetDisplayRows(2);
-	m_preRailing.SetDisplayColumns(2);
-
-	for (UINT i = 0; i < 14; i++)
+	//≤£¡ß
+	if (p_railetype == E_RAILING_BOLI || p_railetype == E_RAILING_ALL)
 	{
-		CString str;
-		CString path;
-		if (i < 7)
+		for (UINT i = 0; i < 7; i++, nCount++)
 		{
 			if (i <= 1)
 			{
-				CString standradRailingSize = RailingSize(i);
-				sPrototypeName.Format(_T("Railing_B%d"),i+1);
-				str.Format(_T("‘≠–Õ±‡∫≈£∫%s\n¿∏∏À¿‡–Õ£∫≤£¡ß¿∏∏À\n"),sPrototypeName);
-				path.Format(TY_GetLocalImagePath() + ("Railing_B%d.png"),i+1);
-				CGridCellForPreview* pCell = m_preRailing.AddPreview(i/2, i%2, path, str);
-				pCell->SetName(sPrototypeName);
+				sPrototypeName.Format(_T("Railing_B%d"), i + 1);
+				str.Format(_T("‘≠–Õ±‡∫≈£∫%s\n¿∏∏À¿‡–Õ£∫≤£¡ß¿∏∏À\n"), sPrototypeName);
+				path.Format(TY_GetLocalImagePath() + ("Railing_B%d.png"), i + 1);
 			}
 			else if (i > 1 && i < 4)
 			{
-				sPrototypeName.Format(_T("Railing_B3_%d"),i-1);
-				str.Format(_T("‘≠–Õ±‡∫≈£∫%s\n¿∏∏À¿‡–Õ£∫≤£¡ß¿∏∏À"),sPrototypeName);
-				path.Format(TY_GetLocalImagePath() + ("Railing_B3_%d.png"),i-1);
-				CGridCellForPreview* pCell = m_preRailing.AddPreview(i/2, i%2, path, str);	
-				pCell->SetName(sPrototypeName);
+				sPrototypeName.Format(_T("Railing_B3_%d"), i - 1);
+				str.Format(_T("‘≠–Õ±‡∫≈£∫%s\n¿∏∏À¿‡–Õ£∫≤£¡ß¿∏∏À"), sPrototypeName);
+				path.Format(TY_GetLocalImagePath() + ("Railing_B3_%d.png"), i - 1);
 			}
 			else
 			{
-				sPrototypeName.Format(_T("Railing_B%d"),i);
-				str.Format(_T("‘≠–Õ±‡∫≈£∫%s\n¿∏∏À¿‡–Õ£∫≤£¡ß¿∏∏À\n"),sPrototypeName);
-				path.Format(TY_GetLocalImagePath() + ("Railing_B%d.png"),i);
-				CGridCellForPreview* pCell = m_preRailing.AddPreview(i/2, i%2, path, str);
-				pCell->SetName(sPrototypeName);
+				sPrototypeName.Format(_T("Railing_B%d"), i);
+				str.Format(_T("‘≠–Õ±‡∫≈£∫%s\n¿∏∏À¿‡–Õ£∫≤£¡ß¿∏∏À\n"), sPrototypeName);
+				path.Format(TY_GetLocalImagePath() + ("Railing_B%d.png"), i);
 			}
-		}
-		else
-		{
-			sPrototypeName.Format(_T("Railing_T%d"),i-6);
-			CString standradRailingSize = RailingSize(i-7);
-			str.Format(_T("‘≠–Õ±‡∫≈£∫%s\n¿∏∏À¿‡–Õ£∫Ã˙“’¿∏∏À\n±Í◊º¿∏∏À≥§£∫%s\n"),sPrototypeName, standradRailingSize);
-			path.Format(TY_GetLocalImagePath() + ("Railing_T%d.png"),i-6);
-			CGridCellForPreview* pCell = m_preRailing.AddPreview(i/2, i%2, path, str);
+
+			CGridCellForPreview* pCell = m_preRailing.AddPreview(nCount / 2, nCount % 2, path, str);
 			pCell->SetName(sPrototypeName);
 		}
 	}

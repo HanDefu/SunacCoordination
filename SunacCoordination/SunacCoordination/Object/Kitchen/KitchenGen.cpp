@@ -518,6 +518,35 @@ CKitchGenKL::CKitchGenKL(AttrKitchen* p_att)
 
 }
 
+vCString CKitchGenKL::GetShuipenOptions()// 获取水盆选项
+{
+	double len = m_attr.m_width - 50 - 600 - 300; //50是装修面宽， 600是台面宽， 300是下水管空间
+
+	vCString strs;
+	strs.push_back(L"单盆600");
+	strs.push_back(L"单盆800");
+
+	 if (len>1000)
+	 {
+		 strs.push_back(L"双盆900");
+	 }
+	 else if (len>1100)
+	 {
+		 strs.push_back(L"双盆1000");
+	 }
+	 else
+	 {
+		 vCString options = WebIO::GetInstance()->GetConfigDict()->Kitchen_GetShuiPenTypes();
+		 return options;
+	 }
+	 return strs;
+}
+
+CString CKitchGenKL::GetShuipenDefault() //水盆默认值
+{
+	return L"单盆600";
+}
+
 vCString CKitchGenKL::GetBinxiangOptions()// 获取冰箱选项
 {
 	vCString options;

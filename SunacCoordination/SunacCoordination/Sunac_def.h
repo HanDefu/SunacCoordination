@@ -33,6 +33,7 @@ typedef enum eRailingType
 {
 	E_RAILING_TIEYI,//ÌúÒÕ
 	E_RAILING_BOLI,//²£Á§
+	E_RAILING_ALL = 0x10,//È«²¿
 }eRailingType;
 
 inline eRailingType ToERailingType(CString type)
