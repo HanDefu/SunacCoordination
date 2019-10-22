@@ -104,6 +104,7 @@ BEGIN_MESSAGE_MAP(CKitchenDlg, CAcUiDialog)
 	ON_CBN_SELCHANGE(IDC_COMBO_FLOORRANGE, &CKitchenDlg::UpdateAttribute)
 	ON_BN_CLICKED(IDC_CHECK_IMAGE, &CKitchenDlg::UpdateAttribute)
 	ON_BN_CLICKED(IDC_RADIO_STANDARD, &CKitchenDlg::UpdateAttribute)
+	ON_BN_CLICKED(IDC_RADIO_CUSTOM, &CKitchenDlg::UpdateAttribute)
 	ON_EN_CHANGE(IDC_EDIT_OFFSETX, &CKitchenDlg::UpdateAttribute)
 	ON_EN_CHANGE(IDC_EDIT_OFFSETY, &CKitchenDlg::UpdateAttribute)
 	ON_EN_CHANGE(IDC_EDIT_X, &CKitchenDlg::UpdateAttribute)
@@ -217,13 +218,20 @@ void CKitchenDlg::OnBnClickedButtonRange()
 		}
 		while (m_doorDir == m_windowDir);
 
-		if ((abs(m_windowDir - m_doorDir) % 2)==0)
-			GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗对开"));
-		else
-			GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗垂直开"));
+		ShowInfo();
 	}
 	ShowWindow(true);
 	ClearPreviews();
+}
+void CKitchenDlg::ShowInfo()
+{
+	CString sInfo;
+	if ((abs(m_windowDir - m_doorDir) % 2) == 0)
+		sInfo.Format(_T("厨房信息：%d x %d,门窗对开"), (int)(m_rect.GetWidth()), (int)(m_rect.GetHeight()));
+	else
+		sInfo.Format(_T("厨房信息：%d x %d,门窗垂直开"), (int)(m_rect.GetWidth()), (int)(m_rect.GetHeight()));
+
+	GetDlgItem(IDC_STATIC_DIR)->SetWindowText(sInfo);
 }
 
 bool CKitchenDlg::IsKitchRectValid(TYRect rect)
@@ -270,10 +278,7 @@ void CKitchenDlg::OnBnClickedButtonDoorDir()//门方向
 
 	ClearPreviews();
 
-	if ((abs(m_windowDir - m_doorDir) % 2)==0)
-		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗对开"));
-	else
-		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗垂直开"));
+	ShowInfo();
 }
 
 void CKitchenDlg::OnBnClickedButtonWindowDir()//窗方向
@@ -309,10 +314,7 @@ void CKitchenDlg::OnBnClickedButtonWindowDir()//窗方向
 
 	ClearPreviews();
 
-	if ((abs(m_windowDir - m_doorDir) % 2) == 0)
-		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗对开"));
-	else
-		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗垂直开"));
+	ShowInfo();
 }
 
 
@@ -356,7 +358,7 @@ void CKitchenDlg::OnBnClickedButtonSearch()
 	m_preKitchen.ClearAllPreviews();
 	if (m_allKitchens.empty())
 	{
-		AfxMessageBox(_T("未找到符合条件的记录\n"));
+		AfxMessageBox(_T("未找到符合条件的记录,请确保面宽进深为150递增\n"));
 		return;
 	}
 	m_preKitchen.SetRowCount((int)m_allKitchens.size());

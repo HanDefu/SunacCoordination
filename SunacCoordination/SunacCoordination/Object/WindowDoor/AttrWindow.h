@@ -118,6 +118,7 @@ public:
 	double GetR(bool bDefaultValue = false) const { return GetValue(L"R", bDefaultValue); }
 
 	bool SetValue(CString p_sCode, double p_dValue);
+
 	bool SetH(double newValue) { return SetValue(L"H", newValue); }
 	bool SetH1(double newValue) { return SetValue(L"H1", newValue); }
 	bool SetH2(double newValue) { return SetValue(L"H2", newValue); }

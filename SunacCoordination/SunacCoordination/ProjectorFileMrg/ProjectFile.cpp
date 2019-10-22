@@ -28,9 +28,36 @@ CProjectorDir::CProjectorDir()
 
 CProjectorDir::~CProjectorDir()
 {
-	for (UINT i = 0; i < m_subDirs.size(); i++)
+}
+
+
+bool CProjectorDir::FindFile(CString p_fileName, CProjectFile &p_fileOut)
+{
+	for (UINT i = 0; i < m_subFiles.size(); i++)
 	{
-		delete m_subDirs[i];
+		if (m_subFiles[i].m_sName.CompareNoCase(p_fileName)==0)
+		{
+			p_fileOut =(m_subFiles[i]);
+			return true;
+		}
 	}
-	m_subDirs.clear();
+
+	return false;
+}
+
+bool CProjectorDir::AddFile(CProjectFile p_file)
+{
+	//首先看是否存在
+	for (UINT i = 0; i < m_subFiles.size(); i++)
+	{
+		if (m_subFiles[i].m_sName.CompareNoCase(p_file.m_sName) == 0)
+		{
+			m_subFiles[i] = p_file;
+			return true;
+		}
+	}
+
+	p_file.m_parent = this;
+	m_subFiles.push_back(p_file);
+	return true;
 }

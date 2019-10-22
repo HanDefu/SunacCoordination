@@ -150,7 +150,7 @@ bool CProjectData::DownloadFile(const CString& strFileURLInServer, //´ıÏÂÔØÎÄ¼şµ
 	return true;
 }
 
-bool CProjectData::UploadFile(CString p_sFileName, CString p_saveName)
+bool CProjectData::UploadFile(CString p_sFilePath, CString p_saveName)
 {
 	CFtpConnection *m_pFtpConnection = NULL;
 	CInternetSession *m_pInetsession = new CInternetSession(NULL, 1, PRE_CONFIG_INTERNET_ACCESS);
@@ -160,7 +160,7 @@ bool CProjectData::UploadFile(CString p_sFileName, CString p_saveName)
 		m_pFtpConnection = m_pInetsession->GetFtpConnection(L"127.0.0.1", NULL, NULL, 38);
 		//MessageBox("Á¬½Ó³É¹¦");
 
-		m_pFtpConnection->PutFile(p_sFileName, p_saveName, FTP_TRANSFER_TYPE_BINARY, 1);
+		m_pFtpConnection->PutFile(p_sFilePath, p_saveName, FTP_TRANSFER_TYPE_BINARY, 1);
 	}
 	catch (CInternetException *pEx)
 	{
@@ -174,5 +174,23 @@ bool CProjectData::UploadFile(CString p_sFileName, CString p_saveName)
 		return false;
 	}
 
+	return true;
+}
+
+
+bool CProjectData::AddFile(CString p_sFileName, CString  p_sParentDir) //p_sParentDirÊÇÖ¸ÉÏ´«µ½ÄÄ¸öÄ¿Â¼ÏÂ
+{
+	//1ÉÏ´«ÎÄ¼şµ½ftpÖĞ
+
+
+	//2.¼Óµ½±¾µØµÄÏîÄ¿ÎÄ¼şÖĞ
+	CProjectFile prjfile;
+	prjfile.m_sName = p_sFileName;
+	//prjfile.m_sSaveName = 
+
+	m_rootDir.AddFile(prjfile);
+	
+
+	//3.µ÷ÓÃweb½Ó¿ÚÌí¼Óµ½webÊı¾İ¿âÖĞ
 	return true;
 }

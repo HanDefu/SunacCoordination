@@ -27,7 +27,7 @@ public:
 	~CProjectFile();
 	bool IsDirectory()const { return false; }
 
-protected:
+public:
 	CString m_sSaveName; //实际存储从名称，通常为GUID
 	CString m_sFileUrl;  //文件下载地址
 
@@ -46,9 +46,18 @@ public:
 	~CProjectorDir();
 	bool IsDirectory()const { return true; }
 
+	bool AddFile(CProjectFile p_file);
+	bool FindFile(CString p_fileName, CProjectFile &p_fileOut);
+	bool DeleteFile(CString p_fileName);
+
+	bool AddFolder(CString sFolderName);
+	bool DeleteFolder(CString p_folder);
+
+	void Rename(CString newName);
+
 protected:
 	vector<CProjectFile> m_subFiles; //子文件
-	vector<CProjectorDir*> m_subDirs;//子文件夹
+	vector<CProjectorDir> m_subDirs;//子文件夹
 };
 
 

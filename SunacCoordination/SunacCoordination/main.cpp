@@ -156,7 +156,7 @@ void ZJYTest()
 	CString localWindowPath = TY_GetLocalFilePath();
 	AttrWindow attrwindow;
 
-	attrwindow.m_prototypeCode = _T("Window_NC1");
+	attrwindow.m_prototypeCode = _T("Window_NC7");
 	attrwindow.m_quyuName = _T("全部");
 	attrwindow.m_isJiTuan = true;
 	attrwindow.m_isDynamic = true;
@@ -182,45 +182,45 @@ void ZJYTest()
 	//CWindowsDimData dimdata1;
 	dimdata1.sCodeName = _T("W1");
 	dimdata1.type = CALC;
-	dimdata1.sFomula = _T("W-2a");
+	dimdata1.sFomula = _T("(W-2a)/2");
 	attrwindow.SetDimData(dimdata1);
 
 	dimdata1.sCodeName = _T("W2");
 	dimdata1.type = CALC;
-	dimdata1.sFomula = _T("W-2a-W1-W3");
+	dimdata1.sFomula = _T("(W-2a)/2");
 	attrwindow.SetDimData(dimdata1);
 
-	dimdata1.sCodeName = _T("W3");
-	dimdata1.type = CALC;
-	dimdata1.sFomula = _T("W-2a");
-	attrwindow.SetDimData(dimdata1);
+	//dimdata1.sCodeName = _T("W3");
+	//dimdata1.type = CALC;
+	//dimdata1.sFomula = _T("");
+	//attrwindow.SetDimData(dimdata1);
 
 	//CWindowsDimData dimdata2;
 	dimdata2.sCodeName = _T("H1");
 	dimdata2.type = CALC;
-	dimdata2.sFomula = _T("H-2a");
+	dimdata2.sFomula = _T("H-2a-H2");
 	attrwindow.SetDimData(dimdata2);
 
 	dimdata2.sCodeName = _T("H2");
-	dimdata2.type = CALC;
-	dimdata2.sFomula = _T("H-2a");
+	dimdata2.type = UNLIMIT;
 	attrwindow.SetDimData(dimdata2);
 
-	dimdata2.sCodeName = _T("H3");
-	dimdata2.type = CALC;
-	dimdata2.sFomula = _T("H-2a");
-	attrwindow.SetDimData(dimdata2);
+	//dimdata2.sCodeName = _T("H3");
+	//dimdata2.type = CALC;
+	//dimdata2.sFomula = _T("");
+	//attrwindow.SetDimData(dimdata2);
 
 	attrwindow.CheckAndComplementDimeData();
 
-	attrwindow.SetW(600);
-	attrwindow.SetW1(500);
+	attrwindow.SetW(1500);
+	attrwindow.SetW1(250);
+	attrwindow.SetW2(250);
 	attrwindow.SetH(1400);
 	attrwindow.SetH1(500);
+	attrwindow.SetH2(400);
 	attrwindow.SetA(50);
 
 	attrwindow.m_material.sAluminumSerial = _T("SN65A系列");
-
 
 	CWindowMaterialUsageNC winUsageNC(attrwindow, 1);
 

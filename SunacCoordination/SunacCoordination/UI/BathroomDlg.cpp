@@ -78,6 +78,7 @@ BEGIN_MESSAGE_MAP(CBathroomDlg, CAcUiDialog)
 	ON_CBN_SELCHANGE(IDC_COMBO_FLOORRANGE, &CBathroomDlg::UpdateAttribute)
 	ON_BN_CLICKED(IDC_CHECK_IMAGE, &CBathroomDlg::UpdateAttribute)
 	ON_BN_CLICKED(IDC_RADIO_STANDARD, &CBathroomDlg::UpdateAttribute)
+	ON_BN_CLICKED(IDC_RADIO_CUSTOM, &CBathroomDlg::UpdateAttribute)
 	ON_EN_CHANGE(IDC_EDIT_OFFSETX, &CBathroomDlg::UpdateAttribute)
 	ON_EN_CHANGE(IDC_EDIT_OFFSETY, &CBathroomDlg::UpdateAttribute)
 	ON_EN_CHANGE(IDC_EDIT_X, &CBathroomDlg::UpdateAttribute)
@@ -382,13 +383,21 @@ void CBathroomDlg::OnBnClickedButtonRange()
 		}
 		while (m_doorDir == m_windowDir);
 
-		if ((abs(m_windowDir - m_doorDir) % 2)==0)
-			GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗对开"));
-		else
-			GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗垂直开"));
+		ShowInfo();
 	}
 	ShowWindow(true);
 	ClearPreviews();
+}
+
+void CBathroomDlg::ShowInfo()
+{
+	CString sInfo;
+	if ((abs(m_windowDir - m_doorDir) % 2) == 0)
+		sInfo.Format(_T("卫生间信息：%d x %d,门窗对开"), (int)(m_rect.GetWidth()), (int)(m_rect.GetHeight()));
+	else
+		sInfo.Format(_T("卫生间信息：%d x %d,门窗垂直开"), (int)(m_rect.GetWidth()), (int)(m_rect.GetHeight()));
+
+	GetDlgItem(IDC_STATIC_DIR)->SetWindowText(sInfo);
 }
 
 void CBathroomDlg::OnBnClickedButtonDoorDir()
@@ -422,10 +431,7 @@ void CBathroomDlg::OnBnClickedButtonDoorDir()
 		return;
 	//更新方向后清空原有搜索列表
 	m_preBathroom.ClearAllPreviews();
-	if ((abs(m_windowDir - m_doorDir) % 2) == 0)
-		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗对开"));
-	else
-		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗垂直开"));
+	ShowInfo();
 }
 
 void CBathroomDlg::OnBnClickedButtonWindowDir()
@@ -459,10 +465,7 @@ void CBathroomDlg::OnBnClickedButtonWindowDir()
 		return;
 	//更新方向后清空原有搜索列表
 	m_preBathroom.ClearAllPreviews();
-	if ((abs(m_windowDir - m_doorDir) % 2) == 0)
-		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗对开"));
-	else
-		GetDlgItem(IDC_STATIC_DIR)->SetWindowText(_T("门窗位置关系：门窗垂直开"));
+	ShowInfo();
 }
 
 void CBathroomDlg::OnBnClickedButtonSearch()
@@ -505,7 +508,7 @@ void CBathroomDlg::OnBnClickedButtonSearch()
 	m_preBathroom.ClearAllPreviews();
 	if (m_allBathrooms.empty())
 	{
-		AfxMessageBox(_T("未找到符合条件的记录\n"));
+		AfxMessageBox(_T("未找到符合条件的记录,请确保面宽进深为150递增\n"));
 		return;
 	}
 	m_preBathroom.SetRowCount((int)m_allBathrooms.size());
