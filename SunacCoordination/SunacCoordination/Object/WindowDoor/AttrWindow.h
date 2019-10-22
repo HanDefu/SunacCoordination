@@ -92,8 +92,8 @@ public:
 
 	virtual eRCType GetType() {return WINDOW;}
 	virtual bool isEqualTo(AttrObject*other);//¥∞–Õ «∑Ò“ª÷¬
-	virtual bool IsPrototypeEqual(const AttrWindow& p_att);
-	virtual bool IsInstanceEqual(const AttrWindow& p_att) const;
+	bool IsPrototypeEqual(const AttrWindow& p_att);
+	bool IsInstanceEqual(const AttrWindow& p_att) const;
 	
 	//////////////////////////////////////////////////////////////////////////
 	const CWindowsDimData* GetDimData(CString p_sCode)const;

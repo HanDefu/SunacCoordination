@@ -61,7 +61,7 @@ bool CWindowAutoName::IsUserNameValid(const AttrWindow& p_att, CString p_sName)
 		return false;
 	for (UINT i = 0; i < m_allTypeWindows.size(); i++)
 	{
-		if ((p_att.m_instanceCode == m_allTypeWindows[i].m_instanceCode) && !m_allTypeWindows[i].IsInstanceEqual(p_att))
+		if ((p_sName == m_allTypeWindows[i].m_instanceCode) && !m_allTypeWindows[i].IsInstanceEqual(p_att))
 			return false;
 	}
 	return true;

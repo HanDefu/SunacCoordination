@@ -42,6 +42,7 @@ public:
 	afx_msg void OnSelChangedH2();
 	void UpdateEnable();
 	void LoadDefaultValue();
+	AttrWindow* GetSelWindow();
 
 protected:
 
@@ -58,7 +59,7 @@ protected:
 	CComboBox m_rate; //比值
 
 	CEdit m_number; //门窗编号
-	CComboBox m_openWidth; //开启扇宽度
+	CComboBox m_W1; //开启扇宽度
 	CComboBox m_H2; //下固定值
 	CComboBox m_distance; //距外墙距离
 	
