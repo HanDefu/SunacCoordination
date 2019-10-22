@@ -99,7 +99,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-x64;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-x64;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
       <TreatWarningAsError>false</TreatWarningAsError>

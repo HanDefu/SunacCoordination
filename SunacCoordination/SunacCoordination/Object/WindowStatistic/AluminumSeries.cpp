@@ -211,7 +211,7 @@ bool CAluminumSeries::GetAluminumDataBySeriesAndName(E_WindowDoorType p_winType,
 	char* cErrMsg;
 	CString sWinType = WindowTypeToCString(p_winType);
 	CString sqlString;
-	sqlString.Format(L"select * from `AluminumSeries` where `WindowDoorType` = '%s' and `Serial` = '%s' and `Name` = '%s';", sWinType, p_serials, sName);
+	sqlString.Format(L"select * from `AluminumSeries` where `WindowDoorType` = '%s' and `Serial` = '%s' and `Name` = '%s' limit 1;", sWinType, p_serials, sName);
 	
 	char* sql;
 	ConvertStringToUTF8(sqlString, sql);
