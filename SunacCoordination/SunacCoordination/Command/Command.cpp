@@ -247,16 +247,3 @@ void CloseModelessDialogs()
 	CloseRailingDlg();
 	CloseAirconditionerDlg();
 }
-
-void CMD_TEST()
-{
-	/*vector<pair<CString, CString>> files = TY_FindFilesInDirecotry(L"*.dwg", "D:\\Projects\\SunacCoordination\\Support\\Sunac2019\\LocalMode\\");
-	for (UINT i = 0; i < files.size(); i++)
-	{
-		CString bmpName = files[i].first;
-		bmpName.Replace(L".dwg", L".bmp");
-		bool bSuc = CreateThumbnailBmp(files[i].second, L"C:\\Users\\12150\\Desktop\\image\\" + bmpName);
-		if (!bSuc)
-			acutPrintf(L"提取缩略图失败：" + files[i].first);
-	}*/
-}

@@ -4,16 +4,21 @@
 #include "ProjectInfo.h"
 
 
-
-class CProjectFileMrg : public CProjectorDir
+//项目管理类，管理所有项目
+class CProjectFileMrg
 {
-public:
 	CProjectFileMrg();
+public:
+	static CProjectFileMrg* Instance();
 	~CProjectFileMrg();
 
-	CProjectInfo& GetProject(CString p_sPrjName);
+	CProjectData* GetProject(CString p_sPrjName);
+	vector<CProjectData*> GetProjectsByArea(CString p_sArea);
 
 protected:
-	vector<CProjectInfo> m_projects;
+	void Clear();
+
+protected:
+	vector<CProjectData*> m_projects;
 };
 
