@@ -36,6 +36,7 @@ public:
 
 	virtual eRCType GetType() {return KITCHEN;}
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
+	bool IsInstanceEqual(const AttrKitchen& p_att) const;
 
 public:
 	//原型相关属性，初始化时填写

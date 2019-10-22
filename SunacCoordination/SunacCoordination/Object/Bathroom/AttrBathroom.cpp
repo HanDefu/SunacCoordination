@@ -81,3 +81,18 @@ bool AttrBathroom::isEqualTo(AttrObject*other)
 	/*return (m_openType == pRealObj->m_openType
 		);*/
 }
+
+bool AttrBathroom::IsInstanceEqual(const AttrBathroom& p_att) const
+{
+	if (m_prototypeCode != p_att.m_prototypeCode)
+		return false;
+
+	if (m_width != p_att.m_width)
+		return false;
+	if (m_height != p_att.m_height)
+		return false;
+	if (m_windowDoorPos != p_att.m_windowDoorPos)
+		return false;
+
+	return true;
+}

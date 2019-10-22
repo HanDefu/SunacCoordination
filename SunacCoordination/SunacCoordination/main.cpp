@@ -531,15 +531,6 @@ static void initApp()
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
-		_T("test"),
-		_T("test"),
-		ACRX_CMD_SESSION,
-		CMD_TEST,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
-
-	acedRegCmds->addCommand(_T("SUNAC"),
 		_T("te"),
 		_T("te"),
 		ACRX_CMD_SESSION,

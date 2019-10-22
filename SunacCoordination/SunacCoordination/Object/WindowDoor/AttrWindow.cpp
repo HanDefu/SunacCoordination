@@ -349,8 +349,16 @@ double AttrWindow::GetValue(CString p_sCode, bool bDefaultValue/* = false*/) con
 bool AttrWindow::SetValue(CString p_sCode, double p_dValue)
 {
 	const CWindowsDimData* pDimData = GetDimData(p_sCode);
-	assert(pDimData);
-	assert(pDimData->type != NOVALUE);
+	if (pDimData==NULL)
+	{
+		assert(false);
+		return false;
+	}
+	if (pDimData->type==NOVALUE)
+	{
+		return false;
+	}
+
 	CWindowsDimData newDimData(*pDimData);
 
 	//公式值和固定值不能设置
@@ -363,7 +371,7 @@ bool AttrWindow::SetValue(CString p_sCode, double p_dValue)
 		SetDimData(newDimData);
 		return true;
 	}
-	if (newDimData.type == MULTI)
+	else if (newDimData.type == MULTI)
 	{
 		for (UINT i = 0; i < newDimData.valueOptions.size(); i++)
 		{
@@ -376,7 +384,7 @@ bool AttrWindow::SetValue(CString p_sCode, double p_dValue)
 		}
 		return false;
 	}
-	if (newDimData.type == SCOPE)
+	else if (newDimData.type == SCOPE)
 	{
 		if ((newDimData.minValue <= p_dValue) && (newDimData.maxValue >= p_dValue))
 		{
@@ -386,8 +394,11 @@ bool AttrWindow::SetValue(CString p_sCode, double p_dValue)
 		}
 		return false;
 	}
-	assert(false);
-	return false;
+	else
+	{
+		assert(false);
+		return false;
+	}
 }
 
 Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
