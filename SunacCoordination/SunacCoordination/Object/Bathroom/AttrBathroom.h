@@ -42,6 +42,7 @@ public:
 	//}}AFX_ARX_METHODS
 	virtual eRCType GetType() {return Bathroom;}
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
+	bool IsInstanceEqual(const AttrBathroom& p_att) const;
 
 public:
 	//原型相关属性，初始化时填写
