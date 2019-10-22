@@ -85,6 +85,7 @@ bool TY_IsPairsEqual(vRCPairKeyStrValue &A, vRCPairKeyStrValue &B);
 
 CString TY_GetLocalFilePath();
 CString TY_GetLocalImagePath();
+char* TY_GetAluminumDatabasePath();
 
 vector<pair<CString,CString>> TY_FindFilesInDirecotry(CString fileName,CString directory );
 vector<pair<CString,CString>> TY_FindFilesInDirecotryRecursion( CString fileName,CString directory,int recursionCount);
