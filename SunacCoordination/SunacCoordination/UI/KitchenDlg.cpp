@@ -386,15 +386,15 @@ void CKitchenDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 		return;
 	}
 
-	AttrKitchen* curSecKitchen = &m_allKitchens[nSel];
-	CKitchenBathroomProp* pcurSelPrototype = &curSecKitchen->m_prop;
+	AttrKitchen* pCurSelKitchen = &m_allKitchens[nSel];
+	CKitchenBathroomProp* pCurSelPrototype = &pCurSelKitchen->m_prop;
 
 	if (m_pKitchGen != NULL)
 	{
 		delete m_pKitchGen;
 	}
 
-	m_pKitchGen = CKitchMrg::CreateKitchGenByKitchType(curSecKitchen);
+	m_pKitchGen = CKitchMrg::CreateKitchGenByKitchType(pCurSelKitchen);
 	if (m_pKitchGen==NULL)
 	{
 		MessageBox(_T("原型无法创建KitchGen"));
@@ -407,13 +407,13 @@ void CKitchenDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	TYUI_InitComboBox(m_fridgeType, m_pKitchGen->GetBinxiangOptions(), m_pKitchGen->GetBinxiangDefault());
 	TYUI_InitComboBox(m_benchWidth, m_pKitchGen->GetZhaotaiOptions(), m_pKitchGen->GetZhaotaiDefault());
 	EnableSetProperty(true);
-	curSecKitchen->m_shuiPenType = m_pKitchGen->GetShuipenDefault();
-	curSecKitchen->m_bingXiangType = m_pKitchGen->GetBinxiangDefault();
-	curSecKitchen->m_zaoTaiType = m_pKitchGen->GetZhaotaiDefault();
+	pCurSelKitchen->m_shuiPenType = m_pKitchGen->GetShuipenDefault();
+	pCurSelKitchen->m_bingXiangType = m_pKitchGen->GetBinxiangDefault();
+	pCurSelKitchen->m_zaoTaiType = m_pKitchGen->GetZhaotaiDefault();
 
-	pcurSelPrototype->GetRotateAngle(m_doorDir, m_windowDir, m_angle, curSecKitchen->m_isMirror);
-	m_isMirror.SetCheck(curSecKitchen->m_isMirror);
-	if (pcurSelPrototype->GetWindowDoorPos() == CHUIZHIKAI)
+	pCurSelPrototype->GetRotateAngle(m_doorDir, m_windowDir, m_angle, pCurSelKitchen->m_isMirror);
+	m_isMirror.SetCheck(pCurSelKitchen->m_isMirror);
+	if (pCurSelPrototype->GetWindowDoorPos() == CHUIZHIKAI)
 		TYUI_Disable(m_isMirror);
 	else
 		TYUI_Enable(m_isMirror);
@@ -424,13 +424,15 @@ void CKitchenDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	TYUI_SetInt(m_offsetY, 0);
 	TYUI_SetInt(m_customX, 450);
 	TYUI_SetInt(m_customY, 350);
-	curSecKitchen->m_isGuoBiao = true;
-	curSecKitchen->m_floorRange = E_KITCHEN_FLOOR_1_7;
-	curSecKitchen->m_airVentOffsetX = 0;
-	curSecKitchen->m_airVentOffsetY = 0;
+	pCurSelKitchen->m_isGuoBiao = true;
+	pCurSelKitchen->m_floorRange = E_KITCHEN_FLOOR_1_7;
+	pCurSelKitchen->m_airVentOffsetX = 0;
+	pCurSelKitchen->m_airVentOffsetY = 0;
 
-	curSecKitchen->m_instanceCode = CKitchenAutoName::GetInstance()->GetKitchenName(*curSecKitchen);
-	TYUI_SetText(m_number, curSecKitchen->m_instanceCode);
+	m_bAutoIndex = TRUE;
+	pCurSelKitchen->m_instanceCode = CKitchenAutoName::GetInstance()->GetKitchenName(*pCurSelKitchen);
+	TYUI_SetText(m_number, pCurSelKitchen->m_instanceCode);
+
 	UpdateData(FALSE);
 }
 
@@ -458,23 +460,25 @@ void CKitchenDlg::UpdateAttribute()
 	if (m_pKitchGen == NULL)
 		return;
 
-	m_pKitchGen->GetKitchenAtt()->m_shuiPenType = TYUI_GetComboBoxText(m_basinType);
-	m_pKitchGen->GetKitchenAtt()->m_bingXiangType = TYUI_GetComboBoxText(m_fridgeType);
-	m_pKitchGen->GetKitchenAtt()->m_zaoTaiType = TYUI_GetComboBoxText(m_benchWidth);
+	AttrKitchen* pAtt = m_pKitchGen->GetKitchenAtt();
 
-	m_pKitchGen->GetKitchenAtt()->m_isGuoBiao = (m_isStd == 0);
-	m_pKitchGen->GetKitchenAtt()->m_floorRange = (E_KITCHEN_FLOOR_RANGE)m_floorRange.GetCurSel();
-	m_pKitchGen->GetKitchenAtt()->m_airVentOffsetX = TYUI_GetInt(m_offsetX);
-	m_pKitchGen->GetKitchenAtt()->m_airVentOffsetY = TYUI_GetInt(m_offsetY);
-	m_pKitchGen->GetKitchenAtt()->m_airVentW = TYUI_GetInt(m_customX);
-	m_pKitchGen->GetKitchenAtt()->m_airVentH = TYUI_GetInt(m_customY);
+	pAtt->m_shuiPenType = TYUI_GetComboBoxText(m_basinType);
+	pAtt->m_bingXiangType = TYUI_GetComboBoxText(m_fridgeType);
+	pAtt->m_zaoTaiType = TYUI_GetComboBoxText(m_benchWidth);
 
-	m_pKitchGen->GetKitchenAtt()->m_isMirror = m_isMirror.GetCheck() ? true : false;
+	pAtt->m_isGuoBiao = (m_isStd == 0);
+	pAtt->m_floorRange = (E_KITCHEN_FLOOR_RANGE)m_floorRange.GetCurSel();
+	pAtt->m_airVentOffsetX = TYUI_GetInt(m_offsetX);
+	pAtt->m_airVentOffsetY = TYUI_GetInt(m_offsetY);
+	pAtt->m_airVentW = TYUI_GetInt(m_customX);
+	pAtt->m_airVentH = TYUI_GetInt(m_customY);
+
+	pAtt->m_isMirror = m_isMirror.GetCheck() ? true : false;
 
 	if (m_bAutoIndex)
 	{
-		m_pKitchGen->GetKitchenAtt()->m_instanceCode = CKitchenAutoName::GetInstance()->GetKitchenName(*m_pKitchGen->GetKitchenAtt());
-		TYUI_SetText(m_number, m_pKitchGen->GetKitchenAtt()->m_instanceCode);
+		pAtt->m_instanceCode = CKitchenAutoName::GetInstance()->GetKitchenName(*pAtt);
+		TYUI_SetText(m_number, pAtt->m_instanceCode);
 	}
 }
 

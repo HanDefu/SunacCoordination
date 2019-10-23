@@ -98,7 +98,7 @@ bool AttrBathroom::IsInstanceEqual(const AttrBathroom& p_att) const
 	if (m_hasPaiQiDao != p_att.m_hasPaiQiDao)
 		return false;
 
-	//比较厨房配置
+	//比较卫生间配置
 	if (m_taipenWidth != p_att.m_taipenWidth)
 		return false;
 	if (m_matongWidth != p_att.m_matongWidth)
@@ -125,6 +125,9 @@ bool AttrBathroom::IsInstanceEqual(const AttrBathroom& p_att) const
 		if (m_airVentH != p_att.m_airVentH)
 			return false;
 	}
+
+	if (m_isMirror != p_att.m_isMirror)
+		return false;
 
 	return true;
 }

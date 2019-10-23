@@ -191,5 +191,8 @@ bool AttrKitchen::IsInstanceEqual(const AttrKitchen& p_att) const
 			return false;
 	}
 
+	if (m_isMirror != p_att.m_isMirror)
+		return false;
+
 	return true;
 }
