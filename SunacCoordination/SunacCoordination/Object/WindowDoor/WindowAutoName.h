@@ -13,16 +13,20 @@ public:
 
 	static CWindowAutoName* GetInstance();
 
-	//自动获取名字，并加入到当前窗型库中
-	CString GetWindowName(const AttrWindow& p_att) const; 
+	//自动获取名字
+	CString GetWindowName(const AttrWindow& p_att) const;
 
+	//加入窗型列表中
 	void AddWindowType(const AttrWindow& p_att);
 
-	//用于用户自命名的情况,检查当前名称是否合理，合理则加入到窗型库中，否则返回false
-	bool IsUserNameValid(const AttrWindow& p_att, CString p_sName);
-	
-	void AutoNameAllWindow(); //遍历当前图纸中的所有的窗户，对其进行自动命名
-	void ReNameWindow(const AttrWindow& p_att);	//对图纸中当前原型相同的窗户进行命名
+	//检查当前名称是否合理，如有同名的其它窗型则返回false
+	bool IsNameValid(const AttrWindow& p_att, CString p_sName) const;
+
+	//将所有窗型重新自动命名
+	void AutoNameAllWindow();
+
+	//将指定窗型重命名
+	bool RenameWindow(const AttrWindow& p_att);
 
 
 protected:

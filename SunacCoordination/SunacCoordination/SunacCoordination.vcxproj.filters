@@ -16,9 +16,6 @@
     <ClCompile Include="UI\BathroomDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="UI\RailingBaseDlg.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
     <ClCompile Include="UI\RailingDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
@@ -343,6 +340,12 @@
     <ClCompile Include="UI\ProjectManagementDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellButton.cpp">
+      <Filter>UI\GridCtrl\NewCellTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\GridCtrlUtil.cpp">
+      <Filter>UI\GridCtrl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -385,9 +388,6 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="UI\BathroomDlg.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\RailingBaseDlg.h">
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="UI\RailingDlg.h">
@@ -774,6 +774,12 @@
     </ClInclude>
     <ClInclude Include="UI\ProjectManagementDlg.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellButton.h">
+      <Filter>UI\GridCtrl\NewCellTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\GridCtrlUtil.h">
+      <Filter>UI\GridCtrl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

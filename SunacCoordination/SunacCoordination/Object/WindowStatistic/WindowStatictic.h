@@ -9,7 +9,6 @@ public:
 	CWindowUsage();
 	virtual ~CWindowUsage();
 
-
 	void InitWindMaterialUsage();
 
 public:

@@ -157,7 +157,7 @@ bool CProjectData::UploadFile(CString p_sFilePath, CString p_saveName)
 	try
 	{
 		//TODO 服务器地址和用户名、密码需设置
-		m_pFtpConnection = m_pInetsession->GetFtpConnection(L"127.0.0.1", NULL, NULL, 38);
+		m_pFtpConnection = m_pInetsession->GetFtpConnection(L"192.168.13.13", L"test", L"1234", 21);
 		//MessageBox("连接成功");
 
 		m_pFtpConnection->PutFile(p_sFilePath, p_saveName, FTP_TRANSFER_TYPE_BINARY, 1);

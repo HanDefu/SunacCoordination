@@ -349,6 +349,8 @@ public:
     void EnableRowHide(BOOL bEnable = TRUE)       { m_bAllowRowHide = bEnable;        }
     BOOL GetRowHide()                             { return m_bAllowRowHide;           }
 
+
+	void SetRowsPerWheelNotch(int p_rows){ m_nRowsPerWheelNotch = p_rows; }
 ///////////////////////////////////////////////////////////////////////////////////
 // default Grid cells. Use these for setting default values such as colors and fonts
 ///////////////////////////////////////////////////////////////////////////////////
@@ -623,6 +625,7 @@ protected:
     // CGridCellBase Creation and Cleanup
     virtual CGridCellBase* CreateCell(int nRow, int nCol);
     virtual void DestroyCell(int nRow, int nCol);
+
 
 // Attributes
 protected:
