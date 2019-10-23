@@ -16,9 +16,6 @@
     <ClCompile Include="UI\BathroomDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="UI\RailingBaseDlg.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
     <ClCompile Include="UI\RailingDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
@@ -385,9 +382,6 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="UI\BathroomDlg.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\RailingBaseDlg.h">
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="UI\RailingDlg.h">

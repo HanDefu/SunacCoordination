@@ -20,42 +20,47 @@ CWindowAutoName* CWindowAutoName::GetInstance()
 CString CWindowAutoName::GetWindowName(const AttrWindow& p_att) const
 {
 	CString sWindowName;
-	sWindowName.Format(L"%s_%02.0lf%02.0lf", p_att.m_prototypeCode.Mid(7), p_att.GetW() / 100, p_att.GetH() / 100);
-	int count = 0;
+	//去除原型编号中的"Window_"前缀
+	CString prototype = p_att.m_prototypeCode;
+	prototype.Replace(L"Window_", L"");
+	//根据"原型编号_尺寸编号"生成门窗编号
+	sWindowName.Format(L"%s_%02.0lf%02.0lf", prototype, p_att.GetW() / 100, p_att.GetH() / 100);
 
+	//镜像窗型增加"_m"后缀
+	CString sMirror;
+	if (!p_att.m_isMirrorWindow && p_att.m_isMirror)
+		sMirror = L"_m";
+
+	CString sWindowFullName = sWindowName + sMirror;
+
+	//查找已存在的窗型
 	for (UINT i = 0; i < m_allTypeWindows.size(); i++)
 	{
 		if (m_allTypeWindows[i].IsInstanceEqual(p_att))
-		{
-			sWindowName = m_allTypeWindows[i].m_instanceCode;
-			sWindowName.TrimRight(L"Mm");
-			if (p_att.m_isMirror && !p_att.m_isMirrorWindow)
-				sWindowName += L"m";
-			return sWindowName;
-		}
-		if (m_allTypeWindows[i].m_instanceCode.Find(sWindowName) == 0)
-			count++;
+			return m_allTypeWindows[i].m_instanceCode;
 	}
 
-	if (count > 0)
+	//查找一个未被占用的门窗编号
+	for (int i = 1; !IsNameValid(p_att, sWindowFullName); i++)
 	{
-		CString sNum;
-		sNum.Format(L"_%d", count);
-		sWindowName += sNum;
+		sWindowFullName.Format(L"%s_%d%s", sWindowName, i, sMirror);
 	}
 
-	if (p_att.m_isMirror && !p_att.m_isMirrorWindow)
-		sWindowName += L"m";
-
-	return sWindowName;
+	return sWindowFullName;
 }
 
 void CWindowAutoName::AddWindowType(const AttrWindow& p_att)
 {
+	//插入前确保不重名
+	for (UINT i = 0; i < m_allTypeWindows.size(); i++)
+	{
+		if (m_allTypeWindows[i].m_instanceCode == p_att.m_instanceCode)
+			return;
+	}
 	m_allTypeWindows.push_back(p_att);
 }
 
-bool CWindowAutoName::IsUserNameValid(const AttrWindow& p_att, CString p_sName)
+bool CWindowAutoName::IsNameValid(const AttrWindow& p_att, CString p_sName) const
 {
 	if (p_sName.IsEmpty())
 		return false;
@@ -65,4 +70,32 @@ bool CWindowAutoName::IsUserNameValid(const AttrWindow& p_att, CString p_sName)
 			return false;
 	}
 	return true;
+}
+
+void CWindowAutoName::AutoNameAllWindow()
+{
+	vector<AttrWindow> temp = m_allTypeWindows;
+	m_allTypeWindows.clear();
+	for (UINT i = 0; i < temp.size(); i++)
+	{
+		temp[i].m_instanceCode = GetWindowName(temp[i]);
+		AddWindowType(temp[i]);
+	}
+}
+
+bool CWindowAutoName::RenameWindow(const AttrWindow& p_att)
+{
+	if (!IsNameValid(p_att, p_att.m_instanceCode))
+		return false;
+
+	for (UINT i = 0; i < m_allTypeWindows.size(); i++)
+	{
+		if (m_allTypeWindows[i].IsInstanceEqual(p_att))
+		{
+			m_allTypeWindows[i].m_instanceCode = p_att.m_instanceCode;
+			return true;
+		}
+	}
+
+	return false;
 }

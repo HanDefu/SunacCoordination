@@ -235,7 +235,6 @@
     <ClCompile Include="UI\MyPaletteSet.cpp" />
     <ClCompile Include="UI\PreviewWithDetail.cpp" />
     <ClCompile Include="UI\ProjectManagementDlg.cpp" />
-    <ClCompile Include="UI\RailingBaseDlg.cpp" />
     <ClCompile Include="UI\RailingDlg.cpp" />
     <ClCompile Include="UI\TreeCtrlEx.cpp" />
     <ClCompile Include="UI\WaterproofDlg.cpp" />
@@ -377,7 +376,6 @@
     <ClInclude Include="UI\MyPaletteSet.h" />
     <ClInclude Include="UI\PreviewWithDetail.h" />
     <ClInclude Include="UI\ProjectManagementDlg.h" />
-    <ClInclude Include="UI\RailingBaseDlg.h" />
     <ClInclude Include="UI\RailingDlg.h" />
     <ClInclude Include="UI\TreeCtrlEx.h" />
     <ClInclude Include="UI\WaterproofDlg.h" />

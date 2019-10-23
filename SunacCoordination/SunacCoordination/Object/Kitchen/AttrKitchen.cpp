@@ -38,9 +38,6 @@ AttrKitchen::AttrKitchen()
 	m_maxwidth = 0;//最大开间
 	m_maxHeight = 0;//最大进深
 	m_minHeight = 0;//最小进深
-	m_BasinSize = 0;//厨房水盆尺寸
-	m_FridgeSize = 0;//厨房冰箱尺寸
-	m_HearthSize = 0;//厨房灶台尺寸
 }
 
 AttrKitchen::~AttrKitchen()
@@ -152,14 +149,49 @@ bool AttrKitchen::isEqualTo(AttrObject*other)
 
 bool AttrKitchen::IsInstanceEqual(const AttrKitchen& p_att) const
 {
+	//比较原型编号
 	if (m_prototypeCode != p_att.m_prototypeCode)
 		return false;
 
+	//比较尺寸和门窗位置
 	if (m_width != p_att.m_width)
 		return false;
 	if (m_height != p_att.m_height)
 		return false;
 	if (m_windowDoorPos != p_att.m_windowDoorPos)
+		return false;
+	if (m_hasPaiQiDao != p_att.m_hasPaiQiDao)
+		return false;
+
+	//比较厨房配置
+	if (m_shuiPenType != p_att.m_shuiPenType)
+		return false;
+	if (m_bingXiangType != p_att.m_bingXiangType)
+		return false;
+	if (m_zaoTaiType != p_att.m_zaoTaiType)
+		return false;
+
+	//比较排气道
+	if (m_isGuoBiao != p_att.m_isGuoBiao)
+		return false;
+	if (m_isGuoBiao)
+	{
+		if (m_floorRange != p_att.m_floorRange)
+			return false;
+		if (m_airVentOffsetX != p_att.m_airVentOffsetX)
+			return false;
+		if (m_airVentOffsetY != p_att.m_airVentOffsetY)
+			return false;
+	}
+	else
+	{
+		if (m_airVentW != p_att.m_airVentW)
+			return false;
+		if (m_airVentH != p_att.m_airVentH)
+			return false;
+	}
+
+	if (m_isMirror != p_att.m_isMirror)
 		return false;
 
 	return true;

@@ -133,7 +133,7 @@ void CAirconditionerDlg::LoadDefaultValue()
 	TYUI_InitComboBox(m_pNum, pNum, pNum.empty() ? _T("") : pNum[0]);
 	TYUI_InitComboBox(m_lNTubePos, lNTubePos, lNTubePos.empty()? _T("") : lNTubePos[0]);
 	TYUI_InitComboBox(m_rainTubePos, rainTubePos, rainTubePos.empty() ? _T("") : rainTubePos[0]);
-	UpdateData(FALSE);
+	//UpdateData(FALSE);
 }
 
 void CAirconditionerDlg::OnBnClickedCheckHasraintube()
@@ -149,8 +149,6 @@ void CAirconditionerDlg::OnBnClickedCheckHasraintube()
 
 void CAirconditionerDlg::UpdatePreview() //当空调对话框中的控件的值发生变化时，图形也要根据控件的值来筛选、变化
 {
-	UpdateData(FALSE);
-
 	//获取控件ComboBox中选的值
 	double pNum = _ttof(TYUI_GetComboBoxText(m_pNum));
 	CString lNTubePos = TYUI_GetComboBoxText(m_lNTubePos);
