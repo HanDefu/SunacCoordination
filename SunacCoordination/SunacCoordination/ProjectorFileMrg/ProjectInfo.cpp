@@ -193,4 +193,6 @@ bool CProjectData::AddFile(CString p_sFileName, CString  p_sParentDir) //p_sPare
 
 	//3.调用web接口添加到web数据库中
 
+
+	return true;
 }

@@ -234,6 +234,7 @@
     <ClCompile Include="UI\MyPalette.cpp" />
     <ClCompile Include="UI\MyPaletteSet.cpp" />
     <ClCompile Include="UI\PreviewWithDetail.cpp" />
+    <ClCompile Include="UI\ProjectManagementDlg.cpp" />
     <ClCompile Include="UI\RailingBaseDlg.cpp" />
     <ClCompile Include="UI\RailingDlg.cpp" />
     <ClCompile Include="UI\TreeCtrlEx.cpp" />
@@ -375,6 +376,7 @@
     <ClInclude Include="UI\MyPalette.h" />
     <ClInclude Include="UI\MyPaletteSet.h" />
     <ClInclude Include="UI\PreviewWithDetail.h" />
+    <ClInclude Include="UI\ProjectManagementDlg.h" />
     <ClInclude Include="UI\RailingBaseDlg.h" />
     <ClInclude Include="UI\RailingDlg.h" />
     <ClInclude Include="UI\TreeCtrlEx.h" />
@@ -409,7 +411,10 @@
     <None Include="lib.bmp" />
     <None Include="mainicon.bmp" />
     <None Include="res\Cancel.bmp" />
+    <None Include="res\Document.ico" />
     <None Include="res\doordir.bmp" />
+    <None Include="res\Folder.bmp" />
+    <None Include="res\FolderOpen.bmp" />
     <None Include="res\Insert.bmp" />
     <None Include="res\kitchenrange.bmp" />
     <None Include="res\lib.bmp" />
@@ -417,6 +422,7 @@
     <None Include="res\search.bmp" />
     <None Include="res\selOne.bmp" />
     <None Include="res\windowdir.bmp" />
+    <None Include="res\画图Folder.ico" />
     <None Include="search.bmp" />
     <None Include="selOne.bmp" />
     <None Include="Tool\SQLite\sqlite3.dll" />
