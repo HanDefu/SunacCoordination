@@ -610,6 +610,8 @@ static void unloadApp()
 	deleteAcRxClass(AttrObject::desc());
 	delete acrxServiceDictionary->remove(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_OBJECT));
 
+	AcDbBlockReference::desc()->delX(AcDbDoubleClickEdit::desc());
+
 	WaitForSingleObject(mThreadHandle, 1000);
 	TerminateThread(mThreadHandle,0);
 }

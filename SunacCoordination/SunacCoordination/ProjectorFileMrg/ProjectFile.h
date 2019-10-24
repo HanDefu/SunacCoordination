@@ -3,7 +3,7 @@
 
 using namespace std;
 
-class CProjectorDir;
+class CProjectDir;
 
 class CPrjNode
 {
@@ -16,7 +16,7 @@ public:
 public:
 	int m_id;	//ID主要用于从web后台操作处理用
 	CString m_sName; //文件名或文件夹名
-	CProjectorDir* m_parent;  //父文件夹
+	CProjectDir* m_parent;  //父文件夹
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -39,25 +39,27 @@ public:
 };
 
 //////////////////////////////////////////////////////////////////////////
-class CProjectorDir :public CPrjNode
+class CProjectDir :public CPrjNode
 {
 public:
-	CProjectorDir();
-	~CProjectorDir();
+	CProjectDir();
+	~CProjectDir();
 	bool IsDirectory()const { return true; }
 
 	bool AddFile(CProjectFile p_file);
-	bool FindFile(CString p_fileName, CProjectFile &p_fileOut);
 	bool DeleteFile(CString p_fileName);
+	bool FindFile(CString p_fileName, CProjectFile &p_fileOut);
 
-	bool AddFolder(CString sFolderName);
-	bool DeleteFolder(CString p_folder);
+	CProjectDir*  AddFolder(CString p_sFolderName);
+	bool DeleteFolder(CString p_sFolderName);
+	CProjectDir* GetFolder(CString p_folder);
 
 	void Rename(CString newName);
 
-protected:
+public:
 	vector<CProjectFile> m_subFiles; //子文件
-	vector<CProjectorDir> m_subDirs;//子文件夹
+	vector<CProjectDir*> m_subDirs;//子文件夹
+
 };
 
 

@@ -96,6 +96,7 @@ BEGIN_MESSAGE_MAP(CWindowDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDC_BUTTON_CALCULATE, &CWindowDlg::OnBnClickedCalculate)
 	ON_BN_CLICKED(IDC_CHECK_AUTOINDEX, &CWindowDlg::OnBnClickedAutoIndex)
 	ON_BN_CLICKED(IDC_BUTTON_SELECT, &CWindowDlg::OnBnClickedSelOnDwg)
+	ON_BN_CLICKED(IDC_CHECK_IMAGE, &CWindowDlg::OnBnClickedMirror)
 	ON_NOTIFY(GVN_SELCHANGED, IDC_PREVIEW_WINDOW, &CWindowDlg::OnSelChangedPreview)
 	ON_CBN_SELCHANGE(IDC_COMBO_OPENWIDTH, &CWindowDlg::OnSelChangedW1)
 	ON_CBN_SELCHANGE(IDC_COMBO_FIXEDVALUE, &CWindowDlg::OnSelChangedH2)
@@ -123,10 +124,16 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	if (pSel == NULL)
 		return;
 
-	if (!m_autoIndex && !CWindowAutoName::GetInstance()->IsUserNameValid(*pSel, TYUI_GetText(m_number)))
+	CString sNumber = TYUI_GetText(m_number);
+	if (!m_autoIndex && !CWindowAutoName::GetInstance()->IsNameValid(*pSel,sNumber))
 	{
-		AfxMessageBox(L"此门窗编号已被占用");
+		AfxMessageBox(L"此编号已被占用");
 		return;
+	}
+	else
+	{
+		pSel->SetInstanceCode(sNumber);
+		CWindowAutoName::GetInstance()->RenameWindow(*pSel);
 	}
 
 	ShowWindow(FALSE);
@@ -283,6 +290,16 @@ void CWindowDlg::OnBnClickedSelOnDwg()
 	TYUI_SetInt(m_height, height);
 }
 
+void CWindowDlg::OnBnClickedMirror()
+{
+	UpdateData(TRUE);
+	AttrWindow* pSel = GetSelWindow();
+	if (pSel == NULL)
+		return;
+	pSel->m_isMirror = (m_isMirror.GetCheck() != FALSE);
+	UpdateInstanceCode();
+}
+
 void CWindowDlg::OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	AttrWindow* pSel = GetSelWindow();
@@ -318,6 +335,7 @@ void CWindowDlg::OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult)
 	pSel->m_instanceCode = CWindowAutoName::GetInstance()->GetWindowName(*pSel);
 	TYUI_SetText(m_number, pSel->m_instanceCode);
 	m_radioYes = (pSel->m_isBayWindow ? 0 : 1);
+	m_isMirror.SetCheck(pSel->m_isMirror);
 
 	m_viewDir.ResetContent();
 	if (PathFileExists(TY_GetLocalFilePath() + pSel->m_frontViewFile.fileName))
@@ -341,11 +359,7 @@ void CWindowDlg::OnSelChangedW1()
 	CString sSel = TYUI_GetComboBoxText(m_W1);
 	pSel->SetW1(_ttoi(sSel));
 	//更改参数会引起实例编号变化，需更新
-	if (m_autoIndex)
-	{
-		pSel->m_instanceCode = CWindowAutoName::GetInstance()->GetWindowName(*pSel);
-		TYUI_SetText(m_number, pSel->m_instanceCode);
-	}
+	UpdateInstanceCode();
 }
 
 void CWindowDlg::OnSelChangedH2()
@@ -357,11 +371,7 @@ void CWindowDlg::OnSelChangedH2()
 	CString sSel = TYUI_GetComboBoxText(m_H2);
 	pSel->SetH2(_ttoi(sSel));
 	//更改参数会引起实例编号变化，需更新
-	if (m_autoIndex)
-	{
-		pSel->m_instanceCode = CWindowAutoName::GetInstance()->GetWindowName(*pSel);
-		TYUI_SetText(m_number, pSel->m_instanceCode);
-	}
+	UpdateInstanceCode();
 }
 
 void CWindowDlg::UpdateEnable()
@@ -391,6 +401,18 @@ void CWindowDlg::UpdateEnable()
 		TYUI_Disable(m_doorType);
 	}
 	LoadDefaultValue();
+}
+
+void CWindowDlg::UpdateInstanceCode()
+{
+	AttrWindow* pSel = GetSelWindow();
+	if (pSel == NULL)
+		return;
+	if (m_autoIndex)
+	{
+		pSel->m_instanceCode = CWindowAutoName::GetInstance()->GetWindowName(*pSel);
+		TYUI_SetText(m_number, pSel->m_instanceCode);
+	}
 }
 
 void CWindowDlg::LoadDefaultValue()

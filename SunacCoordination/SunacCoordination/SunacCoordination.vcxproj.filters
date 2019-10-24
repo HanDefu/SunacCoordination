@@ -337,6 +337,9 @@
     <ClCompile Include="ProjectorFileMrg\ProjectFileMrg.cpp">
       <Filter>ProjectorFileMrg</Filter>
     </ClCompile>
+    <ClCompile Include="UI\ProjectManagementDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -763,6 +766,9 @@
     <ClInclude Include="ProjectorFileMrg\ProjectFileMrg.h">
       <Filter>ProjectorFileMrg</Filter>
     </ClInclude>
+    <ClInclude Include="UI\ProjectManagementDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -901,6 +907,18 @@
     <None Include="WebIO\SunacCadWeb\ArgumentSettingServiceSoap.nsmap" />
     <None Include="Tool\SQLite\sqlite3.dll">
       <Filter>Tool\SQLite</Filter>
+    </None>
+    <None Include="res\Folder.bmp">
+      <Filter>bmp</Filter>
+    </None>
+    <None Include="res\FolderOpen.bmp">
+      <Filter>bmp</Filter>
+    </None>
+    <None Include="res\画图Folder.ico">
+      <Filter>bmp</Filter>
+    </None>
+    <None Include="res\Document.ico">
+      <Filter>bmp</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -13,19 +13,23 @@ public:
 
 	static CBathroomAutoName* GetInstance();
 
-	//自动获取名字，并加入到当前窗型库中
-	CString GetBathroomName(const AttrBathroom& p_att) const; 
+	//自动获取名字
+	CString GetBathroomName(const AttrBathroom& p_att) const;
 
+	//加入卫生间列表中
 	void AddBathroomType(const AttrBathroom& p_att);
 
-	//用于用户自命名的情况,检查当前名称是否合理，合理则加入到窗型库中，否则返回false
-	bool IsUserNameValid(const AttrBathroom& p_att, CString p_sName);
-	
-	void AutoNameAllBathroom(); //遍历当前图纸中的所有的窗户，对其进行自动命名
-	void ReNameBathroom(const AttrBathroom& p_att);	//对图纸中当前原型相同的窗户进行命名
+	//检查当前名称是否合理，如有同名的其它卫生间则返回false
+	bool IsNameValid(const AttrBathroom& p_att, CString p_sName) const;
+
+	//将所有卫生间重新自动命名
+	void AutoNameAllBathroom();
+
+	//将指定卫生间重命名
+	bool RenameBathroom(const AttrBathroom& p_att);
 
 
 protected:
-	vector<AttrBathroom> m_allTypeBathrooms; //所有窗型
+	vector<AttrBathroom> m_allTypeBathrooms; //所有卫生间
 
 };

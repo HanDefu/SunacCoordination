@@ -4,6 +4,7 @@
 #include "..\..\WebIO\WebIO.h"
 #include "..\..\Common/ComFun_Sunac.h"
 #include "..\..\Common/ComFun_DynamicBlock.h"
+#include "KitchenAutoName.h"
 
 
 CKitchGen::CKitchGen(AttrKitchen* p_att)
@@ -156,6 +157,17 @@ vCString CKitchGen::GetZhaotaiOptions()// 获取灶台选型
 CString CKitchGen::GetZhaotaiDefault()
 {
 	return _T("800");
+}
+
+void CKitchGen::InitKitchenByDefault()
+{
+	if (GetKitchenAtt()->m_shuiPenType.IsEmpty())
+		GetKitchenAtt()->m_shuiPenType = GetShuipenDefault();
+	if (GetKitchenAtt()->m_bingXiangType.IsEmpty())
+		GetKitchenAtt()->m_bingXiangType = GetBinxiangDefault();
+	if (GetKitchenAtt()->m_zaoTaiType.IsEmpty())
+		GetKitchenAtt()->m_zaoTaiType = GetZhaotaiDefault();
+	GetKitchenAtt()->m_instanceCode = CKitchenAutoName::GetInstance()->GetKitchenName(*GetKitchenAtt());
 }
 
 AcDbObjectId CKitchGen::GenKitchen(const AcGePoint3d p_pos, int p_angle)

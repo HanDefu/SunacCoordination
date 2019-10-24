@@ -84,14 +84,49 @@ bool AttrBathroom::isEqualTo(AttrObject*other)
 
 bool AttrBathroom::IsInstanceEqual(const AttrBathroom& p_att) const
 {
+	//比较原型编号
 	if (m_prototypeCode != p_att.m_prototypeCode)
 		return false;
 
+	//比较尺寸和门窗位置
 	if (m_width != p_att.m_width)
 		return false;
 	if (m_height != p_att.m_height)
 		return false;
 	if (m_windowDoorPos != p_att.m_windowDoorPos)
+		return false;
+	if (m_hasPaiQiDao != p_att.m_hasPaiQiDao)
+		return false;
+
+	//比较卫生间配置
+	if (m_taipenWidth != p_att.m_taipenWidth)
+		return false;
+	if (m_matongWidth != p_att.m_matongWidth)
+		return false;
+	if (m_guanXiWidth != p_att.m_guanXiWidth)
+		return false;
+
+	//比较排气道
+	if (m_isGuoBiao != p_att.m_isGuoBiao)
+		return false;
+	if (m_isGuoBiao)
+	{
+		if (m_floorRange != p_att.m_floorRange)
+			return false;
+		if (m_airVentOffsetX != p_att.m_airVentOffsetX)
+			return false;
+		if (m_airVentOffsetY != p_att.m_airVentOffsetY)
+			return false;
+	}
+	else
+	{
+		if (m_airVentW != p_att.m_airVentW)
+			return false;
+		if (m_airVentH != p_att.m_airVentH)
+			return false;
+	}
+
+	if (m_isMirror != p_att.m_isMirror)
 		return false;
 
 	return true;

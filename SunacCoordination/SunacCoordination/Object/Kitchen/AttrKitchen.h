@@ -65,6 +65,7 @@ public:
 	double m_airVentOffsetY;	//排气道偏移y
 
 	//插入时填写
+	int m_angle;				//逆时针旋转角度
 	bool m_isMirror;			//镜像
 
 	//////////////////////////////////////////////////////////////////////////
@@ -73,8 +74,4 @@ public:
 	double m_maxwidth;//最大开间
 	double m_maxHeight;//最大进深
 	double m_minHeight;//最小进深
-
-	double m_BasinSize;//厨房水盆尺寸
-	double m_FridgeSize;//厨房冰箱尺寸
-	double m_HearthSize;//厨房灶台尺寸
 };

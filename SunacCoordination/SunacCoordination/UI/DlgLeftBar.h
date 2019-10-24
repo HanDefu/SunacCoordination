@@ -21,7 +21,9 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 	int FillTreeItem();
+	int FillProjectManagementTreeItem();
 	CTreeCtrlEx m_treeCtrlMenu;
+	CTreeCtrl m_treeProjectManagement;
 
 public:
 	afx_msg LRESULT OnClickedPopupMenu(WPARAM mID, LPARAM notUsed);
@@ -29,4 +31,6 @@ public:
 	afx_msg void OnTabSelChanged(NMHDR *pNMHDR, LRESULT *pResult);
 	virtual BOOL OnInitDialog();
 	CTabCtrl m_tab;
+	
+	afx_msg void OnNMDblclkTreeProjectmanagement(NMHDR *pNMHDR, LRESULT *pResult);
 };
