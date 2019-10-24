@@ -20,6 +20,7 @@ AttrKitchen::AttrKitchen()
 	 m_airVentH = 0;//排气道宽度
 	 m_airVentOffsetX = 0;//排气道长度
 	 m_airVentOffsetY = 0;//排气道宽度
+	 m_angle = 0;//逆时针旋转角度
 	 m_isMirror = false;//镜像
 	 m_hasPaiQiDao = true;//是否含有排气道
 	 m_isGuoBiao = true;//排气道

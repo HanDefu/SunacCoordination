@@ -65,9 +65,37 @@ void CDoubleClickBlockReference::startEdit( AcDbEntity *pEnt, AcGePoint3d pt )
 		switch (rcType)
 		{
 		case WINDOW:
-			CWindowDlg dlg;
-			dlg.DoModal();
-			break;
+			{
+				if (g_windowDlg == NULL)
+				{
+					g_windowDlg = new CWindowDlg(acedGetAcadFrame());
+					g_windowDlg->Create(IDD_DIALOG_WINDOW);
+					g_windowDlg->ShowWindow(SW_SHOW);
+				}
+				break;
+			}
+			
+		case KITCHEN:
+			{
+				if (g_kitchenDlg != NULL)
+					break;
+				g_kitchenDlg = new CKitchenDlg(acedGetAcadFrame());
+				g_kitchenDlg->Create(IDD_DIALOG_KITCHEN);
+				g_kitchenDlg->SetEditMode(pBlockReference);
+				g_kitchenDlg->ShowWindow(SW_SHOW);
+				break;
+			}
+			
+		case Bathroom:
+			{
+				if (g_bathroomDlg == NULL)
+				{
+					g_bathroomDlg = new CBathroomDlg(acedGetAcadFrame());
+					g_bathroomDlg->Create(IDD_DIALOG_BATHROOM);
+					g_bathroomDlg->ShowWindow(SW_SHOW);
+				}
+				break;
+			}
 		}
 	}
 	else
