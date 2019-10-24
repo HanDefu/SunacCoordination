@@ -156,13 +156,13 @@ void ZJYTest()
 	CString localWindowPath = TY_GetLocalFilePath();
 	AttrWindow attrwindow;
 
-	attrwindow.m_prototypeCode = _T("Window_NC7");
+	attrwindow.m_prototypeCode = _T("Window_WZC2");
 	attrwindow.m_quyuName = _T("全部");
 	attrwindow.m_isJiTuan = true;
 	attrwindow.m_isDynamic = true;
 
 	attrwindow.m_gongNengquType = _T("全部");
-	attrwindow.m_openType = _T("内开窗");
+	attrwindow.m_openType = _T("外开窗");
 	attrwindow.m_openQty = 1;
 
 	CWindowsDimData dimdata1;
@@ -181,19 +181,21 @@ void ZJYTest()
 
 	//CWindowsDimData dimdata1;
 	dimdata1.sCodeName = _T("W1");
-	dimdata1.type = CALC;
-	dimdata1.sFomula = _T("(W-2a)/2");
+	dimdata1.type = UNLIMIT;
+	//dimdata1.sFomula = _T("(W-2a)/2");
 	attrwindow.SetDimData(dimdata1);
 
+	
 	dimdata1.sCodeName = _T("W2");
 	dimdata1.type = CALC;
-	dimdata1.sFomula = _T("(W-2a)/2");
+	dimdata1.sFomula = _T("W-2a-W1*2-W3");
 	attrwindow.SetDimData(dimdata1);
-
-	//dimdata1.sCodeName = _T("W3");
-	//dimdata1.type = CALC;
+	
+	dimdata1.sCodeName = _T("W3");
+	dimdata1.type = UNLIMIT;
 	//dimdata1.sFomula = _T("");
-	//attrwindow.SetDimData(dimdata1);
+	attrwindow.SetDimData(dimdata1);
+	
 
 	//CWindowsDimData dimdata2;
 	dimdata2.sCodeName = _T("H1");
@@ -207,29 +209,38 @@ void ZJYTest()
 
 	//dimdata2.sCodeName = _T("H3");
 	//dimdata2.type = CALC;
-	//dimdata2.sFomula = _T("");
+	//dimdata2.sFomula = _T("(W-2a)/2");
 	//attrwindow.SetDimData(dimdata2);
+
+	dimdata2.sCodeName = _T("R");
+	dimdata2.type = UNLIMIT;
+	//dimdata2.sFomula = _T("(W-2a)/2");
+	attrwindow.SetDimData(dimdata2);
 
 	attrwindow.CheckAndComplementDimeData();
 
-	attrwindow.SetW(1500);
-	attrwindow.SetW1(250);
-	attrwindow.SetW2(250);
-	attrwindow.SetH(1400);
+	attrwindow.SetH(1800);
+	attrwindow.SetW(2700);
 	attrwindow.SetH1(500);
-	attrwindow.SetH2(400);
+	attrwindow.SetH2(500);
+	//attrwindow.SetH3(500);
+	attrwindow.SetW1(700);
+	attrwindow.SetW2(600);
+	attrwindow.SetW3(500);
+	attrwindow.SetR(0);
 	attrwindow.SetA(50);
 
-	attrwindow.m_material.sAluminumSerial = _T("SN65A系列");
+	attrwindow.m_material.sAluminumSerial = _T("SW50系列");
 
-	CWindowMaterialUsageNC winUsageNC(attrwindow, 1);
+	CWindowMaterialUsageWC winUsageWC(attrwindow, 1);
 
 	CString filter=L"参数文件(*.xlsx)|*.xlsx|All Files(*.*)|*.*||";  
 	CFileDialog dlg(FALSE, L"xlsx", L"*.xlsx", NULL, filter); 
 	if(dlg.DoModal()==IDOK)
 	{
 		CString pathName = dlg.GetFileName();
-		winUsageNC.ExportReportToExcel(pathName);
+		winUsageWC.ExportReportToExcel(pathName);
+
 	}
 }
 
