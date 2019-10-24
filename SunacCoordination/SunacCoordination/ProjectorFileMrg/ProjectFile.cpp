@@ -22,16 +22,22 @@ CProjectFile::~CProjectFile()
 
 
 //////////////////////////////////////////////////////////////////////////
-CProjectorDir::CProjectorDir()
+CProjectDir::CProjectDir()
 {
 }
 
-CProjectorDir::~CProjectorDir()
+CProjectDir::~CProjectDir()
 {
+	for (UINT i = 0; i < m_subDirs.size(); i++)
+	{
+		delete m_subDirs[i];
+	}
+
+	m_subDirs.clear();
 }
 
 
-bool CProjectorDir::FindFile(CString p_fileName, CProjectFile &p_fileOut)
+bool CProjectDir::FindFile(CString p_fileName, CProjectFile &p_fileOut)
 {
 	for (UINT i = 0; i < m_subFiles.size(); i++)
 	{
@@ -45,7 +51,7 @@ bool CProjectorDir::FindFile(CString p_fileName, CProjectFile &p_fileOut)
 	return false;
 }
 
-bool CProjectorDir::AddFile(CProjectFile p_file)
+bool CProjectDir::AddFile(CProjectFile p_file)
 {
 	//首先看是否存在
 	for (UINT i = 0; i < m_subFiles.size(); i++)
@@ -60,4 +66,36 @@ bool CProjectorDir::AddFile(CProjectFile p_file)
 	p_file.m_parent = this;
 	m_subFiles.push_back(p_file);
 	return true;
+}
+
+CProjectDir* CProjectDir::AddFolder(CString p_sFolderName)
+{
+	//首先看是否存在
+	for (UINT i = 0; i < m_subDirs.size(); i++)
+	{
+		if (m_subDirs[i]->m_sName.CompareNoCase(p_sFolderName) == 0)
+		{
+			return (m_subDirs[i]);
+		}
+	}
+
+	CProjectDir* fileDir = new CProjectDir();
+	fileDir->m_sName = p_sFolderName;
+	fileDir->m_parent = this;
+
+	m_subDirs.push_back(fileDir);
+	return fileDir;
+}
+
+CProjectDir* CProjectDir::GetFolder(CString p_sFolderName)
+{
+	for (UINT i = 0; i < m_subDirs.size(); i++)
+	{
+		if (m_subDirs[i]->m_sName.CompareNoCase(p_sFolderName) == 0)
+		{
+			return m_subDirs[i];
+		}
+	}
+
+	return NULL;
 }
