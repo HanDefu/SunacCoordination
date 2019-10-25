@@ -343,6 +343,9 @@
     <ClCompile Include="UI\GridCtrl_src\GridCtrlUtil.cpp">
       <Filter>UI\GridCtrl</Filter>
     </ClCompile>
+    <ClCompile Include="UI\WindowAdvanceDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -774,6 +777,9 @@
     </ClInclude>
     <ClInclude Include="UI\GridCtrl_src\GridCtrlUtil.h">
       <Filter>UI\GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\WindowAdvanceDlg.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
