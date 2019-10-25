@@ -140,6 +140,43 @@ CString AluminumTypeToCSting(E_AluminumType type)
 	}
 }
 
+CString WindowDoorTypeToCSting(E_WindowDoorType type)
+{
+	switch(type)
+	{
+	case E_WindowDoor_NC:
+		{
+			return L"内开窗";
+			break;
+		}
+	case E_WindowDoor_WC:
+		{
+			return L"外开窗";
+			break;
+		}
+	case E_WindowDoor_TC:
+		{
+			return L"推拉窗";
+			break;
+		}
+	case E_WindowDoor_WM:
+		{
+			return L"外开门";
+			break;
+		}
+	case E_WindowDoor_TLM:
+		{
+			return L"推拉门";
+			break;
+		}
+	default:
+		{
+			return L"提升推拉门";
+			break;
+		}
+	}
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 

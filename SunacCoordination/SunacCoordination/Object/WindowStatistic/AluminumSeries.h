@@ -25,7 +25,7 @@ enum E_AluminumType
 
 E_AluminumType ToE_AluminumType(CString type);
 CString AluminumTypeToCSting(E_AluminumType type);
-
+CString WindowDoorTypeToCSting(E_WindowDoorType type);
 //ÐÍ²ÄÊý¾Ý
 struct CAluminumData
 {

@@ -4,6 +4,8 @@
 #include <afxwin.h>
 #include <string>
 #include "..\..\Common\ComFun_Sunac.h"
+#include "AluminumSeries.h"
+#include "DeductedSize.h"
 
 CAluminumFormula::CAluminumFormula()
 {
@@ -124,7 +126,7 @@ static int OutputAlFormula(void *NotUsed, int nCol, char **value, char **ColName
 	return 0;
 }
 
-vector<CAluminumFormula> CWindowFormula::GetAluminumFormulas(CString p_sPrototypeCode)
+vector<CAluminumFormula> CWindowFormula::GetAluminumFormulas(CString p_sPrototypeCode, CString p_sAluminumSeries)
 {
 	sqlite3 * pDB = NULL;
 	vAluminumFormulas.clear();
@@ -138,9 +140,10 @@ vector<CAluminumFormula> CWindowFormula::GetAluminumFormulas(CString p_sPrototyp
 	}
 	char* cErrMsg;
 	CString sqlString;
-	sqlString.Format(L"select * from `AluminumFormulas` where `PrototypeCode` = '%s';", p_sPrototypeCode);
+	sqlString.Format(L"select * from `AluminumFormulas` where `PrototypeCode` = '%s' and `AluminumSeries` = '%s';", p_sPrototypeCode, p_sAluminumSeries);
 	USES_CONVERSION;
 	char* sql = W2A(sqlString);
+	ConvertStringToUTF8(sqlString, sql);
 	int res = sqlite3_exec(pDB, sql, OutputAlFormula , 0 , &cErrMsg);  
 
 	if (res != SQLITE_OK)

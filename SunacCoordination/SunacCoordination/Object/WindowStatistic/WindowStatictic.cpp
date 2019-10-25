@@ -2,6 +2,9 @@
 #include "..\..\Tool\Excel\Excel.h"
 #include "WindowStatictic.h"
 #include "WindowMaterialUsage.h"
+#include "..\..\Common\ComFun_Sunac.h"
+#include "..\..\Common\ComFun_Str.h"
+#include "..\..\Common\TYFormula.h"
 
 
 CWindowUsage::CWindowUsage()
@@ -135,8 +138,99 @@ bool CWindowStatictic::ExportWindowReport(CString p_sReportFile)
 bool CWindowStatictic::GenerateReport(CString p_sReportFile)
 {
 	//TODO
+	CString reportTemplateXlsFile = TY_GetLocalFilePath() + _T("门窗算量表格.xlsx");
 
+	Excel::CExcelUtil xls;
+	xls.OpenExcel(reportTemplateXlsFile); //打开表格
+	xls.SetVisible(true); 
+	xls.SetActiveSheet(1); //打开汇总表
 
+	CString str;
+
+	int nRow = 6; //汇总数据开始行号为6
+	for (UINT i=0; i<m_windows.size(); i++, nRow++)
+	{
+		//类别(一级分项)
+		if (m_windows[i].winAtt.m_prototypeCode.Find(_T("Window")))
+		{
+			xls.SetCellValue(nRow, 4, _T("铝合金窗"));
+		}
+		if (m_windows[i].winAtt.m_prototypeCode.Find(_T("Door")))
+		{
+			xls.SetCellValue(nRow, 4, _T("铝合金门"));
+		}
+
+		//窗型(二级分项)
+		xls.SetCellValue(nRow, 5, WindowDoorTypeToCSting(m_windows[i].winAtt.GetWindowDoorType()));
+
+		//门窗编号
+		xls.SetCellValue(nRow, 6, m_windows[i].winAtt.m_prototypeCode);
+
+		//型材类型
+		str = m_windows[i].winAtt.m_material.sAluminumSerial;
+		xls.SetCellValue(nRow, 9, str);
+		xls.SetCellValue(nRow, 10, _T("断桥铝"));
+		if (str.Find(_T("50")) || str.Find(_T("90")) || str.Find(_T("120")))
+		{
+			xls.SetCellValue(nRow, 10, _T("普铝"));
+		}
+
+		//洞口尺寸
+		str.Format(_T("%d"), (int)(m_windows[i].winAtt.GetW()));
+		xls.SetCellValue(nRow, 12, str);
+		str.Format(_T("%d"), (int)(m_windows[i].winAtt.GetH()));
+		xls.SetCellValue(nRow, 13, str);
+
+		//扣减尺寸
+		str.Format(_T("%d"), (int)(m_windows[i].winAtt.GetA()));
+		xls.SetCellValue(nRow, 14, str);
+		xls.SetCellValue(nRow, 15, str);
+
+		//外框尺寸
+		str.Format(_T("%d"), (int)(m_windows[i].winAtt.GetW() - m_windows[i].winAtt.GetA() * 2));
+		xls.SetCellValue(nRow, 16, str);
+		str.Format(_T("%d"), (int)(m_windows[i].winAtt.GetH() - m_windows[i].winAtt.GetA() * 2));
+		xls.SetCellValue(nRow, 17, str);
+	
+		//工程量汇总
+		str.Format(_T("%d"), m_windows[i].nCount);
+		xls.SetCellValue(nRow, 18, str);
+
+		//单樘洞口面积
+		double holeArea = m_windows[i].m_pMaterialUsage->GetHoleArea();
+		str.Format(_T("%.2f"), holeArea);
+		xls.SetCellValue(nRow, 22, str);
+
+		//洞口总面积
+		str.Format(_T("%.2f"), double(m_windows[i].nCount* holeArea));
+		xls.SetCellValue(nRow, 23, str);
+
+		//单樘外框面积
+		double frameArea = m_windows[i].m_pMaterialUsage->GetWindowFrameArea();
+		str.Format(_T("%.2f"), frameArea);
+		xls.SetCellValue(nRow, 24, str);
+
+		//外框总面积
+		str.Format(_T("%.2f"), double(m_windows[i].nCount* frameArea));
+		xls.SetCellValue(nRow, 25, str);
+
+		//型材(kg/㎡)
+		double alUsageAmount = m_windows[i].m_pMaterialUsage->GetAluminumeUsageAmount();
+		str.Format(_T("%.2f"), alUsageAmount/holeArea);
+		xls.SetCellValue(nRow, 26, str);
+
+		//玻璃(㎡/㎡)
+		double glassUsageAmount = m_windows[i].m_pMaterialUsage->GetGlassUsageAmount();
+		str.Format(_T("%.2f"), glassUsageAmount/holeArea);
+		xls.SetCellValue(nRow, 27, str);
+
+		//五金件(套/樘)
+		double hardwareUsageAmount = m_windows[i].m_pMaterialUsage->GetHardwareUsageAmount();
+		str.Format(_T("%.2f"), hardwareUsageAmount/holeArea);
+		xls.SetCellValue(nRow, 29, str);
+	}
+
+	xls.SaveAs(p_sReportFile);
 
 	return true;
 }

@@ -56,6 +56,8 @@ public:
 	vector<AttrKitchen> m_allKitchens;
 
 	CKitchGen* m_pKitchGen;
+	
+	AcDbBlockReference* m_pCurEdit; //Ë«»÷±à¼­Ê±Ê¹ÓÃ
 
 	afx_msg void OnBnClickedOk();
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);///---01
@@ -68,7 +70,9 @@ public:
 	afx_msg void OnBnClickedAutoIndex();
 	afx_msg void OnBnClickedNoAirout();
 
+	void SetEditMode(AcDbBlockReference* pBlock);
 	void UpdateAttribute();
+	bool lockUpdate;
 	void ShowInfo();
 	E_DIRECTION GetDir(ads_point pt);
 	void LoadDefaultValue();
