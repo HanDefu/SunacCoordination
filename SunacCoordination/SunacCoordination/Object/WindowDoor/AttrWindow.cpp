@@ -430,6 +430,13 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 	return filer->filerStatus();
 }
 
+eRCType AttrWindow::GetType()const
+{
+	if (m_prototypeCode.Left(4) == L"Door")
+		return DOOR;
+	return WINDOW;
+}
+
 Acad::ErrorStatus AttrWindow::dwgOutFields(AcDbDwgFiler* filer) const
 {
 	assertReadEnabled();
@@ -644,4 +651,10 @@ bool AttrWindow::IsInstanceEqual(const AttrWindow& p_att) const
 		return false;
 
 	return true;
+}
+
+E_WindowDoorType AttrWindow::GetWindowDoorType() const
+{
+	CString sType = (GetType() == WINDOW ? L"¥∞" : L"√≈");
+	return ToWindowDoorType(m_openType + sType);
 }

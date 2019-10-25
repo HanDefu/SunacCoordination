@@ -26,9 +26,10 @@
 #include "../UI/FillingDlg.h"
 #include "../UI/MoldingsDlg.h"
 #include "../UI/WaterproofDlg.h"
-#include "../ui/MyPalette.h"
-#include "../ui/MyPaletteSet.h"
-#include "../ui/DlgLogin.h"
+#include "../UI/MyPalette.h"
+#include "../UI/MyPaletteSet.h"
+#include "../UI/DlgLogin.h"
+#include "../UI/WindowAdvanceDlg.h"
 #include "Command.h"
 #include "../Common/ComFun_Math.h"
 #include "../Object/WindowStatistic/WindowStatictic.h"
@@ -65,8 +66,16 @@ void CMD_SUNACWINDOW()
 
 void CMD_SunacWindowAdvanceDesign() //门窗深化设计
 {
+	CAcModuleResourceOverride resOverride;
 
+	if (g_windowAdvanceDlg == NULL)
+	{
+		g_windowAdvanceDlg = new CWindowAdvanceDlg(acedGetAcadFrame());
+		g_windowAdvanceDlg->Create(IDD_DIALOG_WINDOW_ADVANCE);
+	}
+	g_windowAdvanceDlg->ShowWindow(SW_SHOW);
 }
+
 //厨房
 void CMD_SUNACKITCHEN()
 {
@@ -292,4 +301,5 @@ void CloseModelessDialogs()
 	CloseBathroomDlg();
 	CloseRailingDlg();
 	CloseAirconditionerDlg();
+	CloseWindowAdvanceDlg();
 }

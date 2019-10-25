@@ -99,6 +99,7 @@ LRESULT DlgLeftBar::OnClickedPopupMenu(WPARAM mID, LPARAM notUsed)
 		break;
 
 	case ID_COMMAND_WINDOWADVANCE: //二次深化设计
+		CMD_SunacWindowAdvanceDesign();
 		break;
 
 	case ID_COMMAND_WINDOWQUANTITY://门窗算量
