@@ -267,10 +267,6 @@ void ZJYTest()
 	dimdata2.sFomula = _T("H-2a");
 	attrwindow.SetDimData(dimdata2);
 
-	//dimdata2.sCodeName = _T("R");
-	//dimdata2.type = UNLIMIT;
-	//attrwindow.SetDimData(dimdata2);
-
 	attrwindow.CheckAndComplementDimeData();
 
 	attrwindow.SetH(1400);
