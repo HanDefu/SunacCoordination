@@ -72,6 +72,107 @@ static void SyncDataWithService(void * ptr);
 
 AC_IMPLEMENT_EXTENSION_MODULE(theArxDLL);
 
+
+void CMD_YTest()
+{
+	AttrWindow attrwindow;
+
+	attrwindow.m_prototypeCode = _T("Door_TLM3");
+	attrwindow.m_quyuName = _T("全部");
+	attrwindow.m_isJiTuan = true;
+	attrwindow.m_isDynamic = true;
+
+	attrwindow.m_gongNengquType = _T("全部");
+	attrwindow.m_openType = _T("推拉");
+	attrwindow.m_openQty = 1;
+
+	CWindowsDimData dimdata1;
+	dimdata1.sCodeName = _T("W");
+	dimdata1.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata1);
+	CWindowsDimData dimdata2;
+	dimdata2.sCodeName = _T("H");
+	dimdata2.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata2);
+	CWindowsDimData dimdata3;
+
+	dimdata1.sCodeName = _T("W1");
+	dimdata1.type = CALC;
+	dimdata1.sFomula = _T("(W-2a)/4");
+	attrwindow.SetDimData(dimdata1);
+
+	//CWindowsDimData dimdata2;
+	dimdata2.sCodeName = _T("H1");
+	dimdata2.type = CALC;
+	dimdata2.sFomula = _T("H-2a");
+	attrwindow.SetDimData(dimdata2);
+	
+	attrwindow.CheckAndComplementDimeData();
+
+	attrwindow.SetH(2400);
+	attrwindow.SetW(3600);
+	attrwindow.SetH1(500);
+	attrwindow.SetW1(700);
+	attrwindow.SetA(50);
+
+	attrwindow.m_material.sAluminumSerial = _T("ST105AM系列");
+	attrwindow.SetInstanceCode(_T("TLM3"));
+
+	vector<AttrWindow> winAtts;
+	winAtts.push_back(attrwindow);
+	winAtts.push_back(attrwindow);
+
+	attrwindow.m_prototypeCode = _T("Window_NC3");
+	attrwindow.m_quyuName = _T("全部");
+	attrwindow.m_isJiTuan = true;
+	attrwindow.m_isDynamic = true;
+
+	attrwindow.m_gongNengquType = _T("全部");
+	attrwindow.m_openType = _T("内开");
+	attrwindow.m_openQty = 1;
+
+	dimdata1.sCodeName = _T("W");
+	dimdata1.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata1);
+
+	dimdata2.sCodeName = _T("H");
+	dimdata2.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata2);
+
+	dimdata1.sCodeName = _T("W1");
+	dimdata1.type = CALC;
+	dimdata1.sFomula = _T("(W-2a)/2");
+	attrwindow.SetDimData(dimdata1);
+
+	dimdata2.sCodeName = _T("H1");
+	dimdata2.type = CALC;
+	dimdata2.sFomula = _T("H-2a");
+	attrwindow.SetDimData(dimdata2);
+	
+	attrwindow.CheckAndComplementDimeData();
+
+	attrwindow.SetH(1400);
+	attrwindow.SetW(1300);
+	attrwindow.SetH1(500);
+	attrwindow.SetW1(700);
+	attrwindow.SetA(50);
+
+	attrwindow.m_material.sAluminumSerial = _T("SN65A系列");
+	attrwindow.SetInstanceCode(_T("NC3"));
+
+	winAtts.push_back(attrwindow);
+
+	CWindowStatictic winStatictic;
+
+	CString filter = L"参数文件(*.xlsx)|*.xlsx|All Files(*.*)|*.*||";
+	CFileDialog dlg(FALSE, L"xlsx", L"*.xlsx", NULL, filter);
+	if (dlg.DoModal() == IDOK)
+	{
+		CString pathName = dlg.GetPathName();
+		winStatictic.Statictic(winAtts, pathName);
+	}
+}
+
 void AddSubMenu(CAcadPopupMenu&IPopUpMenu, UINT MenuStartIndex)
 {
 	VARIANT index;
@@ -479,6 +580,14 @@ static void initApp()
 	CAcModuleResourceOverride resOverride;
 
 	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("ytest"),
+		_T("ytest"),
+		ACRX_CMD_MODAL,
+		CMD_YTest,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+	acedRegCmds->addCommand(_T("SUNAC"),
 		_T("tes"),
 		_T("tes"),
 		ACRX_CMD_MODAL,
@@ -661,7 +770,7 @@ static void initApp()
 
 	LoadManagedDll(MD2010_GetAppPath() + L"\\support\\Sunac2019\\rcdc.dll");
 
-	WEBINST;
+	//WEBINST;
 
 	//mThreadHandle = (HANDLE)_beginthread(&SyncDataWithService, 0, 0);
 

@@ -98,10 +98,10 @@ bool CWindowsDimData::IsParaEqual(const CWindowsDimData &rhs) const
 {
 	if (sCodeName != rhs.sCodeName)
 		return false;
-	if (type != rhs.type)
-		return false;
-	if (type == NOVALUE)
+	if ((type == NOVALUE) && (rhs.type == NOVALUE))
 		return true;
+	if ((type == NOVALUE) ^ (rhs.type == NOVALUE))
+		return false;
 	if (type == CALC)
 		return sFomula == rhs.sFomula;
 	else
@@ -634,7 +634,7 @@ bool AttrWindow::IsPrototypeEqual(const AttrWindow& p_att)
 
 bool AttrWindow::IsInstanceEqual(const AttrWindow& p_att) const
 {
-	if (m_prototypeCode != p_att.m_prototypeCode)
+	if (GetMainPrototypeCode() != p_att.GetMainPrototypeCode())
 		return false;
 	
 	vector<CWindowsDimData> dim1 = m_dimData;

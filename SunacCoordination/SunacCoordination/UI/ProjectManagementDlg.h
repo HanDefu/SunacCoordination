@@ -47,4 +47,5 @@ public:
 	virtual BOOL OnInitDialog();
 	CStatic m_StcRootName;
 	afx_msg void OnNMClickTreePrjdir(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnBnClickedButtonNewdir();
 };

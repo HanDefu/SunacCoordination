@@ -77,12 +77,8 @@ void CWindowStatictic::Statictic(const vector<AttrWindow>& p_winAtts, CString p_
 		m_windows[i].InitWindMaterialUsage();
 	}
 
-	//2. 对各个门窗生成报表
-	ExportWindowReport(p_sReportFile);
-
-
-	//3. 汇总各个门窗得到汇总表
-	GenerateReport(p_sReportFile);
+	//3. 输出报表
+	Export(p_sReportFile);
 }
 
 void CWindowStatictic::WindowClassify(const vector<AttrWindow>& p_winAtts)
@@ -113,6 +109,61 @@ void CWindowStatictic::WindowClassify(const vector<AttrWindow>& p_winAtts)
 	}
 }
 
+void CWindowStatictic::Export(CString p_sReportFile)//算量表和统计表分开输出
+{
+	CString reportTemplateXlsFile = TY_GetLocalFilePath() + _T("门窗算量表格.xlsx");
+
+	Excel::CExcelUtil xls;
+	bool bSuc = xls.OpenExcel(reportTemplateXlsFile); //打开表格
+	xls.SetVisible(false);
+
+
+	//2. 对各个门窗生成报表
+	ExportWindowReport(xls);
+
+	//3. 汇总各个门窗得到汇总表
+	GenerateReport(xls);
+
+	//保存
+	xls.SaveAs(p_sReportFile);
+	xls.CloseExcel();
+}
+
+bool CWindowStatictic::ExportWindowReport(Excel::CExcelUtil& xls)
+{
+	bool bAllSuc = true;
+
+	//根据门窗数量新增门窗算量表
+	for (UINT i = 1; i < m_windows.size(); i++)
+	{
+		xls.CopySheet(_T("算量表"), m_windows[i].winAtt.GetInstanceCode());
+	}
+
+	if (m_windows.size()>0)
+	{
+		xls.SetSheetName(2, m_windows[0].winAtt.GetInstanceCode());
+	}
+
+	for (UINT i = 0; i < m_windows.size(); i++)
+	{
+		xls.SetActiveSheet(i+2); //sheet序号从1开始，且第一个表是汇总表
+		bool bSuc = m_windows[i].m_pMaterialUsage->ExportReportToExcel(xls);
+		if (bSuc == false)
+			bAllSuc = false;
+	}
+
+	return bAllSuc;
+}
+
+void CWindowStatictic::ExportSeparate(CString p_sReportFile)//算量表和统计表分开输出
+{
+	//2. 对各个门窗生成报表
+	ExportWindowReport(p_sReportFile);
+
+
+	//3. 汇总各个门窗得到汇总表
+	GenerateReport(p_sReportFile);
+}
 //每个窗编号导出一个报表
 bool CWindowStatictic::ExportWindowReport(CString p_sReportFile)
 {
@@ -125,7 +176,7 @@ bool CWindowStatictic::ExportWindowReport(CString p_sReportFile)
 	bool bAllSuc = true;
 	for (UINT i = 0; i < m_windows.size(); i++)
 	{
-		CString sOutFilePath = sPath + m_windows[i].winAtt.GetInstanceCode() + _T(".xlsx");
+		CString sOutFilePath = sPath + _T("_") + m_windows[i].winAtt.GetInstanceCode() + _T(".xlsx");
 		bool bSuc = m_windows[i].m_pMaterialUsage->ExportReportToExcel(sOutFilePath);
 		if (bSuc==false)
 			bAllSuc = false;
@@ -137,7 +188,6 @@ bool CWindowStatictic::ExportWindowReport(CString p_sReportFile)
 //2.生成汇总表
 bool CWindowStatictic::GenerateReport(CString p_sReportFile)
 {
-	//TODO
 	CString reportTemplateXlsFile = TY_GetLocalFilePath() + _T("汇总表模板.xlsx");
 
 	Excel::CExcelUtil xls;
@@ -145,7 +195,18 @@ bool CWindowStatictic::GenerateReport(CString p_sReportFile)
 	xls.SetVisible(false); 
 	xls.SetActiveSheet(1); //打开汇总表
 
+	GenerateReport(xls);
+	
+	xls.SaveAs(p_sReportFile);
+	xls.CloseExcel();
+
+	return true;
+}
+
+bool CWindowStatictic::GenerateReport(Excel::CExcelUtil& xls)
+{
 	CString str;
+	xls.SetActiveSheet(1); //打开汇总表
 
 	int nRow = 6; //汇总数据开始行号为6
 	for (UINT i=0; i<m_windows.size(); i++, nRow++)
@@ -230,7 +291,6 @@ bool CWindowStatictic::GenerateReport(CString p_sReportFile)
 		xls.SetCellValue(nRow, 29, str);
 	}
 
-	xls.SaveAs(p_sReportFile);
 
 	return true;
 }

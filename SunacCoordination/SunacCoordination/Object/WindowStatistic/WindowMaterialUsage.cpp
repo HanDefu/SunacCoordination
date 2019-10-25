@@ -113,14 +113,11 @@ bool CWindowMaterialUsage::ExportReportToExcel(CString p_sReportFile)
 
 bool CWindowMaterialUsage::ExportReportToExcel(Excel::CExcelUtil& p_excel)
 {
-	//p_excel.SetActiveSheet(2); //打开第二张表
-
 	ExportWindowInfo(p_excel);
 	ExprotAlInfo(p_excel);
 	ExportGlassInfo(p_excel);
 	ExportHardwareInfo(p_excel);
 	ExportFuliaoInfo(p_excel);
-
 	return true;
 }
 

@@ -158,6 +158,7 @@
     <ClCompile Include="Common\TYRect.cpp" />
     <ClCompile Include="GlobalSetting.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="NewDirDlg.cpp" />
     <ClCompile Include="Object\AirCondition\AttrAirCon.cpp" />
     <ClCompile Include="Object\AirCondition\RCAirCondition.cpp" />
     <ClCompile Include="Object\Bathroom\BathroomAutoName.cpp" />
@@ -279,6 +280,7 @@
     <ClInclude Include="Common\TYRect.h" />
     <ClInclude Include="GlobalSetting.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="NewDirDlg.h" />
     <ClInclude Include="Object\AirCondition\AttrAirCon.h" />
     <ClInclude Include="Object\AirCondition\RCAirCondition.h" />
     <ClInclude Include="Object\Bathroom\BathroomAutoName.h" />

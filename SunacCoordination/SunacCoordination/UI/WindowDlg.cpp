@@ -338,11 +338,11 @@ void CWindowDlg::OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult)
 	m_isMirror.SetCheck(pSel->m_isMirror);
 
 	m_viewDir.ResetContent();
-	if (PathFileExists(TY_GetLocalFilePath() + pSel->m_frontViewFile.fileName))
+	if ((!pSel->m_frontViewFile.fileName.IsEmpty()) && PathFileExists(TY_GetLocalFilePath() + pSel->m_frontViewFile.fileName))
 		m_viewDir.AddString(L"立面");
-	if (PathFileExists(TY_GetLocalFilePath() + pSel->m_topViewFile.fileName))
+	if ((!pSel->m_topViewFile.fileName.IsEmpty()) && PathFileExists(TY_GetLocalFilePath() + pSel->m_topViewFile.fileName))
 		m_viewDir.AddString(L"平面");
-	if (PathFileExists(TY_GetLocalFilePath() + pSel->m_leftViewFile.fileName))
+	if ((!pSel->m_leftViewFile.fileName.IsEmpty()) && PathFileExists(TY_GetLocalFilePath() + pSel->m_leftViewFile.fileName))
 		m_viewDir.AddString(L"侧视");
 	if (m_viewDir.GetCount() > 0)
 		m_viewDir.SetCurSel(0);

@@ -99,11 +99,9 @@ void CWindowAdvanceDlg::OnBnClickedSelectOnDwg()
 	m_pAttrWindow = pAttrWindow;
 	m_sCode = pAttrWindow->m_instanceCode;
 
-	E_WindowDoorType type = pAttrWindow->GetWindowDoorType();
-	vector<CString> options = CAluminumSeries::Instance()->GetAluminumSerialsByWindowType(type);
+	CString prototype = pAttrWindow->GetMainPrototypeCode();
+	vector<CString> options = CAluminumSeries::Instance()->GetAluminumSerialsByPrototype(prototype);
 	CString defValue = pAttrWindow->m_material.sAluminumSerial;
-	if (!options.empty() && defValue.IsEmpty())
-		defValue = options[0];
 	TYUI_InitComboBox(m_xingCai, options, defValue);
 
 	ShowWindow(SW_SHOW);

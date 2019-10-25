@@ -21,10 +21,10 @@ CString CWindowAutoName::GetWindowName(const AttrWindow& p_att) const
 {
 	CString sWindowName;
 	//去除原型编号中的"Window_"前缀
-	CString prototype = p_att.m_prototypeCode;
+	CString prototype = p_att.GetMainPrototypeCode();
 	prototype.Replace(L"Window_", L"");
 	//根据"原型编号_尺寸编号"生成门窗编号
-	sWindowName.Format(L"%s_%02.0lf%02.0lf", prototype, p_att.GetW() / 100, p_att.GetH() / 100);
+	sWindowName.Format(L"%s_%02d%02d", prototype, (int)p_att.GetW() / 100, (int)p_att.GetH() / 100);
 
 	//镜像窗型增加"_m"后缀
 	CString sMirror;
