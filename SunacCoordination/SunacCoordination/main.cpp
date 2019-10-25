@@ -165,7 +165,7 @@ void ZJYTest()
 	attrwindow.m_isDynamic = true;
 
 	attrwindow.m_gongNengquType = _T("全部");
-	attrwindow.m_openType = _T("推拉门");
+	attrwindow.m_openType = _T("推拉");
 	attrwindow.m_openQty = 1;
 
 	CWindowsDimData dimdata1;
@@ -215,10 +215,10 @@ void ZJYTest()
 	//dimdata2.sFomula = _T("(W-2a)/2");
 	//attrwindow.SetDimData(dimdata2);
 
-	dimdata2.sCodeName = _T("R");
-	dimdata2.type = UNLIMIT;
-	//dimdata2.sFomula = _T("(W-2a)/2");
-	attrwindow.SetDimData(dimdata2);
+	//dimdata2.sCodeName = _T("R");
+	//dimdata2.type = UNLIMIT;
+	////dimdata2.sFomula = _T("(W-2a)/2");
+	//attrwindow.SetDimData(dimdata2);
 
 	attrwindow.CheckAndComplementDimeData();
 
@@ -230,11 +230,11 @@ void ZJYTest()
 	attrwindow.SetW1(700);
 	//attrwindow.SetW2(600);
 	//attrwindow.SetW3(500);
-	attrwindow.SetR(0);
+	//attrwindow.SetR(0);
 	attrwindow.SetA(50);
 
 	attrwindow.m_material.sAluminumSerial = _T("ST105AM系列");
-	attrwindow.SetInstanceCode(_T("Door_TLM3"));
+	attrwindow.SetInstanceCode(_T("TLM3"));
 
 	m_winAtts.push_back(attrwindow);
 	m_winAtts.push_back(attrwindow);
@@ -245,7 +245,7 @@ void ZJYTest()
 	attrwindow.m_isDynamic = true;
 
 	attrwindow.m_gongNengquType = _T("全部");
-	attrwindow.m_openType = _T("内开窗");
+	attrwindow.m_openType = _T("内开");
 	attrwindow.m_openQty = 1;
 
 	dimdata1.sCodeName = _T("W");
@@ -266,9 +266,9 @@ void ZJYTest()
 	dimdata2.sFomula = _T("H-2a");
 	attrwindow.SetDimData(dimdata2);
 
-	dimdata2.sCodeName = _T("R");
-	dimdata2.type = UNLIMIT;
-	attrwindow.SetDimData(dimdata2);
+	//dimdata2.sCodeName = _T("R");
+	//dimdata2.type = UNLIMIT;
+	//attrwindow.SetDimData(dimdata2);
 
 	attrwindow.CheckAndComplementDimeData();
 
@@ -276,11 +276,11 @@ void ZJYTest()
 	attrwindow.SetW(1300);
 	attrwindow.SetH1(500);
 	attrwindow.SetW1(700);
-	attrwindow.SetR(0);
+	//attrwindow.SetR(0);
 	attrwindow.SetA(50);
 
 	attrwindow.m_material.sAluminumSerial = _T("SN65A系列");
-	attrwindow.SetInstanceCode(_T("Window_NC3"));
+	attrwindow.SetInstanceCode(_T("NC3"));
 
 	m_winAtts.push_back(attrwindow);
 
