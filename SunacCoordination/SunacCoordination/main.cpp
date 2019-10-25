@@ -426,10 +426,10 @@ void CMD_test()
 
 void CMD_TEST2()
 {
-	/*vector<CAluminumFormula> vAlFormula;
+	vector<CAluminumFormula> vAlFormula;
 	vector<CGlassFormula> vGlassFormula;
 	vector<CHardwareData> vHardwareFormula;
-	vector<CString> vAlSeries;
+	vector<CString> vAlSeries,vAlSeries2;
 	CAluminumData AlData;
 	CString AlSeries;
 	double DeductedSizeData;
@@ -440,9 +440,10 @@ void CMD_TEST2()
 	CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(E_WindowDoor_WC, L"SN65A系列", L"M1", DeductedSizeData);
 	CAluminumSeries::Instance()->GetAluminumDataBySeriesAndName(E_WindowDoor_NC, L"SN60系列", L"假中梃", AlData);
 	CAluminumSeries::Instance()->GetAluminumSerialByCode(L"SN60T002", AlSeries);
-	vAlSeries = CAluminumSeries::Instance()->GetAluminumSerialsByWindowType(E_WindowDoor_NC);*/
-	CProjectData::UploadFile("F:\\soapcpp2.exe", "soapcpp2.exe");
-	CProjectData::DownloadFile(L"http://fastsoft.onlinedown.net/down/idm_ald.exe", L"F:\\FTPServer\\Test.exe");
+	vAlSeries = CAluminumSeries::Instance()->GetAluminumSerialsByWindowType(E_WindowDoor_NC);
+	vAlSeries2 = CAluminumSeries::Instance()->GetAluminumSerialsByPrototype(L"Window_NC1");
+	/*CProjectData::UploadFile("F:\\soapcpp2.exe", "soapcpp2.exe");
+	CProjectData::DownloadFile(L"http://fastsoft.onlinedown.net/down/idm_ald.exe", L"F:\\FTPServer\\Test.exe");*/
 }
 
 static void initApp()
