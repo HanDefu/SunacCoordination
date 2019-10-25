@@ -156,13 +156,13 @@ void ZJYTest()
 	CString localWindowPath = TY_GetLocalFilePath();
 	AttrWindow attrwindow;
 
-	attrwindow.m_prototypeCode = _T("Window_WZC2");
+	attrwindow.m_prototypeCode = _T("Door_TLM3");
 	attrwindow.m_quyuName = _T("全部");
 	attrwindow.m_isJiTuan = true;
 	attrwindow.m_isDynamic = true;
 
 	attrwindow.m_gongNengquType = _T("全部");
-	attrwindow.m_openType = _T("外开窗");
+	attrwindow.m_openType = _T("推拉门");
 	attrwindow.m_openQty = 1;
 
 	CWindowsDimData dimdata1;
@@ -181,31 +181,31 @@ void ZJYTest()
 
 	//CWindowsDimData dimdata1;
 	dimdata1.sCodeName = _T("W1");
-	dimdata1.type = UNLIMIT;
-	//dimdata1.sFomula = _T("(W-2a)/2");
+	dimdata1.type = CALC;
+	dimdata1.sFomula = _T("(W-2a)/4");
 	attrwindow.SetDimData(dimdata1);
 
-	
-	dimdata1.sCodeName = _T("W2");
-	dimdata1.type = CALC;
-	dimdata1.sFomula = _T("W-2a-W1*2-W3");
-	attrwindow.SetDimData(dimdata1);
-	
-	dimdata1.sCodeName = _T("W3");
-	dimdata1.type = UNLIMIT;
-	//dimdata1.sFomula = _T("");
-	attrwindow.SetDimData(dimdata1);
-	
+	//
+	//dimdata1.sCodeName = _T("W2");
+	//dimdata1.type = CALC;
+	//dimdata1.sFomula = _T("W-2a-W1*2-W3");
+	//attrwindow.SetDimData(dimdata1);
+	//
+	//dimdata1.sCodeName = _T("W3");
+	//dimdata1.type = UNLIMIT;
+	////dimdata1.sFomula = _T("");
+	//attrwindow.SetDimData(dimdata1);
+	//
 
 	//CWindowsDimData dimdata2;
 	dimdata2.sCodeName = _T("H1");
 	dimdata2.type = CALC;
-	dimdata2.sFomula = _T("H-2a-H2");
+	dimdata2.sFomula = _T("H-2a");
 	attrwindow.SetDimData(dimdata2);
 
-	dimdata2.sCodeName = _T("H2");
-	dimdata2.type = UNLIMIT;
-	attrwindow.SetDimData(dimdata2);
+	//dimdata2.sCodeName = _T("H2");
+	//dimdata2.type = UNLIMIT;
+	//attrwindow.SetDimData(dimdata2);
 
 	//dimdata2.sCodeName = _T("H3");
 	//dimdata2.type = CALC;
@@ -219,27 +219,27 @@ void ZJYTest()
 
 	attrwindow.CheckAndComplementDimeData();
 
-	attrwindow.SetH(1800);
-	attrwindow.SetW(2700);
+	attrwindow.SetH(2400);
+	attrwindow.SetW(3600);
 	attrwindow.SetH1(500);
-	attrwindow.SetH2(500);
+	//attrwindow.SetH2(500);
 	//attrwindow.SetH3(500);
 	attrwindow.SetW1(700);
-	attrwindow.SetW2(600);
-	attrwindow.SetW3(500);
+	//attrwindow.SetW2(600);
+	//attrwindow.SetW3(500);
 	attrwindow.SetR(0);
 	attrwindow.SetA(50);
 
-	attrwindow.m_material.sAluminumSerial = _T("SW50系列");
+	attrwindow.m_material.sAluminumSerial = _T("ST105AM系列");
 
-	CWindowMaterialUsageWC winUsageWC(attrwindow, 1);
+	CWindowMaterialUsageTLM winUsageTLM(attrwindow, 1);
 
 	CString filter=L"参数文件(*.xlsx)|*.xlsx|All Files(*.*)|*.*||";  
 	CFileDialog dlg(FALSE, L"xlsx", L"*.xlsx", NULL, filter); 
 	if(dlg.DoModal()==IDOK)
 	{
 		CString pathName = dlg.GetFileName();
-		winUsageWC.ExportReportToExcel(pathName);
+		winUsageTLM.ExportReportToExcel(pathName);
 
 	}
 }

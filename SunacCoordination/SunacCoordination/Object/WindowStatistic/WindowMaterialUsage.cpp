@@ -290,7 +290,11 @@ void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öÐÍ²ÄÊý¾
 		{
 			p_excel.SetCellValue(nRow, 3, _T("ÖÐèè½ÇÂë"));
 		}
-		
+		if (_T("ÊÕ¿Ú1") == alFormulas[i].m_name)
+		{
+			p_excel.SetCellValue(nRow, 3, _T("ÊÕ¿Ú"));
+		}
+
 		p_excel.SetCellValue(nRow, 4, alFormulas[i].m_pos);
 
 		CAluminumData dataOut;
@@ -375,7 +379,7 @@ void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öÐÍ²ÄÊý¾
 			m_chuangshanTotalLength += length*alFormulas[i].m_nCount;
 		}
 
-		if (_T("ÉÈÁÏ") == alFormulas[i].m_aluminumClassify)
+		if (_T("ÉÈÁÏ") == alFormulas[i].m_aluminumClassify && m_winAtt.m_prototypeCode.Find(_T("TC"))>=0)
 		{
 			m_shanliaoTotalLength += length*alFormulas[i].m_nCount;
 		}
@@ -384,6 +388,19 @@ void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öÐÍ²ÄÊý¾
 		{
 			m_menshanTotalLength += length*alFormulas[i].m_nCount;
 		}
+
+		if (_T("ÉÈÁÏ") == alFormulas[i].m_aluminumClassify && m_winAtt.m_prototypeCode.Find(_T("TLM"))>=0)
+		{
+			m_shanliaoTotalLength += length*alFormulas[i].m_nCount;
+		}
+	}
+
+	//ÓÃÓÚ¼ÆËãÍÆÀ­ÃÅTLM3¡¢TML4µÄ²£Á§´¦ÄÍºò½º
+	if (_T("Door_TLM3") == m_winAtt.m_prototypeCode || _T("Door_TLM4") == m_winAtt.m_prototypeCode)
+	{
+		double len = _ttof(p_excel.GetCellValue(25, 6));
+		double count = _ttof(p_excel.GetCellValue(25, 7));
+		m_shanliaoTotalLength = m_shanliaoTotalLength - count * len;
 	}
 
 	//¶ÏÇÅ¸ôÈÈÂÁÐÍ²Ä×ÜÖØ
@@ -599,14 +616,15 @@ void CWindowMaterialUsageTC::ExportFuliaoInfo(Excel::CExcelUtil& p_excel) //Êä³ö
 	p_excel.SetCellValue(64, 9, str);
 
 	//ÃÜ·âÃ«Ìõ
-	m_sealBurrsQTY =  m_glassSealantQTY;
+	p_excel.SetCellValue(65, 3, _T("ÃÜ·âÃ«Ìõ"));
+	m_sealBurrsQTY = m_glassSealantQTY;
 	str.Format(_T("%.2f"),m_sealBurrsQTY);
 	p_excel.SetCellValue(65, 9, str);
 
 	//´°ÖÆ×÷°²×°¸¨²Ä·Ñ
 	m_windowCost = m_winAtt.GetH()* m_winAtt.GetW()/1e6;
 	str.Format(_T("%.2f"),m_windowCost);
-	p_excel.SetCellValue(66, 9, str);
+	p_excel.SetCellValue(67, 9, str);
 }
 
 //Íâ¿ªÃÅ
