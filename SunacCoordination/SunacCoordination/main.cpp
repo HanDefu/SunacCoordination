@@ -291,7 +291,7 @@ void ZJYTest()
 	CFileDialog dlg(FALSE, L"xlsx", L"*.xlsx", NULL, filter); 
 	if(dlg.DoModal()==IDOK)
 	{
-		CString pathName = dlg.GetFileName();
+		CString pathName = dlg.GetPathName();
 		winStatictic.Statictic(m_winAtts, pathName);
 
 	}
@@ -571,7 +571,7 @@ static void initApp()
 		_T("SUNACSTATISTICS"),
 		_T("SUNACSTATISTICS"),
 		ACRX_CMD_MODAL,
-		CMD_SUNACSTATISTICS,
+		CMD_SunacWindowsStatistics,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());

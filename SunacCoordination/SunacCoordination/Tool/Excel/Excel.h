@@ -16,69 +16,46 @@ namespace Excel
 {
     class  CExcelUtil
     {
-    private:
+    protected:
         CString out_file_name;
-    public:
-        CString GetOutFileName() { return out_file_name; };
-        void SetOutFileName(CString new_file_name) 
-        { if (new_file_name.GetLength()>0) out_file_name = new_file_name; }
 
     public:
         CApplication m_excelApp;
-        CWorkbooks    m_excelBooks;
+        CWorkbooks   m_excelBooks;
         CWorkbook    m_excelBook;
-        CWorksheets     m_excelSheets;
+        CWorksheets  m_excelSheets;
         CWorksheet   m_excelSheet;
-        CRange        m_excelRange;
+        CRange       m_excelRange;
 
     public:
+		CExcelUtil(){};
+		~CExcelUtil();
+
+
+        CString GetOutFileName();
+		void SetOutFileName(CString new_file_name);
+		
+
         void CreateExcel();
 		//有时候无法打开excel是因为excel com加载项的问题
 		bool OpenExcel(CString fileName, bool readOnly = false);
-        bool SaveExcel();
         void CloseExcel();
+		bool SaveExcel();
+		BOOL SaveAs(CString sFileSavePath);
 		void SetVisible(bool bvi);
-        // <summary>
-        // 取得特定的Worksheet
-        //</summary>
-        // <param name="SheetName">worksheet的名字</param>
-        //<returns></returns>
+
+		int GetSheetNum();
         CWorksheet GetSheet(CString SheetName);
-
-        /// <summary>
-        /// 取得特定的Worksheet
-        /// </summary>
-        /// <param name="index">worksheet的索引，从1开始</param>
-        /// <returns></returns>
         CWorksheet GetSheet(int index);
-
 		int SetSheetName(int index, CString name);
 		CString GetSheetName(int index);
 		int DeleteSheet(int index);
+		CWorksheet AddSheet(CString SheetName);
 
 		void DeleteAllCell(); //删除当前表中的数据
 
-        /// <summary>
-        /// 添加特定的Worksheet
-        /// </summary>
-        /// <param name="SheetName">新添加的worksheet的名字</param>
-        /// <returns>成功返回创建的worksheet，否则控制台打印相应的出错信息</returns>
-        CWorksheet AddSheet(CString SheetName);
 
-        /// <summary>
-        /// 取得sheet的数量
-        /// </summary>
-        /// <returns>sheet的数量</returns>
-        int GetSheetNum();
 
-        //操作单元格/合并单元格
-        /// <summary>
-        /// 返回特定的单元格
-        /// </summary>
-        /// <param name="ColNum">列号,从1开始,不大于255</param>
-        /// <param name="RowNum">行号,从1开始,不大于255</param>
-        /// <returns></returns>
-        CString GetCell(int ColNum, int RowNum);
 
         //取得一个单元格
         void SetRange(int ColNum, int RowNum);
@@ -88,6 +65,15 @@ namespace Excel
 
         //合并一个单元格区域
         void Merge(int startRowIndex, int startColIndex, int endRowIndex, int endColIndex);
+
+        //操作单元格/合并单元格
+        /// <summary>
+        /// 返回特定的单元格
+        /// </summary>
+        /// <param name="ColNum">列号,从1开始,不大于255</param>
+        /// <param name="RowNum">行号,从1开始</param>
+        /// <returns></returns>
+        CString GetCell(int ColNum, int RowNum);
 
         //单元格赋值/单元格区域赋值
         void SetCellValue(CString value);
@@ -103,7 +89,6 @@ namespace Excel
         void SetBoldFontAndSize( int size );
 
         //设置报表表格为最适应宽度
-        //设置报表表格为最适应宽度
         void SetAutoFitColumns( int startRow, int startCol, int endRow, int endCol );
         void SetCenterAlign();
         void SetBorder();
@@ -114,7 +99,6 @@ namespace Excel
 		int SetSheetCellValue(long iSheetName, long irow, long icol,VARIANT &vt);
 		int GetSheetCellValue(long iSheetName, long irow, long icol,VARIANT &vt);
 		int GetSheetCellValue(long irow, long icol,VARIANT &vt);
-		BOOL SaveAs(CString sFileSavePath);
 		BOOL IsFileExist(CString p_sFileName, BOOL bDir);
 
     };

@@ -65,9 +65,8 @@ public:
 	//获得门窗类型下的型材系列选项
 	vector<CString> GetAluminumSerialsByWindowType(E_WindowDoorType p_winType);
 
-
-	//使用表AluminumSeries
-
-
+	//获得原型的型材系列选项
+	vector<CString> GetAluminumSerialsByPrototype(CString p_sProtoTypeCode);
+	
 protected:
 };
