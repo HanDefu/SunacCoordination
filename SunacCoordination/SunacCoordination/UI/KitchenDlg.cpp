@@ -508,6 +508,8 @@ void CKitchenDlg::SetEditMode(AcDbBlockReference* pBlock)
 	m_preKitchen.AddPreview(0, 0, TY_GetLocalFilePath() + m_allKitchens[0].GetFileName(), str);
 
 	m_preKitchen.SelectPreview(0, 0);
+
+	TYUI_SetText(*GetDlgItem(IDC_BUTTON_INSERTKITCHEN), L"È·¶¨");
 }
 
 void CKitchenDlg::UpdateAttribute()

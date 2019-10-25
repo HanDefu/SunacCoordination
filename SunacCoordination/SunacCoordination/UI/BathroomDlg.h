@@ -53,9 +53,14 @@ public:
 	int m_angle; //插入时旋转角，可能取值为0, 90, 180, 270
 
 	vector<AttrBathroom> m_allBathrooms;
+
 	CBathroomGen* m_pBathroomGen;
 
+	AcDbBlockReference* m_pCurEdit; //双击编辑时使用
+
+	void SetEditMode(AcDbBlockReference* pBlock);
 	void UpdateAttribute();
+	bool lockUpdate;
 	void LoadDefaultValue();
 	E_DIRECTION GetDir(ads_point pt);
 	void EnableSetAirout(bool bEnable);

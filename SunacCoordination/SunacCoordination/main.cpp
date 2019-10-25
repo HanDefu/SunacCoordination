@@ -434,6 +434,15 @@ static void initApp()
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SWINADVANCE"),
+		_T("SWINADVANCE"),
+		ACRX_CMD_MODAL,
+		CMD_SunacWindowAdvanceDesign,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
 		_T("SUNACKITCHEN"),
 		_T("SUNACKITCHEN"),
 		ACRX_CMD_MODAL,
@@ -582,7 +591,7 @@ static void initApp()
 
 	WEBINST;
 
-	mThreadHandle = (HANDLE)_beginthread(&SyncDataWithService, 0, 0);
+	//mThreadHandle = (HANDLE)_beginthread(&SyncDataWithService, 0, 0);
 
 }
 
@@ -675,7 +684,7 @@ extern "C" AcRx::AppRetCode acrxEntryPoint( AcRx::AppMsgCode msg, void* appId)
 
 static void SyncDataWithService(void * ptr)
 {
-	while(1)
+	while (1)
 	{
 		Sleep(1000);
 	}
