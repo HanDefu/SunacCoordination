@@ -151,11 +151,11 @@ bool CWindowStatictic::GenerateReport(CString p_sReportFile)
 	for (UINT i=0; i<m_windows.size(); i++, nRow++)
 	{
 		//类别(一级分项)
-		if (m_windows[i].winAtt.m_prototypeCode.Find(_T("Window")))
+		if (m_windows[i].winAtt.m_prototypeCode.Find(_T("Window")) >= 0)
 		{
 			xls.SetCellValue(nRow, 4, _T("铝合金窗"));
 		}
-		if (m_windows[i].winAtt.m_prototypeCode.Find(_T("Door")))
+		if (m_windows[i].winAtt.m_prototypeCode.Find(_T("Door")) >= 0)
 		{
 			xls.SetCellValue(nRow, 4, _T("铝合金门"));
 		}
@@ -170,7 +170,7 @@ bool CWindowStatictic::GenerateReport(CString p_sReportFile)
 		str = m_windows[i].winAtt.m_material.sAluminumSerial;
 		xls.SetCellValue(nRow, 9, str);
 		xls.SetCellValue(nRow, 10, _T("断桥铝"));
-		if (str.Find(_T("50")) || str.Find(_T("90")) || str.Find(_T("120")))
+		if (str.Find(_T("50")) >= 0 || str.Find(_T("90")) >= 0 || str.Find(_T("120")) >= 0)
 		{
 			xls.SetCellValue(nRow, 10, _T("普铝"));
 		}
