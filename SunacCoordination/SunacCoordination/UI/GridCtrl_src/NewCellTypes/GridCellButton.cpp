@@ -33,12 +33,12 @@ BOOL CGridCellButton::Draw(CDC* pDC, int nRow, int nCol, CRect rect, BOOL bErase
 }
 void CGridCellButton::OnClickDown(CPoint PointCellRelative)
 {
-	m_bPushing = TRUE;
+	m_bPushing = !m_bPushing;
 	GetGrid()->InvalidateRect(m_rect);
 }
 
 void CGridCellButton::OnClick(CPoint PointCellRelative)
 {
-	m_bPushing = FALSE;
-	GetGrid()->ValidateRect(m_rect);
+	/*m_bPushing = !m_bPushing;
+	GetGrid()->ValidateRect(m_rect);*/
 }

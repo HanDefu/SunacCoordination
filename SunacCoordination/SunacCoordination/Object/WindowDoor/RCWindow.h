@@ -69,8 +69,6 @@ public:
 	virtual bool isEqualTo(RCObject*other = 0);//基础数据一致
 
 protected: 
-	
-private:
 	AttrWindow *m_pAttribute;
 };
 

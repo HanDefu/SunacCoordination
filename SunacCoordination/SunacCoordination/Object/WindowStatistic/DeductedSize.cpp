@@ -55,33 +55,8 @@ static int OutputDeductedSize(void *NotUsed, int nCol, char **value, char **ColN
 
 bool CDeductedSize::GetDeductedSizeBySeriesAndName(E_WindowDoorType p_winType, CString p_serials, CString sDeductedName, double &p_valueOut)
 {
-	const char * path = TY_GetAluminumDatabasePath();
-	int nRes = sqlite3_open(path, &pDB2);
-
-	if (nRes != SQLITE_OK)
-	{
-		AfxMessageBox(L"Open database fail");
-		return false;
-	}
-	char* cErrMsg;
-	CString sqlString;
 	CString sWinType = WindowTypeToCString(p_winType);
-	
-	USES_CONVERSION;
-	sqlString.Format(L"select %s from `DeductedSize` where `Type` = '%s' and `ProfileSeries` =  '%s';", sDeductedName, sWinType, p_serials);
-	char* sql = T2A(sqlString);
-	ConvertStringToUTF8(sqlString, sql);
-	//char* convert = T2A(GBKToUTF8(sql));
-	int res = sqlite3_exec(pDB2, sql, OutputDeductedSize , 0 , &cErrMsg);  
-
-	if (res != SQLITE_OK)
-	{
-		AfxMessageBox(L"select fail");
-		return false;
-	}
-	p_valueOut = data;
-
-	return true;
+	return GetDeductedSizeBySeriesAndName(sWinType, p_serials, sDeductedName, p_valueOut);
 }
 
 
