@@ -267,6 +267,7 @@ void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öÐÍ²ÄÊý¾
 	m_shanliaoTotalLength = 0;
 	m_menshanTotalLength = 0;
 
+	//¸ù¾ÝÔ­ÐÍ±àºÅºÍÐÍ²ÄÏµÁÐ»ñÈ¡Êý¾Ý¿âÖÐµÄÊý¾Ý£¬Èô²éÑ¯½á¹ûÎª¿Õ£¬ÔòÖ»¸ù¾ÝÔ­ÐÍ±àºÅÀ´»ñÈ¡Êý¾Ý¿âÖÐµÄÊý¾Ý
 	vector<CAluminumFormula> alFormulas = CWindowFormula::Instance()->GetAluminumFormulas(m_winAtt.GetMainPrototypeCode(), m_winAtt.m_material.sAluminumSerial);
 
 	if (alFormulas.empty())
@@ -450,10 +451,6 @@ void CWindowMaterialUsage::ExportGlassInfo(Excel::CExcelUtil& p_excel) //Êä³ö²£Á
 
 		//Ãæ»ý
 		double area = height* width* glassFormulas[i].m_nCount/1e6; //µ¥Î»©O
-		if (_T("Window_WC11") == m_winAtt.GetMainPrototypeCode() && _T("G3") == glassFormulas[i].m_name)
-		{
-			area = height/1e6;
-		}
 		str.Format(_T("%.2f"),area);
 		p_excel.SetCellValue(nRow, 9, str);
 		m_glassTotalQTY += area;
