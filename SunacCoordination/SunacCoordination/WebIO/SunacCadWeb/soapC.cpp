@@ -10,15 +10,16 @@ compiling, linking, and/or using OpenSSL is allowed.
 A commercial use license is available from Genivia Inc., contact@genivia.com
 --------------------------------------------------------------------------------
 */
+#include "StdAfx.h"
 
 #if defined(__BORLANDC__)
 #pragma option push -w-8060
 #pragma option push -w-8004
 #endif
 
-#include "StdAfx.h"
 #include "soapH.h"
-SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.84 2019-10-15 09:49:13 GMT")
+
+SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.84 2019-10-25 05:52:26 GMT")
 
 
 #ifndef WITH_NOGLOBAL
