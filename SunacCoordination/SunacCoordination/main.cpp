@@ -52,6 +52,7 @@
 #include "Object/WindowStatistic/WindowFormula.h"
 #include "Object/WindowStatistic/AluminumSeries.h"
 #include "Object/WindowStatistic/DeductedSize.h"
+#include "Object/WindowStatistic/WindowStatictic.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -154,6 +155,8 @@ void InitMenu()
 void ZJYTest()
 {
 	CString localWindowPath = TY_GetLocalFilePath();
+
+	vector<AttrWindow> m_winAtts;
 	AttrWindow attrwindow;
 
 	attrwindow.m_prototypeCode = _T("Door_TLM3");
@@ -231,15 +234,65 @@ void ZJYTest()
 	attrwindow.SetA(50);
 
 	attrwindow.m_material.sAluminumSerial = _T("ST105AM系列");
+	attrwindow.SetInstanceCode(_T("Door_TLM3"));
 
-	CWindowMaterialUsageTLM winUsageTLM(attrwindow, 1);
+	m_winAtts.push_back(attrwindow);
+	m_winAtts.push_back(attrwindow);
+
+	attrwindow.m_prototypeCode = _T("Window_NC3");
+	attrwindow.m_quyuName = _T("全部");
+	attrwindow.m_isJiTuan = true;
+	attrwindow.m_isDynamic = true;
+
+	attrwindow.m_gongNengquType = _T("全部");
+	attrwindow.m_openType = _T("内开窗");
+	attrwindow.m_openQty = 1;
+
+	dimdata1.sCodeName = _T("W");
+	dimdata1.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata1);
+
+	dimdata2.sCodeName = _T("H");
+	dimdata2.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata2);
+
+	dimdata1.sCodeName = _T("W1");
+	dimdata1.type = CALC;
+	dimdata1.sFomula = _T("(W-2a)/2");
+	attrwindow.SetDimData(dimdata1);
+
+	dimdata2.sCodeName = _T("H1");
+	dimdata2.type = CALC;
+	dimdata2.sFomula = _T("H-2a");
+	attrwindow.SetDimData(dimdata2);
+
+	dimdata2.sCodeName = _T("R");
+	dimdata2.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata2);
+
+	attrwindow.CheckAndComplementDimeData();
+
+	attrwindow.SetH(1400);
+	attrwindow.SetW(1300);
+	attrwindow.SetH1(500);
+	attrwindow.SetW1(700);
+	attrwindow.SetR(0);
+	attrwindow.SetA(50);
+
+	attrwindow.m_material.sAluminumSerial = _T("SN65A系列");
+	attrwindow.SetInstanceCode(_T("Window_NC3"));
+
+	m_winAtts.push_back(attrwindow);
+
+
+	CWindowStatictic winStatictic;
 
 	CString filter=L"参数文件(*.xlsx)|*.xlsx|All Files(*.*)|*.*||";  
 	CFileDialog dlg(FALSE, L"xlsx", L"*.xlsx", NULL, filter); 
 	if(dlg.DoModal()==IDOK)
 	{
 		CString pathName = dlg.GetFileName();
-		winUsageTLM.ExportReportToExcel(pathName);
+		winStatictic.Statictic(m_winAtts, pathName);
 
 	}
 }
