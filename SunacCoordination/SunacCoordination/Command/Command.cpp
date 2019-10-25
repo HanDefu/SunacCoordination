@@ -262,6 +262,8 @@ void CMD_SunacWindowsStatistics()
 
 		CWindowStatictic winStatic;
 		winStatic.Statictic(winAtts, pathName);
+
+		AfxMessageBox(_T("输出完成"));
 	}
 }
 
