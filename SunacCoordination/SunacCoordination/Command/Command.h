@@ -11,7 +11,9 @@ void CMD_SUNACWINDOW();
 void CMD_SUNACDOOR();
 
 //统计算量
-void CMD_SUNACSTATISTICS();
+void CMD_SunacWindowsStatistics();
+//门窗深化设计
+void CMD_SunacWindowAdvanceDesign();
 
 //厨房
 void CMD_SUNACKITCHEN();

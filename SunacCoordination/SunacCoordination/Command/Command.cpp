@@ -22,14 +22,14 @@
 #include "../UI/BathroomDlg.h"
 #include "../UI/RailingDlg.h"
 #include "../UI/AirconditionerDlg.h"
-#include "../UI/DoorDlg.h"
 #include "../UI/FacadeDlg.h"
 #include "../UI/FillingDlg.h"
 #include "../UI/MoldingsDlg.h"
 #include "../UI/WaterproofDlg.h"
-#include "../ui/MyPalette.h"
-#include "../ui/MyPaletteSet.h"
-#include "../ui/DlgLogin.h"
+#include "../UI/MyPalette.h"
+#include "../UI/MyPaletteSet.h"
+#include "../UI/DlgLogin.h"
+#include "../UI/WindowAdvanceDlg.h"
 #include "Command.h"
 #include "../Common/ComFun_Math.h"
 #include "../Object/WindowStatistic/WindowStatictic.h"
@@ -66,8 +66,16 @@ void CMD_SUNACWINDOW()
 
 void CMD_SunacWindowAdvanceDesign() //门窗深化设计
 {
+	CAcModuleResourceOverride resOverride;
 
+	if (g_windowAdvanceDlg == NULL)
+	{
+		g_windowAdvanceDlg = new CWindowAdvanceDlg(acedGetAcadFrame());
+		g_windowAdvanceDlg->Create(IDD_DIALOG_WINDOW_ADVANCE);
+	}
+	g_windowAdvanceDlg->ShowWindow(SW_SHOW);
 }
+
 //厨房
 void CMD_SUNACKITCHEN()
 {
@@ -106,15 +114,6 @@ void CMD_SUNACBATHROOM()
 		g_bathroomDlg->Create(IDD_DIALOG_BATHROOM);
 	}
 	g_bathroomDlg->ShowWindow(SW_SHOW);
-}
-
-//门
-void CMD_SUNACDOOR()
-{
-	CAcModuleResourceOverride resOverride;
-
-	CDoorDlg dlg;
-	dlg.DoModal();
 }
 
 //栏杆
@@ -194,7 +193,7 @@ void CMD_SUNACWATERPROOF()
 }
 
 //统计算量
-void CMD_SUNACSTATISTICS()
+void CMD_SunacWindowsStatistics()
 {
 	//第一步：选择需要统计的门窗
 	vAcDbObjectId m_vids;//当前选择的ids
@@ -225,6 +224,8 @@ void CMD_SUNACSTATISTICS()
 	if (m_vids.size() == 0)
 		return;
 
+	vector<AcDbObjectId> idsNonAlserials; //未设置型材系列的门窗
+
 	vector<AttrWindow>  winAtts;
 	for (UINT i = 0; i < m_vids.size(); i++)
 	{
@@ -237,14 +238,27 @@ void CMD_SUNACSTATISTICS()
 		{
 			AttrWindow attTemp(*pAtt);
 			winAtts.push_back(attTemp);
+
+			if (attTemp.m_material.sAluminumSerial.IsEmpty())
+			{
+				idsNonAlserials.push_back(m_vids[i]);
+			}
 		}
+	}
+
+	if (idsNonAlserials.size()>0)
+	{
+		AfxMessageBox(_T("型材系列未设置"));
+
+		//TODO 高亮未设置的门窗
+		return;
 	}
 
 	CString filter = L"算量报表文件(*.xlsx)|*.xlsx|All Files(*.*)|*.*||";
 	CFileDialog dlg(FALSE, L"xlsx", L"*.xlsx", NULL, filter);
 	if (dlg.DoModal() == IDOK)
 	{
-		CString pathName = dlg.GetFileName();
+		CString pathName = dlg.GetPathName();
 
 		CWindowStatictic winStatic;
 		winStatic.Statictic(winAtts, pathName);
@@ -302,4 +316,5 @@ void CloseModelessDialogs()
 	CloseBathroomDlg();
 	CloseRailingDlg();
 	CloseAirconditionerDlg();
+	CloseWindowAdvanceDlg();
 }

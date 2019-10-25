@@ -91,12 +91,12 @@ public:
 	virtual Acad::ErrorStatus dwgInFields(AcDbDwgFiler* pFiler);
 	//}}AFX_ARX_METHODS
 
-	virtual eRCType GetType() {return WINDOW;}
+	virtual eRCType GetType()const;
 	virtual bool isEqualTo(AttrObject*other);//¥∞–Õ «∑Ò“ª÷¬
 	bool IsPrototypeEqual(const AttrWindow& p_att);
 	bool IsInstanceEqual(const AttrWindow& p_att) const;
 
-	E_WindowDoorType GetWindowDoorType()const {	return ToWindowDoorType(m_openType); }
+	E_WindowDoorType GetWindowDoorType()const;
 	
 	//////////////////////////////////////////////////////////////////////////
 	const CWindowsDimData* GetDimData(CString p_sCode)const;

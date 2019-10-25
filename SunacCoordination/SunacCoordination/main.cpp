@@ -291,7 +291,7 @@ void ZJYTest()
 	CFileDialog dlg(FALSE, L"xlsx", L"*.xlsx", NULL, filter); 
 	if(dlg.DoModal()==IDOK)
 	{
-		CString pathName = dlg.GetFileName();
+		CString pathName = dlg.GetPathName();
 		winStatictic.Statictic(m_winAtts, pathName);
 
 	}
@@ -514,15 +514,6 @@ static void initApp()
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
-		_T("SUNACDOOR"),
-		_T("SUNACDOOR"),
-		ACRX_CMD_MODAL,
-		CMD_SUNACDOOR,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
-
-	acedRegCmds->addCommand(_T("SUNAC"),
 		_T("SUNACRAILING"),
 		_T("SUNACRAILING"),
 		ACRX_CMD_MODAL,
@@ -580,7 +571,7 @@ static void initApp()
 		_T("SUNACSTATISTICS"),
 		_T("SUNACSTATISTICS"),
 		ACRX_CMD_MODAL,
-		CMD_SUNACSTATISTICS,
+		CMD_SunacWindowsStatistics,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());
@@ -674,8 +665,8 @@ static void unloadApp()
 
 	AcDbBlockReference::desc()->delX(AcDbDoubleClickEdit::desc());
 
-	WaitForSingleObject(mThreadHandle, 1000);
-	TerminateThread(mThreadHandle,0);
+	//WaitForSingleObject(mThreadHandle, 1000);
+	//TerminateThread(mThreadHandle,0);
 }
 
 

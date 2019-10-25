@@ -197,7 +197,7 @@ void CWindowMaterialUsage::ExportWindowInfo(Excel::CExcelUtil& p_excel)//Êä³ö»ù±
 
 	//ÃÅ´°Ãæ»ý
 	double area = m_winAtt.GetH()* m_winAtt.GetW()/1e6; //µ¥Î»©O	
-	if (m_winAtt.GetR() > 0)
+	if (m_winAtt.HasValue(_T("R")))
 	{
 		area = ((m_winAtt.GetH1()+ m_winAtt.GetH2()+ m_winAtt.GetA())* m_winAtt.GetW()+ 3.14* (m_winAtt.GetR()+ m_winAtt.GetA())* (m_winAtt.GetR()+ m_winAtt.GetA())/ 2)/1e6;
 	}
@@ -209,7 +209,7 @@ void CWindowMaterialUsage::ExportWindowInfo(Excel::CExcelUtil& p_excel)//Êä³ö»ù±
 
 	//ÃÅ´°ÖÜ³¤
 	double circumference = (m_winAtt.GetH() + m_winAtt.GetW()) * 2 / 1000;	
-	if (m_winAtt.GetR() > 0)
+	if (m_winAtt.HasValue(_T("R")))
 	{
 		circumference = ((m_winAtt.GetH1()+ m_winAtt.GetH2()+ m_winAtt.GetA())* 2+ m_winAtt.GetW()+ 3.14* (m_winAtt.GetR()+ m_winAtt.GetA()))/1000;
 	}
@@ -492,7 +492,7 @@ void CWindowMaterialUsage::ExportFuliaoInfo(Excel::CExcelUtil& p_excel) //Êä³ö¸¨
 
 	//·¢ÅÝ¼Á
 	m_foamingQTY = (m_winAtt.GetH() + m_winAtt.GetW())*2/1000;
-	if (m_winAtt.GetR() > 0)
+	if (m_winAtt.HasValue(_T("R")))
 	{
 		m_foamingQTY = ((m_winAtt.GetH1()+ m_winAtt.GetH2()+ m_winAtt.GetA())* 2+ m_winAtt.GetW()+ 3.14* (m_winAtt.GetR()+ m_winAtt.GetA()))/1000;
 	}
@@ -530,7 +530,7 @@ void CWindowMaterialUsage::ExportFuliaoInfo(Excel::CExcelUtil& p_excel) //Êä³ö¸¨
 
 	//´°ÖÆ×÷°²×°¸¨²Ä·Ñ
 	m_windowCost = m_winAtt.GetH()* m_winAtt.GetW()/1e6;	
-	if (m_winAtt.GetR() > 0)
+	if (m_winAtt.HasValue(_T("R")))
 	{
 		m_windowCost = ((m_winAtt.GetH1()+ m_winAtt.GetH2()+ m_winAtt.GetA())* m_winAtt.GetW()+ 3.14* (m_winAtt.GetR()+ m_winAtt.GetA())* (m_winAtt.GetR()+ m_winAtt.GetA())/ 2)/1e6;
 	}
@@ -545,7 +545,7 @@ void CWindowMaterialUsageWC::ExportFuliaoInfo(Excel::CExcelUtil& p_excel) //Êä³ö
 
 	//·¢ÅÝ¼Á
 	m_foamingQTY = (m_winAtt.GetH() + m_winAtt.GetW())*2/1000;
-	if (m_winAtt.GetR() > 0)
+	if (m_winAtt.HasValue(_T("R")))
 	{
 		m_foamingQTY = ((m_winAtt.GetH1()+ m_winAtt.GetH2()+ m_winAtt.GetA())* 2+ m_winAtt.GetW()+ 3.14* (m_winAtt.GetR()+ m_winAtt.GetA()))/1000;
 	}
@@ -578,7 +578,7 @@ void CWindowMaterialUsageWC::ExportFuliaoInfo(Excel::CExcelUtil& p_excel) //Êä³ö
 
 	//´°ÖÆ×÷°²×°¸¨²Ä·Ñ
 	m_windowCost = m_winAtt.GetH()* m_winAtt.GetW()/1e6;	
-	if (m_winAtt.GetR() > 0)
+	if (m_winAtt.HasValue(_T("R")))
 	{
 		m_windowCost = ((m_winAtt.GetH1()+ m_winAtt.GetH2()+ m_winAtt.GetA())* m_winAtt.GetW()+ 3.14* (m_winAtt.GetR()+ m_winAtt.GetA())* (m_winAtt.GetR()+ m_winAtt.GetA())/ 2)/1e6;
 	}
@@ -673,7 +673,7 @@ void CWindowMaterialUsageWM::ExportFuliaoInfo(Excel::CExcelUtil& p_excel) //Êä³ö
 double CWindowMaterialUsage::GetHoleArea()const
 {
 	double area = m_winAtt.GetH()* m_winAtt.GetW()/1e6; //µ¥Î»©O	
-	if (m_winAtt.GetR() > 0)
+	if (m_winAtt.HasValue(_T("R")))
 	{
 		area = ((m_winAtt.GetH1()+ m_winAtt.GetH2()+ m_winAtt.GetA())* m_winAtt.GetW()+ 3.14* (m_winAtt.GetR()+ m_winAtt.GetA())* (m_winAtt.GetR()+ m_winAtt.GetA())/ 2)/1e6;
 	}
@@ -684,7 +684,7 @@ double CWindowMaterialUsage::GetHoleArea()const
 double CWindowMaterialUsage::GetWindowFrameArea()const
 {
 	double area = m_winAtt.GetH()* m_winAtt.GetW()/1e6; //µ¥Î»©O	
-	if (m_winAtt.GetR() > 0)
+	if (m_winAtt.HasValue(_T("R")))
 	{
 		area = ((m_winAtt.GetH1()+ m_winAtt.GetH2())* (m_winAtt.GetW() - m_winAtt.GetA()* 2)+ 3.14* m_winAtt.GetR()* m_winAtt.GetR()/ 2)/1e6;
 	}
