@@ -138,10 +138,10 @@ bool CWindowStatictic::ExportWindowReport(CString p_sReportFile)
 bool CWindowStatictic::GenerateReport(CString p_sReportFile)
 {
 	//TODO
-	CString reportTemplateXlsFile = TY_GetLocalFilePath() + _T("门窗算量表格.xlsx");
+	CString reportTemplateXlsFile = TY_GetLocalFilePath() + _T("汇总表模板.xlsx");
 
 	Excel::CExcelUtil xls;
-	xls.OpenExcel(reportTemplateXlsFile); //打开表格
+	bool bSuc = xls.OpenExcel(reportTemplateXlsFile); //打开表格
 	xls.SetVisible(true); 
 	xls.SetActiveSheet(1); //打开汇总表
 

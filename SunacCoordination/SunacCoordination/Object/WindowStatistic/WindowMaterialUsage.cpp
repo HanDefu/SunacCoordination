@@ -101,7 +101,7 @@ bool CWindowMaterialUsage::ExportReportToExcel(CString p_sReportFile)
 
 	Excel::CExcelUtil xls;
 	xls.OpenExcel(reportTemplateXlsFile); //打开表格
-	xls.SetVisible(true); 
+	xls.SetVisible(false); 
 	xls.SetActiveSheet(2); //打开第二张表
 
 	ExportReportToExcel(xls);
