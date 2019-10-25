@@ -165,7 +165,7 @@ void ZJYTest()
 	attrwindow.m_isDynamic = true;
 
 	attrwindow.m_gongNengquType = _T("全部");
-	attrwindow.m_openType = _T("推拉门");
+	attrwindow.m_openType = _T("推拉");
 	attrwindow.m_openQty = 1;
 
 	CWindowsDimData dimdata1;
@@ -245,7 +245,7 @@ void ZJYTest()
 	attrwindow.m_isDynamic = true;
 
 	attrwindow.m_gongNengquType = _T("全部");
-	attrwindow.m_openType = _T("内开窗");
+	attrwindow.m_openType = _T("内开");
 	attrwindow.m_openQty = 1;
 
 	dimdata1.sCodeName = _T("W");

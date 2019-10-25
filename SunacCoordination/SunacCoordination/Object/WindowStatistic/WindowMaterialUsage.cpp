@@ -683,7 +683,7 @@ double CWindowMaterialUsage::GetHoleArea()const
 
 double CWindowMaterialUsage::GetWindowFrameArea()const
 {
-	double area = m_winAtt.GetH()* m_winAtt.GetW()/1e6; //单位㎡	
+	double area = ((m_winAtt.GetH()- m_winAtt.GetA()* 2)* (m_winAtt.GetW()- m_winAtt.GetA()* 2))/1e6; //单位㎡	
 	if (m_winAtt.HasValue(_T("R")))
 	{
 		area = ((m_winAtt.GetH1()+ m_winAtt.GetH2())* (m_winAtt.GetW() - m_winAtt.GetA()* 2)+ 3.14* m_winAtt.GetR()* m_winAtt.GetR()/ 2)/1e6;
