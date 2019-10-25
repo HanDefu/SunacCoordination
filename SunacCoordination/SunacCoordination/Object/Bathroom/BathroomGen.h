@@ -25,6 +25,8 @@ public:
 	virtual vCString GetGuanxiquOptions();
 	virtual CString GetGuanxiquDefault();
 
+	virtual void InitBathroomByDefault();
+
 	virtual bool CheckParameter(CString& errMsg); //插入前检查参数合法性
 
 	//其余的属性值可以通过直接设置AttrBathroom对象的变量实现

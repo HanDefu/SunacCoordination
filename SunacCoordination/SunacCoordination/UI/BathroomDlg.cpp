@@ -5,6 +5,7 @@
 #include "BathroomDlg.h"
 #include "../WebIO/WebIO.h"
 #include "../Object/Bathroom/BathroomAutoName.h"
+#include "../Common/ComFun_ACad.h"
 
 // CBathroomDlg 对话框
 
@@ -32,6 +33,8 @@ CBathroomDlg::CBathroomDlg(CWnd* pParent /*=NULL*/)
 	m_doorDir = E_DIR_UNKNOWN;
 	m_windowDir = E_DIR_UNKNOWN;
 	m_pBathroomGen = NULL;
+	m_pCurEdit = NULL;
+	bool lockUpdate = false;
 }
 
 CBathroomDlg::~CBathroomDlg()
@@ -163,8 +166,64 @@ void CBathroomDlg::EnableSetAirout(bool bEnable)
 	m_customY.EnableWindow(bEnable);
 }
 
+void CBathroomDlg::SetEditMode(AcDbBlockReference* pBlock)
+{
+	m_pCurEdit = pBlock;
+	if (m_pCurEdit == NULL)
+		return;
+
+	AcDbObject* pAtt = NULL;
+	TY_GetAttributeData(pBlock->objectId(), pAtt);
+	AttrBathroom *pBathroom = dynamic_cast<AttrBathroom *>(pAtt);
+	if (pBathroom == NULL)
+		return;
+
+	AcDbExtents ext;
+	pBlock->getGeomExtents(ext);
+	AcGePoint3d ptLB = ext.minPoint();
+
+	//还原卫生间范围和门窗位置
+	m_doorDir = E_DIRECTION((pBathroom->m_angle / 90 + pBathroom->m_prop.m_doorPos) % 4);
+	m_windowDir = E_DIRECTION((pBathroom->m_angle / 90 + pBathroom->m_prop.m_windowPos) % 4);
+	AcGePoint3d ptRT = ptLB;
+	if (m_doorDir == E_DIR_BOTTOM || m_doorDir == E_DIR_TOP)
+	{
+		ptRT.x += pBathroom->m_width;
+		ptRT.y += pBathroom->m_height;
+	}
+	else
+	{
+		ptRT.x += pBathroom->m_height;
+		ptRT.y += pBathroom->m_width;
+	}
+	m_rect.SetLB(ptLB);
+	m_rect.SetRT(ptRT);
+
+	m_allBathrooms.clear();
+	m_allBathrooms.push_back(*pBathroom);
+
+	//////////////////////////////////////////////////////////////////////////
+	//3. 显示原型
+	m_preBathroom.ClearAllPreviews();
+	m_preBathroom.SetRowCount(1);
+	m_preBathroom.SetColumnCount(1);
+	m_preBathroom.SetDisplayRows(3);
+	m_preBathroom.SetDisplayColumns(1);
+
+	CString str;
+	str.Format(_T("原型编号：%s\n卫生间面积：%.2lf\n通风量要求：1.5\n动态类型：%s\n适用范围：集团"), m_allBathrooms[0].m_prototypeCode, m_rect.GetWidth() * m_rect.GetHeight() / 1E6, m_allBathrooms[0].m_isDynamic ? _T("动态") : _T("静态"));
+	m_preBathroom.AddPreview(0, 0, TY_GetLocalFilePath() + m_allBathrooms[0].GetFileName(), str);
+
+	m_preBathroom.SelectPreview(0, 0);
+
+	TYUI_SetText(*GetDlgItem(IDC_BUTTON_INSERTBATHROOM), L"确定");
+}
+
 void CBathroomDlg::UpdateAttribute()
 {
+	if (lockUpdate)
+		return;
+
 	UpdateData(TRUE);
 
 	if (m_pBathroomGen == NULL)
@@ -195,6 +254,7 @@ void CBathroomDlg::UpdateAttribute()
 
 void CBathroomDlg::LoadDefaultValue()
 {
+	lockUpdate = true;
 	const vCString& bathroomTypes = WebIO::GetInstance()->GetConfigDict()->Bathroom_GetTypes();
 	TYUI_InitComboBox(m_bathroomType, bathroomTypes, bathroomTypes.empty() ? _T("") : bathroomTypes[0]);
 	m_autoIndex.SetCheck(TRUE);
@@ -205,6 +265,7 @@ void CBathroomDlg::LoadDefaultValue()
 	TYUI_SetInt(m_customX, 450);
 	TYUI_SetInt(m_customY, 350);
 	UpdateData(FALSE);
+	lockUpdate = false;
 }
 
 void CBathroomDlg::EnableSetProperty(bool bEnable)
@@ -250,19 +311,12 @@ void CBathroomDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 		return;
 	}
 
-	double width = m_rect.GetWidth();
-	double height = m_rect.GetHeight();
-
-	AttrBathroom* pCurSelBathroom = &m_allBathrooms[nSel];
-	CKitchenBathroomProp* pCurSelPrototype = &pCurSelBathroom->m_prop;
-
 	if (m_pBathroomGen != NULL)
 	{
 		delete m_pBathroomGen;
 	}
 
-	m_pBathroomGen = CBathroomMrg::CreateBathroomByAttribute(pCurSelBathroom);
-
+	m_pBathroomGen = CBathroomMrg::CreateBathroomByAttribute(&m_allBathrooms[nSel]);
 	if (m_pBathroomGen == NULL)
 	{
 		AfxMessageBox(_T("原型无法创建BathroomGen"));
@@ -270,39 +324,42 @@ void CBathroomDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 		return;
 	}
 
-	EnableSetProperty(true);
-	//设置属性区选项
-	TYUI_InitComboBox(m_basinWidth, m_pBathroomGen->GetTaipenOptions(), m_pBathroomGen->GetTaipenDefault());
-	TYUI_InitComboBox(m_toiletWidth, m_pBathroomGen->GetMatongOptions(), m_pBathroomGen->GetMatongDefault());
-	TYUI_InitComboBox(m_washWidth, m_pBathroomGen->GetGuanxiquOptions(), m_pBathroomGen->GetGuanxiquDefault());
-	EnableSetProperty(true);
-	pCurSelBathroom->m_taipenWidth = m_pBathroomGen->GetTaipenDefault();
-	pCurSelBathroom->m_matongWidth = m_pBathroomGen->GetMatongDefault();
-	pCurSelBathroom->m_guanXiWidth = _ttof(TYUI_GetComboBoxText(m_washWidth));
+	AttrBathroom* pCurSelBathroom = m_pBathroomGen->GetBathroomAtt();
+	CKitchenBathroomProp* pCurSelPrototype = &pCurSelBathroom->m_prop;
 
-	pCurSelPrototype->GetRotateAngle(m_doorDir, m_windowDir, m_angle, pCurSelBathroom->m_isMirror);
-	m_isMirror.SetCheck(pCurSelBathroom->m_isMirror);
+	lockUpdate = true;
+	bool needMirror;
+	pCurSelPrototype->GetRotateAngle(m_doorDir, m_windowDir, m_angle, needMirror);
+	pCurSelBathroom->m_angle = m_angle;
 	if (pCurSelPrototype->GetWindowDoorPos() == CHUIZHIKAI)
+	{
 		TYUI_Disable(m_isMirror);
+		pCurSelBathroom->m_isMirror = needMirror;
+	}
 	else
 		TYUI_Enable(m_isMirror);
+	m_isMirror.SetCheck(pCurSelBathroom->m_isMirror);
 
-	m_isStd = 0;
-	m_floorRange.SetCurSel(0);
-	TYUI_SetInt(m_offsetX, 0);
-	TYUI_SetInt(m_offsetY, 0);
-	TYUI_SetInt(m_customX, 450);
-	TYUI_SetInt(m_customY, 350);
-	pCurSelBathroom->m_isGuoBiao = true;
-	pCurSelBathroom->m_floorRange = E_BATHROOM_FLOOR_1_14;
-	pCurSelBathroom->m_airVentOffsetX = 0;
-	pCurSelBathroom->m_airVentOffsetY = 0;
+	//设置属性区选项
+	m_pBathroomGen->InitBathroomByDefault();
+	CString sGuanxiWidth;
+	sGuanxiWidth.Format(L"%.0lf", pCurSelBathroom->m_guanXiWidth);
+	TYUI_InitComboBox(m_basinWidth, m_pBathroomGen->GetTaipenOptions(), pCurSelBathroom->m_taipenWidth);
+	TYUI_InitComboBox(m_toiletWidth, m_pBathroomGen->GetMatongOptions(), pCurSelBathroom->m_matongWidth);
+	TYUI_InitComboBox(m_washWidth, m_pBathroomGen->GetGuanxiquOptions(), sGuanxiWidth);
+	m_isStd = pCurSelBathroom->m_isGuoBiao ? 0 : 1;
+	m_floorRange.SetCurSel((int)pCurSelBathroom->m_floorRange);
+	TYUI_SetInt(m_offsetX, (int)pCurSelBathroom->m_airVentOffsetX);
+	TYUI_SetInt(m_offsetY, (int)pCurSelBathroom->m_airVentOffsetY);
+	TYUI_SetInt(m_customX, (int)pCurSelBathroom->m_airVentW);
+	TYUI_SetInt(m_customY, (int)pCurSelBathroom->m_airVentH);
 
 	m_autoIndex.SetCheck(TRUE);
-	pCurSelBathroom->m_instanceCode = CBathroomAutoName::GetInstance()->GetBathroomName(*pCurSelBathroom);
 	TYUI_SetText(m_number, pCurSelBathroom->m_instanceCode);
 
+	EnableSetProperty(true);
 	UpdateData(FALSE);
+	lockUpdate = false;
 }
 
 void CBathroomDlg::OnBnClickedButtonInsert()
@@ -339,6 +396,10 @@ void CBathroomDlg::OnBnClickedButtonInsert()
 	AcGePoint3d origin = m_rect.GetLB();
 
 	//生成
+	if (m_pCurEdit != NULL)
+	{
+		JHCOM_DeleteCadObject(m_pCurEdit->objectId());
+	}
 	m_pBathroomGen->GenBathroom(origin, m_angle);
 	CBathroomAutoName::GetInstance()->AddBathroomType(*m_pBathroomGen->GetBathroomAtt());
 
