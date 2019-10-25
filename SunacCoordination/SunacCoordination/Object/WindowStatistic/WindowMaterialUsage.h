@@ -17,7 +17,6 @@ public:
 	//virtual void CalcMateriaUsage();
 	bool ExportReportToExcel(CString p_sReportFile); //导出到excel报表
 	bool ExportReportToExcel(Excel::CExcelUtil& p_excel); //导出到excel报表
-
 	
 	//////////////////////////////////////////////////////////////////////////
 	//以下函数用于填写汇总表
@@ -25,8 +24,9 @@ public:
 	double GetWindowFrameArea()const;
 	CString GetAluminumeSeries()const ;		//获取该窗户的型材系列
 
-	double GetAluminumeUsageAmount()const ; //获取该窗户的型材用量
-	double GetGlassUsageAmount()const ;		//获取该窗户的玻璃用量
+	double GetAluminumeUsageAmount()const ; //获取该窗户的型材用量总计
+	double GetGlassUsageAmount()const ;		//获取该窗户的玻璃用量总计
+	double GetHardwareUsageAmount()const ;	//获取该窗户的五金用量总计
 
 protected:
 	double GetVauleByFomula(CString p_sFomula);

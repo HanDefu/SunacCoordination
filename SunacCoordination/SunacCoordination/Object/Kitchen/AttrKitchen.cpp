@@ -15,25 +15,23 @@ ACRX_DXF_DEFINE_MEMBERS(AttrKitchen, AcDbObject,
 
 AttrKitchen::AttrKitchen()
 {
-	m_floorRange = E_KITCHEN_FLOOR_1_7;//楼层选项
-	 m_airVentW = 0;//排气道长度
-	 m_airVentH = 0;//排气道宽度
-	 m_airVentOffsetX = 0;//排气道长度
-	 m_airVentOffsetY = 0;//排气道宽度
-	 m_isMirror = false;//镜像
-	 m_hasPaiQiDao = true;//是否含有排气道
-	 m_isGuoBiao = true;//排气道
-	//m_kitchenType;//厨房类型
-	 m_windowDoorPos = DUIKAI;//门窗位置关系
+	m_width = 0;//长度 面宽
+	m_height = 0;//宽度 进深
+	m_windowDoorPos = DUIKAI;//门窗位置关系
 
-	//这些属性体现在图块中--可以从图块直接取出的 就不用从属性记录
-	//m_shuiPenType;//水盆类型
-	//m_bingXiangType;//冰箱类型
-	//m_zaoTaiType;//灶台宽度 
-	m_width = 0;//长度 面宽
-	m_height = 0;//宽度 进深
-	m_width = 0;//长度 面宽
-	m_height = 0;//宽度 进深
+	m_angle = 0;//逆时针旋转角度
+	m_isMirror = false;//镜像
+
+	//排气道相关设置
+	m_hasPaiQiDao = true;//是否含有排气道
+	m_isGuoBiao = true;//是否国标
+	m_floorRange = E_KITCHEN_FLOOR_1_7;//楼层选项
+	m_airVentOffsetX = 0;//排气道长度
+	m_airVentOffsetY = 0;//排气道宽度
+	m_airVentW = 0;//排气道长度
+	m_airVentH = 0;//排气道宽度
+
+	//Web端使用
 	m_minWidth = 0;//最小开间
 	m_maxwidth = 0;//最大开间
 	m_maxHeight = 0;//最大进深

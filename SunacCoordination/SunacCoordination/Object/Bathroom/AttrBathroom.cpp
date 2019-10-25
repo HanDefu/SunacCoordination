@@ -16,22 +16,23 @@ ACRX_DXF_DEFINE_MEMBERS(AttrBathroom, AcDbObject,
 
 AttrBathroom::AttrBathroom()
 {
-	//搜索到原型后填写
-	m_width = 0;				//开间
+	m_width = 0;			//开间
 	m_height = 0;			//进深
+	m_windowDoorPos = DUIKAI;
 
-	//插入时填写
-	m_taipenWidth = "";		//台盆宽度
-	m_matongWidth = "";		//马桶宽度
+	m_angle = 0;
+	m_isMirror = false;
+
 	m_guanXiWidth = 0;		//盥洗区宽度
 
-	//排气道相关设置，插入时填写
-	m_isGuoBiao = 0;			//是否国标
+	//排气道相关设置
+	m_hasPaiQiDao = true;	//是否含排气道
+	m_isGuoBiao = true;		//是否国标
+	m_floorRange = E_BATHROOM_FLOOR_1_14;	//楼层选项
 	m_airVentW = 0;			//排气道长度
     m_airVentH = 0;			//排气道宽度
 	m_airVentOffsetX = 0;	//排气道偏移x
 	m_airVentOffsetY = 0;	//排气道偏移y
-
 }
 
 AttrBathroom::~AttrBathroom()

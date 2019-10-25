@@ -97,15 +97,21 @@ LRESULT DlgLeftBar::OnClickedPopupMenu(WPARAM mID, LPARAM notUsed)
 	case ID_COMMAND_WINDOW:
 		CMD_SUNACWINDOW();
 		break;
-	case ID_COMMAND_WINDOWQUANTITY:
-		CMD_SUNACSTATISTICS();
+
+	case ID_COMMAND_WINDOWADVANCE: //二次深化设计
+		CMD_SunacWindowAdvanceDesign();
+		break;
+
+	case ID_COMMAND_WINDOWQUANTITY://门窗算量
+		CMD_SunacWindowsStatistics();
 		break;
 	case ID_COMMAND_WINDOWTABLE:
 		CMD_SUNACWINDOWTable();
 		break;
-	case ID_COMMAND_WINDOWDETAIL:
+	case ID_COMMAND_WINDOWDETAIL:	//门窗详图
 		CMD_SUNACWINDOWDetail();
 		break;
+
 	case ID_COMMAND_BATHROOM:
 		CMD_SUNACBATHROOM();
 		break;
@@ -113,7 +119,6 @@ LRESULT DlgLeftBar::OnClickedPopupMenu(WPARAM mID, LPARAM notUsed)
 		CMD_SUNACKITCHEN();
 		break;
 	case ID_COMMAND_KITCHENQUANTITY:
-		CMD_SUNACSTATISTICS();
 		break;
 	case ID_COMMAND_RAILING:
 		CMD_SUNACRAILING();
@@ -198,6 +203,6 @@ void DlgLeftBar::OnNMDblclkTreeProjectmanagement(NMHDR *pNMHDR, LRESULT *pResult
 	{
 		CAcModuleResourceOverride resOverride;
 		CProjectManagementDlg dlg(pPrjData);
-		int ret = dlg.DoModal();
+		dlg.DoModal();
 	}
 }

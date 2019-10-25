@@ -55,9 +55,6 @@
     <ClCompile Include="UI\AirconditionerDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="UI\DoorDlg.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
     <ClCompile Include="UI\FacadeDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
@@ -433,9 +430,6 @@
       <Filter>UI\GridCtrl\NewCellTypes</Filter>
     </ClInclude>
     <ClInclude Include="UI\AirconditionerDlg.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\DoorDlg.h">
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="UI\FacadeDlg.h">

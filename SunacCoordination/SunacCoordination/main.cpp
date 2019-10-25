@@ -53,6 +53,7 @@
 #include "Object/WindowStatistic/AluminumSeries.h"
 #include "Object/WindowStatistic/DeductedSize.h"
 #include "ProjectorFileMrg/ProjectFileMrg.h"
+#include "Object/WindowStatistic/WindowStatictic.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -155,15 +156,17 @@ void InitMenu()
 void ZJYTest()
 {
 	CString localWindowPath = TY_GetLocalFilePath();
+
+	vector<AttrWindow> m_winAtts;
 	AttrWindow attrwindow;
 
-	attrwindow.m_prototypeCode = _T("Window_NC7");
+	attrwindow.m_prototypeCode = _T("Door_TLM3");
 	attrwindow.m_quyuName = _T("全部");
 	attrwindow.m_isJiTuan = true;
 	attrwindow.m_isDynamic = true;
 
 	attrwindow.m_gongNengquType = _T("全部");
-	attrwindow.m_openType = _T("内开窗");
+	attrwindow.m_openType = _T("推拉");
 	attrwindow.m_openQty = 1;
 
 	CWindowsDimData dimdata1;
@@ -183,54 +186,115 @@ void ZJYTest()
 	//CWindowsDimData dimdata1;
 	dimdata1.sCodeName = _T("W1");
 	dimdata1.type = CALC;
-	dimdata1.sFomula = _T("(W-2a)/2");
+	dimdata1.sFomula = _T("(W-2a)/4");
 	attrwindow.SetDimData(dimdata1);
 
-	dimdata1.sCodeName = _T("W2");
-	dimdata1.type = CALC;
-	dimdata1.sFomula = _T("(W-2a)/2");
-	attrwindow.SetDimData(dimdata1);
-
-	//dimdata1.sCodeName = _T("W3");
+	//
+	//dimdata1.sCodeName = _T("W2");
 	//dimdata1.type = CALC;
-	//dimdata1.sFomula = _T("");
+	//dimdata1.sFomula = _T("W-2a-W1*2-W3");
 	//attrwindow.SetDimData(dimdata1);
+	//
+	//dimdata1.sCodeName = _T("W3");
+	//dimdata1.type = UNLIMIT;
+	////dimdata1.sFomula = _T("");
+	//attrwindow.SetDimData(dimdata1);
+	//
 
 	//CWindowsDimData dimdata2;
 	dimdata2.sCodeName = _T("H1");
 	dimdata2.type = CALC;
-	dimdata2.sFomula = _T("H-2a-H2");
+	dimdata2.sFomula = _T("H-2a");
 	attrwindow.SetDimData(dimdata2);
 
-	dimdata2.sCodeName = _T("H2");
-	dimdata2.type = UNLIMIT;
-	attrwindow.SetDimData(dimdata2);
+	//dimdata2.sCodeName = _T("H2");
+	//dimdata2.type = UNLIMIT;
+	//attrwindow.SetDimData(dimdata2);
 
 	//dimdata2.sCodeName = _T("H3");
 	//dimdata2.type = CALC;
-	//dimdata2.sFomula = _T("");
+	//dimdata2.sFomula = _T("(W-2a)/2");
+	//attrwindow.SetDimData(dimdata2);
+
+	//dimdata2.sCodeName = _T("R");
+	//dimdata2.type = UNLIMIT;
+	////dimdata2.sFomula = _T("(W-2a)/2");
 	//attrwindow.SetDimData(dimdata2);
 
 	attrwindow.CheckAndComplementDimeData();
 
-	attrwindow.SetW(1500);
-	attrwindow.SetW1(250);
-	attrwindow.SetW2(250);
-	attrwindow.SetH(1400);
+	attrwindow.SetH(2400);
+	attrwindow.SetW(3600);
 	attrwindow.SetH1(500);
-	attrwindow.SetH2(400);
+	//attrwindow.SetH2(500);
+	//attrwindow.SetH3(500);
+	attrwindow.SetW1(700);
+	//attrwindow.SetW2(600);
+	//attrwindow.SetW3(500);
+	//attrwindow.SetR(0);
+	attrwindow.SetA(50);
+
+	attrwindow.m_material.sAluminumSerial = _T("ST105AM系列");
+	attrwindow.SetInstanceCode(_T("TLM3"));
+
+	m_winAtts.push_back(attrwindow);
+	m_winAtts.push_back(attrwindow);
+
+	attrwindow.m_prototypeCode = _T("Window_NC3");
+	attrwindow.m_quyuName = _T("全部");
+	attrwindow.m_isJiTuan = true;
+	attrwindow.m_isDynamic = true;
+
+	attrwindow.m_gongNengquType = _T("全部");
+	attrwindow.m_openType = _T("内开");
+	attrwindow.m_openQty = 1;
+
+	dimdata1.sCodeName = _T("W");
+	dimdata1.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata1);
+
+	dimdata2.sCodeName = _T("H");
+	dimdata2.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata2);
+
+	dimdata1.sCodeName = _T("W1");
+	dimdata1.type = CALC;
+	dimdata1.sFomula = _T("(W-2a)/2");
+	attrwindow.SetDimData(dimdata1);
+
+	dimdata2.sCodeName = _T("H1");
+	dimdata2.type = CALC;
+	dimdata2.sFomula = _T("H-2a");
+	attrwindow.SetDimData(dimdata2);
+
+	//dimdata2.sCodeName = _T("R");
+	//dimdata2.type = UNLIMIT;
+	//attrwindow.SetDimData(dimdata2);
+
+	attrwindow.CheckAndComplementDimeData();
+
+	attrwindow.SetH(1400);
+	attrwindow.SetW(1300);
+	attrwindow.SetH1(500);
+	attrwindow.SetW1(700);
+	//attrwindow.SetR(0);
 	attrwindow.SetA(50);
 
 	attrwindow.m_material.sAluminumSerial = _T("SN65A系列");
+	attrwindow.SetInstanceCode(_T("NC3"));
 
-	CWindowMaterialUsageNC winUsageNC(attrwindow, 1);
+	m_winAtts.push_back(attrwindow);
+
+
+	CWindowStatictic winStatictic;
 
 	CString filter=L"参数文件(*.xlsx)|*.xlsx|All Files(*.*)|*.*||";  
 	CFileDialog dlg(FALSE, L"xlsx", L"*.xlsx", NULL, filter); 
 	if(dlg.DoModal()==IDOK)
 	{
-		CString pathName = dlg.GetFileName();
-		winUsageNC.ExportReportToExcel(pathName);
+		CString pathName = dlg.GetPathName();
+		winStatictic.Statictic(m_winAtts, pathName);
+
 	}
 }
 
@@ -426,6 +490,15 @@ static void initApp()
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SWINADVANCE"),
+		_T("SWINADVANCE"),
+		ACRX_CMD_MODAL,
+		CMD_SunacWindowAdvanceDesign,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
 		_T("SUNACKITCHEN"),
 		_T("SUNACKITCHEN"),
 		ACRX_CMD_MODAL,
@@ -439,15 +512,6 @@ static void initApp()
 		_T("SUNACBATHROOM"),
 		ACRX_CMD_MODAL,
 		CMD_SUNACBATHROOM,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
-
-	acedRegCmds->addCommand(_T("SUNAC"),
-		_T("SUNACDOOR"),
-		_T("SUNACDOOR"),
-		ACRX_CMD_MODAL,
-		CMD_SUNACDOOR,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());
@@ -510,7 +574,7 @@ static void initApp()
 		_T("SUNACSTATISTICS"),
 		_T("SUNACSTATISTICS"),
 		ACRX_CMD_MODAL,
-		CMD_SUNACSTATISTICS,
+		CMD_SunacWindowsStatistics,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());
@@ -574,7 +638,7 @@ static void initApp()
 
 	WEBINST;
 
-	mThreadHandle = (HANDLE)_beginthread(&SyncDataWithService, 0, 0);
+	//mThreadHandle = (HANDLE)_beginthread(&SyncDataWithService, 0, 0);
 
 }
 
@@ -604,8 +668,8 @@ static void unloadApp()
 
 	AcDbBlockReference::desc()->delX(AcDbDoubleClickEdit::desc());
 
-	WaitForSingleObject(mThreadHandle, 1000);
-	TerminateThread(mThreadHandle,0);
+	//WaitForSingleObject(mThreadHandle, 1000);
+	//TerminateThread(mThreadHandle,0);
 }
 
 
@@ -667,7 +731,7 @@ extern "C" AcRx::AppRetCode acrxEntryPoint( AcRx::AppMsgCode msg, void* appId)
 
 static void SyncDataWithService(void * ptr)
 {
-	while(1)
+	while (1)
 	{
 		Sleep(1000);
 	}

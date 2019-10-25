@@ -286,7 +286,12 @@ double AttrWindow::GetTongFengQty(bool bDefaultValue/* = false*/) const
 bool AttrWindow::HasValue(CString p_sCode)const
 {
 	const CWindowsDimData* pDimData = GetDimData(p_sCode);
-	return pDimData != NULL;
+	if (pDimData == NULL || pDimData->type == NOVALUE)
+	{
+		return false;
+	}
+
+	return true;
 }
 
 double AttrWindow::GetValue(CString p_sCode, bool bDefaultValue/* = false*/) const
@@ -294,7 +299,7 @@ double AttrWindow::GetValue(CString p_sCode, bool bDefaultValue/* = false*/) con
 	const CWindowsDimData* pDimData = GetDimData(p_sCode);
 	if (pDimData == NULL)
 	{
-		assert(pDimData);
+		assert(false);
 		return 0;
 	}
 	
@@ -428,6 +433,13 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 
 
 	return filer->filerStatus();
+}
+
+eRCType AttrWindow::GetType()const
+{
+	if (m_prototypeCode.Left(4) == L"Door")
+		return DOOR;
+	return WINDOW;
 }
 
 Acad::ErrorStatus AttrWindow::dwgOutFields(AcDbDwgFiler* filer) const
@@ -644,4 +656,10 @@ bool AttrWindow::IsInstanceEqual(const AttrWindow& p_att) const
 		return false;
 
 	return true;
+}
+
+E_WindowDoorType AttrWindow::GetWindowDoorType() const
+{
+	CString sType = (GetType() == WINDOW ? L"¥∞" : L"√≈");
+	return ToWindowDoorType(m_openType + sType);
 }

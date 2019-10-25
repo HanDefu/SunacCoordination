@@ -91,12 +91,12 @@ public:
 	virtual Acad::ErrorStatus dwgInFields(AcDbDwgFiler* pFiler);
 	//}}AFX_ARX_METHODS
 
-	virtual eRCType GetType() {return WINDOW;}
+	virtual eRCType GetType()const;
 	virtual bool isEqualTo(AttrObject*other);//¥∞–Õ «∑Ò“ª÷¬
 	bool IsPrototypeEqual(const AttrWindow& p_att);
 	bool IsInstanceEqual(const AttrWindow& p_att) const;
 
-	E_WindowDoorType GetWindowDoorType()const {	return ToWindowDoorType(m_openType); }
+	E_WindowDoorType GetWindowDoorType()const;
 	
 	//////////////////////////////////////////////////////////////////////////
 	const CWindowsDimData* GetDimData(CString p_sCode)const;
@@ -110,6 +110,7 @@ public:
 	double GetH(bool bDefaultValue = false) const { return GetValue(L"H", bDefaultValue); }
 	double GetH1(bool bDefaultValue = false) const { return GetValue(L"H1", bDefaultValue); }
 	double GetH2(bool bDefaultValue = false) const { return GetValue(L"H2", bDefaultValue); }
+	double GetH3(bool bDefaultValue = false) const { return GetValue(L"H2", bDefaultValue); }
 	double GetW(bool bDefaultValue = false) const { return GetValue(L"W", bDefaultValue); }
 	double GetW1(bool bDefaultValue = false) const { return GetValue(L"W1", bDefaultValue); }
 	double GetW2(bool bDefaultValue = false) const { return GetValue(L"W2", bDefaultValue); }
@@ -122,6 +123,7 @@ public:
 	bool SetH(double newValue) { return SetValue(L"H", newValue); }
 	bool SetH1(double newValue) { return SetValue(L"H1", newValue); }
 	bool SetH2(double newValue) { return SetValue(L"H2", newValue); }
+	bool SetH3(double newValue) { return SetValue(L"H2", newValue); }
 	bool SetW(double newValue) { return SetValue(L"W", newValue); }
 	bool SetW1(double newValue) { return SetValue(L"W1", newValue); }
 	bool SetW2(double newValue) { return SetValue(L"W2", newValue); }

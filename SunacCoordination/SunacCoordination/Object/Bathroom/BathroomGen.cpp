@@ -4,6 +4,7 @@
 #include "..\..\WebIO\WebIO.h"
 #include "..\..\Common/ComFun_DynamicBlock.h"
 #include "..\..\Common/ComFun_Sunac.h"
+#include "BathroomAutoName.h"
 
 
 CBathroomGen::CBathroomGen(AttrBathroom* p_att)
@@ -78,8 +79,7 @@ CString CBathroomGen::GetMatongDefault()
 vCString CBathroomGen::GetGuanxiquOptions()
 {
 	//只有干湿分离的卫生间才有盥洗区
-	bool isG = (m_attr.GetFileName().Right(6) == _T("_g.dwg"));
-	if (!isG)
+	if (m_attr.m_prototypeCode.Find(L"_g") == -1)
 		return vCString(0);
 	return WebIO::GetInstance()->GetConfigDict()->Bathroom_GetGuanXiWidths();
 
@@ -87,6 +87,19 @@ vCString CBathroomGen::GetGuanxiquOptions()
 CString CBathroomGen::GetGuanxiquDefault()
 {
 	return _T("950");
+}
+
+void CBathroomGen::InitBathroomByDefault()
+{
+	if (GetBathroomAtt()->m_taipenWidth.IsEmpty())
+		GetBathroomAtt()->m_taipenWidth = GetTaipenDefault();
+	if (GetBathroomAtt()->m_matongWidth.IsEmpty())
+		GetBathroomAtt()->m_matongWidth = GetMatongDefault();
+	if (m_attr.m_prototypeCode.Find(L"_g") == -1)
+		GetBathroomAtt()->m_guanXiWidth = 0;
+	else if (GetBathroomAtt()->m_guanXiWidth == 0)
+		GetBathroomAtt()->m_guanXiWidth = _ttof(GetGuanxiquDefault());
+	GetBathroomAtt()->m_instanceCode = CBathroomAutoName::GetInstance()->GetBathroomName(*GetBathroomAtt());
 }
 
 bool CBathroomGen::CheckParameter(CString& errMsg)

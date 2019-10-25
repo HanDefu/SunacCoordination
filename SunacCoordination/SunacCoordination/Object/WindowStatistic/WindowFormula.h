@@ -54,7 +54,7 @@ public:
 	static CWindowFormula* Instance();
 	virtual ~CWindowFormula();
 
-	vector<CAluminumFormula> GetAluminumFormulas(CString p_sPrototypeCode);//使用表AluminumFormulas
+	vector<CAluminumFormula> GetAluminumFormulas(CString p_sPrototypeCode, CString p_sAluminumSeries = _T(""));//使用表AluminumFormulas
 	vector<CGlassFormula> GetGlassFormulas(CString p_sPrototypeCode);//使用表GlassFormulas
 	vector<CHardwareData> GetHardwareData(CString p_sPrototypeCode);//使用表HardwareData
 

@@ -24,6 +24,8 @@ public:
 	virtual vCString GetZhaotaiOptions();// 获取灶台选项
 	virtual CString GetZhaotaiDefault();
 
+	virtual void InitKitchenByDefault();
+
 	//其余的属性值可以通过直接设置AttrKitchen对象的变量实现
 	AttrKitchen* GetKitchenAtt(){ return &m_attr; }
 

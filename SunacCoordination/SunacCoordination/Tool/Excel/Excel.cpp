@@ -4,6 +4,23 @@
 
 using namespace Excel;
 
+
+CExcelUtil::~CExcelUtil()
+{
+	CloseExcel();
+}
+
+CString CExcelUtil::GetOutFileName()
+{ 
+	return out_file_name; 
+}
+
+void CExcelUtil::SetOutFileName(CString new_file_name)
+{
+	if (new_file_name.GetLength() > 0)
+		out_file_name = new_file_name;
+}
+
 void CExcelUtil::CreateExcel()
 {
     COleException pError;
@@ -312,7 +329,7 @@ int CExcelUtil::GetSheetCellValue(long irow, long icol,VARIANT &vt)
 /// 返回特定的单元格
 /// </summary>
 /// <param name="ColNum">列号,从1开始,不大于255</param>
-/// <param name="RowNum">行号,从1开始,不大于255</param>
+/// <param name="RowNum">行号,从1开始</param>
 /// <returns></returns>
 CString CExcelUtil::GetCell(int ColNum, int RowNum)
 {
@@ -333,6 +350,7 @@ CString CExcelUtil::GetCell(int ColNum, int RowNum)
             //AfxMessageBox("行号错误");
             return _T("");
         }
+
         if (ColNum <= 26)
         {
             sprintf_s(buf, "%s%d", m_colString[ColNum], RowNum);
