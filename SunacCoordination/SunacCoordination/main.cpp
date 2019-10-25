@@ -160,13 +160,13 @@ void ZJYTest()
 	vector<AttrWindow> m_winAtts;
 	AttrWindow attrwindow;
 
-	attrwindow.m_prototypeCode = _T("Door_TLM3");
+	attrwindow.m_prototypeCode = _T("Door_WM2");
 	attrwindow.m_quyuName = _T("全部");
 	attrwindow.m_isJiTuan = true;
 	attrwindow.m_isDynamic = true;
 
 	attrwindow.m_gongNengquType = _T("全部");
-	attrwindow.m_openType = _T("推拉");
+	attrwindow.m_openType = _T("外开");
 	attrwindow.m_openQty = 1;
 
 	CWindowsDimData dimdata1;
@@ -186,15 +186,15 @@ void ZJYTest()
 	//CWindowsDimData dimdata1;
 	dimdata1.sCodeName = _T("W1");
 	dimdata1.type = CALC;
-	dimdata1.sFomula = _T("(W-2a)/4");
+	dimdata1.sFomula = _T("W-2a-W2");
 	attrwindow.SetDimData(dimdata1);
 
-	//
-	//dimdata1.sCodeName = _T("W2");
-	//dimdata1.type = CALC;
-	//dimdata1.sFomula = _T("W-2a-W1*2-W3");
-	//attrwindow.SetDimData(dimdata1);
-	//
+	
+	dimdata1.sCodeName = _T("W2");
+	dimdata1.type = CALC;
+	dimdata1.sFomula = _T("450-a");
+	attrwindow.SetDimData(dimdata1);
+	
 	//dimdata1.sCodeName = _T("W3");
 	//dimdata1.type = UNLIMIT;
 	////dimdata1.sFomula = _T("");
@@ -224,29 +224,28 @@ void ZJYTest()
 	attrwindow.CheckAndComplementDimeData();
 
 	attrwindow.SetH(2400);
-	attrwindow.SetW(3600);
+	attrwindow.SetW(1200);
 	attrwindow.SetH1(500);
 	//attrwindow.SetH2(500);
 	//attrwindow.SetH3(500);
 	attrwindow.SetW1(700);
-	//attrwindow.SetW2(600);
+	attrwindow.SetW2(600);
 	//attrwindow.SetW3(500);
 	//attrwindow.SetR(0);
 	attrwindow.SetA(50);
 
-	attrwindow.m_material.sAluminumSerial = _T("ST105AM系列");
-	attrwindow.SetInstanceCode(_T("TLM3"));
+	attrwindow.m_material.sAluminumSerial = _T("SW50M系列");
+	attrwindow.SetInstanceCode(_T("111"));
 
 	m_winAtts.push_back(attrwindow);
-	m_winAtts.push_back(attrwindow);
 
-	attrwindow.m_prototypeCode = _T("Window_NC3");
+	attrwindow.m_prototypeCode = _T("Door_WLC1");
 	attrwindow.m_quyuName = _T("全部");
 	attrwindow.m_isJiTuan = true;
 	attrwindow.m_isDynamic = true;
 
 	attrwindow.m_gongNengquType = _T("全部");
-	attrwindow.m_openType = _T("内开");
+	attrwindow.m_openType = _T("外开");
 	attrwindow.m_openQty = 1;
 
 	dimdata1.sCodeName = _T("W");
@@ -258,26 +257,57 @@ void ZJYTest()
 	attrwindow.SetDimData(dimdata2);
 
 	dimdata1.sCodeName = _T("W1");
-	dimdata1.type = CALC;
-	dimdata1.sFomula = _T("(W-2a)/2");
+	dimdata1.type = UNLIMIT;
+	//dimdata1.sFomula = _T("(W-2a)/3");
 	attrwindow.SetDimData(dimdata1);
 
+	dimdata1.sCodeName = _T("W2");
+	dimdata1.type = CALC;
+	dimdata1.sFomula = _T("W-2a-1700");
+	attrwindow.SetDimData(dimdata1);
+
+	dimdata1.sCodeName = _T("W3");
+	dimdata1.type = UNLIMIT;
+	//dimdata1.sFomula = _T("");
+	attrwindow.SetDimData(dimdata1);
+	
+
+	//CWindowsDimData dimdata2;
 	dimdata2.sCodeName = _T("H1");
 	dimdata2.type = CALC;
-	dimdata2.sFomula = _T("H-2a");
+	dimdata2.sFomula = _T("H-2a-H2");
 	attrwindow.SetDimData(dimdata2);
+
+	dimdata2.sCodeName = _T("H2");
+	dimdata2.type = CALC;
+	dimdata2.sFomula = _T("1000-a");
+	attrwindow.SetDimData(dimdata2);
+
+	//dimdata2.sCodeName = _T("H3");
+	//dimdata2.type = CALC;
+	//dimdata2.sFomula = _T("(W-2a)/2");
+	//attrwindow.SetDimData(dimdata2);
+
+	//dimdata2.sCodeName = _T("R");
+	//dimdata2.type = UNLIMIT;
+	////dimdata2.sFomula = _T("(W-2a)/2");
+	//attrwindow.SetDimData(dimdata2);
 
 	attrwindow.CheckAndComplementDimeData();
 
-	attrwindow.SetH(1400);
-	attrwindow.SetW(1300);
+	attrwindow.SetH(2400);
+	attrwindow.SetW(2700);
 	attrwindow.SetH1(500);
-	attrwindow.SetW1(700);
-	//attrwindow.SetR(0);
+	attrwindow.SetH2(500);
+	//attrwindow.SetH3(500);
+	attrwindow.SetW1(1000);
+	attrwindow.SetW2(600);
+	attrwindow.SetW3(700);
+	attrwindow.SetR(0);
 	attrwindow.SetA(50);
 
-	attrwindow.m_material.sAluminumSerial = _T("SN65A系列");
-	attrwindow.SetInstanceCode(_T("NC3"));
+	attrwindow.m_material.sAluminumSerial = _T("SW55M系列");
+	attrwindow.SetInstanceCode(_T("222"));
 
 	m_winAtts.push_back(attrwindow);
 
@@ -290,7 +320,6 @@ void ZJYTest()
 	{
 		CString pathName = dlg.GetPathName();
 		winStatictic.Statictic(m_winAtts, pathName);
-
 	}
 }
 
@@ -426,10 +455,10 @@ void CMD_test()
 
 void CMD_TEST2()
 {
-	vector<CAluminumFormula> vAlFormula;
+	/*vector<CAluminumFormula> vAlFormula;
 	vector<CGlassFormula> vGlassFormula;
 	vector<CHardwareData> vHardwareFormula;
-	vector<CString> vAlSeries,vAlSeries2;
+	vector<CString> vAlSeries;
 	CAluminumData AlData;
 	CString AlSeries;
 	double DeductedSizeData;
@@ -440,10 +469,9 @@ void CMD_TEST2()
 	CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(E_WindowDoor_WC, L"SN65A系列", L"M1", DeductedSizeData);
 	CAluminumSeries::Instance()->GetAluminumDataBySeriesAndName(E_WindowDoor_NC, L"SN60系列", L"假中梃", AlData);
 	CAluminumSeries::Instance()->GetAluminumSerialByCode(L"SN60T002", AlSeries);
-	vAlSeries = CAluminumSeries::Instance()->GetAluminumSerialsByWindowType(E_WindowDoor_NC);
-	vAlSeries2 = CAluminumSeries::Instance()->GetAluminumSerialsByPrototype(L"Window_NC1");
-	/*CProjectData::UploadFile("F:\\soapcpp2.exe", "soapcpp2.exe");
-	CProjectData::DownloadFile(L"http://fastsoft.onlinedown.net/down/idm_ald.exe", L"F:\\FTPServer\\Test.exe");*/
+	vAlSeries = CAluminumSeries::Instance()->GetAluminumSerialsByWindowType(E_WindowDoor_NC);*/
+	CProjectData::UploadFile("F:\\soapcpp2.exe", "soapcpp2.exe");
+	CProjectData::DownloadFile(L"http://fastsoft.onlinedown.net/down/idm_ald.exe", L"F:\\FTPServer\\Test.exe");
 }
 
 static void initApp()

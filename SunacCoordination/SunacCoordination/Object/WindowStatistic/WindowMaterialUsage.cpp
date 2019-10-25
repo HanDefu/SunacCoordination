@@ -612,8 +612,11 @@ void CWindowMaterialUsageTC::ExportFuliaoInfo(Excel::CExcelUtil& p_excel) //Êä³ö
 	str.Format(_T("%.2f"),m_comGlueQTY);
 	p_excel.SetCellValue(64, 9, str);
 
-	//ÃÜ·âÃ«Ìõ
-	p_excel.SetCellValue(65, 3, _T("ÃÜ·âÃ«Ìõ"));
+	//ÃÜ·âÃ«Ìõ/ÃÜ·â½ºÌõ
+	if (m_winAtt.m_prototypeCode.Find(_T("TLC")) >= 0 || m_winAtt.m_prototypeCode.Find(_T("TLM")) >= 0)
+	{
+		p_excel.SetCellValue(65, 3, _T("ÃÜ·âÃ«Ìõ"));
+	}
 	m_sealBurrsQTY = m_glassSealantQTY;
 	str.Format(_T("%.2f"),m_sealBurrsQTY);
 	p_excel.SetCellValue(65, 9, str);
