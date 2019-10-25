@@ -439,10 +439,10 @@ void CMD_TEST2()
 	vAlFormula = CWindowFormula::Instance()->GetAluminumFormulas(L"Window_NC1");
 	vGlassFormula = CWindowFormula::Instance()->GetGlassFormulas(L"Window_NC1");
 	vHardwareFormula = CWindowFormula::Instance()->GetHardwareData(L"Window_NC1");
-	CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(E_WindowDoor_NC, "SN65A系列", "M1", DeductedSizeData);
-	CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName("外开窗", "SN65A系列", "M1", DeductedSizeData);
-	CAluminumSeries::Instance()->GetAluminumDataBySeriesAndName(E_WindowDoor_NC, "SN60系列", "假中梃", AlData);
-	CAluminumSeries::Instance()->GetAluminumSerialByCode("SN60T002", AlSeries);
+	CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(E_WindowDoor_NC, L"SN65A系列", L"M1", DeductedSizeData);
+	CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(E_WindowDoor_WC, L"SN65A系列", L"M1", DeductedSizeData);
+	CAluminumSeries::Instance()->GetAluminumDataBySeriesAndName(E_WindowDoor_NC, L"SN60系列", L"假中梃", AlData);
+	CAluminumSeries::Instance()->GetAluminumSerialByCode(L"SN60T002", AlSeries);
 	vAlSeries = CAluminumSeries::Instance()->GetAluminumSerialsByWindowType(E_WindowDoor_NC);
 }
 

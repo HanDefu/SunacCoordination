@@ -52,9 +52,11 @@ public:
 	bool operator==(const CWindowsDimData &rhs) const;
 	bool IsValueEqual(const CWindowsDimData &rhs)const;
 	bool IsParaEqual(const CWindowsDimData &rhs)const;
-
+	
 	//排序用
 	bool operator<(const CWindowsDimData &rhs) const;
+
+	bool SetValue(double p_value);
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -97,6 +99,9 @@ public:
 	bool IsInstanceEqual(const AttrWindow& p_att) const;
 
 	E_WindowDoorType GetWindowDoorType()const;
+
+	CString GetPrototypeCode()const { return m_prototypeCode; }
+	CString GetMainPrototypeCode()const; //返回原型主编码，如Window_NC2_1 返回的值为Window_NC2
 	
 	//////////////////////////////////////////////////////////////////////////
 	const CWindowsDimData* GetDimData(CString p_sCode)const;
@@ -132,6 +137,7 @@ public:
 	bool SetR(double newValue) { return SetValue(L"R", newValue); }
 
 protected:
+	CWindowsDimData* GetDimDataByCode(CString p_sCode);
 	vector<CWindowsDimData> m_dimData; //存储W/W1/W2/W3   H/H1/H2/H3 R的尺寸数据
 
 public:

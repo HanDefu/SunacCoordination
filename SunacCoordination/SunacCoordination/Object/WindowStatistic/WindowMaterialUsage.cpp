@@ -62,7 +62,7 @@ double CWindowMaterialUsage::GetVauleByFomula(CString p_sFomula)
 			else
 			{
 				//ÆäËûµÄ´Ó¿Û¼õ³ß´ç±ßÀïÈ¡
-				bool bSuc = CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(m_winAtt.m_openType, m_winAtt.m_material.sAluminumSerial, sParaName, valueOut);
+				bool bSuc = CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(m_winAtt.GetWindowDoorType(), m_winAtt.m_material.sAluminumSerial, sParaName, valueOut);
 				assert(bSuc);
 			}
 			parser.SetVar(sParaName, valueOut);
@@ -267,11 +267,11 @@ void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öÐÍ²ÄÊý¾
 	m_shanliaoTotalLength = 0;
 	m_menshanTotalLength = 0;
 
-	vector<CAluminumFormula> alFormulas = CWindowFormula::Instance()->GetAluminumFormulas(m_winAtt.m_prototypeCode, m_winAtt.m_material.sAluminumSerial);
+	vector<CAluminumFormula> alFormulas = CWindowFormula::Instance()->GetAluminumFormulas(m_winAtt.GetMainPrototypeCode(), m_winAtt.m_material.sAluminumSerial);
 
 	if (alFormulas.empty())
 	{
-		alFormulas = CWindowFormula::Instance()->GetAluminumFormulas(m_winAtt.m_prototypeCode);
+		alFormulas = CWindowFormula::Instance()->GetAluminumFormulas(m_winAtt.GetMainPrototypeCode());
 	}
 
 	E_WindowDoorType winType = m_winAtt.GetWindowDoorType();
@@ -379,7 +379,7 @@ void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öÐÍ²ÄÊý¾
 			m_chuangshanTotalLength += length*alFormulas[i].m_nCount;
 		}
 
-		if (_T("ÉÈÁÏ") == alFormulas[i].m_aluminumClassify && m_winAtt.m_prototypeCode.Find(_T("TC"))>=0)
+		if (_T("ÉÈÁÏ") == alFormulas[i].m_aluminumClassify && m_winAtt.GetMainPrototypeCode().Find(_T("TC")) >= 0)
 		{
 			m_shanliaoTotalLength += length*alFormulas[i].m_nCount;
 		}
@@ -389,14 +389,14 @@ void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öÐÍ²ÄÊý¾
 			m_menshanTotalLength += length*alFormulas[i].m_nCount;
 		}
 
-		if (_T("ÉÈÁÏ") == alFormulas[i].m_aluminumClassify && m_winAtt.m_prototypeCode.Find(_T("TLM"))>=0)
+		if (_T("ÉÈÁÏ") == alFormulas[i].m_aluminumClassify && m_winAtt.GetMainPrototypeCode().Find(_T("TLM")) >= 0)
 		{
 			m_shanliaoTotalLength += length*alFormulas[i].m_nCount;
 		}
 	}
 
 	//ÓÃÓÚ¼ÆËãÍÆÀ­ÃÅTLM3¡¢TML4µÄ²£Á§´¦ÄÍºò½º
-	if (_T("Door_TLM3") == m_winAtt.m_prototypeCode || _T("Door_TLM4") == m_winAtt.m_prototypeCode)
+	if (_T("Door_TLM3") == m_winAtt.GetMainPrototypeCode() || _T("Door_TLM4") == m_winAtt.GetMainPrototypeCode())
 	{
 		double len = _ttof(p_excel.GetCellValue(25, 6));
 		double count = _ttof(p_excel.GetCellValue(25, 7));
@@ -426,7 +426,7 @@ void CWindowMaterialUsage::ExportGlassInfo(Excel::CExcelUtil& p_excel) //Êä³ö²£Á
 	m_glassTotalQTY = 0;
 
 	CString str;
-	const vector<CGlassFormula> glassFormulas = CWindowFormula::Instance()->GetGlassFormulas(m_winAtt.m_prototypeCode);
+	const vector<CGlassFormula> glassFormulas = CWindowFormula::Instance()->GetGlassFormulas(m_winAtt.GetMainPrototypeCode());
 
 	int nRow = 49;
 	for (UINT i=0; i<glassFormulas.size(); i++, nRow++)
@@ -450,7 +450,7 @@ void CWindowMaterialUsage::ExportGlassInfo(Excel::CExcelUtil& p_excel) //Êä³ö²£Á
 
 		//Ãæ»ý
 		double area = height* width* glassFormulas[i].m_nCount/1e6; //µ¥Î»©O
-		if (_T("Window_WC11") == m_winAtt.m_prototypeCode && _T("G3") == glassFormulas[i].m_name)
+		if (_T("Window_WC11") == m_winAtt.GetMainPrototypeCode() && _T("G3") == glassFormulas[i].m_name)
 		{
 			area = height/1e6;
 		}
@@ -468,7 +468,7 @@ void CWindowMaterialUsage::ExportHardwareInfo(Excel::CExcelUtil& p_excel) //Êä³ö
 	m_hardwareNumber = 0;
 
 	CString str;
-	const vector<CHardwareData> hardwareFormulas = CWindowFormula::Instance()->GetHardwareData(m_winAtt.m_prototypeCode);
+	const vector<CHardwareData> hardwareFormulas = CWindowFormula::Instance()->GetHardwareData(m_winAtt.GetMainPrototypeCode());
 
 	int nRow = 57;
 	for (UINT i=0; i<hardwareFormulas.size(); i++, nRow++)
