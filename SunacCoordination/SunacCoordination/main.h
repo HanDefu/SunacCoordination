@@ -19,7 +19,7 @@ void CMD_SUNACDOOR();
 void CMD_SunacWindowAdvanceDesign(); //门窗深化设计
 
 //门窗统计算量
-void CMD_SUNACSTATISTICS();
+void CMD_SunacWindowsStatistics();
 
 //门窗表
 void CMD_SUNACWINDOWTable();

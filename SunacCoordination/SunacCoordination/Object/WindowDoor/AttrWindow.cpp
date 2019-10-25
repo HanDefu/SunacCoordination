@@ -108,6 +108,21 @@ bool CWindowsDimData::IsParaEqual(const CWindowsDimData &rhs) const
 		return value == rhs.value;
 }
 
+bool CWindowsDimData::SetValue(double p_value)
+{
+	if (type == CALC || type==NOVALUE)
+		return false;
+
+	if (type == SCOPE)
+	{
+		if (p_value<minValue || p_value> maxValue)
+			return false;
+	}
+
+	value = p_value;
+	return true;
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 //{{AFX_ARX_MACRO
@@ -192,6 +207,17 @@ const CWindowsDimData* AttrWindow::GetDimData(CString p_sCode)const
 	}
 
 	//assert(false);
+	return NULL;
+}
+CWindowsDimData* AttrWindow::GetDimDataByCode(CString p_sCode)
+{
+	for (UINT i = 0; i < m_dimData.size(); i++)
+	{
+		if (m_dimData[i].sCodeName.CompareNoCase(p_sCode) == 0)
+		{
+			return &(m_dimData[i]);
+		}
+	}
 	return NULL;
 }
 
@@ -286,7 +312,12 @@ double AttrWindow::GetTongFengQty(bool bDefaultValue/* = false*/) const
 bool AttrWindow::HasValue(CString p_sCode)const
 {
 	const CWindowsDimData* pDimData = GetDimData(p_sCode);
-	return pDimData != NULL;
+	if (pDimData == NULL || pDimData->type == NOVALUE)
+	{
+		return false;
+	}
+
+	return true;
 }
 
 double AttrWindow::GetValue(CString p_sCode, bool bDefaultValue/* = false*/) const
@@ -294,7 +325,7 @@ double AttrWindow::GetValue(CString p_sCode, bool bDefaultValue/* = false*/) con
 	const CWindowsDimData* pDimData = GetDimData(p_sCode);
 	if (pDimData == NULL)
 	{
-		assert(pDimData);
+		assert(false);
 		return 0;
 	}
 	
@@ -312,6 +343,7 @@ double AttrWindow::GetValue(CString p_sCode, bool bDefaultValue/* = false*/) con
 				parser.SetVar(vars[i], GetValue(vars[i], bDefaultValue));
 			}
 		}
+
 		if (es == E_PS_InvalidFormula)
 		{
 			CString errMsg;
@@ -348,57 +380,13 @@ double AttrWindow::GetValue(CString p_sCode, bool bDefaultValue/* = false*/) con
 
 bool AttrWindow::SetValue(CString p_sCode, double p_dValue)
 {
-	const CWindowsDimData* pDimData = GetDimData(p_sCode);
+	CWindowsDimData* pDimData = GetDimDataByCode(p_sCode);
 	if (pDimData==NULL)
 	{
-		assert(false);
-		return false;
-	}
-	if (pDimData->type==NOVALUE)
-	{
 		return false;
 	}
 
-	CWindowsDimData newDimData(*pDimData);
-
-	//公式值和固定值不能设置
-	if ((newDimData.type == CALC) || (newDimData.type == SINGLE))
-		return false;
-
-	if (newDimData.type == UNLIMIT)
-	{
-		newDimData.value = p_dValue;
-		SetDimData(newDimData);
-		return true;
-	}
-	else if (newDimData.type == MULTI)
-	{
-		for (UINT i = 0; i < newDimData.valueOptions.size(); i++)
-		{
-			if (newDimData.valueOptions[i] == p_dValue)
-			{
-				newDimData.value = p_dValue;
-				SetDimData(newDimData);
-				return true;
-			}
-		}
-		return false;
-	}
-	else if (newDimData.type == SCOPE)
-	{
-		if ((newDimData.minValue <= p_dValue) && (newDimData.maxValue >= p_dValue))
-		{
-			newDimData.value = p_dValue;
-			SetDimData(newDimData);
-			return true;
-		}
-		return false;
-	}
-	else
-	{
-		assert(false);
-		return false;
-	}
+	return pDimData->SetValue(p_dValue);
 }
 
 Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
@@ -435,6 +423,21 @@ eRCType AttrWindow::GetType()const
 	if (m_prototypeCode.Left(4) == L"Door")
 		return DOOR;
 	return WINDOW;
+}
+
+CString AttrWindow::GetMainPrototypeCode()const //返回原型主编码，如Window_NC2_0 返回的值为Window_NC2
+{
+	int nPos1 = m_prototypeCode.Find(_T('_'));
+	if (nPos1>0)
+	{
+		int nPos2 = m_prototypeCode.Find(_T('_'), nPos1 + 1);
+		if (nPos2>0)
+		{
+			return m_prototypeCode.Left(nPos2);
+		}
+	}
+
+	return m_prototypeCode;
 }
 
 Acad::ErrorStatus AttrWindow::dwgOutFields(AcDbDwgFiler* filer) const

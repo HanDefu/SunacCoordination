@@ -103,7 +103,7 @@ LRESULT DlgLeftBar::OnClickedPopupMenu(WPARAM mID, LPARAM notUsed)
 		break;
 
 	case ID_COMMAND_WINDOWQUANTITY://√≈¥∞À„¡ø
-		CMD_SUNACSTATISTICS();
+		CMD_SunacWindowsStatistics();
 		break;
 	case ID_COMMAND_WINDOWTABLE:
 		CMD_SUNACWINDOWTable();

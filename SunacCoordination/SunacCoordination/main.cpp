@@ -52,6 +52,7 @@
 #include "Object/WindowStatistic/WindowFormula.h"
 #include "Object/WindowStatistic/AluminumSeries.h"
 #include "Object/WindowStatistic/DeductedSize.h"
+#include "ProjectorFileMrg/ProjectFileMrg.h"
 #include "Object/WindowStatistic/WindowStatictic.h"
 
 #ifdef _DEBUG
@@ -165,7 +166,7 @@ void ZJYTest()
 	attrwindow.m_isDynamic = true;
 
 	attrwindow.m_gongNengquType = _T("全部");
-	attrwindow.m_openType = _T("推拉门");
+	attrwindow.m_openType = _T("推拉");
 	attrwindow.m_openQty = 1;
 
 	CWindowsDimData dimdata1;
@@ -215,10 +216,10 @@ void ZJYTest()
 	//dimdata2.sFomula = _T("(W-2a)/2");
 	//attrwindow.SetDimData(dimdata2);
 
-	dimdata2.sCodeName = _T("R");
-	dimdata2.type = UNLIMIT;
-	//dimdata2.sFomula = _T("(W-2a)/2");
-	attrwindow.SetDimData(dimdata2);
+	//dimdata2.sCodeName = _T("R");
+	//dimdata2.type = UNLIMIT;
+	////dimdata2.sFomula = _T("(W-2a)/2");
+	//attrwindow.SetDimData(dimdata2);
 
 	attrwindow.CheckAndComplementDimeData();
 
@@ -230,11 +231,11 @@ void ZJYTest()
 	attrwindow.SetW1(700);
 	//attrwindow.SetW2(600);
 	//attrwindow.SetW3(500);
-	attrwindow.SetR(0);
+	//attrwindow.SetR(0);
 	attrwindow.SetA(50);
 
 	attrwindow.m_material.sAluminumSerial = _T("ST105AM系列");
-	attrwindow.SetInstanceCode(_T("Door_TLM3"));
+	attrwindow.SetInstanceCode(_T("TLM3"));
 
 	m_winAtts.push_back(attrwindow);
 	m_winAtts.push_back(attrwindow);
@@ -245,7 +246,7 @@ void ZJYTest()
 	attrwindow.m_isDynamic = true;
 
 	attrwindow.m_gongNengquType = _T("全部");
-	attrwindow.m_openType = _T("内开窗");
+	attrwindow.m_openType = _T("内开");
 	attrwindow.m_openQty = 1;
 
 	dimdata1.sCodeName = _T("W");
@@ -266,9 +267,9 @@ void ZJYTest()
 	dimdata2.sFomula = _T("H-2a");
 	attrwindow.SetDimData(dimdata2);
 
-	dimdata2.sCodeName = _T("R");
-	dimdata2.type = UNLIMIT;
-	attrwindow.SetDimData(dimdata2);
+	//dimdata2.sCodeName = _T("R");
+	//dimdata2.type = UNLIMIT;
+	//attrwindow.SetDimData(dimdata2);
 
 	attrwindow.CheckAndComplementDimeData();
 
@@ -276,11 +277,11 @@ void ZJYTest()
 	attrwindow.SetW(1300);
 	attrwindow.SetH1(500);
 	attrwindow.SetW1(700);
-	attrwindow.SetR(0);
+	//attrwindow.SetR(0);
 	attrwindow.SetA(50);
 
 	attrwindow.m_material.sAluminumSerial = _T("SN65A系列");
-	attrwindow.SetInstanceCode(_T("Window_NC3"));
+	attrwindow.SetInstanceCode(_T("NC3"));
 
 	m_winAtts.push_back(attrwindow);
 
@@ -291,7 +292,7 @@ void ZJYTest()
 	CFileDialog dlg(FALSE, L"xlsx", L"*.xlsx", NULL, filter); 
 	if(dlg.DoModal()==IDOK)
 	{
-		CString pathName = dlg.GetFileName();
+		CString pathName = dlg.GetPathName();
 		winStatictic.Statictic(m_winAtts, pathName);
 
 	}
@@ -429,7 +430,7 @@ void CMD_test()
 
 void CMD_TEST2()
 {
-	vector<CAluminumFormula> vAlFormula;
+	/*vector<CAluminumFormula> vAlFormula;
 	vector<CGlassFormula> vGlassFormula;
 	vector<CHardwareData> vHardwareFormula;
 	vector<CString> vAlSeries;
@@ -439,11 +440,13 @@ void CMD_TEST2()
 	vAlFormula = CWindowFormula::Instance()->GetAluminumFormulas(L"Window_NC1");
 	vGlassFormula = CWindowFormula::Instance()->GetGlassFormulas(L"Window_NC1");
 	vHardwareFormula = CWindowFormula::Instance()->GetHardwareData(L"Window_NC1");
-	CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(E_WindowDoor_NC, "SN65A系列", "M1", DeductedSizeData);
-	CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName("外开窗", "SN65A系列", "M1", DeductedSizeData);
-	CAluminumSeries::Instance()->GetAluminumDataBySeriesAndName(E_WindowDoor_NC, "SN60系列", "假中梃", AlData);
-	CAluminumSeries::Instance()->GetAluminumSerialByCode("SN60T002", AlSeries);
-	vAlSeries = CAluminumSeries::Instance()->GetAluminumSerialsByWindowType(E_WindowDoor_NC);
+	CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(E_WindowDoor_NC, L"SN65A系列", L"M1", DeductedSizeData);
+	CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(E_WindowDoor_WC, L"SN65A系列", L"M1", DeductedSizeData);
+	CAluminumSeries::Instance()->GetAluminumDataBySeriesAndName(E_WindowDoor_NC, L"SN60系列", L"假中梃", AlData);
+	CAluminumSeries::Instance()->GetAluminumSerialByCode(L"SN60T002", AlSeries);
+	vAlSeries = CAluminumSeries::Instance()->GetAluminumSerialsByWindowType(E_WindowDoor_NC);*/
+	CProjectData::UploadFile("F:\\soapcpp2.exe", "soapcpp2.exe");
+	CProjectData::DownloadFile(L"http://fastsoft.onlinedown.net/down/idm_ald.exe", L"F:\\FTPServer\\Test.exe");
 }
 
 static void initApp()
@@ -571,7 +574,7 @@ static void initApp()
 		_T("SUNACSTATISTICS"),
 		_T("SUNACSTATISTICS"),
 		ACRX_CMD_MODAL,
-		CMD_SUNACSTATISTICS,
+		CMD_SunacWindowsStatistics,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());
