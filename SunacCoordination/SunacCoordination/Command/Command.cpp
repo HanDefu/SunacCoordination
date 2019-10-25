@@ -22,7 +22,6 @@
 #include "../UI/BathroomDlg.h"
 #include "../UI/RailingDlg.h"
 #include "../UI/AirconditionerDlg.h"
-#include "../UI/DoorDlg.h"
 #include "../UI/FacadeDlg.h"
 #include "../UI/FillingDlg.h"
 #include "../UI/MoldingsDlg.h"
@@ -102,15 +101,6 @@ void CMD_SUNACBATHROOM()
 		g_bathroomDlg->Create(IDD_DIALOG_BATHROOM);
 	}
 	g_bathroomDlg->ShowWindow(SW_SHOW);
-}
-
-//门
-void CMD_SUNACDOOR()
-{
-	CAcModuleResourceOverride resOverride;
-
-	CDoorDlg dlg;
-	dlg.DoModal();
 }
 
 //栏杆

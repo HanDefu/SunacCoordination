@@ -55,9 +55,6 @@
     <ClCompile Include="UI\AirconditionerDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="UI\DoorDlg.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
     <ClCompile Include="UI\FacadeDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
@@ -340,6 +337,9 @@
     <ClCompile Include="UI\ProjectManagementDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="UI\WindowAdvanceDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -427,9 +427,6 @@
       <Filter>UI\GridCtrl\NewCellTypes</Filter>
     </ClInclude>
     <ClInclude Include="UI\AirconditionerDlg.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\DoorDlg.h">
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="UI\FacadeDlg.h">
@@ -767,6 +764,9 @@
       <Filter>ProjectorFileMrg</Filter>
     </ClInclude>
     <ClInclude Include="UI\ProjectManagementDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\WindowAdvanceDlg.h">
       <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>

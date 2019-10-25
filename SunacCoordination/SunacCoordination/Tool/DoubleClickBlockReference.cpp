@@ -12,7 +12,6 @@
 #include "../UI/BathroomDlg.h"
 #include "../UI/RailingDlg.h"
 #include "../UI/AirconditionerDlg.h"
-#include "../UI/DoorDlg.h"
 #include "../UI/FacadeDlg.h"
 #include "../UI/FillingDlg.h"
 #include "../UI/MoldingsDlg.h"

@@ -452,15 +452,6 @@ static void initApp()
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
-		_T("SUNACDOOR"),
-		_T("SUNACDOOR"),
-		ACRX_CMD_MODAL,
-		CMD_SUNACDOOR,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
-
-	acedRegCmds->addCommand(_T("SUNAC"),
 		_T("SUNACRAILING"),
 		_T("SUNACRAILING"),
 		ACRX_CMD_MODAL,
@@ -612,8 +603,8 @@ static void unloadApp()
 
 	AcDbBlockReference::desc()->delX(AcDbDoubleClickEdit::desc());
 
-	WaitForSingleObject(mThreadHandle, 1000);
-	TerminateThread(mThreadHandle,0);
+	//WaitForSingleObject(mThreadHandle, 1000);
+	//TerminateThread(mThreadHandle,0);
 }
 
 
