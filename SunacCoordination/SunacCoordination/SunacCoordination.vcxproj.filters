@@ -337,9 +337,14 @@
     <ClCompile Include="UI\ProjectManagementDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="UI\WindowAdvanceDlg.cpp">
-      <Filter>UI</Filter>
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellButton.cpp">
+      <Filter>UI\GridCtrl\NewCellTypes</Filter>
     </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\GridCtrlUtil.cpp">
+      <Filter>UI\GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\WindowAdvanceDlg.cpp" />
+    <ClCompile Include="NewDirDlg.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -766,9 +771,14 @@
     <ClInclude Include="UI\ProjectManagementDlg.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="UI\WindowAdvanceDlg.h">
-      <Filter>UI</Filter>
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellButton.h">
+      <Filter>UI\GridCtrl\NewCellTypes</Filter>
     </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\GridCtrlUtil.h">
+      <Filter>UI\GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\WindowAdvanceDlg.h" />
+    <ClInclude Include="NewDirDlg.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">

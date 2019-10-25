@@ -52,6 +52,7 @@
 #include "Object/WindowStatistic/WindowFormula.h"
 #include "Object/WindowStatistic/AluminumSeries.h"
 #include "Object/WindowStatistic/DeductedSize.h"
+#include "ProjectorFileMrg/ProjectFileMrg.h"
 #include "Object/WindowStatistic/WindowStatictic.h"
 
 #ifdef _DEBUG
@@ -533,7 +534,7 @@ void CMD_TEST2()
 	vector<CAluminumFormula> vAlFormula;
 	vector<CGlassFormula> vGlassFormula;
 	vector<CHardwareData> vHardwareFormula;
-	vector<CString> vAlSeries;
+	vector<CString> vAlSeries,vAlSeries2;
 	CAluminumData AlData;
 	CString AlSeries;
 	double DeductedSizeData;
@@ -545,6 +546,9 @@ void CMD_TEST2()
 	CAluminumSeries::Instance()->GetAluminumDataBySeriesAndName(E_WindowDoor_NC, L"SN60ÏµÁÐ", L"¼ÙÖÐèè", AlData);
 	CAluminumSeries::Instance()->GetAluminumSerialByCode(L"SN60T002", AlSeries);
 	vAlSeries = CAluminumSeries::Instance()->GetAluminumSerialsByWindowType(E_WindowDoor_NC);
+	vAlSeries2 = CAluminumSeries::Instance()->GetAluminumSerialsByPrototype(L"Window_NC1");
+	/*CProjectData::UploadFile("F:\\soapcpp2.exe", "soapcpp2.exe");
+	CProjectData::DownloadFile(L"http://fastsoft.onlinedown.net/down/idm_ald.exe", L"F:\\FTPServer\\Test.exe");*/
 }
 
 static void initApp()

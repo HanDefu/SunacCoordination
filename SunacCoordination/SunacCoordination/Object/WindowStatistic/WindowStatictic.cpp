@@ -225,7 +225,7 @@ bool CWindowStatictic::GenerateReport(Excel::CExcelUtil& xls)
 		xls.SetCellValue(nRow, 5, WindowDoorTypeToCSting(m_windows[i].winAtt.GetWindowDoorType()));
 
 		//门窗编号
-		xls.SetCellValue(nRow, 6, m_windows[i].winAtt.m_prototypeCode);
+		xls.SetCellValue(nRow, 6, m_windows[i].winAtt.GetInstanceCode());
 
 		//型材类型
 		str = m_windows[i].winAtt.m_material.sAluminumSerial;

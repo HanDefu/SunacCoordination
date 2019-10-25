@@ -158,6 +158,7 @@
     <ClCompile Include="Common\TYRect.cpp" />
     <ClCompile Include="GlobalSetting.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="NewDirDlg.cpp" />
     <ClCompile Include="Object\AirCondition\AttrAirCon.cpp" />
     <ClCompile Include="Object\AirCondition\RCAirCondition.cpp" />
     <ClCompile Include="Object\Bathroom\BathroomAutoName.cpp" />
@@ -219,8 +220,10 @@
     <ClCompile Include="UI\GridCtrl_src\GridCell.cpp" />
     <ClCompile Include="UI\GridCtrl_src\GridCellBase.cpp" />
     <ClCompile Include="UI\GridCtrl_src\GridCtrl.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\GridCtrlUtil.cpp" />
     <ClCompile Include="UI\GridCtrl_src\GridDropTarget.cpp" />
     <ClCompile Include="UI\GridCtrl_src\InPlaceEdit.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellButton.cpp" />
     <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellCheck.cpp" />
     <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellCombo.cpp" />
     <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellDateTime.cpp" />
@@ -277,6 +280,7 @@
     <ClInclude Include="Common\TYRect.h" />
     <ClInclude Include="GlobalSetting.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="NewDirDlg.h" />
     <ClInclude Include="Object\AirCondition\AttrAirCon.h" />
     <ClInclude Include="Object\AirCondition\RCAirCondition.h" />
     <ClInclude Include="Object\Bathroom\BathroomAutoName.h" />
@@ -351,9 +355,11 @@
     <ClInclude Include="UI\GridCtrl_src\GridCell.h" />
     <ClInclude Include="UI\GridCtrl_src\GridCellBase.h" />
     <ClInclude Include="UI\GridCtrl_src\GridCtrl.h" />
+    <ClInclude Include="UI\GridCtrl_src\GridCtrlUtil.h" />
     <ClInclude Include="UI\GridCtrl_src\GridDropTarget.h" />
     <ClInclude Include="UI\GridCtrl_src\InPlaceEdit.h" />
     <ClInclude Include="UI\GridCtrl_src\MemDC.h" />
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellButton.h" />
     <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellCheck.h" />
     <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellCombo.h" />
     <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellDateTime.h" />

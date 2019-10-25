@@ -13,7 +13,10 @@ class CProjectManagementDlg : public CAcUiDialog
 public:
 	CProjectManagementDlg(CProjectData* pPrjData, CWnd* pParent = NULL);   // 标准构造函数
 	virtual ~CProjectManagementDlg();
-	void FillPjtMngTreeCtrl();
+	void FillPjtMngTreeCtrl(); //填充树控件
+	void InitGridCtrl(); //初始化GridCtrl
+	void FillPjtGridCtrl(CProjectDir* SelectedDir); //填充GridCtrl
+	CProjectDir* FindClkDir(HTREEITEM CurClkItem); //通过递归找到树控件对应的文件夹位置
 
 // 对话框数据
 	enum { IDD = IDD_DIALOG_PROJECTMANAGEMENT };
@@ -24,6 +27,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	CProjectData* m_pPrjData;
+	CProjectDir* m_selectedDir;
 
 	CButton m_BtnDeleteAll;
 	CButton m_BtnDownloadAll;
@@ -42,4 +46,6 @@ public:
 	afx_msg void OnBnClickedButtonUpload();
 	virtual BOOL OnInitDialog();
 	CStatic m_StcRootName;
+	afx_msg void OnNMClickTreePrjdir(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnBnClickedButtonNewdir();
 };
