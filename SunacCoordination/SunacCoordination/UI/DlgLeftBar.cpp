@@ -198,6 +198,6 @@ void DlgLeftBar::OnNMDblclkTreeProjectmanagement(NMHDR *pNMHDR, LRESULT *pResult
 	{
 		CAcModuleResourceOverride resOverride;
 		CProjectManagementDlg dlg(pPrjData);
-		int ret = dlg.DoModal();
+		dlg.DoModal();
 	}
 }

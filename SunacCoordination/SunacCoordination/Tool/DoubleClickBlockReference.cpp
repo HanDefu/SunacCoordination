@@ -88,12 +88,12 @@ void CDoubleClickBlockReference::startEdit( AcDbEntity *pEnt, AcGePoint3d pt )
 			
 		case Bathroom:
 			{
-				if (g_bathroomDlg == NULL)
-				{
-					g_bathroomDlg = new CBathroomDlg(acedGetAcadFrame());
-					g_bathroomDlg->Create(IDD_DIALOG_BATHROOM);
-					g_bathroomDlg->ShowWindow(SW_SHOW);
-				}
+				if (g_bathroomDlg != NULL)
+					break;
+				g_bathroomDlg = new CBathroomDlg(acedGetAcadFrame());
+				g_bathroomDlg->Create(IDD_DIALOG_BATHROOM);
+				g_bathroomDlg->SetEditMode(pBlockReference);
+				g_bathroomDlg->ShowWindow(SW_SHOW);
 				break;
 			}
 		}

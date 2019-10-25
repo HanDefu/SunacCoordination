@@ -71,7 +71,8 @@ public:
 	double m_airVentOffsetY;	//排气道偏移y
 
 	//插入时填写
-	bool m_isMirror;//镜像
+	int m_angle;				//逆时针旋转角度
+	bool m_isMirror;			//镜像
 };
 
 #endif // !defined(ARX__ZFFDWGSCALE_H__20140205_113541_Bathroom)
