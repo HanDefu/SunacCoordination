@@ -132,13 +132,10 @@ bool CExcelUtil::SaveExcel()
 }
 
 void CExcelUtil::CloseExcel()
-{    
-	
-
+{ 
     COleVariant covOptional((long)DISP_E_PARAMNOTFOUND, VT_ERROR);
     m_excelBook.Close(COleVariant((short)FALSE), covOptional, covOptional);
-    m_excelBooks.Close();
-   
+    m_excelBooks.Close(); 
 
 	m_excelRange.ReleaseDispatch();  
 	m_excelSheet.ReleaseDispatch();  
@@ -212,9 +209,60 @@ CWorksheet CExcelUtil::GetSheet(int index)
         return NULL;
     }
     END_CATCH
-        return m_excelSheet;
-
+		
+	return m_excelSheet;
 }
+
+bool CExcelUtil::CopySheet(CString p_sheetName, CString p_newSheetName)
+{
+	CWorksheets sheets = m_excelBook.get_Worksheets();
+	long sheetCount = sheets.get_Count();
+
+	bool hasSheet = false;
+	long nIdex = 0;
+	for (long i = 1; i <= sheets.get_Count(); i++)
+	{
+		CWorksheet sheet = sheets.get_Item(COleVariant(i));
+		if (sheet.get_Name().Compare(p_sheetName) == 0)
+		{
+			hasSheet = true;
+			nIdex = i;
+			break;
+		}
+	}
+	if (hasSheet== false)
+	{
+		return false; 
+	}
+
+	SetActiveSheet(nIdex); 
+
+
+	TRY
+	{
+		CWorksheet lastSheet = sheets.get_Item(COleVariant(sheetCount));
+
+		COleVariant temp;
+		temp.pdispVal = lastSheet.m_lpDispatch;
+		temp.vt = VT_DISPATCH;
+
+		COleVariant vtMissing((long)DISP_E_PARAMNOTFOUND, VT_ERROR);
+		lastSheet.Copy(vtMissing, temp);
+
+		temp.Detach();
+
+		SetSheetName(sheetCount + 1, p_newSheetName);
+	}
+	CATCH(CException, e)
+	{
+		assert(false);
+		return false;
+	}
+	END_CATCH
+
+		return true;
+}
+
 
 /// <summary>
 /// 添加特定的Worksheet
@@ -258,7 +306,8 @@ CWorksheet CExcelUtil::AddSheet(CString SheetName)
         return NULL;
     }
     END_CATCH
-        return new_sheet;
+    
+	return new_sheet;
 }
 
 /// <summary>
@@ -275,11 +324,10 @@ int CExcelUtil::GetSheetNum()
 /// 设置当前的sheet
 /// </summary>
 /// <returns>成功0，否则其他</returns>
-int CExcelUtil::SetActiveSheet(long iSheetName)
+int CExcelUtil::SetActiveSheet(int index)
 {
 	CWorksheets sheets = m_excelBook.get_Worksheets();  //获得excel表里的所有表单的集合
-
-	m_excelSheet =sheets.get_Item(COleVariant(iSheetName));
+	m_excelSheet = sheets.get_Item(COleVariant((long)index));
 	m_excelSheet.Activate();
 	return 0;
 }
@@ -529,8 +577,9 @@ BOOL CExcelUtil::SaveAs(CString p_sFileName)
 		DeleteFile(p_sFileName);
 	}
 
-	COleVariant vtMissing((long)DISP_E_PARAMNOTFOUND,VT_ERROR),
-		vtTrue((short)TRUE),vtFalse((short)FALSE);
+	COleVariant vtMissing((long)DISP_E_PARAMNOTFOUND, VT_ERROR);
+	COleVariant vtTrue((short)TRUE);
+	COleVariant vtFalse((short)FALSE);
 
 	m_excelBook.SaveAs(COleVariant(p_sFileName),
 		vtMissing,
@@ -544,14 +593,24 @@ BOOL CExcelUtil::SaveAs(CString p_sFileName)
 		vtMissing,
 		vtMissing,
 		vtMissing);
+
 	out_file_name = p_sFileName;
 	return TRUE;
 }
 
 int CExcelUtil::SetSheetName(int index, CString newName)
 {
-	CWorksheet sheet = GetSheet(index);
-	sheet.put_Name(newName);
+	TRY
+	{
+		CWorksheet sheet = GetSheet(index);
+		sheet.put_Name(newName);
+	}
+	CATCH(CException, e)
+	{
+		return -1;
+	}
+	END_CATCH
+
 	return 0;
 }
 

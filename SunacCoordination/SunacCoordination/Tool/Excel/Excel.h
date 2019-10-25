@@ -51,11 +51,11 @@ namespace Excel
 		CString GetSheetName(int index);
 		int DeleteSheet(int index);
 		CWorksheet AddSheet(CString SheetName);
+		bool CopySheet(CString p_sheetName, CString p_newSheetName);
+		int SetActiveSheet(int index);
 
 		void DeleteAllCell(); //删除当前表中的数据
-
-
-
+		
 
         //取得一个单元格
         void SetRange(int ColNum, int RowNum);
@@ -95,10 +95,11 @@ namespace Excel
 
 
 		//以下是我添加的201108 专门为MD 不准确的
-		int SetActiveSheet(long iSheetName);
 		int SetSheetCellValue(long iSheetName, long irow, long icol,VARIANT &vt);
 		int GetSheetCellValue(long iSheetName, long irow, long icol,VARIANT &vt);
 		int GetSheetCellValue(long irow, long icol,VARIANT &vt);
+
+	protected:
 		BOOL IsFileExist(CString p_sFileName, BOOL bDir);
 
     };
