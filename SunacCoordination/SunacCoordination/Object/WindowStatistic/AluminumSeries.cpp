@@ -243,6 +243,13 @@ static int OutputAlSeriesFromWindowType(void *NotUsed, int nCol, char **value, c
 	return 0;
 }
 
+static int OutputAlSeriesFromProtoType(void *NotUsed, int nCol, char **value, char **ColName)
+{
+	AlSeries.push_back(UTF8ToGBK(value[0]));
+	return 0;
+}
+
+
 bool CAluminumSeries::GetAluminumDataBySeriesAndName(E_WindowDoorType p_winType, CString p_serials, CString sName, CAluminumData& p_dataOut)
 {
 	InitAluminum();
@@ -329,6 +336,36 @@ vector<CString> CAluminumSeries::GetAluminumSerialsByWindowType(E_WindowDoorType
 	char* sql;
 	ConvertStringToUTF8(sqlString, sql);
 	int res = sqlite3_exec(pDB3, sql, OutputAlSeriesFromWindowType , 0 , &cErrMsg);  
+
+	if (res != SQLITE_OK)
+	{
+		AfxMessageBox(L"select fail");
+		return AlSeries;
+	}
+
+	sqlite3_close(pDB3);
+	return AlSeries;
+}
+
+vector<CString> CAluminumSeries::GetAluminumSerialsByPrototype(CString p_sProtoTypeCode)
+{
+	AlSeries.clear();
+	sqlite3 * pDB3 = NULL;
+	const char * path = TY_GetAluminumDatabasePath();
+	int nRes = sqlite3_open(path, &pDB3);
+
+	if (nRes != SQLITE_OK)
+	{
+		AfxMessageBox(L"Open database fail");
+		return AlSeries;
+	}
+	char* cErrMsg;
+	CString sqlString;
+	sqlString.Format(L"select distinct AluminumSerial  from `WindowDoorAluminum` where `PrototypeCode` = '%s';", p_sProtoTypeCode);
+
+	char* sql;
+	ConvertStringToUTF8(sqlString, sql);
+	int res = sqlite3_exec(pDB3, sql, OutputAlSeriesFromProtoType , 0 , &cErrMsg);  
 
 	if (res != SQLITE_OK)
 	{
