@@ -31,8 +31,8 @@
 #include "../ui/MyPaletteSet.h"
 #include "../ui/DlgLogin.h"
 #include "Command.h"
-
 #include "../Common/ComFun_Math.h"
+#include "../Object/WindowStatistic/WindowStatictic.h"
 
 //登录
 void CMD_Login()
@@ -64,6 +64,10 @@ void CMD_SUNACWINDOW()
 	g_windowDlg->ShowWindow(SW_SHOW);
 }
 
+void CMD_SunacWindowAdvanceDesign() //门窗深化设计
+{
+
+}
 //厨房
 void CMD_SUNACKITCHEN()
 {
@@ -192,7 +196,59 @@ void CMD_SUNACWATERPROOF()
 //统计算量
 void CMD_SUNACSTATISTICS()
 {
+	//第一步：选择需要统计的门窗
+	vAcDbObjectId m_vids;//当前选择的ids
+	acutPrintf(L"请选择需要算量的门窗表的门窗");
 
+	ads_name sset;
+	acedSSGet(NULL, NULL, NULL, NULL, sset);
+
+	long length = 0;
+	acedSSLength(sset, &length);
+
+	for (int i = 0; i < length; i++)
+	{
+		ads_name ent;
+		acedSSName(sset, i, ent);
+		AcDbObjectId objId = 0;
+		acdbGetObjectId(objId, ent);
+		if (objId != 0 && TY_IsWindow(objId))
+		{
+			m_vids.push_back(objId);
+		}
+	}
+	acedSSFree(sset);
+
+	CString info, str;
+	info.Format(L"共选择了%d个门窗\n", m_vids.size());
+
+	if (m_vids.size() == 0)
+		return;
+
+	vector<AttrWindow>  winAtts;
+	for (UINT i = 0; i < m_vids.size(); i++)
+	{
+		RCWindow oneWindow;
+		oneWindow.m_id = m_vids[i];
+		oneWindow.InitParameters();
+
+		AttrWindow* pAtt= oneWindow.GetAttribute();
+		if (pAtt!=NULL)
+		{
+			AttrWindow attTemp(*pAtt);
+			winAtts.push_back(attTemp);
+		}
+	}
+
+	CString filter = L"算量报表文件(*.xlsx)|*.xlsx|All Files(*.*)|*.*||";
+	CFileDialog dlg(FALSE, L"xlsx", L"*.xlsx", NULL, filter);
+	if (dlg.DoModal() == IDOK)
+	{
+		CString pathName = dlg.GetFileName();
+
+		CWindowStatictic winStatic;
+		winStatic.Statictic(winAtts, pathName);
+	}
 }
 
 void CADPalette_AddP()

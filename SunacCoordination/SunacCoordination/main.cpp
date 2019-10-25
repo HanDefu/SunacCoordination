@@ -434,6 +434,15 @@ static void initApp()
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SWINADVANCE"),
+		_T("SWINADVANCE"),
+		ACRX_CMD_MODAL,
+		CMD_SunacWindowAdvanceDesign,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
 		_T("SUNACKITCHEN"),
 		_T("SUNACKITCHEN"),
 		ACRX_CMD_MODAL,
