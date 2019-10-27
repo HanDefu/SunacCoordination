@@ -45,7 +45,7 @@ void CMD_Login()
 }
 
 //窗
-void CMD_SUNACWINDOW()
+void CMD_SunacWindow()
 {
 	CAcModuleResourceOverride resOverride;
 
@@ -77,7 +77,7 @@ void CMD_SunacWindowAdvanceDesign() //门窗深化设计
 }
 
 //厨房
-void CMD_SUNACKITCHEN()
+void CMD_SunacKitchen()
 {
 	CAcModuleResourceOverride resOverride;
 
@@ -97,7 +97,7 @@ void CMD_SUNACKITCHEN()
 }
 
 //卫生间
-void CMD_SUNACBATHROOM()
+void CMD_SunacBathroom()
 {
 	CAcModuleResourceOverride resOverride;
 
@@ -117,7 +117,7 @@ void CMD_SUNACBATHROOM()
 }
 
 //栏杆
-void CMD_SUNACRAILING()
+void CMD_SunacRailing()
 {
 	CAcModuleResourceOverride resOverride;
 
@@ -137,7 +137,7 @@ void CMD_SUNACRAILING()
 }
 
 //线脚
-void CMD_SUNACMOLDINGS()
+void CMD_SunacMoldings()
 {
 	CAcModuleResourceOverride resOverride;
 
@@ -146,7 +146,7 @@ void CMD_SUNACMOLDINGS()
 }
 
 //填充材质
-void CMD_SUNACFILLING()
+void CMD_SunacFilling()
 {
 	CAcModuleResourceOverride resOverride;
 
@@ -155,7 +155,7 @@ void CMD_SUNACFILLING()
 }
 
 //空调
-void CMD_SUNACAIRCONDITIONER()
+void CMD_SunacAirconditioner()
 {
 	CAcModuleResourceOverride resOverride;
 
@@ -175,7 +175,7 @@ void CMD_SUNACAIRCONDITIONER()
 }
 
 //标准立面
-void CMD_SUNACFACADE()
+void CMD_SunacFacade()
 {
 	CAcModuleResourceOverride resOverride;
 
@@ -184,7 +184,7 @@ void CMD_SUNACFACADE()
 }
 
 //防水构造
-void CMD_SUNACWATERPROOF()
+void CMD_SunacWaterproof()
 {
 	CAcModuleResourceOverride resOverride;
 

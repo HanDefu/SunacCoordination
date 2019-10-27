@@ -1,6 +1,6 @@
 #pragma once
 
 //√≈¥∞±Ì
-void CMD_SUNACWINDOWTable();
+void CMD_SunacWindowsTable();
 
 

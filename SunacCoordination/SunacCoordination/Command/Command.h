@@ -7,32 +7,32 @@ void CADPalette_RemoveP();
 void CMD_Login();
 
 //窗户
-void CMD_SUNACWINDOW();
-void CMD_SUNACDOOR();
-
-//统计算量
-void CMD_SunacWindowsStatistics();
-//门窗深化设计
-void CMD_SunacWindowAdvanceDesign();
+void CMD_SunacWindow();
+void CMD_SunacDoor();
+void CMD_SunacWindowAdvanceDesign();//门窗深化设计
+void CMD_SunacWindowsStatistics();//统计算量
+void CMD_SunacWindowDetail();//门窗详图
 
 //厨房
-void CMD_SUNACKITCHEN();
-void CMD_SUNACBATHROOM();
+void CMD_SunacKitchen();
+void CMD_SunacBathroom();
 
-void CMD_SUNACRAILING();//栏杆
-void CMD_SUNACMOLDINGS(); //线脚
-
-//填充材质
-void CMD_SUNACFILLING();
+void CMD_SunacRailing(); //栏杆
 
 //空调
-void CMD_SUNACAIRCONDITIONER();
+void CMD_SunacAirconditioner();
+
+void CMD_SunacMoldings(); //线脚
+
+//填充材质
+void CMD_SunacFilling();
 
 //标准立面
-void CMD_SUNACFACADE();
+void CMD_SunacFacade();
 
 //防水构造
-void CMD_SUNACWATERPROOF();
+void CMD_SunacWaterproof();
+
 
 //退出前关闭所有非模态对话框
 void CloseModelessDialogs();
