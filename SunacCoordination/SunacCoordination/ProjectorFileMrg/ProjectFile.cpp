@@ -20,6 +20,29 @@ CProjectFile::~CProjectFile()
 {
 }
 
+CString CProjectFile::FileSizeToString(long long p_size)
+{
+	long long kSize = p_size >> 10; //תΪk
+	long long mSize = p_size >> 20; //תΪM
+	long long gSize = mSize >> 10; //תΪG
+
+	CString str;
+	if (gSize>0)
+	{
+		str.Format(_T("%d"), (int)mSize);
+	}
+	else if (mSize>0)
+	{
+		str.Format(_T("%.3f"), (double)mSize);
+	}
+	else
+	{
+		str.Format(_T("%dk"), (int)kSize);
+	}
+
+	return str;
+}
+
 
 //////////////////////////////////////////////////////////////////////////
 CProjectDir::CProjectDir()

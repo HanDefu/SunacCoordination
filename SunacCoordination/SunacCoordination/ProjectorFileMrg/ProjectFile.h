@@ -27,6 +27,9 @@ public:
 	~CProjectFile();
 	bool IsDirectory()const { return false; }
 
+protected:
+	static CString FileSizeToString(long long p_size);
+
 public:
 	CString m_sSaveName; //实际存储从名称，通常为GUID
 	CString m_sFileUrl;  //文件下载地址
@@ -36,6 +39,7 @@ public:
 	CString m_sUpdator;		//更新人员
 	CString m_sUpdateTime;	//更新时间
 	CString m_sFileSize;	//文件大小
+	long long m_fileSize;
 };
 
 //////////////////////////////////////////////////////////////////////////
