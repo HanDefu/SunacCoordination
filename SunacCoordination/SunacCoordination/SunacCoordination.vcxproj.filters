@@ -347,6 +347,12 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="NewDirDlg.cpp" />
+    <ClCompile Include="Object\WindowStatistic\GlassSeries.cpp">
+      <Filter>Object\WindowStatictic</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowStatistic\AuxiliaryFrameSeries.cpp">
+      <Filter>Object\WindowStatictic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -782,7 +788,13 @@
     <ClInclude Include="UI\WindowAdvanceDlg.h">
       <Filter>UI</Filter>
     </ClInclude>
-	<ClInclude Include="NewDirDlg.h" />
+    <ClInclude Include="NewDirDlg.h" />
+    <ClInclude Include="Object\WindowStatistic\GlassSeries.h">
+      <Filter>Object\WindowStatictic</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowStatistic\AuxiliaryFrameSeries.h">
+      <Filter>Object\WindowStatictic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">

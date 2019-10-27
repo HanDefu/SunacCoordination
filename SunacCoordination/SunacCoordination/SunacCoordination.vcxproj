@@ -188,7 +188,9 @@
     <ClCompile Include="Object\WindowDoor\RCWindow.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowAutoName.cpp" />
     <ClCompile Include="Object\WindowStatistic\AluminumSeries.cpp" />
+    <ClCompile Include="Object\WindowStatistic\AuxiliaryFrameSeries.cpp" />
     <ClCompile Include="Object\WindowStatistic\DeductedSize.cpp" />
+    <ClCompile Include="Object\WindowStatistic\GlassSeries.cpp" />
     <ClCompile Include="Object\WindowStatistic\WindowFormula.cpp" />
     <ClCompile Include="Object\WindowStatistic\WindowMaterialUsage.cpp" />
     <ClCompile Include="Object\WindowStatistic\WindowStatictic.cpp" />
@@ -311,7 +313,9 @@
     <ClInclude Include="Object\WindowDoor\RCWindow.h" />
     <ClInclude Include="Object\WindowDoor\WindowAutoName.h" />
     <ClInclude Include="Object\WindowStatistic\AluminumSeries.h" />
+    <ClInclude Include="Object\WindowStatistic\AuxiliaryFrameSeries.h" />
     <ClInclude Include="Object\WindowStatistic\DeductedSize.h" />
+    <ClInclude Include="Object\WindowStatistic\GlassSeries.h" />
     <ClInclude Include="Object\WindowStatistic\WindowFormula.h" />
     <ClInclude Include="Object\WindowStatistic\WindowMaterialUsage.h" />
     <ClInclude Include="Object\WindowStatistic\WindowStatictic.h" />
