@@ -7,6 +7,7 @@
 #include "afxdialogex.h"
 #include "../UI/GridCtrl_src/GridCtrlUtil.h"
 #include "..\ProjectorFileMrg\ProjectFileMrg.h"
+#include "../Common/ComFun_String.h"
 
 
 // CProjectManagementDlg 对话框
@@ -48,6 +49,7 @@ void CProjectManagementDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CProjectManagementDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDC_BUTTON_UPLOAD, &CProjectManagementDlg::OnBnClickedButtonUpload)
 	ON_NOTIFY(TVN_SELCHANGED, IDC_TREE_PRJDIR, &CProjectManagementDlg::OnNMClickTreePrjdir)
+	ON_NOTIFY(NM_CLICK, IDC_GRIDCTRL_PRJMANAGEMENT, OnGridClick)
 	ON_BN_CLICKED(IDC_BUTTON_NewDir, &CProjectManagementDlg::OnBnClickedButtonNewdir)
 END_MESSAGE_MAP()
 
@@ -103,6 +105,16 @@ void CProjectManagementDlg::FillPjtMngTreeCtrl()
 void CProjectManagementDlg::OnBnClickedButtonUpload()
 {
 	// TODO: 在此添加控件通知处理程序代码
+	CString filter = L"参数文件(*.dwg)|*.dwg|All Files(*.*)|*.*||";
+    CFileDialog dlg(FALSE, L"dwg", L"*.dwg", NULL, filter);
+	if(dlg.DoModal() == IDOK)
+	{
+		USES_CONVERSION;
+		CString PathName = dlg.GetPathName();
+		CString FileName;
+		JHCom_GetFileName(PathName.GetBuffer(), FileName.GetBuffer());
+		m_pPrjData->UploadFile(PathName, FileName);
+	}
 }
 
 
@@ -245,4 +257,11 @@ void CProjectManagementDlg::OnBnClickedButtonNewdir()
 	m_selectedDir->AddFolder(sNewDir);
 	m_TreePrjDir.InsertItem(sNewDir, 0, 0, CurClkItem);
 	m_TreePrjDir.Expand(CurClkItem, TVE_EXPAND);
+}
+
+void CProjectManagementDlg::OnGridClick(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	NM_GRIDVIEW* pItem = (NM_GRIDVIEW*) pNMHDR;
+	m_nClkRow = pItem->iRow;
+	m_nClkCol = pItem->iColumn;
 }

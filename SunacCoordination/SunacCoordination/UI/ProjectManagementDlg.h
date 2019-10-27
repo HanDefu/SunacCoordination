@@ -28,6 +28,8 @@ protected:
 public:
 	CProjectData* m_pPrjData;
 	CProjectDir* m_selectedDir;
+	int m_nClkRow;//当前点击的单元格的行数
+	int m_nClkCol;//当前点击的单元格的列数
 
 	CButton m_BtnDeleteAll;
 	CButton m_BtnDownloadAll;
@@ -43,6 +45,8 @@ public:
 	CStatic m_StcUploadTime;
 	CTreeCtrl m_TreePrjDir;
 	CGridCtrl m_PjtManagementGridCtrl;
+
+	afx_msg void OnGridClick(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedButtonUpload();
 	virtual BOOL OnInitDialog();
 	CStatic m_StcRootName;
