@@ -71,9 +71,11 @@ void CProjectManagementDlg::FillPjtMngTreeCtrl()
 	HTREEITEM hTreeItem;
 	hTreeItem = m_TreePrjDir.InsertItem(L"项目文件夹", 3, 3,TVI_ROOT);
 	m_TreePrjDir.SetItemHeight(30);
-	vector<CProjectDir*> allDirs;
+
+	//TODO
+	vector<const CProjectDir*> allDirs;
 	vector<HTREEITEM> allItems;
-	allDirs.push_back(&m_pPrjData->m_rootDir);
+	allDirs.push_back(m_pPrjData->GetRootDir());
 	allItems.push_back(hTreeItem);
 
 	for (UINT i = 0; i < allDirs.size(); i++)
@@ -130,9 +132,9 @@ BOOL CProjectManagementDlg::OnInitDialog()
 	InitGridCtrl();
 	FillPjtMngTreeCtrl();
 
-	m_StcPrjName.SetWindowTextW(m_pPrjData->m_prjInfo.m_sName);
-	m_StcArea.SetWindowTextW(m_pPrjData->m_prjInfo.m_sArea);
-	m_StcCompany.SetWindowTextW(m_pPrjData->m_prjInfo.m_sCityCompany);
+	m_StcPrjName.SetWindowTextW(m_pPrjData->GetPrjInfo().m_sName);
+	m_StcArea.SetWindowTextW(m_pPrjData->GetPrjInfo().m_sArea);
+	m_StcCompany.SetWindowTextW(m_pPrjData->GetPrjInfo().m_sCityCompany);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 异常: OCX 属性页应返回 FALSE
@@ -200,16 +202,18 @@ void CProjectManagementDlg::FillPjtGridCtrl(CProjectDir* SelectedDir)
 
 CProjectDir* CProjectManagementDlg::FindClkDir(HTREEITEM CurClkItem)
 {
-	if (CurClkItem == m_TreePrjDir.GetRootItem())
-	{
-		return &m_pPrjData->m_rootDir;
-	}
+	return NULL;  //TODO
 
-	CProjectDir* pParentDir = FindClkDir(m_TreePrjDir.GetParentItem(CurClkItem));
-	assert(pParentDir);
-	CProjectDir* pDir = pParentDir->GetFolder(m_TreePrjDir.GetItemText(CurClkItem));
-	//assert(pDir);
-	return pDir;
+	//if (CurClkItem == m_TreePrjDir.GetRootItem())
+	//{
+	//	return &m_pPrjData->m_rootDir;
+	//}
+
+	//CProjectDir* pParentDir = FindClkDir(m_TreePrjDir.GetParentItem(CurClkItem));
+	//assert(pParentDir);
+	//CProjectDir* pDir = pParentDir->GetSubFolder(m_TreePrjDir.GetItemText(CurClkItem));
+	////assert(pDir);
+	//return pDir;
 }
 
 

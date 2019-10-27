@@ -84,7 +84,7 @@ int DlgLeftBar::FillProjectManagementTreeItem()
 		HTREEITEM hFolder = m_treeProjectManagement.InsertItem(AreaNames[i], 0, 0);
 		for (UINT j = 0; j < vProjectsDatabByArea.size(); j++)
 		{
-			m_treeProjectManagement.InsertItem(vProjectsDatabByArea[j]->m_prjInfo.m_sName, 1, 1, hFolder);
+			m_treeProjectManagement.InsertItem(vProjectsDatabByArea[j]->GetPrjInfo().m_sName, 1, 1, hFolder);
 		}
 	}
 	return 0;

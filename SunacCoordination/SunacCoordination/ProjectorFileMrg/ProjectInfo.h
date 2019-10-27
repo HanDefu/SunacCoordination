@@ -16,10 +16,13 @@ public:
 	CString m_sCityCompany;//城市公司
 };
 
-
+class CProjectFileMrg;
+class CWebProjectFile;
 //////////////////////////////////////////////////////////////////////////
 class CProjectData //项目的数据
 {
+	friend CProjectFileMrg;
+	friend CWebProjectFile;
 public:
 	CProjectData();
 	~CProjectData();
@@ -33,10 +36,24 @@ public:
 	bool UploadFile(CString p_sFileName, CString p_saveName, CProjectDir*  p_parentDir);
 
 
-	bool AddFile(CString p_sFileName, CString  p_sParentDir); //p_sParentDir是指上传到哪个目录下
-	void DeleteFile();
+	//以下目录参数需输入完整的目录
 
-public:
+	bool AddFile(CString p_sFilePath, CString  p_sParentFolderPath); //p_sParentDirPath是指上传到哪个目录下
+	//bool AddFile(CString p_sFilePath, CProjectDir* p_pParentDir); //p_pParentDir是指上传到哪个目录下
+	bool DeleteFile(CString p_sFileName, CString  p_sParentFolderPath);
+
+	bool AddFolder(CString  p_sParentFolderPath, CString p_sFolderName);
+	bool DeleteFolder(CString  p_sFolderPath);
+	bool RenameFolder(CString p_sFolderPath, CString p_newName);
+
+	//目录层级用\分割，例如：A区\施工图 表示A区文件夹下的施工图文件夹
+	CProjectDir* FindDir(CString p_dirName);
+
+	const CProjectDir* GetRootDir() { return &m_rootDir; }
+	CProjectInfo GetPrjInfo()const { return m_prjInfo; }
+	CString GetProjectId()const;
+
+protected:
 	CProjectInfo m_prjInfo;
 	CProjectDir m_rootDir;	
 };

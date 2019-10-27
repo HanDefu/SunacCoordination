@@ -29,15 +29,15 @@ CString CProjectFile::FileSizeToString(long long p_size)
 	CString str;
 	if (gSize>0)
 	{
-		str.Format(_T("%d"), (int)mSize);
+		str.Format(_T("%dM"), (int)mSize);
 	}
 	else if (mSize>0)
 	{
-		str.Format(_T("%.3f"), (double)mSize);
+		str.Format(_T("%.3fM"), ((double)kSize)/1000);
 	}
 	else
 	{
-		str.Format(_T("%dk"), (int)kSize);
+		str.Format(_T("%dK"), (int)kSize);
 	}
 
 	return str;
@@ -59,7 +59,6 @@ CProjectDir::~CProjectDir()
 	m_subDirs.clear();
 }
 
-
 bool CProjectDir::FindFile(CString p_fileName, CProjectFile &p_fileOut)
 {
 	for (UINT i = 0; i < m_subFiles.size(); i++)
@@ -71,6 +70,19 @@ bool CProjectDir::FindFile(CString p_fileName, CProjectFile &p_fileOut)
 		}
 	}
 
+	return false;
+}
+
+bool CProjectDir::DeleteFile(CString p_fileName)
+{
+	for (vector<CProjectFile>::iterator it = m_subFiles.begin(); it < m_subFiles.end(); it++)
+	{
+		if ((*it).m_sName.CompareNoCase(p_fileName) == 0)
+		{
+			m_subFiles.erase(it);
+			return true;
+		}
+	}
 	return false;
 }
 
@@ -110,7 +122,7 @@ CProjectDir* CProjectDir::AddFolder(CString p_sFolderName)
 	return fileDir;
 }
 
-CProjectDir* CProjectDir::GetFolder(CString p_sFolderName)
+CProjectDir* CProjectDir::GetSubFolder(CString p_sFolderName)
 {
 	for (UINT i = 0; i < m_subDirs.size(); i++)
 	{
@@ -121,4 +133,34 @@ CProjectDir* CProjectDir::GetFolder(CString p_sFolderName)
 	}
 
 	return NULL;
+}
+const CProjectDir* CProjectDir::GetSubFolderConst(CString p_sFolderName)
+{
+	for (UINT i = 0; i < m_subDirs.size(); i++)
+	{
+		if (m_subDirs[i]->m_sName.CompareNoCase(p_sFolderName) == 0)
+		{
+			return m_subDirs[i];
+		}
+	}
+
+	return NULL;
+}
+
+bool CProjectDir::DeleteSubFolder(CString p_sFolderName)
+{
+	for (vector<CProjectDir*>::iterator it = m_subDirs.begin(); it < m_subDirs.end(); it++)
+	{
+		if ((*it)->m_sName.CompareNoCase(p_sFolderName) == 0)
+		{
+			delete (*it);			
+			m_subDirs.erase(it);
+			return true;
+		}
+	}
+	return false;
+}
+void CProjectDir::Rename(CString newName)
+{
+	m_sName = newName;
 }

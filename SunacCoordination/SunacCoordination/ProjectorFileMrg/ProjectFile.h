@@ -55,8 +55,9 @@ public:
 	bool FindFile(CString p_fileName, CProjectFile &p_fileOut);
 
 	CProjectDir*  AddFolder(CString p_sFolderName);
-	bool DeleteFolder(CString p_sFolderName);
-	CProjectDir* GetFolder(CString p_folder);
+	bool DeleteSubFolder(CString p_sFolderName);
+	CProjectDir* GetSubFolder(CString p_folder);
+	const CProjectDir* GetSubFolderConst(CString p_folder);
 
 	void Rename(CString newName);
 

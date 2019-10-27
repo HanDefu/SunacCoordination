@@ -29,7 +29,7 @@ CProjectData* CProjectFileMrg::GetProject(CString p_sPrjName)
 {
 	for (UINT i = 0; i < m_projects.size(); i++)
 	{
-		if (m_projects[i]->m_prjInfo.m_sName.CompareNoCase(p_sPrjName)==0)
+		if (m_projects[i]->GetPrjInfo().m_sName.CompareNoCase(p_sPrjName)==0)
 		{
 			return m_projects[i];
 		}
@@ -91,7 +91,7 @@ vector<CString> CProjectFileMrg::GetAllAreas()const
 		bool bFind = false;
 		for (UINT n = 0; n < allArea.size(); n++)
 		{
-			bFind = allArea[n].CompareNoCase(m_projects[i]->m_prjInfo.m_sArea) == 0;
+			bFind = allArea[n].CompareNoCase(m_projects[i]->GetPrjInfo().m_sArea) == 0;
 			if (bFind)
 			{
 				break;
@@ -100,7 +100,7 @@ vector<CString> CProjectFileMrg::GetAllAreas()const
 
 		if (bFind==false)
 		{
-			allArea.push_back(m_projects[i]->m_prjInfo.m_sArea);
+			allArea.push_back(m_projects[i]->GetPrjInfo().m_sArea);
 		}
 	}
 
@@ -112,7 +112,7 @@ vector<CProjectData*> CProjectFileMrg::GetProjectsByArea(CString p_sArea)
 	vector<CProjectData*> ProjectsByArea;
 	for (UINT i = 0; i < m_projects.size(); i++)
 	{
-		if(m_projects[i]->m_prjInfo.m_sArea.CompareNoCase(p_sArea) == 0)
+		if (m_projects[i]->GetPrjInfo().m_sArea.CompareNoCase(p_sArea) == 0)
 		{
 			ProjectsByArea.push_back(m_projects[i]);
 		}

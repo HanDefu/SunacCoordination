@@ -19,7 +19,6 @@ public:
 
 	vector<CString> GetAllAreas()const;
 
-protected:
 	void Clear();
 
 public:

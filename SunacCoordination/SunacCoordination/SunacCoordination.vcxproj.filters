@@ -353,6 +353,9 @@
     <ClCompile Include="Object\WindowStatistic\AuxiliaryFrameSeries.cpp">
       <Filter>Object\WindowStatictic</Filter>
     </ClCompile>
+    <ClCompile Include="WebIO\WebProjectFile.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -794,6 +797,9 @@
     </ClInclude>
     <ClInclude Include="Object\WindowStatistic\AuxiliaryFrameSeries.h">
       <Filter>Object\WindowStatictic</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\WebProjectFile.h">
+      <Filter>WebIO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

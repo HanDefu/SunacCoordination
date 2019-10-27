@@ -111,3 +111,5 @@ void JHCom_GetFileName2(const WCHAR *filename, WCHAR *filename2);
 std::string JHCOM_GetStringFromCString(CString cstr);
 
 std::vector<CString> YT_SplitCString(CString strSource, const TCHAR ch);
+
+CString FilePathToFileName(const CString &p_sFilePath);

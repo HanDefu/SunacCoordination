@@ -215,3 +215,13 @@ vector<CString> YT_SplitCString(CString strSource, const TCHAR ch)
 }
 
 //-------From PIP Com-------//
+CString FilePathToFileName(const CString &p_sFilePath)
+{
+	CString sFilePath = p_sFilePath;
+	int n1 = sFilePath.ReverseFind(_T('\\')) + 1;
+	int n2 = sFilePath.ReverseFind(_T('.'));
+	if (-1 == n1) n1 = 0;
+	if (-1 == n2) n2 = sFilePath.GetLength();
+
+	return sFilePath.Mid(n1, n2 - n1);
+}
