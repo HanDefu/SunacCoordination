@@ -90,67 +90,50 @@ int DlgLeftBar::FillProjectManagementTreeItem()
 	return 0;
 }
 
-void SendCommandToCAD(CString cmd) //此函数尚未调通
-{
-#if 0
-	acedCommand(RTSTR, cmd, 0);
-#else
-	cmd.Trim();
-	cmd += _T(" "); //在末尾加一个空格
-	COPYDATASTRUCT cmdMsg;
-	cmdMsg.dwData = (DWORD)1;
-	cmdMsg.cbData = (DWORD)_tcslen(cmd) + 1;
-	cmdMsg.lpData = cmd.GetBuffer(cmd.GetLength() + 1);
-
-	SendMessage(adsw_acadMainWnd(), WM_COPYDATA, (WPARAM)adsw_acadMainWnd(), (LPARAM)&cmdMsg);
-#endif
-
-}
-
 LRESULT DlgLeftBar::OnClickedPopupMenu(WPARAM mID, LPARAM notUsed)
 {
 	switch (mID)
 	{
 	case ID_COMMAND_WINDOW:
-		//SendCommandToCAD(_T("SWINDOW"));
-		CMD_SunacWindow();
+		SendCommandToCAD(_T("SWINDOW"));
+		//CMD_SunacWindow();
 		break;
 
 	case ID_COMMAND_WINDOWADVANCE: //二次深化设计
-		//SendCommandToCAD(_T("SWINADVANCE"));
-		CMD_SunacWindowAdvanceDesign();
+		SendCommandToCAD(_T("SWINADVANCE"));
+		//CMD_SunacWindowAdvanceDesign();
 		break;
 
 	case ID_COMMAND_WINDOWQUANTITY://门窗算量
-		//SendCommandToCAD(_T("SWINDOWSTATISTICS"));
-		CMD_SunacWindowsStatistics();
+		SendCommandToCAD(_T("SWINDOWSTATISTICS"));
+		//CMD_SunacWindowsStatistics();
 		break;
 	case ID_COMMAND_WINDOWTABLE:
-		//SendCommandToCAD(_T("SWINDOWTABLE"));
-		CMD_SunacWindowsTable();
+		SendCommandToCAD(_T("SWINDOWTABLE"));
+		//CMD_SunacWindowsTable();
 		break;
 	case ID_COMMAND_WINDOWDETAIL:	//门窗详图
-		//SendCommandToCAD(_T("SWINDOWDETAIL"));
-		CMD_SunacWindowDetail();
+		SendCommandToCAD(_T("SWINDOWDETAIL"));
+		//CMD_SunacWindowDetail();
 		break;
 
 	case ID_COMMAND_KITCHEN:
-		//SendCommandToCAD(_T("SKITCHEN"));
-		CMD_SunacKitchen();
+		SendCommandToCAD(_T("SKITCHEN"));
+		//CMD_SunacKitchen();
 		break;
 	case ID_COMMAND_BATHROOM:
-		//SendCommandToCAD(_T("SBATHROOM"));
-		CMD_SunacBathroom();
+		SendCommandToCAD(_T("SBATHROOM"));
+		//CMD_SunacBathroom();
 		break;
 	case ID_COMMAND_KITCHENQUANTITY:
 		break;
 	case ID_COMMAND_RAILING:
-		//SendCommandToCAD(_T("SRAILING"));
-		CMD_SunacRailing();
+		SendCommandToCAD(_T("SRAILING"));
+		//CMD_SunacRailing();
 		break;
 	case ID_COMMAND_AIRCONDITIONER:
-		//SendCommandToCAD(_T("SAIRCONDITIONER"));
-		CMD_SunacAirconditioner();
+		SendCommandToCAD(_T("SAIRCONDITIONER"));
+		//CMD_SunacAirconditioner();
 		break;
 	default:
 		break;
