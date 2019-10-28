@@ -30,6 +30,12 @@ WebIO::~WebIO()
 
 }
 
+bool WebIO::Login(CString p_sUserName, CString p_key)
+{
+	//TODO
+	m_bLogin = true;
+	return true;
+}
 //width,//宽度值，注意高度值不作为搜索条件 
 //openType, //开启类型
 //openNum,//开启扇数量
@@ -222,6 +228,7 @@ bool WebIO::DownloadFile(const int fileId, CString type, CString filePathName)
 	_ns1__CadFileDownloadResponse cadFileResponse;
 
 	ArgumentSettingServiceSoapProxy cadWeb;
+	InitSoapTime(cadWeb);
 	int nRet = cadWeb.CadFileDownload(&nsCadFile, cadFileResponse);
 
 	wstring* swReturn = cadFileResponse.CadFileDownloadResult;

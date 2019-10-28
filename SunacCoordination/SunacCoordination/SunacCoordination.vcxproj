@@ -401,6 +401,7 @@
     <ClInclude Include="WebIO\KitchenBathroomLocalData.h" />
     <ClInclude Include="WebIO\KitchenBathroomWebData.h" />
     <ClInclude Include="WebIO\RailingWebData.h" />
+    <ClInclude Include="WebIO\WebCommon.h" />
     <ClInclude Include="WebIO\WebProjectFile.h" />
     <ClInclude Include="WebIO\WindowLocalData.h" />
     <ClInclude Include="WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.h" />

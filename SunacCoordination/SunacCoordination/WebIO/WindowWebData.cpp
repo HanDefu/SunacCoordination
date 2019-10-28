@@ -6,6 +6,7 @@
 #include "../Common\ComFun_Str.h"
 #include "..\Common\ComFun_String.h"
 #include "..\Common\ComFun_Sunac.h"
+#include "WebCommon.h"
 #include "WebIO.h"
 
 
@@ -582,6 +583,7 @@ std::vector<AttrWindow> CWindowWebData::GetWindows(double p_width, double p_heig
 	_ns1__GetWindowsResponse nsResponse;
 
 	ArgumentSettingServiceSoapProxy cadWeb;
+	InitSoapTime(cadWeb);
 	int nRet = cadWeb.GetWindows(&ns, nsResponse);
 
 	std::vector<AttrWindow> windowAtts;
@@ -613,6 +615,7 @@ std::vector<AttrWindow>  CWindowWebData::GetAllWindows()const
 	_ns1__GetAllWindowsResponse nsResponse;
 
 	ArgumentSettingServiceSoapProxy cadWeb;
+	InitSoapTime(cadWeb);
 	int nRet = cadWeb.GetAllWindows(&ns, nsResponse);
 
 	std::vector<AttrWindow> allWindowAtts;
@@ -649,6 +652,7 @@ std::vector<AttrWindow >  CWindowWebData::GetAllDoors()const
 	_ns1__GetAllDoorResponse nsResponse;
 
 	ArgumentSettingServiceSoapProxy cadWeb;
+	InitSoapTime(cadWeb);
 	int nRet = cadWeb.GetAllDoor(&ns, nsResponse);
 
 	std::vector<AttrWindow> DoorAttrs;
@@ -683,6 +687,7 @@ std::vector<AttrWindow> CWindowWebData::GetDoors(double p_width, double p_heigh,
 	_ns1__GetAllDoorByParamResponse nsResponse;
 
 	ArgumentSettingServiceSoapProxy cadWeb;
+	InitSoapTime(cadWeb);
 	int nRet = cadWeb.GetAllDoorByParam(&ns, nsResponse);
 
 	std::vector<AttrWindow> doorAtts;

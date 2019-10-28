@@ -805,6 +805,9 @@
     <ClInclude Include="UI\NewDirDlg.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="WebIO\WebCommon.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">

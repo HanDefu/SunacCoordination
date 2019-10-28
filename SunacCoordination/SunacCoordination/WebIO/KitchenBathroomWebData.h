@@ -4,6 +4,7 @@
 #include "..\Tool\MarkupXml\Markup.h"
 #include "../Object/Bathroom/AttrBathroom.h"
 #include "../Object/Kitchen/AttrKitchen.h"
+#include "WebCommon.h"
 
 
 class CKitchenBathroomWebData

@@ -4,6 +4,7 @@
 #include "../Common\ComFun_Str.h"
 #include "..\Common\ComFun_String.h"
 #include "..\Common\ComFun_Sunac.h"
+#include "WebCommon.h"
 #include "WebIO.h"
 #include <string>
 
@@ -31,6 +32,8 @@ std::vector<AttrAirCon> CAirConditionWebData::GetAirCons(double piShu, CString w
 	_ns1__GetAllAirconditionerByParamResponse nsResponse;
 
 	ArgumentSettingServiceSoapProxy cadWeb;
+	InitSoapTime(cadWeb);
+
 	int nRet = cadWeb.GetAllAirconditionerByParam(&ns, nsResponse);
 
 	std::vector<AttrAirCon> AirConAtts;
@@ -197,6 +200,7 @@ std::vector<AttrAirCon> CAirConditionWebData::GetAllAirCons()
 	_ns1__GetAllAirconditionerByParamResponse nsResponse;
 
 	ArgumentSettingServiceSoapProxy cadWeb;
+	InitSoapTime(cadWeb);
 	int nRet = cadWeb.GetAllAirconditionerByParam(&ns, nsResponse);
 
 	std::vector<AttrAirCon> AirConAtts;

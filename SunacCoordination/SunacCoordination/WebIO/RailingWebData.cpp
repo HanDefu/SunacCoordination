@@ -4,6 +4,7 @@
 #include "../Common\ComFun_Str.h"
 #include "..\Common\ComFun_String.h"
 #include "..\Common\ComFun_Sunac.h"
+#include "WebCommon.h"
 #include "WebIO.h"
 #include <string>
 
@@ -33,6 +34,7 @@ std::vector<AttrRailing> CRailingWebData::GetRailings(eRailingType RailingType)c
 	_ns1__GetAllHandrailByParamResponse nsResponse;
 
 	ArgumentSettingServiceSoapProxy cadWeb;
+	InitSoapTime(cadWeb);
 	int nRet = cadWeb.GetAllHandrailByParam(&ns, nsResponse);
 
 	std::vector<AttrRailing> vRailingAttrs;

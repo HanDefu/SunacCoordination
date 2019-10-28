@@ -4,6 +4,7 @@
 #include "../Common\ComFun_Str.h"
 #include "..\Common\ComFun_String.h"
 #include "..\Common\ComFun_Sunac.h"
+#include "WebCommon.h"
 #include "WebIO.h"
 #include <string>
 
@@ -320,6 +321,7 @@ std::vector<AttrKitchen> CKitchenBathroomWebData::GetAllKitchens()const
 	_ns1__GetAllKitchenResponse nsResponse;
 
 	ArgumentSettingServiceSoapProxy cadWeb;
+	InitSoapTime(cadWeb);
 	int nRet = cadWeb.GetAllKitchen(&ns, nsResponse);
 
 	std::vector<AttrKitchen> vKitchenAttrs;
@@ -348,6 +350,7 @@ std::vector<AttrBathroom> CKitchenBathroomWebData::GetAllBathrooms()const
 	_ns1__GetAllBathroomResponse nsResponse;
 
 	ArgumentSettingServiceSoapProxy cadWeb;
+	InitSoapTime(cadWeb);
 	int nRet = cadWeb.GetAllBathroom(&ns, nsResponse);
 
 	std::vector<AttrBathroom> vBathroomAttrs;

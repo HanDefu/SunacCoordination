@@ -8,6 +8,7 @@
 #include "../Common\ComFun_Str.h"
 #include "../WebIO/WindowWebData.h"
 #include "..\Tool\MarkupXml\Markup.h"
+#include "WebCommon.h"
 
 using namespace std;
 
@@ -157,9 +158,8 @@ bool CConfigDictionary::GetConfigFromWeb(wstring p_paraTypeName, vector<wstring>
 	_ns1__StandardDesignAttributeResponse attResult;
 
 	ArgumentSettingServiceSoapProxy cadWeb;
-	cadWeb.recv_timeout = 2;	//接受  (单位是秒)
-	cadWeb.send_timeout = 2;	//发送  (单位是秒)
-	cadWeb.connect_timeout = 2;	//连接(单位是秒)
+	InitSoapTime(cadWeb);
+
 	int nRet = cadWeb.StandardDesignAttribute(&desingAtt, attResult);
 	//判断当指针为空，未读到xml时，返回false
 	if (attResult.StandardDesignAttributeResult == NULL)
