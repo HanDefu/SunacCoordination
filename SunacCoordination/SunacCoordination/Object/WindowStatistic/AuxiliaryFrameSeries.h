@@ -27,6 +27,7 @@ public:
 	static CAuxiliaryFrameSeries* Instance();
 	virtual ~CAuxiliaryFrameSeries();
 
+	vector<CString> GetAllAuxiliaryFrameSerials();
 	vector<CString> GetAllAuxiliaryFrameSerials(EAuxiliaryFrameType p_type);
 
 	vector<double>  GetPlugSlotSize(bool p_bHasAuxiliaryFrame); //Èû·ì³ß´ç

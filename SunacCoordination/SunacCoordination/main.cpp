@@ -256,7 +256,7 @@ void InitMenu()
 
 void ZJYTest()
 {
-	CString localWindowPath = TY_GetLocalFilePath();
+	CString localWindowPath = TY_GetPrototypeFilePath();
 
 	vector<AttrWindow> m_winAtts;
 	AttrWindow attrwindow;
@@ -335,7 +335,7 @@ void ZJYTest()
 	//attrwindow.SetR(0);
 	attrwindow.SetA(50);
 
-	attrwindow.m_material.sAluminumSerial = _T("SW50M系列");
+	attrwindow.m_material.sAluminumSerial = _T("SW60AM系列");
 	attrwindow.SetInstanceCode(_T("111"));
 
 	m_winAtts.push_back(attrwindow);
@@ -407,7 +407,7 @@ void ZJYTest()
 	attrwindow.SetR(0);
 	attrwindow.SetA(50);
 
-	attrwindow.m_material.sAluminumSerial = _T("SW55M系列");
+	attrwindow.m_material.sAluminumSerial = _T("SW65M系列");
 	attrwindow.SetInstanceCode(_T("222"));
 
 	m_winAtts.push_back(attrwindow);

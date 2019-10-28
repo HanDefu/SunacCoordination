@@ -355,7 +355,7 @@
     <ClCompile Include="WebIO\WebProjectFile.cpp">
       <Filter>WebIO</Filter>
     </ClCompile>
-    <ClCompile Include="NewDirDlg.cpp">
+    <ClCompile Include="UI\NewDirDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -802,8 +802,11 @@
     <ClInclude Include="WebIO\WebProjectFile.h">
       <Filter>WebIO</Filter>
     </ClInclude>
-    <ClInclude Include="NewDirDlg.h">
+    <ClInclude Include="UI\NewDirDlg.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\WebCommon.h">
+      <Filter>WebIO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

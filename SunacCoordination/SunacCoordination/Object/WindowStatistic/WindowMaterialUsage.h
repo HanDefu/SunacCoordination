@@ -14,7 +14,6 @@ public:
 	CWindowMaterialUsage(const AttrWindow& p_winAtt, int p_nCount);  //p_nCount表示当前窗型的数量
 	virtual ~CWindowMaterialUsage();
 
-	//virtual void CalcMateriaUsage();
 	bool ExportReportToExcel(CString p_sReportFile); //导出到excel报表
 	bool ExportReportToExcel(Excel::CExcelUtil& p_excel); //导出到excel报表
 	

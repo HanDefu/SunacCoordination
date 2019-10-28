@@ -111,10 +111,16 @@ void CWindowStatictic::WindowClassify(const vector<AttrWindow>& p_winAtts)
 
 void CWindowStatictic::Export(CString p_sReportFile)//算量表和统计表分开输出
 {
-	CString reportTemplateXlsFile = TY_GetLocalFilePath() + _T("门窗算量表格.xlsx");
+	CString reportTemplateXlsFile = TY_GetDataFilePath() + _T("门窗算量表格模板.xlsx");
 
 	Excel::CExcelUtil xls;
 	bool bSuc = xls.OpenExcel(reportTemplateXlsFile); //打开表格
+	if (bSuc == false)
+	{
+		AfxMessageBox(_T("无法打开 门窗算量表格模板.xlsx"));
+		return ;
+	}
+
 	xls.SetVisible(false);
 
 
@@ -155,6 +161,7 @@ bool CWindowStatictic::ExportWindowReport(Excel::CExcelUtil& xls)
 	return bAllSuc;
 }
 
+#if 0
 void CWindowStatictic::ExportSeparate(CString p_sReportFile)//算量表和统计表分开输出
 {
 	//2. 对各个门窗生成报表
@@ -188,10 +195,16 @@ bool CWindowStatictic::ExportWindowReport(CString p_sReportFile)
 //2.生成汇总表
 bool CWindowStatictic::GenerateReport(CString p_sReportFile)
 {
-	CString reportTemplateXlsFile = TY_GetLocalFilePath() + _T("汇总表模板.xlsx");
+	CString reportTemplateXlsFile = TY_GetDataFilePath() + _T("门窗算量表格模板.xlsx");
 
 	Excel::CExcelUtil xls;
 	bool bSuc = xls.OpenExcel(reportTemplateXlsFile); //打开表格
+	if (bSuc==false)
+	{
+		AfxMessageBox(_T("无法打开 门窗算量表格模板.xlsx"));
+		return false;
+	}
+
 	xls.SetVisible(false); 
 	xls.SetActiveSheet(1); //打开汇总表
 
@@ -202,6 +215,7 @@ bool CWindowStatictic::GenerateReport(CString p_sReportFile)
 
 	return true;
 }
+#endif
 
 bool CWindowStatictic::GenerateReport(Excel::CExcelUtil& xls)
 {

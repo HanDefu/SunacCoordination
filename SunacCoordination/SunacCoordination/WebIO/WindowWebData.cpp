@@ -5,6 +5,8 @@
 #include "SunacCadWeb\soapArgumentSettingServiceSoapProxy.h"
 #include "../Common\ComFun_Str.h"
 #include "..\Common\ComFun_String.h"
+#include "..\Common\ComFun_Sunac.h"
+#include "WebCommon.h"
 #include "WebIO.h"
 
 
@@ -105,8 +107,8 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 								attrwindow.m_file.fileName = sFileName;
 							}
 							//检查文件是否存在，不存在则下载
-							CString sDWGFilePath = MD2010_GetAppPath() + L"\\support\\Sunac2019\\WebMode\\" + sFileName;
-							CString sImgFilePath = MD2010_GetAppPath() + L"\\support\\Sunac2019\\WebMode\\" + sImgFileName;
+							CString sDWGFilePath = TY_GetPrototypeFilePath() + sFileName;
+							CString sImgFilePath = TY_GetPrototypeImagePath() + sImgFileName;
 							if (!JHCom_FileExist(sDWGFilePath))
 							{
 								WEBINST->DownloadFile(_ttoi(sFileID), "CAD", sDWGFilePath);
@@ -375,8 +377,8 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 									Attrdoor.m_file.fileName = sFileName;
 								}
 								//检查文件是否存在，不存在则下载
-								CString sDWGFilePath = MD2010_GetAppPath() + L"\\support\\Sunac2019\\WebMode\\" + sFileName;
-								CString sImgFilePath = MD2010_GetAppPath() + L"\\support\\Sunac2019\\WebMode\\" + sImgFileName;
+								CString sDWGFilePath = TY_GetPrototypeFilePath() + sFileName;
+								CString sImgFilePath = TY_GetPrototypeImagePath() + sImgFileName;
 								if (!JHCom_FileExist(sDWGFilePath))
 								{
 									WEBINST->DownloadFile(_ttoi(sFileID), "CAD", sDWGFilePath);
@@ -581,6 +583,7 @@ std::vector<AttrWindow> CWindowWebData::GetWindows(double p_width, double p_heig
 	_ns1__GetWindowsResponse nsResponse;
 
 	ArgumentSettingServiceSoapProxy cadWeb;
+	InitSoapTime(cadWeb);
 	int nRet = cadWeb.GetWindows(&ns, nsResponse);
 
 	std::vector<AttrWindow> windowAtts;
@@ -612,6 +615,7 @@ std::vector<AttrWindow>  CWindowWebData::GetAllWindows()const
 	_ns1__GetAllWindowsResponse nsResponse;
 
 	ArgumentSettingServiceSoapProxy cadWeb;
+	InitSoapTime(cadWeb);
 	int nRet = cadWeb.GetAllWindows(&ns, nsResponse);
 
 	std::vector<AttrWindow> allWindowAtts;
@@ -648,6 +652,7 @@ std::vector<AttrWindow >  CWindowWebData::GetAllDoors()const
 	_ns1__GetAllDoorResponse nsResponse;
 
 	ArgumentSettingServiceSoapProxy cadWeb;
+	InitSoapTime(cadWeb);
 	int nRet = cadWeb.GetAllDoor(&ns, nsResponse);
 
 	std::vector<AttrWindow> DoorAttrs;
@@ -682,6 +687,7 @@ std::vector<AttrWindow> CWindowWebData::GetDoors(double p_width, double p_heigh,
 	_ns1__GetAllDoorByParamResponse nsResponse;
 
 	ArgumentSettingServiceSoapProxy cadWeb;
+	InitSoapTime(cadWeb);
 	int nRet = cadWeb.GetAllDoorByParam(&ns, nsResponse);
 
 	std::vector<AttrWindow> doorAtts;

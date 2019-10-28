@@ -37,10 +37,12 @@ protected:
 	bool ExportWindowReport(Excel::CExcelUtil& xls);
 	bool GenerateReport(Excel::CExcelUtil& xls);
 
-
+#if 0
 	void ExportSeparate(CString p_sReportFile); //算量表和统计表分开输出
 	bool ExportWindowReport(CString p_sReportFile);
 	bool GenerateReport(CString p_sReportFile);
+
+#endif
 
 protected:
 	vector<CWindowUsage> m_windows;

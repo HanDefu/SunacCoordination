@@ -194,7 +194,7 @@ vector<CGlassFormula> CWindowFormula::GetGlassFormulas(CString p_sPrototypeCode)
 {
 	sqlite3 * pDB = NULL;
 	vGlassFormulas.clear();
-	const char * path = "C:\\Program Files\\Autodesk\\AutoCAD 2014\\Support\\Sunac2019\\RCData.db";
+	const char * path = TY_GetAluminumDatabasePath();
 	int nRes = sqlite3_open(path, &pDB);
 
 	if (nRes != SQLITE_OK)
