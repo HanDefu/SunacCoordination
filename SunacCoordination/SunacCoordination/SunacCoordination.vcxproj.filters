@@ -346,7 +346,6 @@
     <ClCompile Include="UI\WindowAdvanceDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="NewDirDlg.cpp" />
     <ClCompile Include="Object\WindowStatistic\GlassSeries.cpp">
       <Filter>Object\WindowStatictic</Filter>
     </ClCompile>
@@ -355,6 +354,9 @@
     </ClCompile>
     <ClCompile Include="WebIO\WebProjectFile.cpp">
       <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="NewDirDlg.cpp">
+      <Filter>UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -791,7 +793,6 @@
     <ClInclude Include="UI\WindowAdvanceDlg.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="NewDirDlg.h" />
     <ClInclude Include="Object\WindowStatistic\GlassSeries.h">
       <Filter>Object\WindowStatictic</Filter>
     </ClInclude>
@@ -800,6 +801,9 @@
     </ClInclude>
     <ClInclude Include="WebIO\WebProjectFile.h">
       <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="NewDirDlg.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

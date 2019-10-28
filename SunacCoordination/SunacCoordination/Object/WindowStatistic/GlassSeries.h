@@ -27,7 +27,7 @@ public:
 	static CGlassSeries* Instance();
 	virtual ~CGlassSeries();
 
-	static vector<CString> GetAllGlassSerials();
+	vector<CString> GetAllGlassSerials();
 
 	////通过型材系列获取玻璃选型
 	//static vector<CString> GetGlassSerialsByAlSerial(CString p_sAlSerial);

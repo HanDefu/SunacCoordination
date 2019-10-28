@@ -6,7 +6,10 @@
 #include "../Common/ComFun_Interactive.h"
 #include "../Common/ComFun_Sunac.h"
 #include "../Object/WindowStatistic/AluminumSeries.h"
+#include "../Object/WindowStatistic/GlassSeries.h"
 #include "ComFun_MFC.h"
+#include "algorithm"
+#include "iterator"
 
 
 // CWindowAdvanceDlg 对话框
@@ -18,7 +21,6 @@ CWindowAdvanceDlg::CWindowAdvanceDlg(CWnd* pParent /*=NULL*/)
 	, m_sCode(_T(""))
 {
 	m_isMoldless = true;
-	m_pAttrWindow = NULL;
 }
 
 CWindowAdvanceDlg::~CWindowAdvanceDlg()
@@ -33,9 +35,12 @@ INT_PTR CWindowAdvanceDlg::DoModal()
 
 void CWindowAdvanceDlg::OnOK()
 {
-	if (m_pAttrWindow != NULL)
+	for (UINT i = 0; i < m_selAttrWindows.size(); i++)
 	{
-		m_pAttrWindow->m_material.sAluminumSerial = TYUI_GetComboBoxText(m_xingCai);
+		if (m_xingCai.GetCurSel() >= 0)
+			m_selAttrWindows[i]->m_material.sAluminumSerial = TYUI_GetComboBoxText(m_xingCai);
+		if (m_boLi.GetCurSel() >= 0)
+			m_selAttrWindows[i]->m_material.sGlassSerial = TYUI_GetComboBoxText(m_boLi);
 	}
 
 	CAcUiDialog::OnOK();
@@ -70,6 +75,16 @@ void CWindowAdvanceDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_BOLI, m_boLi);
 }
 
+BOOL CWindowAdvanceDlg::OnInitDialog()
+{
+	CAcUiDialog::OnInitDialog();
+	OnBnClickedSelectOnDwg();
+	InitAluminumSeries();
+	InitGlassSeries();
+	InitMaterialType();
+	return TRUE;
+}
+
 LRESULT CWindowAdvanceDlg::onAcadKeepFocus(WPARAM, LPARAM)
 {
 	return TRUE;
@@ -86,26 +101,95 @@ END_MESSAGE_MAP()
 
 void CWindowAdvanceDlg::OnBnClickedSelectOnDwg()
 {
-	ShowWindow(SW_HIDE);
-	AcDbObjectId id = JHCOM_SelectJHSolidOne();
-	AcDbObject* pAttr = NULL;
-	TY_GetAttributeData(id, pAttr);
-	AttrWindow* pAttrWindow = AttrWindow::cast(pAttr);
-	if (pAttrWindow == NULL)
-	{
-		ShowWindow(SW_SHOW);
-		return;
-	}
-	m_pAttrWindow = pAttrWindow;
-	m_sCode = pAttrWindow->m_instanceCode;
+	m_sCode.Empty();
+	m_selAttrWindows.clear();
 
-	CString prototype = pAttrWindow->GetMainPrototypeCode();
-	vector<CString> options = CAluminumSeries::Instance()->GetAluminumSerialsByPrototype(prototype);
-	CString defValue = pAttrWindow->m_material.sAluminumSerial;
-	TYUI_InitComboBox(m_xingCai, options, defValue);
+	ShowWindow(SW_HIDE);
+
+	vAcDbObjectId ids;
+	JHCOM_SelectEnts(ids);
+
+	for (UINT i = 0; i < ids.size(); i++)
+	{
+		AcDbObject* pAttr = NULL;
+		TY_GetAttributeData(ids[i], pAttr);
+		AttrWindow* pAttrWindow = AttrWindow::cast(pAttr);
+		if (pAttrWindow == NULL)
+			continue;
+
+		m_selAttrWindows.push_back(pAttrWindow);
+
+		if (m_sCode.IsEmpty())
+			m_sCode = pAttrWindow->m_instanceCode;
+		else if (m_sCode != pAttrWindow->m_instanceCode)
+			m_sCode = L"多种";
+	}
 
 	ShowWindow(SW_SHOW);
 	UpdateData(FALSE);
+}
+
+void CWindowAdvanceDlg::InitGlassSeries()
+{
+	vector<CString> glassOptions = CGlassSeries::Instance()->GetAllGlassSerials();
+	CString defValue;
+	for (UINT i = 0; i < m_selAttrWindows.size(); i++)
+	{
+		if (m_selAttrWindows[i]->m_material.sGlassSerial != m_selAttrWindows[0]->m_material.sGlassSerial)
+		{
+			TYUI_InitComboBox(m_boLi, glassOptions, L"");
+			TYUI_SetText(m_boLi, L"多种");
+			return;
+		}
+	}
+	if (!m_selAttrWindows.empty())
+		defValue = m_selAttrWindows[0]->m_material.sGlassSerial;
+	TYUI_InitComboBox(m_boLi, glassOptions, defValue);
+}
+
+void CWindowAdvanceDlg::InitAluminumSeries()
+{
+	vector<CString> options, prevOptions, currOptions;
+	CString defValue;
+
+	for (UINT i = 0; i < m_selAttrWindows.size(); i++)
+	{
+		AttrWindow* pAttrWindow = m_selAttrWindows[i];
+		CString prototype = pAttrWindow->GetMainPrototypeCode();
+		currOptions = CAluminumSeries::Instance()->GetAluminumSerialsByPrototype(prototype);
+		std::sort(currOptions.begin(), currOptions.end());
+		if (i == 0)
+			options = currOptions;
+		else
+		{
+			prevOptions = options;
+			options.clear();
+			std::set_intersection(prevOptions.begin(), prevOptions.end(), currOptions.begin(), currOptions.end(), std::back_inserter(options));
+		}
+	}
+
+	for (UINT i = 0; i < m_selAttrWindows.size(); i++)
+	{
+		if (m_selAttrWindows[i]->m_material.sAluminumSerial != m_selAttrWindows[0]->m_material.sAluminumSerial)
+		{
+			TYUI_InitComboBox(m_xingCai, options, L"");
+			TYUI_SetText(m_xingCai, L"多种");
+			return;
+		}
+	}
+	if (!m_selAttrWindows.empty())
+		defValue = m_selAttrWindows[0]->m_material.sAluminumSerial;
+	TYUI_InitComboBox(m_xingCai, options, defValue);
+}
+
+void CWindowAdvanceDlg::InitMaterialType()
+{
+	if (m_selAttrWindows.empty())
+	{
+		TYUI_InitComboBox(m_caiZhi, L"", L"");
+		return;
+	}
+	TYUI_InitComboBox(m_caiZhi, L"铝型材", L"铝型材");
 }
 
 CWindowAdvanceDlg* g_windowAdvanceDlg = NULL;
