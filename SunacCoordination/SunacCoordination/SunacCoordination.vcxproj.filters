@@ -837,9 +837,6 @@
     <Filter Include="Tool\Excel">
       <UniqueIdentifier>{454bc2d0-be15-4f72-ae3d-203eae19c3f8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="bmp">
-      <UniqueIdentifier>{f6892d25-12ee-476a-975e-aa77be1ed2fc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Command">
       <UniqueIdentifier>{1820d1ff-4187-4dca-8f46-376bd45f8b92}</UniqueIdentifier>
     </Filter>
@@ -889,76 +886,12 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Cancel.bmp">
-      <Filter>bmp</Filter>
-    </None>
-    <None Include="windowdir.bmp">
-      <Filter>bmp</Filter>
-    </None>
-    <None Include="res\Cancel.bmp">
-      <Filter>bmp</Filter>
-    </None>
-    <None Include="res\doordir.bmp">
-      <Filter>bmp</Filter>
-    </None>
-    <None Include="doordir.bmp">
-      <Filter>bmp</Filter>
-    </None>
-    <None Include="..\..\..\..\Doc\软件图标\Insert.bmp">
-      <Filter>bmp</Filter>
-    </None>
-    <None Include="res\Insert.bmp">
-      <Filter>bmp</Filter>
-    </None>
-    <None Include="res\kitchenrange.bmp">
-      <Filter>bmp</Filter>
-    </None>
-    <None Include="kitchenrange.bmp">
-      <Filter>bmp</Filter>
-    </None>
-    <None Include="res\lib.bmp">
-      <Filter>bmp</Filter>
-    </None>
-    <None Include="lib.bmp">
-      <Filter>bmp</Filter>
-    </None>
-    <None Include="mainicon.bmp">
-      <Filter>bmp</Filter>
-    </None>
-    <None Include="res\mainicon.bmp">
-      <Filter>bmp</Filter>
-    </None>
-    <None Include="res\search.bmp">
-      <Filter>bmp</Filter>
-    </None>
-    <None Include="search.bmp">
-      <Filter>bmp</Filter>
-    </None>
-    <None Include="selOne.bmp">
-      <Filter>bmp</Filter>
-    </None>
-    <None Include="res\selOne.bmp">
-      <Filter>bmp</Filter>
-    </None>
-    <None Include="res\windowdir.bmp">
-      <Filter>bmp</Filter>
-    </None>
     <None Include="WebIO\SunacCadWeb\ArgumentSettingServiceSoap.nsmap" />
     <None Include="Tool\SQLite\sqlite3.dll">
       <Filter>Tool\SQLite</Filter>
     </None>
-    <None Include="res\Folder.bmp">
-      <Filter>bmp</Filter>
-    </None>
-    <None Include="res\FolderOpen.bmp">
-      <Filter>bmp</Filter>
-    </None>
-    <None Include="res\画图Folder.ico">
-      <Filter>bmp</Filter>
-    </None>
-    <None Include="res\Document.ico">
-      <Filter>bmp</Filter>
-    </None>
+    <None Include="res\Document.ico" />
+    <None Include="res\画图Folder.ico" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="Tool\SQLite\sqlite3.lib">
