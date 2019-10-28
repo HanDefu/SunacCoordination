@@ -93,21 +93,8 @@ BOOL CRailingDlg::OnInitDialog()
 
 	UpdateRailingToGrid(E_RAILING_ALL);
 
-	//((CMFCButton*)GetDlgItem(IDC_MFCBUTTON_LIB))->SetImage(IDB_BITMAP37);
-	//((CMFCButton*)GetDlgItem(IDC_MFCBUTTON_CANCEL))->SetImage(IDB_BITMAP37);
 	return TRUE;
 }
-
-/*
-void CRailingDlg::UpdateSelectFile(CString selectFile)
-{
-	if (selectFile.GetLength() > 0)
-	{
-		m_preStyle.SetDwgFile(selectFile);
-		m_selectedFile = selectFile;
-	}
-}
-*/
 
 void Test(AttrRailing& railingAtt)
 {
@@ -162,11 +149,11 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 	//生成
 	CRCRailing* pRailing = CreateRailing(railingAtt);
 	//检查数据
-	if (pRailing->CheckLengthWidth()==false)
+	if (pRailing->CheckLengthHeight()==false ||
+		pRailing->GenRailing() == false)
 	{
 		delete pRailing;
-		AfxMessageBox(_T("栏杆长度或高度不符合要求"));
-		//ShowWindow(TRUE);
+		AfxMessageBox(_T("此栏杆长度无法生成"));
 		return;
 	}
 
@@ -177,6 +164,8 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 
 	AcDbObjectId railingId;
 	int nRet = pRailing->GenerateRailing(pnt, railingId);
+
+	delete pRailing;
 	
 	OnOK();
 }
@@ -229,20 +218,16 @@ void CRailingDlg::OnCbnSelchangeComboRailingtype()
 {
 	UpdateData(TRUE);
 
-	//获取控件ComboBox中选的值
 	CString type = TYUI_GetComboBoxText(m_type);
-
 	if (type == _T("不限"))
 	{
 		UpdateRailingToGrid(E_RAILING_ALL);
 	}
-
-	if (type == _T("铁艺栏杆"))
+	else if (type == _T("铁艺栏杆"))
 	{
 		UpdateRailingToGrid(E_RAILING_TIEYI);
 	}
-
-	if (type == _T("玻璃栏杆"))
+	else if (type == _T("玻璃栏杆"))
 	{
 		UpdateRailingToGrid(E_RAILING_BOLI);
 	}

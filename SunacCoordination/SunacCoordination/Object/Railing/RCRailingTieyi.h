@@ -1,17 +1,4 @@
-/*==============================================================================
 
-        Copyright (c) 2018 Shang Hai Tu Yuan Inc. 
-            Unpublished - All rights reserved
-
-================================================================================
-File description:
-
-    This file is the head file of class RCLanGan.
-
-================================================================================
-   Date      Name                    Description of Change
-16-July-2019  Han Defu                Create.
-==============================================================================*/
 #pragma once
 
 #include <vector>

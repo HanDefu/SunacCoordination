@@ -31,6 +31,7 @@ protected:
 	virtual void OnCancel();
 	virtual void PostNcDestroy(); //释放非模态对话框内存
 	bool m_isMoldless;//是否非模态对话框
+
 public:
 	afx_msg void OnBnClickedInsertToCAD();
 	afx_msg void OnBnClickedButtonSelectline();
