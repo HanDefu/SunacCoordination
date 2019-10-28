@@ -155,11 +155,11 @@ void CWindowDlg::OnBnClickedButtonInsert()
 
 	int sel = m_viewDir.GetCurSel();
 	if (sel == 0)
-		oneWindow.Insert(TY_GetLocalFilePath() + pSel->m_frontViewFile.fileName, origin, 0, L"0", 256);
+		oneWindow.Insert(TY_GetPrototypeFilePath() + pSel->m_frontViewFile.fileName, origin, 0, L"0", 256);
 	else if (sel == 1)
-		oneWindow.Insert(TY_GetLocalFilePath() + pSel->m_topViewFile.fileName, origin, 0, L"0", 256);
+		oneWindow.Insert(TY_GetPrototypeFilePath() + pSel->m_topViewFile.fileName, origin, 0, L"0", 256);
 	else
-		oneWindow.Insert(TY_GetLocalFilePath() + pSel->m_leftViewFile.fileName, origin, 0, L"0", 256);
+		oneWindow.Insert(TY_GetPrototypeFilePath() + pSel->m_leftViewFile.fileName, origin, 0, L"0", 256);
 
 	oneWindow.InitParameters();
 
@@ -202,7 +202,7 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 
 	for (UINT i = 0; i < m_allWindows.size(); i++)
 	{
-		CString dwgPath = TY_GetLocalFilePath() + m_allWindows[i].GetFileName();
+		CString dwgPath = TY_GetPrototypeFilePath() + m_allWindows[i].GetFileName();
 		if (!PathFileExists(dwgPath))
 		{
 			acutPrintf(L"\n原型文件" + m_allWindows[i].GetFileName() + L"未找到\n");
@@ -226,7 +226,7 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 		m_allWindows[i].SetH(height);
 		CString str;
 		str.Format(L"原型编号：%s\n窗户面积：%.2lf\n通风量：%.2lf\n动态类型：%s\n适用范围：集团", m_allWindows[i].m_prototypeCode, width * height / 1E6, m_allWindows[i].GetTongFengQty(false), m_allWindows[i].m_isDynamic ? L"动态" : L"静态");
-		CString dwgPath = TY_GetLocalFilePath() + m_allWindows[i].GetFileName();
+		CString dwgPath = TY_GetPrototypeFilePath() + m_allWindows[i].GetFileName();
 		CString pngPath = dwgPath;
 		pngPath.Replace(L"\\LocalMode", L"\\Image");
 		pngPath.Replace(L".dwg", L".png");
@@ -338,11 +338,11 @@ void CWindowDlg::OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult)
 	m_isMirror.SetCheck(pSel->m_isMirror);
 
 	m_viewDir.ResetContent();
-	if ((!pSel->m_frontViewFile.fileName.IsEmpty()) && PathFileExists(TY_GetLocalFilePath() + pSel->m_frontViewFile.fileName))
+	if ((!pSel->m_frontViewFile.fileName.IsEmpty()) && PathFileExists(TY_GetPrototypeFilePath() + pSel->m_frontViewFile.fileName))
 		m_viewDir.AddString(L"立面");
-	if ((!pSel->m_topViewFile.fileName.IsEmpty()) && PathFileExists(TY_GetLocalFilePath() + pSel->m_topViewFile.fileName))
+	if ((!pSel->m_topViewFile.fileName.IsEmpty()) && PathFileExists(TY_GetPrototypeFilePath() + pSel->m_topViewFile.fileName))
 		m_viewDir.AddString(L"平面");
-	if ((!pSel->m_leftViewFile.fileName.IsEmpty()) && PathFileExists(TY_GetLocalFilePath() + pSel->m_leftViewFile.fileName))
+	if ((!pSel->m_leftViewFile.fileName.IsEmpty()) && PathFileExists(TY_GetPrototypeFilePath() + pSel->m_leftViewFile.fileName))
 		m_viewDir.AddString(L"侧视");
 	if (m_viewDir.GetCount() > 0)
 		m_viewDir.SetCurSel(0);

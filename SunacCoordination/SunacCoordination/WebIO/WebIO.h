@@ -28,8 +28,9 @@ public:
 	}
 
 	const CConfigDictionary* GetConfigDict() { return &m_configDic; }
-	//static const CWindowLocalData* GetWindowLocalData() { return &(GetInstance()->m_windowLocalData); }
-	//const CAirConditionLocalData* GetAirConditionLocalData() { return &m_airConLocalData; }
+
+	bool Login(CString p_sUserName, CString p_key);
+	bool IsLogin()const { return m_bLogin; }
 
 public:
 	//width宽度值，注意高度值不作为搜索条件 
@@ -75,6 +76,9 @@ protected:
 	CWindowWebData m_windowWebData;
 	CAirConditionWebData m_airConWebData;
 	CKitchenBathroomWebData m_kitchenBathroomWebData;
+
+
+	bool m_bLogin;
 	
 }; 
 

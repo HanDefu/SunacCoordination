@@ -22,7 +22,7 @@ int GlobalSetting::InitLocalFiles()
 	//if (m_localFiles.size() > 0)
 		//return 0;
 
-	CString localFilePath = TY_GetLocalFilePath();
+	CString localFilePath = TY_GetPrototypeFilePath();
 	//CTime curTime1 = GetTickCount();
 	m_localFiles = TY_FindFilesInDirecotry(L"*.dwg",localFilePath);
 	//CTime curTime2 = GetTickCount();
@@ -37,7 +37,7 @@ bool GlobalSetting::GetLocalFile(CString fileName,CString &filePathName)
 
 	std::pair<CString,CString> filePair;
 	filePair.first = fileName;
-	filePair.second = TY_GetLocalFilePath() + fileName;
+	filePair.second = TY_GetPrototypeFilePath() + fileName;
 	vector<pair<CString,CString>>::iterator it = 
 		std::find(m_localFiles.begin(),m_localFiles.end(), filePair);
 	if (it != m_localFiles.end())

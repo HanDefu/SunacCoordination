@@ -883,7 +883,13 @@ bool TY_IsPairsEqual(vRCPairKeyStrValue &A, vRCPairKeyStrValue &B)
 	return true;
 }
 
-CString TY_GetLocalFilePath()
+CString TY_GetDataFilePath()
+{
+	CString appPath = MD2010_GetAppPath();
+	return appPath + L"\\Support\\Sunac2019\\Data\\";
+}
+
+CString TY_GetPrototypeFilePath()
 {
 	CString appPath = MD2010_GetAppPath();
 #ifdef WORK_LOCAL//本地模式
@@ -893,7 +899,7 @@ CString TY_GetLocalFilePath()
 #endif
 }
 
-CString TY_GetLocalImagePath()
+CString TY_GetPrototypeImagePath()
 {
 	CString appPath = MD2010_GetAppPath();
 #ifdef WORK_LOCAL//本地模式
@@ -905,7 +911,7 @@ CString TY_GetLocalImagePath()
 
 char* TY_GetAluminumDatabasePath()
 {
-	CString TempPath = MD2010_GetAppPath() + L"\\Support\\Sunac2019\\RCData.db";
+	CString TempPath = MD2010_GetAppPath() + L"\\Support\\Sunac2019\\Data\\AluminumData.db";
 	int n = TempPath.GetLength();
 	int len = WideCharToMultiByte(CP_ACP, 0, TempPath, n, NULL, 0, NULL, NULL);
 	char * DatabasePath = new char[len + 1];
