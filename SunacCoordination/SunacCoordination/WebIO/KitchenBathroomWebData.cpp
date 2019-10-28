@@ -3,6 +3,7 @@
 #include "SunacCadWeb\soapArgumentSettingServiceSoapProxy.h"
 #include "../Common\ComFun_Str.h"
 #include "..\Common\ComFun_String.h"
+#include "..\Common\ComFun_Sunac.h"
 #include "WebIO.h"
 #include <string>
 
@@ -76,8 +77,8 @@ std::vector<AttrKitchen > CKitchenBathroomWebData::ParseKitchensFromXML(CMarkup 
 								KitchenAttr.m_file.fileName = sFileName;
 							}
 							//检查文件是否存在，不存在则下载
-							CString sDWGFilePath = MD2010_GetAppPath() + L"\\support\\Sunac2019\\WebMode\\" + sFileName;
-							CString sImgFilePath = MD2010_GetAppPath() + L"\\support\\Sunac2019\\WebMode\\" + sImgFileName;
+							CString sDWGFilePath = TY_GetPrototypeFilePath() + sFileName;
+							CString sImgFilePath = TY_GetPrototypeImagePath()+ sImgFileName;
 							if (!JHCom_FileExist(sDWGFilePath))
 							{
 								WEBINST->DownloadFile(_ttoi(sFileID), "CAD", sDWGFilePath);
@@ -235,8 +236,8 @@ std::vector<AttrBathroom > CKitchenBathroomWebData::ParseBathroomsFromXML(CMarku
 								BathroomAttr.m_file.fileName = sFileName;
 							}
 							//检查文件是否存在，不存在则下载
-							CString sDWGFilePath = MD2010_GetAppPath() + L"\\support\\Sunac2019\\WebMode\\" + sFileName;
-							CString sImgFilePath = MD2010_GetAppPath() + L"\\support\\Sunac2019\\WebMode\\" + sImgFileName;
+							CString sDWGFilePath = TY_GetPrototypeFilePath() + sFileName;
+							CString sImgFilePath = TY_GetPrototypeImagePath() + sImgFileName;
 							if (!JHCom_FileExist(sDWGFilePath))
 							{
 								WEBINST->DownloadFile(_ttoi(sFileID), "CAD", sDWGFilePath);

@@ -10,8 +10,8 @@ using namespace Excel;
 
 CWindowLocalData::CWindowLocalData()
 {
-	CString localWindowPath = TY_GetLocalFilePath();
-	LoadDataFromExcel((localWindowPath + ("外窗数据.xlsx")));
+	CString localWindowPath = TY_GetDataFilePath();
+	LoadDataFromExcel((localWindowPath + ("原型数据.xlsx")));
 }
 
 CWindowLocalData::~CWindowLocalData()
@@ -103,8 +103,13 @@ CWindowsDimData CWindowLocalData::ConvertStringToDimData ( CString code, CString
 void CWindowLocalData::LoadDataFromExcel(CString p_file) 
 {
 	Excel::CExcelUtil xls; 
+	bool bSuc = xls.OpenExcel(p_file); //打开表格
+	if (bSuc == false)
+	{
+		AfxMessageBox(_T("无法打开文件：") + p_file);
+		return;
+	}
 
-	xls.OpenExcel(p_file); //打开表格
 	xls.SetVisible(false); 
 
 

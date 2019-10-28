@@ -256,7 +256,7 @@ void InitMenu()
 
 void ZJYTest()
 {
-	CString localWindowPath = TY_GetLocalFilePath();
+	CString localWindowPath = TY_GetPrototypeFilePath();
 
 	vector<AttrWindow> m_winAtts;
 	AttrWindow attrwindow;

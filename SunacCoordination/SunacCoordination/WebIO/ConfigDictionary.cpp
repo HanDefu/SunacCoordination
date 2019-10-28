@@ -7,7 +7,6 @@
 #include "SunacCadWeb\soapArgumentSettingServiceSoapProxy.h"
 #include "../Common\ComFun_Str.h"
 #include "../WebIO/WindowWebData.h"
-
 #include "..\Tool\MarkupXml\Markup.h"
 
 using namespace std;

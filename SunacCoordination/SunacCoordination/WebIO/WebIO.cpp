@@ -22,7 +22,7 @@ using namespace std;
 
 WebIO::WebIO()
 {
-
+	m_bLogin = false;
 }
 
 WebIO::~WebIO()
@@ -144,7 +144,7 @@ std::vector<AttrRailing> WebIO::GetRailings(eRailingType type)//一次搜索所有的
 {
 #ifdef WORK_LOCAL//本地模式
 	std::vector<AttrRailing> result;
-	//CString localWindowPath = TY_GetLocalFilePath();
+	//CString localWindowPath = TY_GetPrototypeFilePath();
 	//vector<pair<CString,CString>> localFiles = TY_FindFilesInDirecotry(L"_Railing1.dwg",localWindowPath);
 	//for (UINT i = 0; i < localFiles.size(); i++)
 	//{

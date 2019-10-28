@@ -10,8 +10,8 @@ using namespace Excel;
 
 CAirConditionLocalData::CAirConditionLocalData()
 {
-	CString localWindowPath = TY_GetLocalFilePath();
-	LoadDataFromExcel((localWindowPath + ("外窗数据.xlsx")));
+	CString localWindowPath = TY_GetDataFilePath();
+	LoadDataFromExcel((localWindowPath + ("原型数据.xlsx")));
 }
 
 CAirConditionLocalData::~CAirConditionLocalData()
@@ -22,7 +22,13 @@ CAirConditionLocalData::~CAirConditionLocalData()
 void CAirConditionLocalData::LoadDataFromExcel(CString p_file) 
 {
 	Excel::CExcelUtil xls; 
-	xls.OpenExcel(p_file); //打开表格
+	bool bSuc = xls.OpenExcel(p_file); //打开表格
+	if (bSuc == false)
+	{
+		AfxMessageBox(_T("无法打开文件：") + p_file);
+		return ;
+	}
+
 	xls.SetVisible(false); 
 
 	//读取空调数据表单的空调数据

@@ -97,10 +97,16 @@ double CWindowMaterialUsage::GetVauleByFomula(CString p_sFomula)
 
 bool CWindowMaterialUsage::ExportReportToExcel(CString p_sReportFile)
 {
-	CString reportTemplateXlsFile = TY_GetLocalFilePath() + _T("门窗算量表格.xlsx");
+	CString reportTemplateXlsFile = TY_GetDataFilePath() + _T("门窗算量表格模板.xlsx");
 
 	Excel::CExcelUtil xls;
-	xls.OpenExcel(reportTemplateXlsFile); //打开表格
+	bool bSuc = xls.OpenExcel(reportTemplateXlsFile); //打开表格
+	if (bSuc==false)
+	{
+		AfxMessageBox(_T("无法打开 门窗算量表格模板.xlsx"));
+		return false;
+	}
+
 	xls.SetVisible(false); 
 	xls.SetActiveSheet(2); //打开第二张表
 
