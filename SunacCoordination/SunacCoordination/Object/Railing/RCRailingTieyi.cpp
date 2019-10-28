@@ -1,17 +1,3 @@
-/*==============================================================================
-
-        Copyright (c) 2018 Shang Hai Tu Yuan Inc. 
-            Unpublished - All rights reserved
-
-================================================================================
-File description:
-
-    This implementation file of class RCLanGan.
-
-================================================================================
-   Date      Name                    Description of Change
-16-July-2019  Han Defu                Create.
-==============================================================================*/
 
 #include "StdAfx.h"
 #include "RCRailingTieyi.h"
@@ -205,7 +191,7 @@ bool CRCRailingTieyi::GenRailing()  //对栏杆总长进行判断，如果栏杆总长小于1550，
 
 		if (n_1 < 0)
 		{
-			AfxMessageBox(_T("输出的栏杆长度有误"));
+			//AfxMessageBox(_T("此栏杆长度无法生成"));
 			return false;
 		}
 
@@ -219,7 +205,7 @@ bool CRCRailingTieyi::GenRailing()  //对栏杆总长进行判断，如果栏杆总长小于1550，
 
 		if (n_2 < 0)
 		{
-			AfxMessageBox(_T("输出的栏杆长度有误"));
+			//AfxMessageBox(_T("此栏杆长度无法生成"));
 			return false;
 		}
 
@@ -227,7 +213,7 @@ bool CRCRailingTieyi::GenRailing()  //对栏杆总长进行判断，如果栏杆总长小于1550，
 
 		if (k2 > 105 || k2 < 0)	//对K2进行判断，如果K2大于105，返回false
 		{
-			AfxMessageBox(_T("输出的栏杆长度有误"));
+			//AfxMessageBox(_T("此栏杆长度无法生成"));
 			return false;
 		}
 		m_K = k2;

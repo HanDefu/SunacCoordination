@@ -34,6 +34,26 @@
 #include "../Common/ComFun_Math.h"
 #include "../Object/WindowStatistic/WindowStatictic.h"
 
+
+void SendCommandToCAD(CString cmd) //此函数尚未调通
+{
+#if 0
+	acedCommand(RTSTR, cmd, 0);
+#else
+	cmd.Trim();
+	cmd += _T(" "); //在末尾加一个空格
+
+	acDocManager->sendStringToExecute(curDoc(), cmd);
+	return;
+
+	//COPYDATASTRUCT cmdMsg;
+	//cmdMsg.dwData = (DWORD)1;
+	//cmdMsg.cbData = (DWORD)_tcslen(cmd) + 1;
+	//cmdMsg.lpData = cmd.GetBuffer(cmd.GetLength() + 1);
+	//SendMessage(adsw_acadMainWnd(), WM_COPYDATA, (WPARAM)adsw_acadMainWnd(), (LPARAM)&cmdMsg);
+#endif
+}
+
 //登录
 void CMD_Login()
 {

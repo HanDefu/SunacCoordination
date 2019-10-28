@@ -63,6 +63,9 @@ public:
 	//获得从Web端下载文件的文件名（包含扩展名）
 	CString GetFileName(const WCHAR *fullname);
 
+	
+	
+
 protected:
 	CConfigDictionary m_configDic;
 
@@ -73,6 +76,7 @@ protected:
 	CWindowWebData m_windowWebData;
 	CAirConditionWebData m_airConWebData;
 	CKitchenBathroomWebData m_kitchenBathroomWebData;
+	CRailingWebData m_railingWebData;
 
 
 	bool m_bLogin;

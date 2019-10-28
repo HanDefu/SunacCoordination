@@ -34,7 +34,8 @@ public:
 	AttrRailing GetRailingAtt()const { return m_railingAtt; }
 
 	virtual bool SetLength(double p_length);
-	virtual bool CheckLengthWidth();
+	virtual bool CheckLengthHeight();
+	virtual bool GenRailing() = 0;
 	virtual int GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut);
 
 	//////////////////////////////////////////////////////////////////////////
@@ -51,8 +52,6 @@ public:
 	virtual double GetMinHeight()const { return 400; }
 
 protected:
-	virtual bool GenRailing() = 0;
-
 	virtual AcDbObjectId CreateRailingBlockDefine(CString sRailingDefName)= 0;
 
 	CString GetPrototypeFilePath()const ;
