@@ -27,14 +27,12 @@ public:
 	CProjectData();
 	~CProjectData();
 
+	CString GetDirString(CString sName, CProjectDir* p_parentDir);
+
 	static CString GenerateGuid();
 	static bool DownloadFile(const CString& strFileURLInServer, const CString & strFileLocalFullPath);
 	static bool DownloadFile(CProjectFile p_prjFile);
-	static bool UploadFile(CString p_sFileName, CString p_saveName);
-
-	bool UploadFile(CString p_sFileName, CString p_saveName, CString  p_sParentDir); //p_sParentDir 为完整的父目录
-	bool UploadFile(CString p_sFileName, CString p_saveName, CProjectDir*  p_parentDir);
-
+	static bool UploadFile(CString p_sFilePath, CString p_saveName);
 
 	//以下目录参数需输入完整的目录
 

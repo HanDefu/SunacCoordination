@@ -31,6 +31,10 @@ protected:
 	static CString FileSizeToString(long long p_size);
 
 public:
+	CString GetFileSize();
+
+
+public:
 	CString m_sSaveName; //实际存储从名称，通常为GUID
 	CString m_sFileUrl;  //文件下载地址
 
