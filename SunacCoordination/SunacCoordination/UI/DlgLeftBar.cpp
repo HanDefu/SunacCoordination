@@ -190,7 +190,6 @@ BOOL DlgLeftBar::OnInitDialog()
 
 void DlgLeftBar::OnNMDblclkTreeProjectmanagement(NMHDR *pNMHDR, LRESULT *pResult)
 {
-	// TODO: 在此添加控件通知处理程序代码
 	*pResult = 0;
 
 	CPoint CurClkPoint;
