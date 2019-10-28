@@ -67,15 +67,15 @@ vector<double> CAuxiliaryFrameSeries::GetPlugSlotSize(bool p_bHasAuxiliaryFrame)
 	vector<double>  sizesOut;
 	if (p_bHasAuxiliaryFrame)
 	{
+		sizesOut.push_back(40);
+		sizesOut.push_back(50);
+	}
+	else
+	{
 		sizesOut.push_back(10);
 		sizesOut.push_back(20);
 		sizesOut.push_back(25);
 		sizesOut.push_back(30);
-	}
-	else
-	{
-		sizesOut.push_back(40);
-		sizesOut.push_back(50);
 	}
 	return sizesOut;
 }
