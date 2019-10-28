@@ -413,3 +413,38 @@ std::vector<AttrBathroom> CKitchenBathroomWebData::GetAllBathrooms()const
 
 	return vBathroomAttrs;
 }
+
+std::vector<AttrBathroom> CKitchenBathroomWebData::GetBathrooms(double width, double height, CString weiZhiGuanXi, CString type)const
+{
+	std::wstring sWindowDoorPosition = weiZhiGuanXi;
+	std::wstring sType = type;
+
+	_ns1__GetAllBathroomByParam ns;
+	_ns1__GetAllBathroomByParamResponse nsResponse;
+
+	ns.Width = width;
+	ns.Height = height;
+	ns.BathroomDoorWindowPosition = &sWindowDoorPosition;
+	ns.ToiletType = &sType;
+
+	ArgumentSettingServiceSoapProxy cadWeb;
+	InitSoapTime(cadWeb);
+	int nRet = cadWeb.GetAllBathroomByParam(&ns, nsResponse);
+
+	std::vector<AttrBathroom> vBathroomAttrs;
+
+	//判断返回结果是否成功
+	if (nsResponse.GetAllBathroomByParamResult == NULL)
+	{
+		return vBathroomAttrs;
+	}
+
+	//解析字符串出结果
+	CMarkup xml;	
+
+	xml.SetDoc((*(nsResponse.GetAllBathroomByParamResult)).c_str());
+
+	vBathroomAttrs = ParseBathroomsFromXML(xml);
+
+	return vBathroomAttrs;
+}

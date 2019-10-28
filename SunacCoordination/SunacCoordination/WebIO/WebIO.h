@@ -76,13 +76,12 @@ protected:
 	CWindowWebData m_windowWebData;
 	CAirConditionWebData m_airConWebData;
 	CKitchenBathroomWebData m_kitchenBathroomWebData;
+	CRailingWebData m_railingWebData;
 
 
 	bool m_bLogin;
 	
 }; 
-
-CString KitchenTypeToCString(EKitchType type);
 
 #define WEBINST (WebIO::GetInstance())
 

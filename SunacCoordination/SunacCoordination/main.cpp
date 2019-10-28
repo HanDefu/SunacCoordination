@@ -548,9 +548,9 @@ void CMD_test()
 
 	}*/
 
-	std::vector<AttrBathroom> BathroomFromWebData = BathroomFromWeb.GetAllBathrooms();
+	std::vector<AttrBathroom> BathroomFromWebData = BathroomFromWeb.GetBathrooms(1800, 2000, L"门窗垂直开", L"L型");
 	std::vector<AttrRailing> RailingFromWebData = RailingFromWeb.GetRailings(E_RAILING_BOLI);
-	std::vector<AttrAirCon> AirConFromWebData = AirConFromWeb.GetAirCons(0,"",0 ,"");
+	std::vector<AttrAirCon> AirConFromWebData = AirConFromWeb.GetAirCons(1.5, "后面", 1, "侧面");
 	return;
 }
 

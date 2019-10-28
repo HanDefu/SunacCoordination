@@ -17,6 +17,7 @@
 #include "AirconditionWebData.h"
 #include "KitchenBathroomWebData.h"
 #include "RailingWebData.h"
+#include "math.h"
 
 using namespace std;
 
@@ -51,7 +52,7 @@ std::vector<AttrWindow>  WebIO::GetWindows(double width, double height, CString 
 	vAttrWindow Local = m_windowLocalData.GetWindows(width, openType, openNum, gongNengQu);
 	vAttrWindow Web = m_windowWebData.GetWindows(width, height, openType, openNum, gongNengQu);
 
-	for(int i = 0; i < Web.size(); i++ )
+	/*for(int i = 0; i < Web.size(); i++ )
 	{
 		AttrWindow &curWebWin = Web[i];
 
@@ -74,8 +75,8 @@ std::vector<AttrWindow>  WebIO::GetWindows(double width, double height, CString 
 			}
 		}
 
-	}
-	return Local;
+	}*/
+	return Web;
 #endif
 }
 std::vector<AttrWindow> WebIO::GetDoors(double width, double height, CString openType, int openNum, CString gongNengQu)const
@@ -92,7 +93,16 @@ std::vector<AttrKitchen> WebIO::GetKitchens(EKitchType p_type, double p_xLen, do
 #ifdef WORK_LOCAL//本地模式
 	return m_kitchenBathroomLocalData.GetKitchens(p_type, p_xLen, p_yLen, p_doorDir, p_windowDir, p_hasPaiQiDao);
 #else
-	return m_kitchenBathroomWebData.GetKitchens(p_xLen, p_yLen, L"", KitchenTypeToCString(p_type), (p_hasPaiQiDao == true)? 1:0);
+	
+	CString WindowDoorPos;
+	if (abs(p_doorDir - p_windowDir) == 2)
+	{
+		WindowDoorPos = L"门窗对开";
+	}
+	else WindowDoorPos = L"门窗垂直开";
+
+
+	return m_kitchenBathroomWebData.GetKitchens(p_xLen, p_yLen, WindowDoorPos, KitchenTypeToCString(p_type), (p_hasPaiQiDao == true)? 1:0);
 #endif
 }
 
@@ -101,8 +111,7 @@ std::vector<AttrKitchen> WebIO::GetAllKitchens()
 #ifdef WORK_LOCAL//本地模式
 	return m_kitchenBathroomLocalData.GetAllKitchens();
 #else
-	std::vector<AttrKitchen> ret;
-	return ret;
+	return m_kitchenBathroomWebData.GetAllKitchens();
 #endif
 }
 
@@ -111,8 +120,15 @@ std::vector<AttrBathroom> WebIO::GetBathrooms(EBathroomType p_type, double p_xLe
 #ifdef WORK_LOCAL//本地模式
 	return m_kitchenBathroomLocalData.GetBathrooms(p_type, p_xLen, p_yLen, p_doorDir, p_windowDir);
 #else
-	std::vector<AttrBathroom> ret;
-	return ret;
+
+	CString WindowDoorPos;
+	if (abs(p_doorDir - p_windowDir) == 2)
+	{
+		WindowDoorPos = L"门窗对开";
+	}
+	else WindowDoorPos = L"门窗垂直开";
+
+	return m_kitchenBathroomWebData.GetBathrooms(p_xLen, p_yLen, WindowDoorPos, BathroomTypeToCString(p_type));
 #endif
 }
 
@@ -121,8 +137,7 @@ std::vector<AttrBathroom> WebIO::GetAllBathrooms()
 #ifdef WORK_LOCAL//本地模式
 	return m_kitchenBathroomLocalData.GetAllBathrooms();
 #else
-	std::vector<AttrBathroom> ret;
-	return ret;
+	return m_kitchenBathroomWebData.GetAllBathrooms();
 #endif
 }
 
@@ -168,8 +183,7 @@ std::vector<AttrRailing> WebIO::GetRailings(eRailingType type)//一次搜索所有的
 	//}
 	return result;
 #else
-	std::vector<AttrRailing> result;
-	return result;
+	return m_railingWebData.GetRailings(type);
 #endif
 }
 
@@ -181,10 +195,7 @@ std::vector<AttrRailing> WebIO::GetAllRailings()
 	result1.insert(result1.end(), result2.begin(), result2.end());
 	return result1;
 #else
-	std::vector<AttrRailing> result1 = GetRailings(E_RAILING_TIEYI);
-	std::vector<AttrRailing> result2 = GetRailings(E_RAILING_BOLI);
-	result1.insert(result1.end(), result2.begin(), result2.end());
-	return result1;
+	return m_railingWebData.GetRailings(E_RAILING_BOLI);
 #endif
 }
 
@@ -277,27 +288,3 @@ CString WebIO::GetFileName(const WCHAR *fullname)
 	return filename;
 }
 
-CString KitchenTypeToCString(EKitchType type)
-{
-	switch(type)
-	{
-	case E_KITCH_U:
-		return L"U型";
-		break;
-	case E_KITCH_L:
-		return L"L型";
-		break;
-	case E_KITCH_I:
-		return L"I型";
-		break;
-	case E_KITCH_OTHER:
-		return L"其他";
-		break;
-	case E_KITCH_ALL:
-		return L"所有类型";
-		break;
-	default:
-		return L"";
-		break;
-	}
-}
