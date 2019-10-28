@@ -11,23 +11,30 @@
 std::vector<AttrAirCon> CAirConditionWebData::GetAirCons(double piShu, CString weiZhi, bool hasYuShuiGuan, CString yuShuiGuanWeizhi)
 {
 	CString AirconditionerIsRainpipe_;
-	AirconditionerIsRainpipe_.Format(L"%d", hasYuShuiGuan);
+	if (hasYuShuiGuan)
+	{
+		AirconditionerIsRainpipe_ = L"1";
+	}
+	else AirconditionerIsRainpipe_ = L"-1";
+	CString pishu_;
+	pishu_.Format(L"%.1f", piShu);
+	pishu_ = pishu_;
 
-/*
-	std::wstring sAirconditionerPower = piShu;
-	std::wstring sAirconditionerPipePosition = AirconditionerPipePosition;
+
+	std::wstring sAirconditionerPower = pishu_;
+	std::wstring sAirconditionerPipePosition = weiZhi;
 	std::wstring sAirconditionerIsRainpipe = AirconditionerIsRainpipe_;
-	std::wstring sRainpipePosition = RainpipePosition;*/
+	std::wstring sRainpipePosition = yuShuiGuanWeizhi;
 
 	_ns1__GetAllAirconditionerByParam ns;
-	/*ns.AirconditionerPower = &sAirconditionerPower;
+	ns.AirconditionerPower = &sAirconditionerPower;
 	ns.AirconditionerPipePosition = &sAirconditionerPipePosition;
 	ns.AirconditionerIsRainpipe = &sAirconditionerIsRainpipe;
-	ns.RainpipePosition = &sRainpipePosition;*/
-	ns.AirconditionerPower = 0;
+	ns.RainpipePosition = &sRainpipePosition;
+	/*ns.AirconditionerPower = 0;
 	ns.AirconditionerPipePosition = 0;
 	ns.AirconditionerIsRainpipe = 0;
-	ns.RainpipePosition = 0;
+	ns.RainpipePosition = 0;*/
 
 	_ns1__GetAllAirconditionerByParamResponse nsResponse;
 
