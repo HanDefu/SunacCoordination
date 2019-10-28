@@ -27,7 +27,7 @@
 #include "dbtable.h"
 
 //门窗表
-void CMD_SUNACWINDOWTable()
+void CMD_SunacWindowsTable()
 {
 	//第一步：选择需要统计的门窗
 	vAcDbObjectId m_vids;//当前选择的ids

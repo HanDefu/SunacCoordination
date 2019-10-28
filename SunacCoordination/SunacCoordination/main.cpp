@@ -597,6 +597,15 @@ static void initApp()
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("test2"),
+		_T("test2"),
+		ACRX_CMD_SESSION,
+		CMD_TEST2,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
 		_T("zjy"),
 		_T("zjy"),
 		ACRX_CMD_MODAL,
@@ -604,6 +613,8 @@ static void initApp()
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());
+
+	//////////////////////////////////////////////////////////////////////////
 
 	acedRegCmds->addCommand(_T("SUNAC"),
 		_T("SLOGIN"),
@@ -615,10 +626,10 @@ static void initApp()
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
-		_T("SUNACWINDOW"),
-		_T("SUNACWINDOW"),
+		_T("SWINDOW"),
+		_T("SWINDOW"),
 		ACRX_CMD_MODAL,
-		CMD_SUNACWINDOW,
+		CMD_SunacWindow,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());
@@ -633,80 +644,8 @@ static void initApp()
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
-		_T("SUNACKITCHEN"),
-		_T("SUNACKITCHEN"),
-		ACRX_CMD_MODAL,
-		CMD_SUNACKITCHEN,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
-
-	acedRegCmds->addCommand(_T("SUNAC"),
-		_T("SUNACBATHROOM"),
-		_T("SUNACBATHROOM"),
-		ACRX_CMD_MODAL,
-		CMD_SUNACBATHROOM,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
-
-	acedRegCmds->addCommand(_T("SUNAC"),
-		_T("SUNACRAILING"),
-		_T("SUNACRAILING"),
-		ACRX_CMD_MODAL,
-		CMD_SUNACRAILING,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
-
-	acedRegCmds->addCommand(_T("SUNAC"),
-		_T("SUNACMOLDINGS"),
-		_T("SUNACMOLDINGS"),
-		ACRX_CMD_MODAL,
-		CMD_SUNACMOLDINGS,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
-
-	acedRegCmds->addCommand(_T("SUNAC"),
-		_T("SUNACFILLING"),
-		_T("SUNACFILLING"),
-		ACRX_CMD_MODAL,
-		CMD_SUNACFILLING,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
-
-	acedRegCmds->addCommand(_T("SUNAC"),
-		_T("SUNACAIRCONDITIONER"),
-		_T("SUNACAIRCONDITIONER"),
-		ACRX_CMD_MODAL,
-		CMD_SUNACAIRCONDITIONER,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
-
-	acedRegCmds->addCommand(_T("SUNAC"),
-		_T("SUNACFACADE"),
-		_T("SUNACFACADE"),
-		ACRX_CMD_MODAL,
-		CMD_SUNACFACADE,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
-
-	acedRegCmds->addCommand(_T("SUNAC"),
-		_T("SUNACWATERPROOF"),
-		_T("SUNACWATERPROOF"),
-		ACRX_CMD_MODAL,
-		CMD_SUNACWATERPROOF,
-		NULL,
-		-1,
-		theArxDLL.ModuleResourceInstance());
-
-	acedRegCmds->addCommand(_T("SUNAC"),
-		_T("SUNACSTATISTICS"),
-		_T("SUNACSTATISTICS"),
+		_T("SWINDOWSTATISTICS"),
+		_T("SWINDOWSTATISTICS"),
 		ACRX_CMD_MODAL,
 		CMD_SunacWindowsStatistics,
 		NULL,
@@ -714,31 +653,97 @@ static void initApp()
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
-		_T("mcb"),
-		_T("mcb"),
+		_T("SWINDOWTABLE"),
+		_T("SWINDOWTABLE"),
 		ACRX_CMD_MODAL,
-		CMD_SUNACWINDOWTable,
+		CMD_SunacWindowsTable,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
-		_T("mcxt"),
-		_T("mcxt"),
+		_T("SWINDOWDETAIL"),
+		_T("SWINDOWDETAIL"),
 		ACRX_CMD_MODAL,
-		CMD_SUNACWINDOWDetail,
+		CMD_SunacWindowDetail,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
-		_T("te"),
-		_T("te"),
-		ACRX_CMD_SESSION,
-		CMD_TEST2,
+		_T("SKITCHEN"),
+		_T("SKITCHEN"),
+		ACRX_CMD_MODAL,
+		CMD_SunacKitchen,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SBATHROOM"),
+		_T("SBATHROOM"),
+		ACRX_CMD_MODAL,
+		CMD_SunacBathroom,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SRAILING"),
+		_T("SRAILING"),
+		ACRX_CMD_MODAL,
+		CMD_SunacRailing,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SAIRCONDITIONER"),
+		_T("SAIRCONDITIONER"),
+		ACRX_CMD_MODAL,
+		CMD_SunacAirconditioner,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SMOLDINGS"),
+		_T("SMOLDINGS"),
+		ACRX_CMD_MODAL,
+		CMD_SunacMoldings,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SFILLING"),
+		_T("SFILLING"),
+		ACRX_CMD_MODAL,
+		CMD_SunacFilling,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SFACADE"),
+		_T("SFACADE"),
+		ACRX_CMD_MODAL,
+		CMD_SunacFacade,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SWATERPROOF"),
+		_T("SWATERPROOF"),
+		ACRX_CMD_MODAL,
+		CMD_SunacWaterproof,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+
 
 	AttrObject::rxInit();
 	acrxBuildClassHierarchy();
@@ -773,7 +778,6 @@ static void initApp()
 	//WEBINST;
 
 	//mThreadHandle = (HANDLE)_beginthread(&SyncDataWithService, 0, 0);
-
 }
 
 

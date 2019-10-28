@@ -116,7 +116,7 @@ static int InsertTemplates(vRCWindow &allWindowsTypes, AcGePoint3d pnt, vSWindow
 }
 
 //门窗详图
-void CMD_SUNACWINDOWDetail()
+void CMD_SunacWindowDetail()
 {
 	CDocLock lockEnt;
 	CString str;
