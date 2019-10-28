@@ -66,7 +66,21 @@ vector<CString> CGlassSeries::GetAllGlassSerials()
 	glassSerials.push_back(_T("6中透光Low-E+12A+6"));
 	glassSerials.push_back(_T("6中透光Low-E+9A+6"));	
 
-	//后续改为读数据库
+	//TODO 后续改为读数据库
 
 	return glassSerials;
+}
+
+//通过型材系列获取玻璃选型
+vector<CString> CGlassSeries::GetGlassSerialsByAlSerial(CString p_sAlSerial)
+{
+	//TODO
+	return GetAllGlassSerials();
+}
+
+//通过隔热系数获取玻璃选型
+vector<CString> CGlassSeries::GetGlassSerialsByHeatInsulationCoeff(double p_heatCoeff)
+{
+	//TODO
+	return GetAllGlassSerials();
 }

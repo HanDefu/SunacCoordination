@@ -43,6 +43,12 @@ CString CProjectFile::FileSizeToString(long long p_size)
 	return str;
 }
 
+CString CProjectFile::GetFileSize()
+{
+	CString sFileSize = this->FileSizeToString(m_fileSize);
+	return sFileSize;
+}
+
 
 //////////////////////////////////////////////////////////////////////////
 CProjectDir::CProjectDir()

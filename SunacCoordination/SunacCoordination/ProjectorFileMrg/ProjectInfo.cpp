@@ -205,6 +205,7 @@ CProjectDir* CProjectData::FindDir(CString p_dirName)
 				return NULL;
 			}
 			nPos1 = npos2 + 1;
+			npos2++;
 		}
 	} while (npos2>0);
 
@@ -227,8 +228,11 @@ bool CProjectData::AddFile(CString p_sFilePath, CString  p_sParentFolderPath) //
 	{
 		return false;
 	}
+
 	CString sExtensionName = sFileName.Mid(nPos);
 	CString sSaveName = GenerateGuid() + sExtensionName; //实际存储的名字
+	sSaveName.Delete(sSaveName.Find(_T("{")));
+	sSaveName.Delete(sSaveName.Find(_T("}")));
 
 	//上传到ftp中
 	UploadFile(p_sFilePath, sSaveName);
@@ -324,4 +328,17 @@ bool CProjectData::RenameFolder(CString p_sFolderPath, CString p_newName)
 	CWebProjectFile::Instance()->RenameFolder(GetProjectId(), p_sFolderPath, p_newName);
 
 	return true; 
+}
+
+CString CProjectData::GetDirString(CString sName, CProjectDir* p_parentDir)
+{
+	CString temp = sName;
+	CProjectDir* tempDir = p_parentDir;
+	while (tempDir != &m_rootDir)
+	{
+		CString sDirString = tempDir->m_sName;
+		temp = sDirString + L"\\" + temp;
+		tempDir = tempDir->m_parent;
+	}
+	return temp;
 }
