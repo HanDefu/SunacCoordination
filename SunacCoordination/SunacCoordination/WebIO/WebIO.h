@@ -62,6 +62,9 @@ public:
 	//获得从Web端下载文件的文件名（包含扩展名）
 	CString GetFileName(const WCHAR *fullname);
 
+	
+	
+
 protected:
 	CConfigDictionary m_configDic;
 
@@ -74,6 +77,8 @@ protected:
 	CKitchenBathroomWebData m_kitchenBathroomWebData;
 	
 }; 
+
+CString KitchenTypeToCString(EKitchType type);
 
 #define WEBINST (WebIO::GetInstance())
 

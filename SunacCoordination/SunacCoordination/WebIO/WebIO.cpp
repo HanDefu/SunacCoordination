@@ -86,8 +86,7 @@ std::vector<AttrKitchen> WebIO::GetKitchens(EKitchType p_type, double p_xLen, do
 #ifdef WORK_LOCAL//本地模式
 	return m_kitchenBathroomLocalData.GetKitchens(p_type, p_xLen, p_yLen, p_doorDir, p_windowDir, p_hasPaiQiDao);
 #else
-	std::vector<AttrKitchen> ret;
-	return ret;
+	return m_kitchenBathroomWebData.GetKitchens(p_xLen, p_yLen, L"", KitchenTypeToCString(p_type), (p_hasPaiQiDao == true)? 1:0);
 #endif
 }
 
@@ -269,4 +268,29 @@ CString WebIO::GetFileName(const WCHAR *fullname)
 	}
 	wcscpy_s(filename,pre);
 	return filename;
+}
+
+CString KitchenTypeToCString(EKitchType type)
+{
+	switch(type)
+	{
+	case E_KITCH_U:
+		return L"U型";
+		break;
+	case E_KITCH_L:
+		return L"L型";
+		break;
+	case E_KITCH_I:
+		return L"I型";
+		break;
+	case E_KITCH_OTHER:
+		return L"其他";
+		break;
+	case E_KITCH_ALL:
+		return L"所有类型";
+		break;
+	default:
+		return L"";
+		break;
+	}
 }

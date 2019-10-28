@@ -247,6 +247,11 @@ void CProjectManagementDlg::OnBnClickedButtonNewdir()
 	CNewDirDlg dlg;
 	dlg.DoModal();
 	CString sNewDir = dlg.m_sNewDir;
+	if (sNewDir = L"")
+	{
+		AfxMessageBox(L"ÇëÊäÈëÄ¿Â¼Ãû£¡");
+		return;
+	}
 	CPoint CurClkPoint;
 	GetCursorPos(&CurClkPoint);
 	m_TreePrjDir.ScreenToClient(&CurClkPoint);
