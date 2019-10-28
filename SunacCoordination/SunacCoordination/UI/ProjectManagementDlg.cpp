@@ -7,6 +7,7 @@
 #include "afxdialogex.h"
 #include "../UI/GridCtrl_src/GridCtrlUtil.h"
 #include "..\ProjectorFileMrg\ProjectFileMrg.h"
+#include "..\ProjectorFileMrg\ProjectInfo.h"
 #include "../Common/ComFun_String.h"
 
 
@@ -51,10 +52,14 @@ BEGIN_MESSAGE_MAP(CProjectManagementDlg, CAcUiDialog)
 	ON_NOTIFY(TVN_SELCHANGED, IDC_TREE_PRJDIR, &CProjectManagementDlg::OnNMClickTreePrjdir)
 	ON_NOTIFY(NM_CLICK, IDC_GRIDCTRL_PRJMANAGEMENT, OnGridClick)
 	ON_BN_CLICKED(IDC_BUTTON_NewDir, &CProjectManagementDlg::OnBnClickedButtonNewdir)
+	ON_BN_CLICKED(IDC_BUTTON_DeleteDir, &CProjectManagementDlg::OnBnClickedButtonDeletedir)
+	ON_BN_CLICKED(IDC_BUTTON_DOWNLOADALL, &CProjectManagementDlg::OnBnClickedButtonDownloadall)
+	ON_BN_CLICKED(IDC_BUTTON_DELETEALL, &CProjectManagementDlg::OnBnClickedButtonDeleteall)
 END_MESSAGE_MAP()
 
 void CProjectManagementDlg::FillPjtMngTreeCtrl()
 {
+	m_TreePrjDir.DeleteAllItems();
 	HICON Icon[3];
 	CImageList *ImageList = new CImageList();
 	ImageList->Create(16,16,ILC_COLOR24,12,12);
@@ -67,12 +72,10 @@ void CProjectManagementDlg::FillPjtMngTreeCtrl()
 	}
 	m_TreePrjDir.SetImageList(ImageList, TVSIL_NORMAL);
 
-	//vector <HTREEITEM> Areas;
 	HTREEITEM hTreeItem;
 	hTreeItem = m_TreePrjDir.InsertItem(L"项目文件夹", 3, 3,TVI_ROOT);
 	m_TreePrjDir.SetItemHeight(30);
 
-	//TODO
 	vector<const CProjectDir*> allDirs;
 	vector<HTREEITEM> allItems;
 	allDirs.push_back(m_pPrjData->GetRootDir());
@@ -87,17 +90,6 @@ void CProjectManagementDlg::FillPjtMngTreeCtrl()
 			allItems.push_back(item);
 		}
 	}
-/*
-
-
-	for (UINT i = 0; i < m_pPrjData->m_rootDir.m_subDirs.size(); i++)
-	{
-		HTREEITEM hFolder = m_TreePrjDir.InsertItem(m_pPrjData->m_rootDir.m_subDirs[i]->m_sName, hTreeItem);
-		for (UINT j = 0; j < m_pPrjData->m_rootDir.m_subDirs[i]->m_subDirs.size(); j++)
-		{
-			m_TreePrjDir.InsertItem(m_pPrjData->m_rootDir.m_subDirs[i]->m_subDirs[j]->m_sName, 1, 1, hFolder);
-		}
-	}*/
 	m_TreePrjDir.Expand(hTreeItem, TVE_EXPAND);
 }
 
@@ -114,9 +106,13 @@ void CProjectManagementDlg::OnBnClickedButtonUpload()
 		USES_CONVERSION;
 		CString PathName = dlg.GetPathName();
 		CString FileName;
-		JHCom_GetFileName(PathName.GetBuffer(), FileName.GetBuffer());
-		m_pPrjData->UploadFile(PathName, FileName);
+		
+		FileName = FilePathToFileName(PathName);
+		CString ParentPath = m_pPrjData->GetDirString(L"", m_selectedDir);//返回文件夹的路径
+		//m_pPrjData->UploadFile(PathName, FileName);
+		m_pPrjData->AddFile(PathName, ParentPath);
 	}
+	FillPjtGridCtrl(m_selectedDir);
 }
 
 
@@ -144,7 +140,7 @@ void CProjectManagementDlg::InitGridCtrl()
 {
 	m_PjtManagementGridCtrl.DeleteAllItems();
 	
-	m_PjtManagementGridCtrl.SetRowCount(1);
+	m_PjtManagementGridCtrl.SetFixedRowCount(1);
 	m_PjtManagementGridCtrl.SetColumnCount(9);
 	m_PjtManagementGridCtrl.SetItemText(0, 1, L"文件名称");
 	m_PjtManagementGridCtrl.SetItemText(0, 2, L"创建人");
@@ -166,10 +162,6 @@ void CProjectManagementDlg::InitGridCtrl()
 	m_PjtManagementGridCtrl.SetSingleColSelection(TRUE);
 
 	COLORREF color=RGB(220,220,220);
-	for (UINT i = 0; i < 9; i++)
-	{
-		m_PjtManagementGridCtrl.SetItemBkColour(0, i, color);
-	}	
 
 }
 
@@ -183,6 +175,8 @@ void CProjectManagementDlg::FillPjtGridCtrl(CProjectDir* SelectedDir)
 	m_PjtManagementGridCtrl.SetRowCount((int)SelectedDir->m_subFiles.size() + 1);
 	for (UINT i = 1; i <= SelectedDir->m_subFiles.size(); i++)
 	{
+		
+	    m_PjtManagementGridCtrl.SetCellType(i, 0, RUNTIME_CLASS(CGridCellCheck));
 		m_PjtManagementGridCtrl.SetItemText(i, 1, SelectedDir->m_subFiles[i - 1].m_sName);
 		m_PjtManagementGridCtrl.SetItemText(i, 2, SelectedDir->m_subFiles[i - 1].m_sCreator);
 		m_PjtManagementGridCtrl.SetItemText(i, 3, SelectedDir->m_subFiles[i - 1].m_sCreateTime);
@@ -202,18 +196,18 @@ void CProjectManagementDlg::FillPjtGridCtrl(CProjectDir* SelectedDir)
 
 CProjectDir* CProjectManagementDlg::FindClkDir(HTREEITEM CurClkItem)
 {
-	return NULL;  //TODO
 
-	//if (CurClkItem == m_TreePrjDir.GetRootItem())
-	//{
-	//	return &m_pPrjData->m_rootDir;
-	//}
+	CProjectDir* RootDir = (CProjectDir *)m_pPrjData->GetRootDir();
+	if (CurClkItem == m_TreePrjDir.GetRootItem())
+	{
+		return RootDir;
+	}
 
-	//CProjectDir* pParentDir = FindClkDir(m_TreePrjDir.GetParentItem(CurClkItem));
-	//assert(pParentDir);
-	//CProjectDir* pDir = pParentDir->GetSubFolder(m_TreePrjDir.GetItemText(CurClkItem));
-	////assert(pDir);
-	//return pDir;
+	CProjectDir* pParentDir = FindClkDir(m_TreePrjDir.GetParentItem(CurClkItem));
+	assert(pParentDir);
+	CProjectDir* pDir = pParentDir->GetSubFolder(m_TreePrjDir.GetItemText(CurClkItem));
+	//assert(pDir);
+	return pDir;
 }
 
 
@@ -230,6 +224,7 @@ void CProjectManagementDlg::OnNMClickTreePrjdir(NMHDR *pNMHDR, LRESULT *pResult)
 	CurClkItem = m_TreePrjDir.GetSelectedItem();
 	if (m_TreePrjDir.ItemHasChildren(CurClkItem))
 	{
+		InitGridCtrl();
 		return;
 	}
 	m_selectedDir = FindClkDir(CurClkItem);
@@ -268,4 +263,72 @@ void CProjectManagementDlg::OnGridClick(NMHDR *pNMHDR, LRESULT *pResult)
 	NM_GRIDVIEW* pItem = (NM_GRIDVIEW*) pNMHDR;
 	m_nClkRow = pItem->iRow;
 	m_nClkCol = pItem->iColumn;
+	CString sSelectedFileName = m_PjtManagementGridCtrl.GetItemText(m_nClkRow, 1);
+	CString sSelectedFileParentPath = m_pPrjData->GetDirString(L"", m_selectedDir);
+	CProjectFile SelectedFile;
+
+	m_selectedDir->FindFile(sSelectedFileName, SelectedFile);
+	m_StcDocName.SetWindowTextW(SelectedFile.m_sName);
+	//m_StcDocSize.SetWindowTextW(SelectedFile.GetFileSize()); 
+	m_StcUpdaterName.SetWindowTextW(SelectedFile.m_sCreator); 
+	m_StcUpdateTime.SetWindowTextW(SelectedFile.m_sCreateTime); 
+	m_StcUploaderName.SetWindowTextW(SelectedFile.m_sUpdator); 
+	m_StcUploadTime.SetWindowTextW(SelectedFile.m_sUpdateTime);
+
+	if (m_nClkCol == 7)//下载
+	{
+		m_pPrjData->DownloadFile(sSelectedFileName,sSelectedFileParentPath);
+		FillPjtGridCtrl(m_selectedDir);
+	}
+
+	if (m_nClkCol == 8)//删除
+	{
+		m_pPrjData->DeleteFile(sSelectedFileName,sSelectedFileParentPath);
+		FillPjtGridCtrl(m_selectedDir);
+	}
+}
+
+void CProjectManagementDlg::OnBnClickedButtonDeletedir()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CString sDeleteDir;
+	sDeleteDir = m_pPrjData->GetDirString(L"", m_selectedDir);
+	m_pPrjData->DeleteFolder(sDeleteDir);
+	HTREEITEM DeleteTreeItem;
+	DeleteTreeItem = m_TreePrjDir.GetSelectedItem();
+	m_TreePrjDir.DeleteItem(DeleteTreeItem);
+}
+
+
+void CProjectManagementDlg::OnBnClickedButtonDownloadall()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	for(UINT i = 1; i < m_PjtManagementGridCtrl.GetRowCount(); i++)
+	{
+		CGridCellBase* pCell = m_PjtManagementGridCtrl.GetCell(i, 0);
+		if(((CGridCellCheck* )pCell)->GetCheck())
+		{
+			CString sCheckedFileName = m_PjtManagementGridCtrl.GetItemText(i, 1);
+			CString sCheckedParentPath = m_pPrjData->GetDirString(L"", m_selectedDir);
+			m_pPrjData->DownloadFile(sCheckedFileName, sCheckedParentPath);
+		}
+	}
+}
+
+
+
+void CProjectManagementDlg::OnBnClickedButtonDeleteall()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	for(UINT i = 1; i < m_PjtManagementGridCtrl.GetRowCount(); i++)
+	{
+		CGridCellBase* pCell = m_PjtManagementGridCtrl.GetCell(i, 0);
+		if(((CGridCellCheck* )pCell)->GetCheck())
+		{
+			CString sCheckedFileName = m_PjtManagementGridCtrl.GetItemText(i, 1);
+			CString sCheckedParentPath = m_pPrjData->GetDirString(L"", m_selectedDir);
+			m_pPrjData->DeleteFile(sCheckedFileName, sCheckedParentPath);
+		}
+	}
+	FillPjtGridCtrl(m_selectedDir);
 }

@@ -151,7 +151,7 @@ CRect CGridCellCheck::GetCheckPlacement()
     place.right = place.left + nWidth;
     place.bottom = place.top + nWidth;
 
-	/* for centering
+	//for centering
 	int nDiff = (place.Width() - nWidth)/2;
 	if (nDiff > 0)
 	{
@@ -164,7 +164,7 @@ CRect CGridCellCheck::GetCheckPlacement()
 		place.top += nDiff;
 		place.bottom = place.top + nWidth;
 	}
-    */
+    
 
     if (m_Rect.Height() < nWidth + 2 * static_cast<int> (GetMargin())) 
     {		

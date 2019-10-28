@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ProjectorFileMrg\ProjectInfo.h"
+#include "../UI/GridCtrl_src/NewCellTypes/GridCellCheck.h"
 #include "GridCtrlEx.h"
 
 
@@ -30,6 +31,7 @@ public:
 	CProjectDir* m_selectedDir;
 	int m_nClkRow;//当前点击的单元格的行数
 	int m_nClkCol;//当前点击的单元格的列数
+	vector<CGridCellCheck*> m_vCheckBox;//选中的checkbox
 
 	CButton m_BtnDeleteAll;
 	CButton m_BtnDownloadAll;
@@ -52,4 +54,7 @@ public:
 	CStatic m_StcRootName;
 	afx_msg void OnNMClickTreePrjdir(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedButtonNewdir();
+	afx_msg void OnBnClickedButtonDeletedir();
+	afx_msg void OnBnClickedButtonDownloadall();
+	afx_msg void OnBnClickedButtonDeleteall();
 };
