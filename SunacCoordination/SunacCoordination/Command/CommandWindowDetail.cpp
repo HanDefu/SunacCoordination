@@ -125,7 +125,7 @@ void CMD_SunacWindowDetail()
 	acutPrintf(L"请选择需要计算门窗详图的门窗");
 	ads_name sset;
 	acedSSGet(NULL,NULL,NULL,NULL,sset);
-	long length = 0;
+	Adesk::Int32 length = 0;
 	acedSSLength(sset, &length);
 	for (int i = 0; i < length; i++)
 	{

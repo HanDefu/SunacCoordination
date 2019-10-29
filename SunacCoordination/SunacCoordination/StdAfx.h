@@ -149,6 +149,11 @@ typedef std::vector<RCPairKeyStrValue> vRCPairKeyStrValue;
 #include <afxcontrolbars.h>
 #include <afxdisp.h>
 
+#if (defined ARX_2010) || (defined ARX_2011) || (defined ARX_2012)
+#define _ttof       _wtof
+#define nullptr NULL
+#endif // ARX_2010
+
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Developer Studio will insert additional declarations immediately before the previous line.

@@ -69,8 +69,13 @@ int CRCRailing::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut)
 	if (bSuc == false)
 		return -1;
 
-	CString sRailingDefName;
-	sRailingDefName.Format(_T("%s_%d_%d"), m_railingAtt.m_prototypeCode, (int)(m_railingAtt.m_length), (int)(m_railingAtt.m_height));
+	CString sRailingDefName = m_railingAtt.GetInstanceCode();
+	if (sRailingDefName.IsEmpty())
+	{
+		assert(false);
+		sRailingDefName.Format(_T("%s_%d_%d"), m_railingAtt.m_prototypeCode, (int)(m_railingAtt.m_length), (int)(m_railingAtt.m_height));
+	}
+
 	//若之前有，则直接插入
 	AcDbObjectId railingBlockDef = MD2010_GetBlockDefID(sRailingDefName);
 	if (railingBlockDef == AcDbObjectId::kNull)
