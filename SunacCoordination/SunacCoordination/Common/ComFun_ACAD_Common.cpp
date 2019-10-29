@@ -324,7 +324,7 @@ int MD2010_SetModelSpaceCurrentLayout()
 	/*if (pmodl) pmodl->close();
 	     if (pmodl) pmodl->close();*/
 
-#ifdef ARX_2018
+#if (defined ARX_2018) || (defined ARX_2019)
 	AcDbObjectId modlid = acdbHostApplicationServices()->layoutManager()->findLayoutNamed(L"Model");
 #else
 	AcDbLayout * pmodl2 =
@@ -343,18 +343,27 @@ int MD2010_SetCurrentLayout(const ACHAR * layoutname)
 	AcApLayoutManager *pAcApLayoutManager = (AcApLayoutManager *)(acdbHostApplicationServices()->layoutManager());
 	AcDbLayout * pLayout = NULL;
 	const WCHAR *pcur = pAcApLayoutManager->findActiveLayout(true);
-	if (wcscmp(pcur,layoutname) == 0)
+	if (wcscmp(pcur, layoutname) == 0)
 	{
 		return 0;
 	}
 
+#if (defined ARX_2018) || (defined ARX_2019)
 	if (0 == pAcApLayoutManager->findLayoutNamed(layoutname))
-	    return 1;
+		return 1;
+#else
+	pLayout = pAcApLayoutManager->findLayoutNamed(layoutname);
+	if (NULL == pLayout)
+		return 1;
+#endif 
 
 	pAcApLayoutManager->setCurrentLayout(layoutname);
 	pAcApLayoutManager->updateCurrentPaper(Adesk::kTrue);
 	pAcApLayoutManager->updateLayoutTabs();
-	pLayout->close();
+
+	if(pLayout != 0)
+	    pLayout->close();
+
 	return 0;
 }
 

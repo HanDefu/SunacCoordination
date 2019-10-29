@@ -38,7 +38,6 @@
     <ClCompile Include="Common\TYRect.cpp" />
     <ClCompile Include="GlobalSetting.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MyPaletteSet.cpp" />
     <ClCompile Include="Object\AirCondition\AttrAirCon.cpp" />
     <ClCompile Include="Object\AirCondition\RCAirCondition.cpp" />
     <ClCompile Include="Object\AttrObject.cpp" />
@@ -95,9 +94,6 @@
     <ClCompile Include="UI\GridCellWithPicture.cpp" />
     <ClCompile Include="UI\GridCtrlEx.cpp" />
     <ClCompile Include="UI\GridCtrlWithPreview.cpp" />
-    <ClCompile Include="UI\GridCtrl_src\Experimental Upgrades\GridCellLite.cpp" />
-    <ClCompile Include="UI\GridCtrl_src\Experimental Upgrades\InPlaceList.cpp" />
-    <ClCompile Include="UI\GridCtrl_src\Experimental Upgrades\TitleTip.cpp" />
     <ClCompile Include="UI\GridCtrl_src\GridCell.cpp" />
     <ClCompile Include="UI\GridCtrl_src\GridCellBase.cpp" />
     <ClCompile Include="UI\GridCtrl_src\GridCtrl.cpp" />
@@ -237,9 +233,6 @@
     <ClInclude Include="UI\GridCtrlEx.h" />
     <ClInclude Include="UI\GridCtrlWithPreview.h" />
     <ClInclude Include="UI\GridCtrl_src\CellRange.h" />
-    <ClInclude Include="UI\GridCtrl_src\Experimental Upgrades\GridCellLite.h" />
-    <ClInclude Include="UI\GridCtrl_src\Experimental Upgrades\InPlaceList.h" />
-    <ClInclude Include="UI\GridCtrl_src\Experimental Upgrades\TitleTip.h" />
     <ClInclude Include="UI\GridCtrl_src\GridCell.h" />
     <ClInclude Include="UI\GridCtrl_src\GridCellBase.h" />
     <ClInclude Include="UI\GridCtrl_src\GridCtrl.h" />
@@ -338,7 +331,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{F97C3018-FE58-4663-9749-234C224B19A1}</ProjectGuid>
+    <ProjectGuid>{7AB34B67-D184-41BB-AC5C-C48D0A58C8B8}</ProjectGuid>
     <RootNamespace>curve</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -387,31 +380,45 @@
     <Import Project="C:\Autodesk\Autodesk_ObjectARX_2019_Win_64_and_32Bit\inc\arx.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\ARX2019\</OutDir>
+    <IntDir>$(Configuration)\ARX2019\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\ARX2019\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\ARX2019\</IntDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2019_Win_64_and_32Bit\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2019_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2019_Win_64_and_32Bit\utils\brep\inc;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>RADPACK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>
       </PrecompiledHeader>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2019_Win_64_and_32Bit\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2019_Win_64_and_32Bit\lib;C:\Autodesk\Autodesk_ObjectARX_2019_Win_64_and_32Bit\lib-win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2019_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
+      <AdditionalDependencies>acdbmgd.lib;AcDrawBridge.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$SunacCAD2019X86.arx</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2019_Win_64_and_32Bit\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>RADPACK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2019_Win_64_and_32Bit\inc;$(ProjectDir);C:\Autodesk\Autodesk_ObjectARX_2019_Win_64_and_32Bit\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>RADPACK;ARX_2019;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>
       </PrecompiledHeader>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2019_Win_64_and_32Bit\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2019_Win_64_and_32Bit\lib;C:\Autodesk\Autodesk_ObjectARX_2019_Win_64_and_32Bit\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2019_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalDependencies>acdbmgd.lib;AcDrawBridge.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)SunacCAD2019X64.arx</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

@@ -404,6 +404,7 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <TreatWarningAsError>false</TreatWarningAsError>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2016_Win_64_and_32Bit\lib;C:\Autodesk\Autodesk_ObjectARX_2016_Win_64_and_32Bit\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>

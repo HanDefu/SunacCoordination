@@ -219,54 +219,6 @@
     <ClCompile Include="UI\WindowDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="UI\GridCtrl_src\GridCell.cpp">
-      <Filter>UI\Grid</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\GridCtrl_src\GridCellBase.cpp">
-      <Filter>UI\Grid</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\GridCtrl_src\GridCtrl.cpp">
-      <Filter>UI\Grid</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\GridCtrl_src\GridCtrlUtil.cpp">
-      <Filter>UI\Grid</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\GridCtrl_src\GridDropTarget.cpp">
-      <Filter>UI\Grid</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\GridCtrl_src\InPlaceEdit.cpp">
-      <Filter>UI\Grid</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\GridCtrl_src\TitleTip.cpp">
-      <Filter>UI\Grid</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellButton.cpp">
-      <Filter>UI\Grid</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellCheck.cpp">
-      <Filter>UI\Grid</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellCombo.cpp">
-      <Filter>UI\Grid</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellDateTime.cpp">
-      <Filter>UI\Grid</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellNumeric.cpp">
-      <Filter>UI\Grid</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridURLCell.cpp">
-      <Filter>UI\Grid</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\GridCtrl_src\Experimental Upgrades\GridCellLite.cpp">
-      <Filter>UI\Grid</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\GridCtrl_src\Experimental Upgrades\InPlaceList.cpp">
-      <Filter>UI\Grid</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\GridCtrl_src\Experimental Upgrades\TitleTip.cpp">
-      <Filter>UI\Grid</Filter>
-    </ClCompile>
     <ClCompile Include="Tool\DoubleClickBlockReference.cpp">
       <Filter>Tool</Filter>
     </ClCompile>
@@ -405,11 +357,47 @@
     <ClCompile Include="main.cpp">
       <Filter>Src</Filter>
     </ClCompile>
-    <ClCompile Include="MyPaletteSet.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
     <ClCompile Include="StdAfx.cpp">
       <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\GridCell.cpp">
+      <Filter>UI\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\GridCellBase.cpp">
+      <Filter>UI\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\GridCtrl.cpp">
+      <Filter>UI\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\GridCtrlUtil.cpp">
+      <Filter>UI\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\GridDropTarget.cpp">
+      <Filter>UI\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\InPlaceEdit.cpp">
+      <Filter>UI\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\TitleTip.cpp">
+      <Filter>UI\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellButton.cpp">
+      <Filter>UI\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellCheck.cpp">
+      <Filter>UI\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellCombo.cpp">
+      <Filter>UI\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellDateTime.cpp">
+      <Filter>UI\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellNumeric.cpp">
+      <Filter>UI\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridURLCell.cpp">
+      <Filter>UI\Grid</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -595,60 +583,6 @@
     </ClInclude>
     <ClInclude Include="UI\WindowDlg.h">
       <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\GridCtrl_src\CellRange.h">
-      <Filter>UI\Grid</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\GridCtrl_src\GridCell.h">
-      <Filter>UI\Grid</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\GridCtrl_src\GridCellBase.h">
-      <Filter>UI\Grid</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\GridCtrl_src\GridCtrl.h">
-      <Filter>UI\Grid</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\GridCtrl_src\GridCtrlUtil.h">
-      <Filter>UI\Grid</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\GridCtrl_src\GridDropTarget.h">
-      <Filter>UI\Grid</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\GridCtrl_src\InPlaceEdit.h">
-      <Filter>UI\Grid</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\GridCtrl_src\MemDC.h">
-      <Filter>UI\Grid</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\GridCtrl_src\TitleTip.h">
-      <Filter>UI\Grid</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellButton.h">
-      <Filter>UI\Grid</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellCheck.h">
-      <Filter>UI\Grid</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellCombo.h">
-      <Filter>UI\Grid</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellDateTime.h">
-      <Filter>UI\Grid</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellNumeric.h">
-      <Filter>UI\Grid</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridURLCell.h">
-      <Filter>UI\Grid</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\GridCtrl_src\Experimental Upgrades\GridCellLite.h">
-      <Filter>UI\Grid</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\GridCtrl_src\Experimental Upgrades\InPlaceList.h">
-      <Filter>UI\Grid</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\GridCtrl_src\Experimental Upgrades\TitleTip.h">
-      <Filter>UI\Grid</Filter>
     </ClInclude>
     <ClInclude Include="UI\Menu\CAcadApplication.h">
       <Filter>UI\Menu</Filter>
@@ -865,6 +799,51 @@
     </ClInclude>
     <ClInclude Include="Sunac_def.h">
       <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\CellRange.h">
+      <Filter>UI\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\GridCell.h">
+      <Filter>UI\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\GridCellBase.h">
+      <Filter>UI\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\GridCtrl.h">
+      <Filter>UI\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\GridCtrlUtil.h">
+      <Filter>UI\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\GridDropTarget.h">
+      <Filter>UI\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\InPlaceEdit.h">
+      <Filter>UI\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\MemDC.h">
+      <Filter>UI\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\TitleTip.h">
+      <Filter>UI\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellButton.h">
+      <Filter>UI\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellCheck.h">
+      <Filter>UI\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellCombo.h">
+      <Filter>UI\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellDateTime.h">
+      <Filter>UI\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellNumeric.h">
+      <Filter>UI\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridURLCell.h">
+      <Filter>UI\Grid</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

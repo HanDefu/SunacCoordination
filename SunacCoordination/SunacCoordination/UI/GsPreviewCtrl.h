@@ -177,7 +177,7 @@ public:
     HCURSOR mhOrbitCursor;
     AcGsManager         *mpManager;
 
-#if (defined ARX_2018) || (defined ARX_2017) || (defined ARX_2016) || (defined ARX_2015)
+#if (defined ARX_2018) || (defined ARX_2019) || (defined ARX_2017) || (defined ARX_2016) || (defined ARX_2015)
 	AcGsGraphicsKernel    *mpFactory;
 #else
 	AcGsClassFactory    *mpFactory;

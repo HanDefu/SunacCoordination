@@ -1186,7 +1186,7 @@ AcDbObjectId CopyBlockDefFromDwg(const TCHAR* fileName, const TCHAR* blkDefName)
 
 	// 使用_SH_DENYNO参数打开图形(只读打开)，允许其它用户读写该文件
 	AcDbDatabase* pSourceDwg = new AcDbDatabase(false);
-#if (defined ARX_2018) || (defined ARX_2017)
+#if (defined ARX_2018) || (defined ARX_2017)|| (defined ARX_2019)
 	Acad::ErrorStatus es = pSourceDwg->readDwgFile(fileName, AcDbDatabase::kForReadAndAllShare);
 #else
 	Acad::ErrorStatus es = pSourceDwg->readDwgFile(fileName, _SH_DENYNO);
