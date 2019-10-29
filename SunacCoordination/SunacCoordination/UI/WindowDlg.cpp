@@ -173,7 +173,10 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	oneWindow.RunParameters();
 
 	if (m_isMirror.GetCheck())
-		TYCOM_Mirror(oneWindow.m_id, origin, AcGeVector3d(0,1,0));
+	{
+		AcGePoint3d basePt(origin.x + width / 2, 0, 0);
+		TYCOM_Mirror(oneWindow.m_id, basePt, AcGeVector3d(0, 1, 0));
+	}
 
 	CWindowAutoName::GetInstance()->AddWindowType(*pSel);
 
@@ -194,7 +197,10 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 	CString areaType = TYUI_GetText(m_areaType);
 
 	if (m_radioDoor == 0)
+	{
+		openType = TYUI_GetText(m_doorType);
 	    m_allWindows = WebIO::GetInstance()->GetDoors(width, height, openType, openNum, areaType);
+	}
 	else
 		m_allWindows = WebIO::GetInstance()->GetWindows(width, height, openType, openNum, areaType);
 
