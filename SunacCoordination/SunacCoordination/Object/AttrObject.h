@@ -11,6 +11,7 @@
 #include "dbmain.h"
 #include "../Sunac_def.h"
 #include "PrototypeInfo.h"
+#include "AcString.h"
 
 #pragma warning(disable: 4275 4251)
 
@@ -38,7 +39,9 @@ public:
 
 	//{{AFX_ARX_METHODS(ZffDwgScale)
 	virtual Acad::ErrorStatus dwgOutFields(AcDbDwgFiler* pFiler) const;
+	virtual Acad::ErrorStatus dwgOutFileInfo(AcDbDwgFiler* pFiler, const CDwgFileInfo& pFileInfo) const;
 	virtual Acad::ErrorStatus dwgInFields(AcDbDwgFiler* pFiler);
+	virtual Acad::ErrorStatus dwgInFileInfo(AcDbDwgFiler* pFiler, CDwgFileInfo& pFileInfo);
 	//}}AFX_ARX_METHODS
 	
 	virtual eRCType GetType(){return TYPENUM;}
