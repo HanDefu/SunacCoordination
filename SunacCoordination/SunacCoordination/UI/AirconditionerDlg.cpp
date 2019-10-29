@@ -138,8 +138,6 @@ void CAirconditionerDlg::LoadDefaultValue()
 
 void CAirconditionerDlg::OnBnClickedCheckHasraintube()
 {
-	// TODO: 在此添加控件通知处理程序代码
-
 	BOOL state = m_hasRainTube.GetCheck(); 
 
 	m_rainTubePos.EnableWindow(state);

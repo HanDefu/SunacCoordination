@@ -226,9 +226,9 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 		m_allWindows[i].SetH(height);
 		CString str;
 		str.Format(L"原型编号：%s\n窗户面积：%.2lf\n通风量：%.2lf\n动态类型：%s\n适用范围：集团", m_allWindows[i].m_prototypeCode, width * height / 1E6, m_allWindows[i].GetTongFengQty(false), m_allWindows[i].m_isDynamic ? L"动态" : L"静态");
+
 		CString dwgPath = TY_GetPrototypeFilePath() + m_allWindows[i].GetFileName();
-		CString pngPath = dwgPath;
-		pngPath.Replace(L"\\LocalMode", L"\\Image");
+		CString pngPath = TY_GetPrototypeImagePath_Local() + m_allWindows[i].GetFileName(); //门窗原型优先使用内部的图片
 		pngPath.Replace(L".dwg", L".png");
 		if (PathFileExists(pngPath))
 			m_preWindow.AddPreview(i, 0, pngPath, str);

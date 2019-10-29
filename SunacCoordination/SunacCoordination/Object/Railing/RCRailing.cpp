@@ -37,7 +37,6 @@ CRCRailing::~CRCRailing(void)
 
 }
 
-
 void CRCRailing::SetRailingAtt(const AttrRailing p_railingAtt)
 {
 	m_railingAtt = p_railingAtt;
@@ -49,7 +48,7 @@ bool CRCRailing::SetLength(double p_length) //设置栏杆总长度，参数(栏杆总长度)传
 }
 CString CRCRailing::GetPrototypeFilePath()const
 {
-	return MD2010_GetAppPath() + L"\\support\\Sunac2019\\LocalMode\\" + m_railingAtt.m_prototypeCode + L".dwg";
+	return TY_GetPrototypeFilePath_Local() + m_railingAtt.m_prototypeCode + L".dwg";
 }
 bool CRCRailing::CheckLengthHeight()
 {
