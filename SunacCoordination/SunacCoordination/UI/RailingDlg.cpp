@@ -77,15 +77,6 @@ BOOL CRailingDlg::OnInitDialog()
 {
 	CAcUiDialog::OnInitDialog();
 
-	vCString allRailingFiles;
-	TY_GetAllTieYiLanGanFiles(allRailingFiles);
-	m_selectedFile = allRailingFiles[0];
-
-	//m_preStyle.SubclassDlgItem(IDC_STATIC_STYLE, this);
-	//m_preStyle.Init(theArxDLL.ModuleResourceInstance(), true);
-	//m_preStyle.SetDwgFile(m_selectedFile);
-
-	//m_railingInfo.SetWindowText(_T("À¸¸ËÐÅÏ¢ËµÃ÷:\r\nÀ¸¸Ë¼ä¾à:\r\nµ¥Ôª³ß´ç:\r\nÀ¸¸ËÀàÐÍ£º"));
 	m_type.AddString(_T("²»ÏÞ"));
 	m_type.AddString(_T("ÌúÒÕÀ¸¸Ë"));
 	m_type.AddString(_T("²£Á§À¸¸Ë"));
@@ -261,7 +252,7 @@ void CRailingDlg::UpdateRailingToGrid(eRailingType p_railetype)
 			sPrototypeName.Format(_T("Railing_T%d"), i + 1);
 			CString standradRailingSize = RailingSize(i);
 			str.Format(_T("Ô­ÐÍ±àºÅ£º%s\nÀ¸¸ËÀàÐÍ£ºÌúÒÕÀ¸¸Ë\n±ê×¼À¸¸Ë³¤£º%s\n"), sPrototypeName, standradRailingSize);
-			path.Format(TY_GetPrototypeImagePath() + ("Railing_T%d.png"), i + 1);
+			path.Format(TY_GetPrototypeImagePath_Local() + ("Railing_T%d.png"), i + 1);
 
 			CGridCellForPreview* pCell = m_preRailing.AddPreview(nCount / 2, nCount % 2, path, str);
 			pCell->SetName(sPrototypeName);
@@ -277,19 +268,19 @@ void CRailingDlg::UpdateRailingToGrid(eRailingType p_railetype)
 			{
 				sPrototypeName.Format(_T("Railing_B%d"), i + 1);
 				str.Format(_T("Ô­ÐÍ±àºÅ£º%s\nÀ¸¸ËÀàÐÍ£º²£Á§À¸¸Ë\n"), sPrototypeName);
-				path.Format(TY_GetPrototypeImagePath() + ("Railing_B%d.png"), i + 1);
+				path.Format(TY_GetPrototypeImagePath_Local() + ("Railing_B%d.png"), i + 1);
 			}
 			else if (i > 1 && i < 4)
 			{
 				sPrototypeName.Format(_T("Railing_B3_%d"), i - 1);
 				str.Format(_T("Ô­ÐÍ±àºÅ£º%s\nÀ¸¸ËÀàÐÍ£º²£Á§À¸¸Ë"), sPrototypeName);
-				path.Format(TY_GetPrototypeImagePath() + ("Railing_B3_%d.png"), i - 1);
+				path.Format(TY_GetPrototypeImagePath_Local() + ("Railing_B3_%d.png"), i - 1);
 			}
 			else
 			{
 				sPrototypeName.Format(_T("Railing_B%d"), i);
 				str.Format(_T("Ô­ÐÍ±àºÅ£º%s\nÀ¸¸ËÀàÐÍ£º²£Á§À¸¸Ë\n"), sPrototypeName);
-				path.Format(TY_GetPrototypeImagePath() + ("Railing_B%d.png"), i);
+				path.Format(TY_GetPrototypeImagePath_Local() + ("Railing_B%d.png"), i);
 			}
 
 			CGridCellForPreview* pCell = m_preRailing.AddPreview(nCount / 2, nCount % 2, path, str);

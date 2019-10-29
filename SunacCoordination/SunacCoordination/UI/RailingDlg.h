@@ -42,7 +42,6 @@ public:
 	CString RailingSize(int i);
 
 	CGridCtrlWithPreview m_preRailing;
-	CString m_selectedFile;
 	CComboBox m_type;
 	double m_height;// 栏杆高度	
 	double m_width;// 栏杆长度
