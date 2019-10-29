@@ -193,3 +193,25 @@ void JHCOM_SelectCenterLines(vAcDbObjectId &ids)
 	}
 }
 
+void JHCOM_SelectEnts(vAcDbObjectId &ids, const ACHAR* pstr/* = NULL*/)
+{
+	AcDbObjectId id;
+	ads_name ssname;
+	ads_name ent;
+	//struct resbuf* rb;
+	//rb = acutBuildList(RTDXF0, L"*SOLID", RTNONE);
+	int rt = acedSSGet(pstr, NULL, NULL, NULL, ssname); // 提示用户选择对象
+	if (rt == RTNORM)
+	{
+		long length;
+		acedSSLength(ssname, &length);
+		for (int i=0;i<length;i++)
+		{
+			acedSSName(ssname,i, ent);
+			acdbGetObjectId(id, ent);
+			ids.push_back(id);
+		}
+		acedSSFree(ssname);
+	}
+}
+

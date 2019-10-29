@@ -37,7 +37,6 @@ END_MESSAGE_MAP()
 
 void CNewDirDlg::OnBnClickedOk()
 {
-	// TODO: 在此添加控件通知处理程序代码
 	UpdateData(TRUE);
 	m_NewDirEdit.GetWindowTextW(m_sNewDir);
 	CNewDirDlg::OnOK();

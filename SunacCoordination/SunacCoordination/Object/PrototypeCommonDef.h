@@ -10,6 +10,31 @@ enum EKitchType
 	E_KITCH_ALL = 0xff,	 //所有类型
 };
 
+inline CString KitchenTypeToCString(EKitchType type)
+{
+	switch(type)
+	{
+	case E_KITCH_U:
+		return L"U型";
+		break;
+	case E_KITCH_L:
+		return L"L型";
+		break;
+	case E_KITCH_I:
+		return L"I型";
+		break;
+	case E_KITCH_OTHER:
+		return L"其他";
+		break;
+	case E_KITCH_ALL:
+		return L"所有类型";
+		break;
+	default:
+		return L"";
+		break;
+	}
+}
+
 enum EBathroomType
 {
 	E_BATHROOM_U,	//U型
@@ -18,6 +43,31 @@ enum EBathroomType
 	E_BATHROOM_OTHER = 0xf, //其他
 	E_BATHROOM_ALL = 0xff,	 //所有类型
 };
+
+inline CString BathroomTypeToCString(EBathroomType type)
+{
+	switch(type)
+	{
+	case E_KITCH_U:
+		return L"U型";
+		break;
+	case E_KITCH_L:
+		return L"L型";
+		break;
+	case E_KITCH_I:
+		return L"I型";
+		break;
+	case E_KITCH_OTHER:
+		return L"其他";
+		break;
+	case E_KITCH_ALL:
+		return L"所有类型";
+		break;
+	default:
+		return L"";
+		break;
+	}
+}
 
 enum E_DIRECTION
 {

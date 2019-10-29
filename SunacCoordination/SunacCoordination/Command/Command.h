@@ -1,5 +1,7 @@
 #pragma once
 
+void SendCommandToCAD(CString cmd); //此函数尚未调通
+
 //创建/移除工具栏
 void CADPalette_AddP();
 void CADPalette_RemoveP();
