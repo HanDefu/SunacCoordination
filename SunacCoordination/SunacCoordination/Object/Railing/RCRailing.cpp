@@ -30,6 +30,8 @@ CRCRailing::CRCRailing(void)
 	m_B = 1260;			//标准栏杆尺寸 1260或者1380
 	m_N = 1;			//标准栏杆数量 
 	m_K = 0;
+
+	m_bSimple = true;
 }
  
 CRCRailing::~CRCRailing(void)
