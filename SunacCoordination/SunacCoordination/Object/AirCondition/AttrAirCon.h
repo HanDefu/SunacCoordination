@@ -51,12 +51,14 @@ public:
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
 	virtual bool IsPrototypeEqual(const AttrAirCon& p_att);
 
+	CString AutoInstanceCode(); //空调自动编号只考虑匹数，仅用于统计，不用于查找块
+
 public:
-	double m_power;		//空调匹数
+	double m_power;			//空调匹数
 	CString m_pipePos;		//空调冷凝水管位置
-	bool m_hasRainPipe;	//空调是否有雨水立管穿过
+	bool m_hasRainPipe;		//空调是否有雨水立管穿过
 	CString m_rainPipePos;	//空调雨水管位置
-	//CString m_installNetSize;	//空调安装净尺寸
+
 	int m_airW;		//对应空调数据表格
 	int m_airH;
 	int m_airD;

@@ -55,7 +55,7 @@ public:
 	void SetFileName(CString p_str){ m_file.fileName = p_str; }
 
 	void SetInstanceCode(CString  bianHao) { m_instanceCode = bianHao; }
-	CString GetInstanceCode()const { return m_instanceCode; }
+	virtual CString GetInstanceCode()const { return m_instanceCode; }
 
 	
 public:

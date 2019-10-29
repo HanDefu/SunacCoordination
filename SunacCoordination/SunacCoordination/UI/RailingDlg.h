@@ -42,10 +42,12 @@ public:
 	CString RailingSize(int i);
 
 	CGridCtrlWithPreview m_preRailing;
-	CComboBox m_type;
+	CComboBox m_comboRailingType;
 	double m_height;// 栏杆高度	
 	double m_width;// 栏杆长度
-	CEdit m_railingNumber;
+	CEdit m_editRailingID;
+	CString m_sRailingId;
+	BOOL m_bRailingAutoName;// 自动编号
 };
 
 extern CRailingDlg* g_railingDlg;

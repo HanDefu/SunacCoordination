@@ -46,7 +46,6 @@ public:
 	virtual double GetMinWidth()const { return 0; }
 	virtual double GetMinHeight()const { return 400; }
 
-
 	void SetSimpleDraw(bool p_bSimple){ m_bSimple = p_bSimple; }
 	bool IsSampleDraw()const { return m_bSimple; }
 
