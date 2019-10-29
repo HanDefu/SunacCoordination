@@ -4,6 +4,7 @@
 #include "../Common\ComFun_Str.h"
 #include "..\Common\ComFun_String.h"
 #include "..\Common\ComFun_Sunac.h"
+#include "WebCommon.h"
 #include "WebIO.h"
 #include <string>
 
@@ -320,6 +321,7 @@ std::vector<AttrKitchen> CKitchenBathroomWebData::GetAllKitchens()const
 	_ns1__GetAllKitchenResponse nsResponse;
 
 	ArgumentSettingServiceSoapProxy cadWeb;
+	InitSoapTime(cadWeb);
 	int nRet = cadWeb.GetAllKitchen(&ns, nsResponse);
 
 	std::vector<AttrKitchen> vKitchenAttrs;
@@ -340,6 +342,49 @@ std::vector<AttrKitchen> CKitchenBathroomWebData::GetAllKitchens()const
 	return vKitchenAttrs;
 }
 
+std::vector<AttrKitchen> CKitchenBathroomWebData::GetKitchens( double kaiJian, double jinShen, CString weiZhiGuanXi, CString type, bool hasPaiQiDao)const 
+{
+	_ns1__GetAllKitchenParam ns;
+	_ns1__GetAllKitchenParamResponse nsResponse;
+
+	std::wstring sKitchenDoorWindowPosition = weiZhiGuanXi;
+	std::wstring sKitchenType = type;
+	std::wstring sAirVent;
+
+	if (hasPaiQiDao)
+	{
+		sAirVent = _T("1");
+	}
+	else sAirVent = _T("0");
+
+	ns.Width = kaiJian;
+	ns.Height = jinShen;
+	ns.KitchenType = &sKitchenType;
+	ns.KitchenDoorWindowPosition = &sKitchenDoorWindowPosition;
+	ns.AirVent = &sAirVent;
+
+	ArgumentSettingServiceSoapProxy cadWeb;
+	int nRet = cadWeb.GetAllKitchenParam(&ns, nsResponse);
+
+	std::vector<AttrKitchen> vKitchenAttrs;
+
+	//判断返回结果是否成功
+	if (nsResponse.GetAllKitchenParamResult == NULL)
+	{
+		return vKitchenAttrs;
+	}
+
+	//解析字符串出结果
+	CMarkup xml;	
+
+	xml.SetDoc((*(nsResponse.GetAllKitchenParamResult)).c_str());
+
+	vKitchenAttrs = ParseKitchensFromXML(xml);
+
+	return vKitchenAttrs;
+
+}
+
 std::vector<AttrBathroom> CKitchenBathroomWebData::GetAllBathrooms()const
 {
 	std::wstring sBathroomDoorWindowPosition, sToiletType;
@@ -348,6 +393,7 @@ std::vector<AttrBathroom> CKitchenBathroomWebData::GetAllBathrooms()const
 	_ns1__GetAllBathroomResponse nsResponse;
 
 	ArgumentSettingServiceSoapProxy cadWeb;
+	InitSoapTime(cadWeb);
 	int nRet = cadWeb.GetAllBathroom(&ns, nsResponse);
 
 	std::vector<AttrBathroom> vBathroomAttrs;
@@ -362,6 +408,41 @@ std::vector<AttrBathroom> CKitchenBathroomWebData::GetAllBathrooms()const
 	CMarkup xml;	
 
 	xml.SetDoc((*(nsResponse.GetAllBathroomResult)).c_str());
+
+	vBathroomAttrs = ParseBathroomsFromXML(xml);
+
+	return vBathroomAttrs;
+}
+
+std::vector<AttrBathroom> CKitchenBathroomWebData::GetBathrooms(double width, double height, CString weiZhiGuanXi, CString type)const
+{
+	std::wstring sWindowDoorPosition = weiZhiGuanXi;
+	std::wstring sType = type;
+
+	_ns1__GetAllBathroomByParam ns;
+	_ns1__GetAllBathroomByParamResponse nsResponse;
+
+	ns.Width = width;
+	ns.Height = height;
+	ns.BathroomDoorWindowPosition = &sWindowDoorPosition;
+	ns.ToiletType = &sType;
+
+	ArgumentSettingServiceSoapProxy cadWeb;
+	InitSoapTime(cadWeb);
+	int nRet = cadWeb.GetAllBathroomByParam(&ns, nsResponse);
+
+	std::vector<AttrBathroom> vBathroomAttrs;
+
+	//判断返回结果是否成功
+	if (nsResponse.GetAllBathroomByParamResult == NULL)
+	{
+		return vBathroomAttrs;
+	}
+
+	//解析字符串出结果
+	CMarkup xml;	
+
+	xml.SetDoc((*(nsResponse.GetAllBathroomByParamResult)).c_str());
 
 	vBathroomAttrs = ParseBathroomsFromXML(xml);
 

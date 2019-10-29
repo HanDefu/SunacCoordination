@@ -30,12 +30,12 @@ public:
 	static CGlassSeries* Instance();
 	virtual ~CGlassSeries();
 
-	static vector<CString> GetAllGlassSerials();
+	vector<CString> GetAllGlassSerials();
 
 	//通过型材系列获取玻璃选型
-	static vector<CString> GetGlassSerialsByAlSerial(CString p_sAlSerial);
+	vector<CString> GetGlassSerialsByAlSerial(CString p_sAlSerial);
 
 	//通过隔热系数获取玻璃选型
-	static vector<CString> GetGlassSerialsByHeatInsulationCoeff(double p_heatCoeff);
+	vector<CString> GetGlassSerialsByHeatInsulationCoeff(double p_heatCoeff);
 
 };

@@ -29,6 +29,9 @@ public:
 
 	const CConfigDictionary* GetConfigDict() { return &m_configDic; }
 
+	bool Login(CString p_sUserName, CString p_key);
+	bool IsLogin()const { return m_bLogin; }
+
 public:
 	//width宽度值，注意高度值不作为搜索条件 
 	//openType开启类型，openNum开启扇数量， gongNengQu功能区， tongFengLiang通风量
@@ -60,6 +63,9 @@ public:
 	//获得从Web端下载文件的文件名（包含扩展名）
 	CString GetFileName(const WCHAR *fullname);
 
+	
+	
+
 protected:
 	CConfigDictionary m_configDic;
 
@@ -70,6 +76,7 @@ protected:
 	CWindowWebData m_windowWebData;
 	CAirConditionWebData m_airConWebData;
 	CKitchenBathroomWebData m_kitchenBathroomWebData;
+	CRailingWebData m_railingWebData;
 
 
 	bool m_bLogin;

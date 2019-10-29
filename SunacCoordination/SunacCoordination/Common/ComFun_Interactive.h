@@ -67,3 +67,5 @@ void              JHCOM_SelectCenterLines(vAcDbObjectId &ids);
 * Return          : Has input : true, no input : false.
 --------------------------------------------------------------------------*/
 bool              JHCOM_GetString(CString prompt, CString &str);
+
+void JHCOM_SelectEnts(vAcDbObjectId &ids, const ACHAR* pstr = NULL);
