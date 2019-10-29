@@ -358,6 +358,12 @@
     <ClCompile Include="UI\NewDirDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="WebIO\WindowLocalDataFromDB.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\AirConditionLocalDataFromDB.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -806,6 +812,12 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="WebIO\WebCommon.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\WindowLocalDataFromDB.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\AirConditionLocalDataFromDB.h">
       <Filter>WebIO</Filter>
     </ClInclude>
   </ItemGroup>

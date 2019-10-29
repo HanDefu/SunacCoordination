@@ -158,7 +158,7 @@ void CProjectManagementDlg::InitGridCtrl()
 	m_PjtManagementGridCtrl.SetColumnWidth(7, 40);
 	m_PjtManagementGridCtrl.SetColumnWidth(8, 40);
 
-	m_PjtManagementGridCtrl.SetSingleColSelection(TRUE);
+	m_PjtManagementGridCtrl.SetSingleRowSelection(TRUE);
 
 	COLORREF color=RGB(220,220,220);
 
@@ -244,7 +244,7 @@ void CProjectManagementDlg::OnBnClickedButtonNewdir()
 	CNewDirDlg dlg;
 	dlg.DoModal();
 	CString sNewDir = dlg.m_sNewDir;
-	if (sNewDir = L"")
+	if (sNewDir == L"")
 	{
 		AfxMessageBox(L"ÇëÊäÈëÄ¿Â¼Ãû£¡");
 		return;

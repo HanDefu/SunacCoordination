@@ -4,6 +4,7 @@
 #include "AluminumSeries.h"
 #include "..\..\Tool\SQLite\sqlite3.h"
 #include "..\..\Common\ComFun_Sunac.h"
+#include "..\..\Common\ComFun_Convert.h"
 
 
 CDeductedSize* CDeductedSize::Instance()
@@ -21,31 +22,6 @@ CDeductedSize::~CDeductedSize()
 
 sqlite3 * pDB2 = NULL;
 double data = 0;
-
-size_t ConvertStringToUTF8( LPCTSTR strIn, char *& strOutUTF8MB )
-{
-	size_t len=_tcslen(strIn);
-
-#ifdef UNICODE
-	int iRequiredSize=WideCharToMultiByte(CP_UTF8, 0, strIn, -1, 0, 0, 0, 0);
-
-	strOutUTF8MB=new char[iRequiredSize];
-	strOutUTF8MB[0]=0;
-
-	WideCharToMultiByte(CP_UTF8, 0, strIn, -1, strOutUTF8MB, iRequiredSize, 0, 0);
-#else
-	WCHAR * wChar=new WCHAR[len+1];
-	wChar[0]=0;
-	MultiByteToWideChar(CP_ACP, 0, strIn, (int)len+1, wChar, (int)len+1);
-	int iRequiredSize=WideCharToMultiByte(CP_UTF8, 0, wChar, (int)len+1, 0, 0, 0, 0);
-	strOutUTF8MB=new char[iRequiredSize];
-	strOutUTF8MB[0]=0;
-	WideCharToMultiByte(CP_UTF8, 0, wChar, (int)len+1, strOutUTF8MB, iRequiredSize, 0, 0);
-	delete [] wChar;
-#endif
-
-	return iRequiredSize;
-}
 
 static int OutputDeductedSize(void *NotUsed, int nCol, char **value, char **ColName)
 {

@@ -32,7 +32,6 @@ typedef enum eWindowDimType
 
 eWindowDimType ToEWindowType(CString type);
 
-
 class CWindowsDimData
 {
 public:

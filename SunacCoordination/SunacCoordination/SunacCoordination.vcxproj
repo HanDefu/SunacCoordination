@@ -245,6 +245,7 @@
     <ClCompile Include="UI\WindowAdvanceDlg.cpp" />
     <ClCompile Include="UI\WindowDlg.cpp" />
     <ClCompile Include="WebIO\AirConditionLocalData.cpp" />
+    <ClCompile Include="WebIO\AirConditionLocalDataFromDB.cpp" />
     <ClCompile Include="WebIO\AirconditionWebData.cpp" />
     <ClCompile Include="WebIO\ConfigDictionary.cpp" />
     <ClCompile Include="WebIO\cpp_base64\src\Base64Decoder.cpp" />
@@ -260,6 +261,7 @@
     <ClCompile Include="WebIO\SunacCadWeb\soapC.cpp" />
     <ClCompile Include="WebIO\SunacCadWeb\stdsoap2.cpp" />
     <ClCompile Include="WebIO\WebIO.cpp" />
+    <ClCompile Include="WebIO\WindowLocalDataFromDB.cpp" />
     <ClCompile Include="WebIO\WindowWebData.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -392,6 +394,7 @@
     <ClInclude Include="UI\WindowAdvanceDlg.h" />
     <ClInclude Include="UI\WindowDlg.h" />
     <ClInclude Include="WebIO\AirConditionLocalData.h" />
+    <ClInclude Include="WebIO\AirConditionLocalDataFromDB.h" />
     <ClInclude Include="WebIO\AirconditionWebData.h" />
     <ClInclude Include="WebIO\ConfigDictionary.h" />
     <ClInclude Include="WebIO\cpp_base64\src\Base64Decoder.h" />
@@ -409,6 +412,7 @@
     <ClInclude Include="WebIO\SunacCadWeb\soapStub.h" />
     <ClInclude Include="WebIO\SunacCadWeb\stdsoap2.h" />
     <ClInclude Include="WebIO\WebIO.h" />
+    <ClInclude Include="WebIO\WindowLocalDataFromDB.h" />
     <ClInclude Include="WebIO\WindowWebData.h" />
   </ItemGroup>
   <ItemGroup>

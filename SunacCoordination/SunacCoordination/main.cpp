@@ -42,7 +42,9 @@
 #include "WebIO\KitchenBathroomWebData.h"
 #include "WebIO\RailingWebData.h"
 #include "WebIO\AirconditionWebData.h"
+#include "WebIO\AirconditionLocalDataFromDB.h"
 #include "WebIO\WindowWebData.h"
+#include "webIO\WindowLocalDataFromDB.h"
 #include "WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.h"
 #include "Common\ComFun_Str.h"
 #include "Tool\MarkupXml\Markup.h"
@@ -451,6 +453,7 @@ void CMD_test()
 
 	CWindowWebData WindowFromWeb;
 	CWindowLocalData WindowFromLocal;
+	CWindowLocalDataFromDB WindowFromDB;
 
 	CWindowWebData DoorFromWeb;
 	CWindowLocalData DoorFromLocal;
@@ -459,10 +462,14 @@ void CMD_test()
 	CKitchenBathroomWebData BathroomFromWeb;
 	CRailingWebData RailingFromWeb;
 	CAirConditionWebData AirConFromWeb;
+	CAirConditionLocalDataFromDB AirConFromDB;
 	//vAttrWindow window = b.GetWindows(width, height, "", 0, "");
 	std::vector<AttrWindow> WindowFromWebData = WindowFromWeb.GetAllWindows();
 	std::vector<AttrWindow> WindowFromWebData2 = WindowFromWeb.GetWindows(1800, 1800, L"外开", 1, L"");
 	std::vector<AttrWindow> WindowFromLocalData = WindowFromLocal.GetAllWindows();
+	std::vector<AttrWindow> WindowFromLocalDataFromDB = WindowFromDB.GetAllWindows();
+	std::vector<AttrWindow> WindowFromLocalDataFromDB2 = WindowFromDB.GetWindows(1800, L"外开", 1, L"全部");
+	std::vector<AttrAirCon> AirConLocalDataFromDB = AirConFromDB.GetAllAirCons();
 
 	//比较windows1, windows2
 /*
@@ -549,7 +556,7 @@ void CMD_test()
 
 	}*/
 
-	std::vector<AttrKitchen> KitchenFromWebData2 = KitchenFromWeb.GetKitchens(2500, 2000, L"门窗垂直开", L"U型", true);
+	std::vector<AttrKitchen> KitchenFromWebData2 = KitchenFromWeb.GetKitchens(1800, 2600, L"门窗对开", L"L型", true);
 	std::vector<AttrBathroom> BathroomFromWebData = BathroomFromWeb.GetBathrooms(1800, 2000, L"门窗垂直开", L"L型");
 	std::vector<AttrRailing> RailingFromWebData = RailingFromWeb.GetRailings(E_RAILING_BOLI);
 	std::vector<AttrAirCon> AirConFromWebData = AirConFromWeb.GetAirCons(1.5, "后面", 1, "侧面");

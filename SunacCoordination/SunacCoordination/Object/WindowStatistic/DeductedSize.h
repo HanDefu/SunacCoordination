@@ -17,5 +17,3 @@ protected:
 	bool GetDeductedSizeBySeriesAndName(CString p_sWinType, CString p_serials, CString sDeductedName, double &p_valueOut);
 
 };
-
-size_t ConvertStringToUTF8( LPCTSTR strIn, char *& strOutUTF8MB );
