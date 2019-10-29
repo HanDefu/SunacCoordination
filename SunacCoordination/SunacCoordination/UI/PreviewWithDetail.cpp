@@ -74,6 +74,37 @@ void CPreviewWithDetail::SetSelected(bool bSelected)
 	}
 }
 
+
+void DrawMultLineText(CDC* pDC, CRect rect, int nRowDis, UINT nFromat, CString strText)
+{
+	CString sTest = _T("²âÊÔÎÄ×Ö");
+	CSize size = pDC->GetTextExtent(sTest);
+	int nRowHeight = size.cy + nRowDis;
+
+	CRect rtChar;
+	rtChar.top = rect.top;
+	rtChar.bottom = rtChar.top + nRowHeight;
+	rtChar.left = rect.left;
+	rtChar.right = rect.right;
+
+	int nPos = 0;
+	
+	do 
+	{
+		int nPos2 = strText.Find(_T('\n'), nPos);
+		if (nPos2<0)
+			break; 
+
+		CString subStr = strText.Mid(nPos, nPos2 - nPos);
+		pDC->DrawText(subStr, rtChar, nFromat);
+
+		rtChar.top = rtChar.bottom;
+		rtChar.bottom += nRowHeight;
+		nPos = nPos2+1;
+
+	} while (nPos>0);
+}
+
 void CPreviewWithDetail::DrawText(CDC* pDC)
 {
 	CRect innerRect(m_recText);
@@ -100,7 +131,10 @@ void CPreviewWithDetail::DrawText(CDC* pDC)
 		pDC->SetTextColor(GetSysColor(COLOR_HIGHLIGHTTEXT));
 	else
 		pDC->SetTextColor(RGB(0, 0, 0));
-	pDC->DrawText(m_sText, innerRect, DT_EDITCONTROL | DT_WORDBREAK);
+
+
+	//pDC->DrawText(m_sText, innerRect, DT_EDITCONTROL | DT_WORDBREAK);
+	DrawMultLineText(pDC, innerRect, 5, DT_EDITCONTROL | DT_WORDBREAK, m_sText);
 }
 
 void CPreviewWithDetail::DrawBackGround(CDC* pDC)

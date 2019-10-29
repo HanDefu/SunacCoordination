@@ -20,6 +20,8 @@ public:
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
+	virtual BOOL OnInitDialog();
+
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);
 	virtual void OnOK();
 	virtual void OnCancel();
@@ -29,16 +31,26 @@ protected:
 
 public:
 	afx_msg void OnBnClickedSelectOnDwg();
+	afx_msg void OnBnClickedAuxiliaryFrame();
+	void InitGlassSeries(); //玻璃选型
+	void InitAluminumSeries(); //型材系列
+	void InitMaterialType(); //材质类型
+	void InitPlugSlotSize(); //塞缝尺寸
+	void InitAuxiliaryFrame(); //附框
+	void InitAuxiliaryFrameSeries();
 
 	bool m_isMoldless;	//是否非模态对话框
 
-	AttrWindow* m_pAttrWindow;
+	vector<AttrWindow*> m_selAttrWindows;
 
 	CString m_sCode;
 	CComboBox m_jieNeng;
 	CComboBox m_caiZhi;
 	CComboBox m_xingCai;
 	CComboBox m_boLi;
+	int m_bFuKuang;
+	CComboBox m_fuKuangType;
+	CComboBox m_saiFeng;
 };
 
 extern CWindowAdvanceDlg* g_windowAdvanceDlg;

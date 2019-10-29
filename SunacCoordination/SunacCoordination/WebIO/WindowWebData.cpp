@@ -395,22 +395,7 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 				}
 				xml.OutOfElem();
 			}
-			/*if (xml.FindElem(_T("DrawingPathTop")))
-			{
-				Attrdoor.m_topViewFile = xml.GetData();
-			}
-			if (xml.FindElem(_T("DrawingPathFront")))
-			{
-				Attrdoor.m_frontViewFile.fileName = xml.GetData();
-			}
-			if (xml.FindElem(_T("DrawingPathLeft")))
-			{
-				Attrdoor.m_leftViewFile.fileName = xml.GetData();
-			}
-			if (xml.FindElem(_T("DrawingPathExpanded")))
-			{
-				Attrdoor.m_file.fileName = xml.GetData();
-			}*/
+
 			if (xml.FindElem(_T("Scope")))
 			{
 				CString flag = xml.GetData();
@@ -466,11 +451,7 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 				dimDataW.minValue = minValue;
 				dimDataW.maxValue = maxValue;
 			}
-			//else //TODO 支持静态的数据
-			//{
-			//	dimDataW.type = SINGLE;
-			//	dimDataW.value = _ttof(xls.GetCellValue(i, 12)); //宽度
-			//}
+
 			Attrdoor.SetDimData(dimDataW);
 
 			CWindowsDimData dimDataH;
@@ -479,11 +460,7 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 			{
 				dimDataH.type = UNLIMIT;
 			}
-			//else
-			//{
-			//	dimDataH.type = SINGLE;
-			//	dimDataH.value = _ttof(xls.GetCellValue(i, 13)); //宽度
-			//}
+
 			Attrdoor.SetDimData(dimDataH);
 
 

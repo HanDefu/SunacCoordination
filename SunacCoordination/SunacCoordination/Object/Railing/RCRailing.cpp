@@ -51,14 +51,14 @@ CString CRCRailing::GetPrototypeFilePath()const
 {
 	return MD2010_GetAppPath() + L"\\support\\Sunac2019\\LocalMode\\" + m_railingAtt.m_prototypeCode + L".dwg";
 }
-bool CRCRailing::CheckLengthWidth()
+bool CRCRailing::CheckLengthHeight()
 {
 	return (m_railingAtt.m_length > GetMinWidth()) && (m_railingAtt.m_height > GetMinHeight());
 }
 //start ÎªÀ¸¸ËµÄ×óÏÂ½Ç
 int CRCRailing::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut)
 {
-	if (CheckLengthWidth()==false)
+	if (CheckLengthHeight()==false)
 	{
 		return -1;
 	}
