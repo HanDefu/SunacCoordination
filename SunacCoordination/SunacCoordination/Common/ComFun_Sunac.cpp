@@ -517,51 +517,6 @@ void YT_UpdateBlockReference(AcDbObjectId &entId)
 	pBlkRef->close();
 }
 
-void TY_GetAllWindowFiles(vCString &files)
-{
-	CString appPath = MD2010_GetAppPath();
-	files.push_back(appPath + L"\\support\\Sunac2019\\LocalMode\\Window_N_7_0.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\LocalMode\\Window_N_7_1.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\LocalMode\\Window_N_9_0.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\LocalMode\\Window_N_9_1.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\LocalMode\\Window_N_9_2.dwg");
-}
-
-void TY_GetAllKitchenFiles(vCString &files)
-{
-	CString appPath = MD2010_GetAppPath();
-	files.push_back(appPath + L"\\support\\Sunac2019\\LocalMode\\KL_1.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\LocalMode\\KUq_1.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\LocalMode\\KL_1.dwg");
-}
-
-void TY_GetAllTieYiLanGanFiles(vCString &files)
-{
-	files.clear();
-	CString appPath = MD2010_GetAppPath();
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\沺眙戲裝_1.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\沺眙戲裝_2.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\沺眙戲裝_3.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\沺眙戲裝_4.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\沺眙戲裝_5.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\沺眙戲裝_6.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\沺眙戲裝_7.dwg");
-}
-
-void TY_GetAllBoLiLanGanFiles(vCString &files)
-{
-	files.clear();
-	CString appPath = MD2010_GetAppPath();
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\產薛戲裝_1.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\產薛戲裝_2.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\產薛戲裝_3.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\產薛戲裝_4.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\產薛戲裝_5.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\產薛戲裝_6.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\產薛戲裝_7.dwg");
-}
-
-
 AcGePoint3d TY_GetPoint(CString prompt)
 {
 	ads_point pt;
@@ -898,6 +853,11 @@ CString TY_GetPrototypeFilePath()
 	return appPath + L"\\Support\\Sunac2019\\Files\\";
 #endif
 }
+CString TY_GetPrototypeFilePath_Local()
+{
+	CString sPath = MD2010_GetAppPath()+ L"\\Support\\Sunac2019\\LocalMode\\";
+	return sPath;
+}
 
 CString TY_GetPrototypeImagePath()
 {
@@ -907,6 +867,11 @@ CString TY_GetPrototypeImagePath()
 #else
 	return appPath + L"\\support\\Sunac2019\\Files\\";
 #endif
+}
+CString TY_GetPrototypeImagePath_Local()
+{
+	CString appPath = MD2010_GetAppPath();
+	return appPath + L"\\support\\Sunac2019\\Image\\";
 }
 
 char* TY_GetAluminumDatabasePath()

@@ -41,10 +41,14 @@ public:
 	afx_msg void OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnSelChangedW1();
 	afx_msg void OnSelChangedH2();
+	afx_msg void OnBnClickedBayWindow();
+	afx_msg void OnSelChangedWallDis();
 	void UpdateEnable();
 	void UpdateInstanceCode();
 	void LoadDefaultValue();
 	AttrWindow* GetSelWindow();
+
+	void SetEditMode(AcDbBlockReference* pBlock);
 
 protected:
 
@@ -69,7 +73,9 @@ protected:
 	int m_radioYes; //ÊÇ·ñÍ¹´°
 
 	vector<AttrWindow> m_allWindows;
-public:
+
+	AcDbBlockReference* m_pCurEdit;
+
 	BOOL m_autoIndex;
 	CComboBox m_viewDir;
 	CButton m_isMirror;

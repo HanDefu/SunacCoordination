@@ -41,6 +41,7 @@ protected:
 	CString GetStandardBlockName() const;
 	CString GetNonStandardBlockName() const;
 	CString GetHandRailBlockName() const;
+
 	double B1() const { return m_B1; }
 	double B2() const { return m_B2; }
 
