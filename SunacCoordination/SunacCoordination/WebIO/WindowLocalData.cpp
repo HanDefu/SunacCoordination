@@ -30,6 +30,7 @@ CWindowsDimData CWindowLocalData::ReadDimData(Excel::CExcelUtil &xls, CString co
 	CWindowsDimData  data;
 	data.sCodeName = code;
 	data.defaultValue = defaultValue;
+	data.value = defaultValue;
 	data.minValue = minValue;
 	data.maxValue = maxValue;
 	data.prompt = sComment;
