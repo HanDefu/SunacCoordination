@@ -639,7 +639,7 @@ static void initApp()
 	acedRegCmds->addCommand(_T("SUNAC"),
 		_T("SWINADVANCE"),
 		_T("SWINADVANCE"),
-		ACRX_CMD_MODAL,
+		ACRX_CMD_MODAL | ACRX_CMD_USEPICKSET,
 		CMD_SunacWindowAdvanceDesign,
 		NULL,
 		-1,

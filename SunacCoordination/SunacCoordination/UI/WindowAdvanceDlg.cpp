@@ -49,6 +49,8 @@ void CWindowAdvanceDlg::OnOK()
 			m_selAttrWindows[i]->m_material.bHasAuxiliaryFrame = (m_bFuKuang != FALSE);
 		if (m_selAttrWindows[i]->m_material.bHasAuxiliaryFrame && (m_fuKuangType.GetCurSel() >= 0))
 			m_selAttrWindows[i]->m_material.sAuxiliaryFrame = TYUI_GetComboBoxText(m_fuKuangType);
+		if (!m_selAttrWindows[i]->m_material.bHasAuxiliaryFrame)
+			m_selAttrWindows[i]->m_material.sAuxiliaryFrame.Empty();
 	}
 
 	CAcUiDialog::OnOK();
@@ -268,7 +270,7 @@ void CWindowAdvanceDlg::InitPlugSlotSize()
 		}
 	}
 
-	defValue = _ttoi(m_selAttrWindows[0]->m_material.sAuxiliaryFrame);
+	defValue = (int)m_selAttrWindows[0]->GetA();
 	TYUI_InitComboBox(m_saiFeng, options, defValue);
 }
 
@@ -276,6 +278,8 @@ void CWindowAdvanceDlg::InitAuxiliaryFrame()
 {
 	if (m_selAttrWindows.empty())
 		return;
+
+	m_bFuKuang = m_selAttrWindows[0]->m_material.bHasAuxiliaryFrame;
 
 	for (UINT i = 0; i < m_selAttrWindows.size(); i++)
 	{
@@ -285,11 +289,12 @@ void CWindowAdvanceDlg::InitAuxiliaryFrame()
 			break;
 		}
 	}
-	m_bFuKuang = m_selAttrWindows[0]->m_material.bHasAuxiliaryFrame;
+
 	if (m_bFuKuang == FALSE)
 		TYUI_Disable(m_fuKuangType);
 	else
 		TYUI_Enable(m_fuKuangType);
+
 	UpdateData(FALSE);
 }
 

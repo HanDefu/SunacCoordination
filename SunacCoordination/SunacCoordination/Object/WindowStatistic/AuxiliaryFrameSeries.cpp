@@ -29,7 +29,7 @@ CAuxiliaryFrameSeries::~CAuxiliaryFrameSeries()
 vector<CString> CAuxiliaryFrameSeries::GetAllAuxiliaryFrameSerials()
 {
 	vector<CString> serails1 = GetAllAuxiliaryFrameSerials(EAuxiliaryFrame_¸Ö¸½¿ò);
-	vector<CString> serails2 = GetAllAuxiliaryFrameSerials(EAuxiliaryFrame_¸Ö¸½¿ò);
+	vector<CString> serails2 = GetAllAuxiliaryFrameSerials(EAuxiliaryFrame_½ÚÄÜ¸½¿ò);
 	serails1.insert(serails1.end(), serails2.begin(), serails2.end());
 
 	return serails1;
