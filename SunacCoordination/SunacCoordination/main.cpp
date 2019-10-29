@@ -461,6 +461,7 @@ void CMD_test()
 	CAirConditionWebData AirConFromWeb;
 	//vAttrWindow window = b.GetWindows(width, height, "", 0, "");
 	std::vector<AttrWindow> WindowFromWebData = WindowFromWeb.GetAllWindows();
+	std::vector<AttrWindow> WindowFromWebData2 = WindowFromWeb.GetWindows(1800, 1800, L"外开", 1, L"");
 	std::vector<AttrWindow> WindowFromLocalData = WindowFromLocal.GetAllWindows();
 
 	//比较windows1, windows2
@@ -548,6 +549,7 @@ void CMD_test()
 
 	}*/
 
+	std::vector<AttrKitchen> KitchenFromWebData2 = KitchenFromWeb.GetKitchens(2500, 2000, L"门窗垂直开", L"U型", true);
 	std::vector<AttrBathroom> BathroomFromWebData = BathroomFromWeb.GetBathrooms(1800, 2000, L"门窗垂直开", L"L型");
 	std::vector<AttrRailing> RailingFromWebData = RailingFromWeb.GetRailings(E_RAILING_BOLI);
 	std::vector<AttrAirCon> AirConFromWebData = AirConFromWeb.GetAirCons(1.5, "后面", 1, "侧面");

@@ -98,7 +98,6 @@ void CProjectManagementDlg::FillPjtMngTreeCtrl()
 
 void CProjectManagementDlg::OnBnClickedButtonUpload()
 {
-	// TODO: 在此添加控件通知处理程序代码
 	CString filter = L"参数文件(*.dwg)|*.dwg|All Files(*.*)|*.*||";
     CFileDialog dlg(FALSE, L"dwg", L"*.dwg", NULL, filter);
 	if(dlg.DoModal() == IDOK)
@@ -213,7 +212,6 @@ CProjectDir* CProjectManagementDlg::FindClkDir(HTREEITEM CurClkItem)
 
 void CProjectManagementDlg::OnNMClickTreePrjdir(NMHDR *pNMHDR, LRESULT *pResult)
 {
-	// TODO: 在此添加控件通知处理程序代码
 	*pResult = 0;
 	CPoint CurClkPoint;
 	GetCursorPos(&CurClkPoint);
@@ -243,7 +241,6 @@ void CProjectManagementDlg::OnNMClickTreePrjdir(NMHDR *pNMHDR, LRESULT *pResult)
 
 void CProjectManagementDlg::OnBnClickedButtonNewdir()
 {
-	// TODO: 在此添加控件通知处理程序代码
 	CNewDirDlg dlg;
 	dlg.DoModal();
 	CString sNewDir = dlg.m_sNewDir;
@@ -295,7 +292,6 @@ void CProjectManagementDlg::OnGridClick(NMHDR *pNMHDR, LRESULT *pResult)
 
 void CProjectManagementDlg::OnBnClickedButtonDeletedir()
 {
-	// TODO: 在此添加控件通知处理程序代码
 	CString sDeleteDir;
 	sDeleteDir = m_pPrjData->GetDirString(L"", m_selectedDir);
 	m_pPrjData->DeleteFolder(sDeleteDir);
@@ -307,7 +303,6 @@ void CProjectManagementDlg::OnBnClickedButtonDeletedir()
 
 void CProjectManagementDlg::OnBnClickedButtonDownloadall()
 {
-	// TODO: 在此添加控件通知处理程序代码
 	for(UINT i = 1; i < m_PjtManagementGridCtrl.GetRowCount(); i++)
 	{
 		CGridCellBase* pCell = m_PjtManagementGridCtrl.GetCell(i, 0);
@@ -324,7 +319,6 @@ void CProjectManagementDlg::OnBnClickedButtonDownloadall()
 
 void CProjectManagementDlg::OnBnClickedButtonDeleteall()
 {
-	// TODO: 在此添加控件通知处理程序代码
 	for(UINT i = 1; i < m_PjtManagementGridCtrl.GetRowCount(); i++)
 	{
 		CGridCellBase* pCell = m_PjtManagementGridCtrl.GetCell(i, 0);

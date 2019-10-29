@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "DlgLogin.h"
 #include "afxdialogex.h"
+#include "../WebIO/WebIO.h"
 
 
 // DlgLogin dialog
@@ -38,8 +39,16 @@ END_MESSAGE_MAP()
 
 void DlgLogin::OnBnClickedOk()
 {
-	// TODO: 在此添加控件通知处理程序代码
 	Acad::ErrorStatus es = acDocManager->sendStringToExecute(curDoc(), L"REMOVEBLOCKREFDOUBLECLICK\n");
+	
+	CString sUserName, sPassword;
+	m_name.GetWindowTextW(sUserName);
+	m_password.GetWindowTextW(sPassword);
+	if (!WebIO::GetInstance()->Login(sUserName, sPassword))
+	{
+		AfxMessageBox(L"用户名或密码输入错误！");
+		return;
+	}
 	CAcUiDialog::OnOK();
 }
 
