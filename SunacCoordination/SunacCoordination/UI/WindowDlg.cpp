@@ -182,6 +182,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	oneWindow.AddAttribute(pWindow);
 	pWindow->close();
 
+	//ShowWindow(TRUE);
 	OnOK();
 }
 
@@ -189,9 +190,9 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 {
 	double width = TYUI_GetDouble(m_width);
 	double height = TYUI_GetDouble(m_height);
-	CString openType = TYUI_GetText(m_openType);
-	int openNum = TYUI_GetInt(m_openAmount);
-	CString areaType = TYUI_GetText(m_areaType);
+	CString openType = TYUI_GetComboBoxText(m_openType);
+	int openNum = _ttoi(TYUI_GetComboBoxText(m_openAmount));
+	CString areaType = TYUI_GetComboBoxText(m_areaType);
 
 	if (m_radioDoor == 0)
 	    m_allWindows = WebIO::GetInstance()->GetDoors(width, height, openType, openNum, areaType);
