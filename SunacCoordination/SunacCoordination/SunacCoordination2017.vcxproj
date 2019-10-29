@@ -298,7 +298,6 @@
     <None Include="props\rxsdk_debugcfg.props" />
     <None Include="props\rxsdk_releasecfg.props" />
     <None Include="res\SunacCoordination.aps" />
-    <None Include="Tool\SQLite\sqlite3.dll" />
     <None Include="WebIO\SunacCadWeb\ArgumentSettingServiceSoap.nsmap" />
   </ItemGroup>
   <ItemGroup>
@@ -323,9 +322,6 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\SunacCoordination.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="Tool\SQLite\sqlite3.lib" />
   </ItemGroup>
   <PropertyGroup Label="Configuration">
     <CharacterSet>Unicode</CharacterSet>
@@ -357,58 +353,63 @@
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="C:\Autodesk\ObjectARX 2017\inc\rxsdk_Debugcfg.props" />
-    <Import Project="C:\Autodesk\ObjectARX 2017\inc\arx.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\rxsdk_Debugcfg.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\arx.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="C:\Autodesk\ObjectARX 2017\inc\rxsdk_Releasecfg.props" />
-    <Import Project="C:\Autodesk\ObjectARX 2017\inc\arx.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\rxsdk_Releasecfg.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\arx.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="C:\Autodesk\ObjectARX 2017\inc\rxsdk_Debugcfg.props" />
-    <Import Project="C:\Autodesk\ObjectARX 2017\inc\arx.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\rxsdk_Debugcfg.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\arx.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="C:\Autodesk\ObjectARX 2017\inc\rxsdk_Releasecfg.props" />
-    <Import Project="C:\Autodesk\ObjectARX 2017\inc\arx.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\rxsdk_Releasecfg.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\arx.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\ARX2017\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\ARX2017\</IntDir>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\ARX2017X86\</OutDir>
+    <IntDir>$(Configuration)\ARX2017X86\</IntDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>C:\Autodesk\ObjectARX 2017\inc;C:\Autodesk\ObjectARX 2017\utils\brep\inc;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\inc;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>RADPACK;ARX_2017;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\ObjectARX 2017\lib;C:\Autodesk\ObjectARX 2017\lib-win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>C:\Autodesk\ObjectARX 2017\inc\AcRxDefault.def</ModuleDefinitionFile>
-      <AdditionalDependencies>acdbmgd.lib;AcDrawBridge.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\lib;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\lib-win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
+      <AdditionalDependencies>acdbmgd.lib;AcDrawBridge.lib;Tool\SQLite\x86\sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)SunacCAD2017X86.arx</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>C:\Autodesk\ObjectARX 2017\inc;$(ProjectDir);C:\Autodesk\ObjectARX 2017\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc;$(ProjectDir);C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>RADPACK;ARX_2017;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\ObjectARX 2017\lib;C:\Autodesk\ObjectARX 2017\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>C:\Autodesk\ObjectARX 2017\inc\AcRxDefault.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\lib;C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
-      <AdditionalDependencies>acdbmgd.lib;AcDrawBridge.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>acdbmgd.lib;AcDrawBridge.lib;Tool\SQLite\sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)SunacCAD2017X64.arx</OutputFile>
     </Link>
   </ItemDefinitionGroup>
@@ -417,7 +418,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Autodesk\ObjectARX 2017\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>RADPACK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -426,8 +427,8 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\ObjectARX 2017\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>C:\Autodesk\ObjectARX 2017\inc\AcRxDefault.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -435,7 +436,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Autodesk\ObjectARX 2017\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>RADPACK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -445,8 +446,8 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\ObjectARX 2017\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>C:\Autodesk\ObjectARX 2017\inc\AcRxDefault.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
   </ItemDefinitionGroup>

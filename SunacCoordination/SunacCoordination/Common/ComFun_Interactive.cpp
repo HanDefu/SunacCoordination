@@ -203,7 +203,7 @@ void JHCOM_SelectEnts(vAcDbObjectId &ids, const ACHAR* pstr/* = NULL*/)
 	int rt = acedSSGet(pstr, NULL, NULL, NULL, ssname); // 提示用户选择对象
 	if (rt == RTNORM)
 	{
-		long length;
+		Adesk::Int32 length;
 		acedSSLength(ssname, &length);
 		for (int i=0;i<length;i++)
 		{

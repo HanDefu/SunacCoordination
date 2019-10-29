@@ -316,14 +316,10 @@
     <None Include="res\SunacCoordination.aps" />
     <None Include="res\windowdir.bmp" />
     <None Include="res\画图Folder.ico" />
-    <None Include="Tool\SQLite\sqlite3.dll" />
     <None Include="WebIO\SunacCadWeb\ArgumentSettingServiceSoap.nsmap" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\SunacCoordination.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="Tool\SQLite\sqlite3.lib" />
   </ItemGroup>
   <PropertyGroup Label="Configuration">
     <CharacterSet>Unicode</CharacterSet>
@@ -351,58 +347,63 @@
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="C:\Autodesk\ObjectARX 2012\inc\rxsdk_Debugcfg.props" />
-    <Import Project="C:\Autodesk\ObjectARX 2012\inc\arx.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\inc\rxsdk_Debugcfg.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\inc\arx.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="C:\Autodesk\ObjectARX 2012\inc\rxsdk_Releasecfg.props" />
-    <Import Project="C:\Autodesk\ObjectARX 2012\inc\arx.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\inc\rxsdk_Releasecfg.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\inc\arx.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="C:\Autodesk\ObjectARX 2012\inc\rxsdk_Debugcfg.props" />
-    <Import Project="C:\Autodesk\ObjectARX 2012\inc\arx.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\inc\rxsdk_Debugcfg.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\inc\arx.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="C:\Autodesk\ObjectARX 2012\inc\rxsdk_Releasecfg.props" />
-    <Import Project="C:\Autodesk\ObjectARX 2012\inc\arx.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\inc\rxsdk_Releasecfg.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\inc\arx.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\ARX2012\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\ARX2012\</IntDir>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\ARX2012X86\</OutDir>
+    <IntDir>$(Configuration)\ARX2012X86\</IntDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>C:\Autodesk\ObjectARX 2012\inc;$(ProjectDir);C:\Autodesk\ObjectARX 2012\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\inc;$(ProjectDir);C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>RADPACK;ARX_2012;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\ObjectARX 2012\lib;C:\Autodesk\ObjectARX 2012\lib-win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>C:\Autodesk\ObjectARX 2012\inc\AcRxDefault.def</ModuleDefinitionFile>
-      <AdditionalDependencies>acdbmgd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\lib;C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\lib-win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
+      <AdditionalDependencies>acdbmgd.lib;Tool\SQLite\x86\sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)SunacCAD2012X86.arx</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>C:\Autodesk\ObjectARX 2012\inc;$(ProjectDir);C:\Autodesk\ObjectARX 2012\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\inc;$(ProjectDir);C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>RADPACK;ARX_2012;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\ObjectARX 2012\lib;C:\Autodesk\ObjectARX 2012\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>C:\Autodesk\ObjectARX 2012\inc\AcRxDefault.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\lib;C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
-      <AdditionalDependencies>acdbmgd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>acdbmgd.lib;Tool\SQLite\sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)SunacCAD2012X64.arx</OutputFile>
     </Link>
   </ItemDefinitionGroup>
@@ -411,7 +412,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Autodesk\ObjectARX 2012\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>RADPACK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -420,8 +421,8 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\ObjectARX 2012\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>C:\Autodesk\ObjectARX 2012\inc\AcRxDefault.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -429,7 +430,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Autodesk\ObjectARX 2012\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>RADPACK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -438,8 +439,8 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\ObjectARX 2012\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>C:\Autodesk\ObjectARX 2012\inc\AcRxDefault.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
   </ItemDefinitionGroup>

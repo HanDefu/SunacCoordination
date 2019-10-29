@@ -899,9 +899,6 @@
     <None Include="res\画图Folder.ico">
       <Filter>res</Filter>
     </None>
-    <None Include="Tool\SQLite\sqlite3.dll">
-      <Filter>Tool</Filter>
-    </None>
     <None Include="WebIO\SunacCadWeb\ArgumentSettingServiceSoap.nsmap">
       <Filter>WebIO</Filter>
     </None>
@@ -910,10 +907,5 @@
     <ResourceCompile Include="res\SunacCoordination.rc">
       <Filter>res</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="Tool\SQLite\sqlite3.lib">
-      <Filter>Tool</Filter>
-    </Library>
   </ItemGroup>
 </Project>

@@ -132,51 +132,51 @@
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="C:\Autodesk\ObjectARX 2014\inc\rxsdk_Debugcfg.props" />
-    <Import Project="C:\Autodesk\ObjectARX 2014\inc\arx.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc\rxsdk_Debugcfg.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc\arx.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="C:\Autodesk\ObjectARX 2014\inc\rxsdk_Releasecfg.props" />
-    <Import Project="C:\Autodesk\ObjectARX 2014\inc\arx.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc\rxsdk_Releasecfg.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc\arx.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="C:\Autodesk\ObjectARX 2014\inc\rxsdk_Debugcfg.props" />
-    <Import Project="C:\Autodesk\ObjectARX 2014\inc\arx.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc\rxsdk_Debugcfg.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc\arx.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="C:\Autodesk\ObjectARX 2014\inc\rxsdk_Releasecfg.props" />
-    <Import Project="C:\Autodesk\ObjectARX 2014\inc\arx.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc\rxsdk_Releasecfg.props" />
+    <Import Project="C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc\arx.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>C:\Autodesk\ObjectARX 2014\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>RADPACK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\ObjectARX 2014\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>C:\Autodesk\ObjectARX 2014\inc\AcRxDefault.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>C:\Autodesk\ObjectARX 2014\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>RADPACK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\ObjectARX 2014\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>C:\Autodesk\ObjectARX 2014\inc\AcRxDefault.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -185,7 +185,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Autodesk\ObjectARX 2014\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>RADPACK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -194,8 +194,8 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\ObjectARX 2014\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>C:\Autodesk\ObjectARX 2014\inc\AcRxDefault.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -203,7 +203,7 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Autodesk\ObjectARX 2014\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>RADPACK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -212,8 +212,8 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\ObjectARX 2014\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>C:\Autodesk\ObjectARX 2014\inc\AcRxDefault.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
