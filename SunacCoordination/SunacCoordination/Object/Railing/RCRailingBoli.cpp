@@ -69,20 +69,36 @@ AcDbObjectId CRCRailingBoli::CreateRailingBlockDefine(CString sRailingDefName)
 }
 CString CRCRailingBoli::GetStandardBlockName() const
 {
-	return m_railingAtt.m_prototypeCode + _T("_Standard");
+	CString sName = m_railingAtt.m_prototypeCode + _T("_Standard");
+	if (IsSampleDraw())
+		sName += _T("_simple");
+
+	return sName;
 }
 
 CString CRCRailingBoli::GetLeftBlockName() const
 {
-	return m_railingAtt.m_prototypeCode + _T("_Left");
+	CString sName = m_railingAtt.m_prototypeCode + _T("_Left");
+	if (IsSampleDraw())
+		sName += _T("_simple");
+
+	return sName;
 }
 CString CRCRailingBoli::GetRightBlockName() const
 {
-	return m_railingAtt.m_prototypeCode + _T("_Right");
+	CString sName = m_railingAtt.m_prototypeCode + _T("_Right");
+	if (IsSampleDraw())
+		sName += _T("_simple");
+
+	return sName;
 }
 CString CRCRailingBoli::GetHandRailBlockName() const
 {
-	return m_railingAtt.m_prototypeCode + _T("_Handrail");
+	CString sName = m_railingAtt.m_prototypeCode + _T("_Handrail");
+	if (IsSampleDraw())
+		sName += _T("_simple");
+
+	return sName;
 }
 
 AcDbObjectIdArray CRCRailingBoli::GenerateRailing_Standard(AcGePoint3d pos)

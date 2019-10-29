@@ -225,7 +225,7 @@ void DQ_SelectMany(vAcDbObjectId &ids)
 	int rt = acedSSGet(NULL, NULL, NULL, NULL, ssname); // Ã· æ”√ªß—°‘Ò∂‘œÛ
 	if (rt == RTNORM)
 	{
-		long length;
+		Adesk::Int32 length;
 		acedSSLength(ssname, &length);
 		for (int i=0;i<length;i++)
 		{
@@ -516,51 +516,6 @@ void YT_UpdateBlockReference(AcDbObjectId &entId)
 	//pBlkRef->draw();
 	pBlkRef->close();
 }
-
-void TY_GetAllWindowFiles(vCString &files)
-{
-	CString appPath = MD2010_GetAppPath();
-	files.push_back(appPath + L"\\support\\Sunac2019\\LocalMode\\Window_N_7_0.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\LocalMode\\Window_N_7_1.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\LocalMode\\Window_N_9_0.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\LocalMode\\Window_N_9_1.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\LocalMode\\Window_N_9_2.dwg");
-}
-
-void TY_GetAllKitchenFiles(vCString &files)
-{
-	CString appPath = MD2010_GetAppPath();
-	files.push_back(appPath + L"\\support\\Sunac2019\\LocalMode\\KL_1.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\LocalMode\\KUq_1.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\LocalMode\\KL_1.dwg");
-}
-
-void TY_GetAllTieYiLanGanFiles(vCString &files)
-{
-	files.clear();
-	CString appPath = MD2010_GetAppPath();
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\Ã˙“’¿∏∏À_1.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\Ã˙“’¿∏∏À_2.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\Ã˙“’¿∏∏À_3.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\Ã˙“’¿∏∏À_4.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\Ã˙“’¿∏∏À_5.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\Ã˙“’¿∏∏À_6.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\Ã˙“’¿∏∏À_7.dwg");
-}
-
-void TY_GetAllBoLiLanGanFiles(vCString &files)
-{
-	files.clear();
-	CString appPath = MD2010_GetAppPath();
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\≤£¡ß¿∏∏À_1.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\≤£¡ß¿∏∏À_2.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\≤£¡ß¿∏∏À_3.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\≤£¡ß¿∏∏À_4.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\≤£¡ß¿∏∏À_5.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\≤£¡ß¿∏∏À_6.dwg");
-	files.push_back(appPath + L"\\support\\Sunac2019\\Railing\\≤£¡ß¿∏∏À_7.dwg");
-}
-
 
 AcGePoint3d TY_GetPoint(CString prompt)
 {
@@ -898,6 +853,11 @@ CString TY_GetPrototypeFilePath()
 	return appPath + L"\\Support\\Sunac2019\\Files\\";
 #endif
 }
+CString TY_GetPrototypeFilePath_Local()
+{
+	CString sPath = MD2010_GetAppPath()+ L"\\Support\\Sunac2019\\LocalMode\\";
+	return sPath;
+}
 
 CString TY_GetPrototypeImagePath()
 {
@@ -907,6 +867,11 @@ CString TY_GetPrototypeImagePath()
 #else
 	return appPath + L"\\support\\Sunac2019\\Files\\";
 #endif
+}
+CString TY_GetPrototypeImagePath_Local()
+{
+	CString appPath = MD2010_GetAppPath();
+	return appPath + L"\\support\\Sunac2019\\Image\\";
 }
 
 char* TY_GetAluminumDatabasePath()
@@ -1197,7 +1162,13 @@ AcDbObjectId CopyBlockDefFromDwg(const TCHAR* fileName, const TCHAR* blkDefName)
 
 	//  π”√_SH_DENYNO≤Œ ˝¥Úø™Õº–Œ(÷ª∂¡¥Úø™)£¨‘ –Ì∆‰À¸”√ªß∂¡–¥∏√Œƒº˛
 	AcDbDatabase* pSourceDwg = new AcDbDatabase(false);
+#if (defined ARX_2018) || (defined ARX_2017)|| (defined ARX_2019)
+	Acad::ErrorStatus es = pSourceDwg->readDwgFile(fileName, AcDbDatabase::kForReadAndAllShare);
+#else
 	Acad::ErrorStatus es = pSourceDwg->readDwgFile(fileName, _SH_DENYNO);
+#endif //  ARX_2018
+
+	
 	if (es != Acad::eOk)
 	{
 		delete pSourceDwg;

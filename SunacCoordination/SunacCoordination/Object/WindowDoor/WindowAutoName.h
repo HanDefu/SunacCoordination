@@ -7,8 +7,8 @@ using namespace std;
 
 class CWindowAutoName
 {
-public:
 	CWindowAutoName();
+public:
 	~CWindowAutoName();
 
 	static CWindowAutoName* GetInstance();

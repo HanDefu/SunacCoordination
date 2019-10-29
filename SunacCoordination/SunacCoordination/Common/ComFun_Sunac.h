@@ -56,10 +56,6 @@ int MD2010_GetAllTypedObjectsInLayer(vAcDbObjectId &allEntites, CString layname,
 
 void YT_UpdateBlockReference(AcDbObjectId &entId);
 
-void TY_GetAllWindowFiles(vCString &files);
-void TY_GetAllKitchenFiles(vCString &files);
-void TY_GetAllTieYiLanGanFiles(vCString &files);
-void TY_GetAllBoLiLanGanFiles(vCString &files);
 
 AcGePoint3d TY_GetPoint(CString prompt = L"«Î—°‘Ò≤Â»Îµ„");
 TYRect TY_GetOneRect();
@@ -85,7 +81,9 @@ bool TY_IsPairsEqual(vRCPairKeyStrValue &A, vRCPairKeyStrValue &B);
 
 CString TY_GetDataFilePath();
 CString TY_GetPrototypeFilePath();
+CString TY_GetPrototypeFilePath_Local();
 CString TY_GetPrototypeImagePath();
+CString TY_GetPrototypeImagePath_Local();
 
 char* TY_GetAluminumDatabasePath();
 char* TY_GetLocalDataDatabasePath();

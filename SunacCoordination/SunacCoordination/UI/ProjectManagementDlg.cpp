@@ -303,7 +303,7 @@ void CProjectManagementDlg::OnBnClickedButtonDeletedir()
 
 void CProjectManagementDlg::OnBnClickedButtonDownloadall()
 {
-	for(UINT i = 1; i < m_PjtManagementGridCtrl.GetRowCount(); i++)
+	for(int i = 1; i < m_PjtManagementGridCtrl.GetRowCount(); i++)
 	{
 		CGridCellBase* pCell = m_PjtManagementGridCtrl.GetCell(i, 0);
 		if(((CGridCellCheck* )pCell)->GetCheck())
@@ -319,7 +319,7 @@ void CProjectManagementDlg::OnBnClickedButtonDownloadall()
 
 void CProjectManagementDlg::OnBnClickedButtonDeleteall()
 {
-	for(UINT i = 1; i < m_PjtManagementGridCtrl.GetRowCount(); i++)
+	for(int i = 1; i < m_PjtManagementGridCtrl.GetRowCount(); i++)
 	{
 		CGridCellBase* pCell = m_PjtManagementGridCtrl.GetCell(i, 0);
 		if(((CGridCellCheck* )pCell)->GetCheck())

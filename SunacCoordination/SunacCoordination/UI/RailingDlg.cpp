@@ -33,6 +33,8 @@ CRailingDlg::CRailingDlg(CWnd* pParent /*=NULL*/)
 	: CAcUiDialog(CRailingDlg::IDD, pParent)
 	, m_height(1200)
 	, m_width(5400)
+	, m_bRailingAutoName(TRUE)
+	, m_sRailingId(_T(""))
 {
 	m_isMoldless = true;
 }
@@ -51,12 +53,14 @@ void CRailingDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CAcUiDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_PREVIEW_RAILING, m_preRailing);
-	DDX_Control(pDX, IDC_COMBO_RAILINGTYPE, m_type);
+	DDX_Control(pDX, IDC_COMBO_RAILINGTYPE, m_comboRailingType);
 	DDX_Text(pDX, IDC_EDIT_RAILINGHEIGHT, m_height);
 	DDV_MinMaxDouble(pDX, m_height, 100, 10000);
 	DDX_Text(pDX, IDC_EDIT_HOLEWIDTH, m_width);
 	DDV_MinMaxDouble(pDX, m_width, 100, 100000);
-	DDX_Control(pDX, IDC_EDIT_RAILINGNUMBER, m_railingNumber);
+	DDX_Check(pDX, IDC_CHECK_AUTOINDEX, m_bRailingAutoName);
+	DDX_Text(pDX, IDC_EDIT_RAILINGNUMBER, m_sRailingId);
+	DDX_Control(pDX, IDC_EDIT_RAILINGNUMBER, m_editRailingID);
 }
 
 BEGIN_MESSAGE_MAP(CRailingDlg, CAcUiDialog)
@@ -77,19 +81,10 @@ BOOL CRailingDlg::OnInitDialog()
 {
 	CAcUiDialog::OnInitDialog();
 
-	vCString allRailingFiles;
-	TY_GetAllTieYiLanGanFiles(allRailingFiles);
-	m_selectedFile = allRailingFiles[0];
-
-	//m_preStyle.SubclassDlgItem(IDC_STATIC_STYLE, this);
-	//m_preStyle.Init(theArxDLL.ModuleResourceInstance(), true);
-	//m_preStyle.SetDwgFile(m_selectedFile);
-
-	//m_railingInfo.SetWindowText(_T("栏杆信息说明:\r\n栏杆间距:\r\n单元尺寸:\r\n栏杆类型："));
-	m_type.AddString(_T("不限"));
-	m_type.AddString(_T("铁艺栏杆"));
-	m_type.AddString(_T("玻璃栏杆"));
-	m_type.SetCurSel(0);
+	m_comboRailingType.AddString(_T("不限"));
+	m_comboRailingType.AddString(_T("铁艺栏杆"));
+	m_comboRailingType.AddString(_T("玻璃栏杆"));
+	m_comboRailingType.SetCurSel(0);
 
 	UpdateRailingToGrid(E_RAILING_ALL);
 
@@ -137,17 +132,22 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 		return;
 	}
 
-	CString sPrototypeName = pCell->GetName();
-	
-	CString path;
+	if (m_sRailingId.IsEmpty())
+	{
+		AfxMessageBox(_T("请设置原型编号\n"));
+		return;
+	}
+
 	AttrRailing railingAtt;
 	railingAtt.m_height = m_height;
 	railingAtt.m_length = m_width;
-	railingAtt.m_prototypeCode = sPrototypeName;
-	railingAtt.m_railingType = sPrototypeName.Find(_T("_T"))>0 ? E_RAILING_TIEYI : E_RAILING_BOLI;
+	railingAtt.m_prototypeCode = pCell->GetName();
+	railingAtt.m_railingType = railingAtt.m_prototypeCode.Find(_T("_T"))>0 ? E_RAILING_TIEYI : E_RAILING_BOLI;
+	railingAtt.SetInstanceCode(m_sRailingId);
 
 	//生成
 	CRCRailing* pRailing = CreateRailing(railingAtt);
+
 	//检查数据
 	if (pRailing->CheckLengthHeight()==false ||
 		pRailing->GenRailing() == false)
@@ -218,7 +218,7 @@ void CRailingDlg::OnCbnSelchangeComboRailingtype()
 {
 	UpdateData(TRUE);
 
-	CString type = TYUI_GetComboBoxText(m_type);
+	CString type = TYUI_GetComboBoxText(m_comboRailingType);
 	if (type == _T("不限"))
 	{
 		UpdateRailingToGrid(E_RAILING_ALL);
@@ -261,7 +261,7 @@ void CRailingDlg::UpdateRailingToGrid(eRailingType p_railetype)
 			sPrototypeName.Format(_T("Railing_T%d"), i + 1);
 			CString standradRailingSize = RailingSize(i);
 			str.Format(_T("原型编号：%s\n栏杆类型：铁艺栏杆\n标准栏杆长：%s\n"), sPrototypeName, standradRailingSize);
-			path.Format(TY_GetPrototypeImagePath() + ("Railing_T%d.png"), i + 1);
+			path.Format(TY_GetPrototypeImagePath_Local() + ("Railing_T%d.png"), i + 1);
 
 			CGridCellForPreview* pCell = m_preRailing.AddPreview(nCount / 2, nCount % 2, path, str);
 			pCell->SetName(sPrototypeName);
@@ -277,19 +277,19 @@ void CRailingDlg::UpdateRailingToGrid(eRailingType p_railetype)
 			{
 				sPrototypeName.Format(_T("Railing_B%d"), i + 1);
 				str.Format(_T("原型编号：%s\n栏杆类型：玻璃栏杆\n"), sPrototypeName);
-				path.Format(TY_GetPrototypeImagePath() + ("Railing_B%d.png"), i + 1);
+				path.Format(TY_GetPrototypeImagePath_Local() + ("Railing_B%d.png"), i + 1);
 			}
 			else if (i > 1 && i < 4)
 			{
 				sPrototypeName.Format(_T("Railing_B3_%d"), i - 1);
 				str.Format(_T("原型编号：%s\n栏杆类型：玻璃栏杆"), sPrototypeName);
-				path.Format(TY_GetPrototypeImagePath() + ("Railing_B3_%d.png"), i - 1);
+				path.Format(TY_GetPrototypeImagePath_Local() + ("Railing_B3_%d.png"), i - 1);
 			}
 			else
 			{
 				sPrototypeName.Format(_T("Railing_B%d"), i);
 				str.Format(_T("原型编号：%s\n栏杆类型：玻璃栏杆\n"), sPrototypeName);
-				path.Format(TY_GetPrototypeImagePath() + ("Railing_B%d.png"), i);
+				path.Format(TY_GetPrototypeImagePath_Local() + ("Railing_B%d.png"), i);
 			}
 
 			CGridCellForPreview* pCell = m_preRailing.AddPreview(nCount / 2, nCount % 2, path, str);
@@ -321,15 +321,8 @@ CString CRailingDlg::RailingSize(int i)
 void CRailingDlg::OnBnClickedCheckAutoindex()
 {
 	int state =((CButton *)GetDlgItem(IDC_CHECK_AUTOINDEX))->GetCheck(); 
-	if (state == BST_CHECKED ) 
-	{
-		m_railingNumber.SetWindowTextW(_T(""));
-		TYUI_Disable(m_railingNumber);
-	}
-	else
-	{
-		TYUI_Enable(m_railingNumber);
-	}
+	BOOL bEnable = state == BST_CHECKED ? FALSE : TRUE;
+	m_editRailingID.EnableWindow(bEnable);
 }
 
 
@@ -344,15 +337,16 @@ void CRailingDlg::OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult)
 	int selectedRow = selCells[0].row;
 	int selectedColoum = selCells[0].col;
 	CGridCellForPreview* pCell = m_preRailing.GetPreviewCell(selectedRow, selectedColoum);
-	if (pCell != NULL)
+
+	//自动编号
+	if (pCell != NULL && m_bRailingAutoName)
 	{
 		AttrRailing railingAtt;
 		railingAtt.m_height = m_height;
 		railingAtt.m_length = m_width;
-		CString sPrototypeName = pCell->GetName();
-		railingAtt.m_prototypeCode = sPrototypeName;
-		CString sRailingDefName;
-		sRailingDefName.Format(_T("%s_%d_%d"), railingAtt.m_prototypeCode, (int)(railingAtt.m_length), (int)(railingAtt.m_height));
-		m_railingNumber.SetWindowTextW(sRailingDefName);
+		railingAtt.m_prototypeCode = pCell->GetName();
+
+		m_sRailingId =railingAtt.AutoInstanceCode();
+		UpdateData(FALSE);
 	}
 }

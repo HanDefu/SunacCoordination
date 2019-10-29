@@ -148,12 +148,24 @@ void CGsPreviewCtrl::Init(HMODULE hRes, bool bCreateModel)
 		mpManager = acgsGetGsManager();
 		assert(mpManager);
 		// get the GS class factory
+#if (defined ARX_2018) || (defined ARX_2017) || (defined ARX_2016) || (defined ARX_2015)|| (defined ARX_2019)
+		AcGsKernelDescriptor descriptor;
+		descriptor.addRequirement(AcGsKernelDescriptor::k3DDrawing);
+		mpFactory = AcGsManager::acquireGraphicsKernel(descriptor);
+#else
 		mpFactory = mpManager->getGSClassFactory();
+#endif
+
 		assert(mpFactory);
 		// create an AcGsDevice object. The window handle passed in to this 
 		// function is the display surface onto which the graphics system draws
 		//a device with standard autocad color palette
+#if (defined ARX_2018) || (defined ARX_2017)|| (defined ARX_2016) || (defined ARX_2015)|| (defined ARX_2019)
+		mpDevice = mpManager->createAutoCADDevice(*mpFactory, m_hWnd);
+#else
 		mpDevice = mpManager->createAutoCADDevice(m_hWnd);
+#endif
+		
 		assert(mpDevice);
 		
 		// 获得我们将要绘制的窗口尺寸
@@ -170,7 +182,12 @@ void CGsPreviewCtrl::Init(HMODULE hRes, bool bCreateModel)
 			// (which is a hint to the graphics system that the geometry in this 
 			// model should be rasterized into its main frame buffer). This 
 			// AcGsModel is created with get and release functions that will open and close AcDb objects.
+#if (defined ARX_2018) || (defined ARX_2017)|| (defined ARX_2016) || (defined ARX_2015)|| (defined ARX_2019)
+			mpModel = mpManager->createAutoCADModel(*mpFactory);
+#else
 			mpModel = mpManager->createAutoCADModel();
+#endif
+			
 			assert(mpModel);
 			mbModelCreated = true;
 		}
@@ -363,7 +380,13 @@ void CGsPreviewCtrl::SetDwgFile( const TCHAR* fileName )
 
 	// 新建图形数据库，读取DWG文件，作为预览目标
 	m_pDb = new AcDbDatabase (Adesk::kFalse);
+
+#if (defined ARX_2018) || (defined ARX_2017)|| (defined ARX_2019)
+	Acad::ErrorStatus es = m_pDb->readDwgFile(fileName, AcDbDatabase::kForReadAndAllShare);
+#else
 	Acad::ErrorStatus es = m_pDb->readDwgFile(fileName, _SH_DENYNO);
+#endif 
+
 	if (es != Acad::eOk)
 	{
  		delete m_pDb;

@@ -78,6 +78,7 @@ BEGIN_MESSAGE_MAP(CAirconditionerDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDC_BUTTON_INSERTAC, &CAirconditionerDlg::OnBnClickedButtonInsertac)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
 	ON_BN_CLICKED(IDC_BUTTON_CALCULATE, &CAirconditionerDlg::OnBnClickedButtonCalculate)
+	ON_BN_CLICKED(IDC_BUTTON_CALCULATE2, &CAirconditionerDlg::OnBnClickedButtonCalculate2)
 END_MESSAGE_MAP()
 
 
@@ -94,6 +95,7 @@ BOOL CAirconditionerDlg::OnInitDialog()
 	
 	m_room.ShowWindow(FALSE);	//将静态文本控件和编辑框控件隐藏
 	m_roomSize.ShowWindow(FALSE);
+	GetDlgItem(IDC_BUTTON_CALCULATE2)->ShowWindow(FALSE);
 
 	m_preAirCon.SubclassDlgItem(IDC_STATIC_AC, this);		// 控件和资源的关联
 	m_preAirCon.Init(theArxDLL.ModuleResourceInstance(), true);
@@ -138,8 +140,6 @@ void CAirconditionerDlg::LoadDefaultValue()
 
 void CAirconditionerDlg::OnBnClickedCheckHasraintube()
 {
-	// TODO: 在此添加控件通知处理程序代码
-
 	BOOL state = m_hasRainTube.GetCheck(); 
 
 	m_rainTubePos.EnableWindow(state);
@@ -237,48 +237,44 @@ void CAirconditionerDlg::OnBnClickedButtonInsertac()
 //点击计算按钮，显示房间面积对话框，并通过房间面积计算出空调匹数
 void CAirconditionerDlg::OnBnClickedButtonCalculate()
 {
-	UpdateData(TRUE);
-
-	CWnd *pWnd;
-	
 	if (m_flag == FALSE)
 	{
-		//将按钮控件移动位置
-		pWnd = GetDlgItem(IDC_BUTTON_CALCULATE);    //获取控件指针，IDC_BUTTON_CALCULATE为控件ID号
-		pWnd->SetWindowPos(NULL, 300, 23, 0, 0, SWP_NOZORDER | SWP_NOSIZE);    //把按钮移到窗口的(280,23)处
-
 		//将静态文本和编辑框显示
 		m_room.ShowWindow(TRUE);
 		m_roomSize.ShowWindow(TRUE);
 
+		GetDlgItem(IDC_BUTTON_CALCULATE)->ShowWindow(FALSE);
+		GetDlgItem(IDC_BUTTON_CALCULATE2)->ShowWindow(TRUE);
+
 		m_flag = true;
 	}
-	else 
+}
+
+void CAirconditionerDlg::OnBnClickedButtonCalculate2()
+{
+	UpdateData(TRUE);
+	const vCString& pNum = WebIO::GetInstance()->GetConfigDict()->Air_GetPiShus();	//	获取空调所有匹数
+
+	//空调匹数计算方法
+	if (m_rSize > 0 && m_rSize <= 18)
 	{
-		const vCString& pNum = WebIO::GetInstance()->GetConfigDict()->Air_GetPiShus();	//	获取空调所有匹数
-
-		//空调匹数计算方法
-		if (m_rSize > 0 && m_rSize <= 18)
-		{
-			TYUI_InitComboBox(m_pNum, pNum, pNum.empty() ? _T("") : pNum[0]);
-		}
-		else if(m_rSize >= 12 && m_rSize <= 24)
-		{
-			TYUI_InitComboBox(m_pNum, pNum, pNum.empty() ? _T("") : pNum[1]);
-		}
-		else if(m_rSize >= 25 && m_rSize <= 34)
-		{
-			TYUI_InitComboBox(m_pNum, pNum, pNum.empty() ? _T("") : pNum[2]);
-		}
-		else if(m_rSize >= 35)
-		{
-			TYUI_InitComboBox(m_pNum, pNum, pNum.empty() ? _T("") : pNum[3]);
-		}
-		else
-		{
-			AfxMessageBox(TEXT("房间面积应大于0m²"));
-		}
+		TYUI_InitComboBox(m_pNum, pNum, pNum.empty() ? _T("") : pNum[0]);
 	}
-
+	else if (m_rSize >= 12 && m_rSize <= 24)
+	{
+		TYUI_InitComboBox(m_pNum, pNum, pNum.empty() ? _T("") : pNum[1]);
+	}
+	else if (m_rSize >= 25 && m_rSize <= 34)
+	{
+		TYUI_InitComboBox(m_pNum, pNum, pNum.empty() ? _T("") : pNum[2]);
+	}
+	else if (m_rSize >= 35)
+	{
+		TYUI_InitComboBox(m_pNum, pNum, pNum.empty() ? _T("") : pNum[3]);
+	}
+	else
+	{
+		AfxMessageBox(TEXT("房间面积应大于0m²"));
+	}
 	UpdateData(FALSE);
 }

@@ -60,34 +60,38 @@ Acad::ErrorStatus AttrObject::dwgInFields(AcDbDwgFiler* filer)
 
 	filer->readItem(&m_version);
 
-	ACHAR *tempStr = new ACHAR[SUNAC_COMMON_STR_LEN];
-    filer->readItem(&tempStr);
-	m_prototypeCode = CString(tempStr);
+	AcString tempStr;
+    filer->readString(tempStr);
+	m_prototypeCode = tempStr.kACharPtr();
 
-	filer->readItem(&tempStr);
-	m_instanceCode = CString(tempStr);
+	filer->readString(tempStr);
+	m_instanceCode = tempStr.kACharPtr();
 
-
-	//filer->readItem(&tempStr);
-	//m_name = CString(tempStr);
-
-	filer->readItem(&m_isJiTuan);
-
-	filer->readItem(&tempStr);
-	m_quyuName = CString(tempStr);
-
-	//filer->readItem(&tempStr);
-	//m_type = CString(tempStr);
+	dwgInFileInfo(filer, m_file);
 
 	filer->readItem(&m_isDynamic);
 
-	filer->readItem(&tempStr);
-	//m_fileName = CString(tempStr);
-	filer->readItem(&tempStr);
-	m_instanceCode = CString(tempStr);
+	filer->readItem(&m_isJiTuan);
 
-	delete [] tempStr;
+	filer->readString(tempStr);
+	m_quyuName = tempStr.kACharPtr();
+
+	filer->readString(tempStr);
+	m_quyuId = tempStr.kACharPtr();
+
 	return filer->filerStatus();
+}
+
+Acad::ErrorStatus AttrObject::dwgInFileInfo(AcDbDwgFiler* filer, CDwgFileInfo& pFileInfo)
+{
+	AcString tempStr;
+	filer->readString(tempStr);
+	pFileInfo.fileName = tempStr.kACharPtr();
+	filer->readString(tempStr);
+	pFileInfo.previewFile = tempStr.kACharPtr();
+	filer->readItem(&pFileInfo.id);
+	filer->readItem(&pFileInfo.PreviewID);
+	return Acad::eOk;
 }
 
 Acad::ErrorStatus AttrObject::dwgOutFields(AcDbDwgFiler* filer) const
@@ -102,17 +106,31 @@ Acad::ErrorStatus AttrObject::dwgOutFields(AcDbDwgFiler* filer) const
 
 	Adesk::Int32 version = FILE_VERSION;
 	filer->writeItem(version);
+
 	filer->writeItem(m_prototypeCode);
-	filer->writeItem(m_instanceCode);
-//	filer->writeItem(m_name);
-	filer->writeItem(m_isJiTuan);
-	filer->writeItem(m_quyuName);
-//	filer->writeItem(m_type);
-	filer->writeItem(m_isDynamic);
-//	filer->writeItem(m_fileName);
+
 	filer->writeItem(m_instanceCode);
 
+	dwgOutFileInfo(filer, m_file);
+
+	filer->writeItem(m_isDynamic);
+
+	filer->writeItem(m_isJiTuan);
+
+	filer->writeItem(m_quyuName);
+
+	filer->writeItem(m_quyuId);
+
 	return filer->filerStatus();
+}
+
+Acad::ErrorStatus AttrObject::dwgOutFileInfo(AcDbDwgFiler* filer, const CDwgFileInfo& pFileInfo) const
+{
+	filer->writeItem(pFileInfo.fileName);
+	filer->writeItem(pFileInfo.previewFile);
+	filer->writeItem(pFileInfo.id);
+	filer->writeItem(pFileInfo.PreviewID);
+	return Acad::eOk;
 }
 
 bool AttrObject::isEqualTo(AttrObject*other)

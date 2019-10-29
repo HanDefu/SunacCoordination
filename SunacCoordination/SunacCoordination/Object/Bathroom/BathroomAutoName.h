@@ -7,8 +7,8 @@ using namespace std;
 
 class CBathroomAutoName
 {
-public:
 	CBathroomAutoName();
+public:
 	~CBathroomAutoName();
 
 	static CBathroomAutoName* GetInstance();

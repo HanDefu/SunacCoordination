@@ -1,0 +1,911 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Command">
+      <UniqueIdentifier>{6d1dbd45-283c-43a0-ac2f-b327d06d3e9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{136f9919-0143-4273-a68c-ae884e906d19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{05f88f9a-4bba-4989-9c4a-ffe928978175}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ProjectorFileMrg">
+      <UniqueIdentifier>{bf0ee76c-2a97-46be-a22c-220e50d48278}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="props">
+      <UniqueIdentifier>{7b894e03-0ec2-4dc1-82c1-25e71046292c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res">
+      <UniqueIdentifier>{a7a5e59c-7dcb-4e17-baea-b2d3ee3137bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tool">
+      <UniqueIdentifier>{a05d10bc-9795-4c9f-be40-ec706c54317d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WebIO">
+      <UniqueIdentifier>{d5fba8ac-489b-4840-9e5b-88bfe25a0b05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{f33a7ecb-081e-4a54-98e2-8858845aa42b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Command\Command.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="Command\CommandWindowDetail.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="Command\CommandWindowTable.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\AcessDatabase.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ComFun_ACad.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ComFun_ACAD_Common.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ComFun_ACAD_Geometry.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ComFun_Convert.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ComFun_DynamicBlock.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ComFun_Interactive.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ComFun_Layer.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ComFun_Math.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ComFun_Str.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ComFun_String.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ComFun_Sunac.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\TYFormula.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\TYRect.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\AttrObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\KitchenBathroomProp.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\PrototypeInfo.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCBlock.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCDynamicBlock.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCStandBlock.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCStdFacade.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCStdFill.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCWaterProof.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCXianJiao.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\AirCondition\AttrAirCon.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\AirCondition\RCAirCondition.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Bathroom\AttrBathroom.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Bathroom\BathroomAutoName.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Bathroom\BathroomCom.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Bathroom\BathroomGen.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Bathroom\RCBathroom.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Kitchen\AttrKitchen.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Kitchen\KitchenAutoName.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Kitchen\KitchenGen.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Kitchen\RCKitchen.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Railing\AttrRailing.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Railing\RCRailing.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Railing\RCRailingBoli.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Railing\RCRailingTieyi.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowDoor\AttrWindow.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowDoor\RCWindow.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowDoor\WindowAutoName.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowStatistic\AluminumSeries.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowStatistic\AuxiliaryFrameSeries.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowStatistic\DeductedSize.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowStatistic\GlassSeries.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowStatistic\WindowFormula.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowStatistic\WindowMaterialUsage.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowStatistic\WindowStatictic.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectorFileMrg\ProjectFile.cpp">
+      <Filter>ProjectorFileMrg</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectorFileMrg\ProjectFileMrg.cpp">
+      <Filter>ProjectorFileMrg</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectorFileMrg\ProjectInfo.cpp">
+      <Filter>ProjectorFileMrg</Filter>
+    </ClCompile>
+    <ClCompile Include="Tool\DoubleClickBlockReference.cpp">
+      <Filter>Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="Tool\Regedit.cpp">
+      <Filter>Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="Tool\MarkupXml\Markup.cpp">
+      <Filter>Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="Tool\Excel\CExcel.cpp">
+      <Filter>Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="Tool\Excel\Excel.cpp">
+      <Filter>Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\AirconditionerDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\BathroomDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ComFun_MFC.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\DlgLeftBar.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\DlgLogin.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\FacadeDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\FillingDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCellForPreview.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCellWithPicture.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrlEx.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrlWithPreview.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GsPreviewCtrl.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\KitchenDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\MoldingsDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\MyPalette.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\MyPaletteSet.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\NewDirDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\PreviewWithDetail.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\ProjectManagementDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\RailingDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\TreeCtrlEx.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\WaterproofDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\WindowAdvanceDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\WindowDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\GridCell.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\GridCellBase.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\GridCtrl.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\GridCtrlUtil.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\GridDropTarget.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\InPlaceEdit.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\TitleTip.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellButton.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellCheck.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellCombo.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellDateTime.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellNumeric.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridURLCell.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\AirConditionLocalData.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\AirconditionWebData.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\ConfigDictionary.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\KitchenBathroomLocalData.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\KitchenBathroomWebData.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\RailingWebData.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\WebIO.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\WebProjectFile.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\WindowLocalData.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\WindowWebData.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\SunacCadWeb\soapC.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\SunacCadWeb\stdsoap2.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\cpp_base64\src\Base64Decoder.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\cpp_base64\src\Base64Encoder.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\cpp_base64\src\cdecode.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\cpp_base64\src\cencode.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalSetting.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="StdAfx.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Command\Command.h">
+      <Filter>Command</Filter>
+    </ClInclude>
+    <ClInclude Include="Command\CommandWindowDetail.h">
+      <Filter>Command</Filter>
+    </ClInclude>
+    <ClInclude Include="Command\CommandWindowTable.h">
+      <Filter>Command</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\AcessDatabase.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_ACad.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_ACAD_Common.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_ACAD_Geometry.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_Convert.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_Def.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_DynamicBlock.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_Interactive.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_Layer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_Math.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_Str.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_String.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_Sunac.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\TYFormula.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\TYRect.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\AttrObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\KitchenBathroomProp.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\PrototypeCommonDef.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\PrototypeInfo.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCBlock.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCDynamicBlock.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCStandBlock.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCStdFacade.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCStdFill.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCWaterProof.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCXianJiao.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\AirCondition\AttrAirCon.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\AirCondition\RCAirCondition.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Bathroom\AttrBathroom.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Bathroom\BathroomAutoName.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Bathroom\BathroomCom.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Bathroom\BathroomGen.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Bathroom\RCBathroom.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Kitchen\AttrKitchen.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Kitchen\KitchenAutoName.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Kitchen\KitchenGen.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Kitchen\RCKitchen.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Railing\AttrRailing.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Railing\RCRailing.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Railing\RCRailingBoli.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Railing\RCRailingTieyi.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\AttrWindow.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\RCWindow.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\WindowAutoName.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowStatistic\AluminumSeries.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowStatistic\AuxiliaryFrameSeries.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowStatistic\DeductedSize.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowStatistic\GlassSeries.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowStatistic\WindowFormula.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowStatistic\WindowMaterialUsage.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowStatistic\WindowStatictic.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectorFileMrg\ProjectFile.h">
+      <Filter>ProjectorFileMrg</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectorFileMrg\ProjectFileMrg.h">
+      <Filter>ProjectorFileMrg</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectorFileMrg\ProjectInfo.h">
+      <Filter>ProjectorFileMrg</Filter>
+    </ClInclude>
+    <ClInclude Include="res\resource.h">
+      <Filter>res</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\DocLock.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\DoubleClickBlockReference.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Regedit.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\SQLite\sqlite3.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\SQLite\sqlite3ext.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\MarkupXml\Markup.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\CApplication.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\CBorder.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\CBorders.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\CExcel.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\CFont0.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\Cnterior.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\CRange.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\CRanges.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\CWorkbook.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\CWorkbooks.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\CWorksheet.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\CWorksheets.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool\Excel\Excel.h">
+      <Filter>Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\AirconditionerDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\BathroomDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ComFun_MFC.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DlgLeftBar.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DlgLogin.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\FacadeDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\FillingDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCellForPreview.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCellWithPicture.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrlEx.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrlWithPreview.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GsPreviewCtrl.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\KitchenDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\MoldingsDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\MyPalette.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\MyPaletteSet.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\NewDirDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\PreviewWithDetail.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\ProjectManagementDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\RailingDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\TreeCtrlEx.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\WaterproofDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\WindowAdvanceDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\WindowDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Menu\CAcadApplication.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Menu\CAcadMenuBar.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Menu\CAcadMenuGroup.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Menu\CAcadMenuGroups.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Menu\CAcadPopupMenu.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Menu\CAcadPopupMenuItem.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Menu\CAcadPopupMenus.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Menu\Menu_Def.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\CellRange.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\GridCell.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\GridCellBase.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\GridCtrl.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\GridCtrlUtil.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\GridDropTarget.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\InPlaceEdit.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\MemDC.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\TitleTip.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellButton.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellCheck.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellCombo.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellDateTime.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellNumeric.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridURLCell.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\AirConditionLocalData.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\AirconditionWebData.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\ConfigDictionary.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\KitchenBathroomLocalData.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\KitchenBathroomWebData.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\RailingWebData.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\WebCommon.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\WebIO.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\WebProjectFile.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\WindowLocalData.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\WindowWebData.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\SunacCadWeb\soapH.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\SunacCadWeb\soapStub.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\SunacCadWeb\stdsoap2.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\cpp_base64\src\Base64Decoder.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\cpp_base64\src\Base64Encoder.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\cpp_base64\src\cdecode.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\cpp_base64\src\cencode.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalSetting.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="Sunac_def.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="props\AcRxDefault.def">
+      <Filter>props</Filter>
+    </None>
+    <None Include="props\aecmodeler.props">
+      <Filter>props</Filter>
+    </None>
+    <None Include="props\arx.props">
+      <Filter>props</Filter>
+    </None>
+    <None Include="props\brep.props">
+      <Filter>props</Filter>
+    </None>
+    <None Include="props\dbx.props">
+      <Filter>props</Filter>
+    </None>
+    <None Include="props\rxsdk_common.props">
+      <Filter>props</Filter>
+    </None>
+    <None Include="props\rxsdk_debugcfg.props">
+      <Filter>props</Filter>
+    </None>
+    <None Include="props\rxsdk_releasecfg.props">
+      <Filter>props</Filter>
+    </None>
+    <None Include="res\Cancel.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\Document.ico">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\doordir.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\Insert.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\kitchenrange.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\lib.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\mainicon.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\Railing_T1.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\Railing_T2.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\Railing_T3.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\Railing_T4.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\Railing_T5.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\Railing_T6.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\Railing_T7.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\search.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\selOne.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\SunacCoordination.aps">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\windowdir.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\画图Folder.ico">
+      <Filter>res</Filter>
+    </None>
+    <None Include="WebIO\SunacCadWeb\ArgumentSettingServiceSoap.nsmap">
+      <Filter>WebIO</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="res\SunacCoordination.rc">
+      <Filter>res</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

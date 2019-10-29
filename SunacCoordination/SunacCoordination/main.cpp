@@ -62,7 +62,7 @@
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
-extern "C" HWND adsw_acadMainWnd();
+//extern "C" HWND adsw_acadMainWnd(); AutoCADÖ÷´°¿Ú
 static HANDLE mThreadHandle = 0;
 
 ACRX_DEFINE_MEMBERS(AcDbDoubleClickEdit);
@@ -646,7 +646,7 @@ static void initApp()
 	acedRegCmds->addCommand(_T("SUNAC"),
 		_T("SWINADVANCE"),
 		_T("SWINADVANCE"),
-		ACRX_CMD_MODAL,
+		ACRX_CMD_MODAL | ACRX_CMD_USEPICKSET,
 		CMD_SunacWindowAdvanceDesign,
 		NULL,
 		-1,

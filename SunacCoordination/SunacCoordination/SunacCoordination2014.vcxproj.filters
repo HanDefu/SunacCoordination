@@ -899,15 +899,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="WebIO\SunacCadWeb\ArgumentSettingServiceSoap.nsmap" />
-    <None Include="Tool\SQLite\sqlite3.dll">
-      <Filter>Tool\SQLite</Filter>
-    </None>
     <None Include="res\Document.ico" />
     <None Include="res\画图Folder.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="Tool\SQLite\sqlite3.lib">
-      <Filter>Tool\SQLite</Filter>
-    </Library>
   </ItemGroup>
 </Project>

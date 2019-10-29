@@ -108,6 +108,7 @@ std::vector<AttrAirCon > CAirConditionWebData::ParseAirConditionersFromXML(CMark
 									sImgFileName = WEBINST->GetFileName(tempString);//获得带扩展名的文件名
 								}
 							}
+
 							if (xml.FindElem(_T("CADPath")))
 							{
 								tempString = xml.GetData();
@@ -116,6 +117,7 @@ std::vector<AttrAirCon > CAirConditionWebData::ParseAirConditionersFromXML(CMark
 									sFileName = WEBINST->GetFileName(tempString);//获得带扩展名的文件名
 								}
 							}
+
 							if (xml.FindElem(_T("CADType")))
 							{
 								sFileType = xml.GetData();
@@ -125,14 +127,15 @@ std::vector<AttrAirCon > CAirConditionWebData::ParseAirConditionersFromXML(CMark
 								AirConAttr.m_file.id = _ttoi(sFileID);
 								AirConAttr.m_file.fileName = sFileName;
 							}
+
 							//检查文件是否存在，不存在则下载
 							CString sDWGFilePath = TY_GetPrototypeFilePath() + sFileName;
-							CString sImgFilePath = TY_GetPrototypeImagePath() + sImgFileName;
 							if (!JHCom_FileExist(sDWGFilePath))
 							{
 								WEBINST->DownloadFile(_ttoi(sFileID), "CAD", sDWGFilePath);
 							}
 
+							CString sImgFilePath = TY_GetPrototypeImagePath() + sImgFileName;
 							if (!JHCom_FileExist(sImgFilePath))
 							{
 								WEBINST->DownloadFile(_ttoi(sFileID), "Img", sImgFilePath);

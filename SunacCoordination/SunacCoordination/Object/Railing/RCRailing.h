@@ -23,12 +23,8 @@ class CRCRailing : public RCStandBlock
 public:
 	CRCRailing(void);
 	virtual ~CRCRailing(void);
-
-	//CRCRailing(const CRCRailing &other);
-	//virtual CRCRailing & operator=(const CRCRailing &rhs);
-
+	
 	virtual RCTYPE GetType()const{ return T_RAILING; }
-	//virtual CRCRailing * Clone() = 0; //TODO
 	
 	void SetRailingAtt(const AttrRailing p_railingAtt);
 	AttrRailing GetRailingAtt()const { return m_railingAtt; }
@@ -47,27 +43,24 @@ public:
 	virtual double GetStandardRailingTotalLen()const = 0;
 	virtual double GetNonstandardLen()const = 0;	//获取非标段栏杆长度，含两侧立柱
 
-
 	virtual double GetMinWidth()const { return 0; }
 	virtual double GetMinHeight()const { return 400; }
 
+	void SetSimpleDraw(bool p_bSimple){ m_bSimple = p_bSimple; }
+	bool IsSampleDraw()const { return m_bSimple; }
+
 protected:
 	virtual AcDbObjectId CreateRailingBlockDefine(CString sRailingDefName)= 0;
-
 	CString GetPrototypeFilePath()const ;
 
 protected:
-	//double m_length;	//栏杆总尺寸 譬如5400
 	double m_B;			//标准栏杆尺寸 1260或者1380
 	int	   m_N;			//标准栏杆段数量 
 	double m_K;			//侧边立柱与结构墙间尺寸（单边）
 
-protected: 
 	AttrRailing m_railingAtt;
 
-
-	//////////////////////////////////////////////////////////////////////////
-	
+	bool m_bSimple; //是否为建筑的简化图
 };
 
 typedef std::vector<CRCRailing*> vpRCRailing;

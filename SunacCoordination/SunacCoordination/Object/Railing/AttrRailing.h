@@ -37,6 +37,7 @@ public:
 	virtual Acad::ErrorStatus dwgInFields(AcDbDwgFiler* pFiler);
 	//}}AFX_ARX_METHODS
 
+	CString AutoInstanceCode(); //自动编号
 
 public:
     double m_height;		//栏杆高度

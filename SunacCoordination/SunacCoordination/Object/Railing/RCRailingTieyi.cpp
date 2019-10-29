@@ -26,16 +26,26 @@ CString CRCRailingTieyi::GetStandardBlockName() const
 {
 	CString sName;
 	sName.Format(_T("%s_%d"), m_railingAtt.m_prototypeCode, (int)GetB());
+	if (IsSampleDraw())
+		sName += _T("_simple");
 	return sName;
 }
 
 CString CRCRailingTieyi::GetNonStandardBlockName() const
 {
-	return m_railingAtt.m_prototypeCode + _T("_NonStandard");
+	CString sName = m_railingAtt.m_prototypeCode + _T("_NonStandard");
+	if (IsSampleDraw())
+		sName += _T("_simple");
+
+	return sName;
 }
 CString CRCRailingTieyi::GetHandRailBlockName() const
 {
-	return m_railingAtt.m_prototypeCode + _T("_Handrail");
+	CString sName = m_railingAtt.m_prototypeCode + _T("_Handrail");
+	if (IsSampleDraw())
+		sName += _T("_simple");
+
+	return sName;
 }
 
 

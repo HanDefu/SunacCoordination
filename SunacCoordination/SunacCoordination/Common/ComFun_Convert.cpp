@@ -533,16 +533,20 @@ Acad::ErrorStatus JHCOM_ConvertDbCurveToGeCurve(AcDbCurve *pDbCurve,AcGeCurve3d 
 AcDbObjectId JHCOM_GetConvertGeCurveToAcDbCurve(AcGeCurve3d &geCurve3d)
 
 {
+#if (defined ARX_2008) || (defined ARX_2009)||(defined ARX_2010) || (defined ARX_2011) || (defined ARX_2012) || (defined ARX_2013)
+	return 0;
+#else
 	AcDbObjectId oid = AcDbObjectId::kNull;
 	Acad::ErrorStatus es = Acad::eOk;
 	AcDbCurve *pDbCurve = NULL;
 	es = acdbConvertGelibCurveToAcDbCurve(geCurve3d, pDbCurve);
-	if(es == Acad::eOk)
+	if (es == Acad::eOk)
 	{
 		oid = JHCOM_PostToModelSpace(pDbCurve);
 		//postToDb(pDbCurve, oid);
 	}
 	return oid;
+#endif
 }
 
 size_t ConvertStringToUTF8( LPCTSTR strIn, char *& strOutUTF8MB )
