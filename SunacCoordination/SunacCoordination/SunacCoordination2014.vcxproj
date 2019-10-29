@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CAcadApplication.h" />
+    <ClInclude Include="CAcadDocument.h" />
+    <ClInclude Include="CAcadDocuments.h" />
+    <ClInclude Include="CommonFunction.h" />
+    <ClInclude Include="CPlot.h" />
+    <ClInclude Include="DialogMain.h" />
+    <ClInclude Include="DialogPrint.h" />
+    <ClInclude Include="DlgLearn.h" />
+    <ClInclude Include="JGBlkDef.h" />
+    <ClInclude Include="JGGlobalSetting.h" />
+    <ClInclude Include="JGKeyWord.h" />
+    <ClInclude Include="JGLanguage.h" />
+    <ClInclude Include="JGLoop.h" />
+    <ClInclude Include="JGObject.h" />
+    <ClInclude Include="JGRect.h" />
+    <ClInclude Include="JGTitle.h" />
+    <ClInclude Include="JGTitleGetter.h" />
+    <ClInclude Include="JGTitleGetterBlockKeyword.h" />
+    <ClInclude Include="JGTitleGetterKeyword.h" />
+    <ClInclude Include="JGTitleGetterManual.h" />
+    <ClInclude Include="Main.h" />
+    <ClInclude Include="MfcGridCtrl\CellRange.h" />
+    <ClInclude Include="MfcGridCtrl\CellTypes\GridCellButton.h" />
+    <ClInclude Include="MfcGridCtrl\CellTypes\GridCellCheck.h" />
+    <ClInclude Include="MfcGridCtrl\CellTypes\GridCellCombo.h" />
+    <ClInclude Include="MfcGridCtrl\CellTypes\GridCellDateTime.h" />
+    <ClInclude Include="MfcGridCtrl\CellTypes\GridCellGroup.h" />
+    <ClInclude Include="MfcGridCtrl\CellTypes\GridCellNumeric.h" />
+    <ClInclude Include="MfcGridCtrl\CellTypes\GridCellTerminal.h" />
+    <ClInclude Include="MfcGridCtrl\CellTypes\GridURLCell.h" />
+    <ClInclude Include="MfcGridCtrl\GridCell.h" />
+    <ClInclude Include="MfcGridCtrl\GridCellBase.h" />
+    <ClInclude Include="MfcGridCtrl\GridCtrl.h" />
+    <ClInclude Include="MfcGridCtrl\GridCtrlUtil.h" />
+    <ClInclude Include="MfcGridCtrl\GridDropTarget.h" />
+    <ClInclude Include="MfcGridCtrl\InPlaceEdit.h" />
+    <ClInclude Include="MfcGridCtrl\MemDC.h" />
+    <ClInclude Include="MfcGridCtrl\TitleTip.h" />
+    <ClInclude Include="Regedit.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="resource1.h" />
+    <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="XML\Markup.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CommonFunction.cpp" />
+    <ClCompile Include="CPlot.cpp" />
+    <ClCompile Include="DialogMain.cpp" />
+    <ClCompile Include="DialogPrint.cpp" />
+    <ClCompile Include="DlgLearn.cpp" />
+    <ClCompile Include="JGBlkDef.cpp" />
+    <ClCompile Include="JGGlobalSetting.cpp" />
+    <ClCompile Include="JGKeyWord.cpp" />
+    <ClCompile Include="JGLanguage.cpp" />
+    <ClCompile Include="JGLoop.cpp" />
+    <ClCompile Include="JGObject.cpp" />
+    <ClCompile Include="JGRect.cpp" />
+    <ClCompile Include="JGTitle.cpp" />
+    <ClCompile Include="JGTitleGetter.cpp" />
+    <ClCompile Include="JGTitleGetterBlockKeyword.cpp" />
+    <ClCompile Include="JGTitleGetterKeyword.cpp" />
+    <ClCompile Include="JGTitleGetterManual.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MfcGridCtrl\CellTypes\GridCellButton.cpp" />
+    <ClCompile Include="MfcGridCtrl\CellTypes\GridCellCheck.cpp" />
+    <ClCompile Include="MfcGridCtrl\CellTypes\GridCellCombo.cpp" />
+    <ClCompile Include="MfcGridCtrl\CellTypes\GridCellDateTime.cpp" />
+    <ClCompile Include="MfcGridCtrl\CellTypes\GridCellGroup.cpp" />
+    <ClCompile Include="MfcGridCtrl\CellTypes\GridCellNumeric.cpp" />
+    <ClCompile Include="MfcGridCtrl\CellTypes\GridCellTerminal.cpp" />
+    <ClCompile Include="MfcGridCtrl\CellTypes\GridURLCell.cpp" />
+    <ClCompile Include="MfcGridCtrl\GridCell.cpp" />
+    <ClCompile Include="MfcGridCtrl\GridCellBase.cpp" />
+    <ClCompile Include="MfcGridCtrl\GridCtrl.cpp" />
+    <ClCompile Include="MfcGridCtrl\GridCtrlUtil.cpp" />
+    <ClCompile Include="MfcGridCtrl\GridDropTarget.cpp" />
+    <ClCompile Include="MfcGridCtrl\InPlaceEdit.cpp" />
+    <ClCompile Include="MfcGridCtrl\TitleTip.cpp" />
+    <ClCompile Include="Regedit.cpp" />
+    <ClCompile Include="StdAfx.cpp" />
+    <ClCompile Include="XML\Markup.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="AutoPDF.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MfcGridCtrl\CellTypes\vssver2.scc" />
+  </ItemGroup>
+  <PropertyGroup Label="Configuration">
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F97C3018-FE58-4663-9749-234C224B19A1}</ProjectGuid>
+    <RootNamespace>curve</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="C:\Autodesk\ObjectARX 2014\inc\rxsdk_Debugcfg.props" />
+    <Import Project="C:\Autodesk\ObjectARX 2014\inc\arx.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="C:\Autodesk\ObjectARX 2014\inc\rxsdk_Releasecfg.props" />
+    <Import Project="C:\Autodesk\ObjectARX 2014\inc\arx.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="C:\Autodesk\ObjectARX 2014\inc\rxsdk_Debugcfg.props" />
+    <Import Project="C:\Autodesk\ObjectARX 2014\inc\arx.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="C:\Autodesk\ObjectARX 2014\inc\rxsdk_Releasecfg.props" />
+    <Import Project="C:\Autodesk\ObjectARX 2014\inc\arx.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>C:\Autodesk\ObjectARX 2014\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>RADPACK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <TreatWarningAsError>false</TreatWarningAsError>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Autodesk\ObjectARX 2014\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>C:\Autodesk\ObjectARX 2014\inc\AcRxDefault.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>C:\Autodesk\ObjectARX 2014\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>RADPACK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <TreatWarningAsError>false</TreatWarningAsError>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Autodesk\ObjectARX 2014\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>C:\Autodesk\ObjectARX 2014\inc\AcRxDefault.def</ModuleDefinitionFile>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Autodesk\ObjectARX 2014\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>RADPACK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Autodesk\ObjectARX 2014\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>C:\Autodesk\ObjectARX 2014\inc\AcRxDefault.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Autodesk\ObjectARX 2014\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>RADPACK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Autodesk\ObjectARX 2014\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>C:\Autodesk\ObjectARX 2014\inc\AcRxDefault.def</ModuleDefinitionFile>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

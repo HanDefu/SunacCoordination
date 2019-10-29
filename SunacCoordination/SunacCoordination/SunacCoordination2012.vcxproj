@@ -18,132 +18,6 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <PropertyGroup Label="Globals">
-    <ProjectGuid>{849A0E9A-7517-43E4-9ED1-D59CE2A4F994}</ProjectGuid>
-    <Keyword>MFCProj</Keyword>
-    <ProjectName>SunacCoordination2014</ProjectName>
-  </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <UseOfMfc>false</UseOfMfc>
-  </PropertyGroup>
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project=".\props\rxsdk_Releasecfg.props" />
-    <Import Project=".\props\arx.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project=".\props\rxsdk_Debugcfg.props" />
-    <Import Project=".\props\arx.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project=".\props\rxsdk_Releasecfg.props" />
-    <Import Project=".\props\arx.props" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project=".\props\rxsdk_Debugcfg.props" />
-    <Import Project=".\props\arx.props" />
-  </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
-  <PropertyGroup>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)\Temp\$(Platform)\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\Temp\$(Platform)\$(Configuration)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)\Temp\$(Platform)\$(Configuration)\ARX2014\</IntDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)\bin\$(Platform)\$(Configuration)\ARX2014\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)\bin\$(Platform)\$(Configuration)\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\bin\$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-win32;$(IncludePath)</IncludePath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-win32;$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>C:\Program Files\Autodesk\AutoCAD 2014\Support\</OutDir>
-    <IntDir>$(SolutionDir)Temp\$(Platform)\$(Configuration)\</IntDir>
-    <TargetName>Sunac2019</TargetName>
-  </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <Midl>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </Midl>
-    <ClCompile>
-      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <TreatWarningAsError>false</TreatWarningAsError>
-    </ClCompile>
-    <ResourceCompile>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ResourceCompile>
-    <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>.\props\AcRxDefault.def</ModuleDefinitionFile>
-      <AdditionalDependencies>acdbmgd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <Midl>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </Midl>
-    <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir);C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-x64;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
-      <TreatWarningAsError>false</TreatWarningAsError>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-    </ClCompile>
-    <ResourceCompile>
-      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ResourceCompile>
-    <Link>
-      <AdditionalLibraryDirectories>$(ProjectDir);C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-x64;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>.\props\AcRxDefault.def</ModuleDefinitionFile>
-      <TargetMachine>MachineX64</TargetMachine>
-      <AdditionalDependencies>acdbmgd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <ClCompile>
-      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-win32;$(ProjectDir);C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>ARX_2014;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <TreatWarningAsError>false</TreatWarningAsError>
-    </ClCompile>
-    <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>.\props\AcRxDefault.def</ModuleDefinitionFile>
-      <AdditionalDependencies>acdbmgd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <ClCompile>
-      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-x64;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\inc;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>ARX_2014;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <TreatWarningAsError>false</TreatWarningAsError>
-    </ClCompile>
-    <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <ModuleDefinitionFile>.\props\AcRxDefault.def</ModuleDefinitionFile>
-      <TargetMachine>MachineX64</TargetMachine>
-      <AdditionalDependencies>acdbmgd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>$(OutDir)SunacCAD2014X64.arx</OutputFile>
-    </Link>
-  </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Command\Command.cpp" />
     <ClCompile Include="Command\CommandWindowDetail.cpp" />
@@ -166,12 +40,13 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object\AirCondition\AttrAirCon.cpp" />
     <ClCompile Include="Object\AirCondition\RCAirCondition.cpp" />
-    <ClCompile Include="Object\Bathroom\BathroomAutoName.cpp" />
-    <ClCompile Include="Object\KitchenBathroomProp.cpp" />
     <ClCompile Include="Object\AttrObject.cpp" />
     <ClCompile Include="Object\Bathroom\AttrBathroom.cpp" />
+    <ClCompile Include="Object\Bathroom\BathroomAutoName.cpp" />
+    <ClCompile Include="Object\Bathroom\BathroomCom.cpp" />
     <ClCompile Include="Object\Bathroom\BathroomGen.cpp" />
     <ClCompile Include="Object\Bathroom\RCBathroom.cpp" />
+    <ClCompile Include="Object\KitchenBathroomProp.cpp" />
     <ClCompile Include="Object\Kitchen\AttrKitchen.cpp" />
     <ClCompile Include="Object\Kitchen\KitchenAutoName.cpp" />
     <ClCompile Include="Object\Kitchen\KitchenGen.cpp" />
@@ -202,12 +77,7 @@
     <ClCompile Include="ProjectorFileMrg\ProjectFile.cpp" />
     <ClCompile Include="ProjectorFileMrg\ProjectFileMrg.cpp" />
     <ClCompile Include="ProjectorFileMrg\ProjectInfo.cpp" />
-    <ClCompile Include="StdAfx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="StdAfx.cpp" />
     <ClCompile Include="Tool\DoubleClickBlockReference.cpp" />
     <ClCompile Include="Tool\Excel\CExcel.cpp" />
     <ClCompile Include="Tool\Excel\Excel.cpp" />
@@ -260,12 +130,12 @@
     <ClCompile Include="WebIO\KitchenBathroomLocalData.cpp" />
     <ClCompile Include="WebIO\KitchenBathroomWebData.cpp" />
     <ClCompile Include="WebIO\RailingWebData.cpp" />
-    <ClCompile Include="WebIO\WebProjectFile.cpp" />
-    <ClCompile Include="WebIO\WindowLocalData.cpp" />
     <ClCompile Include="WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.cpp" />
     <ClCompile Include="WebIO\SunacCadWeb\soapC.cpp" />
     <ClCompile Include="WebIO\SunacCadWeb\stdsoap2.cpp" />
     <ClCompile Include="WebIO\WebIO.cpp" />
+    <ClCompile Include="WebIO\WebProjectFile.cpp" />
+    <ClCompile Include="WebIO\WindowLocalData.cpp" />
     <ClCompile Include="WebIO\WindowWebData.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -291,12 +161,13 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="Object\AirCondition\AttrAirCon.h" />
     <ClInclude Include="Object\AirCondition\RCAirCondition.h" />
-    <ClInclude Include="Object\Bathroom\BathroomAutoName.h" />
-    <ClInclude Include="Object\KitchenBathroomProp.h" />
     <ClInclude Include="Object\AttrObject.h" />
     <ClInclude Include="Object\Bathroom\AttrBathroom.h" />
+    <ClInclude Include="Object\Bathroom\BathroomAutoName.h" />
+    <ClInclude Include="Object\Bathroom\BathroomCom.h" />
     <ClInclude Include="Object\Bathroom\BathroomGen.h" />
     <ClInclude Include="Object\Bathroom\RCBathroom.h" />
+    <ClInclude Include="Object\KitchenBathroomProp.h" />
     <ClInclude Include="Object\Kitchen\AttrKitchen.h" />
     <ClInclude Include="Object\Kitchen\KitchenAutoName.h" />
     <ClInclude Include="Object\Kitchen\KitchenGen.h" />
@@ -407,54 +278,172 @@
     <ClInclude Include="WebIO\KitchenBathroomLocalData.h" />
     <ClInclude Include="WebIO\KitchenBathroomWebData.h" />
     <ClInclude Include="WebIO\RailingWebData.h" />
-    <ClInclude Include="WebIO\WebCommon.h" />
-    <ClInclude Include="WebIO\WebProjectFile.h" />
-    <ClInclude Include="WebIO\WindowLocalData.h" />
     <ClInclude Include="WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.h" />
     <ClInclude Include="WebIO\SunacCadWeb\soapH.h" />
     <ClInclude Include="WebIO\SunacCadWeb\soapStub.h" />
     <ClInclude Include="WebIO\SunacCadWeb\stdsoap2.h" />
+    <ClInclude Include="WebIO\WebCommon.h" />
     <ClInclude Include="WebIO\WebIO.h" />
+    <ClInclude Include="WebIO\WebProjectFile.h" />
+    <ClInclude Include="WebIO\WindowLocalData.h" />
     <ClInclude Include="WebIO\WindowWebData.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="props\AcRxDefault.def" />
+    <None Include="props\aecmodeler.props" />
+    <None Include="props\arx.props" />
+    <None Include="props\brep.props" />
+    <None Include="props\dbx.props" />
+    <None Include="props\rxsdk_common.props" />
+    <None Include="props\rxsdk_debugcfg.props" />
+    <None Include="props\rxsdk_releasecfg.props" />
+    <None Include="res\Cancel.bmp" />
+    <None Include="res\Document.ico" />
+    <None Include="res\doordir.bmp" />
+    <None Include="res\Insert.bmp" />
+    <None Include="res\kitchenrange.bmp" />
+    <None Include="res\lib.bmp" />
+    <None Include="res\mainicon.bmp" />
+    <None Include="res\Railing_T1.bmp" />
+    <None Include="res\Railing_T2.bmp" />
+    <None Include="res\Railing_T3.bmp" />
+    <None Include="res\Railing_T4.bmp" />
+    <None Include="res\Railing_T5.bmp" />
+    <None Include="res\Railing_T6.bmp" />
+    <None Include="res\Railing_T7.bmp" />
+    <None Include="res\search.bmp" />
+    <None Include="res\selOne.bmp" />
+    <None Include="res\SunacCoordination.aps" />
+    <None Include="res\windowdir.bmp" />
+    <None Include="res\画图Folder.ico" />
+    <None Include="Tool\SQLite\sqlite3.dll" />
+    <None Include="WebIO\SunacCadWeb\ArgumentSettingServiceSoap.nsmap" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\SunacCoordination.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\Doc\软件图标\Insert.bmp" />
-    <None Include="Cancel.bmp" />
-    <None Include="doordir.bmp" />
-    <None Include="kitchenrange.bmp" />
-    <None Include="lib.bmp" />
-    <None Include="mainicon.bmp" />
-    <None Include="res\Cancel.bmp" />
-    <None Include="res\Document.ico" />
-    <None Include="res\doordir.bmp" />
-    <None Include="res\Folder.bmp" />
-    <None Include="res\FolderOpen.bmp" />
-    <None Include="res\Insert.bmp" />
-    <None Include="res\kitchenrange.bmp" />
-    <None Include="res\lib.bmp" />
-    <None Include="res\mainicon.bmp" />
-    <None Include="res\search.bmp" />
-    <None Include="res\selOne.bmp" />
-    <None Include="res\windowdir.bmp" />
-    <None Include="res\画图Folder.ico" />
-    <None Include="search.bmp" />
-    <None Include="selOne.bmp" />
-    <None Include="Tool\SQLite\sqlite3.dll" />
-    <None Include="WebIO\SunacCadWeb\ArgumentSettingServiceSoap.nsmap" />
-    <None Include="windowdir.bmp" />
-  </ItemGroup>
-  <ItemGroup>
     <Library Include="Tool\SQLite\sqlite3.lib" />
   </ItemGroup>
+  <PropertyGroup Label="Configuration">
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{26D5AAEB-2731-499A-AB26-60836BA6A667}</ProjectGuid>
+    <RootNamespace>curve</RootNamespace>
+    <PlatformToolset>v90</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="C:\Autodesk\ObjectARX 2012\inc\rxsdk_Debugcfg.props" />
+    <Import Project="C:\Autodesk\ObjectARX 2012\inc\arx.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="C:\Autodesk\ObjectARX 2012\inc\rxsdk_Releasecfg.props" />
+    <Import Project="C:\Autodesk\ObjectARX 2012\inc\arx.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="C:\Autodesk\ObjectARX 2012\inc\rxsdk_Debugcfg.props" />
+    <Import Project="C:\Autodesk\ObjectARX 2012\inc\arx.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="C:\Autodesk\ObjectARX 2012\inc\rxsdk_Releasecfg.props" />
+    <Import Project="C:\Autodesk\ObjectARX 2012\inc\arx.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\ARX2012\</OutDir>
+    <IntDir>$(Platform)\$(Configuration)\ARX2012\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>C:\Autodesk\ObjectARX 2012\inc;$(ProjectDir);C:\Autodesk\ObjectARX 2012\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>RADPACK;ARX_2012;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <TreatWarningAsError>false</TreatWarningAsError>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Autodesk\ObjectARX 2012\lib;C:\Autodesk\ObjectARX 2012\lib-win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>C:\Autodesk\ObjectARX 2012\inc\AcRxDefault.def</ModuleDefinitionFile>
+      <AdditionalDependencies>acdbmgd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>C:\Autodesk\ObjectARX 2012\inc;$(ProjectDir);C:\Autodesk\ObjectARX 2012\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>RADPACK;ARX_2012;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <TreatWarningAsError>false</TreatWarningAsError>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Autodesk\ObjectARX 2012\lib;C:\Autodesk\ObjectARX 2012\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>C:\Autodesk\ObjectARX 2012\inc\AcRxDefault.def</ModuleDefinitionFile>
+      <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalDependencies>acdbmgd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)SunacCAD2012X64.arx</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Autodesk\ObjectARX 2012\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>RADPACK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Autodesk\ObjectARX 2012\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>C:\Autodesk\ObjectARX 2012\inc\AcRxDefault.def</ModuleDefinitionFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Autodesk\ObjectARX 2012\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>RADPACK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Autodesk\ObjectARX 2012\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>C:\Autodesk\ObjectARX 2012\inc\AcRxDefault.def</ModuleDefinitionFile>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <ProjectExtensions>
-    <VisualStudio>
-      <UserProperties RESOURCE_FILE="" />
-    </VisualStudio>
-  </ProjectExtensions>
 </Project>

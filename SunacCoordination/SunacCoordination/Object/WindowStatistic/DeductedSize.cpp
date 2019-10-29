@@ -20,7 +20,7 @@ CDeductedSize::~CDeductedSize()
 }
 
 sqlite3 * pDB2 = NULL;
-double data = 0;
+static double localdata = 0;
 
 size_t ConvertStringToUTF8( LPCTSTR strIn, char *& strOutUTF8MB )
 {
@@ -49,7 +49,7 @@ size_t ConvertStringToUTF8( LPCTSTR strIn, char *& strOutUTF8MB )
 
 static int OutputDeductedSize(void *NotUsed, int nCol, char **value, char **ColName)
 {
-	data = atof(value[0]);
+	localdata = atof(value[0]);
 	return 0;
 }
 
@@ -85,7 +85,7 @@ bool CDeductedSize::GetDeductedSizeBySeriesAndName(CString p_winType, CString p_
 		AfxMessageBox(L"select fail");
 		return false;
 	}
-	p_valueOut = data;
+	p_valueOut = localdata;
 
 	return true;
 }

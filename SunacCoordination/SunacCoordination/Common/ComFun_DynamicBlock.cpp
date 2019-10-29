@@ -432,7 +432,7 @@ int TYCOM_GetDynamicBlockData(AcDbObjectId eId, CString key, double &value)
 			blkProp = blkPropAry[lIndex1];
 
 			AcString a = blkProp.propertyName();
-			CString aa(a.kszPtr());
+			CString aa(a.constPtr());
 			AcDbEvalVariant va;
 			if (aa == key)
 			{
@@ -488,7 +488,7 @@ int TYCOM_GetDynamicBlockData(AcDbObjectId eId, CString key, int &value)
 			blkProp = blkPropAry[lIndex1];
 
 			AcString a = blkProp.propertyName();
-			CString aa(a.kszPtr());
+			CString aa(a.constPtr());
 			AcDbEvalVariant va;
 			if (aa == key)
 			{
@@ -559,7 +559,7 @@ int TYCOM_GetDynamicBlockData(AcDbObjectId eId, CString key, CString &value)
 			blkProp = blkPropAry[lIndex1];
 
 			AcString a = blkProp.propertyName();
-			CString aa(a.kszPtr());
+			CString aa(a.constPtr());
 			AcDbEvalVariant va;
 			if (aa == key)
 			{

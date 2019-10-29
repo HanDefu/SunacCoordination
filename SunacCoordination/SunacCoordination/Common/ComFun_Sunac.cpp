@@ -225,7 +225,7 @@ void DQ_SelectMany(vAcDbObjectId &ids)
 	int rt = acedSSGet(NULL, NULL, NULL, NULL, ssname); // 提示用户选择对象
 	if (rt == RTNORM)
 	{
-		long length;
+		Adesk::Int32 length;
 		acedSSLength(ssname, &length);
 		for (int i=0;i<length;i++)
 		{
@@ -1186,7 +1186,13 @@ AcDbObjectId CopyBlockDefFromDwg(const TCHAR* fileName, const TCHAR* blkDefName)
 
 	// 使用_SH_DENYNO参数打开图形(只读打开)，允许其它用户读写该文件
 	AcDbDatabase* pSourceDwg = new AcDbDatabase(false);
+#if (defined ARX_2018) || (defined ARX_2017)
+	Acad::ErrorStatus es = pSourceDwg->readDwgFile(fileName, AcDbDatabase::kForReadAndAllShare);
+#else
 	Acad::ErrorStatus es = pSourceDwg->readDwgFile(fileName, _SH_DENYNO);
+#endif //  ARX_2018
+
+	
 	if (es != Acad::eOk)
 	{
 		delete pSourceDwg;
