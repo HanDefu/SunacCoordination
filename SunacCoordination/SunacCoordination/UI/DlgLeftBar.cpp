@@ -6,7 +6,7 @@
 #include "../Command/CommandWindowDetail.h"
 #include "../Command/CommandWindowTable.h"
 #include "DlgLeftBar.h"
-#include "res/resource.h"
+#include "../res/resource.h"
 #include "..\ProjectorFileMrg\ProjectFileMrg.h"
 #include "ProjectManagementDlg.h"
 
