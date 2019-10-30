@@ -178,7 +178,8 @@ void CKitchenDlg::OnBnClickedButtonInsert()
 	m_pKitchGen->GenKitchen(origin, m_angle);
 	CKitchenAutoName::GetInstance()->AddKitchenType(*m_pKitchGen->GetKitchenAtt());
 
-	OnOK();
+	ShowWindow(TRUE);
+	//OnOK();
 }
 
 

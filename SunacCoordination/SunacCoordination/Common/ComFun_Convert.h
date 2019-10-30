@@ -173,3 +173,9 @@ Acad::ErrorStatus JHCOM_convertPolylineToGeCurve(AcDbPolyline* pPoly, AcGeCurve3
 Acad::ErrorStatus JHCOM_ConvertDbCurveToGeCurve(AcDbCurve *pDbCurve,AcGeCurve3d *&pGeCurve);
 
 AcDbObjectId JHCOM_GetConvertGeCurveToAcDbCurve(AcGeCurve3d &geCurve3d);
+
+size_t ConvertStringToUTF8( LPCTSTR strIn, char *& strOutUTF8MB );
+
+CString UTF8ToGBK(const std::string& strUTF8);
+
+CString GBKToUTF8(const std::string& strGBK);

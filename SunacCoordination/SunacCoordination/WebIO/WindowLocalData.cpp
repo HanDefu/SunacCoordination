@@ -30,14 +30,17 @@ CWindowsDimData CWindowLocalData::ReadDimData(Excel::CExcelUtil &xls, CString co
 	CWindowsDimData  data;
 	data.sCodeName = code;
 	data.defaultValue = defaultValue;
-	data.value = defaultValue;
-	data.minValue = minValue;
-	data.maxValue = maxValue;
 	data.prompt = sComment;
 
 	if (valueType == "无")
 	{
 		data.type = NOVALUE;
+	}
+	else if (valueType == L"范围")
+	{
+		data.type = SCOPE;
+		data.minValue = minValue;
+		data.maxValue = maxValue;
 	}
 	else if (valueType == L"公式")
 	{
@@ -64,42 +67,42 @@ CWindowsDimData CWindowLocalData::ReadDimData(Excel::CExcelUtil &xls, CString co
 }
 
 //门窗
-CWindowsDimData CWindowLocalData::ConvertStringToDimData ( CString code, CString  valueType, CString value, CString defaultValue,	CString state) const
-{
-	CWindowsDimData  data;
-	if (valueType == "无")
-	{
-		data.sCodeName = code;
-		data.type = NOVALUE;
-	}
-	else if(valueType == L"公式")
-	{
-		data.sCodeName = code;
-		data.type = CALC;
-	}
-	else if(valueType == L"固定值")
-	{
-		data.sCodeName = code;
-		data.type = SINGLE;
-		data.valueOptions.push_back(_wtof(value));
-		data.defaultValue = _wtof(defaultValue);
-		data.prompt = state;
-	}
-	else if(valueType == L"值系列")
-	{
-		data.sCodeName = code;
-		data.type = MULTI;
-
-		std::vector<CString> strs = YT_SplitCString(value, L',');
-		for (UINT i = 0; i < strs.size(); i++)
-		{
-			data.valueOptions.push_back(_wtof(strs[i]));
-		}
-		data.defaultValue = _wtof(defaultValue);
-		data.prompt = state;
-	}
-	return data;
-}
+//CWindowsDimData CWindowLocalData::ConvertStringToDimData ( CString code, CString  valueType, CString value, CString defaultValue,	CString state) const
+//{
+//	CWindowsDimData  data;
+//	if (valueType == "无")
+//	{
+//		data.sCodeName = code;
+//		data.type = NOVALUE;
+//	}
+//	else if(valueType == L"公式")
+//	{
+//		data.sCodeName = code;
+//		data.type = CALC;
+//	}
+//	else if(valueType == L"固定值")
+//	{
+//		data.sCodeName = code;
+//		data.type = SINGLE;
+//		data.valueOptions.push_back(_wtof(value));
+//		data.defaultValue = _wtof(defaultValue);
+//		data.prompt = state;
+//	}
+//	else if(valueType == L"值系列")
+//	{
+//		data.sCodeName = code;
+//		data.type = MULTI;
+//
+//		std::vector<CString> strs = YT_SplitCString(value, L',');
+//		for (UINT i = 0; i < strs.size(); i++)
+//		{
+//			data.valueOptions.push_back(_wtof(strs[i]));
+//		}
+//		data.defaultValue = _wtof(defaultValue);
+//		data.prompt = state;
+//	}
+//	return data;
+//}
 
 void CWindowLocalData::LoadDataFromExcel(CString p_file) 
 {

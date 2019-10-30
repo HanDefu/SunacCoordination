@@ -62,5 +62,3 @@ protected:
 
 };
 
-CString GBKToUTF8(const std::string& strGBK);
-CString UTF8ToGBK(const std::string& strUTF8);
