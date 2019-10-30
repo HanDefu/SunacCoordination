@@ -7,7 +7,10 @@
 
 class CAirConditionWebData
 {
+	CAirConditionWebData(){}
 public:
+	static CAirConditionWebData* Instance();
+
 	bool GetAirConditionById(CString p_sId, AttrAirCon& value)const;
 
 	//weiZhi¿‰ƒ˝ÀÆπ‹Œª÷√

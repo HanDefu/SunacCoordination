@@ -135,7 +135,7 @@ std::vector<AttrKitchen > CKitchenBathroomWebData::ParseKitchensFromXML(CMarkup 
 			}
 			if (xml.FindElem(_T("KitchenOpenSizeMax")))
 			{
-				KitchenAttr.m_maxwidth = _ttof(xml.GetData());
+				KitchenAttr.m_maxWidth = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("KitchenDepthsizeMin")))
 			{

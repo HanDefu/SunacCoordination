@@ -8,6 +8,12 @@
 #include "WebIO.h"
 #include <string>
 
+
+CAirConditionWebData* CAirConditionWebData::Instance()
+{
+	static CAirConditionWebData instance;
+	return &instance;
+}
 std::vector<AttrAirCon> CAirConditionWebData::GetAirCons(double piShu, CString weiZhi, bool hasYuShuiGuan, CString yuShuiGuanWeizhi)
 {
 	CString AirconditionerIsRainpipe_;
@@ -18,8 +24,6 @@ std::vector<AttrAirCon> CAirConditionWebData::GetAirCons(double piShu, CString w
 	else AirconditionerIsRainpipe_ = L"-1";
 	CString pishu_;
 	pishu_.Format(L"%.1f", piShu);
-	pishu_ = pishu_;
-
 
 	std::wstring sAirconditionerPower = pishu_;
 	std::wstring sAirconditionerPipePosition = weiZhi;

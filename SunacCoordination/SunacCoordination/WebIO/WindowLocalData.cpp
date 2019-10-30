@@ -8,6 +8,12 @@
 
 using namespace Excel;
 
+CWindowLocalData* CWindowLocalData::Instance()
+{
+	static CWindowLocalData instance;
+	return &instance;
+}
+
 CWindowLocalData::CWindowLocalData()
 {
 	CString localWindowPath = TY_GetDataFilePath();
@@ -30,26 +36,26 @@ CWindowsDimData CWindowLocalData::ReadDimData(Excel::CExcelUtil &xls, CString co
 	CWindowsDimData  data;
 	data.sCodeName = code;
 	data.defaultValue = defaultValue;
-	data.value = defaultValue;
-	data.minValue = minValue;
-	data.maxValue = maxValue;
 	data.prompt = sComment;
 
-	if (valueType == "无")
+	valueType.Trim();
+	if (valueType == L"范围")
 	{
-		data.type = NOVALUE;
+		data.type = SCOPE;
+		data.minValue = minValue;
+		data.maxValue = maxValue;
 	}
 	else if (valueType == L"公式")
 	{
 		data.type = CALC;
 		data.sFomula = sValue;
 	}
-	else if (valueType == L"固定值")
+	else if (valueType == L"固定值" || valueType == L"值")
 	{
 		data.type = SINGLE;
 		data.valueOptions.push_back(_wtof(sValue));
 	}
-	else if (valueType == L"值系列")
+	else if (valueType.Find(L"系列") >= 0)
 	{
 		data.type = MULTI;
 
@@ -59,45 +65,15 @@ CWindowsDimData CWindowLocalData::ReadDimData(Excel::CExcelUtil &xls, CString co
 			data.valueOptions.push_back(_wtof(strs[i]));
 		}
 	}
-	
-	return data;
-}
-
-//门窗
-CWindowsDimData CWindowLocalData::ConvertStringToDimData ( CString code, CString  valueType, CString value, CString defaultValue,	CString state) const
-{
-	CWindowsDimData  data;
-	if (valueType == "无")
+	else if (valueType == L"不限")
 	{
-		data.sCodeName = code;
+		data.type = UNLIMIT;
+	}
+	else
+	{
 		data.type = NOVALUE;
 	}
-	else if(valueType == L"公式")
-	{
-		data.sCodeName = code;
-		data.type = CALC;
-	}
-	else if(valueType == L"固定值")
-	{
-		data.sCodeName = code;
-		data.type = SINGLE;
-		data.valueOptions.push_back(_wtof(value));
-		data.defaultValue = _wtof(defaultValue);
-		data.prompt = state;
-	}
-	else if(valueType == L"值系列")
-	{
-		data.sCodeName = code;
-		data.type = MULTI;
-
-		std::vector<CString> strs = YT_SplitCString(value, L',');
-		for (UINT i = 0; i < strs.size(); i++)
-		{
-			data.valueOptions.push_back(_wtof(strs[i]));
-		}
-		data.defaultValue = _wtof(defaultValue);
-		data.prompt = state;
-	}
+	
 	return data;
 }
 

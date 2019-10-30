@@ -92,7 +92,7 @@ bool CExcelUtil::OpenExcel(CString fileName, bool readOnly)
 		out_file_name = fileName;
 
 	}
-	catch (CException* e)
+	catch (CException*)
 	{
 		return false;
 	}

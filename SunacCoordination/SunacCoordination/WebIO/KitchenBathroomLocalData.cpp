@@ -28,13 +28,13 @@ std::vector<AttrKitchen> CKitchenBathroomLocalData::GetKitchens(EKitchType p_typ
 	switch (p_type)
 	{
 	case E_KITCH_U:
-		sType = L"TI";
+		sType = L"KU";
 		break;
 	case E_KITCH_L:
-		sType = L"TL";
+		sType = L"KL";
 		break;
 	case E_KITCH_I:
-		sType = L"TU";
+		sType = L"KI";
 		break;
 	}
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ProjectorFileMrg\ProjectInfo.h"
+#include "..\ProjectorFileMrg\ProjectInfo.h"
 #include "../UI/GridCtrl_src/NewCellTypes/GridCellCheck.h"
 #include "GridCtrlEx.h"
 

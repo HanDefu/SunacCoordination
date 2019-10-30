@@ -885,6 +885,17 @@ char* TY_GetAluminumDatabasePath()
 	return DatabasePath;
 }
 
+char* TY_GetLocalDataDatabasePath()
+{
+	CString TempPath = MD2010_GetAppPath() + L"\\Support\\Sunac2019\\Data\\LocalData.db";
+	int n = TempPath.GetLength();
+	int len = WideCharToMultiByte(CP_ACP, 0, TempPath, n, NULL, 0, NULL, NULL);
+	char * DatabasePath = new char[len + 1];
+	WideCharToMultiByte(CP_ACP, 0, TempPath, n, DatabasePath, len, NULL, NULL);
+	DatabasePath [len] = '\0';
+	return DatabasePath;
+}
+
 /************************************************************************
 说明：
     在文件夹中查找文件（仅在指定文件夹查找，不递归）

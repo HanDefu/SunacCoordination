@@ -54,7 +54,14 @@ std::vector<AttrRailing> CRailingWebData::GetRailings(eRailingType RailingType)c
 
 	return vRailingAttrs;
 }
+std::vector<AttrRailing> CRailingWebData::GetAllRailings()const
+{
+	std::vector<AttrRailing> railingAtts;
 
+	//TODO YMY
+
+	return railingAtts;
+}
 
 std::vector<AttrRailing > CRailingWebData::ParseRailingsFromXML(CMarkup xml)const
 {
