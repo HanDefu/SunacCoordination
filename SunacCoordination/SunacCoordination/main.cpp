@@ -450,26 +450,16 @@ void CMD_test()
 	double width = 1800;
 	double height = 1800;
 	CString doorType = "";
+	
+	std::vector<AttrWindow> WindowFromWebData = CWindowWebData::Instance()->GetAllWindows();
+	std::vector<AttrWindow> WindowFromWebData2 = CWindowWebData::Instance()->GetWindows(1800, 1800, L"外开", 1, L"");
+	std::vector<AttrWindow> WindowFromLocalData = CWindowLocalData::Instance()->GetAllWindows();
+	std::vector<AttrWindow> WindowFromLocalDataFromDB = CWindowLocalDataFromDB::Instance()->GetAllWindows();
+	std::vector<AttrWindow> WindowFromLocalDataFromDB2 = CWindowLocalDataFromDB::Instance()->GetWindows(1800, L"外开", 1, L"全部");
 
-	CWindowWebData WindowFromWeb;
-	CWindowLocalData WindowFromLocal;
-	CWindowLocalDataFromDB WindowFromDB;
+	//test比较从excel读取的数据和数据库中读取的数据
 
-	CWindowWebData DoorFromWeb;
-	CWindowLocalData DoorFromLocal;
 
-	CKitchenBathroomWebData KitchenFromWeb;
-	CKitchenBathroomWebData BathroomFromWeb;
-	CRailingWebData RailingFromWeb;
-	CAirConditionWebData AirConFromWeb;
-	CAirConditionLocalDataFromDB AirConFromDB;
-	//vAttrWindow window = b.GetWindows(width, height, "", 0, "");
-	std::vector<AttrWindow> WindowFromWebData = WindowFromWeb.GetAllWindows();
-	std::vector<AttrWindow> WindowFromWebData2 = WindowFromWeb.GetWindows(1800, 1800, L"外开", 1, L"");
-	std::vector<AttrWindow> WindowFromLocalData = WindowFromLocal.GetAllWindows();
-	std::vector<AttrWindow> WindowFromLocalDataFromDB = WindowFromDB.GetAllWindows();
-	std::vector<AttrWindow> WindowFromLocalDataFromDB2 = WindowFromDB.GetWindows(1800, L"外开", 1, L"全部");
-	std::vector<AttrAirCon> AirConLocalDataFromDB = AirConFromDB.GetAllAirCons();
 
 	//比较windows1, windows2
 /*
@@ -499,8 +489,8 @@ void CMD_test()
 		assert(bFind==true);
 	}*/
 
-	std::vector<AttrWindow> DoorFromWebData = DoorFromWeb.GetAllDoors();
-	std::vector<AttrWindow> DoorFromLocalData = DoorFromLocal.GetAllDoors();
+	std::vector<AttrWindow> DoorFromWebData = CWindowWebData::Instance()->GetAllDoors();
+	std::vector<AttrWindow> DoorFromLocalData = CWindowLocalData::Instance()->GetAllDoors();
 /*
 	for(int i = 0; i < DoorFromWebData.size(); i++ )
 	{
@@ -528,8 +518,12 @@ void CMD_test()
 		assert(bFind==true);
 	}*/
 
+	CKitchenBathroomWebData KitchenFromWeb;
+	CKitchenBathroomWebData BathroomFromWeb;
 	std::vector<AttrKitchen> KitchenFromLocalData = WebIO::GetInstance()->GetAllKitchens();
 	std::vector<AttrKitchen> KitchenFromWebData = KitchenFromWeb.GetAllKitchens();
+	std::vector<AttrKitchen> KitchenFromWebData2 = KitchenFromWeb.GetKitchens(1800, 2600, L"门窗对开", L"L型", true);
+	std::vector<AttrBathroom> BathroomFromWebData = BathroomFromWeb.GetBathrooms(1800, 2000, L"门窗垂直开", L"L型");
 	/*
 	for(int i = 0; i < attrs2.size(); i++ )
 	{
@@ -556,10 +550,13 @@ void CMD_test()
 
 	}*/
 
-	std::vector<AttrKitchen> KitchenFromWebData2 = KitchenFromWeb.GetKitchens(1800, 2600, L"门窗对开", L"L型", true);
-	std::vector<AttrBathroom> BathroomFromWebData = BathroomFromWeb.GetBathrooms(1800, 2000, L"门窗垂直开", L"L型");
+
+
+	CRailingWebData RailingFromWeb;
 	std::vector<AttrRailing> RailingFromWebData = RailingFromWeb.GetRailings(E_RAILING_BOLI);
-	std::vector<AttrAirCon> AirConFromWebData = AirConFromWeb.GetAirCons(1.5, "后面", 1, "侧面");
+
+	std::vector<AttrAirCon> AirConLocalDataFromDB = CAirConditionLocalDataFromDB::Instance()->GetAllAirCons();
+	std::vector<AttrAirCon> AirConFromWebData = CAirConditionWebData::Instance()->GetAirCons(1.5, "后面", 1, "侧面");
 	return;
 }
 

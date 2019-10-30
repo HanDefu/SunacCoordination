@@ -37,22 +37,20 @@ bool WebIO::Login(CString p_sUserName, CString p_key)
 	m_bLogin = true;
 	return true;
 }
-//width,//宽度值，注意高度值不作为搜索条件 
-//openType, //开启类型
-//openNum,//开启扇数量
-//gongNengQu,//功能区
-//tongFengLiang//通风量
-//读取门和窗
+
+//注意高度值不作为搜索条件 
+//width宽度值，openType开启类型, openNum开启扇数量  gongNengQu功能区, tongFengLiang通风量
 std::vector<AttrWindow>  WebIO::GetWindows(double width, double height, CString openType, int openNum, CString gongNengQu)const
 {
 #ifdef WORK_LOCAL		//本地模式
-	vAttrWindow Local = m_windowLocalData.GetWindows(width, openType, openNum, gongNengQu);
+	vAttrWindow Local = CWindowLocalDataFromDB::Instance()->GetWindows(width, openType, openNum, gongNengQu);
 	return Local;
 #else
-	vAttrWindow Local = m_windowLocalData.GetWindows(width, openType, openNum, gongNengQu);
-	vAttrWindow Web = m_windowWebData.GetWindows(width, height, openType, openNum, gongNengQu);
+	vAttrWindow Web = CWindowWebData::Instance()->GetWindows(width, height, openType, openNum, gongNengQu);
 
-	/*for(int i = 0; i < Web.size(); i++ )
+#ifdef _WEB_TEST
+	vAttrWindow Local = CWindowLocalDataFromDB::Instance()->GetWindows(width, openType, openNum, gongNengQu);
+	for(int i = 0; i < Web.size(); i++ )
 	{
 		AttrWindow &curWebWin = Web[i];
 
@@ -74,17 +72,18 @@ std::vector<AttrWindow>  WebIO::GetWindows(double width, double height, CString 
 				break;
 			}
 		}
+	}
+#endif
 
-	}*/
 	return Web;
 #endif
 }
 std::vector<AttrWindow> WebIO::GetDoors(double width, double height, CString openType, int openNum, CString gongNengQu)const
 {
 #ifdef WORK_LOCAL//本地模式
-	return m_windowLocalData.GetDoors(width, openType, openNum, gongNengQu);
+	return CWindowLocalDataFromDB::Instance()->GetDoors(width, openType, openNum, gongNengQu);
 #else
-	return m_windowWebData.GetDoors(width, height, openType, openNum, gongNengQu);
+	return CWindowWebData::Instance()->GetDoors(width, height, openType, openNum, gongNengQu);
 #endif
 }
 
@@ -92,15 +91,16 @@ std::vector<AttrKitchen> WebIO::GetKitchens(EKitchType p_type, double p_xLen, do
 {
 #ifdef WORK_LOCAL//本地模式
 	return m_kitchenBathroomLocalData.GetKitchens(p_type, p_xLen, p_yLen, p_doorDir, p_windowDir, p_hasPaiQiDao);
-#else
-	
+#else	
 	CString WindowDoorPos;
 	if (abs(p_doorDir - p_windowDir) == 2)
 	{
 		WindowDoorPos = L"门窗对开";
 	}
-	else WindowDoorPos = L"门窗垂直开";
-
+	else 
+	{
+		WindowDoorPos = L"门窗垂直开";
+	}
 
 	return m_kitchenBathroomWebData.GetKitchens(p_xLen, p_yLen, WindowDoorPos, KitchenTypeToCString(p_type), (p_hasPaiQiDao == true)? 1:0);
 #endif
@@ -120,7 +120,6 @@ std::vector<AttrBathroom> WebIO::GetBathrooms(EBathroomType p_type, double p_xLe
 #ifdef WORK_LOCAL//本地模式
 	return m_kitchenBathroomLocalData.GetBathrooms(p_type, p_xLen, p_yLen, p_doorDir, p_windowDir);
 #else
-
 	CString WindowDoorPos;
 	if (abs(p_doorDir - p_windowDir) == 2)
 	{
@@ -145,18 +144,18 @@ std::vector<AttrBathroom> WebIO::GetAllBathrooms()
 std::vector<AttrAirCon> WebIO::GetAirCons(double piShu, CString weiZhi, CString hasYuShuiGuan, CString yuShuiGuanWeizhi)
 {
 #ifdef WORK_LOCAL//本地模式
-	return m_airConLocalData.GetAirCons(piShu, weiZhi, hasYuShuiGuan, yuShuiGuanWeizhi);
+	return CAirConditionLocalDataFromDB::Instance()->GetAirCons(piShu, weiZhi, hasYuShuiGuan, yuShuiGuanWeizhi);
 #else
-	return m_airConWebData.GetAirCons(piShu, weiZhi, (hasYuShuiGuan == L"有"), yuShuiGuanWeizhi);
+	return CAirConditionWebData::Instance()->GetAirCons(piShu, weiZhi, (hasYuShuiGuan == L"有"), yuShuiGuanWeizhi);
 #endif
 }
 
 std::vector<AttrAirCon> WebIO::GetAllAirCons()
 {
 #ifdef WORK_LOCAL//本地模式
-	return m_airConLocalData.GetAllAirCons();
+	return CAirConditionLocalDataFromDB::Instance()->GetAllAirCons();
 #else
-	return m_airConWebData.GetAllAirCons();
+	return CAirConditionWebData::Instance()->GetAllAirCons();
 #endif
 }
 
@@ -175,10 +174,7 @@ std::vector<AttrRailing> WebIO::GetRailings(eRailingType type)//一次搜索所有的
 	//	pAttribute.SetFileName(localFiles[i].first);
 	//	pAttribute.m_isJiTuan = true;
 	//	pAttribute.m_isDynamic = true;
-	//	pAttribute.close();
-
-	//	//TODO 补全栏杆其他的属性初始化
-
+	//	pAttribute.close();	
 	//	result.push_back(pAttribute);
 	//}
 	return result;
@@ -195,7 +191,7 @@ std::vector<AttrRailing> WebIO::GetAllRailings()
 	result1.insert(result1.end(), result2.begin(), result2.end());
 	return result1;
 #else
-	return m_railingWebData.GetRailings(E_RAILING_BOLI);
+	return m_railingWebData.GetAllRailings();
 #endif
 }
 
