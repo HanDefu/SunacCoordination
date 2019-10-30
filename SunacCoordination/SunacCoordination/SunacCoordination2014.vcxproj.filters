@@ -911,7 +911,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="WebIO\SunacCadWeb\ArgumentSettingServiceSoap.nsmap" />
-    <None Include="res\Document.ico" />
     <None Include="res\画图Folder.ico" />
+    <None Include="res\Document.ico" />
   </ItemGroup>
 </Project>
