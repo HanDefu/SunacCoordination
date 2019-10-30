@@ -399,6 +399,18 @@
     <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridURLCell.cpp">
       <Filter>UI\Grid</Filter>
     </ClCompile>
+    <ClCompile Include="ProjectorFileMrg\FileUploadDownload.cpp">
+      <Filter>ProjectorFileMrg</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Railing\RailingStatistic.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\AirConditionLocalDataFromDB.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\WindowLocalDataFromDB.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command\Command.h">
@@ -844,6 +856,18 @@
     </ClInclude>
     <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridURLCell.h">
       <Filter>UI\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectorFileMrg\FileUploadDownload.h">
+      <Filter>ProjectorFileMrg</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Railing\RailingStatistic.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\AirConditionLocalDataFromDB.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\WindowLocalDataFromDB.h">
+      <Filter>WebIO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

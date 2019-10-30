@@ -53,6 +53,7 @@
     <ClCompile Include="Object\Kitchen\RCKitchen.cpp" />
     <ClCompile Include="Object\PrototypeInfo.cpp" />
     <ClCompile Include="Object\Railing\AttrRailing.cpp" />
+    <ClCompile Include="Object\Railing\RailingStatistic.cpp" />
     <ClCompile Include="Object\Railing\RCRailing.cpp" />
     <ClCompile Include="Object\Railing\RCRailingBoli.cpp" />
     <ClCompile Include="Object\Railing\RCRailingTieyi.cpp" />
@@ -74,6 +75,7 @@
     <ClCompile Include="Object\WindowStatistic\WindowFormula.cpp" />
     <ClCompile Include="Object\WindowStatistic\WindowMaterialUsage.cpp" />
     <ClCompile Include="Object\WindowStatistic\WindowStatictic.cpp" />
+    <ClCompile Include="ProjectorFileMrg\FileUploadDownload.cpp" />
     <ClCompile Include="ProjectorFileMrg\ProjectFile.cpp" />
     <ClCompile Include="ProjectorFileMrg\ProjectFileMrg.cpp" />
     <ClCompile Include="ProjectorFileMrg\ProjectInfo.cpp" />
@@ -121,6 +123,7 @@
     <ClCompile Include="UI\WindowAdvanceDlg.cpp" />
     <ClCompile Include="UI\WindowDlg.cpp" />
     <ClCompile Include="WebIO\AirConditionLocalData.cpp" />
+    <ClCompile Include="WebIO\AirConditionLocalDataFromDB.cpp" />
     <ClCompile Include="WebIO\AirconditionWebData.cpp" />
     <ClCompile Include="WebIO\ConfigDictionary.cpp" />
     <ClCompile Include="WebIO\cpp_base64\src\Base64Decoder.cpp" />
@@ -136,6 +139,7 @@
     <ClCompile Include="WebIO\WebIO.cpp" />
     <ClCompile Include="WebIO\WebProjectFile.cpp" />
     <ClCompile Include="WebIO\WindowLocalData.cpp" />
+    <ClCompile Include="WebIO\WindowLocalDataFromDB.cpp" />
     <ClCompile Include="WebIO\WindowWebData.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +179,7 @@
     <ClInclude Include="Object\PrototypeCommonDef.h" />
     <ClInclude Include="Object\PrototypeInfo.h" />
     <ClInclude Include="Object\Railing\AttrRailing.h" />
+    <ClInclude Include="Object\Railing\RailingStatistic.h" />
     <ClInclude Include="Object\Railing\RCRailing.h" />
     <ClInclude Include="Object\Railing\RCRailingBoli.h" />
     <ClInclude Include="Object\Railing\RCRailingTieyi.h" />
@@ -196,6 +201,7 @@
     <ClInclude Include="Object\WindowStatistic\WindowFormula.h" />
     <ClInclude Include="Object\WindowStatistic\WindowMaterialUsage.h" />
     <ClInclude Include="Object\WindowStatistic\WindowStatictic.h" />
+    <ClInclude Include="ProjectorFileMrg\FileUploadDownload.h" />
     <ClInclude Include="ProjectorFileMrg\ProjectFile.h" />
     <ClInclude Include="ProjectorFileMrg\ProjectFileMrg.h" />
     <ClInclude Include="ProjectorFileMrg\ProjectInfo.h" />
@@ -269,6 +275,7 @@
     <ClInclude Include="UI\WindowAdvanceDlg.h" />
     <ClInclude Include="UI\WindowDlg.h" />
     <ClInclude Include="WebIO\AirConditionLocalData.h" />
+    <ClInclude Include="WebIO\AirConditionLocalDataFromDB.h" />
     <ClInclude Include="WebIO\AirconditionWebData.h" />
     <ClInclude Include="WebIO\ConfigDictionary.h" />
     <ClInclude Include="WebIO\cpp_base64\src\Base64Decoder.h" />
@@ -286,6 +293,7 @@
     <ClInclude Include="WebIO\WebIO.h" />
     <ClInclude Include="WebIO\WebProjectFile.h" />
     <ClInclude Include="WebIO\WindowLocalData.h" />
+    <ClInclude Include="WebIO\WindowLocalDataFromDB.h" />
     <ClInclude Include="WebIO\WindowWebData.h" />
   </ItemGroup>
   <ItemGroup>
@@ -414,7 +422,7 @@
     <Link>
       <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2010_Win_64_and_32Bit\lib;C:\Autodesk\Autodesk_ObjectARX_2010_Win_64_and_32Bit\lib-win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2010_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
-      <AdditionalDependencies>acdbmgd.lib;Tool\SQLite\x86\sqlite3X86.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>acdbmgd.lib;Tool\SQLite\x86\sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)SunacCAD2010X86.arx</OutputFile>
     </Link>
   </ItemDefinitionGroup>
@@ -430,7 +438,7 @@
       <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2010_Win_64_and_32Bit\lib;C:\Autodesk\Autodesk_ObjectARX_2010_Win_64_and_32Bit\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2010_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
-      <AdditionalDependencies>acdbmgd.lib;Tool\SQLite\sqlite3X64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>acdbmgd.lib;Tool\SQLite\sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)SunacCAD2010X64.arx</OutputFile>
     </Link>
   </ItemDefinitionGroup>
