@@ -358,6 +358,12 @@
     <ClCompile Include="UI\NewDirDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="WebIO\WindowLocalDataFromDB.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
+    <ClCompile Include="WebIO\AirConditionLocalDataFromDB.cpp">
+      <Filter>WebIO</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -808,6 +814,12 @@
     <ClInclude Include="WebIO\WebCommon.h">
       <Filter>WebIO</Filter>
     </ClInclude>
+    <ClInclude Include="WebIO\WindowLocalDataFromDB.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="WebIO\AirConditionLocalDataFromDB.h">
+      <Filter>WebIO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -887,15 +899,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="WebIO\SunacCadWeb\ArgumentSettingServiceSoap.nsmap" />
-    <None Include="Tool\SQLite\sqlite3.dll">
-      <Filter>Tool\SQLite</Filter>
-    </None>
     <None Include="res\Document.ico" />
     <None Include="res\画图Folder.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="Tool\SQLite\sqlite3.lib">
-      <Filter>Tool\SQLite</Filter>
-    </Library>
   </ItemGroup>
 </Project>

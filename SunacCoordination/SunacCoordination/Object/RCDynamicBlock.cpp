@@ -203,7 +203,7 @@ int RCDynamicBlock::InitParameters()
 			blkProp = blkPropAry[lIndex1];
 
 			AcString a = blkProp.propertyName();
-			CString aa(a.kszPtr());
+			CString aa(a.constPtr());
 			AcDbEvalVariant va;
 			
 			if (blkProp.propertyType() == AcDb::kDwgInt32)

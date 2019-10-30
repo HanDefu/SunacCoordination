@@ -46,6 +46,9 @@ public:
 	virtual double GetMinWidth()const { return 0; }
 	virtual double GetMinHeight()const { return 400; }
 
+	void SetSimpleDraw(bool p_bSimple){ m_bSimple = p_bSimple; }
+	bool IsSampleDraw()const { return m_bSimple; }
+
 protected:
 	virtual AcDbObjectId CreateRailingBlockDefine(CString sRailingDefName)= 0;
 	CString GetPrototypeFilePath()const ;
@@ -55,7 +58,9 @@ protected:
 	int	   m_N;			//标准栏杆段数量 
 	double m_K;			//侧边立柱与结构墙间尺寸（单边）
 
-	AttrRailing m_railingAtt;	
+	AttrRailing m_railingAtt;
+
+	bool m_bSimple; //是否为建筑的简化图
 };
 
 typedef std::vector<CRCRailing*> vpRCRailing;

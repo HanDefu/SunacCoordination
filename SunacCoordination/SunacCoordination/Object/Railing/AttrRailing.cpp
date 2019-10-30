@@ -128,3 +128,13 @@ bool AttrRailing::IsPrototypeEqual(const AttrRailing& p_att)
 	}
 	else return true;
 }
+
+CString AttrRailing::AutoInstanceCode()
+{
+	CString sInstanceCode;
+	sInstanceCode.Format(_T("%s_%d_%d"), m_prototypeCode, (int)(m_length), (int)(m_height));
+
+	SetInstanceCode(sInstanceCode);
+
+	return sInstanceCode;
+}

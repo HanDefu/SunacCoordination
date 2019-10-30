@@ -30,6 +30,8 @@ CRCRailing::CRCRailing(void)
 	m_B = 1260;			//标准栏杆尺寸 1260或者1380
 	m_N = 1;			//标准栏杆数量 
 	m_K = 0;
+
+	m_bSimple = true;
 }
  
 CRCRailing::~CRCRailing(void)
@@ -67,8 +69,13 @@ int CRCRailing::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut)
 	if (bSuc == false)
 		return -1;
 
-	CString sRailingDefName;
-	sRailingDefName.Format(_T("%s_%d_%d"), m_railingAtt.m_prototypeCode, (int)(m_railingAtt.m_length), (int)(m_railingAtt.m_height));
+	CString sRailingDefName = m_railingAtt.GetInstanceCode();
+	if (sRailingDefName.IsEmpty())
+	{
+		assert(false);
+		sRailingDefName.Format(_T("%s_%d_%d"), m_railingAtt.m_prototypeCode, (int)(m_railingAtt.m_length), (int)(m_railingAtt.m_height));
+	}
+
 	//若之前有，则直接插入
 	AcDbObjectId railingBlockDef = MD2010_GetBlockDefID(sRailingDefName);
 	if (railingBlockDef == AcDbObjectId::kNull)

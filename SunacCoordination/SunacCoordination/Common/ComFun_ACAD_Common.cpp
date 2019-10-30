@@ -324,9 +324,14 @@ int MD2010_SetModelSpaceCurrentLayout()
 	/*if (pmodl) pmodl->close();
 	     if (pmodl) pmodl->close();*/
 
-	AcDbLayout * pmodl2 =      
+#if (defined ARX_2018) || (defined ARX_2019)
+	AcDbObjectId modlid = acdbHostApplicationServices()->layoutManager()->findLayoutNamed(L"Model");
+#else
+	AcDbLayout * pmodl2 =
 		acdbHostApplicationServices()->layoutManager()->findLayoutNamed(L"Model");
 	AcDbObjectId modlid = pmodl2->objectId();
+#endif
+	
 	
 	acdbHostApplicationServices()->layoutManager()
 		->setCurrentLayoutId(modlid);
@@ -338,17 +343,27 @@ int MD2010_SetCurrentLayout(const ACHAR * layoutname)
 	AcApLayoutManager *pAcApLayoutManager = (AcApLayoutManager *)(acdbHostApplicationServices()->layoutManager());
 	AcDbLayout * pLayout = NULL;
 	const WCHAR *pcur = pAcApLayoutManager->findActiveLayout(true);
-	if (wcscmp(pcur,layoutname) == 0)
+	if (wcscmp(pcur, layoutname) == 0)
 	{
 		return 0;
 	}
+
+#if (defined ARX_2018) || (defined ARX_2019)
+	if (0 == pAcApLayoutManager->findLayoutNamed(layoutname))
+		return 1;
+#else
 	pLayout = pAcApLayoutManager->findLayoutNamed(layoutname);
 	if (NULL == pLayout)
-	    return 1;
+		return 1;
+#endif 
+
 	pAcApLayoutManager->setCurrentLayout(layoutname);
 	pAcApLayoutManager->updateCurrentPaper(Adesk::kTrue);
 	pAcApLayoutManager->updateLayoutTabs();
-	pLayout->close();
+
+	if(pLayout != 0)
+	    pLayout->close();
+
 	return 0;
 }
 
@@ -362,8 +377,7 @@ int MD2010_CopyLayoutWithSameConfig(const WCHAR * tname, const WCHAR* newname)
 {
 	AcApLayoutManager *pAcApLayoutManager = (AcApLayoutManager *)(acdbHostApplicationServices()->layoutManager());
 	AcDbLayout * pLayout = NULL;
-	pLayout = pAcApLayoutManager->findLayoutNamed(tname);
-	if (NULL == pLayout)
+	if (0 == pAcApLayoutManager->findLayoutNamed(tname))
 	    return 1;
 	Acad::ErrorStatus es = pAcApLayoutManager->copyLayout(tname,newname);
 	pLayout->close();
@@ -375,9 +389,9 @@ bool MD2010_CheckLayoutExist(const WCHAR * tname)
 {
 	AcApLayoutManager *pAcApLayoutManager = (AcApLayoutManager *)(acdbHostApplicationServices()->layoutManager());
 	AcDbLayout * pLayout = NULL;
-	pLayout = pAcApLayoutManager->findLayoutNamed(tname);
+
 	bool flag;
-	if (NULL == pLayout)
+	if (NULL == pAcApLayoutManager->findLayoutNamed(tname))
 	    flag= false;
 	else 
 		flag= true;
@@ -390,8 +404,7 @@ int MD2010_DeleteLayout(const WCHAR * tname)
 {
 	AcApLayoutManager *pAcApLayoutManager = (AcApLayoutManager *)(acdbHostApplicationServices()->layoutManager());
 	AcDbLayout * pLayout = NULL;
-	pLayout = pAcApLayoutManager->findLayoutNamed(tname);
-	if (NULL == pLayout)
+	if (0 == pAcApLayoutManager->findLayoutNamed(tname))
 	    return 1;
 	pAcApLayoutManager->deleteLayout(tname);
 	pLayout->close();
@@ -2288,7 +2301,7 @@ AcDbAnnotationScale *MD2010_GetAnnotationScale(const WCHAR *scalename)
 			continue;
 		}
 		annoScale->getName(strName);
-		if (wcscmp(strName.mpwszData,scalename) == 0)
+		if (wcscmp(strName.constPtr(), scalename) == 0)
 		{
 			//pvp1->setAnnotationScale(annoScale);
 			break;
@@ -3401,7 +3414,7 @@ int MD2012_Select1(const ACHAR *str, vAcDbObjectId &ids)
 	//初始化填充边界的ID数组
 	if (rt == RTNORM)
 	{
-		long length;
+		Adesk::Int32 length;
 		acedSSLength(ss, &length);
 		for (int i = 0; i < length; i++)
 		{

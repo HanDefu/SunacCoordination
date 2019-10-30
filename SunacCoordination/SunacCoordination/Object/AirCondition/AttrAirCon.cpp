@@ -146,3 +146,12 @@ bool AttrAirCon::IsPrototypeEqual(const AttrAirCon& p_att)
 	}
 	else return true;
 }
+
+
+CString AttrAirCon::AutoInstanceCode() //空调自动编号只考虑匹数，仅用于统计，不用于查找块
+{
+	CString sInstance;
+	sInstance.Format(_T("AirConditioner_%.1f"), m_power);
+	SetInstanceCode(sInstance);
+	return sInstance;
+}

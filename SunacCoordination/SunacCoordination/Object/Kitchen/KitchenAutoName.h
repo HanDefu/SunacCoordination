@@ -7,8 +7,8 @@ using namespace std;
 
 class CKitchenAutoName
 {
-public:
 	CKitchenAutoName();
+public:
 	~CKitchenAutoName();
 
 	static CKitchenAutoName* GetInstance();

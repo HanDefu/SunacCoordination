@@ -397,23 +397,61 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 	if ((es = AttrObject::dwgInFields(filer)) != Acad::eOk) 
 		return es;
 
-	ACHAR *tempStr = new ACHAR[SUNAC_COMMON_STR_LEN];
-	filer->readItem(&tempStr);
-	m_openType = CString(tempStr);
+	AcString tempStr;
+	
+	Adesk::UInt32 size;
+	filer->readItem(&size);
+	m_dimData.resize(size);
+	for (UINT i = 0; i < m_dimData.size(); i++)
+	{
+		filer->readString(tempStr);
+		m_dimData[i].sCodeName = tempStr.kACharPtr();
+		filer->readString(tempStr);
+		m_dimData[i].sFomula = tempStr.kACharPtr();
+		filer->readString(tempStr);
+		m_dimData[i].prompt = tempStr.kACharPtr();
 
-	filer->readItem(&m_openQty);
-	filer->readItem(&m_isZhuanJiao);
+		filer->readItem(&m_dimData[i].minValue);
+		filer->readItem(&m_dimData[i].maxValue);
+		filer->readItem(&m_dimData[i].defaultValue);
+		filer->readItem(&m_dimData[i].value);
 
-	filer->readItem(&tempStr);
-	m_tongFengFormula = CString(tempStr);
+		filer->readItem((Adesk::UInt32*)&m_dimData[i].type);
+
+		filer->readItem(&size);
+		m_dimData[i].valueOptions.resize(size);
+		for (UINT j = 0; j < m_dimData[i].valueOptions.size(); j++)
+			filer->readItem(&m_dimData[i].valueOptions[j]);
+	}
+
+	dwgInFileInfo(filer, m_frontViewFile);
+	dwgInFileInfo(filer, m_leftViewFile);
+	dwgInFileInfo(filer, m_topViewFile);
+
+	filer->readString(tempStr);
+	m_tongFengFormula = tempStr.kACharPtr();
 
 	filer->readItem(&m_tongFengQty);
 
+	filer->readString(tempStr);
+	m_openType = tempStr.kACharPtr();
 
-	//TODO 把所有的属性读取补充完整
+	filer->readItem(&m_openQty);
 
-	delete [] tempStr;
+	filer->readString(tempStr);
+	m_gongNengquType = tempStr.kACharPtr();
 
+	filer->readItem(&m_isZhuanJiao);
+
+	filer->readItem(&m_isMirrorWindow);
+
+	filer->readItem(&m_isMirror);
+
+	filer->readItem((Adesk::UInt32*)&m_viewDir);
+
+	filer->readItem(&m_isBayWindow);
+
+	filer->readItem(&m_wallDis);
 
 	return filer->filerStatus();
 }
@@ -450,13 +488,50 @@ Acad::ErrorStatus AttrWindow::dwgOutFields(AcDbDwgFiler* filer) const
 		return es;
 	}
 
-	filer->writeItem(m_openType);
-	filer->writeItem(m_openQty);
-	filer->writeItem(m_isZhuanJiao);
+	filer->writeItem((Adesk::UInt32)m_dimData.size());
+	for (UINT i = 0; i < m_dimData.size(); i++)
+	{
+		filer->writeItem(m_dimData[i].sCodeName);
+		filer->writeItem(m_dimData[i].sFomula);
+		filer->writeItem(m_dimData[i].prompt);
+
+		filer->writeItem(m_dimData[i].minValue);
+		filer->writeItem(m_dimData[i].maxValue);
+		filer->writeItem(m_dimData[i].defaultValue);
+		filer->writeItem(m_dimData[i].value);
+
+		filer->writeItem((Adesk::UInt32)m_dimData[i].type);
+
+		filer->writeItem((Adesk::UInt32)m_dimData[i].valueOptions.size());
+		for (UINT j = 0; j < m_dimData[i].valueOptions.size(); j++)
+			filer->writeItem(m_dimData[i].valueOptions[j]);
+	}
+
+	dwgOutFileInfo(filer, m_frontViewFile);
+	dwgOutFileInfo(filer, m_leftViewFile);
+	dwgOutFileInfo(filer, m_topViewFile);
+
 	filer->writeItem(m_tongFengFormula);
+
 	filer->writeItem(m_tongFengQty);
 
-	//TODO 把所有的属性读取补充完整
+	filer->writeItem(m_openType);
+
+	filer->writeItem(m_openQty);
+
+	filer->writeItem(m_gongNengquType);
+
+	filer->writeItem(m_isZhuanJiao);
+
+	filer->writeItem(m_isMirrorWindow);
+
+	filer->writeItem(m_isMirror);
+
+	filer->writeItem((Adesk::UInt32)m_viewDir);
+
+	filer->writeItem(m_isBayWindow);
+
+	filer->writeItem(m_wallDis);
 
 	return filer->filerStatus();
 }

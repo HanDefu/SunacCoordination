@@ -39,7 +39,7 @@ END_MESSAGE_MAP()
 
 void DlgLogin::OnBnClickedOk()
 {
-	Acad::ErrorStatus es = acDocManager->sendStringToExecute(curDoc(), L"REMOVEBLOCKREFDOUBLECLICK\n");
+	//Acad::ErrorStatus es = acDocManager->sendStringToExecute(curDoc(), L"REMOVEBLOCKREFDOUBLECLICK\n");
 	
 	CString sUserName, sPassword;
 	m_name.GetWindowTextW(sUserName);

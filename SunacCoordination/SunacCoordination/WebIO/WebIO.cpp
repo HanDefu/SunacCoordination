@@ -252,7 +252,11 @@ bool WebIO::DownloadFile(const int fileId, CString type, CString filePathName)
 	Base64Decoder decoder;
 
 	wstring filenameOut = filePathName;
+#if (defined ARX_2010) || (defined ARX_2011) || (defined ARX_2012)
+	ofstream ofs(filenameOut.c_str(), ofstream::out | ofstream::binary);
+#else
 	ofstream ofs(filenameOut, ofstream::out | ofstream::binary);
+#endif
 	if (ofs)
 	{
 		int numberOfBytes = (int)sReturn.length() + 1;

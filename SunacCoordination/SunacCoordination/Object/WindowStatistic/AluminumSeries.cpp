@@ -4,6 +4,7 @@
 #include "DeductedSize.h"
 #include "WindowFormula.h"
 #include "..\..\Common\ComFun_Sunac.h"
+#include "..\..\Common\ComFun_Convert.h"
 
 
 

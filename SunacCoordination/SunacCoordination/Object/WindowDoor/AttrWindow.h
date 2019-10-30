@@ -32,7 +32,6 @@ typedef enum eWindowDimType
 
 eWindowDimType ToEWindowType(CString type);
 
-
 class CWindowsDimData
 {
 public:
@@ -141,8 +140,6 @@ protected:
 	vector<CWindowsDimData> m_dimData; //存储W/W1/W2/W3   H/H1/H2/H3 R的尺寸数据
 
 public:
-	CString m_openType;		//开启类型
-
 	CDwgFileInfo m_frontViewFile;	//原型立面文件, 展开图用基类的m_fileName
 	CDwgFileInfo m_topViewFile;		//原型俯视图文件
 	CDwgFileInfo m_leftViewFile;	//原型侧视图文件
@@ -150,6 +147,7 @@ public:
 	CString m_tongFengFormula;//通风量计算公式,主要用于动态原型
 	double m_tongFengQty;	//通风量
 
+	CString m_openType;		//开启类型
 	Adesk::Int32 m_openQty;	//开启扇数量
 	CString m_gongNengquType;//功能区类型
 

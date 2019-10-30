@@ -38,7 +38,7 @@ protected:
 
 	//从excel内读出一条尺寸的6个CString转换成dimdata
 	CWindowsDimData ReadDimData(Excel::CExcelUtil &xls, CString code, int p_row, int p_colum);
-	CWindowsDimData ConvertStringToDimData (CString code, CString  valueType,	CString value, CString defaultValue, CString state)const;
+	//CWindowsDimData ConvertStringToDimData (CString code, CString  valueType,	CString value, CString defaultValue, CString state)const;
 
 protected:
 	vector<AttrWindow> m_windows; //所有门窗

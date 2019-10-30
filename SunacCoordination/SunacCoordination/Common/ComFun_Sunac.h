@@ -86,6 +86,7 @@ CString TY_GetPrototypeImagePath();
 CString TY_GetPrototypeImagePath_Local();
 
 char* TY_GetAluminumDatabasePath();
+char* TY_GetLocalDataDatabasePath();
 
 vector<pair<CString,CString>> TY_FindFilesInDirecotry(CString fileName,CString directory );
 vector<pair<CString,CString>> TY_FindFilesInDirecotryRecursion( CString fileName,CString directory,int recursionCount);

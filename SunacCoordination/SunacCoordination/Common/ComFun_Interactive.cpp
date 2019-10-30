@@ -118,7 +118,7 @@ void JHCOM_SelectSolidMany(vAcDbObjectId &ids)
 	int rt = acedSSGet(NULL, NULL, NULL, rb, ssname); // 提示用户选择对象
 	if (rt == RTNORM)
 	{
-		long length;
+		Adesk::Int32 length;
 		acedSSLength(ssname, &length);
 		for (int i=0;i<length;i++)
 		{
@@ -148,7 +148,7 @@ void JHCOM_SelectJHSolidMany(vAcDbObjectId &ids)
 	int rt = acedSSGet(NULL, NULL, NULL, rb, ssname); // 提示用户选择对象
 	if (rt == RTNORM)
 	{
-		long length;
+		Adesk::Int32 length;
 		acedSSLength(ssname, &length);
 		for (int i=0;i<length;i++)
 		{
@@ -177,7 +177,7 @@ void JHCOM_SelectCenterLines(vAcDbObjectId &ids)
 	
 	if (rt == RTNORM)
 	{
-		long length = 0;
+		Adesk::Int32 length = 0;
 		acedSSLength(ssname, &length); // 获得选择集中的对象个数
 		for (int i = 0; i < length; i++)
 		{
@@ -203,7 +203,7 @@ void JHCOM_SelectEnts(vAcDbObjectId &ids, const ACHAR* pstr/* = NULL*/)
 	int rt = acedSSGet(pstr, NULL, NULL, NULL, ssname); // 提示用户选择对象
 	if (rt == RTNORM)
 	{
-		long length;
+		Adesk::Int32 length;
 		acedSSLength(ssname, &length);
 		for (int i=0;i<length;i++)
 		{

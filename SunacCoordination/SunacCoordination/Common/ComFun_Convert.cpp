@@ -533,14 +533,79 @@ Acad::ErrorStatus JHCOM_ConvertDbCurveToGeCurve(AcDbCurve *pDbCurve,AcGeCurve3d 
 AcDbObjectId JHCOM_GetConvertGeCurveToAcDbCurve(AcGeCurve3d &geCurve3d)
 
 {
+#if (defined ARX_2008) || (defined ARX_2009)||(defined ARX_2010) || (defined ARX_2011) || (defined ARX_2012) || (defined ARX_2013)
+	return 0;
+#else
 	AcDbObjectId oid = AcDbObjectId::kNull;
 	Acad::ErrorStatus es = Acad::eOk;
 	AcDbCurve *pDbCurve = NULL;
 	es = acdbConvertGelibCurveToAcDbCurve(geCurve3d, pDbCurve);
-	if(es == Acad::eOk)
+	if (es == Acad::eOk)
 	{
 		oid = JHCOM_PostToModelSpace(pDbCurve);
 		//postToDb(pDbCurve, oid);
 	}
 	return oid;
+#endif
+}
+
+size_t ConvertStringToUTF8( LPCTSTR strIn, char *& strOutUTF8MB )
+{
+	size_t len=_tcslen(strIn);
+
+#ifdef UNICODE
+	int iRequiredSize=WideCharToMultiByte(CP_UTF8, 0, strIn, -1, 0, 0, 0, 0);
+
+	strOutUTF8MB=new char[iRequiredSize];
+	strOutUTF8MB[0]=0;
+
+	WideCharToMultiByte(CP_UTF8, 0, strIn, -1, strOutUTF8MB, iRequiredSize, 0, 0);
+#else
+	WCHAR * wChar=new WCHAR[len+1];
+	wChar[0]=0;
+	MultiByteToWideChar(CP_ACP, 0, strIn, (int)len+1, wChar, (int)len+1);
+	int iRequiredSize=WideCharToMultiByte(CP_UTF8, 0, wChar, (int)len+1, 0, 0, 0, 0);
+	strOutUTF8MB=new char[iRequiredSize];
+	strOutUTF8MB[0]=0;
+	WideCharToMultiByte(CP_UTF8, 0, wChar, (int)len+1, strOutUTF8MB, iRequiredSize, 0, 0);
+	delete [] wChar;
+#endif
+
+	return iRequiredSize;
+}
+
+CString UTF8ToGBK(const std::string& strUTF8)
+{
+	int len = MultiByteToWideChar(CP_UTF8, 0, strUTF8.c_str(), -1, NULL, 0);
+	unsigned short * wszGBK = new unsigned short[len + 1];
+	memset(wszGBK, 0, len * 2 + 2);
+	MultiByteToWideChar(CP_UTF8, 0, (LPCSTR)strUTF8.c_str(), -1, (LPWSTR)wszGBK, len);
+
+	len = WideCharToMultiByte(CP_ACP, 0, (LPWSTR)wszGBK, -1, NULL, 0, NULL, NULL);
+	char *szGBK = new char[len + 1];
+	memset(szGBK, 0, len + 1);
+	WideCharToMultiByte(CP_ACP,0, (LPWSTR)wszGBK, -1, szGBK, len, NULL, NULL);
+	//strUTF8 = szGBK;
+	CString strTemp(szGBK);
+	delete[]szGBK;
+	delete[]wszGBK;
+	return strTemp;
+}
+
+CString GBKToUTF8(const std::string& strGBK)
+{
+	CString strOutUTF8 = "";
+	WCHAR * str1;
+	int n = MultiByteToWideChar(CP_ACP, 0, strGBK.c_str(), -1, NULL, 0);
+	str1 = new WCHAR[n];
+	MultiByteToWideChar(CP_ACP, 0, strGBK.c_str(), -1, str1, n);
+	n = WideCharToMultiByte(CP_UTF8, 0, str1, -1, NULL, 0, NULL, NULL);
+	char * str2 = new char[n];
+	WideCharToMultiByte(CP_UTF8, 0, str1, -1, str2, n, NULL, NULL);
+	strOutUTF8 = str2;
+	delete[]str1;
+	str1 = NULL;
+	delete[]str2;
+	str2 = NULL;
+	return strOutUTF8;
 }

@@ -2,7 +2,7 @@
 
 #define  SUNAC_DEBUG
 #define  SUNAC_ATTRIBUTE_ENTITY L"SUNAC_ATTRIBUTE_ENTITY"
-#define  SUNAC_COMMON_STR_LEN (256)
+//#define  SUNAC_COMMON_STR_LEN (256)
 #define  FILE_VERSION ((Adesk::Int32)1)
 
 #define  WORK_LOCAL//是否本地工作模式

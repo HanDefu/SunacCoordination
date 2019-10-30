@@ -9,6 +9,7 @@
 #include "../WebIO/WindowWebData.h"
 #include "..\Tool\MarkupXml\Markup.h"
 #include "WebCommon.h"
+#include <xtree>
 
 using namespace std;
 
@@ -220,7 +221,7 @@ vCString CConfigDictionary::GetQuyus()const
 	//{
 	//	return m_configDict[_T("area")];
 	//}
-	auto iter = m_configDict.find(_T("area"));
+	std::map<CString, vCString>::const_iterator iter = m_configDict.find(_T("area"));
 	if (iter != m_configDict.end())
 	{
 		return iter->second;
@@ -241,7 +242,7 @@ vCString CConfigDictionary::GetQuyus()const
 }
 vCString CConfigDictionary::GetGongNengQus()const
 {
-	auto iter = m_configDict.find(_T("actionType"));
+	std::map<CString, vCString>::const_iterator iter = m_configDict.find(_T("actionType"));
 	if (iter != m_configDict.end())
 	{
 		return iter->second;
@@ -260,7 +261,7 @@ vCString CConfigDictionary::GetGongNengQus()const
 }
 vCString CConfigDictionary::GetWindowDoorPoss()const
 {
-	auto iter = m_configDict.find(_T("doorWindowPosition"));
+	std::map<CString, vCString>::const_iterator iter = m_configDict.find(_T("doorWindowPosition"));
 	if (iter != m_configDict.end())
 	{
 		return iter->second;
@@ -275,7 +276,7 @@ vCString CConfigDictionary::GetWindowDoorPoss()const
 }
 vCString CConfigDictionary::Window_GetOpenTypes()const
 {
-	auto iter = m_configDict.find(_T("openType"));
+	std::map<CString, vCString>::const_iterator iter = m_configDict.find(_T("openType"));
 	if (iter != m_configDict.end())
 	{
 		return iter->second;
@@ -294,7 +295,7 @@ vCString CConfigDictionary::Window_GetOpenTypes()const
 
 vCString CConfigDictionary::Window_GetOpenAmount()const
 {
-	auto iter = m_configDict.find(_T("openWindowNum"));
+	std::map<CString, vCString>::const_iterator iter = m_configDict.find(_T("openWindowNum"));
 	if (iter != m_configDict.end())
 	{
 		return iter->second;
@@ -313,7 +314,7 @@ vCString CConfigDictionary::Window_GetOpenAmount()const
 
 vCString CConfigDictionary::Window_GetRate()const
 {
-	auto iter = m_configDict.find(_T("airVolumeAreaRation"));
+	std::map<CString, vCString>::const_iterator iter = m_configDict.find(_T("airVolumeAreaRation"));
 	if (iter != m_configDict.end())
 	{
 		return iter->second;
@@ -332,7 +333,7 @@ vCString CConfigDictionary::Window_GetRate()const
 
 vCString CConfigDictionary::Window_GetWallDis()const
 {
-	auto iter = m_configDict.find(_T("doorWindowDistance"));
+	std::map<CString, vCString>::const_iterator iter = m_configDict.find(_T("doorWindowDistance"));
 	if (iter != m_configDict.end())
 	{
 		return iter->second;
@@ -351,7 +352,7 @@ vCString CConfigDictionary::Window_GetWallDis()const
 
 vCString CConfigDictionary::Door_GetTypes()const
 {
-	auto iter = m_configDict.find(_T("doorType"));
+	std::map<CString, vCString>::const_iterator iter = m_configDict.find(_T("doorType"));
 	if (iter != m_configDict.end())
 	{
 		return iter->second;
@@ -367,7 +368,7 @@ vCString CConfigDictionary::Door_GetTypes()const
 }
 vCString CConfigDictionary::Kitchen_GetTypes()const
 {
-	auto iter = m_configDict.find(_T("kitchenType"));
+	std::map<CString, vCString>::const_iterator iter = m_configDict.find(_T("kitchenType"));
 	if (iter != m_configDict.end())
 	{
 		return iter->second;
@@ -384,7 +385,7 @@ vCString CConfigDictionary::Kitchen_GetTypes()const
 }
 vCString CConfigDictionary::Kitchen_GetShuiPenTypes()const
 {
-	auto iter = m_configDict.find(_T("kitchenBasinType"));
+	std::map<CString, vCString>::const_iterator iter = m_configDict.find(_T("kitchenBasinType"));
 	if (iter != m_configDict.end())
 	{
 		return iter->second;
@@ -402,7 +403,7 @@ vCString CConfigDictionary::Kitchen_GetShuiPenTypes()const
 }
 vCString CConfigDictionary::Kitchen_GetBingXiangTypes()const
 {
-	auto iter = m_configDict.find(_T("refrigeratorType"));
+	std::map<CString, vCString>::const_iterator iter = m_configDict.find(_T("refrigeratorType"));
 	if (iter != m_configDict.end())
 	{
 		return iter->second;
@@ -418,7 +419,7 @@ vCString CConfigDictionary::Kitchen_GetBingXiangTypes()const
 }
 vCString CConfigDictionary::Kitchen_GetZaoTaiWidths()const
 {
-	auto iter = m_configDict.find(_T("hearthWidth"));
+	std::map<CString, vCString>::const_iterator iter = m_configDict.find(_T("hearthWidth"));
 	if (iter != m_configDict.end())
 	{
 		return iter->second;
@@ -433,7 +434,7 @@ vCString CConfigDictionary::Kitchen_GetZaoTaiWidths()const
 }
 vCString CConfigDictionary::Bathroom_GetTypes()const
 {
-	auto iter = m_configDict.find(_T("BathroomType"));
+	std::map<CString, vCString>::const_iterator iter = m_configDict.find(_T("BathroomType"));
 	if (iter != m_configDict.end())
 	{
 		return iter->second;
@@ -450,7 +451,7 @@ vCString CConfigDictionary::Bathroom_GetTypes()const
 }
 vCString CConfigDictionary::Bathroom_GetTaiPenWidths()const
 {
-	auto iter = m_configDict.find(_T("BathroomBasinWidth"));
+	std::map<CString, vCString>::const_iterator iter = m_configDict.find(_T("BathroomBasinWidth"));
 	if (iter != m_configDict.end())
 	{
 		return iter->second;
@@ -468,7 +469,7 @@ vCString CConfigDictionary::Bathroom_GetTaiPenWidths()const
 }
 vCString CConfigDictionary::Bathroom_GetMaTongTypes()const
 {
-	auto iter = m_configDict.find(_T("closesToolWidth"));
+	std::map<CString, vCString>::const_iterator iter = m_configDict.find(_T("closesToolWidth"));
 	if (iter != m_configDict.end())
 	{
 		return iter->second;
@@ -483,7 +484,7 @@ vCString CConfigDictionary::Bathroom_GetMaTongTypes()const
 }
 vCString CConfigDictionary::Bathroom_GetGuanXiWidths()const
 {
-	auto iter = m_configDict.find(_T("bathroomWidth"));
+	std::map<CString, vCString>::const_iterator iter = m_configDict.find(_T("bathroomWidth"));
 	if (iter != m_configDict.end())
 	{
 		return iter->second;
@@ -498,7 +499,7 @@ vCString CConfigDictionary::Bathroom_GetGuanXiWidths()const
 }
 vCString CConfigDictionary::Air_GetPiShus()const
 {
-	auto iter = m_configDict.find(_T("airConditionNumber"));
+	std::map<CString, vCString>::const_iterator iter = m_configDict.find(_T("airConditionNumber"));
 	if (iter != m_configDict.end())
 	{
 		return iter->second;
@@ -515,7 +516,7 @@ vCString CConfigDictionary::Air_GetPiShus()const
 }
 vCString CConfigDictionary::Air_GetLengNingShuiGuanPos()const//获得冷凝水管位置
 {
-	auto iter = m_configDict.find(_T("condensatePipePosition"));
+	std::map<CString, vCString>::const_iterator iter = m_configDict.find(_T("condensatePipePosition"));
 	if (iter != m_configDict.end())
 	{
 		return iter->second;
@@ -531,7 +532,7 @@ vCString CConfigDictionary::Air_GetLengNingShuiGuanPos()const//获得冷凝水�
 
 vCString CConfigDictionary::Air_GetYuShuiGuanPos()const//获得雨水管位置
 {
-	auto iter = m_configDict.find(_T("rainPipePosition"));
+	std::map<CString, vCString>::const_iterator iter = m_configDict.find(_T("rainPipePosition"));
 	if (iter != m_configDict.end())
 	{
 		return iter->second;
@@ -547,7 +548,7 @@ vCString CConfigDictionary::Air_GetYuShuiGuanPos()const//获得雨水管位置
 
 vCString CConfigDictionary::Railing_GetTypes()
 {
-	auto iter = m_configDict.find(_T("handRail"));
+	std::map<CString, vCString>::const_iterator iter = m_configDict.find(_T("handRail"));
 	if (iter != m_configDict.end())
 	{
 		return iter->second;

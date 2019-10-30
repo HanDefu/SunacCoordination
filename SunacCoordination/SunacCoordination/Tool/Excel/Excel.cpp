@@ -1,5 +1,4 @@
 #include "stdafx.h"
-
 #include "Excel.h"
 
 using namespace Excel;
@@ -51,47 +50,52 @@ bool CExcelUtil::OpenExcel(CString fileName, bool readOnly)
 {        
     COleException pError;
     if (!m_excelApp.CreateDispatch((_T("Excel.Application")), &pError))
-
     {
         pError.ReportError();
         return false;
     }
-    else
-    {
-        COleVariant covOptional((long)DISP_E_PARAMNOTFOUND, VT_ERROR);
-        m_excelBooks = m_excelApp.get_Workbooks();
+
+	try
+	{
+		COleVariant covOptional((long)DISP_E_PARAMNOTFOUND, VT_ERROR);
+		m_excelBooks = m_excelApp.get_Workbooks();
 
 		VARIANT output;
 		StrToVariant(L"2018", output);
 
-		if(readOnly)
+		if (readOnly)
 		{
-			int lValue = 1;  
-			VARIANT vParam;  
-			vParam.vt = VT_I4;  
-			vParam.lVal = lValue;  
+			int lValue = 1;
+			VARIANT vParam;
+			vParam.vt = VT_I4;
+			vParam.lVal = lValue;
 
-			m_excelBook = m_excelBooks.Open(fileName,covOptional, vParam, covOptional, 
+			m_excelBook = m_excelBooks.Open(fileName, covOptional, vParam, covOptional,
 				output, output, covOptional, covOptional, covOptional,
 				covOptional, covOptional, covOptional, covOptional, covOptional, covOptional);
 		}
 		else
 		{
-			m_excelBook = m_excelBooks.Open(fileName,covOptional, covOptional, covOptional, 
+			m_excelBook = m_excelBooks.Open(fileName, covOptional, covOptional, covOptional,
 				output, output, covOptional, covOptional, covOptional,
 				covOptional, covOptional, covOptional, covOptional, covOptional, covOptional);
 		}
 
-		if (m_excelBooks==NULL)
+		if (m_excelBooks == NULL)
 		{
 			return false;
 
 		}
 
 		m_excelSheets = m_excelBook.get_Sheets();
-        m_excelSheet = m_excelBook.get_ActiveSheet();
-        out_file_name = fileName;
-    }
+		m_excelSheet = m_excelBook.get_ActiveSheet();
+		out_file_name = fileName;
+
+	}
+	catch (CException* e)
+	{
+		return false;
+	}
 
 	return true;
 }

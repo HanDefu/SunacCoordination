@@ -1,0 +1,444 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{849A0E9A-7517-43E4-9ED1-D59CE2A4F994}</ProjectGuid>
+    <Keyword>MFCProj</Keyword>
+    <ProjectName>SunacCoordination2014</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project=".\props\rxsdk_Releasecfg.props" />
+    <Import Project=".\props\arx.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project=".\props\rxsdk_Debugcfg.props" />
+    <Import Project=".\props\arx.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project=".\props\rxsdk_Releasecfg.props" />
+    <Import Project=".\props\arx.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project=".\props\rxsdk_Debugcfg.props" />
+    <Import Project=".\props\arx.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)\Temp\$(Platform)\$(Configuration)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Platform)\$(Configuration)\ARX2014X86\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\ARX2014\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SolutionDir)$(Platform)\$(Configuration)\ARX2014\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)\bin\$(Platform)\$(Configuration)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Platform)\$(Configuration)\ARX2014X86\</OutDir>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-win32;$(IncludePath)</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-win32;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>C:\Program Files\Autodesk\AutoCAD 2014\Support\</OutDir>
+    <IntDir>$(SolutionDir)Temp\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>Sunac2019</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ClCompile>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>false</TreatWarningAsError>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>.\props\AcRxDefault.def</ModuleDefinitionFile>
+      <AdditionalDependencies>acdbmgd.lib;.\SQLite\x86\sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(ProjectDir);C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-x64;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ProgramDataBaseFileName>$(OutDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(ProjectDir);C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-x64;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\lib-x64;.\Tool\SQLite;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>.\props\AcRxDefault.def</ModuleDefinitionFile>
+      <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalDependencies>acdbmgd.lib;sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-win32;$(ProjectDir);C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>ARX_2014;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>false</TreatWarningAsError>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>.\props\AcRxDefault.def</ModuleDefinitionFile>
+      <AdditionalDependencies>acdbmgd.lib;Tool\SQLite\x86\sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)SunacCAD2014X86.arx</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-x64;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\inc;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>ARX_2014;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-x64;.\Tool\SQLite;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ModuleDefinitionFile>.\props\AcRxDefault.def</ModuleDefinitionFile>
+      <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalDependencies>acdbmgd.lib;Tool\SQLite\sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)SunacCAD2014X64.arx</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Command\Command.cpp" />
+    <ClCompile Include="Command\CommandWindowDetail.cpp" />
+    <ClCompile Include="Command\CommandWindowTable.cpp" />
+    <ClCompile Include="Common\AcessDatabase.cpp" />
+    <ClCompile Include="Common\ComFun_ACad.cpp" />
+    <ClCompile Include="Common\ComFun_ACAD_Common.cpp" />
+    <ClCompile Include="Common\ComFun_ACAD_Geometry.cpp" />
+    <ClCompile Include="Common\ComFun_Convert.cpp" />
+    <ClCompile Include="Common\ComFun_DynamicBlock.cpp" />
+    <ClCompile Include="Common\ComFun_Interactive.cpp" />
+    <ClCompile Include="Common\ComFun_Layer.cpp" />
+    <ClCompile Include="Common\ComFun_Math.cpp" />
+    <ClCompile Include="Common\ComFun_Str.cpp" />
+    <ClCompile Include="Common\ComFun_String.cpp" />
+    <ClCompile Include="Common\ComFun_Sunac.cpp" />
+    <ClCompile Include="Common\TYFormula.cpp" />
+    <ClCompile Include="Common\TYRect.cpp" />
+    <ClCompile Include="GlobalSetting.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Object\AirCondition\AttrAirCon.cpp" />
+    <ClCompile Include="Object\AirCondition\RCAirCondition.cpp" />
+    <ClCompile Include="Object\Bathroom\BathroomAutoName.cpp" />
+    <ClCompile Include="Object\KitchenBathroomProp.cpp" />
+    <ClCompile Include="Object\AttrObject.cpp" />
+    <ClCompile Include="Object\Bathroom\AttrBathroom.cpp" />
+    <ClCompile Include="Object\Bathroom\BathroomGen.cpp" />
+    <ClCompile Include="Object\Bathroom\RCBathroom.cpp" />
+    <ClCompile Include="Object\Kitchen\AttrKitchen.cpp" />
+    <ClCompile Include="Object\Kitchen\KitchenAutoName.cpp" />
+    <ClCompile Include="Object\Kitchen\KitchenGen.cpp" />
+    <ClCompile Include="Object\Kitchen\RCKitchen.cpp" />
+    <ClCompile Include="Object\PrototypeInfo.cpp" />
+    <ClCompile Include="Object\Railing\AttrRailing.cpp" />
+    <ClCompile Include="Object\Railing\RCRailing.cpp" />
+    <ClCompile Include="Object\Railing\RCRailingBoli.cpp" />
+    <ClCompile Include="Object\Railing\RCRailingTieyi.cpp" />
+    <ClCompile Include="Object\RCBlock.cpp" />
+    <ClCompile Include="Object\RCDynamicBlock.cpp" />
+    <ClCompile Include="Object\RCObject.cpp" />
+    <ClCompile Include="Object\RCStandBlock.cpp" />
+    <ClCompile Include="Object\RCStdFacade.cpp" />
+    <ClCompile Include="Object\RCStdFill.cpp" />
+    <ClCompile Include="Object\RCWaterProof.cpp" />
+    <ClCompile Include="Object\RCXianJiao.cpp" />
+    <ClCompile Include="Object\WindowDoor\AttrWindow.cpp" />
+    <ClCompile Include="Object\WindowDoor\RCWindow.cpp" />
+    <ClCompile Include="Object\WindowDoor\WindowAutoName.cpp" />
+    <ClCompile Include="Object\WindowStatistic\AluminumSeries.cpp" />
+    <ClCompile Include="Object\WindowStatistic\AuxiliaryFrameSeries.cpp" />
+    <ClCompile Include="Object\WindowStatistic\DeductedSize.cpp" />
+    <ClCompile Include="Object\WindowStatistic\GlassSeries.cpp" />
+    <ClCompile Include="Object\WindowStatistic\WindowFormula.cpp" />
+    <ClCompile Include="Object\WindowStatistic\WindowMaterialUsage.cpp" />
+    <ClCompile Include="Object\WindowStatistic\WindowStatictic.cpp" />
+    <ClCompile Include="ProjectorFileMrg\ProjectFile.cpp" />
+    <ClCompile Include="ProjectorFileMrg\ProjectFileMrg.cpp" />
+    <ClCompile Include="ProjectorFileMrg\ProjectInfo.cpp" />
+    <ClCompile Include="StdAfx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Tool\DoubleClickBlockReference.cpp" />
+    <ClCompile Include="Tool\Excel\CExcel.cpp" />
+    <ClCompile Include="Tool\Excel\Excel.cpp" />
+    <ClCompile Include="Tool\MarkupXml\Markup.cpp" />
+    <ClCompile Include="Tool\Regedit.cpp" />
+    <ClCompile Include="UI\AirconditionerDlg.cpp" />
+    <ClCompile Include="UI\BathroomDlg.cpp" />
+    <ClCompile Include="UI\ComFun_MFC.cpp" />
+    <ClCompile Include="UI\DlgLeftBar.cpp" />
+    <ClCompile Include="UI\DlgLogin.cpp" />
+    <ClCompile Include="UI\FacadeDlg.cpp" />
+    <ClCompile Include="UI\FillingDlg.cpp" />
+    <ClCompile Include="UI\GridCellForPreview.cpp" />
+    <ClCompile Include="UI\GridCellWithPicture.cpp" />
+    <ClCompile Include="UI\GridCtrlEx.cpp" />
+    <ClCompile Include="UI\GridCtrlWithPreview.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\GridCell.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\GridCellBase.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\GridCtrl.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\GridCtrlUtil.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\GridDropTarget.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\InPlaceEdit.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellButton.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellCheck.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellCombo.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellDateTime.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridCellNumeric.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\NewCellTypes\GridURLCell.cpp" />
+    <ClCompile Include="UI\GridCtrl_src\TitleTip.cpp" />
+    <ClCompile Include="UI\GsPreviewCtrl.cpp" />
+    <ClCompile Include="UI\KitchenDlg.cpp" />
+    <ClCompile Include="UI\MoldingsDlg.cpp" />
+    <ClCompile Include="UI\MyPalette.cpp" />
+    <ClCompile Include="UI\MyPaletteSet.cpp" />
+    <ClCompile Include="UI\NewDirDlg.cpp" />
+    <ClCompile Include="UI\PreviewWithDetail.cpp" />
+    <ClCompile Include="UI\ProjectManagementDlg.cpp" />
+    <ClCompile Include="UI\RailingDlg.cpp" />
+    <ClCompile Include="UI\TreeCtrlEx.cpp" />
+    <ClCompile Include="UI\WaterproofDlg.cpp" />
+    <ClCompile Include="UI\WindowAdvanceDlg.cpp" />
+    <ClCompile Include="UI\WindowDlg.cpp" />
+    <ClCompile Include="WebIO\AirConditionLocalData.cpp" />
+    <ClCompile Include="WebIO\AirConditionLocalDataFromDB.cpp" />
+    <ClCompile Include="WebIO\AirconditionWebData.cpp" />
+    <ClCompile Include="WebIO\ConfigDictionary.cpp" />
+    <ClCompile Include="WebIO\cpp_base64\src\Base64Decoder.cpp" />
+    <ClCompile Include="WebIO\cpp_base64\src\Base64Encoder.cpp" />
+    <ClCompile Include="WebIO\cpp_base64\src\cdecode.cpp" />
+    <ClCompile Include="WebIO\cpp_base64\src\cencode.cpp" />
+    <ClCompile Include="WebIO\KitchenBathroomLocalData.cpp" />
+    <ClCompile Include="WebIO\KitchenBathroomWebData.cpp" />
+    <ClCompile Include="WebIO\RailingWebData.cpp" />
+    <ClCompile Include="WebIO\WebProjectFile.cpp" />
+    <ClCompile Include="WebIO\WindowLocalData.cpp" />
+    <ClCompile Include="WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.cpp" />
+    <ClCompile Include="WebIO\SunacCadWeb\soapC.cpp" />
+    <ClCompile Include="WebIO\SunacCadWeb\stdsoap2.cpp" />
+    <ClCompile Include="WebIO\WebIO.cpp" />
+    <ClCompile Include="WebIO\WindowLocalDataFromDB.cpp" />
+    <ClCompile Include="WebIO\WindowWebData.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Command\Command.h" />
+    <ClInclude Include="Command\CommandWindowDetail.h" />
+    <ClInclude Include="Command\CommandWindowTable.h" />
+    <ClInclude Include="Common\AcessDatabase.h" />
+    <ClInclude Include="Common\ComFun_ACad.h" />
+    <ClInclude Include="Common\ComFun_ACAD_Common.h" />
+    <ClInclude Include="Common\ComFun_ACAD_Geometry.h" />
+    <ClInclude Include="Common\ComFun_Convert.h" />
+    <ClInclude Include="Common\ComFun_Def.h" />
+    <ClInclude Include="Common\ComFun_DynamicBlock.h" />
+    <ClInclude Include="Common\ComFun_Interactive.h" />
+    <ClInclude Include="Common\ComFun_Layer.h" />
+    <ClInclude Include="Common\ComFun_Math.h" />
+    <ClInclude Include="Common\ComFun_Str.h" />
+    <ClInclude Include="Common\ComFun_String.h" />
+    <ClInclude Include="Common\ComFun_Sunac.h" />
+    <ClInclude Include="Common\TYFormula.h" />
+    <ClInclude Include="Common\TYRect.h" />
+    <ClInclude Include="GlobalSetting.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="Object\AirCondition\AttrAirCon.h" />
+    <ClInclude Include="Object\AirCondition\RCAirCondition.h" />
+    <ClInclude Include="Object\Bathroom\BathroomAutoName.h" />
+    <ClInclude Include="Object\KitchenBathroomProp.h" />
+    <ClInclude Include="Object\AttrObject.h" />
+    <ClInclude Include="Object\Bathroom\AttrBathroom.h" />
+    <ClInclude Include="Object\Bathroom\BathroomGen.h" />
+    <ClInclude Include="Object\Bathroom\RCBathroom.h" />
+    <ClInclude Include="Object\Kitchen\AttrKitchen.h" />
+    <ClInclude Include="Object\Kitchen\KitchenAutoName.h" />
+    <ClInclude Include="Object\Kitchen\KitchenGen.h" />
+    <ClInclude Include="Object\Kitchen\RCKitchen.h" />
+    <ClInclude Include="Object\PrototypeCommonDef.h" />
+    <ClInclude Include="Object\PrototypeInfo.h" />
+    <ClInclude Include="Object\Railing\AttrRailing.h" />
+    <ClInclude Include="Object\Railing\RCRailing.h" />
+    <ClInclude Include="Object\Railing\RCRailingBoli.h" />
+    <ClInclude Include="Object\Railing\RCRailingTieyi.h" />
+    <ClInclude Include="Object\RCBlock.h" />
+    <ClInclude Include="Object\RCDynamicBlock.h" />
+    <ClInclude Include="Object\RCObject.h" />
+    <ClInclude Include="Object\RCStandBlock.h" />
+    <ClInclude Include="Object\RCStdFacade.h" />
+    <ClInclude Include="Object\RCStdFill.h" />
+    <ClInclude Include="Object\RCWaterProof.h" />
+    <ClInclude Include="Object\RCXianJiao.h" />
+    <ClInclude Include="Object\WindowDoor\AttrWindow.h" />
+    <ClInclude Include="Object\WindowDoor\RCWindow.h" />
+    <ClInclude Include="Object\WindowDoor\WindowAutoName.h" />
+    <ClInclude Include="Object\WindowStatistic\AluminumSeries.h" />
+    <ClInclude Include="Object\WindowStatistic\AuxiliaryFrameSeries.h" />
+    <ClInclude Include="Object\WindowStatistic\DeductedSize.h" />
+    <ClInclude Include="Object\WindowStatistic\GlassSeries.h" />
+    <ClInclude Include="Object\WindowStatistic\WindowFormula.h" />
+    <ClInclude Include="Object\WindowStatistic\WindowMaterialUsage.h" />
+    <ClInclude Include="Object\WindowStatistic\WindowStatictic.h" />
+    <ClInclude Include="ProjectorFileMrg\ProjectFile.h" />
+    <ClInclude Include="ProjectorFileMrg\ProjectFileMrg.h" />
+    <ClInclude Include="ProjectorFileMrg\ProjectInfo.h" />
+    <ClInclude Include="res\resource.h" />
+    <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="Sunac_def.h" />
+    <ClInclude Include="Tool\DocLock.h" />
+    <ClInclude Include="Tool\DoubleClickBlockReference.h" />
+    <ClInclude Include="Tool\Excel\CApplication.h" />
+    <ClInclude Include="Tool\Excel\CBorder.h" />
+    <ClInclude Include="Tool\Excel\CBorders.h" />
+    <ClInclude Include="Tool\Excel\CExcel.h" />
+    <ClInclude Include="Tool\Excel\CFont0.h" />
+    <ClInclude Include="Tool\Excel\Cnterior.h" />
+    <ClInclude Include="Tool\Excel\CRange.h" />
+    <ClInclude Include="Tool\Excel\CRanges.h" />
+    <ClInclude Include="Tool\Excel\CWorkbook.h" />
+    <ClInclude Include="Tool\Excel\CWorkbooks.h" />
+    <ClInclude Include="Tool\Excel\CWorksheet.h" />
+    <ClInclude Include="Tool\Excel\CWorksheets.h" />
+    <ClInclude Include="Tool\Excel\Excel.h" />
+    <ClInclude Include="Tool\MarkupXml\Markup.h" />
+    <ClInclude Include="Tool\Regedit.h" />
+    <ClInclude Include="Tool\SQLite\sqlite3.h" />
+    <ClInclude Include="Tool\SQLite\sqlite3ext.h" />
+    <ClInclude Include="UI\AirconditionerDlg.h" />
+    <ClInclude Include="UI\BathroomDlg.h" />
+    <ClInclude Include="UI\ComFun_MFC.h" />
+    <ClInclude Include="UI\DlgLeftBar.h" />
+    <ClInclude Include="UI\DlgLogin.h" />
+    <ClInclude Include="UI\FacadeDlg.h" />
+    <ClInclude Include="UI\FillingDlg.h" />
+    <ClInclude Include="UI\GridCellForPreview.h" />
+    <ClInclude Include="UI\GridCellWithPicture.h" />
+    <ClInclude Include="UI\GridCtrlEx.h" />
+    <ClInclude Include="UI\GridCtrlWithPreview.h" />
+    <ClInclude Include="UI\GridCtrl_src\CellRange.h" />
+    <ClInclude Include="UI\GridCtrl_src\GridCell.h" />
+    <ClInclude Include="UI\GridCtrl_src\GridCellBase.h" />
+    <ClInclude Include="UI\GridCtrl_src\GridCtrl.h" />
+    <ClInclude Include="UI\GridCtrl_src\GridCtrlUtil.h" />
+    <ClInclude Include="UI\GridCtrl_src\GridDropTarget.h" />
+    <ClInclude Include="UI\GridCtrl_src\InPlaceEdit.h" />
+    <ClInclude Include="UI\GridCtrl_src\MemDC.h" />
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellButton.h" />
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellCheck.h" />
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellCombo.h" />
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellDateTime.h" />
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridCellNumeric.h" />
+    <ClInclude Include="UI\GridCtrl_src\NewCellTypes\GridURLCell.h" />
+    <ClInclude Include="UI\GridCtrl_src\TitleTip.h" />
+    <ClInclude Include="UI\GsPreviewCtrl.h" />
+    <ClInclude Include="UI\KitchenDlg.h" />
+    <ClInclude Include="UI\Menu\CAcadApplication.h" />
+    <ClInclude Include="UI\Menu\CAcadMenuBar.h" />
+    <ClInclude Include="UI\Menu\CAcadMenuGroup.h" />
+    <ClInclude Include="UI\Menu\CAcadMenuGroups.h" />
+    <ClInclude Include="UI\Menu\CAcadPopupMenu.h" />
+    <ClInclude Include="UI\Menu\CAcadPopupMenuItem.h" />
+    <ClInclude Include="UI\Menu\CAcadPopupMenus.h" />
+    <ClInclude Include="UI\Menu\Menu_Def.h" />
+    <ClInclude Include="UI\MoldingsDlg.h" />
+    <ClInclude Include="UI\MyPalette.h" />
+    <ClInclude Include="UI\MyPaletteSet.h" />
+    <ClInclude Include="UI\NewDirDlg.h" />
+    <ClInclude Include="UI\PreviewWithDetail.h" />
+    <ClInclude Include="UI\ProjectManagementDlg.h" />
+    <ClInclude Include="UI\RailingDlg.h" />
+    <ClInclude Include="UI\TreeCtrlEx.h" />
+    <ClInclude Include="UI\WaterproofDlg.h" />
+    <ClInclude Include="UI\WindowAdvanceDlg.h" />
+    <ClInclude Include="UI\WindowDlg.h" />
+    <ClInclude Include="WebIO\AirConditionLocalData.h" />
+    <ClInclude Include="WebIO\AirConditionLocalDataFromDB.h" />
+    <ClInclude Include="WebIO\AirconditionWebData.h" />
+    <ClInclude Include="WebIO\ConfigDictionary.h" />
+    <ClInclude Include="WebIO\cpp_base64\src\Base64Decoder.h" />
+    <ClInclude Include="WebIO\cpp_base64\src\Base64Encoder.h" />
+    <ClInclude Include="WebIO\cpp_base64\src\cdecode.h" />
+    <ClInclude Include="WebIO\cpp_base64\src\cencode.h" />
+    <ClInclude Include="WebIO\KitchenBathroomLocalData.h" />
+    <ClInclude Include="WebIO\KitchenBathroomWebData.h" />
+    <ClInclude Include="WebIO\RailingWebData.h" />
+    <ClInclude Include="WebIO\WebCommon.h" />
+    <ClInclude Include="WebIO\WebProjectFile.h" />
+    <ClInclude Include="WebIO\WindowLocalData.h" />
+    <ClInclude Include="WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.h" />
+    <ClInclude Include="WebIO\SunacCadWeb\soapH.h" />
+    <ClInclude Include="WebIO\SunacCadWeb\soapStub.h" />
+    <ClInclude Include="WebIO\SunacCadWeb\stdsoap2.h" />
+    <ClInclude Include="WebIO\WebIO.h" />
+    <ClInclude Include="WebIO\WindowLocalDataFromDB.h" />
+    <ClInclude Include="WebIO\WindowWebData.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="res\SunacCoordination.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\Document.ico" />
+    <None Include="res\画图Folder.ico" />
+    <None Include="WebIO\SunacCadWeb\ArgumentSettingServiceSoap.nsmap" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

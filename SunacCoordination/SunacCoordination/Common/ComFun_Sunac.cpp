@@ -225,7 +225,7 @@ void DQ_SelectMany(vAcDbObjectId &ids)
 	int rt = acedSSGet(NULL, NULL, NULL, NULL, ssname); // 提示用户选择对象
 	if (rt == RTNORM)
 	{
-		long length;
+		Adesk::Int32 length;
 		acedSSLength(ssname, &length);
 		for (int i=0;i<length;i++)
 		{
@@ -885,6 +885,17 @@ char* TY_GetAluminumDatabasePath()
 	return DatabasePath;
 }
 
+char* TY_GetLocalDataDatabasePath()
+{
+	CString TempPath = MD2010_GetAppPath() + L"\\Support\\Sunac2019\\Data\\LocalData.db";
+	int n = TempPath.GetLength();
+	int len = WideCharToMultiByte(CP_ACP, 0, TempPath, n, NULL, 0, NULL, NULL);
+	char * DatabasePath = new char[len + 1];
+	WideCharToMultiByte(CP_ACP, 0, TempPath, n, DatabasePath, len, NULL, NULL);
+	DatabasePath [len] = '\0';
+	return DatabasePath;
+}
+
 /************************************************************************
 说明：
     在文件夹中查找文件（仅在指定文件夹查找，不递归）
@@ -1151,7 +1162,13 @@ AcDbObjectId CopyBlockDefFromDwg(const TCHAR* fileName, const TCHAR* blkDefName)
 
 	// 使用_SH_DENYNO参数打开图形(只读打开)，允许其它用户读写该文件
 	AcDbDatabase* pSourceDwg = new AcDbDatabase(false);
+#if (defined ARX_2018) || (defined ARX_2017)|| (defined ARX_2019)
+	Acad::ErrorStatus es = pSourceDwg->readDwgFile(fileName, AcDbDatabase::kForReadAndAllShare);
+#else
 	Acad::ErrorStatus es = pSourceDwg->readDwgFile(fileName, _SH_DENYNO);
+#endif //  ARX_2018
+
+	
 	if (es != Acad::eOk)
 	{
 		delete pSourceDwg;

@@ -82,14 +82,19 @@ public:
     {
         return AcDbObjectId::kNull;
     }
-    virtual void            setGsNode       (AcGsNode * gsnode)
-    {
-        m_pNode = gsnode;
-    }
-    virtual AcGsNode*       gsNode          (void) const
-    {
-        return m_pNode;
-    }
+
+#if (!defined ARX_2016) && (!defined ARX_2015)
+	virtual void            setGsNode(AcGsNode * gsnode)
+	{
+		m_pNode = gsnode;
+	}
+	virtual AcGsNode*       gsNode(void) const
+	{
+		return m_pNode;
+	}
+#endif
+
+   
 
 #if _MSC_VER >= 1500
 	virtual Adesk::UInt32   subSetAttributes   (AcGiDrawableTraits * traits){ return 0; };
@@ -171,7 +176,14 @@ public:
     HCURSOR mhCrossCursor;
     HCURSOR mhOrbitCursor;
     AcGsManager         *mpManager;
-    AcGsClassFactory    *mpFactory;
+
+#if (defined ARX_2018) || (defined ARX_2019) || (defined ARX_2017) || (defined ARX_2016) || (defined ARX_2015)
+	AcGsGraphicsKernel    *mpFactory;
+#else
+	AcGsClassFactory    *mpFactory;
+#endif // ARX_2018
+
+   
     AcGsDevice          *mpDevice;
     AcGsView            *mpView;
     AcGsModel           *mpModel;
