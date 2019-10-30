@@ -52,6 +52,19 @@ Acad::ErrorStatus AttrAirCon::dwgInFields(AcDbDwgFiler* filer)
 	if ((es = AttrObject::dwgInFields(filer)) != Acad::eOk) {
 		return es;
 	}
+
+	AcString tempStr;
+	filer->readItem(&m_power);
+	filer->readString(tempStr);
+	m_pipePos = tempStr.kACharPtr();
+	filer->readItem(&m_hasRainPipe);
+	filer->readString(tempStr);
+	m_rainPipePos = tempStr.kACharPtr();
+
+	filer->readItem(&m_airW);
+	filer->readItem(&m_airH);
+	filer->readItem(&m_airD);
+
 	return Acad::eOk;
 }
 
@@ -64,6 +77,15 @@ Acad::ErrorStatus AttrAirCon::dwgOutFields(AcDbDwgFiler* filer) const
 	if ((es = AttrObject::dwgOutFields(filer)) != Acad::eOk) {
 		return es;
 	}
+
+	filer->writeItem(m_power);
+	filer->writeItem(m_pipePos);
+	filer->writeItem(m_hasRainPipe);
+	filer->writeItem(m_rainPipePos);
+
+	filer->writeItem(m_airW);
+	filer->writeItem(m_airH);
+	filer->writeItem(m_airD);
 
 	return filer->filerStatus();
 }
