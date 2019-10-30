@@ -403,7 +403,8 @@ void CBathroomDlg::OnBnClickedButtonInsert()
 	m_pBathroomGen->GenBathroom(origin, m_angle);
 	CBathroomAutoName::GetInstance()->AddBathroomType(*m_pBathroomGen->GetBathroomAtt());
 
-	OnOK();
+	//OnOK();
+	ShowWindow(TRUE);
 }
 
 void CBathroomDlg::OnBnClickedButtonRange()
