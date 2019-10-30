@@ -128,7 +128,7 @@
     <Link>
       <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>.\props\AcRxDefault.def</ModuleDefinitionFile>
-      <AdditionalDependencies>acdbmgd.lib;Tool\SQLite\x86\sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>acdbmgd.lib;Tool\SQLite\x86\sqlite3X86.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)SunacCAD2014X86.arx</OutputFile>
     </Link>
   </ItemDefinitionGroup>
@@ -144,7 +144,7 @@
       <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-x64;.\Tool\SQLite;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>.\props\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
-      <AdditionalDependencies>acdbmgd.lib;Tool\SQLite\sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>acdbmgd.lib;Tool\SQLite\sqlite3X64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)SunacCAD2014X64.arx</OutputFile>
     </Link>
   </ItemDefinitionGroup>
