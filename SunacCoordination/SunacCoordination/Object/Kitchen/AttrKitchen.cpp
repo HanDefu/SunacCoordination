@@ -33,7 +33,7 @@ AttrKitchen::AttrKitchen()
 
 	//Web端使用
 	m_minWidth = 0;//最小开间
-	m_maxwidth = 0;//最大开间
+	m_maxWidth = 0;//最大开间
 	m_maxHeight = 0;//最大进深
 	m_minHeight = 0;//最小进深
 }
@@ -53,37 +53,48 @@ Acad::ErrorStatus AttrKitchen::dwgInFields(AcDbDwgFiler* filer)
 	{
 		return es;
 	}
-/*
 
+	AcString tempStr;
+	filer->readString(tempStr);
+	m_kitchenType = tempStr.kACharPtr();
+	filer->readItem((Adesk::UInt32*)&m_windowDoorPos);
 	filer->readItem(&m_hasPaiQiDao);
-	filer->readItem(&m_isGuoBiao);
-	filer->readItem((int*)&m_floorRange);
 
+	filer->readItem((Adesk::UInt32*)&m_prop.m_doorPos);
+	filer->readItem((Adesk::UInt32*)&m_prop.m_windowPos);
+	Adesk::UInt32 size;
+	filer->readItem(&size);
+	m_prop.m_sizeList.resize(size);
+	for (UINT i = 0; i < m_prop.m_sizeList.size(); i++)
+	{
+		filer->readItem(&m_prop.m_sizeList[i].xLen);
+		filer->readItem(&m_prop.m_sizeList[i].yLen);
+	}
+
+	filer->readItem(&m_width);
+	filer->readItem(&m_height);
+
+	filer->readString(tempStr);
+	m_shuiPenType = tempStr.kACharPtr();
+	filer->readString(tempStr);
+	m_bingXiangType = tempStr.kACharPtr();
+	filer->readString(tempStr);
+	m_zaoTaiType = tempStr.kACharPtr();
+
+	filer->readItem(&m_isGuoBiao);
+	filer->readItem((Adesk::UInt32*)&m_floorRange);
 	filer->readItem(&m_airVentW);
 	filer->readItem(&m_airVentH);
 	filer->readItem(&m_airVentOffsetX);
 	filer->readItem(&m_airVentOffsetY);
 
+	filer->readItem(&m_angle);
 	filer->readItem(&m_isMirror);
 
-	ACHAR *tempStr = new ACHAR[SUNAC_COMMON_STR_LEN];
-
-	filer->readItem(&tempStr);
-	m_kitchenType = CString(tempStr);
-	filer->readItem(&tempStr);
-	m_windowDoorPos = CString(tempStr);
-	filer->readItem(&tempStr);
-	m_shuiPenType = CString(tempStr);
-	filer->readItem(&tempStr);
-	m_bingXiangType = CString(tempStr);
-	filer->readItem(&tempStr);
-	m_zaoTaiType = CString(tempStr);
-
-	filer->readItem(&m_width);
-	filer->readItem(&m_height);
-
-	delete [] tempStr;
-*/
+	filer->readItem(&m_minWidth);
+	filer->readItem(&m_maxWidth);
+	filer->readItem(&m_minHeight);
+	filer->readItem(&m_maxHeight);
 
 	return filer->filerStatus();
 }
@@ -97,28 +108,41 @@ Acad::ErrorStatus AttrKitchen::dwgOutFields(AcDbDwgFiler* filer) const
 	if ((es = AttrObject::dwgOutFields(filer)) != Acad::eOk) {
 		return es;
 	}
-/*
 
+	filer->writeItem(m_kitchenType);
+	filer->writeItem((Adesk::UInt32)m_windowDoorPos);
 	filer->writeItem(m_hasPaiQiDao);
-	filer->writeItem(m_isGuoBiao);
-	filer->writeItem(m_floorRange);
 
+	filer->writeItem((Adesk::UInt32)m_prop.m_doorPos);
+	filer->writeItem((Adesk::UInt32)m_prop.m_windowPos);
+	filer->writeItem((Adesk::UInt32)m_prop.m_sizeList.size());
+	for (UINT i = 0; i < m_prop.m_sizeList.size(); i++)
+	{
+		filer->writeItem(m_prop.m_sizeList[i].xLen);
+		filer->writeItem(m_prop.m_sizeList[i].yLen);
+	}
+
+	filer->writeItem(m_width);
+	filer->writeItem(m_height);
+
+	filer->writeItem(m_shuiPenType);
+	filer->writeItem(m_bingXiangType);
+	filer->writeItem(m_zaoTaiType);
+
+	filer->writeItem(m_isGuoBiao);
+	filer->writeItem((Adesk::UInt32)m_floorRange);
 	filer->writeItem(m_airVentW);
 	filer->writeItem(m_airVentH);
 	filer->writeItem(m_airVentOffsetX);
 	filer->writeItem(m_airVentOffsetY);
 
+	filer->writeItem(m_angle);
 	filer->writeItem(m_isMirror);
 
-	filer->writeItem(m_kitchenType);
-	filer->writeItem(m_windowDoorPos);
-	filer->writeItem(m_shuiPenType);
-	filer->writeItem(m_bingXiangType);
-	filer->writeItem(m_zaoTaiType);
-
-	filer->writeItem(m_width);
-	filer->writeItem(m_height);
-*/
+	filer->writeItem(m_minWidth);
+	filer->writeItem(m_maxWidth);
+	filer->writeItem(m_minHeight);
+	filer->writeItem(m_maxHeight);
 
 	return filer->filerStatus();
 }
