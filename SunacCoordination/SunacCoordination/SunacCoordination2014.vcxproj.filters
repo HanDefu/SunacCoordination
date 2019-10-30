@@ -364,6 +364,9 @@
     <ClCompile Include="WebIO\AirConditionLocalDataFromDB.cpp">
       <Filter>WebIO</Filter>
     </ClCompile>
+    <ClCompile Include="Object\Railing\RailingStatistic.cpp">
+      <Filter>Object\Railing</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -819,6 +822,9 @@
     </ClInclude>
     <ClInclude Include="WebIO\AirConditionLocalDataFromDB.h">
       <Filter>WebIO</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Railing\RailingStatistic.h">
+      <Filter>Object\Railing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

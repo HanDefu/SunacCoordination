@@ -33,6 +33,7 @@
 #include "Command.h"
 #include "../Common/ComFun_Math.h"
 #include "../Object/WindowStatistic/WindowStatictic.h"
+#include "../Object/Railing/RailingStatistic.h"
 
 
 void SendCommandToCAD(CString cmd) //此函数尚未调通
@@ -154,6 +155,14 @@ void CMD_SunacRailing()
 		g_railingDlg->Create(IDD_DIALOG_RAILING);
 	}
 	g_railingDlg->ShowWindow(SW_SHOW);
+}
+
+void CMD_SunacRailingStatistic()
+{
+	CRailingStatistic instance;
+	instance.SelectRailings();
+	AcGePoint3d insertPoint = TY_GetPoint();
+	instance.InsertTableToCAD(insertPoint);
 }
 
 //线脚
