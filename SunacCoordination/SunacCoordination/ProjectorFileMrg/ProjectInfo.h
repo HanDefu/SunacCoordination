@@ -30,12 +30,8 @@ public:
 	CString GetDirString(CString sName, CProjectDir* p_parentDir);
 
 	static CString GenerateGuid();
-	static bool DownloadFile(const CString& strFileURLInServer, const CString & strFileLocalFullPath);
-	static bool DownloadFile(CProjectFile p_prjFile);
-	static bool UploadFile(CString p_sFilePath, CString p_saveName);
 
 	//以下目录参数需输入完整的目录
-
 	bool AddFile(CString p_sFilePath, CString  p_sParentFolderPath); //p_sParentDirPath是指上传到哪个目录下
 	//bool AddFile(CString p_sFilePath, CProjectDir* p_pParentDir); //p_pParentDir是指上传到哪个目录下
 	bool DeleteFile(CString p_sFileName, CString  p_sParentFolderPath);

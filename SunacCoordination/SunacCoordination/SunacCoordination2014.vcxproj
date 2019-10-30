@@ -203,6 +203,7 @@
     <ClCompile Include="Object\WindowStatistic\WindowFormula.cpp" />
     <ClCompile Include="Object\WindowStatistic\WindowMaterialUsage.cpp" />
     <ClCompile Include="Object\WindowStatistic\WindowStatictic.cpp" />
+    <ClCompile Include="ProjectorFileMrg\FileUploadDownload.cpp" />
     <ClCompile Include="ProjectorFileMrg\ProjectFile.cpp" />
     <ClCompile Include="ProjectorFileMrg\ProjectFileMrg.cpp" />
     <ClCompile Include="ProjectorFileMrg\ProjectInfo.cpp" />
@@ -331,6 +332,7 @@
     <ClInclude Include="Object\WindowStatistic\WindowFormula.h" />
     <ClInclude Include="Object\WindowStatistic\WindowMaterialUsage.h" />
     <ClInclude Include="Object\WindowStatistic\WindowStatictic.h" />
+    <ClInclude Include="ProjectorFileMrg\FileUploadDownload.h" />
     <ClInclude Include="ProjectorFileMrg\ProjectFile.h" />
     <ClInclude Include="ProjectorFileMrg\ProjectFileMrg.h" />
     <ClInclude Include="ProjectorFileMrg\ProjectInfo.h" />

@@ -154,6 +154,7 @@ typedef std::vector<RCPairKeyStrValue> vRCPairKeyStrValue;
 #define nullptr NULL
 #endif // ARX_2010
 
+#include "Sunac_def.h"
 
 //{{AFX_INSERT_LOCATION}}
 // Microsoft Developer Studio will insert additional declarations immediately before the previous line.

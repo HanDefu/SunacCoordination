@@ -8,6 +8,7 @@
 #include "../UI/GridCtrl_src/GridCtrlUtil.h"
 #include "..\ProjectorFileMrg\ProjectFileMrg.h"
 #include "..\ProjectorFileMrg\ProjectInfo.h"
+#include "..\ProjectorFileMrg\FileUploadDownload.h"
 #include "../Common/ComFun_String.h"
 
 
@@ -279,7 +280,7 @@ void CProjectManagementDlg::OnGridClick(NMHDR *pNMHDR, LRESULT *pResult)
 
 	if (m_nClkCol == 7)//обть
 	{
-		m_pPrjData->DownloadFile(sSelectedFileName,sSelectedFileParentPath);
+		CFileUpDownLoad::DownloadFile(sSelectedFileName, sSelectedFileParentPath);
 		FillPjtGridCtrl(m_selectedDir);
 	}
 
@@ -310,7 +311,7 @@ void CProjectManagementDlg::OnBnClickedButtonDownloadall()
 		{
 			CString sCheckedFileName = m_PjtManagementGridCtrl.GetItemText(i, 1);
 			CString sCheckedParentPath = m_pPrjData->GetDirString(L"", m_selectedDir);
-			m_pPrjData->DownloadFile(sCheckedFileName, sCheckedParentPath);
+			CFileUpDownLoad::DownloadFile(sCheckedFileName, sCheckedParentPath);
 		}
 	}
 }
