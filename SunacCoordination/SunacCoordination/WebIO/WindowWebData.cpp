@@ -10,6 +10,11 @@
 #include "WebIO.h"
 
 
+CWindowWebData* CWindowWebData::Instance()
+{
+	static CWindowWebData instance;
+	return &instance;
+}
 CWindowWebData::CWindowWebData()
 {
 

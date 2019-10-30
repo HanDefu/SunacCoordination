@@ -22,8 +22,6 @@ CAirConditionLocalDataFromDB::~CAirConditionLocalDataFromDB(void)
 {
 }
 
-vector<AttrAirCon> vAttrAirConData;
-
 int CAirConditionLocalDataFromDB::OutputAirConData(void *NotUsed, int nCol, char **value, char **ColName)
 {
 	AttrAirCon TempData;
@@ -70,42 +68,46 @@ int CAirConditionLocalDataFromDB::OutputAirConData(void *NotUsed, int nCol, char
 			TempData.m_airD = atoi(value[i]);
 		}
 	}
-	vAttrAirConData.push_back(TempData);
+
+	Instance()->m_allAirconditions.push_back(TempData);
 	return 0;
 }
 
 void CAirConditionLocalDataFromDB::LoadDataFromDataBase()
 {
-	m_pDB =NULL;
-	const char * path = TY_GetLocalDataDatabasePath();
-	int nRes = sqlite3_open(path, &m_pDB);
+	m_allAirconditions.clear();
 
+	sqlite3* pDB = NULL;
+	const char * path = TY_GetLocalDataDatabasePath();
+	int nRes = sqlite3_open(path, &pDB);
 	if (nRes != SQLITE_OK)
 	{
 		AfxMessageBox(L"Open database fail");
 	}
+
 	char* cErrMsg;
 	CString sqlString;
 	sqlString.Format(L"select * from `AirConLocalData`;");
 	char* sql;
 	ConvertStringToUTF8(sqlString, sql);
-	int res = sqlite3_exec(m_pDB, sql, OutputAirConData, 0 , &cErrMsg);  
 
+	int res = sqlite3_exec(pDB, sql, OutputAirConData, 0 , &cErrMsg);  
 	if (res != SQLITE_OK)
 	{
 		AfxMessageBox(L"select fail");
 	}
-	sqlite3_close(m_pDB);
+
+	sqlite3_close(pDB);
 }
 
 
-bool CAirConditionLocalDataFromDB::GetAirConById(CString p_sId, AttrAirCon& value)const   //通过原型编号从vAttrAirConData中获取空调
+bool CAirConditionLocalDataFromDB::GetAirConById(CString p_sId, AttrAirCon& value)const   //通过原型编号从m_allAirconditions中获取空调
 {
-	for (UINT i = 0; i < vAttrAirConData.size(); i++)
+	for (UINT i = 0; i < m_allAirconditions.size(); i++)
 	{
-		if (vAttrAirConData[i].m_prototypeCode == p_sId)
+		if (m_allAirconditions[i].m_prototypeCode == p_sId)
 		{
-			value = vAttrAirConData[i];
+			value = m_allAirconditions[i];
 			return true;
 		}
 	}
@@ -113,13 +115,13 @@ bool CAirConditionLocalDataFromDB::GetAirConById(CString p_sId, AttrAirCon& valu
 	return false;
 }
 
-bool CAirConditionLocalDataFromDB::GetAirConByFileName(CString p_sFileName, AttrAirCon&value)  const //通过文件名从vAttrAirConData中获取空调
+bool CAirConditionLocalDataFromDB::GetAirConByFileName(CString p_sFileName, AttrAirCon&value)  const //通过文件名从m_allAirconditions中获取空调
 {
-	for (UINT i = 0; i < vAttrAirConData.size(); i++)
+	for (UINT i = 0; i < m_allAirconditions.size(); i++)
 	{
-		if (vAttrAirConData[i].GetFileName() == p_sFileName)
+		if (m_allAirconditions[i].GetFileName() == p_sFileName)
 		{
-			value = vAttrAirConData[i];
+			value = m_allAirconditions[i];
 			return true;
 		}
 	}
@@ -128,7 +130,7 @@ bool CAirConditionLocalDataFromDB::GetAirConByFileName(CString p_sFileName, Attr
 
 vector<AttrAirCon> CAirConditionLocalDataFromDB::GetAllAirCons() const  //获取所有空调
 {
-	return vAttrAirConData;
+	return m_allAirconditions;
 }
 
 //获取满足筛选条件的空调
@@ -136,29 +138,28 @@ std::vector<AttrAirCon >  CAirConditionLocalDataFromDB::GetAirCons(double p_airC
 {
 	std::vector<AttrAirCon> data;
 
-	for (UINT i =0; i < vAttrAirConData.size(); i++)
+	for (UINT i =0; i < m_allAirconditions.size(); i++)
 	{
-		if (p_airConHorseNumber != vAttrAirConData[i].m_power)
+		if (p_airConHorseNumber != m_allAirconditions[i].m_power)
 		{
 			continue;
 		}
 
-		if (p_airConPipePos != vAttrAirConData[i].m_pipePos)
+		if (p_airConPipePos != m_allAirconditions[i].m_pipePos)
 		{
 			continue;
 		}
 
 		if (p_airConRainRiser != L"否")
 		{
-			if (p_airConRainRiserPos !=  vAttrAirConData[i].m_rainPipePos)
+			if (p_airConRainRiserPos !=  m_allAirconditions[i].m_rainPipePos)
 			{
 				continue;
 			}
 		}
 
-		data.push_back(vAttrAirConData[i]);
+		data.push_back(m_allAirconditions[i]);
 	}
 
 	return data;
-
 }

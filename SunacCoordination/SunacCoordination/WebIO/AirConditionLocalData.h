@@ -8,8 +8,9 @@ using namespace std;
 
 class CAirConditionLocalData
 {
-public:
 	CAirConditionLocalData();
+public:
+	static CAirConditionLocalData* Instance();
 	~CAirConditionLocalData();
 
 	bool GetAirConById(CString p_sId,AttrAirCon& value)const;  //通过原型编号从m_allAirconditions中获取空调

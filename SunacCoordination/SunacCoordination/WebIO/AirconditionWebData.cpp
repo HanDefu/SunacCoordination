@@ -8,6 +8,12 @@
 #include "WebIO.h"
 #include <string>
 
+
+CAirConditionWebData* CAirConditionWebData::Instance()
+{
+	static CAirConditionWebData instance;
+	return &instance;
+}
 std::vector<AttrAirCon> CAirConditionWebData::GetAirCons(double piShu, CString weiZhi, bool hasYuShuiGuan, CString yuShuiGuanWeizhi)
 {
 	CString AirconditionerIsRainpipe_;

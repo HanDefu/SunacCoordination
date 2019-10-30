@@ -7,10 +7,12 @@
 #include "../Object/WindowDoor/AttrWindow.h"
 #include "ConfigDictionary.h"
 #include "WindowLocalData.h"
-#include "AirConditionLocalData.h"
-#include "KitchenBathroomLocalData.h"
 #include "WindowWebData.h"
+#include "WindowLocalDataFromDB.h"
+#include "AirConditionLocalData.h"
+#include "AirConditionLocalDataFromDB.h"
 #include "AirconditionWebData.h"
+#include "KitchenBathroomLocalData.h"
 #include "KitchenBathroomWebData.h"
 #include "RailingWebData.h"
 
@@ -63,24 +65,24 @@ public:
 	//获得从Web端下载文件的文件名（包含扩展名）
 	CString GetFileName(const WCHAR *fullname);
 
-	
-	
 
 protected:
 	CConfigDictionary m_configDic;
 
-	CWindowLocalData m_windowLocalData;
-	CAirConditionLocalData m_airConLocalData;
-	CKitchenBathroomLocalData m_kitchenBathroomLocalData;
+	//CWindowLocalData m_windowLocalData;
+	//CWindowLocalDataFromDB m_windowLocalData;
+	//CWindowWebData m_windowWebData;
 
-	CWindowWebData m_windowWebData;
-	CAirConditionWebData m_airConWebData;
+	//CAirConditionLocalData m_airConLocalData;
+	//CAirConditionLocalDataFromDB m_airConLocalData;
+	//CAirConditionWebData m_airConWebData;
+
+	CKitchenBathroomLocalData m_kitchenBathroomLocalData;
 	CKitchenBathroomWebData m_kitchenBathroomWebData;
+
 	CRailingWebData m_railingWebData;
 
-
-	bool m_bLogin;
-	
+	bool m_bLogin;	
 }; 
 
 #define WEBINST (WebIO::GetInstance())

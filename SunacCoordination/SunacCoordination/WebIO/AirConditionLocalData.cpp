@@ -8,6 +8,11 @@
 
 using namespace Excel;
 
+CAirConditionLocalData* CAirConditionLocalData::Instance()
+{
+	static CAirConditionLocalData instance;
+	return &instance;
+}
 CAirConditionLocalData::CAirConditionLocalData()
 {
 	CString localWindowPath = TY_GetDataFilePath();
