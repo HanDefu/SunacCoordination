@@ -127,6 +127,9 @@ LRESULT DlgLeftBar::OnClickedPopupMenu(WPARAM mID, LPARAM notUsed)
 		break;
 	case ID_COMMAND_KITCHENQUANTITY:
 		break;
+	case ID_COMMAND_RAILINGQUANTITY:
+		SendCommandToCAD(_T("SRAILINGSTATISTICS"));
+		break;
 	case ID_COMMAND_RAILING:
 		SendCommandToCAD(_T("SRAILING"));
 		//CMD_SunacRailing();

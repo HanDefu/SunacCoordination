@@ -80,6 +80,7 @@ END_MESSAGE_MAP()
 BOOL CRailingDlg::OnInitDialog()
 {
 	CAcUiDialog::OnInitDialog();
+	m_preRailing.LoadDefaltSettings();
 
 	m_comboRailingType.AddString(_T("≤ªœﬁ"));
 	m_comboRailingType.AddString(_T("Ã˙“’¿∏∏À"));

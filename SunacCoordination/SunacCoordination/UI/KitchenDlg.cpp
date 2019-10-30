@@ -70,6 +70,13 @@ void CKitchenDlg::PostNcDestroy()
 	g_kitchenDlg = NULL;
 }
 
+BOOL CKitchenDlg::PreTranslateMessage(MSG *pMsg)
+{
+	if ((pMsg->message == WM_KEYDOWN) && (pMsg->wParam == VK_RETURN))
+		return TRUE;
+	return CAcUiDialog::PreTranslateMessage(pMsg);
+}
+
 void CKitchenDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CAcUiDialog::DoDataExchange(pDX);
@@ -178,8 +185,8 @@ void CKitchenDlg::OnBnClickedButtonInsert()
 	m_pKitchGen->GenKitchen(origin, m_angle);
 	CKitchenAutoName::GetInstance()->AddKitchenType(*m_pKitchGen->GetKitchenAtt());
 
-	ShowWindow(TRUE);
-	//OnOK();
+	//ShowWindow(TRUE);
+	OnOK();
 }
 
 

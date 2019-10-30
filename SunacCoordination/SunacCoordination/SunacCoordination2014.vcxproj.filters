@@ -367,6 +367,9 @@
     <ClCompile Include="ProjectorFileMrg\FileUploadDownload.cpp">
       <Filter>ProjectorFileMrg</Filter>
     </ClCompile>
+    <ClCompile Include="Object\Railing\RailingStatistic.cpp">
+      <Filter>Object\Railing</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -825,6 +828,9 @@
     </ClInclude>
     <ClInclude Include="ProjectorFileMrg\FileUploadDownload.h">
       <Filter>ProjectorFileMrg</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Railing\RailingStatistic.h">
+      <Filter>Object\Railing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

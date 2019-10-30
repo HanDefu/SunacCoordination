@@ -50,6 +50,42 @@ Acad::ErrorStatus AttrBathroom::dwgInFields(AcDbDwgFiler* filer)
 		return es;
 	}
 
+	AcString tempStr;
+	filer->readString(tempStr);
+	m_sBathroomType = tempStr.kACharPtr();
+	filer->readItem((Adesk::UInt32*)&m_windowDoorPos);
+	filer->readItem(&m_hasPaiQiDao);
+
+	filer->readItem((Adesk::UInt32*)&m_prop.m_doorPos);
+	filer->readItem((Adesk::UInt32*)&m_prop.m_windowPos);
+	Adesk::UInt32 size;
+	filer->readItem(&size);
+	m_prop.m_sizeList.resize(size);
+	for (UINT i = 0; i < m_prop.m_sizeList.size(); i++)
+	{
+		filer->readItem(&m_prop.m_sizeList[i].xLen);
+		filer->readItem(&m_prop.m_sizeList[i].yLen);
+	}
+
+	filer->readItem(&m_width);
+	filer->readItem(&m_height);
+
+	filer->readString(tempStr);
+	m_taipenWidth = tempStr.kACharPtr();
+	filer->readString(tempStr);
+	m_matongWidth = tempStr.kACharPtr();
+	filer->readItem(&m_guanXiWidth);
+
+	filer->readItem(&m_isGuoBiao);
+	filer->readItem((Adesk::UInt32*)&m_floorRange);
+	filer->readItem(&m_airVentW);
+	filer->readItem(&m_airVentH);
+	filer->readItem(&m_airVentOffsetX);
+	filer->readItem(&m_airVentOffsetY);
+
+	filer->readItem(&m_angle);
+	filer->readItem(&m_isMirror);
+
 	return filer->filerStatus();
 }
 
@@ -62,6 +98,36 @@ Acad::ErrorStatus AttrBathroom::dwgOutFields(AcDbDwgFiler* filer) const
 	if ((es = AttrObject::dwgOutFields(filer)) != Acad::eOk) {
 		return es;
 	}
+
+	filer->writeItem(m_sBathroomType);
+	filer->writeItem((Adesk::UInt32)m_windowDoorPos);
+	filer->writeItem(m_hasPaiQiDao);
+
+	filer->writeItem((Adesk::UInt32)m_prop.m_doorPos);
+	filer->writeItem((Adesk::UInt32)m_prop.m_windowPos);
+	filer->writeItem((Adesk::UInt32)m_prop.m_sizeList.size());
+	for (UINT i = 0; i < m_prop.m_sizeList.size(); i++)
+	{
+		filer->writeItem(m_prop.m_sizeList[i].xLen);
+		filer->writeItem(m_prop.m_sizeList[i].yLen);
+	}
+
+	filer->writeItem(m_width);
+	filer->writeItem(m_height);
+
+	filer->writeItem(m_taipenWidth);
+	filer->writeItem(m_matongWidth);
+	filer->writeItem(m_guanXiWidth);
+
+	filer->writeItem(m_isGuoBiao);
+	filer->writeItem((Adesk::UInt32)m_floorRange);
+	filer->writeItem(m_airVentW);
+	filer->writeItem(m_airVentH);
+	filer->writeItem(m_airVentOffsetX);
+	filer->writeItem(m_airVentOffsetY);
+
+	filer->writeItem(m_angle);
+	filer->writeItem(m_isMirror);
 
 	return filer->filerStatus();
 }

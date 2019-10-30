@@ -123,6 +123,13 @@ void CBathroomDlg::PostNcDestroy()
 	g_bathroomDlg = NULL;
 }
 
+BOOL CBathroomDlg::PreTranslateMessage(MSG *pMsg)
+{
+	if ((pMsg->message == WM_KEYDOWN) && (pMsg->wParam == VK_RETURN))
+		return TRUE;
+	return CAcUiDialog::PreTranslateMessage(pMsg);
+}
+
 bool CBathroomDlg::IsBathroomRectValid(TYRect rect)
 {
 	if (rect.GetWidth() < 1000 || rect.GetHeight() < 1000)

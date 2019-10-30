@@ -144,7 +144,7 @@ vCString CKitchGen::GetBinxiangOptions()// 获取冰箱选型
 
 CString CKitchGen::GetBinxiangDefault()
 {
-	return _T("对开门800");
+	return L"对开门800";
 }
 
 vCString CKitchGen::GetZhaotaiOptions()// 获取灶台选型
@@ -156,7 +156,7 @@ vCString CKitchGen::GetZhaotaiOptions()// 获取灶台选型
 
 CString CKitchGen::GetZhaotaiDefault()
 {
-	return _T("800");
+	return L"800";
 }
 
 void CKitchGen::InitKitchenByDefault()
@@ -267,14 +267,14 @@ vCString CKitchGenKUQ::GetShuipenOptions()// 获取台盆选型
 	vCString options;
 	if (m_attr.m_width < 2900)
 	{
-		options.push_back(_T("单盆600"));
-		options.push_back(_T("单盆800"));
+		options.push_back(L"单盆600");
+		options.push_back(L"单盆800");
 	}
 	else
 	{
-		options.push_back(_T("双盆900"));
-		options.push_back(_T("双盆1000"));
-		options.push_back(_T("双盆1200"));
+		options.push_back(L"双盆900");
+		options.push_back(L"双盆1000");
+		options.push_back(L"双盆1200");
 	}
 	return options;
 }
@@ -285,6 +285,21 @@ CString CKitchGenKUQ::GetShuipenDefault()
 		return L"单盆600";
 	else
 		return L"双盆900";
+}
+
+vCString CKitchGenKUQ::GetBinxiangOptions()
+{
+	vCString options;
+	
+	options.push_back(L"对开门800");
+	options.push_back(L"对开门1000");
+
+	return options;
+}
+
+CString CKitchGenKUQ::GetBinxiangDefault()
+{
+	return L"对开门800";
 }
 
 //kuq 对开 自动设置门的位置
@@ -376,14 +391,14 @@ vCString CKitchGenKUQ_C::GetShuipenOptions()// 获取台盆选型
 	vCString options;
 	if (m_attr.m_height < 2150) //进深小于2150时单盆
 	{
-		options.push_back(_T("单盆600"));
-		options.push_back(_T("单盆800"));
+		options.push_back(L"单盆600");
+		options.push_back(L"单盆800");
 	}
 	else
 	{
-		options.push_back(_T("双盆900"));
-		options.push_back(_T("双盆1000"));
-		options.push_back(_T("双盆1200"));
+		options.push_back(L"双盆900");
+		options.push_back(L"双盆1000");
+		options.push_back(L"双盆1200");
 	}
 	return options;
 }
@@ -394,6 +409,21 @@ CString CKitchGenKUQ_C::GetShuipenDefault()
 		return L"单盆600";
 	else
 		return L"双盆900";
+}
+
+vCString CKitchGenKUQ_C::GetBinxiangOptions()
+{
+	vCString options;
+
+	options.push_back(L"对开门800");
+	options.push_back(L"对开门1000");
+
+	return options;
+}
+
+CString CKitchGenKUQ_C::GetBinxiangDefault()
+{
+	return L"对开门800";
 }
 
 //kuq 垂直开 自动设置门的位置
@@ -474,6 +504,21 @@ CKitchGenKUS::CKitchGenKUS(AttrKitchen* p_att)
 :CKitchGen(p_att)
 {
 
+}
+
+vCString CKitchGenKUS::GetBinxiangOptions()
+{
+	vCString options;
+
+	options.push_back(L"对开门800");
+	options.push_back(L"对开门1000");
+
+	return options;
+}
+
+CString CKitchGenKUS::GetBinxiangDefault()
+{
+	return L"对开门800";
 }
 
 //kus 垂直开 自动设置水盆的位置
@@ -564,12 +609,12 @@ vCString CKitchGenKL::GetBinxiangOptions()// 获取冰箱选项
 	vCString options;
 	if (m_attr.m_height < 3200) //进深小于3200时单开门
 	{
-		options.push_back(_T("单开门700"));
+		options.push_back(L"单开门700");
 	}
 	else
 	{
-		options.push_back(_T("对开门800"));
-		options.push_back(_T("对开门1000"));
+		options.push_back(L"对开门800");
+		options.push_back(L"对开门1000");
 	}
 	return options;
 }
@@ -578,11 +623,11 @@ CString CKitchGenKL::GetBinxiangDefault()
 {
 	if (m_attr.m_height < 3200) //进深小于3200时单开门
 	{
-		return _T("单开门700");
+		return L"单开门700";
 	}
 	else
 	{
-		return _T("对开门800");
+		return L"对开门800";
 	}
 }
 
@@ -651,14 +696,14 @@ vCString CKitchGenKI::GetShuipenOptions()// 获取台盆选型
 	vCString options;
 	if (m_attr.m_height < 3350) //进深小于3350时单盆
 	{
-		options.push_back(_T("单盆600"));
-		options.push_back(_T("单盆800"));
+		options.push_back(L"单盆600");
+		options.push_back(L"单盆800");
 	}
 	else
 	{
-		options.push_back(_T("双盆900"));
-		options.push_back(_T("双盆1000"));
-		options.push_back(_T("双盆1200"));
+		options.push_back(L"双盆900");
+		options.push_back(L"双盆1000");
+		options.push_back(L"双盆1200");
 	}
 	return options;
 }
@@ -674,27 +719,26 @@ CString CKitchGenKI::GetShuipenDefault()
 vCString CKitchGenKI::GetZhaotaiOptions() 
 {
 	vCString options;
-	if (m_attr.m_height < 3200) //进深小于3200时单开门
+	if (m_attr.m_height < 3350)
 	{
-		options.push_back(_T("单开门700"));
+		options.push_back(L"800");
 	}
 	else
 	{
-		options.push_back(_T("对开门800"));
-		options.push_back(_T("对开门1000"));
+		options.push_back(L"900");
 	}
 	return options;
 }
 
 CString CKitchGenKI::GetZhaotaiDefault()
 {
-	if (m_attr.m_height < 3350) //进深小于3350时
+	if (m_attr.m_height < 3350)
 	{
-		return _T("800");
+		return L"800";
 	}
 	else
 	{
-		return _T("900");
+		return L"900";
 	}
 }
 
@@ -759,15 +803,15 @@ CKitchGenSTATIC::CKitchGenSTATIC(AttrKitchen* p_att)
 
 CKitchGen* CKitchMrg::CreateKitchGenByKitchType(AttrKitchen* p_attr)
 {
-	if (p_attr->m_prototypeCode.Left(3) == _T("KUq") && p_attr->m_prototypeCode.Find(L"_c") == -1)
+	if ((p_attr->m_prototypeCode.Left(3) == L"KUq") && (p_attr->m_prototypeCode.Find(L"_c") == -1))
 		return new CKitchGenKUQ(p_attr);
-	else if (p_attr->m_prototypeCode.Left(3) == _T("KUq"))
+	else if (p_attr->m_prototypeCode.Left(3) == L"KUq")
 		return new CKitchGenKUQ_C(p_attr);
-	else if (p_attr->m_prototypeCode.Left(3) == _T("KUs"))
+	else if (p_attr->m_prototypeCode.Left(3) == L"KUs")
 		return new CKitchGenKUS(p_attr);
-	else if (p_attr->m_prototypeCode.Left(2) == _T("KL"))
+	else if (p_attr->m_prototypeCode.Left(2) == L"KL")
 		return new CKitchGenKL(p_attr);
-	else if (p_attr->m_prototypeCode.Left(2) == _T("KI"))
+	else if (p_attr->m_prototypeCode.Left(2) == L"KI")
 		return new CKitchGenKI(p_attr);
 	else
 		return NULL;

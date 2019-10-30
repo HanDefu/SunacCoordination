@@ -128,7 +128,7 @@
     <Link>
       <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>.\props\AcRxDefault.def</ModuleDefinitionFile>
-      <AdditionalDependencies>acdbmgd.lib;Tool\SQLite\x86\sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>acdbmgd.lib;Tool\SQLite\x86\sqlite3X86.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)SunacCAD2014X86.arx</OutputFile>
     </Link>
   </ItemDefinitionGroup>
@@ -144,7 +144,7 @@
       <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\lib-x64;.\Tool\SQLite;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>.\props\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
-      <AdditionalDependencies>acdbmgd.lib;Tool\SQLite\sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>acdbmgd.lib;Tool\SQLite\sqlite3X64.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)SunacCAD2014X64.arx</OutputFile>
     </Link>
   </ItemDefinitionGroup>
@@ -182,6 +182,7 @@
     <ClCompile Include="Object\Kitchen\RCKitchen.cpp" />
     <ClCompile Include="Object\PrototypeInfo.cpp" />
     <ClCompile Include="Object\Railing\AttrRailing.cpp" />
+    <ClCompile Include="Object\Railing\RailingStatistic.cpp" />
     <ClCompile Include="Object\Railing\RCRailing.cpp" />
     <ClCompile Include="Object\Railing\RCRailingBoli.cpp" />
     <ClCompile Include="Object\Railing\RCRailingTieyi.cpp" />
@@ -311,6 +312,7 @@
     <ClInclude Include="Object\PrototypeCommonDef.h" />
     <ClInclude Include="Object\PrototypeInfo.h" />
     <ClInclude Include="Object\Railing\AttrRailing.h" />
+    <ClInclude Include="Object\Railing\RailingStatistic.h" />
     <ClInclude Include="Object\Railing\RCRailing.h" />
     <ClInclude Include="Object\Railing\RCRailingBoli.h" />
     <ClInclude Include="Object\Railing\RCRailingTieyi.h" />

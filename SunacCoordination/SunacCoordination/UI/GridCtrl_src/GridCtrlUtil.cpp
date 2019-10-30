@@ -92,7 +92,7 @@ void CGridCtrlUtil::SetCellComboOptions( CGridCtrl &gridCtrl, int row, int col, 
 void CGridCtrlUtil::SetCellComboOptions( CGridCtrl &gridCtrl, int row, int col, const std::vector<CString> &items )
 {
 	CStringArray ar;
-	for (int i = 0; i < items.size(); i++)
+	for (UINT i = 0; i < items.size(); i++)
 	{
 		ar.Add(items[i]);
 	}

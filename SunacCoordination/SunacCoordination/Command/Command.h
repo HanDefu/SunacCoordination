@@ -19,7 +19,9 @@ void CMD_SunacWindowDetail();//ÃÅ´°ÏêÍ¼
 void CMD_SunacKitchen();
 void CMD_SunacBathroom();
 
-void CMD_SunacRailing(); //À¸¸Ë
+//À¸¸Ë
+void CMD_SunacRailing();
+void CMD_SunacRailingStatistic();
 
 //¿Õµ÷
 void CMD_SunacAirconditioner();

@@ -46,6 +46,11 @@ Acad::ErrorStatus AttrRailing::dwgInFields(AcDbDwgFiler* filer)
 		return es;
 	}
 
+	filer->readItem(&m_height);
+	filer->readItem(&m_fanKanHeight);
+	filer->readItem(&m_length);
+	filer->readItem((Adesk::UInt32*)&m_railingType);
+
 	return filer->filerStatus();
 }
 
@@ -58,6 +63,11 @@ Acad::ErrorStatus AttrRailing::dwgOutFields(AcDbDwgFiler* filer) const
 	if ((es = AttrObject::dwgOutFields(filer)) != Acad::eOk) {
 		return es;
 	}
+
+	filer->writeItem(m_height);
+	filer->writeItem(m_fanKanHeight);
+	filer->writeItem(m_length);
+	filer->writeItem((Adesk::UInt32)m_railingType);
 	
 	return filer->filerStatus();
 }
