@@ -579,8 +579,8 @@ void CMD_TEST2()
 	CAluminumSeries::Instance()->GetAluminumDataBySeriesAndName(E_WindowDoor_NC, L"SN60ÏµÁÐ", L"¼ÙÖÐèè", AlData);
 	CAluminumSeries::Instance()->GetAluminumSerialByCode(L"SN60T002", AlSeries);
 	vAlSeries = CAluminumSeries::Instance()->GetAluminumSerialsByWindowType(E_WindowDoor_NC);*/
-	CFileUpDownLoad::UploadFile("F:\\soapcpp2.exe", "soapcpp2.exe",_T("20191030"));
-	CFileUpDownLoad::DownloadFile(L"http://fastsoft.onlinedown.net/down/idm_ald.exe", L"F:\\FTPServer\\Test.exe");
+	CFileUpDownLoad::UploadFile(L"D:\\Drawing1.dwg", L"1234567778.dwg", _T("20191030"));
+	//CFileUpDownLoad::DownloadFile(L"http://fastsoft.onlinedown.net/down/idm_ald.exe", L"F:\\FTPServer\\Test.exe");
 }
 
 static void initApp()
