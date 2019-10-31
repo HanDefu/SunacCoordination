@@ -11,6 +11,7 @@ CFileUpDownLoad* CFileUpDownLoad::Instance()
 
 CFileUpDownLoad::CFileUpDownLoad()
 {
+	m_bWaitingForQuit = false;
 }
 
 CFileUpDownLoad::~CFileUpDownLoad()
@@ -194,11 +195,6 @@ void CFileUpDownLoad::UploadFileByThread(CUpDownFilePara p_upFilePara)
 {
 	CUpDownFilePara* pFilePara = new CUpDownFilePara(p_upFilePara);
 	pFilePara->bUpload = true;
-	//pFilePara->sFilePath = p_sFilePath;
-	//pFilePara->sFileName = FilePathToFileName(p_sFilePath);
-	//pFilePara->sDirInProject = p_sDirInProject;
-	//pFilePara->ftpSaveName = p_ftpSaveName;
-	//pFilePara->ftpDir = p_ftpDir;
 
 	HANDLE hSampleThread = CreateThread(NULL, 0, CFileUpDownLoad::UploadFileThreadFunc, pFilePara, 0, NULL);
 
@@ -213,9 +209,20 @@ DWORD CFileUpDownLoad::UploadFileThreadFunc(LPVOID pama)
 
 	bool bSuc = UploadFile(pFilePara->sFileLocalPath, pFilePara->ftpSaveName, pFilePara->ftpDir);
 
+	if (CFileUpDownLoad::Instance()->m_bWaitingForQuit) //程序正在退出，无需后面的回调
+		return 0;
+
+	pFilePara->progress = bSuc ? 100 : -1;
+
 	//上传完成后通知界面显示和下一步动作
-	pFilePara->progress = bSuc ? 100 : 0;
-	pFilePara->cbFunc(pFilePara);
+	if (pFilePara->cbFunc!=NULL)
+	{
+		pFilePara->cbFunc(pFilePara);
+	}
+	if (pFilePara->uiCBFunc != NULL)
+	{
+		pFilePara->uiCBFunc(pFilePara);
+	}
 
 	return 0;
 }
@@ -236,9 +243,20 @@ DWORD CFileUpDownLoad::DownloadFileThreadFunc(LPVOID pama)
 
 	bool bSuc = DownloadFile(pFilePara->sFileUrl, pFilePara->sFileLocalPath);
 
+	if (CFileUpDownLoad::Instance()->m_bWaitingForQuit) //程序正在退出，无需后面的回调
+		return 0;
+
+	pFilePara->progress = bSuc ? 100 : -1;
+
 	//上传完成后通知界面显示和下一步动作
-	pFilePara->progress = bSuc ? 100 : 0;
-	pFilePara->cbFunc(pFilePara);
+	if (pFilePara->cbFunc != NULL)
+	{
+		pFilePara->cbFunc(pFilePara);
+	}
+	if (pFilePara->uiCBFunc != NULL)
+	{
+		pFilePara->uiCBFunc(pFilePara);
+	}
 
 	return 0;
 }

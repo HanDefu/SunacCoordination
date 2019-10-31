@@ -58,6 +58,7 @@
 #include "ProjectorFileMrg/FileUploadDownload.h"
 #include "Object/WindowStatistic/WindowStatictic.h"
 
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -867,6 +868,7 @@ extern "C" AcRx::AppRetCode acrxEntryPoint( AcRx::AppMsgCode msg, void* appId)
 			InitMenu();
 		break;
 	case AcRx::kQuitMsg:
+		CFileUpDownLoad::Instance()->SetAppQuit();
 		break;
 	case  AcRx::kLoadDwgMsg:
 		break;
