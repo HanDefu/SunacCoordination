@@ -24,6 +24,7 @@ public:
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
+	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);
 
 	DECLARE_MESSAGE_MAP()
 public:
@@ -58,3 +59,6 @@ public:
 	afx_msg void OnBnClickedButtonDownloadall();
 	afx_msg void OnBnClickedButtonDeleteall();
 };
+
+extern CProjectManagementDlg* g_projectManagementDlg;
+BOOL CloseProjectManagementDlg();

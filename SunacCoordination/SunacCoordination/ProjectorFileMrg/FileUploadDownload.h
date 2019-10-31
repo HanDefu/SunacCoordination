@@ -19,15 +19,20 @@ public:
 	CString ftpDir;
 
 	FileUpDownCB  cbFunc; //回调函数
+	FileUpDownCB  uiCBFunc; //UI回调函数
 
-	int progress; //进度，0-100
+	int progress; //进度，0-100, -1表示失败或中断
+
+	void* pCaller; //调用者
 
 public:
 	CUpDownFilePara()
 	{ 
 		bUpload = true;
 		cbFunc = NULL; 
+		uiCBFunc = NULL;
 		progress = 0; 
+		pCaller = NULL;
 	}
 };
 
@@ -44,11 +49,12 @@ public:
 
 	//strFileURLInServer待下载文件的URL,  strFileLocalFullPath存放到本地的路径
 	static bool DownloadFile(const CString& strFileURLInServer, const CString & strFileLocalFullPath);
-	void DownloadFileByThread(CUpDownFilePara p_upFilePara);
-
 	static bool UploadFile(CString p_sFilePath, CString p_ftpSaveName, CString p_ftpDir);
-	
+
+	void DownloadFileByThread(CUpDownFilePara p_upFilePara);
 	void UploadFileByThread(CUpDownFilePara p_upFilePara);
+
+	void SetAppQuit(){ m_bWaitingForQuit = true; }
 
 protected:
 	static DWORD UploadFileThreadFunc(LPVOID pama);
@@ -59,5 +65,7 @@ protected:
 
 	vector<HANDLE> m_allTheadHandle;
 
+
+	bool m_bWaitingForQuit; //程序退出中
 };
 

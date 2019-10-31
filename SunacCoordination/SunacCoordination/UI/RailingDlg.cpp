@@ -199,6 +199,13 @@ void CRailingDlg::PostNcDestroy()
 	}
 }
 
+BOOL CRailingDlg::PreTranslateMessage(MSG *pMsg)
+{
+	if ((pMsg->message == WM_KEYDOWN) && (pMsg->wParam == VK_RETURN))
+		return TRUE;
+	return CAcUiDialog::PreTranslateMessage(pMsg);
+}
+
 void CRailingDlg::OnBnClickedButtonSelectline()
 {
 	ShowWindow(FALSE);

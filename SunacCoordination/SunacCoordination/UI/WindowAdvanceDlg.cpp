@@ -75,6 +75,13 @@ void CWindowAdvanceDlg::PostNcDestroy()
 	}
 }
 
+BOOL CWindowAdvanceDlg::PreTranslateMessage(MSG *pMsg)
+{
+	if ((pMsg->message == WM_KEYDOWN) && (pMsg->wParam == VK_RETURN))
+		return TRUE;
+	return CAcUiDialog::PreTranslateMessage(pMsg);
+}
+
 void CWindowAdvanceDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CAcUiDialog::DoDataExchange(pDX);

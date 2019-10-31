@@ -11,6 +11,7 @@ CFileUpDownLoad* CFileUpDownLoad::Instance()
 
 CFileUpDownLoad::CFileUpDownLoad()
 {
+	m_bWaitingForQuit = false;
 }
 
 CFileUpDownLoad::~CFileUpDownLoad()
@@ -143,22 +144,27 @@ bool CFileUpDownLoad::DownloadFile(const CString& strFileURLInServer, const CStr
 	return true;
 }
 
+//https://blog.csdn.net/the_king_cloud/article/details/8090699
+//https://www.cnblogs.com/linuxws/p/11006293.html
 bool CFileUpDownLoad::UploadFile(CString p_sFilePath, CString p_ftpSaveName, CString p_ftpDir)
 {
+	BOOL bSuc = false; 
 	CFtpConnection *pFtpConnection = NULL;
 	CInternetSession *m_pInetsession = new CInternetSession(NULL, 1, PRE_CONFIG_INTERNET_ACCESS);
 	try
 	{
 		//TODO 服务器地址和用户名、密码需设置
-#ifdef WORK_LOCAL
-		pFtpConnection = m_pInetsession->GetFtpConnection(L"192.168.13.13", L"test", L"1234", 21);
-#else
-		pFtpConnection = m_pInetsession->GetFtpConnection(L"10.4.64.91", L"caduploader", L"ty19@scad", 2121); //测试环境
-#endif // WORK_LOCAL
+//#ifdef WORK_LOCAL
+//		pFtpConnection = m_pInetsession->GetFtpConnection(L"192.168.13.13", L"test", L"1234", 21);
+//#else
+		pFtpConnection = m_pInetsession->GetFtpConnection(L"10.4.64.91", L"caduploader", L"ty19@scad", 2121, TRUE); //测试环境, 由于本地使用通常是带网关的局域网，需设置被动模式
+//#endif // WORK_LOCAL
 
 		if (pFtpConnection ==  NULL)
 		{
 			assert(false);
+			m_pInetsession->Close();
+			delete m_pInetsession;
 			return false; 
 		}
 
@@ -173,7 +179,17 @@ bool CFileUpDownLoad::UploadFile(CString p_sFilePath, CString p_ftpSaveName, CSt
 			}
 		}
 
-		pFtpConnection->PutFile(p_sFilePath, p_ftpSaveName, FTP_TRANSFER_TYPE_BINARY, 1);
+		bSuc = pFtpConnection->PutFile(p_sFilePath, p_ftpSaveName, FTP_TRANSFER_TYPE_BINARY, 1);
+		if (bSuc==FALSE)
+		{
+			DWORD lError = GetLastError();
+			DWORD lError2 = 0;
+			TCHAR errorMsg[256] = { 0 };
+			DWORD len = 256;
+
+			InternetGetLastResponseInfo(&lError2, errorMsg, &len);
+			AfxMessageBox(errorMsg);
+		}
 	}
 	catch (CInternetException *pEx)
 	{
@@ -183,22 +199,26 @@ bool CFileUpDownLoad::UploadFile(CString p_sFilePath, CString p_ftpSaveName, CSt
 		else
 			AfxMessageBox(L"There was an exception");
 		pEx->Delete();
-		pFtpConnection = NULL;
+
+		pFtpConnection->Close();
+		m_pInetsession->Close();
+		delete pFtpConnection;
+		delete m_pInetsession;
 		return false;
 	}
 
-	return true;
+	pFtpConnection->Close();
+	m_pInetsession->Close();
+	delete pFtpConnection;
+	delete m_pInetsession;
+
+	return bSuc ?  true :false;
 }
 
 void CFileUpDownLoad::UploadFileByThread(CUpDownFilePara p_upFilePara)
 {
 	CUpDownFilePara* pFilePara = new CUpDownFilePara(p_upFilePara);
 	pFilePara->bUpload = true;
-	//pFilePara->sFilePath = p_sFilePath;
-	//pFilePara->sFileName = FilePathToFileName(p_sFilePath);
-	//pFilePara->sDirInProject = p_sDirInProject;
-	//pFilePara->ftpSaveName = p_ftpSaveName;
-	//pFilePara->ftpDir = p_ftpDir;
 
 	HANDLE hSampleThread = CreateThread(NULL, 0, CFileUpDownLoad::UploadFileThreadFunc, pFilePara, 0, NULL);
 
@@ -213,9 +233,20 @@ DWORD CFileUpDownLoad::UploadFileThreadFunc(LPVOID pama)
 
 	bool bSuc = UploadFile(pFilePara->sFileLocalPath, pFilePara->ftpSaveName, pFilePara->ftpDir);
 
+	if (CFileUpDownLoad::Instance()->m_bWaitingForQuit) //程序正在退出，无需后面的回调
+		return 0;
+
+	pFilePara->progress = bSuc ? 100 : -1;
+
 	//上传完成后通知界面显示和下一步动作
-	pFilePara->progress = bSuc ? 100 : 0;
-	pFilePara->cbFunc(pFilePara);
+	if (pFilePara->cbFunc!=NULL)
+	{
+		pFilePara->cbFunc(pFilePara);
+	}
+	if (pFilePara->uiCBFunc != NULL)
+	{
+		pFilePara->uiCBFunc(pFilePara);
+	}
 
 	return 0;
 }
@@ -236,9 +267,20 @@ DWORD CFileUpDownLoad::DownloadFileThreadFunc(LPVOID pama)
 
 	bool bSuc = DownloadFile(pFilePara->sFileUrl, pFilePara->sFileLocalPath);
 
+	if (CFileUpDownLoad::Instance()->m_bWaitingForQuit) //程序正在退出，无需后面的回调
+		return 0;
+
+	pFilePara->progress = bSuc ? 100 : -1;
+
 	//上传完成后通知界面显示和下一步动作
-	pFilePara->progress = bSuc ? 100 : 0;
-	pFilePara->cbFunc(pFilePara);
+	if (pFilePara->cbFunc != NULL)
+	{
+		pFilePara->cbFunc(pFilePara);
+	}
+	if (pFilePara->uiCBFunc != NULL)
+	{
+		pFilePara->uiCBFunc(pFilePara);
+	}
 
 	return 0;
 }

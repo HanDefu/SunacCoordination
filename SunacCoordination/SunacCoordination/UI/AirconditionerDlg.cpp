@@ -125,6 +125,13 @@ void CAirconditionerDlg::PostNcDestroy()
 	g_airconditionerDlg = NULL;
 }
 
+BOOL CAirconditionerDlg::PreTranslateMessage(MSG *pMsg)
+{
+	if ((pMsg->message == WM_KEYDOWN) && (pMsg->wParam == VK_RETURN))
+		return TRUE;
+	return CAcUiDialog::PreTranslateMessage(pMsg);
+}
+
 //设置空调对话框中控件的默认值
 void CAirconditionerDlg::LoadDefaultValue()
 {

@@ -35,8 +35,9 @@ public:
 
 
 public:
-	CString m_sSaveName; //实际存储从名称，通常为GUID
+	CString m_sSaveName; //实际存储名称，通常为GUID
 	CString m_sFileUrl;  //文件下载地址
+	CString m_sLocalPath; //本地存储地址
 
 	CString m_sCreator;		//创建者
 	CString m_sCreateTime;  //创建时间

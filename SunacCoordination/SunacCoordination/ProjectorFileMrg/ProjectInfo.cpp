@@ -30,7 +30,7 @@ CString CProjectData::GenerateGuid()
 	CoCreateGuid(&guid);
 
 	CString sGuid;
-	sGuid.Format(_T("{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}"),
+	sGuid.Format(_T("%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X"),
 		guid.Data1, guid.Data2,
 		guid.Data3, guid.Data4[0],
 		guid.Data4[1], guid.Data4[2],
@@ -76,28 +76,29 @@ CProjectDir* CProjectData::FindDir(CString p_dirName)
 	return pParentDir->GetSubFolder(lastFolderName);	
 }
 
-bool CProjectData::AddFile(CString p_sFilePath, CString  p_sParentFolderPath, FileUpDownCB cbFunc) //p_sParentFolderPath是指上传到哪个目录下,目录层级用\分割，例如：A区\施工图 表示A区文件夹下的施工图文件夹
+bool CProjectData::AddFile(CString p_sFilePath, CString  p_sDirPathInProject, FileUpDownCB p_cbFunc) //p_sDirPathInProject是指上传到哪个目录下,目录层级用\分割，例如：A区\施工图 表示A区文件夹下的施工图文件夹
 {
 	//1上传文件到ftp中
 	CString sFileName = FilePathToFileName(p_sFilePath);
+
 	int nPos = sFileName.ReverseFind(_T('.'));
 	if (nPos<0)
 		return false;
-
 	CString sExtensionName = sFileName.Mid(nPos);
+
 	CString sSaveName = GenerateGuid() + sExtensionName; //实际存储的名字
-	sSaveName.Delete(sSaveName.Find(_T("{")));
-	sSaveName.Delete(sSaveName.Find(_T("}")));
 
-	//上传到ftp中
-	CTime nowtime = CTime::GetCurrentTime();
+	//以日期为文件夹名
 	CString sDir;
+	CTime nowtime = CTime::GetCurrentTime();
 	sDir.Format(_T("%d%2d%2d"), nowtime.GetYear(), nowtime.GetMonth(), nowtime.GetDay());
-	CFileUpDownLoad::UploadFile(p_sFilePath, sSaveName, sDir); //以日期为文件夹名
 
+#if 0
+	CFileUpDownLoad::UploadFile(p_sFilePath, sSaveName, sDir); 
 
+	//////////////////////////////////////////////////////////////////////////
 	//2.加到本地的项目文件中
-	CProjectDir* p_pParentDir = FindDir(p_sParentFolderPath);	//找到目录
+	CProjectDir* p_pParentDir = FindDir(p_sDirPathInProject);	//找到目录
 	if (p_pParentDir == NULL)
 		return false;
 
@@ -108,9 +109,58 @@ bool CProjectData::AddFile(CString p_sFilePath, CString  p_sParentFolderPath, Fi
 	p_pParentDir->AddFile(prjfile);	
 
 	//3.调用web接口添加到web数据库中
-	CWebProjectFile::Instance()->UpdateFile(GetProjectId(), p_sParentFolderPath, sSaveName, sFileName);
+	CWebProjectFile::Instance()->UpdateFile(GetProjectId(), p_sDirPathInProject, sSaveName, sFileName);
+
+#else  //使用多线程
+	CUpDownFilePara upFilePara;
+	upFilePara.bUpload = true;
+	upFilePara.sFileLocalPath = p_sFilePath; //本地文件名
+	upFilePara.sFileName = FilePathToFileName(p_sFilePath);		//包含后缀
+	upFilePara.sDirInProject = p_sDirPathInProject; //在项目中的目录
+	//upFilePara.sFileUrl;
+	upFilePara.ftpSaveName = sSaveName;
+	upFilePara.ftpDir = sDir;
+
+	upFilePara.cbFunc = CProjectData::FileUpCBFunc; //回调函数
+	upFilePara.uiCBFunc = p_cbFunc;
+	upFilePara.progress = 0; //进度，0-100
+	upFilePara.pCaller = this; //调用者
+
+	CFileUpDownLoad::Instance()->UploadFileByThread(upFilePara);
+#endif
 
 	return true;
+}
+
+void CProjectData::FileUpCBFunc(CUpDownFilePara* p_upFilePara)
+{
+	if (p_upFilePara->progress<100) //上传完成了才更新web端数据
+	{
+		return; 
+	}
+
+	CProjectData* pProjectData = (CProjectData*)(p_upFilePara->pCaller);
+	if (pProjectData==NULL)
+	{
+		assert(false);
+		return;
+	}
+
+	//2.加到本地的项目文件中
+	CProjectDir* p_pParentDir = pProjectData->FindDir(p_upFilePara->sDirInProject);	//找到目录
+	if (p_pParentDir == NULL)
+	{
+		assert(false);
+		return;
+	}
+
+	CProjectFile prjfile;
+	prjfile.m_sName = p_upFilePara->sFileName;
+	prjfile.m_sSaveName = p_upFilePara->ftpDir + _T("\\") + p_upFilePara->ftpSaveName;
+	p_pParentDir->AddFile(prjfile);
+
+	//3.调用web接口添加到web数据库中
+	CWebProjectFile::Instance()->UpdateFile(pProjectData->GetProjectId(), p_upFilePara->sDirInProject, prjfile.m_sSaveName, prjfile.m_sName);
 }
 
 CString CProjectData::GetProjectId()const
@@ -119,27 +169,27 @@ CString CProjectData::GetProjectId()const
 	sId.Format(_T("%d"), m_prjInfo.m_id);
 	return sId;
 }
-bool CProjectData::DeleteFile(CString p_sFileName, CString  p_sParentFolderPath)
+bool CProjectData::DeleteFile(CString p_sFileName, CString  p_sDirPathInProject)
 {
 	//找到目录
-	CProjectDir* pDir = FindDir(p_sParentFolderPath);
+	CProjectDir* pDir = FindDir(p_sDirPathInProject);
 	if (pDir == NULL)
 		return false;
 
 	pDir->DeleteFile(p_sFileName);
 
 	//web端更新 
-	CWebProjectFile::Instance()->DeleteFile(GetProjectId(), p_sParentFolderPath, p_sFileName);
+	CWebProjectFile::Instance()->DeleteFile(GetProjectId(), p_sDirPathInProject, p_sFileName);
 
 	return true;
 }
-bool CProjectData::AddFolder(CString  p_sParentFolderPath, CString p_sFolderName)
+bool CProjectData::AddFolder(CString  p_sDirPathInProject, CString p_sFolderName)
 {
 	//找到目录
 	CProjectDir* pDir = NULL;
-	if (p_sParentFolderPath.IsEmpty() == false)
+	if (p_sDirPathInProject.IsEmpty() == false)
 	{
-		pDir = FindDir(p_sParentFolderPath);
+		pDir = FindDir(p_sDirPathInProject);
 	}
 	else
 	{
