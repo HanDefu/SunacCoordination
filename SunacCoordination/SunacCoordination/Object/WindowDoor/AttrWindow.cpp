@@ -82,6 +82,22 @@ bool CWindowsDimData::operator<(const CWindowsDimData &rhs) const
 	return sCodeName < rhs.sCodeName;
 }
 
+bool CWindowsDimData::SetDefaultValue(double p_value)
+{
+	if (type == CALC || type==NOVALUE)
+		return false;
+
+	if (type == SCOPE)
+	{
+		if (p_value<minValue || p_value> maxValue)
+			return false;
+	}
+
+	defaultValue = p_value;
+	value = defaultValue;
+	return true;
+}
+
 bool CWindowsDimData::IsValueEqual(const CWindowsDimData &rhs)const
 {
 	if (type==NOVALUE)
@@ -229,8 +245,7 @@ void AttrWindow::CheckAndComplementDimeData() //检查并补全Dim数据，W/H/a确保都有
 		CWindowsDimData dimData;
 		dimData.sCodeName = _T("W");
 		dimData.type = UNLIMIT;
-		dimData.defaultValue = 1200;
-		dimData.value = 1200;
+		dimData.SetDefaultValue(1200);
 		SetDimData(dimData);
 	}
 	if (GetDimData(_T("H")) == NULL)
@@ -238,8 +253,7 @@ void AttrWindow::CheckAndComplementDimeData() //检查并补全Dim数据，W/H/a确保都有
 		CWindowsDimData dimData;
 		dimData.sCodeName = _T("W");
 		dimData.type = UNLIMIT;
-		dimData.defaultValue = 1500;
-		dimData.value = 1500;
+		dimData.SetDefaultValue(1500);
 		SetDimData(dimData);
 	}
 	if (GetDimData(_T("a")) == NULL)
@@ -247,8 +261,7 @@ void AttrWindow::CheckAndComplementDimeData() //检查并补全Dim数据，W/H/a确保都有
 		CWindowsDimData dimData;
 		dimData.sCodeName = _T("A");
 		dimData.type = UNLIMIT;
-		dimData.defaultValue = 0;
-		dimData.value = 0;
+		dimData.SetDefaultValue(0);
 		SetDimData(dimData);
 	}
 }
