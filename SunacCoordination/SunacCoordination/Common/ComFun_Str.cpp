@@ -36,7 +36,7 @@ void CF_STR_get_file_name_3(const WCHAR *filename, WCHAR *filename3)
 {
 	WCHAR name[256];
 	wcscpy_s(name,filename);
-	WCHAR *p = wcstok(name,L".dwg");
+	WCHAR *p = wcstok(name,L".");
 	/*WCHAR *pre = NULL;
 	while(p != NULL)
 	{
