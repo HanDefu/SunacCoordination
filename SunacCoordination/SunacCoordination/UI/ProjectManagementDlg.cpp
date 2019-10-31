@@ -9,6 +9,7 @@
 #include "..\ProjectorFileMrg\ProjectFileMrg.h"
 #include "..\ProjectorFileMrg\ProjectInfo.h"
 #include "..\ProjectorFileMrg\FileUploadDownload.h"
+#include "..\ProjectorFileMrg\ProjectFile.h"
 #include "../Common/ComFun_String.h"
 
 
@@ -105,26 +106,26 @@ void CProjectManagementDlg::FillPjtMngTreeCtrl()
 static void UIFileUpCBFunc(CUpDownFilePara* p_fileUpdownPara)
 {
 	//更新当前文件的状态
+	g_projectManagementDlg->FillPjtGridCtrl(g_projectManagementDlg->m_selectedDir);
+
 }
 
 void CProjectManagementDlg::OnBnClickedButtonUpload()
 {
+	CString FileName;
 	CString filter = L"参数文件(*.dwg)|*.dwg|All Files(*.*)|*.*||";
     CFileDialog dlg(FALSE, L"dwg", L"*.dwg", NULL, filter);
 	if(dlg.DoModal() == IDOK)
 	{
 		USES_CONVERSION;
 		CString PathName = dlg.GetPathName();
-		CString FileName;
 		
 		FileName = FilePathToFileName(PathName);
 		CString ParentPath = m_pPrjData->GetDirString(L"", m_selectedDir);//返回文件夹的路径
 
 		m_pPrjData->AddFile(PathName, ParentPath, UIFileUpCBFunc); 
 	}
-	
 	// TODO 添加正在下载的状态显示
-
 	FillPjtGridCtrl(m_selectedDir);
 }
 
@@ -154,13 +155,14 @@ void CProjectManagementDlg::InitGridCtrl()
 	m_PjtManagementGridCtrl.DeleteAllItems();
 	
 	m_PjtManagementGridCtrl.SetFixedRowCount(1);
-	m_PjtManagementGridCtrl.SetColumnCount(9);
+	m_PjtManagementGridCtrl.SetColumnCount(10);
 	m_PjtManagementGridCtrl.SetItemText(0, 1, L"文件名称");
 	m_PjtManagementGridCtrl.SetItemText(0, 2, L"创建人");
 	m_PjtManagementGridCtrl.SetItemText(0, 3, L"创建时间");
 	m_PjtManagementGridCtrl.SetItemText(0, 4, L"更新人员");
 	m_PjtManagementGridCtrl.SetItemText(0, 5, L"更新时间");
 	m_PjtManagementGridCtrl.SetItemText(0, 6, L"文件大小");
+	m_PjtManagementGridCtrl.SetItemText(0, 7, L"文件状态");
 
 	m_PjtManagementGridCtrl.SetColumnWidth(0, 30);
 	m_PjtManagementGridCtrl.SetColumnWidth(1, 140);
@@ -169,8 +171,9 @@ void CProjectManagementDlg::InitGridCtrl()
 	m_PjtManagementGridCtrl.SetColumnWidth(4, 60);
 	m_PjtManagementGridCtrl.SetColumnWidth(5, 140);
 	m_PjtManagementGridCtrl.SetColumnWidth(6, 80);
-	m_PjtManagementGridCtrl.SetColumnWidth(7, 40);
+	m_PjtManagementGridCtrl.SetColumnWidth(7, 60);
 	m_PjtManagementGridCtrl.SetColumnWidth(8, 40);
+	m_PjtManagementGridCtrl.SetColumnWidth(9, 40);
 
 	m_PjtManagementGridCtrl.SetSingleRowSelection(TRUE);
 
@@ -196,12 +199,13 @@ void CProjectManagementDlg::FillPjtGridCtrl(CProjectDir* SelectedDir)
 		m_PjtManagementGridCtrl.SetItemText(i, 4, SelectedDir->m_subFiles[i - 1].m_sUpdator);
 		m_PjtManagementGridCtrl.SetItemText(i, 5, SelectedDir->m_subFiles[i - 1].m_sUpdateTime);
 		m_PjtManagementGridCtrl.SetItemText(i, 6, SelectedDir->m_subFiles[i - 1].m_sFileSize);
-		m_PjtManagementGridCtrl.SetItemText(i, 7, L"下载");
-		CGridCtrlUtil::SetCellButtonType(m_PjtManagementGridCtrl, i, 7);
-		m_PjtManagementGridCtrl.SetItemState(i, 7, GVIS_READONLY);
-		m_PjtManagementGridCtrl.SetItemText(i, 8, L"删除");
+		m_PjtManagementGridCtrl.SetItemText(i, 7, EProjectFileStateToCString(SelectedDir->m_subFiles[i - 1].m_fileState));
+		m_PjtManagementGridCtrl.SetItemText(i, 8, L"下载");
 		CGridCtrlUtil::SetCellButtonType(m_PjtManagementGridCtrl, i, 8);
 		m_PjtManagementGridCtrl.SetItemState(i, 8, GVIS_READONLY);
+		m_PjtManagementGridCtrl.SetItemText(i, 9, L"删除");
+		CGridCtrlUtil::SetCellButtonType(m_PjtManagementGridCtrl, i, 9);
+		m_PjtManagementGridCtrl.SetItemState(i, 9, GVIS_READONLY);
 		
 	}
 	UpdateData();
@@ -291,13 +295,13 @@ void CProjectManagementDlg::OnGridClick(NMHDR *pNMHDR, LRESULT *pResult)
 	m_StcUploaderName.SetWindowTextW(SelectedFile.m_sUpdator); 
 	m_StcUploadTime.SetWindowTextW(SelectedFile.m_sUpdateTime);
 
-	if (m_nClkCol == 7)//下载
+	if (m_nClkCol == 8)//下载
 	{
-		CFileUpDownLoad::DownloadFile(sSelectedFileName, sSelectedFileParentPath);
+		m_pPrjData->DownloadFile(sSelectedFileParentPath, sSelectedFileName, L"",UIFileUpCBFunc);
 		FillPjtGridCtrl(m_selectedDir);
 	}
 
-	if (m_nClkCol == 8)//删除
+	if (m_nClkCol == 9)//删除
 	{
 		m_pPrjData->DeleteFile(sSelectedFileName,sSelectedFileParentPath);
 		FillPjtGridCtrl(m_selectedDir);
