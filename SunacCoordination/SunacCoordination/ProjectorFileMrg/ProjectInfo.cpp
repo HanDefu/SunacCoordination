@@ -88,6 +88,35 @@ CProjectFile* CProjectData::GetFileByDirAndName(CString p_sDirPathInProject, CSt
 	}
 }
 
+bool CProjectData::DownloadFile(CString p_sDirPathInProject, CString p_fileName, CString p_sFileLocalPath, FileUpDownCB p_cbFunc)
+{
+	CProjectFile* pFile = GetFileByDirAndName(p_sDirPathInProject, p_fileName);
+	if (pFile==NULL)
+	{
+		return false;
+	}
+
+	pFile->m_fileState = E_ProjectFile_Downloading;
+
+	CUpDownFilePara downFilePara;
+	downFilePara.bUpload = false;
+	downFilePara.sFileLocalPath = p_sFileLocalPath; //本地文件名
+	downFilePara.sFileName = FilePathToFileName(p_fileName);		//包含后缀
+	downFilePara.sDirInProject = p_sDirPathInProject; //在项目中的目录
+
+	downFilePara.sFileUrl = pFile->m_sFileUrl;
+	downFilePara.ftpSaveName = pFile->m_sSaveName;
+
+	downFilePara.cbFunc = CProjectData::FileDownCBFunc; //回调函数
+	downFilePara.uiCBFunc = p_cbFunc;
+	downFilePara.progress = 0; //进度，0-100
+	downFilePara.pCaller = this; //调用者
+
+	CFileUpDownLoad::Instance()->DownloadFileByThread(downFilePara);
+
+	return true;
+}
+
 bool CProjectData::AddFile(CString p_sFilePath, CString  p_sDirPathInProject, FileUpDownCB p_cbFunc) //p_sDirPathInProject是指上传到哪个目录下,目录层级用\分割，例如：A区\施工图 表示A区文件夹下的施工图文件夹
 {
 	//1上传文件到ftp中
@@ -145,6 +174,27 @@ bool CProjectData::AddFile(CString p_sFilePath, CString  p_sDirPathInProject, Fi
 #endif
 
 	return true;
+}
+
+void CProjectData::FileDownCBFunc(CUpDownFilePara* p_upFilePara)
+{
+	if (p_upFilePara->progress > 0 && p_upFilePara->progress<100) //上传完成了才更新web端数据
+	{
+		return;
+	}
+	CProjectData* pProjectData = (CProjectData*)(p_upFilePara->pCaller);
+	if (pProjectData == NULL)
+	{
+		assert(false);
+		return;
+	}
+
+	CProjectFile* pPrjfile = pProjectData->GetFileByDirAndName(p_upFilePara->sDirInProject, p_upFilePara->sFileName);
+	if (pPrjfile!=NULL)
+	{
+		bool bLoadFail = p_upFilePara->progress < 0;
+		pPrjfile->m_fileState = bLoadFail ? E_ProjectFile_DownloadFailed : E_ProjectFile_DownloadSuccess;
+	}
 }
 
 void CProjectData::FileUpCBFunc(CUpDownFilePara* p_upFilePara)

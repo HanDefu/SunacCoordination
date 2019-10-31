@@ -24,8 +24,10 @@ enum EProjectFileState
 	E_ProjectFile_Normal,
 	E_ProjectFile_Downloading,
 	E_ProjectFile_DownloadSuccess,
+	E_ProjectFile_DownloadFailed,
 	E_ProjectFile_Uploading,
 	E_ProjectFile_UploadSuccess,
+	E_ProjectFile_UploadFailed,
 };
 
 //////////////////////////////////////////////////////////////////////////
