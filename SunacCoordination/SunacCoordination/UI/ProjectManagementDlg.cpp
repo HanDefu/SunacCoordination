@@ -102,6 +102,10 @@ void CProjectManagementDlg::FillPjtMngTreeCtrl()
 
 // CProjectManagementDlg 消息处理程序
 
+static void UIFileUpCBFunc(CUpDownFilePara* p_fileUpdownPara)
+{
+	//更新当前文件的状态
+}
 
 void CProjectManagementDlg::OnBnClickedButtonUpload()
 {
@@ -115,9 +119,12 @@ void CProjectManagementDlg::OnBnClickedButtonUpload()
 		
 		FileName = FilePathToFileName(PathName);
 		CString ParentPath = m_pPrjData->GetDirString(L"", m_selectedDir);//返回文件夹的路径
-		//m_pPrjData->UploadFile(PathName, FileName);
-		m_pPrjData->AddFile(PathName, ParentPath, NULL); //TODO 添加回调函数
+
+		m_pPrjData->AddFile(PathName, ParentPath, UIFileUpCBFunc); 
 	}
+	
+	// TODO 添加正在下载的状态显示
+
 	FillPjtGridCtrl(m_selectedDir);
 }
 

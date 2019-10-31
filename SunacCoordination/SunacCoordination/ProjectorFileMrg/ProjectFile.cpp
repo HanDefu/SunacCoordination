@@ -14,6 +14,7 @@ CPrjNode::~CPrjNode()
 //////////////////////////////////////////////////////////////////////////
 CProjectFile::CProjectFile()
 {
+	m_fileState = E_ProjectFile_Normal;
 }
 
 CProjectFile::~CProjectFile()
@@ -65,7 +66,7 @@ CProjectDir::~CProjectDir()
 	m_subDirs.clear();
 }
 
-bool CProjectDir::FindFile(CString p_fileName, CProjectFile &p_fileOut)
+bool CProjectDir::FindFile(CString p_fileName, CProjectFile &p_fileOut) const
 {
 	for (UINT i = 0; i < m_subFiles.size(); i++)
 	{
@@ -79,6 +80,18 @@ bool CProjectDir::FindFile(CString p_fileName, CProjectFile &p_fileOut)
 	return false;
 }
 
+CProjectFile* CProjectDir::FindFile(CString p_fileName)
+{
+	for (UINT i = 0; i < m_subFiles.size(); i++)
+	{
+		if (m_subFiles[i].m_sName.CompareNoCase(p_fileName) == 0)
+		{
+			return &m_subFiles[i];
+		}
+	}
+
+	return NULL;
+}
 bool CProjectDir::DeleteFile(CString p_fileName)
 {
 	for (vector<CProjectFile>::iterator it = m_subFiles.begin(); it < m_subFiles.end(); it++)
@@ -169,4 +182,20 @@ bool CProjectDir::DeleteSubFolder(CString p_sFolderName)
 void CProjectDir::Rename(CString newName)
 {
 	m_sName = newName;
+}
+
+CString CProjectDir::GetDirFullPath()const
+{
+	CString sDirPath = m_sName;
+
+	const CProjectDir* pParent = m_parent;
+	while (pParent!=NULL)
+	{
+		if (pParent->m_sName.IsEmpty())
+			break;//¸ù½Úµã
+
+		sDirPath = pParent->m_sName + _T("\\") + sDirPath;
+	}
+
+	return sDirPath;
 }

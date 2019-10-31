@@ -30,7 +30,7 @@ CString CProjectData::GenerateGuid()
 	CoCreateGuid(&guid);
 
 	CString sGuid;
-	sGuid.Format(_T("{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}"),
+	sGuid.Format(_T("%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X"),
 		guid.Data1, guid.Data2,
 		guid.Data3, guid.Data4[0],
 		guid.Data4[1], guid.Data4[2],
@@ -42,9 +42,9 @@ CString CProjectData::GenerateGuid()
 
 
 //目录层级用\分割，例如：A区\施工图 表示A区文件夹下的施工图文件夹
-CProjectDir* CProjectData::FindDir(CString p_dirName)
+CProjectDir* CProjectData::FindDir(CString p_dirPath)
 {
-	p_dirName.Trim(_T('\\'));
+	p_dirPath.Trim(_T('\\'));
 
 	int nPos1 = 0;
 	int npos2 = 0; 
@@ -53,14 +53,14 @@ CProjectDir* CProjectData::FindDir(CString p_dirName)
 
 	do 
 	{
-		npos2 = p_dirName.Find(_T('\\'), npos2);
+		npos2 = p_dirPath.Find(_T('\\'), npos2);
 		if (npos2<0)
 		{
 			break;
 		}
 		else
 		{
-			CString sFolderName = p_dirName.Mid(nPos1, npos2 - nPos1);
+			CString sFolderName = p_dirPath.Mid(nPos1, npos2 - nPos1);
 			pParentDir = pParentDir->GetSubFolder(sFolderName);
 			if (pParentDir==NULL)
 			{
@@ -72,45 +72,173 @@ CProjectDir* CProjectData::FindDir(CString p_dirName)
 	} while (npos2>0);
 
 
-	CString lastFolderName = p_dirName.Mid(nPos1);
+	CString lastFolderName = p_dirPath.Mid(nPos1);
 	return pParentDir->GetSubFolder(lastFolderName);	
 }
+CProjectFile* CProjectData::GetFileByDirAndName(CString p_sDirPathInProject, CString p_fileName)
+{
+	CProjectDir* pDir = FindDir(p_sDirPathInProject);
+	if (pDir == NULL)
+	{
+		return NULL;
+	}
+	else
+	{
+		return pDir->FindFile(p_fileName);
+	}
+}
 
-bool CProjectData::AddFile(CString p_sFilePath, CString  p_sParentFolderPath, FileUpDownCB cbFunc) //p_sParentFolderPath是指上传到哪个目录下,目录层级用\分割，例如：A区\施工图 表示A区文件夹下的施工图文件夹
+bool CProjectData::DownloadFile(CString p_sDirPathInProject, CString p_fileName, CString p_sFileLocalPath, FileUpDownCB p_cbFunc)
+{
+	CProjectFile* pFile = GetFileByDirAndName(p_sDirPathInProject, p_fileName);
+	if (pFile==NULL)
+	{
+		return false;
+	}
+
+	pFile->m_fileState = E_ProjectFile_Downloading;
+
+	CUpDownFilePara downFilePara;
+	downFilePara.bUpload = false;
+	downFilePara.sFileLocalPath = p_sFileLocalPath; //本地文件名
+	downFilePara.sFileName = FilePathToFileName(p_fileName);		//包含后缀
+	downFilePara.sDirInProject = p_sDirPathInProject; //在项目中的目录
+
+	downFilePara.sFileUrl = pFile->m_sFileUrl;
+	downFilePara.ftpSaveName = pFile->m_sSaveName;
+
+	downFilePara.cbFunc = CProjectData::FileDownCBFunc; //回调函数
+	downFilePara.uiCBFunc = p_cbFunc;
+	downFilePara.progress = 0; //进度，0-100
+	downFilePara.pCaller = this; //调用者
+
+	CFileUpDownLoad::Instance()->DownloadFileByThread(downFilePara);
+
+	return true;
+}
+
+bool CProjectData::AddFile(CString p_sFilePath, CString  p_sDirPathInProject, FileUpDownCB p_cbFunc) //p_sDirPathInProject是指上传到哪个目录下,目录层级用\分割，例如：A区\施工图 表示A区文件夹下的施工图文件夹
 {
 	//1上传文件到ftp中
 	CString sFileName = FilePathToFileName(p_sFilePath);
+
 	int nPos = sFileName.ReverseFind(_T('.'));
 	if (nPos<0)
 		return false;
-
 	CString sExtensionName = sFileName.Mid(nPos);
+
 	CString sSaveName = GenerateGuid() + sExtensionName; //实际存储的名字
-	sSaveName.Delete(sSaveName.Find(_T("{")));
-	sSaveName.Delete(sSaveName.Find(_T("}")));
 
-	//上传到ftp中
-	CTime nowtime = CTime::GetCurrentTime();
-	CString sDir;
-	sDir.Format(_T("%d%2d%2d"), nowtime.GetYear(), nowtime.GetMonth(), nowtime.GetDay());
-	CFileUpDownLoad::UploadFile(p_sFilePath, sSaveName, sDir); //以日期为文件夹名
-
-
-	//2.加到本地的项目文件中
-	CProjectDir* p_pParentDir = FindDir(p_sParentFolderPath);	//找到目录
+	//1.加到本地的项目文件中
+	CProjectDir* p_pParentDir = FindDir(p_sDirPathInProject);	//找到目录
 	if (p_pParentDir == NULL)
 		return false;
 
 	CProjectFile prjfile;
 	prjfile.m_sName = sFileName;
 	prjfile.m_sSaveName = sSaveName;
-
+	prjfile.m_fileState = E_ProjectFile_Uploading;
 	p_pParentDir->AddFile(prjfile);	
 
+	//////////////////////////////////////////////////////////////////////////
+	//以日期为文件夹名
+	CString sDir;
+	CTime nowtime = CTime::GetCurrentTime();
+	sDir.Format(_T("%d%2d%2d"), nowtime.GetYear(), nowtime.GetMonth(), nowtime.GetDay());
+
+#if 0
+	//2. 上传
+	CFileUpDownLoad::UploadFile(p_sFilePath, sSaveName, sDir); 
+
+	//////////////////////////////////////////////////////////////////////////
+
 	//3.调用web接口添加到web数据库中
-	CWebProjectFile::Instance()->UpdateFile(GetProjectId(), p_sParentFolderPath, sSaveName, sFileName);
+	CWebProjectFile::Instance()->UpdateFile(GetProjectId(), p_sDirPathInProject, sSaveName, sFileName);
+
+#else  //使用多线程
+	CUpDownFilePara upFilePara;
+	upFilePara.bUpload = true;
+	upFilePara.sFileLocalPath = p_sFilePath; //本地文件名
+	upFilePara.sFileName = FilePathToFileName(p_sFilePath);		//包含后缀
+	upFilePara.sDirInProject = p_sDirPathInProject; //在项目中的目录
+	//upFilePara.sFileUrl;
+	upFilePara.ftpSaveName = sSaveName;
+	upFilePara.ftpDir = sDir;
+
+	upFilePara.cbFunc = CProjectData::FileUpCBFunc; //回调函数
+	upFilePara.uiCBFunc = p_cbFunc;
+	upFilePara.progress = 0; //进度，0-100
+	upFilePara.pCaller = this; //调用者
+
+	CFileUpDownLoad::Instance()->UploadFileByThread(upFilePara);
+#endif
 
 	return true;
+}
+
+void CProjectData::FileDownCBFunc(CUpDownFilePara* p_upFilePara)
+{
+	if (p_upFilePara->progress > 0 && p_upFilePara->progress<100) //上传完成了才更新web端数据
+	{
+		return;
+	}
+	CProjectData* pProjectData = (CProjectData*)(p_upFilePara->pCaller);
+	if (pProjectData == NULL)
+	{
+		assert(false);
+		return;
+	}
+
+	CProjectFile* pPrjfile = pProjectData->GetFileByDirAndName(p_upFilePara->sDirInProject, p_upFilePara->sFileName);
+	if (pPrjfile!=NULL)
+	{
+		bool bLoadFail = p_upFilePara->progress < 0;
+		pPrjfile->m_fileState = bLoadFail ? E_ProjectFile_DownloadFailed : E_ProjectFile_DownloadSuccess;
+	}
+}
+
+void CProjectData::FileUpCBFunc(CUpDownFilePara* p_upFilePara)
+{
+	if (p_upFilePara->progress>0 && p_upFilePara->progress<100) //上传完成了才更新web端数据
+	{
+		return; 
+	}
+
+	CProjectData* pProjectData = (CProjectData*)(p_upFilePara->pCaller);
+	if (pProjectData==NULL)
+	{
+		assert(false);
+		return;
+	}
+
+	//2.加到本地的项目文件中
+	CProjectDir* p_pParentDir = pProjectData->FindDir(p_upFilePara->sDirInProject);	//找到目录
+	if (p_pParentDir == NULL)
+	{
+		assert(false);
+		return;
+	}
+
+	bool bLoadFail = p_upFilePara->progress < 0;
+	if (bLoadFail)
+	{
+		p_pParentDir->DeleteFile(p_upFilePara->sFileName);
+		return;
+	}
+	else
+	{
+		CProjectFile* pPrjfile = p_pParentDir->FindFile(p_upFilePara->sFileName);
+		if (pPrjfile == NULL)
+		{
+			assert(false);
+			return;
+		}
+
+		pPrjfile->m_fileState = E_ProjectFile_UploadSuccess;
+
+		//3.调用web接口添加到web数据库中
+		CWebProjectFile::Instance()->UpdateFile(pProjectData->GetProjectId(), p_upFilePara->sDirInProject, pPrjfile->m_sSaveName, pPrjfile->m_sName);
+	}
 }
 
 CString CProjectData::GetProjectId()const
@@ -119,27 +247,27 @@ CString CProjectData::GetProjectId()const
 	sId.Format(_T("%d"), m_prjInfo.m_id);
 	return sId;
 }
-bool CProjectData::DeleteFile(CString p_sFileName, CString  p_sParentFolderPath)
+bool CProjectData::DeleteFile(CString p_sFileName, CString  p_sDirPathInProject)
 {
 	//找到目录
-	CProjectDir* pDir = FindDir(p_sParentFolderPath);
+	CProjectDir* pDir = FindDir(p_sDirPathInProject);
 	if (pDir == NULL)
 		return false;
 
 	pDir->DeleteFile(p_sFileName);
 
 	//web端更新 
-	CWebProjectFile::Instance()->DeleteFile(GetProjectId(), p_sParentFolderPath, p_sFileName);
+	CWebProjectFile::Instance()->DeleteFile(GetProjectId(), p_sDirPathInProject, p_sFileName);
 
 	return true;
 }
-bool CProjectData::AddFolder(CString  p_sParentFolderPath, CString p_sFolderName)
+bool CProjectData::AddFolder(CString  p_sDirPathInProject, CString p_sFolderName)
 {
 	//找到目录
 	CProjectDir* pDir = NULL;
-	if (p_sParentFolderPath.IsEmpty() == false)
+	if (p_sDirPathInProject.IsEmpty() == false)
 	{
-		pDir = FindDir(p_sParentFolderPath);
+		pDir = FindDir(p_sDirPathInProject);
 	}
 	else
 	{
@@ -205,3 +333,4 @@ CString CProjectData::GetDirString(CString sName, CProjectDir* p_parentDir)
 	}
 	return temp;
 }
+
