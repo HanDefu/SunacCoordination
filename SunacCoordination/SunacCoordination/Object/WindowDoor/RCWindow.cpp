@@ -184,11 +184,6 @@ double RCWindow::GetWindowArea()
     return GetH() * GetW();
 }
 
-//开启面积
-double RCWindow::GetOpenArea()
-{
-	return GetW1() * GetH1();
-}
 
 void RCWindow::SetInstanceCode(CString str)
 {
@@ -204,57 +199,72 @@ int RCWindow::CreateDims()
 	CDocLock lockEnt;
 	if (m_id == 0)
 		return -1;
+
+	const double W = GetW();
+	const double H = GetH();
+	const double A = GetA();
 	
 	TYRect rect;
 	DQ_GetBlockReferenceInsertPoint(m_id, rect.m_lb);
-	rect.m_rt.x = rect.m_lb.x + GetW();
-	rect.m_rt.y = rect.m_lb.y + GetH();
+	rect.m_rt.x = rect.m_lb.x + W;
+	rect.m_rt.y = rect.m_lb.y + H;
 	rect.m_rt.z = 0;
 	
 	//JHCOM_GetObjectMinMaxPoint(m_id, rect.m_lb, rect.m_rt);
 	double offset = 150;
 
 	//----------------先标注竖向的--------------------//
-	double h2 = GetH2();
-	double h1 = GetH1();
-	AcGePoint3d  start = rect.GetRB(), 
-		       end = rect.GetRB(), 
-			   mid = rect.GetRB();
+	const double h2 = GetH2();
+	const double h1 = GetH1();
+	const AcGePoint3d  rightBottomPt = rect.GetRB();
+	const AcGePoint3d  rightTopPt = rect.GetRT();
+
+	AcGePoint3d  start = rightBottomPt;
+	AcGePoint3d  end = rightBottomPt;
+	AcGePoint3d  mid = rightBottomPt;
+
+	if (A > TOL)//如果A值存在 先标注两端的A
+	{
+		end.y += A;
+		mid.y += A / 2;
+		mid.x = start.x + offset;
+		MD2010_AddAlignedDimension2(start, end, mid);
+
+		AcGePoint3d start1 = rightTopPt;
+		AcGePoint3d end1 = rightTopPt;
+		AcGePoint3d mid1 = rightTopPt;
+		end1.y -= A;
+		mid1.y -= A / 2;
+		mid.x = start.x + offset;
+		MD2010_AddAlignedDimension2(rightTopPt, end1, mid1);
+	}
 
 	if (h2 > TOL)
 	{
-		start = 
-		end = start;
-		end.y += h2;
-		mid.x = start.x + offset;
-		mid.y = start.y + h2/2;
+		start = AcGePoint3d(rightBottomPt.x, rightBottomPt.y + A, 0);
+		end = AcGePoint3d(start.x, start.y + h2, 0);
+		mid = AcGePoint3d(start.x + offset,  start.y + h2 / 2 , 0);
 		MD2010_AddAlignedDimension2(start,end, mid);
 	}
 
 	//H1一定有
-	start = end;
-	end.y += h1;
-	mid = start;
-	mid.y += h1/2;
-	mid.x += offset;
+	start = AcGePoint3d(rightBottomPt.x, rightBottomPt.y + A + h2, 0);
+	end = AcGePoint3d(start.x, start.y + h1, 0);
+	mid = AcGePoint3d(start.x + offset, start.y + h1 / 2, 0);
 	MD2010_AddAlignedDimension2(start,end, mid);
 
 	//总高度一定有
-	start = rect.GetRB();
-	//start.x += offset * 2;
-	end = start;
-	end.y += h1 + h2;
-	mid = start;
-	mid.y = (start.y + end.y)/2;
-	mid.x += offset * 2;
+	start = rightBottomPt;
+	end = rightTopPt;
+	mid = AcGePoint3d(start.x + offset* 2, (start.y+end.y)/2, 0);
 	MD2010_AddAlignedDimension2(start,end, mid);
 
+	//////////////////////////////////////////////////////////////////////////
 	//----------------标注横向的--------------------//
-	double A = GetA();
+
 	double W1 = GetW1();
 	double W2 = GetW2();
 	double W3 = GetW3();
-	double W = GetW();
 
 	start = rect.GetLT();
 	end = start;
