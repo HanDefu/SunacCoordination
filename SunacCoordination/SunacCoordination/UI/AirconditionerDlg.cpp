@@ -16,6 +16,7 @@
 #include "../Object/AirCondition/RCAirCondition.h"
 #include "../Common/ComFun_Sunac.h"
 #include "../Common/ComFun_Str.h"
+#include "../Common/ComFun_ACad.h"
 
 
 // CAirconditionerDlg 对话框
@@ -40,6 +41,7 @@ CAirconditionerDlg::CAirconditionerDlg(CWnd* pParent /*=NULL*/)
 	, m_rSize(0)
 {
 	m_flag = false;
+	m_pCurEdit = NULL;
 }
 
 CAirconditionerDlg::~CAirconditionerDlg()
@@ -205,8 +207,21 @@ void CAirconditionerDlg::OnBnClickedButtonInsertac()
 	ShowWindow(FALSE);
 
 	AcGeVector3d offsetXY;
+	AcGePoint3d pnt;
+
 	//获取插入点
-	AcGePoint3d pnt = TY_GetPoint();
+	if (m_pCurEdit == NULL)
+	{
+		pnt = TY_GetPoint();
+		acedPostCommandPrompt();
+	}
+	else
+	{
+		AcDbExtents ext;
+		m_pCurEdit->getGeomExtents(ext);
+		pnt = ext.minPoint();
+		JHCOM_DeleteCadObject(m_pCurEdit->objectId());
+	}
 
 	RCAirCondition blockAirCon;
 	//将块插入图形空间
@@ -234,6 +249,8 @@ void CAirconditionerDlg::OnBnClickedButtonInsertac()
 
 	//把UI的数据记录在图框的扩展字典中
 	AttrAirCon * pAirCon = new AttrAirCon(m_allAirCons[0]);
+	pAirCon->m_bLeftRightMirror = (m_leftRightImage.GetCheck() == TRUE);
+	pAirCon->m_bUpDownMirror = (m_upDownImage.GetCheck() == TRUE);
 	blockAirCon.AddAttribute(pAirCon);
 
 	pAirCon->close();
@@ -284,4 +301,29 @@ void CAirconditionerDlg::OnBnClickedButtonCalculate2()
 		AfxMessageBox(TEXT("房间面积应大于0m²"));
 	}
 	UpdateData(FALSE);
+}
+
+void CAirconditionerDlg::SetEditMode(AcDbBlockReference* pBlock)
+{
+	m_pCurEdit = pBlock;
+	if (m_pCurEdit == NULL)
+		return;
+
+	AcDbObject* pAtt = NULL;
+	TY_GetAttributeData(pBlock->objectId(), pAtt);
+	AttrAirCon *pAirCon = dynamic_cast<AttrAirCon *>(pAtt);
+	if (pAirCon == NULL)
+		return;
+
+	CString sPower;
+	sPower.Format(L"%.1lf", pAirCon->m_power);
+	m_pNum.SelectString(-1, sPower);
+	m_lNTubePos.SelectString(-1, pAirCon->m_pipePos);
+	m_hasRainTube.SetCheck(pAirCon->m_hasRainPipe);
+	m_rainTubePos.EnableWindow(pAirCon->m_hasRainPipe);
+	m_rainTubePos.SelectString(-1, pAirCon->m_rainPipePos);
+	m_upDownImage.SetCheck(pAirCon->m_bUpDownMirror);
+	m_leftRightImage.SetCheck(pAirCon->m_bLeftRightMirror);
+
+	TYUI_SetText(*GetDlgItem(IDC_BUTTON_INSERTAC), L"确定");
 }

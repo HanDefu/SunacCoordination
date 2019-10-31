@@ -96,6 +96,26 @@ void CDoubleClickBlockReference::startEdit( AcDbEntity *pEnt, AcGePoint3d pt )
 				g_bathroomDlg->ShowWindow(SW_SHOW);
 				break;
 			}
+		case RAILING:
+			{
+				if (g_railingDlg != NULL)
+					break;
+				g_railingDlg = new CRailingDlg(acedGetAcadFrame());
+				g_railingDlg->Create(IDD_DIALOG_RAILING);
+				g_railingDlg->SetEditMode(pBlockReference);
+				g_railingDlg->ShowWindow(SW_SHOW);
+				break;
+			}
+		case AIRCON:
+			{
+				if (g_airconditionerDlg != NULL)
+					break;
+				g_airconditionerDlg = new CAirconditionerDlg(acedGetAcadFrame());
+				g_airconditionerDlg->Create(IDD_DIALOG_AIRCONDITIONER);
+				g_airconditionerDlg->SetEditMode(pBlockReference);
+				g_airconditionerDlg->ShowWindow(SW_SHOW);
+				break;
+			}
 		}
 	}
 	else

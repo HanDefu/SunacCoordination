@@ -11,6 +11,7 @@
 #include "../WebIO/WebIO.h"
 #include "../GlobalSetting.h"
 #include "GridCellWithPicture.h"
+#include "../Common/ComFun_ACad.h"
 
 // CRailingDlg 对话框
 
@@ -37,6 +38,7 @@ CRailingDlg::CRailingDlg(CWnd* pParent /*=NULL*/)
 	, m_sRailingId(_T(""))
 {
 	m_isMoldless = true;
+	m_pCurEdit = NULL;
 }
 
 CRailingDlg::~CRailingDlg()
@@ -161,7 +163,18 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 	//选择插入点
 	ShowWindow(FALSE);
 	AcGePoint3d pnt;
-	pnt = TY_GetPoint();
+	if (m_pCurEdit == NULL)
+	{
+		pnt = TY_GetPoint();
+		acedPostCommandPrompt();
+	}
+	else
+	{
+		AcDbExtents ext;
+		m_pCurEdit->getGeomExtents(ext);
+		pnt = ext.minPoint();
+		JHCOM_DeleteCadObject(m_pCurEdit->objectId());
+	}
 
 	AcDbObjectId railingId;
 	int nRet = pRailing->GenerateRailing(pnt, railingId);
@@ -306,8 +319,8 @@ void CRailingDlg::UpdateRailingToGrid(eRailingType p_railetype)
 	}
 
 	m_preRailing.SelectPreview(0, 0);
-	m_preRailing.SetDefCellMargin(20);
-	m_preRailing.SetBkColor(RGB(128, 128, 128));
+	//m_preRailing.SetDefCellMargin(20);
+	//m_preRailing.SetBkColor(RGB(128, 128, 128));
 }
 
 CString CRailingDlg::RailingSize(int i)
@@ -324,6 +337,40 @@ CString CRailingDlg::RailingSize(int i)
 	else if(i == 6)
 		str = _T("1510,1716");
 	return str;
+}
+
+void CRailingDlg::SetEditMode(AcDbBlockReference* pBlock)
+{
+	m_pCurEdit = pBlock;
+	if (m_pCurEdit == NULL)
+		return;
+
+	AcDbObject* pAtt = NULL;
+	TY_GetAttributeData(pBlock->objectId(), pAtt);
+	AttrRailing *pRailing = dynamic_cast<AttrRailing *>(pAtt);
+	if (pRailing == NULL)
+		return;
+
+	m_width = pRailing->m_length;
+	m_height = pRailing->m_height;
+	UpdateData(FALSE);
+
+	for (int i = 0; i < m_preRailing.GetRowCount(); i++)
+	{
+		for (int j = 0; j < m_preRailing.GetColumnCount(); j++)
+		{
+			CGridCellForPreview* pCell = m_preRailing.GetPreviewCell(i, j);
+			if (pCell == NULL)
+				continue;
+			if (pRailing->m_prototypeCode == pCell->GetName())
+			{
+				m_preRailing.SelectPreview(i, j);
+				break;
+			}
+		}
+	}
+
+	TYUI_SetText(*GetDlgItem(IDC_BUTTON_INSERTRAILING), L"确定");
 }
 
 void CRailingDlg::OnBnClickedCheckAutoindex()
