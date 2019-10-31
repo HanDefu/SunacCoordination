@@ -61,32 +61,40 @@ class _ns1__CadFileDownload;	/* .\SunacCADService2.h:195 */
 class _ns1__CadFileDownloadResponse;	/* .\SunacCADService2.h:197 */
 class _ns1__CadImgDownload;	/* .\SunacCADService2.h:199 */
 class _ns1__CadImgDownloadResponse;	/* .\SunacCADService2.h:201 */
-struct __ns1__StandardDesignAttribute;	/* .\SunacCADService2.h:1012 */
-struct __ns1__GetAllWindows;	/* .\SunacCADService2.h:1083 */
-struct __ns1__GetWindows;	/* .\SunacCADService2.h:1154 */
-struct __ns1__GetAllDoor;	/* .\SunacCADService2.h:1225 */
-struct __ns1__GetAllDoorByParam;	/* .\SunacCADService2.h:1296 */
-struct __ns1__GetAllKitchen;	/* .\SunacCADService2.h:1367 */
-struct __ns1__GetAllKitchenParam;	/* .\SunacCADService2.h:1438 */
-struct __ns1__GetAllBathroom;	/* .\SunacCADService2.h:1509 */
-struct __ns1__GetAllBathroomByParam;	/* .\SunacCADService2.h:1580 */
-struct __ns1__GetAllHandrailByParam;	/* .\SunacCADService2.h:1651 */
-struct __ns1__GetAllAirconditionerByParam;	/* .\SunacCADService2.h:1722 */
-struct __ns1__CadFileDownload;	/* .\SunacCADService2.h:1793 */
-struct __ns1__CadImgDownload;	/* .\SunacCADService2.h:1864 */
-struct __ns1__StandardDesignAttribute_;	/* .\SunacCADService2.h:1935 */
-struct __ns1__GetAllWindows_;	/* .\SunacCADService2.h:2006 */
-struct __ns1__GetWindows_;	/* .\SunacCADService2.h:2077 */
-struct __ns1__GetAllDoor_;	/* .\SunacCADService2.h:2148 */
-struct __ns1__GetAllDoorByParam_;	/* .\SunacCADService2.h:2219 */
-struct __ns1__GetAllKitchen_;	/* .\SunacCADService2.h:2290 */
-struct __ns1__GetAllKitchenParam_;	/* .\SunacCADService2.h:2361 */
-struct __ns1__GetAllBathroom_;	/* .\SunacCADService2.h:2432 */
-struct __ns1__GetAllBathroomByParam_;	/* .\SunacCADService2.h:2503 */
-struct __ns1__GetAllHandrailByParam_;	/* .\SunacCADService2.h:2574 */
-struct __ns1__GetAllAirconditionerByParam_;	/* .\SunacCADService2.h:2645 */
-struct __ns1__CadFileDownload_;	/* .\SunacCADService2.h:2716 */
-struct __ns1__CadImgDownload_;	/* .\SunacCADService2.h:2787 */
+class _ns1__NewCadFileDir;	/* .\SunacCADService2.h:203 */
+class _ns1__NewCadFileDirResponse;	/* .\SunacCADService2.h:205 */
+class _ns1__DeleteCadFileDir;	/* .\SunacCADService2.h:207 */
+class _ns1__DeleteCadFileDirResponse;	/* .\SunacCADService2.h:209 */
+struct __ns1__StandardDesignAttribute;	/* .\SunacCADService2.h:1128 */
+struct __ns1__GetAllWindows;	/* .\SunacCADService2.h:1199 */
+struct __ns1__GetWindows;	/* .\SunacCADService2.h:1270 */
+struct __ns1__GetAllDoor;	/* .\SunacCADService2.h:1341 */
+struct __ns1__GetAllDoorByParam;	/* .\SunacCADService2.h:1412 */
+struct __ns1__GetAllKitchen;	/* .\SunacCADService2.h:1483 */
+struct __ns1__GetAllKitchenParam;	/* .\SunacCADService2.h:1554 */
+struct __ns1__GetAllBathroom;	/* .\SunacCADService2.h:1625 */
+struct __ns1__GetAllBathroomByParam;	/* .\SunacCADService2.h:1696 */
+struct __ns1__GetAllHandrailByParam;	/* .\SunacCADService2.h:1767 */
+struct __ns1__GetAllAirconditionerByParam;	/* .\SunacCADService2.h:1838 */
+struct __ns1__CadFileDownload;	/* .\SunacCADService2.h:1909 */
+struct __ns1__CadImgDownload;	/* .\SunacCADService2.h:1980 */
+struct __ns1__NewCadFileDir;	/* .\SunacCADService2.h:2051 */
+struct __ns1__DeleteCadFileDir;	/* .\SunacCADService2.h:2122 */
+struct __ns1__StandardDesignAttribute_;	/* .\SunacCADService2.h:2193 */
+struct __ns1__GetAllWindows_;	/* .\SunacCADService2.h:2264 */
+struct __ns1__GetWindows_;	/* .\SunacCADService2.h:2335 */
+struct __ns1__GetAllDoor_;	/* .\SunacCADService2.h:2406 */
+struct __ns1__GetAllDoorByParam_;	/* .\SunacCADService2.h:2477 */
+struct __ns1__GetAllKitchen_;	/* .\SunacCADService2.h:2548 */
+struct __ns1__GetAllKitchenParam_;	/* .\SunacCADService2.h:2619 */
+struct __ns1__GetAllBathroom_;	/* .\SunacCADService2.h:2690 */
+struct __ns1__GetAllBathroomByParam_;	/* .\SunacCADService2.h:2761 */
+struct __ns1__GetAllHandrailByParam_;	/* .\SunacCADService2.h:2832 */
+struct __ns1__GetAllAirconditionerByParam_;	/* .\SunacCADService2.h:2903 */
+struct __ns1__CadFileDownload_;	/* .\SunacCADService2.h:2974 */
+struct __ns1__CadImgDownload_;	/* .\SunacCADService2.h:3045 */
+struct __ns1__NewCadFileDir_;	/* .\SunacCADService2.h:3116 */
+struct __ns1__DeleteCadFileDir_;	/* .\SunacCADService2.h:3187 */
 
 /* .\SunacCADService2.h:151 */
 #ifndef SOAP_TYPE__ns1__StandardDesignAttribute
@@ -1050,9 +1058,165 @@ class SOAP_CMAC _ns1__CadImgDownloadResponse {
 };
 #endif
 
-/* .\SunacCADService2.h:1012 */
+/* .\SunacCADService2.h:203 */
+#ifndef SOAP_TYPE__ns1__NewCadFileDir
+#define SOAP_TYPE__ns1__NewCadFileDir (34)
+/* complex XML schema type 'ns1:NewCadFileDir': */
+class SOAP_CMAC _ns1__NewCadFileDir {
+      public:
+        /// Optional element 'ns1:UID' of XML schema type 'xsd:string'
+        std::wstring *UID;
+        /// Optional element 'ns1:OID' of XML schema type 'xsd:string'
+        std::wstring *OID;
+        /// Optional element 'ns1:DrawingDir' of XML schema type 'xsd:string'
+        std::wstring *DrawingDir;
+        /// Optional element 'ns1:ParentDir' of XML schema type 'xsd:string'
+        std::wstring *ParentDir;
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__NewCadFileDir
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__NewCadFileDir; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__NewCadFileDir, default initialized and not managed by a soap context
+        virtual _ns1__NewCadFileDir *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__NewCadFileDir); }
+      public:
+        /// Constructor with default initializations
+        _ns1__NewCadFileDir() : UID(), OID(), DrawingDir(), ParentDir(), soap() { }
+        virtual ~_ns1__NewCadFileDir() { }
+        /// Friend allocator used by soap_new__ns1__NewCadFileDir(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__NewCadFileDir * SOAP_FMAC2 soap_instantiate__ns1__NewCadFileDir(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:205 */
+#ifndef SOAP_TYPE__ns1__NewCadFileDirResponse
+#define SOAP_TYPE__ns1__NewCadFileDirResponse (35)
+/* complex XML schema type 'ns1:NewCadFileDirResponse': */
+class SOAP_CMAC _ns1__NewCadFileDirResponse {
+      public:
+        /// Optional element 'ns1:NewCadFileDirResult' of XML schema type 'xsd:string'
+        std::wstring *NewCadFileDirResult;
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__NewCadFileDirResponse
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__NewCadFileDirResponse; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__NewCadFileDirResponse, default initialized and not managed by a soap context
+        virtual _ns1__NewCadFileDirResponse *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__NewCadFileDirResponse); }
+      public:
+        /// Constructor with default initializations
+        _ns1__NewCadFileDirResponse() : NewCadFileDirResult(), soap() { }
+        virtual ~_ns1__NewCadFileDirResponse() { }
+        /// Friend allocator used by soap_new__ns1__NewCadFileDirResponse(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__NewCadFileDirResponse * SOAP_FMAC2 soap_instantiate__ns1__NewCadFileDirResponse(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:207 */
+#ifndef SOAP_TYPE__ns1__DeleteCadFileDir
+#define SOAP_TYPE__ns1__DeleteCadFileDir (36)
+/* complex XML schema type 'ns1:DeleteCadFileDir': */
+class SOAP_CMAC _ns1__DeleteCadFileDir {
+      public:
+        /// Optional element 'ns1:UID' of XML schema type 'xsd:string'
+        std::wstring *UID;
+        /// Optional element 'ns1:OID' of XML schema type 'xsd:string'
+        std::wstring *OID;
+        /// Optional element 'ns1:DrawingDir' of XML schema type 'xsd:string'
+        std::wstring *DrawingDir;
+        /// Optional element 'ns1:ParentDir' of XML schema type 'xsd:string'
+        std::wstring *ParentDir;
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__DeleteCadFileDir
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__DeleteCadFileDir; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__DeleteCadFileDir, default initialized and not managed by a soap context
+        virtual _ns1__DeleteCadFileDir *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__DeleteCadFileDir); }
+      public:
+        /// Constructor with default initializations
+        _ns1__DeleteCadFileDir() : UID(), OID(), DrawingDir(), ParentDir(), soap() { }
+        virtual ~_ns1__DeleteCadFileDir() { }
+        /// Friend allocator used by soap_new__ns1__DeleteCadFileDir(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__DeleteCadFileDir * SOAP_FMAC2 soap_instantiate__ns1__DeleteCadFileDir(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:209 */
+#ifndef SOAP_TYPE__ns1__DeleteCadFileDirResponse
+#define SOAP_TYPE__ns1__DeleteCadFileDirResponse (37)
+/* complex XML schema type 'ns1:DeleteCadFileDirResponse': */
+class SOAP_CMAC _ns1__DeleteCadFileDirResponse {
+      public:
+        /// Optional element 'ns1:DeleteCadFileDirResult' of XML schema type 'xsd:string'
+        std::wstring *DeleteCadFileDirResult;
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE__ns1__DeleteCadFileDirResponse
+        virtual long soap_type(void) const { return SOAP_TYPE__ns1__DeleteCadFileDirResponse; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type _ns1__DeleteCadFileDirResponse, default initialized and not managed by a soap context
+        virtual _ns1__DeleteCadFileDirResponse *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(_ns1__DeleteCadFileDirResponse); }
+      public:
+        /// Constructor with default initializations
+        _ns1__DeleteCadFileDirResponse() : DeleteCadFileDirResult(), soap() { }
+        virtual ~_ns1__DeleteCadFileDirResponse() { }
+        /// Friend allocator used by soap_new__ns1__DeleteCadFileDirResponse(struct soap*, int)
+        friend SOAP_FMAC1 _ns1__DeleteCadFileDirResponse * SOAP_FMAC2 soap_instantiate__ns1__DeleteCadFileDirResponse(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:1128 */
 #ifndef SOAP_TYPE___ns1__StandardDesignAttribute
-#define SOAP_TYPE___ns1__StandardDesignAttribute (41)
+#define SOAP_TYPE___ns1__StandardDesignAttribute (45)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__StandardDesignAttribute {
       public:
@@ -1068,9 +1232,9 @@ struct SOAP_CMAC __ns1__StandardDesignAttribute {
 };
 #endif
 
-/* .\SunacCADService2.h:1083 */
+/* .\SunacCADService2.h:1199 */
 #ifndef SOAP_TYPE___ns1__GetAllWindows
-#define SOAP_TYPE___ns1__GetAllWindows (45)
+#define SOAP_TYPE___ns1__GetAllWindows (49)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetAllWindows {
       public:
@@ -1086,9 +1250,9 @@ struct SOAP_CMAC __ns1__GetAllWindows {
 };
 #endif
 
-/* .\SunacCADService2.h:1154 */
+/* .\SunacCADService2.h:1270 */
 #ifndef SOAP_TYPE___ns1__GetWindows
-#define SOAP_TYPE___ns1__GetWindows (49)
+#define SOAP_TYPE___ns1__GetWindows (53)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetWindows {
       public:
@@ -1104,9 +1268,9 @@ struct SOAP_CMAC __ns1__GetWindows {
 };
 #endif
 
-/* .\SunacCADService2.h:1225 */
+/* .\SunacCADService2.h:1341 */
 #ifndef SOAP_TYPE___ns1__GetAllDoor
-#define SOAP_TYPE___ns1__GetAllDoor (53)
+#define SOAP_TYPE___ns1__GetAllDoor (57)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetAllDoor {
       public:
@@ -1122,9 +1286,9 @@ struct SOAP_CMAC __ns1__GetAllDoor {
 };
 #endif
 
-/* .\SunacCADService2.h:1296 */
+/* .\SunacCADService2.h:1412 */
 #ifndef SOAP_TYPE___ns1__GetAllDoorByParam
-#define SOAP_TYPE___ns1__GetAllDoorByParam (57)
+#define SOAP_TYPE___ns1__GetAllDoorByParam (61)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetAllDoorByParam {
       public:
@@ -1140,9 +1304,9 @@ struct SOAP_CMAC __ns1__GetAllDoorByParam {
 };
 #endif
 
-/* .\SunacCADService2.h:1367 */
+/* .\SunacCADService2.h:1483 */
 #ifndef SOAP_TYPE___ns1__GetAllKitchen
-#define SOAP_TYPE___ns1__GetAllKitchen (61)
+#define SOAP_TYPE___ns1__GetAllKitchen (65)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetAllKitchen {
       public:
@@ -1158,9 +1322,9 @@ struct SOAP_CMAC __ns1__GetAllKitchen {
 };
 #endif
 
-/* .\SunacCADService2.h:1438 */
+/* .\SunacCADService2.h:1554 */
 #ifndef SOAP_TYPE___ns1__GetAllKitchenParam
-#define SOAP_TYPE___ns1__GetAllKitchenParam (65)
+#define SOAP_TYPE___ns1__GetAllKitchenParam (69)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetAllKitchenParam {
       public:
@@ -1176,9 +1340,9 @@ struct SOAP_CMAC __ns1__GetAllKitchenParam {
 };
 #endif
 
-/* .\SunacCADService2.h:1509 */
+/* .\SunacCADService2.h:1625 */
 #ifndef SOAP_TYPE___ns1__GetAllBathroom
-#define SOAP_TYPE___ns1__GetAllBathroom (69)
+#define SOAP_TYPE___ns1__GetAllBathroom (73)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetAllBathroom {
       public:
@@ -1194,9 +1358,9 @@ struct SOAP_CMAC __ns1__GetAllBathroom {
 };
 #endif
 
-/* .\SunacCADService2.h:1580 */
+/* .\SunacCADService2.h:1696 */
 #ifndef SOAP_TYPE___ns1__GetAllBathroomByParam
-#define SOAP_TYPE___ns1__GetAllBathroomByParam (73)
+#define SOAP_TYPE___ns1__GetAllBathroomByParam (77)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetAllBathroomByParam {
       public:
@@ -1212,9 +1376,9 @@ struct SOAP_CMAC __ns1__GetAllBathroomByParam {
 };
 #endif
 
-/* .\SunacCADService2.h:1651 */
+/* .\SunacCADService2.h:1767 */
 #ifndef SOAP_TYPE___ns1__GetAllHandrailByParam
-#define SOAP_TYPE___ns1__GetAllHandrailByParam (77)
+#define SOAP_TYPE___ns1__GetAllHandrailByParam (81)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetAllHandrailByParam {
       public:
@@ -1230,9 +1394,9 @@ struct SOAP_CMAC __ns1__GetAllHandrailByParam {
 };
 #endif
 
-/* .\SunacCADService2.h:1722 */
+/* .\SunacCADService2.h:1838 */
 #ifndef SOAP_TYPE___ns1__GetAllAirconditionerByParam
-#define SOAP_TYPE___ns1__GetAllAirconditionerByParam (81)
+#define SOAP_TYPE___ns1__GetAllAirconditionerByParam (85)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetAllAirconditionerByParam {
       public:
@@ -1248,9 +1412,9 @@ struct SOAP_CMAC __ns1__GetAllAirconditionerByParam {
 };
 #endif
 
-/* .\SunacCADService2.h:1793 */
+/* .\SunacCADService2.h:1909 */
 #ifndef SOAP_TYPE___ns1__CadFileDownload
-#define SOAP_TYPE___ns1__CadFileDownload (85)
+#define SOAP_TYPE___ns1__CadFileDownload (89)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__CadFileDownload {
       public:
@@ -1266,9 +1430,9 @@ struct SOAP_CMAC __ns1__CadFileDownload {
 };
 #endif
 
-/* .\SunacCADService2.h:1864 */
+/* .\SunacCADService2.h:1980 */
 #ifndef SOAP_TYPE___ns1__CadImgDownload
-#define SOAP_TYPE___ns1__CadImgDownload (89)
+#define SOAP_TYPE___ns1__CadImgDownload (93)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__CadImgDownload {
       public:
@@ -1284,9 +1448,45 @@ struct SOAP_CMAC __ns1__CadImgDownload {
 };
 #endif
 
-/* .\SunacCADService2.h:1935 */
+/* .\SunacCADService2.h:2051 */
+#ifndef SOAP_TYPE___ns1__NewCadFileDir
+#define SOAP_TYPE___ns1__NewCadFileDir (97)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__NewCadFileDir {
+      public:
+        /** Optional element 'ns1:NewCadFileDir' of XML schema type 'ns1:NewCadFileDir' */
+        _ns1__NewCadFileDir *ns1__NewCadFileDir;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__NewCadFileDir */
+        long soap_type() const { return SOAP_TYPE___ns1__NewCadFileDir; }
+        /** Constructor with member initializations */
+        __ns1__NewCadFileDir() : ns1__NewCadFileDir() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__NewCadFileDir * SOAP_FMAC2 soap_instantiate___ns1__NewCadFileDir(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:2122 */
+#ifndef SOAP_TYPE___ns1__DeleteCadFileDir
+#define SOAP_TYPE___ns1__DeleteCadFileDir (101)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__DeleteCadFileDir {
+      public:
+        /** Optional element 'ns1:DeleteCadFileDir' of XML schema type 'ns1:DeleteCadFileDir' */
+        _ns1__DeleteCadFileDir *ns1__DeleteCadFileDir;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__DeleteCadFileDir */
+        long soap_type() const { return SOAP_TYPE___ns1__DeleteCadFileDir; }
+        /** Constructor with member initializations */
+        __ns1__DeleteCadFileDir() : ns1__DeleteCadFileDir() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__DeleteCadFileDir * SOAP_FMAC2 soap_instantiate___ns1__DeleteCadFileDir(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:2193 */
 #ifndef SOAP_TYPE___ns1__StandardDesignAttribute_
-#define SOAP_TYPE___ns1__StandardDesignAttribute_ (91)
+#define SOAP_TYPE___ns1__StandardDesignAttribute_ (103)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__StandardDesignAttribute_ {
       public:
@@ -1302,9 +1502,9 @@ struct SOAP_CMAC __ns1__StandardDesignAttribute_ {
 };
 #endif
 
-/* .\SunacCADService2.h:2006 */
+/* .\SunacCADService2.h:2264 */
 #ifndef SOAP_TYPE___ns1__GetAllWindows_
-#define SOAP_TYPE___ns1__GetAllWindows_ (93)
+#define SOAP_TYPE___ns1__GetAllWindows_ (105)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetAllWindows_ {
       public:
@@ -1320,9 +1520,9 @@ struct SOAP_CMAC __ns1__GetAllWindows_ {
 };
 #endif
 
-/* .\SunacCADService2.h:2077 */
+/* .\SunacCADService2.h:2335 */
 #ifndef SOAP_TYPE___ns1__GetWindows_
-#define SOAP_TYPE___ns1__GetWindows_ (95)
+#define SOAP_TYPE___ns1__GetWindows_ (107)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetWindows_ {
       public:
@@ -1338,9 +1538,9 @@ struct SOAP_CMAC __ns1__GetWindows_ {
 };
 #endif
 
-/* .\SunacCADService2.h:2148 */
+/* .\SunacCADService2.h:2406 */
 #ifndef SOAP_TYPE___ns1__GetAllDoor_
-#define SOAP_TYPE___ns1__GetAllDoor_ (97)
+#define SOAP_TYPE___ns1__GetAllDoor_ (109)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetAllDoor_ {
       public:
@@ -1356,9 +1556,9 @@ struct SOAP_CMAC __ns1__GetAllDoor_ {
 };
 #endif
 
-/* .\SunacCADService2.h:2219 */
+/* .\SunacCADService2.h:2477 */
 #ifndef SOAP_TYPE___ns1__GetAllDoorByParam_
-#define SOAP_TYPE___ns1__GetAllDoorByParam_ (99)
+#define SOAP_TYPE___ns1__GetAllDoorByParam_ (111)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetAllDoorByParam_ {
       public:
@@ -1374,9 +1574,9 @@ struct SOAP_CMAC __ns1__GetAllDoorByParam_ {
 };
 #endif
 
-/* .\SunacCADService2.h:2290 */
+/* .\SunacCADService2.h:2548 */
 #ifndef SOAP_TYPE___ns1__GetAllKitchen_
-#define SOAP_TYPE___ns1__GetAllKitchen_ (101)
+#define SOAP_TYPE___ns1__GetAllKitchen_ (113)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetAllKitchen_ {
       public:
@@ -1392,9 +1592,9 @@ struct SOAP_CMAC __ns1__GetAllKitchen_ {
 };
 #endif
 
-/* .\SunacCADService2.h:2361 */
+/* .\SunacCADService2.h:2619 */
 #ifndef SOAP_TYPE___ns1__GetAllKitchenParam_
-#define SOAP_TYPE___ns1__GetAllKitchenParam_ (103)
+#define SOAP_TYPE___ns1__GetAllKitchenParam_ (115)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetAllKitchenParam_ {
       public:
@@ -1410,9 +1610,9 @@ struct SOAP_CMAC __ns1__GetAllKitchenParam_ {
 };
 #endif
 
-/* .\SunacCADService2.h:2432 */
+/* .\SunacCADService2.h:2690 */
 #ifndef SOAP_TYPE___ns1__GetAllBathroom_
-#define SOAP_TYPE___ns1__GetAllBathroom_ (105)
+#define SOAP_TYPE___ns1__GetAllBathroom_ (117)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetAllBathroom_ {
       public:
@@ -1428,9 +1628,9 @@ struct SOAP_CMAC __ns1__GetAllBathroom_ {
 };
 #endif
 
-/* .\SunacCADService2.h:2503 */
+/* .\SunacCADService2.h:2761 */
 #ifndef SOAP_TYPE___ns1__GetAllBathroomByParam_
-#define SOAP_TYPE___ns1__GetAllBathroomByParam_ (107)
+#define SOAP_TYPE___ns1__GetAllBathroomByParam_ (119)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetAllBathroomByParam_ {
       public:
@@ -1446,9 +1646,9 @@ struct SOAP_CMAC __ns1__GetAllBathroomByParam_ {
 };
 #endif
 
-/* .\SunacCADService2.h:2574 */
+/* .\SunacCADService2.h:2832 */
 #ifndef SOAP_TYPE___ns1__GetAllHandrailByParam_
-#define SOAP_TYPE___ns1__GetAllHandrailByParam_ (109)
+#define SOAP_TYPE___ns1__GetAllHandrailByParam_ (121)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetAllHandrailByParam_ {
       public:
@@ -1464,9 +1664,9 @@ struct SOAP_CMAC __ns1__GetAllHandrailByParam_ {
 };
 #endif
 
-/* .\SunacCADService2.h:2645 */
+/* .\SunacCADService2.h:2903 */
 #ifndef SOAP_TYPE___ns1__GetAllAirconditionerByParam_
-#define SOAP_TYPE___ns1__GetAllAirconditionerByParam_ (111)
+#define SOAP_TYPE___ns1__GetAllAirconditionerByParam_ (123)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__GetAllAirconditionerByParam_ {
       public:
@@ -1482,9 +1682,9 @@ struct SOAP_CMAC __ns1__GetAllAirconditionerByParam_ {
 };
 #endif
 
-/* .\SunacCADService2.h:2716 */
+/* .\SunacCADService2.h:2974 */
 #ifndef SOAP_TYPE___ns1__CadFileDownload_
-#define SOAP_TYPE___ns1__CadFileDownload_ (113)
+#define SOAP_TYPE___ns1__CadFileDownload_ (125)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__CadFileDownload_ {
       public:
@@ -1500,9 +1700,9 @@ struct SOAP_CMAC __ns1__CadFileDownload_ {
 };
 #endif
 
-/* .\SunacCADService2.h:2787 */
+/* .\SunacCADService2.h:3045 */
 #ifndef SOAP_TYPE___ns1__CadImgDownload_
-#define SOAP_TYPE___ns1__CadImgDownload_ (115)
+#define SOAP_TYPE___ns1__CadImgDownload_ (127)
 /* Wrapper: */
 struct SOAP_CMAC __ns1__CadImgDownload_ {
       public:
@@ -1518,10 +1718,46 @@ struct SOAP_CMAC __ns1__CadImgDownload_ {
 };
 #endif
 
-/* .\SunacCADService2.h:3238 */
+/* .\SunacCADService2.h:3116 */
+#ifndef SOAP_TYPE___ns1__NewCadFileDir_
+#define SOAP_TYPE___ns1__NewCadFileDir_ (129)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__NewCadFileDir_ {
+      public:
+        /** Optional element 'ns1:NewCadFileDir' of XML schema type 'ns1:NewCadFileDir' */
+        _ns1__NewCadFileDir *ns1__NewCadFileDir;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__NewCadFileDir_ */
+        long soap_type() const { return SOAP_TYPE___ns1__NewCadFileDir_; }
+        /** Constructor with member initializations */
+        __ns1__NewCadFileDir_() : ns1__NewCadFileDir() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__NewCadFileDir_ * SOAP_FMAC2 soap_instantiate___ns1__NewCadFileDir_(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:3187 */
+#ifndef SOAP_TYPE___ns1__DeleteCadFileDir_
+#define SOAP_TYPE___ns1__DeleteCadFileDir_ (131)
+/* Wrapper: */
+struct SOAP_CMAC __ns1__DeleteCadFileDir_ {
+      public:
+        /** Optional element 'ns1:DeleteCadFileDir' of XML schema type 'ns1:DeleteCadFileDir' */
+        _ns1__DeleteCadFileDir *ns1__DeleteCadFileDir;
+      public:
+        /** Return unique type id SOAP_TYPE___ns1__DeleteCadFileDir_ */
+        long soap_type() const { return SOAP_TYPE___ns1__DeleteCadFileDir_; }
+        /** Constructor with member initializations */
+        __ns1__DeleteCadFileDir_() : ns1__DeleteCadFileDir() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 __ns1__DeleteCadFileDir_ * SOAP_FMAC2 soap_instantiate___ns1__DeleteCadFileDir_(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* .\SunacCADService2.h:3698 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Header
-#define SOAP_TYPE_SOAP_ENV__Header (116)
+#define SOAP_TYPE_SOAP_ENV__Header (132)
 /* SOAP_ENV__Header: */
 struct SOAP_CMAC SOAP_ENV__Header {
       public:
@@ -1535,10 +1771,10 @@ struct SOAP_CMAC SOAP_ENV__Header {
 #endif
 #endif
 
-/* .\SunacCADService2.h:3238 */
+/* .\SunacCADService2.h:3698 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Code
-#define SOAP_TYPE_SOAP_ENV__Code (117)
+#define SOAP_TYPE_SOAP_ENV__Code (133)
 /* Type SOAP_ENV__Code is a recursive data type, (in)directly referencing itself through its (base or derived class) members */
 /* SOAP_ENV__Code: */
 struct SOAP_CMAC SOAP_ENV__Code {
@@ -1558,10 +1794,10 @@ struct SOAP_CMAC SOAP_ENV__Code {
 #endif
 #endif
 
-/* .\SunacCADService2.h:3238 */
+/* .\SunacCADService2.h:3698 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Detail
-#define SOAP_TYPE_SOAP_ENV__Detail (119)
+#define SOAP_TYPE_SOAP_ENV__Detail (135)
 /* SOAP_ENV__Detail: */
 struct SOAP_CMAC SOAP_ENV__Detail {
       public:
@@ -1581,10 +1817,10 @@ struct SOAP_CMAC SOAP_ENV__Detail {
 #endif
 #endif
 
-/* .\SunacCADService2.h:3238 */
+/* .\SunacCADService2.h:3698 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Reason
-#define SOAP_TYPE_SOAP_ENV__Reason (122)
+#define SOAP_TYPE_SOAP_ENV__Reason (138)
 /* SOAP_ENV__Reason: */
 struct SOAP_CMAC SOAP_ENV__Reason {
       public:
@@ -1601,10 +1837,10 @@ struct SOAP_CMAC SOAP_ENV__Reason {
 #endif
 #endif
 
-/* .\SunacCADService2.h:3238 */
+/* .\SunacCADService2.h:3698 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Fault
-#define SOAP_TYPE_SOAP_ENV__Fault (123)
+#define SOAP_TYPE_SOAP_ENV__Fault (139)
 /* SOAP_ENV__Fault: */
 struct SOAP_CMAC SOAP_ENV__Fault {
       public:
@@ -1675,12 +1911,32 @@ typedef char *_QName;
 
 /* double has binding name 'double' for type 'xsd:double' */
 #ifndef SOAP_TYPE_double
-#define SOAP_TYPE_double (37)
+#define SOAP_TYPE_double (41)
 #endif
 
 /* std::wstring has binding name 'std__wstring' for type 'xsd:string' */
 #ifndef SOAP_TYPE_std__wstring
-#define SOAP_TYPE_std__wstring (34)
+#define SOAP_TYPE_std__wstring (38)
+#endif
+
+/* _ns1__DeleteCadFileDirResponse has binding name '_ns1__DeleteCadFileDirResponse' for type '' */
+#ifndef SOAP_TYPE__ns1__DeleteCadFileDirResponse
+#define SOAP_TYPE__ns1__DeleteCadFileDirResponse (37)
+#endif
+
+/* _ns1__DeleteCadFileDir has binding name '_ns1__DeleteCadFileDir' for type '' */
+#ifndef SOAP_TYPE__ns1__DeleteCadFileDir
+#define SOAP_TYPE__ns1__DeleteCadFileDir (36)
+#endif
+
+/* _ns1__NewCadFileDirResponse has binding name '_ns1__NewCadFileDirResponse' for type '' */
+#ifndef SOAP_TYPE__ns1__NewCadFileDirResponse
+#define SOAP_TYPE__ns1__NewCadFileDirResponse (35)
+#endif
+
+/* _ns1__NewCadFileDir has binding name '_ns1__NewCadFileDir' for type '' */
+#ifndef SOAP_TYPE__ns1__NewCadFileDir
+#define SOAP_TYPE__ns1__NewCadFileDir (34)
 #endif
 
 /* _ns1__CadImgDownloadResponse has binding name '_ns1__CadImgDownloadResponse' for type '' */
@@ -1815,112 +2071,122 @@ typedef char *_QName;
 
 /* struct SOAP_ENV__Fault has binding name 'SOAP_ENV__Fault' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Fault
-#define SOAP_TYPE_SOAP_ENV__Fault (123)
+#define SOAP_TYPE_SOAP_ENV__Fault (139)
 #endif
 
 /* struct SOAP_ENV__Reason has binding name 'SOAP_ENV__Reason' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Reason
-#define SOAP_TYPE_SOAP_ENV__Reason (122)
+#define SOAP_TYPE_SOAP_ENV__Reason (138)
 #endif
 
 /* struct SOAP_ENV__Detail has binding name 'SOAP_ENV__Detail' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Detail
-#define SOAP_TYPE_SOAP_ENV__Detail (119)
+#define SOAP_TYPE_SOAP_ENV__Detail (135)
 #endif
 
 /* struct SOAP_ENV__Code has binding name 'SOAP_ENV__Code' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Code
-#define SOAP_TYPE_SOAP_ENV__Code (117)
+#define SOAP_TYPE_SOAP_ENV__Code (133)
 #endif
 
 /* struct SOAP_ENV__Header has binding name 'SOAP_ENV__Header' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Header
-#define SOAP_TYPE_SOAP_ENV__Header (116)
+#define SOAP_TYPE_SOAP_ENV__Header (132)
 #endif
 
 /* struct SOAP_ENV__Reason * has binding name 'PointerToSOAP_ENV__Reason' for type '' */
 #ifndef SOAP_TYPE_PointerToSOAP_ENV__Reason
-#define SOAP_TYPE_PointerToSOAP_ENV__Reason (125)
+#define SOAP_TYPE_PointerToSOAP_ENV__Reason (141)
 #endif
 
 /* struct SOAP_ENV__Detail * has binding name 'PointerToSOAP_ENV__Detail' for type '' */
 #ifndef SOAP_TYPE_PointerToSOAP_ENV__Detail
-#define SOAP_TYPE_PointerToSOAP_ENV__Detail (124)
+#define SOAP_TYPE_PointerToSOAP_ENV__Detail (140)
 #endif
 
 /* struct SOAP_ENV__Code * has binding name 'PointerToSOAP_ENV__Code' for type '' */
 #ifndef SOAP_TYPE_PointerToSOAP_ENV__Code
-#define SOAP_TYPE_PointerToSOAP_ENV__Code (118)
+#define SOAP_TYPE_PointerToSOAP_ENV__Code (134)
+#endif
+
+/* _ns1__DeleteCadFileDir * has binding name 'PointerTo_ns1__DeleteCadFileDir' for type '' */
+#ifndef SOAP_TYPE_PointerTo_ns1__DeleteCadFileDir
+#define SOAP_TYPE_PointerTo_ns1__DeleteCadFileDir (98)
+#endif
+
+/* _ns1__NewCadFileDir * has binding name 'PointerTo_ns1__NewCadFileDir' for type '' */
+#ifndef SOAP_TYPE_PointerTo_ns1__NewCadFileDir
+#define SOAP_TYPE_PointerTo_ns1__NewCadFileDir (94)
 #endif
 
 /* _ns1__CadImgDownload * has binding name 'PointerTo_ns1__CadImgDownload' for type '' */
 #ifndef SOAP_TYPE_PointerTo_ns1__CadImgDownload
-#define SOAP_TYPE_PointerTo_ns1__CadImgDownload (86)
+#define SOAP_TYPE_PointerTo_ns1__CadImgDownload (90)
 #endif
 
 /* _ns1__CadFileDownload * has binding name 'PointerTo_ns1__CadFileDownload' for type '' */
 #ifndef SOAP_TYPE_PointerTo_ns1__CadFileDownload
-#define SOAP_TYPE_PointerTo_ns1__CadFileDownload (82)
+#define SOAP_TYPE_PointerTo_ns1__CadFileDownload (86)
 #endif
 
 /* _ns1__GetAllAirconditionerByParam * has binding name 'PointerTo_ns1__GetAllAirconditionerByParam' for type '' */
 #ifndef SOAP_TYPE_PointerTo_ns1__GetAllAirconditionerByParam
-#define SOAP_TYPE_PointerTo_ns1__GetAllAirconditionerByParam (78)
+#define SOAP_TYPE_PointerTo_ns1__GetAllAirconditionerByParam (82)
 #endif
 
 /* _ns1__GetAllHandrailByParam * has binding name 'PointerTo_ns1__GetAllHandrailByParam' for type '' */
 #ifndef SOAP_TYPE_PointerTo_ns1__GetAllHandrailByParam
-#define SOAP_TYPE_PointerTo_ns1__GetAllHandrailByParam (74)
+#define SOAP_TYPE_PointerTo_ns1__GetAllHandrailByParam (78)
 #endif
 
 /* _ns1__GetAllBathroomByParam * has binding name 'PointerTo_ns1__GetAllBathroomByParam' for type '' */
 #ifndef SOAP_TYPE_PointerTo_ns1__GetAllBathroomByParam
-#define SOAP_TYPE_PointerTo_ns1__GetAllBathroomByParam (70)
+#define SOAP_TYPE_PointerTo_ns1__GetAllBathroomByParam (74)
 #endif
 
 /* _ns1__GetAllBathroom * has binding name 'PointerTo_ns1__GetAllBathroom' for type '' */
 #ifndef SOAP_TYPE_PointerTo_ns1__GetAllBathroom
-#define SOAP_TYPE_PointerTo_ns1__GetAllBathroom (66)
+#define SOAP_TYPE_PointerTo_ns1__GetAllBathroom (70)
 #endif
 
 /* _ns1__GetAllKitchenParam * has binding name 'PointerTo_ns1__GetAllKitchenParam' for type '' */
 #ifndef SOAP_TYPE_PointerTo_ns1__GetAllKitchenParam
-#define SOAP_TYPE_PointerTo_ns1__GetAllKitchenParam (62)
+#define SOAP_TYPE_PointerTo_ns1__GetAllKitchenParam (66)
 #endif
 
 /* _ns1__GetAllKitchen * has binding name 'PointerTo_ns1__GetAllKitchen' for type '' */
 #ifndef SOAP_TYPE_PointerTo_ns1__GetAllKitchen
-#define SOAP_TYPE_PointerTo_ns1__GetAllKitchen (58)
+#define SOAP_TYPE_PointerTo_ns1__GetAllKitchen (62)
 #endif
 
 /* _ns1__GetAllDoorByParam * has binding name 'PointerTo_ns1__GetAllDoorByParam' for type '' */
 #ifndef SOAP_TYPE_PointerTo_ns1__GetAllDoorByParam
-#define SOAP_TYPE_PointerTo_ns1__GetAllDoorByParam (54)
+#define SOAP_TYPE_PointerTo_ns1__GetAllDoorByParam (58)
 #endif
 
 /* _ns1__GetAllDoor * has binding name 'PointerTo_ns1__GetAllDoor' for type '' */
 #ifndef SOAP_TYPE_PointerTo_ns1__GetAllDoor
-#define SOAP_TYPE_PointerTo_ns1__GetAllDoor (50)
+#define SOAP_TYPE_PointerTo_ns1__GetAllDoor (54)
 #endif
 
 /* _ns1__GetWindows * has binding name 'PointerTo_ns1__GetWindows' for type '' */
 #ifndef SOAP_TYPE_PointerTo_ns1__GetWindows
-#define SOAP_TYPE_PointerTo_ns1__GetWindows (46)
+#define SOAP_TYPE_PointerTo_ns1__GetWindows (50)
 #endif
 
 /* _ns1__GetAllWindows * has binding name 'PointerTo_ns1__GetAllWindows' for type '' */
 #ifndef SOAP_TYPE_PointerTo_ns1__GetAllWindows
-#define SOAP_TYPE_PointerTo_ns1__GetAllWindows (42)
+#define SOAP_TYPE_PointerTo_ns1__GetAllWindows (46)
 #endif
 
 /* _ns1__StandardDesignAttribute * has binding name 'PointerTo_ns1__StandardDesignAttribute' for type '' */
 #ifndef SOAP_TYPE_PointerTo_ns1__StandardDesignAttribute
-#define SOAP_TYPE_PointerTo_ns1__StandardDesignAttribute (38)
+#define SOAP_TYPE_PointerTo_ns1__StandardDesignAttribute (42)
 #endif
 
 /* std::wstring * has binding name 'PointerTostd__wstring' for type 'xsd:string' */
 #ifndef SOAP_TYPE_PointerTostd__wstring
-#define SOAP_TYPE_PointerTostd__wstring (35)
+#define SOAP_TYPE_PointerTostd__wstring (39)
 #endif
 
 /* _QName has binding name '_QName' for type 'xsd:QName' */

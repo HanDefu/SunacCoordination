@@ -278,7 +278,10 @@ void AttrWindow::SetDimData(const CWindowsDimData& p_dim)
 
 	m_dimData.push_back(p_dim);
 }
-
+double AttrWindow::GetWindowArea()const
+{
+	return GetH() * GetW() / 1000000.0;
+}
 double AttrWindow::GetTongFengQty(bool bDefaultValue/* = false*/) const
 {
 	if (m_isDynamic)

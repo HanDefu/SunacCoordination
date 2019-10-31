@@ -373,6 +373,9 @@
     <ClCompile Include="AutoNameSerialize.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Common\ThreadUtil.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -837,6 +840,9 @@
     </ClInclude>
     <ClInclude Include="AutoNameSerialize.h">
       <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ThreadUtil.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

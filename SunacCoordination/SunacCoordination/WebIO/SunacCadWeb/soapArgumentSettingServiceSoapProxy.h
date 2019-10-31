@@ -192,6 +192,24 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
         /// Web service asynchronous operation 'recv_CadImgDownload' to receive a response message from the connected endpoint, returns SOAP_OK or error code
         virtual int recv_CadImgDownload(_ns1__CadImgDownloadResponse &ns1__CadImgDownloadResponse);
         //
+        /// Web service synchronous operation 'NewCadFileDir' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int NewCadFileDir(_ns1__NewCadFileDir *ns1__NewCadFileDir, _ns1__NewCadFileDirResponse &ns1__NewCadFileDirResponse) { return this->NewCadFileDir(NULL, NULL, ns1__NewCadFileDir, ns1__NewCadFileDirResponse); }
+        /// Web service synchronous operation 'NewCadFileDir' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int NewCadFileDir(const char *soap_endpoint_url, const char *soap_action, _ns1__NewCadFileDir *ns1__NewCadFileDir, _ns1__NewCadFileDirResponse &ns1__NewCadFileDirResponse) { return this->send_NewCadFileDir(soap_endpoint_url, soap_action, ns1__NewCadFileDir) || this->recv_NewCadFileDir(ns1__NewCadFileDirResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_NewCadFileDir' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_NewCadFileDir(const char *soap_endpoint_url, const char *soap_action, _ns1__NewCadFileDir *ns1__NewCadFileDir);
+        /// Web service asynchronous operation 'recv_NewCadFileDir' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_NewCadFileDir(_ns1__NewCadFileDirResponse &ns1__NewCadFileDirResponse);
+        //
+        /// Web service synchronous operation 'DeleteCadFileDir' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int DeleteCadFileDir(_ns1__DeleteCadFileDir *ns1__DeleteCadFileDir, _ns1__DeleteCadFileDirResponse &ns1__DeleteCadFileDirResponse) { return this->DeleteCadFileDir(NULL, NULL, ns1__DeleteCadFileDir, ns1__DeleteCadFileDirResponse); }
+        /// Web service synchronous operation 'DeleteCadFileDir' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int DeleteCadFileDir(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadFileDir *ns1__DeleteCadFileDir, _ns1__DeleteCadFileDirResponse &ns1__DeleteCadFileDirResponse) { return this->send_DeleteCadFileDir(soap_endpoint_url, soap_action, ns1__DeleteCadFileDir) || this->recv_DeleteCadFileDir(ns1__DeleteCadFileDirResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_DeleteCadFileDir' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_DeleteCadFileDir(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadFileDir *ns1__DeleteCadFileDir);
+        /// Web service asynchronous operation 'recv_DeleteCadFileDir' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_DeleteCadFileDir(_ns1__DeleteCadFileDirResponse &ns1__DeleteCadFileDirResponse);
+        //
         /// Web service synchronous operation 'StandardDesignAttribute' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
         virtual int StandardDesignAttribute_(_ns1__StandardDesignAttribute *ns1__StandardDesignAttribute, _ns1__StandardDesignAttributeResponse &ns1__StandardDesignAttributeResponse) { return this->StandardDesignAttribute_(NULL, NULL, ns1__StandardDesignAttribute, ns1__StandardDesignAttributeResponse); }
         /// Web service synchronous operation 'StandardDesignAttribute' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
@@ -308,5 +326,23 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
         virtual int send_CadImgDownload_(const char *soap_endpoint_url, const char *soap_action, _ns1__CadImgDownload *ns1__CadImgDownload);
         /// Web service asynchronous operation 'recv_CadImgDownload' to receive a response message from the connected endpoint, returns SOAP_OK or error code
         virtual int recv_CadImgDownload_(_ns1__CadImgDownloadResponse &ns1__CadImgDownloadResponse);
+        //
+        /// Web service synchronous operation 'NewCadFileDir' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int NewCadFileDir_(_ns1__NewCadFileDir *ns1__NewCadFileDir, _ns1__NewCadFileDirResponse &ns1__NewCadFileDirResponse) { return this->NewCadFileDir_(NULL, NULL, ns1__NewCadFileDir, ns1__NewCadFileDirResponse); }
+        /// Web service synchronous operation 'NewCadFileDir' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int NewCadFileDir_(const char *soap_endpoint_url, const char *soap_action, _ns1__NewCadFileDir *ns1__NewCadFileDir, _ns1__NewCadFileDirResponse &ns1__NewCadFileDirResponse) { return this->send_NewCadFileDir_(soap_endpoint_url, soap_action, ns1__NewCadFileDir) || this->recv_NewCadFileDir_(ns1__NewCadFileDirResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_NewCadFileDir' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_NewCadFileDir_(const char *soap_endpoint_url, const char *soap_action, _ns1__NewCadFileDir *ns1__NewCadFileDir);
+        /// Web service asynchronous operation 'recv_NewCadFileDir' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_NewCadFileDir_(_ns1__NewCadFileDirResponse &ns1__NewCadFileDirResponse);
+        //
+        /// Web service synchronous operation 'DeleteCadFileDir' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int DeleteCadFileDir_(_ns1__DeleteCadFileDir *ns1__DeleteCadFileDir, _ns1__DeleteCadFileDirResponse &ns1__DeleteCadFileDirResponse) { return this->DeleteCadFileDir_(NULL, NULL, ns1__DeleteCadFileDir, ns1__DeleteCadFileDirResponse); }
+        /// Web service synchronous operation 'DeleteCadFileDir' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int DeleteCadFileDir_(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadFileDir *ns1__DeleteCadFileDir, _ns1__DeleteCadFileDirResponse &ns1__DeleteCadFileDirResponse) { return this->send_DeleteCadFileDir_(soap_endpoint_url, soap_action, ns1__DeleteCadFileDir) || this->recv_DeleteCadFileDir_(ns1__DeleteCadFileDirResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_DeleteCadFileDir' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_DeleteCadFileDir_(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadFileDir *ns1__DeleteCadFileDir);
+        /// Web service asynchronous operation 'recv_DeleteCadFileDir' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_DeleteCadFileDir_(_ns1__DeleteCadFileDirResponse &ns1__DeleteCadFileDirResponse);
     };
 #endif
