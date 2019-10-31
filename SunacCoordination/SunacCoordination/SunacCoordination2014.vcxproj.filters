@@ -370,6 +370,9 @@
     <ClCompile Include="Object\Railing\RailingStatistic.cpp">
       <Filter>Object\Railing</Filter>
     </ClCompile>
+    <ClCompile Include="Common\ThreadUtil.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -831,6 +834,9 @@
     </ClInclude>
     <ClInclude Include="Object\Railing\RailingStatistic.h">
       <Filter>Object\Railing</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ThreadUtil.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
