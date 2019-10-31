@@ -34,6 +34,7 @@
 #include "../Common/ComFun_Math.h"
 #include "../Object/WindowStatistic/WindowStatictic.h"
 #include "../Object/Railing/RailingStatistic.h"
+#include "../UI/ProjectManagementDlg.h"
 
 
 void SendCommandToCAD(CString cmd) //此函数尚未调通
@@ -349,4 +350,5 @@ void CloseModelessDialogs()
 	CloseRailingDlg();
 	CloseAirconditionerDlg();
 	CloseWindowAdvanceDlg();
+	CloseProjectManagementDlg();
 }
