@@ -41,11 +41,13 @@ public:
 	bool RenameFolder(CString p_sFolderPath, CString p_newName);
 
 	//目录层级用\分割，例如：A区\施工图 表示A区文件夹下的施工图文件夹
-	CProjectDir* FindDir(CString p_dirName);
+	CProjectDir* FindDir(CString p_dirPath);
+	CProjectFile* GetFileByDirAndName(CString p_sDirPathInProject, CString p_fileName);
 
 	const CProjectDir* GetRootDir() { return &m_rootDir; }
 	CProjectInfo GetPrjInfo()const { return m_prjInfo; }
 	CString GetProjectId()const;
+
 
 protected:
 	static void FileUpCBFunc(CUpDownFilePara*);
