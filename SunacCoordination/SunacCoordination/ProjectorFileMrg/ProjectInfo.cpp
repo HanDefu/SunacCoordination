@@ -76,20 +76,13 @@ CProjectDir* CProjectData::FindDir(CString p_dirName)
 	return pParentDir->GetSubFolder(lastFolderName);	
 }
 
-bool CProjectData::AddFile(CString p_sFilePath, CString  p_sParentFolderPath) //p_sParentFolderPath是指上传到哪个目录下,目录层级用\分割，例如：A区\施工图 表示A区文件夹下的施工图文件夹
+bool CProjectData::AddFile(CString p_sFilePath, CString  p_sParentFolderPath, FileUpDownCB cbFunc) //p_sParentFolderPath是指上传到哪个目录下,目录层级用\分割，例如：A区\施工图 表示A区文件夹下的施工图文件夹
 {
-	//找到目录
-	CProjectDir* p_pParentDir = FindDir(p_sParentFolderPath);
-	if (p_pParentDir == NULL)
-		return false;
-
 	//1上传文件到ftp中
 	CString sFileName = FilePathToFileName(p_sFilePath);
 	int nPos = sFileName.ReverseFind(_T('.'));
 	if (nPos<0)
-	{
 		return false;
-	}
 
 	CString sExtensionName = sFileName.Mid(nPos);
 	CString sSaveName = GenerateGuid() + sExtensionName; //实际存储的名字
@@ -102,7 +95,12 @@ bool CProjectData::AddFile(CString p_sFilePath, CString  p_sParentFolderPath) //
 	sDir.Format(_T("%d%2d%2d"), nowtime.GetYear(), nowtime.GetMonth(), nowtime.GetDay());
 	CFileUpDownLoad::UploadFile(p_sFilePath, sSaveName, sDir); //以日期为文件夹名
 
+
 	//2.加到本地的项目文件中
+	CProjectDir* p_pParentDir = FindDir(p_sParentFolderPath);	//找到目录
+	if (p_pParentDir == NULL)
+		return false;
+
 	CProjectFile prjfile;
 	prjfile.m_sName = sFileName;
 	prjfile.m_sSaveName = sSaveName;
@@ -114,6 +112,7 @@ bool CProjectData::AddFile(CString p_sFilePath, CString  p_sParentFolderPath) //
 
 	return true;
 }
+
 CString CProjectData::GetProjectId()const
 {
 	CString sId;

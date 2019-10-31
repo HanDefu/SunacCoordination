@@ -113,3 +113,4 @@ std::string JHCOM_GetStringFromCString(CString cstr);
 std::vector<CString> YT_SplitCString(CString strSource, const TCHAR ch);
 
 CString FilePathToFileName(const CString &p_sFilePath);
+CString FilePathToFileNameWithoutExtension(const CString &p_sFilePath);

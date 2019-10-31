@@ -221,10 +221,19 @@ CString FilePathToFileName(const CString &p_sFilePath)
 	int n1 = sFilePath.ReverseFind(_T('\\')) + 1;
 	if (-1 == n1) 
 		n1 = 0;
+	
+	return sFilePath.Mid(n1);
+}
+CString FilePathToFileNameWithoutExtension(const CString &p_sFilePath)
+{
+	CString sFilePath = p_sFilePath;
+	int n1 = sFilePath.ReverseFind(_T('\\')) + 1;
+	if (-1 == n1)
+		n1 = 0;
 
 	int n2 = sFilePath.ReverseFind(_T('.'));
-	if (-1 == n2) 
+	if (-1 == n2)
 		n2 = sFilePath.GetLength();
 
-	return sFilePath.Mid(n1);
+	return sFilePath.Mid(n1, n2-n1);
 }
