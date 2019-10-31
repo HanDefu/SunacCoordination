@@ -14,19 +14,6 @@ int CRailingStatistic::SelectRailings()
 	vAcDbObjectId ids;
 	JHCOM_SelectEnts(ids);
 
-	//查找块定义
-	for (UINT i = 0; i < ids.size(); i++)
-	{
-		AcDbEntity* pAttr = NULL;
-		if (acdbOpenObject(pAttr, ids[i], AcDb::kForRead) == Acad::eOk)
-		{
-			AcDbBlockReference* pBlockRef = AcDbBlockReference::cast(pAttr);
-			if (pBlockRef != NULL)
-				ids[i] = pBlockRef->blockTableRecord();
-			pAttr->close();
-		}
-	}
-
 	int count = 0;
 	for (UINT i = 0; i < ids.size(); i++)
 	{
@@ -89,7 +76,7 @@ AcDbObjectId CRailingStatistic::InsertTableToCAD(AcGePoint3d insertPos)
 	}
 
 	//定义列宽
-	for (int i = 0; i < rowSize; i++)
+	for (int i = 0; i < columSize; i++)
 	{
 		pTable->setColumnWidth(i, c_tableCellWidth[i]);
 	}

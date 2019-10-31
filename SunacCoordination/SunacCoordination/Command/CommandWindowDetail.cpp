@@ -178,6 +178,8 @@ void CMD_SunacWindowDetail()
 	//windowDetailTemplates 和 allWindowsTypes 的数量是一致的
 	for (UINT i = 0; i < allWindowsTypes.size(); i++)
 	{
+		const AttrWindow * pWinAtt = allWindowsTypes[i].GetAttribute();
+
 		AcGePoint3d winPnt = windowDetailTemplates[i].GetInsertPntWindow(allWindowsTypes[i].GetW(), allWindowsTypes[i].GetH());
 		allWindowsTypes[i].Insert
 			(
@@ -190,11 +192,11 @@ void CMD_SunacWindowDetail()
 			);
 		allWindowsTypes[i].RunParameters();
 
-		//功能区
-		JHCOM_CreateText(AcGePoint3d(windowDetailTemplates[i].pnt.x + windowDetailTemplates[i].gongNengQuX,
-			                      windowDetailTemplates[i].pnt.y + windowDetailTemplates[i].gongNengQuY,0),
-			AcGeVector3d(0,0,1), 
-			120, 0, L"厨房");
+		////功能区
+		//JHCOM_CreateText(AcGePoint3d(windowDetailTemplates[i].pnt.x + windowDetailTemplates[i].gongNengQuX,
+		//	                      windowDetailTemplates[i].pnt.y + windowDetailTemplates[i].gongNengQuY,0),
+		//	AcGeVector3d(0,0,1), 
+		//	120, 0, L"厨房"); //TODO
 
 		//门窗编号
 		JHCOM_CreateText(AcGePoint3d(windowDetailTemplates[i].pnt.x + windowDetailTemplates[i].idX,
@@ -204,7 +206,7 @@ void CMD_SunacWindowDetail()
 			allWindowsTypes[i].GetInstanceCode());
 
 		//窗面积
-		str.Format(L"%.2f",allWindowsTypes[i].GetWindowArea()/1000000);
+		str.Format(L"%.2f", pWinAtt->GetWindowArea());
 		JHCOM_CreateText(AcGePoint3d(windowDetailTemplates[i].pnt.x + windowDetailTemplates[i].areaX,
 			windowDetailTemplates[i].pnt.y + windowDetailTemplates[i].areaY,0),
 			AcGeVector3d(0,0,1), 
@@ -212,7 +214,7 @@ void CMD_SunacWindowDetail()
 			str);
 
 		//开启面积
-		str.Format(L"%.2f",allWindowsTypes[i].GetOpenArea()/1000000);
+		str.Format(L"%.2f", pWinAtt->GetTongFengQty());
 		JHCOM_CreateText(AcGePoint3d(windowDetailTemplates[i].pnt.x + windowDetailTemplates[i].openAreaX,
 			windowDetailTemplates[i].pnt.y + windowDetailTemplates[i].openAreaY,0),
 			AcGeVector3d(0,0,1), 

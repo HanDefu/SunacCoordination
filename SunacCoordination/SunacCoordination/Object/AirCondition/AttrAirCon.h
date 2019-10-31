@@ -62,6 +62,9 @@ public:
 	int m_airW;		//对应空调数据表格
 	int m_airH;
 	int m_airD;
+
+	bool m_bUpDownMirror;
+	bool m_bLeftRightMirror;
 };
 
 #endif // !defined(ARX__ZFFDWGSCALE_H__20140205_113541_AIRCON)

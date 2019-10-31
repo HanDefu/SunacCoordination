@@ -84,6 +84,9 @@ int CRCRailing::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut)
 	}
 
 	MD2010_InsertBlockReference_ModelSpace(sRailingDefName, p_railingIdOut, start);
+	AttrRailing* pAttRailing = new AttrRailing(m_railingAtt);
+	TY_AddAttributeData(p_railingIdOut, pAttRailing);
+	pAttRailing->close();
 
 	return 0;
 }

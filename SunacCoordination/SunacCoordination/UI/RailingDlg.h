@@ -42,6 +42,8 @@ public:
 	void UpdateRailingToGrid(eRailingType p_railetype);
 	CString RailingSize(int i);
 
+	void SetEditMode(AcDbBlockReference* pBlock);
+
 	CGridCtrlWithPreview m_preRailing;
 	CComboBox m_comboRailingType;
 	double m_height;// 栏杆高度	
@@ -49,6 +51,8 @@ public:
 	CEdit m_editRailingID;
 	CString m_sRailingId;
 	BOOL m_bRailingAutoName;// 自动编号
+
+	AcDbBlockReference* m_pCurEdit;
 };
 
 extern CRailingDlg* g_railingDlg;
