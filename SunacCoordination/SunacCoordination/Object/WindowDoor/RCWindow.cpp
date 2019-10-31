@@ -223,12 +223,16 @@ int RCWindow::CreateDims()
 	AcGePoint3d  end = rightBottomPt;
 	AcGePoint3d  mid = rightBottomPt;
 
+	int colorIndex = 2;
+	int textHeight = 80;
+	CString layer = L"0";
+
 	if (A > TOL)//如果A值存在 先标注两端的A
 	{
 		end.y += A;
 		mid.y += A / 2;
 		mid.x = start.x + offset;
-		MD2010_AddAlignedDimension2(start, end, mid);
+		MD2010_AddAlignedDimension2(start, end, mid, layer,colorIndex,textHeight);
 
 		AcGePoint3d start1 = rightTopPt;
 		AcGePoint3d end1 = rightTopPt;
@@ -236,7 +240,7 @@ int RCWindow::CreateDims()
 		end1.y -= A;
 		mid1.y -= A / 2;
 		mid.x = start.x + offset;
-		MD2010_AddAlignedDimension2(rightTopPt, end1, mid1);
+		MD2010_AddAlignedDimension2(rightTopPt, end1, mid1, layer,colorIndex,textHeight);
 	}
 
 	if (h2 > TOL)
@@ -244,20 +248,20 @@ int RCWindow::CreateDims()
 		start = AcGePoint3d(rightBottomPt.x, rightBottomPt.y + A, 0);
 		end = AcGePoint3d(start.x, start.y + h2, 0);
 		mid = AcGePoint3d(start.x + offset,  start.y + h2 / 2 , 0);
-		MD2010_AddAlignedDimension2(start,end, mid);
+		MD2010_AddAlignedDimension2(start,end, mid, layer,colorIndex,textHeight);
 	}
 
 	//H1一定有
 	start = AcGePoint3d(rightBottomPt.x, rightBottomPt.y + A + h2, 0);
 	end = AcGePoint3d(start.x, start.y + h1, 0);
 	mid = AcGePoint3d(start.x + offset, start.y + h1 / 2, 0);
-	MD2010_AddAlignedDimension2(start,end, mid);
+	MD2010_AddAlignedDimension2(start,end, mid, layer,colorIndex,textHeight);
 
 	//总高度一定有
 	start = rightBottomPt;
 	end = rightTopPt;
 	mid = AcGePoint3d(start.x + offset* 2, (start.y+end.y)/2, 0);
-	MD2010_AddAlignedDimension2(start,end, mid);
+	MD2010_AddAlignedDimension2(start,end, mid, layer,colorIndex,textHeight);
 
 	//////////////////////////////////////////////////////////////////////////
 	//----------------标注横向的--------------------//
@@ -274,7 +278,7 @@ int RCWindow::CreateDims()
 		end.x += A;
 		mid.x += A/2;
 		mid.y += offset;
-		MD2010_AddAlignedDimension2(start,end, mid);
+		MD2010_AddAlignedDimension2(start,end, mid, layer,colorIndex,textHeight);
 
 		AcGePoint3d start1 = rect.GetRT();
 		AcGePoint3d end1 = start1;
@@ -282,7 +286,7 @@ int RCWindow::CreateDims()
 		end1.x -= A;
 		mid1.x -= A/2;
 		mid1.y += offset;
-		MD2010_AddAlignedDimension2(start1,end1, mid1);
+		MD2010_AddAlignedDimension2(start1,end1, mid1, layer,colorIndex,textHeight);
 	}
 
 	//W1 都会存在
@@ -291,7 +295,7 @@ int RCWindow::CreateDims()
 	end.x += W1;
 	mid.x += W1/2;
 	mid.y += offset;
-	MD2010_AddAlignedDimension2(start,end, mid);
+	MD2010_AddAlignedDimension2(start,end, mid, layer,colorIndex,textHeight);
 
 	//标注W2
 	if (W2 > TOL)
@@ -301,7 +305,7 @@ int RCWindow::CreateDims()
 		end.x += W2;
 		mid.x += W2/2;
 		mid.y += offset;
-		MD2010_AddAlignedDimension2(start,end, mid);
+		MD2010_AddAlignedDimension2(start,end, mid, layer,colorIndex,textHeight);
 	}
 
 	//最后可能还有一个W1
@@ -312,7 +316,7 @@ int RCWindow::CreateDims()
 		end.x += W1;
 		mid.x += W1/2;
 		mid.y += offset;
-		MD2010_AddAlignedDimension2(start,end, mid);
+		MD2010_AddAlignedDimension2(start,end, mid, layer,colorIndex,textHeight);
 	}
 
 	//标注总的宽度
@@ -322,7 +326,7 @@ int RCWindow::CreateDims()
 	end.x += W;
 	mid.x += W/2;
 	mid.y += offset*2;
-	MD2010_AddAlignedDimension2(start,end, mid);
+	MD2010_AddAlignedDimension2(start,end, mid, layer,colorIndex,textHeight);
 
 	return 0;
 }
