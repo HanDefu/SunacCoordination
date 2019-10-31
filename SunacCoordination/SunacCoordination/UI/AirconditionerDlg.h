@@ -62,6 +62,9 @@ public:
 	bool m_flag;  //判断是否显示空调编辑框
 	double m_rSize; //房间面积，用于计算空调匹数
 	afx_msg void OnBnClickedButtonCalculate2();
+
+	void SetEditMode(AcDbBlockReference* pBlock);
+	AcDbBlockReference* m_pCurEdit;
 };
 
 extern CAirconditionerDlg* g_airconditionerDlg;
