@@ -17,6 +17,8 @@ AttrAirCon::AttrAirCon()
 	m_airW = 0;		//对应空调数据表格
 	m_airH = 0;
 	m_airD = 0;
+	m_bLeftRightMirror = false;
+	m_bUpDownMirror = false;
 }
 
 AttrAirCon::~AttrAirCon()
@@ -65,6 +67,9 @@ Acad::ErrorStatus AttrAirCon::dwgInFields(AcDbDwgFiler* filer)
 	filer->readItem(&m_airH);
 	filer->readItem(&m_airD);
 
+	filer->readItem(&m_bLeftRightMirror);
+	filer->readItem(&m_bUpDownMirror);
+
 	return Acad::eOk;
 }
 
@@ -86,6 +91,9 @@ Acad::ErrorStatus AttrAirCon::dwgOutFields(AcDbDwgFiler* filer) const
 	filer->writeItem(m_airW);
 	filer->writeItem(m_airH);
 	filer->writeItem(m_airD);
+
+	filer->writeItem(m_bLeftRightMirror);
+	filer->writeItem(m_bUpDownMirror);
 
 	return filer->filerStatus();
 }
