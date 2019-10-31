@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "ProjectFile.h"
+#include "FileUploadDownload.h"
 
 //项目基本信息
 class CProjectInfo
@@ -32,7 +33,7 @@ public:
 	static CString GenerateGuid();
 
 	//以下目录参数需输入完整的目录
-	bool AddFile(CString p_sFilePath, CString  p_sParentFolderPath); //p_sParentDirPath是指上传到哪个目录下
+	bool AddFile(CString p_sFilePath, CString  p_sParentFolderPath, FileUpDownCB  cbFunc); //p_sParentDirPath是指上传到哪个目录下
 	//bool AddFile(CString p_sFilePath, CProjectDir* p_pParentDir); //p_pParentDir是指上传到哪个目录下
 	bool DeleteFile(CString p_sFileName, CString  p_sParentFolderPath);
 
@@ -46,6 +47,8 @@ public:
 	const CProjectDir* GetRootDir() { return &m_rootDir; }
 	CProjectInfo GetPrjInfo()const { return m_prjInfo; }
 	CString GetProjectId()const;
+
+protected:
 
 protected:
 	CProjectInfo m_prjInfo;

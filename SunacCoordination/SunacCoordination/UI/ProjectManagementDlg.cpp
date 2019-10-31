@@ -110,7 +110,7 @@ void CProjectManagementDlg::OnBnClickedButtonUpload()
 		FileName = FilePathToFileName(PathName);
 		CString ParentPath = m_pPrjData->GetDirString(L"", m_selectedDir);//返回文件夹的路径
 		//m_pPrjData->UploadFile(PathName, FileName);
-		m_pPrjData->AddFile(PathName, ParentPath);
+		m_pPrjData->AddFile(PathName, ParentPath, NULL); //TODO 添加回调函数
 	}
 	FillPjtGridCtrl(m_selectedDir);
 }

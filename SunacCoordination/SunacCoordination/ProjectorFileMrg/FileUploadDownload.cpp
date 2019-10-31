@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include < afxinet.h>
+#include "..\Common\ComFun_String.h"
 #include "FileUploadDownload.h"
 
 CFileUpDownLoad* CFileUpDownLoad::Instance()
@@ -14,6 +15,19 @@ CFileUpDownLoad::CFileUpDownLoad()
 
 CFileUpDownLoad::~CFileUpDownLoad()
 {
+	//结束所有线程
+	for (UINT i = 0; i < m_allTheadHandle.size(); i++)
+	{
+		TerminateThread(m_allTheadHandle[i],0 );
+	}
+	m_allTheadHandle.clear();
+
+	//////////////////////////////////////////////////////////////////////////
+	for (UINT i = 0; i < m_allUpFileParas.size();i++)
+	{
+		delete m_allUpFileParas[i];
+	}
+	m_allUpFileParas.clear();
 }
 
 //strFileURLInServer待下载文件的URL,  strFileLocalFullPath存放到本地的路径
@@ -152,7 +166,7 @@ bool CFileUpDownLoad::UploadFile(CString p_sFilePath, CString p_ftpSaveName, CSt
 		if (bDirExsit == FALSE)
 		{
 			BOOL bCreateSuc = pFtpConnection->CreateDirectory(p_ftpDir);
-			BOOL bDirExsit = pFtpConnection->SetCurrentDirectory(p_ftpDir);
+			bDirExsit = pFtpConnection->SetCurrentDirectory(p_ftpDir);
 			if (bCreateSuc == FALSE || bDirExsit ==FALSE)
 			{
 				return false;
@@ -176,7 +190,55 @@ bool CFileUpDownLoad::UploadFile(CString p_sFilePath, CString p_ftpSaveName, CSt
 	return true;
 }
 
-void CFileUpDownLoad::UploadFileByThread(CString p_sFilePath, CString p_ftpSaveName, CString p_ftpDir)
+void CFileUpDownLoad::UploadFileByThread(CUpDownFilePara p_upFilePara)
 {
+	CUpDownFilePara* pFilePara = new CUpDownFilePara(p_upFilePara);
+	pFilePara->bUpload = true;
+	//pFilePara->sFilePath = p_sFilePath;
+	//pFilePara->sFileName = FilePathToFileName(p_sFilePath);
+	//pFilePara->sDirInProject = p_sDirInProject;
+	//pFilePara->ftpSaveName = p_ftpSaveName;
+	//pFilePara->ftpDir = p_ftpDir;
 
+	HANDLE hSampleThread = CreateThread(NULL, 0, CFileUpDownLoad::UploadFileThreadFunc, pFilePara, 0, NULL);
+
+
+	m_allUpFileParas.push_back(pFilePara);
+	m_allTheadHandle.push_back(hSampleThread);
+}
+
+DWORD CFileUpDownLoad::UploadFileThreadFunc(LPVOID pama)
+{
+	CUpDownFilePara* pFilePara = (CUpDownFilePara*)pama;
+
+	bool bSuc = UploadFile(pFilePara->sFileLocalPath, pFilePara->ftpSaveName, pFilePara->ftpDir);
+
+	//上传完成后通知界面显示和下一步动作
+	pFilePara->progress = bSuc ? 100 : 0;
+	pFilePara->cbFunc(pFilePara);
+
+	return 0;
+}
+void CFileUpDownLoad::DownloadFileByThread(CUpDownFilePara p_upFilePara)
+{
+	CUpDownFilePara* pFilePara = new CUpDownFilePara(p_upFilePara);
+	pFilePara->bUpload = false;
+
+	HANDLE hSampleThread = CreateThread(NULL, 0, CFileUpDownLoad::DownloadFileThreadFunc, pFilePara, 0, NULL);
+
+	m_allUpFileParas.push_back(pFilePara);
+	m_allTheadHandle.push_back(hSampleThread);
+}
+
+DWORD CFileUpDownLoad::DownloadFileThreadFunc(LPVOID pama)
+{
+	CUpDownFilePara* pFilePara = (CUpDownFilePara*)pama;
+
+	bool bSuc = DownloadFile(pFilePara->sFileUrl, pFilePara->sFileLocalPath);
+
+	//上传完成后通知界面显示和下一步动作
+	pFilePara->progress = bSuc ? 100 : 0;
+	pFilePara->cbFunc(pFilePara);
+
+	return 0;
 }
