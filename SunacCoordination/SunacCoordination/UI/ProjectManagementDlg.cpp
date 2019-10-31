@@ -48,6 +48,11 @@ void CProjectManagementDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 
+LRESULT CProjectManagementDlg::onAcadKeepFocus(WPARAM, LPARAM)
+{
+	return TRUE;
+}
+
 BEGIN_MESSAGE_MAP(CProjectManagementDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDC_BUTTON_UPLOAD, &CProjectManagementDlg::OnBnClickedButtonUpload)
 	ON_NOTIFY(TVN_SELCHANGED, IDC_TREE_PRJDIR, &CProjectManagementDlg::OnNMClickTreePrjdir)
@@ -56,6 +61,7 @@ BEGIN_MESSAGE_MAP(CProjectManagementDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDC_BUTTON_DeleteDir, &CProjectManagementDlg::OnBnClickedButtonDeletedir)
 	ON_BN_CLICKED(IDC_BUTTON_DOWNLOADALL, &CProjectManagementDlg::OnBnClickedButtonDownloadall)
 	ON_BN_CLICKED(IDC_BUTTON_DELETEALL, &CProjectManagementDlg::OnBnClickedButtonDeleteall)
+	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
 END_MESSAGE_MAP()
 
 void CProjectManagementDlg::FillPjtMngTreeCtrl()
@@ -331,4 +337,19 @@ void CProjectManagementDlg::OnBnClickedButtonDeleteall()
 		}
 	}
 	FillPjtGridCtrl(m_selectedDir);
+}
+
+CProjectManagementDlg* g_projectManagementDlg = NULL;
+
+BOOL CloseProjectManagementDlg()
+{
+	if (g_projectManagementDlg == NULL)
+		return TRUE;
+	BOOL ret = g_projectManagementDlg->DestroyWindow();
+	if (ret)
+	{
+		delete g_projectManagementDlg;
+		g_projectManagementDlg = NULL;
+	}
+	return ret;
 }
