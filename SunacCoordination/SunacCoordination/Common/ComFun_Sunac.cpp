@@ -841,21 +841,21 @@ bool TY_IsPairsEqual(vRCPairKeyStrValue &A, vRCPairKeyStrValue &B)
 CString TY_GetDataFilePath()
 {
 	CString appPath = MD2010_GetAppPath();
-	return appPath + L"\\Support\\Sunac2019\\Data\\";
+	return appPath + L"\\Sunac2019\\Data\\";
 }
 
 CString TY_GetPrototypeFilePath()
 {
 	CString appPath = MD2010_GetAppPath();
 #ifdef WORK_LOCAL//本地模式
-	return appPath + L"\\Support\\Sunac2019\\LocalMode\\";
+	return appPath + L"\\Sunac2019\\LocalMode\\";
 #else
-	return appPath + L"\\Support\\Sunac2019\\Files\\";
+	return appPath + L"\\Sunac2019\\Files\\";
 #endif
 }
 CString TY_GetPrototypeFilePath_Local()
 {
-	CString sPath = MD2010_GetAppPath()+ L"\\Support\\Sunac2019\\LocalMode\\";
+	CString sPath = MD2010_GetAppPath()+ L"\\Sunac2019\\LocalMode\\";
 	return sPath;
 }
 
@@ -863,20 +863,20 @@ CString TY_GetPrototypeImagePath()
 {
 	CString appPath = MD2010_GetAppPath();
 #ifdef WORK_LOCAL//本地模式
-	return appPath + L"\\support\\Sunac2019\\Image\\";
+	return appPath + L"\\Sunac2019\\Image\\";
 #else
-	return appPath + L"\\support\\Sunac2019\\Files\\";
+	return appPath + L"\\Sunac2019\\Files\\";
 #endif
 }
 CString TY_GetPrototypeImagePath_Local()
 {
 	CString appPath = MD2010_GetAppPath();
-	return appPath + L"\\support\\Sunac2019\\Image\\";
+	return appPath + L"\\Sunac2019\\Image\\";
 }
 
 char* TY_GetAluminumDatabasePath()
 {
-	CString TempPath = MD2010_GetAppPath() + L"\\Support\\Sunac2019\\Data\\AluminumData.db";
+	CString TempPath = MD2010_GetAppPath() + L"\\Sunac2019\\Data\\AluminumData.db";
 	int n = TempPath.GetLength();
 	int len = WideCharToMultiByte(CP_ACP, 0, TempPath, n, NULL, 0, NULL, NULL);
 	char * DatabasePath = new char[len + 1];
@@ -887,7 +887,7 @@ char* TY_GetAluminumDatabasePath()
 
 char* TY_GetLocalDataDatabasePath()
 {
-	CString TempPath = MD2010_GetAppPath() + L"\\Support\\Sunac2019\\Data\\LocalData.db";
+	CString TempPath = MD2010_GetAppPath() + L"\\Sunac2019\\Data\\LocalData.db";
 	int n = TempPath.GetLength();
 	int len = WideCharToMultiByte(CP_ACP, 0, TempPath, n, NULL, 0, NULL, NULL);
 	char * DatabasePath = new char[len + 1];
