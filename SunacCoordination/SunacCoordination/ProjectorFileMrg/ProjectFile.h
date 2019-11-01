@@ -30,6 +30,9 @@ enum EProjectFileState
 	E_ProjectFile_UploadFailed,
 };
 
+CString EProjectFileStateToCString(EProjectFileState state);
+
+
 //////////////////////////////////////////////////////////////////////////
 class CProjectFile :public CPrjNode
 {

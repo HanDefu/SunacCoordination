@@ -13,9 +13,9 @@ void TYUI_Hide(CWnd& wnd);
 void TYUI_Enable(CWnd& wnd);
 void TYUI_Disable(CWnd& wnd);
 
-void TYUI_InitComboBox(CComboBox& comboBox, vCString options, CString defaultValue);
-void TYUI_InitComboBox(CComboBox& comboBox, vint options, int defaultValue);
-void TYUI_InitComboBox(CComboBox& comboBox, vdouble options, double defaultValue);
-void TYUI_InitComboBox(CComboBox& comboBox, CString options, CString defaultValue);
+void TYUI_InitComboBox(CComboBox& comboBox, vCString options, CString defaultValue, bool bAutoEnable = false);
+void TYUI_InitComboBox(CComboBox& comboBox, vint options, int defaultValue, bool bAutoEnable = false);
+void TYUI_InitComboBox(CComboBox& comboBox, vdouble options, double defaultValue, bool bAutoEnable = false);
+void TYUI_InitComboBox(CComboBox& comboBox, CString options, CString defaultValue, bool bAutoEnable = false);
 
 CString TYUI_GetComboBoxText(CComboBox& comboBox);

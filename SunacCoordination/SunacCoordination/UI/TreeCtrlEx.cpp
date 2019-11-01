@@ -72,7 +72,7 @@ void CTreeCtrlEx::DrawItem(CDC* pDC)
 {
 	HTREEITEM hCurrentItem;//绘制的当前项句柄
 	CRect CurItemRect;//当前项的区域
-	int CurItemState;//当前项的状态
+	//int CurItemState;//当前项的状态
  
 	hCurrentItem = GetFirstVisibleItem();//获取第一个可见的项,返回它的句柄值
 	do 
@@ -81,7 +81,7 @@ void CTreeCtrlEx::DrawItem(CDC* pDC)
 		{
 			CRect fillRect(0,CurItemRect.top,m_ClientRect.right,CurItemRect.bottom);
  
-			CurItemState = GetItemState(hCurrentItem,TVIF_STATE);
+			//CurItemState = GetItemState(hCurrentItem,TVIF_STATE);
  
 			//当前正绘制的项已超出窗口的边界，所以不绘制，并退出绘制
 			if (CurItemRect.bottom > m_ClientRect.bottom)  
@@ -93,11 +93,11 @@ void CTreeCtrlEx::DrawItem(CDC* pDC)
 			{
 				pDC->FillSolidRect(&fillRect, RGB(220,220,255));
 			}
-			//绘制选中状态
+			/*//绘制选中状态
 			if(CurItemState & TVIS_SELECTED)
 			{
 				pDC->FillSolidRect(&fillRect, GetSysColor(COLOR_MENUHILIGHT));
-			}
+			}*/
 			//绘制分割线
 			if (GetParentItem(hCurrentItem) == NULL)
 			{
@@ -105,6 +105,8 @@ void CTreeCtrlEx::DrawItem(CDC* pDC)
 				CPoint ptTopRight(fillRect.right, fillRect.top);
 				CPoint ptBottomLeft(fillRect.left, fillRect.bottom);
 				CPoint ptBottomRight = fillRect.BottomRight();
+				ptBottomLeft.y--;
+				ptBottomRight.y--;
 
 				pDC->MoveTo(ptTopLeft);
 				pDC->LineTo(ptTopRight);

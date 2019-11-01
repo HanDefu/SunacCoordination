@@ -19,17 +19,7 @@ CKitchenAutoName* CKitchenAutoName::GetInstance()
 
 CString CKitchenAutoName::GetKitchenName(const AttrKitchen& p_att) const
 {
-	CString sKitchenName;
-	//去除原型编号中的后缀
-	CString prototype = p_att.m_prototypeCode;
-	int pos = prototype.Find(L'_');
-	if (pos != -1)
-		prototype = prototype.Left(pos);
-	//根据"原型编号_尺寸编号"生成门窗编号
-	sKitchenName.Format(L"%s-%.0lf×%.0lf", prototype, p_att.m_width, p_att.m_height);
-
-	if (prototype.Find(L"_c"))
-		sKitchenName += L"/c";
+	CString sKitchenName = p_att.GetPrototypeCode();
 
 	//镜像厨房增加"_m"后缀
 	CString sMirror;

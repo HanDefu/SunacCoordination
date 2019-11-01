@@ -65,6 +65,9 @@ public:
 	//获得从Web端下载文件的文件名（包含扩展名）
 	CString GetFileName(const WCHAR *fullname);
 
+	//获取登陆的用户ID
+	int GetUserID();
+
 
 protected:
 	CConfigDictionary m_configDic;

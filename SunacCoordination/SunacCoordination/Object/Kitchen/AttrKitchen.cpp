@@ -218,3 +218,18 @@ bool AttrKitchen::IsInstanceEqual(const AttrKitchen& p_att) const
 
 	return true;
 }
+
+CString AttrKitchen::GetPrototypeCode() const
+{
+	CString prototypeCode = m_prototypeCode;
+	int pos = prototypeCode.Find(L'_');
+	if (pos != -1)
+		prototypeCode = prototypeCode.Left(pos);
+
+	CString ret;
+	ret.Format(L"%s-%0.lf¡Á%0.lf", prototypeCode, m_width, m_height);
+	if (m_prototypeCode.Find(L"_c") != -1)
+		ret += L"/c";
+
+	return ret;
+}

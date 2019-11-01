@@ -38,6 +38,8 @@ public:
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
 	bool IsInstanceEqual(const AttrKitchen& p_att) const;
 
+	CString GetPrototypeCode() const;
+
 public:
 	//原型相关属性，初始化时填写
 	CString m_kitchenType;		//厨房类型

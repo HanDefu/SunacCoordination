@@ -9,6 +9,7 @@
 #include "../res/resource.h"
 #include "..\ProjectorFileMrg\ProjectFileMrg.h"
 #include "ProjectManagementDlg.h"
+#include "../WebIO/WebProjectFile.h"
 
 
 // DlgLeftBar dialog
@@ -51,9 +52,13 @@ int DlgLeftBar::FillTreeItem()
 	m_treeCtrlMenu.InsertItem(_T("门窗"), hItem);
 	m_treeCtrlMenu.InsertItem(_T("栏杆"), hItem);
 
+	m_treeCtrlMenu.Expand(hItem, TVE_EXPAND);
+
 	hItem = m_treeCtrlMenu.InsertItem(_T("标准空间模块库"));
 	m_treeCtrlMenu.InsertItem(_T("厨卫"), hItem);
 	m_treeCtrlMenu.InsertItem(_T("空调"), hItem);
+
+	m_treeCtrlMenu.Expand(hItem, TVE_EXPAND);
 
 	//绑定弹出菜单
 	m_treeCtrlMenu.SetMenuID(IDR_LEFTBAR_MENU);
@@ -75,8 +80,10 @@ int DlgLeftBar::FillProjectManagementTreeItem()
 		ImageList->Add(Icon[i]);
 	}
 	m_treeProjectManagement.SetImageList(ImageList, TVSIL_NORMAL);
+
+	CWebProjectFile::Instance()->GetAllProjectInfo();
 	
-	CProjectFileMrg::Instance()->InitTestData();
+	//CProjectFileMrg::Instance()->InitTestData();
 	vector<CString> AreaNames = CProjectFileMrg::Instance()->GetAllAreas();
 	for (UINT i = 0; i < AreaNames.size(); i++)
 	{
