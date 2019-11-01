@@ -236,15 +236,16 @@ void CKitchenDlg::OnBnClickedButtonRange()
 		ShowInfo();
 	}
 	ShowWindow(true);
+	ShowInfo();
 	ClearPreviews();
 }
 void CKitchenDlg::ShowInfo()
 {
 	CString sInfo;
 	if ((abs(m_windowDir - m_doorDir) % 2) == 0)
-		sInfo.Format(_T("厨房信息：%d x %d,门窗对开"), (int)(m_rect.GetWidth()), (int)(m_rect.GetHeight()));
+		sInfo.Format(_T("厨房信息：%.0lf x %.0lf,门窗对开"), m_rect.GetWidth(), m_rect.GetHeight());
 	else
-		sInfo.Format(_T("厨房信息：%d x %d,门窗垂直开"), (int)(m_rect.GetWidth()), (int)(m_rect.GetHeight()));
+		sInfo.Format(_T("厨房信息：%.0lf x %.0lf,门窗垂直开"), m_rect.GetWidth(), m_rect.GetHeight());
 
 	GetDlgItem(IDC_STATIC_DIR)->SetWindowText(sInfo);
 }
@@ -383,7 +384,7 @@ void CKitchenDlg::OnBnClickedButtonSearch()
 	for (UINT i = 0; i < m_allKitchens.size(); i++)
 	{
 		CString str;
-		str.Format(_T("原型编号：%s\n厨房面积：%.2lf\n通风量要求：1.5\n动态类型：%s\n适用范围：集团"), m_allKitchens[i].m_prototypeCode, m_rect.GetWidth() * m_rect.GetHeight() / 1E6, m_allKitchens[i].m_isDynamic ? _T("动态") : _T("静态"));
+		str.Format(_T("原型编号：\n%s\n厨房面积：%.2lf\n通风量要求：1.5\n动态类型：%s\n适用范围：集团"), m_allKitchens[i].GetPrototypeCode(), m_rect.GetWidth() * m_rect.GetHeight() / 1E6, m_allKitchens[i].m_isDynamic ? _T("动态") : _T("静态"));
 		m_preKitchen.AddPreview(i, 0, TY_GetPrototypeFilePath() + m_allKitchens[i].GetFileName(), str);
 	}
 
@@ -433,9 +434,9 @@ void CKitchenDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	//设置属性区选项
 	EnableSetProperty(true);
 	m_pKitchGen->InitKitchenByDefault();
-	TYUI_InitComboBox(m_basinType, m_pKitchGen->GetShuipenOptions(), pCurSelKitchen->m_shuiPenType);
-	TYUI_InitComboBox(m_fridgeType, m_pKitchGen->GetBinxiangOptions(), pCurSelKitchen->m_bingXiangType);
-	TYUI_InitComboBox(m_benchWidth, m_pKitchGen->GetZhaotaiOptions(), pCurSelKitchen->m_zaoTaiType);
+	TYUI_InitComboBox(m_basinType, m_pKitchGen->GetShuipenOptions(), pCurSelKitchen->m_shuiPenType, true);
+	TYUI_InitComboBox(m_fridgeType, m_pKitchGen->GetBinxiangOptions(), pCurSelKitchen->m_bingXiangType, true);
+	TYUI_InitComboBox(m_benchWidth, m_pKitchGen->GetZhaotaiOptions(), pCurSelKitchen->m_zaoTaiType, true);
 	m_isStd = pCurSelKitchen->m_isGuoBiao ? 0 : 1;
 	m_floorRange.SetCurSel(int(pCurSelKitchen->m_floorRange));
 	TYUI_SetInt(m_offsetX, (int)pCurSelKitchen->m_airVentOffsetX);

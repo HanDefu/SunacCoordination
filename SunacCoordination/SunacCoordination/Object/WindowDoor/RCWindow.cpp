@@ -229,18 +229,15 @@ int RCWindow::CreateDims()
 
 	if (A > TOL)//如果A值存在 先标注两端的A
 	{
-		end.y += A;
-		mid.y += A / 2;
-		mid.x = start.x + offset;
+		start = rightBottomPt;
+		end = AcGePoint3d(start.x, start.y + A, 0);
+		mid = AcGePoint3d(start.x + offset, (start.y + end.y) / 2, 0);
 		MD2010_AddAlignedDimension2(start, end, mid, layer,colorIndex,textHeight);
 
-		AcGePoint3d start1 = rightTopPt;
-		AcGePoint3d end1 = rightTopPt;
-		AcGePoint3d mid1 = rightTopPt;
-		end1.y -= A;
-		mid1.y -= A / 2;
-		mid.x = start.x + offset;
-		MD2010_AddAlignedDimension2(rightTopPt, end1, mid1, layer,colorIndex,textHeight);
+		start = rightTopPt;
+		end = AcGePoint3d(start.x, start.y - A, 0);
+		mid = AcGePoint3d(start.x + offset, (start.y + end.y) / 2, 0);
+		MD2010_AddAlignedDimension2(start, end, mid);
 	}
 
 	if (h2 > TOL)
