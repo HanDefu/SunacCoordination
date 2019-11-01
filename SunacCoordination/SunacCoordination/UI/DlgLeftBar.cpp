@@ -9,6 +9,7 @@
 #include "../res/resource.h"
 #include "..\ProjectorFileMrg\ProjectFileMrg.h"
 #include "ProjectManagementDlg.h"
+#include "../WebIO/WebProjectFile.h"
 
 
 // DlgLeftBar dialog
@@ -79,8 +80,10 @@ int DlgLeftBar::FillProjectManagementTreeItem()
 		ImageList->Add(Icon[i]);
 	}
 	m_treeProjectManagement.SetImageList(ImageList, TVSIL_NORMAL);
+
+	CWebProjectFile::Instance()->GetAllProjectInfo();
 	
-	CProjectFileMrg::Instance()->InitTestData();
+	//CProjectFileMrg::Instance()->InitTestData();
 	vector<CString> AreaNames = CProjectFileMrg::Instance()->GetAllAreas();
 	for (UINT i = 0; i < AreaNames.size(); i++)
 	{

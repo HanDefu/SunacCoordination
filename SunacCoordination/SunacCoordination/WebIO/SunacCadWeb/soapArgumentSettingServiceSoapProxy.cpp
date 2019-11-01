@@ -11,7 +11,6 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
 --------------------------------------------------------------------------------
 */
 #include "StdAfx.h"
-
 #include "soapArgumentSettingServiceSoapProxy.h"
 
 ArgumentSettingServiceSoapProxy::ArgumentSettingServiceSoapProxy() : soap(SOAP_IO_DEFAULT)
