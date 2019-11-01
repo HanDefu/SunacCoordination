@@ -683,6 +683,7 @@ inline _ns1__UpdateCadDrawing * soap_new_set__ns1__UpdateCadDrawing(
 	std::wstring *UID,
 	std::wstring *OID,
 	std::wstring *DrawingDir,
+	std::wstring *FileSaveName,
 	std::wstring *DrawingFile)
 {
 	_ns1__UpdateCadDrawing *_p = ::soap_new__ns1__UpdateCadDrawing(soap);
@@ -691,6 +692,7 @@ inline _ns1__UpdateCadDrawing * soap_new_set__ns1__UpdateCadDrawing(
 		_p->_ns1__UpdateCadDrawing::UID = UID;
 		_p->_ns1__UpdateCadDrawing::OID = OID;
 		_p->_ns1__UpdateCadDrawing::DrawingDir = DrawingDir;
+		_p->_ns1__UpdateCadDrawing::FileSaveName = FileSaveName;
 		_p->_ns1__UpdateCadDrawing::DrawingFile = DrawingFile;
 	}
 	return _p;

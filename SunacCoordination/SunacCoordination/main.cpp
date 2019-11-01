@@ -45,6 +45,7 @@
 #include "WebIO\AirconditionLocalDataFromDB.h"
 #include "WebIO\WindowWebData.h"
 #include "webIO\WindowLocalDataFromDB.h"
+#include "webIO\WebProjectFile.h"
 #include "WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.h"
 #include "Common\ComFun_Str.h"
 #include "Tool\MarkupXml\Markup.h"
@@ -580,8 +581,13 @@ void CMD_TEST2()
 	CAluminumSeries::Instance()->GetAluminumDataBySeriesAndName(E_WindowDoor_NC, L"SN60ÏµÁÐ", L"¼ÙÖÐèè", AlData);
 	CAluminumSeries::Instance()->GetAluminumSerialByCode(L"SN60T002", AlSeries);
 	vAlSeries = CAluminumSeries::Instance()->GetAluminumSerialsByWindowType(E_WindowDoor_NC);*/
-	CFileUpDownLoad::UploadFile(L"D:\\Drawing1.dwg", L"1234567778.dwg", _T("20191030"));
+	//CFileUpDownLoad::UploadFile(L"D:\\Drawing1.dwg", L"1234567778.dwg", _T("20191030"));
 	//CFileUpDownLoad::DownloadFile(L"http://fastsoft.onlinedown.net/down/idm_ald.exe", L"F:\\FTPServer\\Test.exe");
+	if(CWebProjectFile::Instance()->GetAllProjectInfo())
+	{
+		vector<CProjectData *> vProjects;
+		vProjects.swap(CProjectFileMrg::Instance()->m_projects);
+	}
 }
 
 static void initApp()

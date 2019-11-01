@@ -19,7 +19,7 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
 
 #include "soapH.h"
 
-SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.84 2019-11-01 01:07:54 GMT")
+SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.84 2019-11-01 07:45:24 GMT")
 
 
 #ifndef WITH_NOGLOBAL
@@ -2651,6 +2651,7 @@ void _ns1__UpdateCadDrawing::soap_default(struct soap *soap)
 	this->_ns1__UpdateCadDrawing::UID = NULL;
 	this->_ns1__UpdateCadDrawing::OID = NULL;
 	this->_ns1__UpdateCadDrawing::DrawingDir = NULL;
+	this->_ns1__UpdateCadDrawing::FileSaveName = NULL;
 	this->_ns1__UpdateCadDrawing::DrawingFile = NULL;
 }
 
@@ -2661,6 +2662,7 @@ void _ns1__UpdateCadDrawing::soap_serialize(struct soap *soap) const
 	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__UpdateCadDrawing::UID);
 	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__UpdateCadDrawing::OID);
 	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__UpdateCadDrawing::DrawingDir);
+	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__UpdateCadDrawing::FileSaveName);
 	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__UpdateCadDrawing::DrawingFile);
 #endif
 }
@@ -2680,6 +2682,8 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__UpdateCadDrawing(struct soap *soap, con
 	if (soap_out_PointerTostd__wstring(soap, "ns1:OID", -1, &a->_ns1__UpdateCadDrawing::OID, ""))
 		return soap->error;
 	if (soap_out_PointerTostd__wstring(soap, "ns1:DrawingDir", -1, &a->_ns1__UpdateCadDrawing::DrawingDir, ""))
+		return soap->error;
+	if (soap_out_PointerTostd__wstring(soap, "ns1:FileSaveName", -1, &a->_ns1__UpdateCadDrawing::FileSaveName, ""))
 		return soap->error;
 	if (soap_out_PointerTostd__wstring(soap, "ns1:DrawingFile", -1, &a->_ns1__UpdateCadDrawing::DrawingFile, ""))
 		return soap->error;
@@ -2709,6 +2713,7 @@ SOAP_FMAC3 _ns1__UpdateCadDrawing * SOAP_FMAC4 soap_in__ns1__UpdateCadDrawing(st
 	size_t soap_flag_UID1 = 1;
 	size_t soap_flag_OID1 = 1;
 	size_t soap_flag_DrawingDir1 = 1;
+	size_t soap_flag_FileSaveName1 = 1;
 	size_t soap_flag_DrawingFile1 = 1;
 	if (soap->body && *soap->href != '#')
 	{
@@ -2729,6 +2734,12 @@ SOAP_FMAC3 _ns1__UpdateCadDrawing * SOAP_FMAC4 soap_in__ns1__UpdateCadDrawing(st
 			if (soap_flag_DrawingDir1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
 			{	if (soap_in_PointerTostd__wstring(soap, "ns1:DrawingDir", &a->_ns1__UpdateCadDrawing::DrawingDir, "xsd:string"))
 				{	soap_flag_DrawingDir1--;
+					continue;
+				}
+			}
+			if (soap_flag_FileSaveName1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_PointerTostd__wstring(soap, "ns1:FileSaveName", &a->_ns1__UpdateCadDrawing::FileSaveName, "xsd:string"))
+				{	soap_flag_FileSaveName1--;
 					continue;
 				}
 			}
