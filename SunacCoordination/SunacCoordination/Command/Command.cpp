@@ -253,7 +253,10 @@ void CMD_SunacWindowsStatistics()
 	info.Format(L"共选择了%d个门窗\n", m_vids.size());
 
 	if (m_vids.size() == 0)
+	{
+		acutPrintf(L"未选择到门窗\n");
 		return;
+	}
 
 	vector<AcDbObjectId> idsNonAlserials; //未设置型材系列的门窗
 

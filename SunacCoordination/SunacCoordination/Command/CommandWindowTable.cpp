@@ -54,7 +54,10 @@ void CMD_SunacWindowsTable()
 	info.Format(L"共选择了%d个门窗\n",m_vids.size());
 
 	if (m_vids.size() == 0)
+	{
+		acutPrintf(L"未选择到门窗\n");
 		return;
+	}
 
 	//第二步  选择门窗表插入点
 	AcGePoint3d pnt = TY_GetPoint(L"请选择门窗表插入点");

@@ -40,20 +40,20 @@ vector<CString> CAuxiliaryFrameSeries::GetAllAuxiliaryFrameSerials(EAuxiliaryFra
 	switch(p_type)
 	{
 	case EAuxiliaryFrame_钢附框:
-		serialsOut.push_back(_T("20*40*1.5mm"));
-		serialsOut.push_back(_T("20*40*2mm"));
+		serialsOut.push_back(_T("钢20*40*1.5mm"));
+		serialsOut.push_back(_T("钢20*40*2mm"));
 		break;
 	case EAuxiliaryFrame_节能附框:
-		serialsOut.push_back(_T("55*24mm"));
-		serialsOut.push_back(_T("60*24mm"));
-		serialsOut.push_back(_T("65*24mm"));
-		serialsOut.push_back(_T("70*24mm"));
-		serialsOut.push_back(_T("75*24mm"));
-		serialsOut.push_back(_T("80*24mm"));
-		serialsOut.push_back(_T("90*24mm"));
-		serialsOut.push_back(_T("100*24mm"));
-		serialsOut.push_back(_T("110*24mm"));
-		serialsOut.push_back(_T("120*24mm"));
+		serialsOut.push_back(_T("节能附框55*24mm"));
+		serialsOut.push_back(_T("节能附框60*24mm"));
+		serialsOut.push_back(_T("节能附框65*24mm"));
+		serialsOut.push_back(_T("节能附框70*24mm"));
+		serialsOut.push_back(_T("节能附框75*24mm"));
+		serialsOut.push_back(_T("节能附框80*24mm"));
+		serialsOut.push_back(_T("节能附框90*24mm"));
+		serialsOut.push_back(_T("节能附框100*24mm"));
+		serialsOut.push_back(_T("节能附框110*24mm"));
+		serialsOut.push_back(_T("节能附框120*24mm"));
 		break;
 	default:
 			break;
