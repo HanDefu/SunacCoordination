@@ -210,6 +210,42 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
         /// Web service asynchronous operation 'recv_DeleteCadFileDir' to receive a response message from the connected endpoint, returns SOAP_OK or error code
         virtual int recv_DeleteCadFileDir(_ns1__DeleteCadFileDirResponse &ns1__DeleteCadFileDirResponse);
         //
+        /// Web service synchronous operation 'RenameCadFileDir' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int RenameCadFileDir(_ns1__RenameCadFileDir *ns1__RenameCadFileDir, _ns1__RenameCadFileDirResponse &ns1__RenameCadFileDirResponse) { return this->RenameCadFileDir(NULL, NULL, ns1__RenameCadFileDir, ns1__RenameCadFileDirResponse); }
+        /// Web service synchronous operation 'RenameCadFileDir' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int RenameCadFileDir(const char *soap_endpoint_url, const char *soap_action, _ns1__RenameCadFileDir *ns1__RenameCadFileDir, _ns1__RenameCadFileDirResponse &ns1__RenameCadFileDirResponse) { return this->send_RenameCadFileDir(soap_endpoint_url, soap_action, ns1__RenameCadFileDir) || this->recv_RenameCadFileDir(ns1__RenameCadFileDirResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_RenameCadFileDir' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_RenameCadFileDir(const char *soap_endpoint_url, const char *soap_action, _ns1__RenameCadFileDir *ns1__RenameCadFileDir);
+        /// Web service asynchronous operation 'recv_RenameCadFileDir' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_RenameCadFileDir(_ns1__RenameCadFileDirResponse &ns1__RenameCadFileDirResponse);
+        //
+        /// Web service synchronous operation 'GetProjectInfo' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int GetProjectInfo(_ns1__GetProjectInfo *ns1__GetProjectInfo, _ns1__GetProjectInfoResponse &ns1__GetProjectInfoResponse) { return this->GetProjectInfo(NULL, NULL, ns1__GetProjectInfo, ns1__GetProjectInfoResponse); }
+        /// Web service synchronous operation 'GetProjectInfo' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int GetProjectInfo(const char *soap_endpoint_url, const char *soap_action, _ns1__GetProjectInfo *ns1__GetProjectInfo, _ns1__GetProjectInfoResponse &ns1__GetProjectInfoResponse) { return this->send_GetProjectInfo(soap_endpoint_url, soap_action, ns1__GetProjectInfo) || this->recv_GetProjectInfo(ns1__GetProjectInfoResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_GetProjectInfo' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_GetProjectInfo(const char *soap_endpoint_url, const char *soap_action, _ns1__GetProjectInfo *ns1__GetProjectInfo);
+        /// Web service asynchronous operation 'recv_GetProjectInfo' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_GetProjectInfo(_ns1__GetProjectInfoResponse &ns1__GetProjectInfoResponse);
+        //
+        /// Web service synchronous operation 'UpdateCadDrawing' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int UpdateCadDrawing(_ns1__UpdateCadDrawing *ns1__UpdateCadDrawing, _ns1__UpdateCadDrawingResponse &ns1__UpdateCadDrawingResponse) { return this->UpdateCadDrawing(NULL, NULL, ns1__UpdateCadDrawing, ns1__UpdateCadDrawingResponse); }
+        /// Web service synchronous operation 'UpdateCadDrawing' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int UpdateCadDrawing(const char *soap_endpoint_url, const char *soap_action, _ns1__UpdateCadDrawing *ns1__UpdateCadDrawing, _ns1__UpdateCadDrawingResponse &ns1__UpdateCadDrawingResponse) { return this->send_UpdateCadDrawing(soap_endpoint_url, soap_action, ns1__UpdateCadDrawing) || this->recv_UpdateCadDrawing(ns1__UpdateCadDrawingResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_UpdateCadDrawing' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_UpdateCadDrawing(const char *soap_endpoint_url, const char *soap_action, _ns1__UpdateCadDrawing *ns1__UpdateCadDrawing);
+        /// Web service asynchronous operation 'recv_UpdateCadDrawing' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_UpdateCadDrawing(_ns1__UpdateCadDrawingResponse &ns1__UpdateCadDrawingResponse);
+        //
+        /// Web service synchronous operation 'DeleteCadDrawing' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int DeleteCadDrawing(_ns1__DeleteCadDrawing *ns1__DeleteCadDrawing, _ns1__DeleteCadDrawingResponse &ns1__DeleteCadDrawingResponse) { return this->DeleteCadDrawing(NULL, NULL, ns1__DeleteCadDrawing, ns1__DeleteCadDrawingResponse); }
+        /// Web service synchronous operation 'DeleteCadDrawing' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int DeleteCadDrawing(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadDrawing *ns1__DeleteCadDrawing, _ns1__DeleteCadDrawingResponse &ns1__DeleteCadDrawingResponse) { return this->send_DeleteCadDrawing(soap_endpoint_url, soap_action, ns1__DeleteCadDrawing) || this->recv_DeleteCadDrawing(ns1__DeleteCadDrawingResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_DeleteCadDrawing' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_DeleteCadDrawing(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadDrawing *ns1__DeleteCadDrawing);
+        /// Web service asynchronous operation 'recv_DeleteCadDrawing' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_DeleteCadDrawing(_ns1__DeleteCadDrawingResponse &ns1__DeleteCadDrawingResponse);
+        //
         /// Web service synchronous operation 'StandardDesignAttribute' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
         virtual int StandardDesignAttribute_(_ns1__StandardDesignAttribute *ns1__StandardDesignAttribute, _ns1__StandardDesignAttributeResponse &ns1__StandardDesignAttributeResponse) { return this->StandardDesignAttribute_(NULL, NULL, ns1__StandardDesignAttribute, ns1__StandardDesignAttributeResponse); }
         /// Web service synchronous operation 'StandardDesignAttribute' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
@@ -344,5 +380,41 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
         virtual int send_DeleteCadFileDir_(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadFileDir *ns1__DeleteCadFileDir);
         /// Web service asynchronous operation 'recv_DeleteCadFileDir' to receive a response message from the connected endpoint, returns SOAP_OK or error code
         virtual int recv_DeleteCadFileDir_(_ns1__DeleteCadFileDirResponse &ns1__DeleteCadFileDirResponse);
+        //
+        /// Web service synchronous operation 'RenameCadFileDir' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int RenameCadFileDir_(_ns1__RenameCadFileDir *ns1__RenameCadFileDir, _ns1__RenameCadFileDirResponse &ns1__RenameCadFileDirResponse) { return this->RenameCadFileDir_(NULL, NULL, ns1__RenameCadFileDir, ns1__RenameCadFileDirResponse); }
+        /// Web service synchronous operation 'RenameCadFileDir' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int RenameCadFileDir_(const char *soap_endpoint_url, const char *soap_action, _ns1__RenameCadFileDir *ns1__RenameCadFileDir, _ns1__RenameCadFileDirResponse &ns1__RenameCadFileDirResponse) { return this->send_RenameCadFileDir_(soap_endpoint_url, soap_action, ns1__RenameCadFileDir) || this->recv_RenameCadFileDir_(ns1__RenameCadFileDirResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_RenameCadFileDir' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_RenameCadFileDir_(const char *soap_endpoint_url, const char *soap_action, _ns1__RenameCadFileDir *ns1__RenameCadFileDir);
+        /// Web service asynchronous operation 'recv_RenameCadFileDir' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_RenameCadFileDir_(_ns1__RenameCadFileDirResponse &ns1__RenameCadFileDirResponse);
+        //
+        /// Web service synchronous operation 'GetProjectInfo' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int GetProjectInfo_(_ns1__GetProjectInfo *ns1__GetProjectInfo, _ns1__GetProjectInfoResponse &ns1__GetProjectInfoResponse) { return this->GetProjectInfo_(NULL, NULL, ns1__GetProjectInfo, ns1__GetProjectInfoResponse); }
+        /// Web service synchronous operation 'GetProjectInfo' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int GetProjectInfo_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetProjectInfo *ns1__GetProjectInfo, _ns1__GetProjectInfoResponse &ns1__GetProjectInfoResponse) { return this->send_GetProjectInfo_(soap_endpoint_url, soap_action, ns1__GetProjectInfo) || this->recv_GetProjectInfo_(ns1__GetProjectInfoResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_GetProjectInfo' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_GetProjectInfo_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetProjectInfo *ns1__GetProjectInfo);
+        /// Web service asynchronous operation 'recv_GetProjectInfo' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_GetProjectInfo_(_ns1__GetProjectInfoResponse &ns1__GetProjectInfoResponse);
+        //
+        /// Web service synchronous operation 'UpdateCadDrawing' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int UpdateCadDrawing_(_ns1__UpdateCadDrawing *ns1__UpdateCadDrawing, _ns1__UpdateCadDrawingResponse &ns1__UpdateCadDrawingResponse) { return this->UpdateCadDrawing_(NULL, NULL, ns1__UpdateCadDrawing, ns1__UpdateCadDrawingResponse); }
+        /// Web service synchronous operation 'UpdateCadDrawing' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int UpdateCadDrawing_(const char *soap_endpoint_url, const char *soap_action, _ns1__UpdateCadDrawing *ns1__UpdateCadDrawing, _ns1__UpdateCadDrawingResponse &ns1__UpdateCadDrawingResponse) { return this->send_UpdateCadDrawing_(soap_endpoint_url, soap_action, ns1__UpdateCadDrawing) || this->recv_UpdateCadDrawing_(ns1__UpdateCadDrawingResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_UpdateCadDrawing' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_UpdateCadDrawing_(const char *soap_endpoint_url, const char *soap_action, _ns1__UpdateCadDrawing *ns1__UpdateCadDrawing);
+        /// Web service asynchronous operation 'recv_UpdateCadDrawing' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_UpdateCadDrawing_(_ns1__UpdateCadDrawingResponse &ns1__UpdateCadDrawingResponse);
+        //
+        /// Web service synchronous operation 'DeleteCadDrawing' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int DeleteCadDrawing_(_ns1__DeleteCadDrawing *ns1__DeleteCadDrawing, _ns1__DeleteCadDrawingResponse &ns1__DeleteCadDrawingResponse) { return this->DeleteCadDrawing_(NULL, NULL, ns1__DeleteCadDrawing, ns1__DeleteCadDrawingResponse); }
+        /// Web service synchronous operation 'DeleteCadDrawing' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int DeleteCadDrawing_(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadDrawing *ns1__DeleteCadDrawing, _ns1__DeleteCadDrawingResponse &ns1__DeleteCadDrawingResponse) { return this->send_DeleteCadDrawing_(soap_endpoint_url, soap_action, ns1__DeleteCadDrawing) || this->recv_DeleteCadDrawing_(ns1__DeleteCadDrawingResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_DeleteCadDrawing' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_DeleteCadDrawing_(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadDrawing *ns1__DeleteCadDrawing);
+        /// Web service asynchronous operation 'recv_DeleteCadDrawing' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_DeleteCadDrawing_(_ns1__DeleteCadDrawingResponse &ns1__DeleteCadDrawingResponse);
     };
 #endif
