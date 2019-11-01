@@ -123,8 +123,13 @@ CHAR* WCHARTOCHAR(const WCHAR * pchar)
 //此函数用于获得AutoCAD的安装路径，返回该路径。
 CString MD2010_GetAppPath()
 {
+	static CString sunacCADPath;
+	if (sunacCADPath.IsEmpty() == false)
+	{
+		return sunacCADPath;
+	}
 	//系统安装注册表 读取模式
-    CString sunacCADPath = Regedit::GetString(L"PATH");
+    sunacCADPath = Regedit::GetString(L"PATH");
     if (sunacCADPath.GetLength() > 0)
 	    return sunacCADPath;
 
