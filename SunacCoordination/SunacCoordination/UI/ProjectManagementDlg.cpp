@@ -123,7 +123,7 @@ void CProjectManagementDlg::OnBnClickedButtonUpload()
 		FileName = FilePathToFileName(PathName);
 		CString ParentPath = m_pPrjData->GetDirString(L"", m_selectedDir);//返回文件夹的路径
 
-		m_pPrjData->AddFile(PathName, ParentPath, UIFileUpCBFunc); 
+		m_pPrjData->AddFile(PathName, ParentPath, UIFileUpCBFunc);
 	}
 	// TODO 添加正在下载的状态显示
 	FillPjtGridCtrl(m_selectedDir);
@@ -216,11 +216,14 @@ CProjectDir* CProjectManagementDlg::FindClkDir(HTREEITEM CurClkItem)
 {
 
 	CProjectDir* RootDir = (CProjectDir *)m_pPrjData->GetRootDir();
+	if (CurClkItem == NULL)
+	{
+		return RootDir;
+	}
 	if (CurClkItem == m_TreePrjDir.GetRootItem())
 	{
 		return RootDir;
 	}
-
 	CProjectDir* pParentDir = FindClkDir(m_TreePrjDir.GetParentItem(CurClkItem));
 	assert(pParentDir);
 	CProjectDir* pDir = pParentDir->GetSubFolder(m_TreePrjDir.GetItemText(CurClkItem));
