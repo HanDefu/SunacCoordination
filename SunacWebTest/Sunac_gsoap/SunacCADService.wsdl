@@ -219,6 +219,73 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="RenameCadFileDir">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DrawingDir" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ParentDir" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="NewDrawingDir" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RenameCadFileDirResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RenameCadFileDirResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetProjectInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetProjectInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetProjectInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateCadDrawing">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DrawingDir" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="FileSaveName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DrawingFile" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateCadDrawingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UpdateCadDrawingResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteCadDrawing">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DrawingDir" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DrawingFile" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteCadDrawingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DeleteCadDrawingResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="StandardDesignAttributeSoapIn">
@@ -311,6 +378,30 @@
   <wsdl:message name="DeleteCadFileDirSoapOut">
     <wsdl:part name="parameters" element="tns:DeleteCadFileDirResponse" />
   </wsdl:message>
+  <wsdl:message name="RenameCadFileDirSoapIn">
+    <wsdl:part name="parameters" element="tns:RenameCadFileDir" />
+  </wsdl:message>
+  <wsdl:message name="RenameCadFileDirSoapOut">
+    <wsdl:part name="parameters" element="tns:RenameCadFileDirResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetProjectInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:GetProjectInfo" />
+  </wsdl:message>
+  <wsdl:message name="GetProjectInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:GetProjectInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCadDrawingSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateCadDrawing" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCadDrawingSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateCadDrawingResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCadDrawingSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteCadDrawing" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCadDrawingSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteCadDrawingResponse" />
+  </wsdl:message>
   <wsdl:portType name="ArgumentSettingServiceSoap">
     <wsdl:operation name="StandardDesignAttribute">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">标准模块属性；1、标准部品库：外窗、门、栏杆;2、厨房、卫生间、空调</wsdl:documentation>
@@ -386,6 +477,26 @@
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">项目分类文件夹删除</wsdl:documentation>
       <wsdl:input message="tns:DeleteCadFileDirSoapIn" />
       <wsdl:output message="tns:DeleteCadFileDirSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RenameCadFileDir">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">项目分类文件夹重命名</wsdl:documentation>
+      <wsdl:input message="tns:RenameCadFileDirSoapIn" />
+      <wsdl:output message="tns:RenameCadFileDirSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProjectInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">项目信息获取</wsdl:documentation>
+      <wsdl:input message="tns:GetProjectInfoSoapIn" />
+      <wsdl:output message="tns:GetProjectInfoSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCadDrawing">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">项目图纸上传</wsdl:documentation>
+      <wsdl:input message="tns:UpdateCadDrawingSoapIn" />
+      <wsdl:output message="tns:UpdateCadDrawingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCadDrawing">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">项目文件删除</wsdl:documentation>
+      <wsdl:input message="tns:DeleteCadDrawingSoapIn" />
+      <wsdl:output message="tns:DeleteCadDrawingSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="ArgumentSettingServiceSoap" type="tns:ArgumentSettingServiceSoap">
@@ -525,6 +636,42 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="RenameCadFileDir">
+      <soap:operation soapAction="http://tempuri.org/RenameCadFileDir" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProjectInfo">
+      <soap:operation soapAction="http://tempuri.org/GetProjectInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCadDrawing">
+      <soap:operation soapAction="http://tempuri.org/UpdateCadDrawing" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCadDrawing">
+      <soap:operation soapAction="http://tempuri.org/DeleteCadDrawing" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="ArgumentSettingServiceSoap12" type="tns:ArgumentSettingServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -656,6 +803,42 @@
     </wsdl:operation>
     <wsdl:operation name="DeleteCadFileDir">
       <soap12:operation soapAction="http://tempuri.org/DeleteCadFileDir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RenameCadFileDir">
+      <soap12:operation soapAction="http://tempuri.org/RenameCadFileDir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProjectInfo">
+      <soap12:operation soapAction="http://tempuri.org/GetProjectInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCadDrawing">
+      <soap12:operation soapAction="http://tempuri.org/UpdateCadDrawing" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCadDrawing">
+      <soap12:operation soapAction="http://tempuri.org/DeleteCadDrawing" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
