@@ -199,3 +199,32 @@ CString CProjectDir::GetDirFullPath()const
 
 	return sDirPath;
 }
+
+CString EProjectFileStateToCString(EProjectFileState state)
+{
+	switch(state)
+	{
+	case E_ProjectFile_Normal:
+		return L"准备就绪";
+		break;
+	case E_ProjectFile_Downloading:
+		return L"下载中...";
+		break;
+	case E_ProjectFile_DownloadSuccess:
+		return L"下载成功！";
+		break;
+	case E_ProjectFile_DownloadFailed:
+		return L"下载失败";
+		break;
+	case E_ProjectFile_Uploading:
+		return L"上传中...";
+		break;
+	case E_ProjectFile_UploadSuccess:
+		return L"上传成功！";
+		break;
+	case E_ProjectFile_UploadFailed:
+		return L"上传失败";
+		break;
+	default: return L"";
+	}
+}
