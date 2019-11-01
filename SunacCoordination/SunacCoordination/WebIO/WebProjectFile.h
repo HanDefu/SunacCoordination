@@ -26,6 +26,8 @@ public:
 	void ParseRenameFileDirFromXML(CMarkup xml);
 	void ParseUpdateFileFromXML(CMarkup xml);
 
+	CProjectDir* GetDirsFromWeb(CMarkup xml);
+
 protected:
 
 };
