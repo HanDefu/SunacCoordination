@@ -134,7 +134,7 @@ void CMD_YTest()
 	attrwindow.m_isDynamic = true;
 
 	attrwindow.m_gongNengquType = _T("全部");
-	attrwindow.m_openType = _T("内开");
+	attrwindow.m_openType = _T("外开");
 	attrwindow.m_openQty = 1;
 
 	dimdata1.sCodeName = _T("W");
@@ -163,7 +163,7 @@ void CMD_YTest()
 	attrwindow.SetW1(700);
 	attrwindow.SetA(50);
 
-	attrwindow.m_material.sAluminumSerial = _T("SN65A系列");
+	attrwindow.m_material.sAluminumSerial = _T("SW55M系列");
 	attrwindow.SetInstanceCode(_T("NC3"));
 
 	winAtts.push_back(attrwindow);
@@ -266,8 +266,8 @@ void ZJYTest()
 
 	vector<AttrWindow> m_winAtts;
 	AttrWindow attrwindow;
-
-	attrwindow.m_prototypeCode = _T("Door_WM2");
+	//////////////////////////////////////////////////////////////////////////
+	attrwindow.m_prototypeCode = _T("Door_WM1");
 	attrwindow.m_quyuName = _T("全部");
 	attrwindow.m_isJiTuan = true;
 	attrwindow.m_isDynamic = true;
@@ -285,68 +285,31 @@ void ZJYTest()
 	dimdata2.type = UNLIMIT;
 	attrwindow.SetDimData(dimdata2);
 	CWindowsDimData dimdata3;
-	/*dimdata3.sCodeName = _T("a");
-	dimdata3.type = UNLIMIT;
-	attrwindow.SetDimData(dimdata3);*/
 
-
-	//CWindowsDimData dimdata1;
 	dimdata1.sCodeName = _T("W1");
 	dimdata1.type = CALC;
-	dimdata1.sFomula = _T("W-2a-W2");
+	dimdata1.sFomula = _T("W-2a");
 	attrwindow.SetDimData(dimdata1);
 
-	
-	dimdata1.sCodeName = _T("W2");
-	dimdata1.type = CALC;
-	dimdata1.sFomula = _T("450-a");
-	attrwindow.SetDimData(dimdata1);
-	
-	//dimdata1.sCodeName = _T("W3");
-	//dimdata1.type = UNLIMIT;
-	////dimdata1.sFomula = _T("");
-	//attrwindow.SetDimData(dimdata1);
-	//
-
-	//CWindowsDimData dimdata2;
 	dimdata2.sCodeName = _T("H1");
 	dimdata2.type = CALC;
 	dimdata2.sFomula = _T("H-2a");
 	attrwindow.SetDimData(dimdata2);
 
-	//dimdata2.sCodeName = _T("H2");
-	//dimdata2.type = UNLIMIT;
-	//attrwindow.SetDimData(dimdata2);
-
-	//dimdata2.sCodeName = _T("H3");
-	//dimdata2.type = CALC;
-	//dimdata2.sFomula = _T("(W-2a)/2");
-	//attrwindow.SetDimData(dimdata2);
-
-	//dimdata2.sCodeName = _T("R");
-	//dimdata2.type = UNLIMIT;
-	////dimdata2.sFomula = _T("(W-2a)/2");
-	//attrwindow.SetDimData(dimdata2);
-
 	attrwindow.CheckAndComplementDimeData();
 
-	attrwindow.SetH(2400);
-	attrwindow.SetW(1200);
+	attrwindow.SetH(1400);
+	attrwindow.SetW(1700);
 	attrwindow.SetH1(500);
-	//attrwindow.SetH2(500);
-	//attrwindow.SetH3(500);
-	attrwindow.SetW1(700);
-	attrwindow.SetW2(600);
-	//attrwindow.SetW3(500);
-	//attrwindow.SetR(0);
+	attrwindow.SetW1(750);
 	attrwindow.SetA(50);
 
-	attrwindow.m_material.sAluminumSerial = _T("SW60AM系列");
+	attrwindow.m_material.sAluminumSerial = _T("SW55M系列");
 	attrwindow.SetInstanceCode(_T("111"));
 
 	m_winAtts.push_back(attrwindow);
-
-	attrwindow.m_prototypeCode = _T("Door_WLC1");
+	//////////////////////////////////////////////////////////////////////////
+	attrwindow.m_prototypeCode = _T("Door_WM2");
 	attrwindow.m_quyuName = _T("全部");
 	attrwindow.m_isJiTuan = true;
 	attrwindow.m_isDynamic = true;
@@ -364,22 +327,150 @@ void ZJYTest()
 	attrwindow.SetDimData(dimdata2);
 
 	dimdata1.sCodeName = _T("W1");
+	dimdata1.type = CALC;
+	dimdata1.sFomula = _T("W-2a-W2");
+	attrwindow.SetDimData(dimdata1);
+
+	
+	dimdata1.sCodeName = _T("W2");
+	dimdata1.type = CALC;
+	dimdata1.sFomula = _T("450-a");
+	attrwindow.SetDimData(dimdata1);
+
+	dimdata2.sCodeName = _T("H1");
+	dimdata2.type = CALC;
+	dimdata2.sFomula = _T("H-2a");
+	attrwindow.SetDimData(dimdata2);
+
+	attrwindow.CheckAndComplementDimeData();
+
+	attrwindow.SetH(1400);
+	attrwindow.SetW(1700);
+	attrwindow.SetH1(500);
+	attrwindow.SetW1(750);
+	attrwindow.SetW2(600);
+	attrwindow.SetA(50);
+
+	attrwindow.m_material.sAluminumSerial = _T("SW55M系列");
+	attrwindow.SetInstanceCode(_T("222"));
+
+	m_winAtts.push_back(attrwindow);
+	//////////////////////////////////////////////////////////////////////////
+	attrwindow.m_prototypeCode = _T("Door_WM3");
+	attrwindow.m_quyuName = _T("全部");
+	attrwindow.m_isJiTuan = true;
+	attrwindow.m_isDynamic = true;
+
+	attrwindow.m_gongNengquType = _T("全部");
+	attrwindow.m_openType = _T("外开");
+	attrwindow.m_openQty = 1;
+
+	dimdata1.sCodeName = _T("W");
 	dimdata1.type = UNLIMIT;
-	//dimdata1.sFomula = _T("(W-2a)/3");
+	attrwindow.SetDimData(dimdata1);
+
+	dimdata2.sCodeName = _T("H");
+	dimdata2.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata2);
+
+	dimdata1.sCodeName = _T("W1");
+	dimdata1.type = CALC;
+	dimdata1.sFomula = _T("(W-2a)/2");
+	attrwindow.SetDimData(dimdata1);
+
+	dimdata2.sCodeName = _T("H1");
+	dimdata2.type = CALC;
+	dimdata2.sFomula = _T("H-2a");
+	attrwindow.SetDimData(dimdata2);
+
+	attrwindow.CheckAndComplementDimeData();
+
+	attrwindow.SetH(1400);
+	attrwindow.SetW(1700);
+	attrwindow.SetH1(500);
+	attrwindow.SetW1(750);
+	attrwindow.SetA(50);
+
+	attrwindow.m_material.sAluminumSerial = _T("SW55M系列");
+	attrwindow.SetInstanceCode(_T("333"));
+
+	m_winAtts.push_back(attrwindow);
+	//////////////////////////////////////////////////////////////////////////
+	attrwindow.m_prototypeCode = _T("Door_WM4");
+	attrwindow.m_quyuName = _T("全部");
+	attrwindow.m_isJiTuan = true;
+	attrwindow.m_isDynamic = true;
+
+	attrwindow.m_gongNengquType = _T("全部");
+	attrwindow.m_openType = _T("外开");
+	attrwindow.m_openQty = 1;
+
+	dimdata1.sCodeName = _T("W");
+	dimdata1.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata1);
+
+	dimdata2.sCodeName = _T("H");
+	dimdata2.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata2);
+
+	dimdata1.sCodeName = _T("W1");
+	dimdata1.type = CALC;
+	dimdata1.sFomula = _T("(W-2a)/2");
 	attrwindow.SetDimData(dimdata1);
 
 	dimdata1.sCodeName = _T("W2");
 	dimdata1.type = CALC;
-	dimdata1.sFomula = _T("W-2a-1700");
+	dimdata1.sFomula = _T("W-2a-W1");
+	attrwindow.SetDimData(dimdata1);
+
+	dimdata2.sCodeName = _T("H1");
+	dimdata2.type = CALC;
+	dimdata2.sFomula = _T("H-2a");
+	attrwindow.SetDimData(dimdata2);
+
+	attrwindow.CheckAndComplementDimeData();
+
+	attrwindow.SetH(1400);
+	attrwindow.SetW(1700);
+	attrwindow.SetH1(500);
+	attrwindow.SetW1(600);
+	attrwindow.SetH2(400);
+	attrwindow.SetA(50);
+
+	attrwindow.m_material.sAluminumSerial = _T("SW55M系列");
+	attrwindow.SetInstanceCode(_T("444"));
+
+	m_winAtts.push_back(attrwindow);
+	//////////////////////////////////////////////////////////////////////////
+	attrwindow.m_prototypeCode = _T("Door_WLC1");
+	attrwindow.m_quyuName = _T("全部");
+	attrwindow.m_isJiTuan = true;
+	attrwindow.m_isDynamic = true;
+
+	attrwindow.m_gongNengquType = _T("全部");
+	attrwindow.m_openType = _T("外开");
+	attrwindow.m_openQty = 1;
+
+	//CWindowsDimData dimdata1;
+	dimdata1.sCodeName = _T("W");
+	dimdata1.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata1);
+	//CWindowsDimData dimdata2;
+	dimdata2.sCodeName = _T("H");
+	dimdata2.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata2);
+	//CWindowsDimData dimdata3;
+
+	dimdata1.sCodeName = _T("W1");
+	dimdata1.type = UNLIMIT;
+	//dimdata1.sFomula = _T("W-2a");
 	attrwindow.SetDimData(dimdata1);
 
 	dimdata1.sCodeName = _T("W3");
 	dimdata1.type = UNLIMIT;
-	//dimdata1.sFomula = _T("");
+	//dimdata1.sFomula = _T("W-2a");
 	attrwindow.SetDimData(dimdata1);
-	
 
-	//CWindowsDimData dimdata2;
 	dimdata2.sCodeName = _T("H1");
 	dimdata2.type = CALC;
 	dimdata2.sFomula = _T("H-2a-H2");
@@ -390,35 +481,130 @@ void ZJYTest()
 	dimdata2.sFomula = _T("1000-a");
 	attrwindow.SetDimData(dimdata2);
 
-	//dimdata2.sCodeName = _T("H3");
-	//dimdata2.type = CALC;
-	//dimdata2.sFomula = _T("(W-2a)/2");
-	//attrwindow.SetDimData(dimdata2);
-
-	//dimdata2.sCodeName = _T("R");
-	//dimdata2.type = UNLIMIT;
-	////dimdata2.sFomula = _T("(W-2a)/2");
-	//attrwindow.SetDimData(dimdata2);
+	dimdata2.sCodeName = _T("W2");
+	dimdata2.type = CALC;
+	dimdata2.sFomula = _T("W-2a-W1");
+	attrwindow.SetDimData(dimdata2);
 
 	attrwindow.CheckAndComplementDimeData();
 
 	attrwindow.SetH(2400);
 	attrwindow.SetW(2700);
 	attrwindow.SetH1(500);
-	attrwindow.SetH2(500);
-	//attrwindow.SetH3(500);
 	attrwindow.SetW1(1000);
-	attrwindow.SetW2(600);
+	attrwindow.SetW2(400);
 	attrwindow.SetW3(700);
-	attrwindow.SetR(0);
 	attrwindow.SetA(50);
 
-	attrwindow.m_material.sAluminumSerial = _T("SW65M系列");
-	attrwindow.SetInstanceCode(_T("222"));
+	attrwindow.m_material.sAluminumSerial = _T("SW55M系列");
+	attrwindow.SetInstanceCode(_T("555"));
 
 	m_winAtts.push_back(attrwindow);
+	//////////////////////////////////////////////////////////////////////////
+	attrwindow.m_prototypeCode = _T("Door_WLC2");
+	attrwindow.m_quyuName = _T("全部");
+	attrwindow.m_isJiTuan = true;
+	attrwindow.m_isDynamic = true;
 
+	attrwindow.m_gongNengquType = _T("全部");
+	attrwindow.m_openType = _T("外开");
+	attrwindow.m_openQty = 1;
 
+	//CWindowsDimData dimdata1;
+	dimdata1.sCodeName = _T("W");
+	dimdata1.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata1);
+	//CWindowsDimData dimdata2;
+	dimdata2.sCodeName = _T("H");
+	dimdata2.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata2);
+	//CWindowsDimData dimdata3;
+
+	dimdata1.sCodeName = _T("W1");
+	dimdata1.type = CALC;
+	dimdata1.sFomula = _T("W-2a-W2");
+	attrwindow.SetDimData(dimdata1);
+
+	dimdata1.sCodeName = _T("W2");
+	dimdata1.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata1);
+
+	dimdata2.sCodeName = _T("H1");
+	dimdata2.type = CALC;
+	dimdata2.sFomula = _T("H-900");
+	attrwindow.SetDimData(dimdata2);
+
+	attrwindow.CheckAndComplementDimeData();
+
+	attrwindow.SetH(2400);
+	attrwindow.SetW(1600);
+	attrwindow.SetH1(500);
+	attrwindow.SetW1(750);
+	attrwindow.SetW2(900);
+	attrwindow.SetA(50);
+
+	attrwindow.m_material.sAluminumSerial = _T("SW55M系列");
+	attrwindow.SetInstanceCode(_T("666"));
+
+	m_winAtts.push_back(attrwindow);
+	//////////////////////////////////////////////////////////////////////////
+	attrwindow.m_prototypeCode = _T("Door_WLC3");
+	attrwindow.m_quyuName = _T("全部");
+	attrwindow.m_isJiTuan = true;
+	attrwindow.m_isDynamic = true;
+
+	attrwindow.m_gongNengquType = _T("全部");
+	attrwindow.m_openType = _T("外开");
+	attrwindow.m_openQty = 1;
+
+	//CWindowsDimData dimdata1;
+	dimdata1.sCodeName = _T("W");
+	dimdata1.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata1);
+	//CWindowsDimData dimdata2;
+	dimdata2.sCodeName = _T("H");
+	dimdata2.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata2);
+	//CWindowsDimData dimdata3;
+
+	dimdata1.sCodeName = _T("W1");
+	dimdata1.type = CALC;
+	dimdata1.sFomula = _T("W-2a-W2");
+	attrwindow.SetDimData(dimdata1);
+
+	dimdata1.sCodeName = _T("W2");
+	dimdata1.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata1);
+
+	dimdata2.sCodeName = _T("H1");
+	dimdata2.type = CALC;
+	dimdata2.sFomula = _T("H-2a-H2-H3");
+	attrwindow.SetDimData(dimdata2);
+
+	dimdata2.sCodeName = _T("H2");
+	dimdata2.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata2);
+
+	dimdata2.sCodeName = _T("H3");
+	dimdata2.type = UNLIMIT;
+	attrwindow.SetDimData(dimdata2);
+
+	attrwindow.CheckAndComplementDimeData();
+
+	attrwindow.SetH(2400);
+	attrwindow.SetW(1600);
+	attrwindow.SetH1(500);
+	attrwindow.SetH2(400);
+	attrwindow.SetH3(600);
+	attrwindow.SetW2(900);
+	attrwindow.SetW1(700);
+	attrwindow.SetA(50);
+
+	attrwindow.m_material.sAluminumSerial = _T("SW55M系列");
+	attrwindow.SetInstanceCode(_T("777"));
+
+	m_winAtts.push_back(attrwindow);
+	//////////////////////////////////////////////////////////////////////////
 	CWindowStatictic winStatictic;
 
 	CString filter=L"参数文件(*.xlsx)|*.xlsx|All Files(*.*)|*.*||";  
@@ -576,9 +762,9 @@ void CMD_TEST2()
 	vAlFormula = CWindowFormula::Instance()->GetAluminumFormulas(L"Window_NC1");
 	vGlassFormula = CWindowFormula::Instance()->GetGlassFormulas(L"Window_NC1");
 	vHardwareFormula = CWindowFormula::Instance()->GetHardwareData(L"Window_NC1");
-	CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(E_WindowDoor_NC, L"SN65A系列", L"M1", DeductedSizeData);
-	CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(E_WindowDoor_WC, L"SN65A系列", L"M1", DeductedSizeData);
-	CAluminumSeries::Instance()->GetAluminumDataBySeriesAndName(E_WindowDoor_NC, L"SN60系列", L"假中梃", AlData);
+	CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(E_WindowDoor_NC, L"SW55M系列", L"M1", DeductedSizeData);
+	CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(E_WindowDoor_WC, L"SW55M系列", L"M1", DeductedSizeData);
+	CAluminumSeries::Instance()->GetAluminumDataBySeriesAndName(E_WindowDoor_NC, L"SW55M系列", L"假中梃", AlData);
 	CAluminumSeries::Instance()->GetAluminumSerialByCode(L"SN60T002", AlSeries);
 	vAlSeries = CAluminumSeries::Instance()->GetAluminumSerialsByWindowType(E_WindowDoor_NC);*/
 	//CFileUpDownLoad::UploadFile(L"D:\\Drawing1.dwg", L"1234567778.dwg", _T("20191030"));
