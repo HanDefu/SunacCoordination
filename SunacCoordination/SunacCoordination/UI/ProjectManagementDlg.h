@@ -3,6 +3,7 @@
 #include "..\ProjectorFileMrg\ProjectInfo.h"
 #include "../UI/GridCtrl_src/NewCellTypes/GridCellCheck.h"
 #include "GridCtrlEx.h"
+#include "../Common/ThreadUtil.h"
 
 
 // CProjectManagementDlg 对话框
@@ -33,6 +34,7 @@ public:
 	int m_nClkRow;//当前点击的单元格的行数
 	int m_nClkCol;//当前点击的单元格的列数
 	vector<CGridCellCheck*> m_vCheckBox;//选中的checkbox
+	CCritSec m_Lock;
 
 	CButton m_BtnDeleteAll;
 	CButton m_BtnDownloadAll;

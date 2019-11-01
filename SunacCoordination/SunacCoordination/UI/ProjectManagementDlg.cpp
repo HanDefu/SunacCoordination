@@ -182,7 +182,8 @@ void CProjectManagementDlg::InitGridCtrl()
 }
 
 void CProjectManagementDlg::FillPjtGridCtrl(CProjectDir* SelectedDir)
-{	
+{
+	CAutoLock a(&m_Lock);
 	InitGridCtrl();
 	if (SelectedDir->m_subFiles.empty())
 	{

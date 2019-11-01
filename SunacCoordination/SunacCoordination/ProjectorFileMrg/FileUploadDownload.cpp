@@ -200,16 +200,23 @@ bool CFileUpDownLoad::UploadFile(CString p_sFilePath, CString p_ftpSaveName, CSt
 			AfxMessageBox(L"There was an exception");
 		pEx->Delete();
 
-		pFtpConnection->Close();
+		if (pFtpConnection != NULL)
+		{
+			pFtpConnection->Close();
+			//delete pFtpConnection;
+		}
 		m_pInetsession->Close();
-		delete pFtpConnection;
 		delete m_pInetsession;
 		return false;
 	}
 
-	pFtpConnection->Close();
+	if (pFtpConnection)
+	{
+		pFtpConnection->Close();
+		//delete pFtpConnection;
+	}
+
 	m_pInetsession->Close();
-	delete pFtpConnection;
 	delete m_pInetsession;
 
 	return bSuc ?  true :false;
