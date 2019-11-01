@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "ComFun_Str.h"
 #include "ComFun_Math.h"
+#include "../Tool/Regedit.h"
 
 void CF_STR_get_file_name(const WCHAR *fullname, WCHAR *filename)
 {
@@ -122,6 +123,12 @@ CHAR* WCHARTOCHAR(const WCHAR * pchar)
 //此函数用于获得AutoCAD的安装路径，返回该路径。
 CString MD2010_GetAppPath()
 {
+	//系统安装注册表 读取模式
+    CString sunacCADPath = Regedit::GetString(L"PATH");
+    if (sunacCADPath.GetLength() > 0)
+	    return sunacCADPath;
+
+	//如果注册表不存在 读取cad安装目录
 	WCHAR lpFileName[MAX_PATH];
 	GetModuleFileName(AfxGetInstanceHandle(),lpFileName,MAX_PATH);
 	CString strFileName = lpFileName;
@@ -135,5 +142,6 @@ CString MD2010_GetAppPath()
 	{
 		strPath = "";
 	}
+	strPath += L"\\Support";
 	return strPath;
 }
