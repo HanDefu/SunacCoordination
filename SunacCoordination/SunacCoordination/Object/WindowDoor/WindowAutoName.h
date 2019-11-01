@@ -28,6 +28,8 @@ public:
 	//将指定窗型重命名
 	bool RenameWindow(const AttrWindow& p_att);
 
+	Acad::ErrorStatus ReadFromDwg(AcDbDwgFiler* pFiler);
+	Acad::ErrorStatus WriteToDwg(AcDbDwgFiler* pFiler);
 
 protected:
 	vector<AttrWindow> m_allTypeWindows; //所有窗型

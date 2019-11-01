@@ -28,6 +28,8 @@ public:
 	//将指定卫生间重命名
 	bool RenameBathroom(const AttrBathroom& p_att);
 
+	Acad::ErrorStatus ReadFromDwg(AcDbDwgFiler* pFiler);
+	Acad::ErrorStatus WriteToDwg(AcDbDwgFiler* pFiler);
 
 protected:
 	vector<AttrBathroom> m_allTypeBathrooms; //所有卫生间

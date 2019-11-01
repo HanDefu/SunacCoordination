@@ -28,6 +28,8 @@ public:
 	//将指定厨房重命名
 	bool RenameKitchen(const AttrKitchen& p_att);
 
+	Acad::ErrorStatus ReadFromDwg(AcDbDwgFiler* pFiler);
+	Acad::ErrorStatus WriteToDwg(AcDbDwgFiler* pFiler);
 
 protected:
 	vector<AttrKitchen> m_allTypeKitchens; //所有厨房

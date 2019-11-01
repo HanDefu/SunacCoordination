@@ -41,9 +41,8 @@ public:
 	double minValue;
 	double maxValue;
 	CString sFomula;	//公式
-	double defaultValue;
 	CString prompt;  //说明
-
+	double defaultValue;
 	double value; //具体实例中的取值
 
 public:
@@ -55,6 +54,7 @@ public:
 	//排序用
 	bool operator<(const CWindowsDimData &rhs) const;
 
+	bool SetDefaultValue(double p_value);
 	bool SetValue(double p_value);
 };
 
@@ -62,6 +62,7 @@ public:
 
 struct CWindowMaterial	//门窗材料系列
 {
+	double heatCoeff;		//隔热系数
 	CString sAluminumSerial; //型材系列
 	CString sGlassSerial;
 	bool bHasAuxiliaryFrame; //是否有附框
@@ -69,6 +70,7 @@ struct CWindowMaterial	//门窗材料系列
 
 	CWindowMaterial()
 	{
+		heatCoeff = 2.4;
 		bHasAuxiliaryFrame = false;
 	}
 };
@@ -108,6 +110,7 @@ public:
 	void CheckAndComplementDimeData(); //检查并补全Dim数据，W/H/a确保都有
 
 	double GetTongFengQty(bool bDefaultValue = false) const;
+	double GetWindowArea()const;
 	
 	bool HasValue(CString p_sCode)const;
 	double GetValue(CString p_sCode, bool bDefaultValue = false) const;

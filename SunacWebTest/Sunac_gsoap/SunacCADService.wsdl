@@ -185,6 +185,40 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="NewCadFileDir">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DrawingDir" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ParentDir" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="NewCadFileDirResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="NewCadFileDirResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteCadFileDir">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="UID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="DrawingDir" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ParentDir" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteCadFileDirResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DeleteCadFileDirResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="StandardDesignAttributeSoapIn">
@@ -265,6 +299,18 @@
   <wsdl:message name="CadImgDownloadSoapOut">
     <wsdl:part name="parameters" element="tns:CadImgDownloadResponse" />
   </wsdl:message>
+  <wsdl:message name="NewCadFileDirSoapIn">
+    <wsdl:part name="parameters" element="tns:NewCadFileDir" />
+  </wsdl:message>
+  <wsdl:message name="NewCadFileDirSoapOut">
+    <wsdl:part name="parameters" element="tns:NewCadFileDirResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCadFileDirSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteCadFileDir" />
+  </wsdl:message>
+  <wsdl:message name="DeleteCadFileDirSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteCadFileDirResponse" />
+  </wsdl:message>
   <wsdl:portType name="ArgumentSettingServiceSoap">
     <wsdl:operation name="StandardDesignAttribute">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">标准模块属性；1、标准部品库：外窗、门、栏杆;2、厨房、卫生间、空调</wsdl:documentation>
@@ -330,6 +376,16 @@
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">标准部品库[原型文件缩略图下载]</wsdl:documentation>
       <wsdl:input message="tns:CadImgDownloadSoapIn" />
       <wsdl:output message="tns:CadImgDownloadSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="NewCadFileDir">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">项目分类文件夹新建</wsdl:documentation>
+      <wsdl:input message="tns:NewCadFileDirSoapIn" />
+      <wsdl:output message="tns:NewCadFileDirSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCadFileDir">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">项目分类文件夹删除</wsdl:documentation>
+      <wsdl:input message="tns:DeleteCadFileDirSoapIn" />
+      <wsdl:output message="tns:DeleteCadFileDirSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="ArgumentSettingServiceSoap" type="tns:ArgumentSettingServiceSoap">
@@ -451,6 +507,24 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="NewCadFileDir">
+      <soap:operation soapAction="http://tempuri.org/NewCadFileDir" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCadFileDir">
+      <soap:operation soapAction="http://tempuri.org/DeleteCadFileDir" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="ArgumentSettingServiceSoap12" type="tns:ArgumentSettingServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -564,6 +638,24 @@
     </wsdl:operation>
     <wsdl:operation name="CadImgDownload">
       <soap12:operation soapAction="http://tempuri.org/CadImgDownload" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NewCadFileDir">
+      <soap12:operation soapAction="http://tempuri.org/NewCadFileDir" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteCadFileDir">
+      <soap12:operation soapAction="http://tempuri.org/DeleteCadFileDir" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

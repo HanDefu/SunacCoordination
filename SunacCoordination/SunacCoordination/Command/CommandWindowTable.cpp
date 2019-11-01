@@ -25,6 +25,7 @@
 #include "../Object/WindowDoor/RCWindow.h"
 #include "../Common/ComFun_ACad.h"
 #include "dbtable.h"
+#include "Command.h"
 
 //门窗表
 void CMD_SunacWindowsTable()
@@ -97,8 +98,7 @@ void CMD_SunacWindowsTable()
 	table->setAlignment(AcDb::kMiddleCenter);
 
 
-	//1.设置行数列数
-	                //说明：3 是标题栏， +1是合计
+	//1.设置行数列数, 说明：3 是标题栏， +1是合计
 	int allRowNum = 3+(numWindow+1);//+(doorNum+1)
 	table->setNumRows(allRowNum);
 	table->setNumColumns(17);
@@ -178,70 +178,70 @@ void CMD_SunacWindowsTable()
 		//-------6.逐个写入外窗的数据------//
 		for (int i = 0; i < numWindow; i++)
 		{
+			const AttrWindow * pWinAtt = allWindowsTypes[i].GetAttribute();
+			int W = (int)(pWinAtt->GetW());
+			int H = (int)(pWinAtt->GetH());
+			int nCount = (int)allWindowsTypes[i].m_sameTypeIds.size();
+
 			//序号
 			str.Format(L"%d",i+1);
 			table->setTextString(dataStartRow+i,1,str);
 
 			//门窗编号
-			str.Format(L"%s%dX%d",allWindowsTypes[i].GetAttribute()->m_prototypeCode, 
-				                  (int)(allWindowsTypes[i].GetW()),
-								  (int)(allWindowsTypes[i].GetH()));
-			table->setTextString(dataStartRow+i,2,str);
+			table->setTextString(dataStartRow + i, 2, pWinAtt->GetInstanceCode());
 			table->setContentColor(dataStartRow+i,2,0,redColor);
 
 			//型材种类
-			str = L"铝合金平开窗";
+			str = L"铝合金";
 			table->setTextString(dataStartRow+i,4,str);
 			table->setContentColor(dataStartRow+i,4,0,yellowColor);
 
 			//玻璃构造
-			str = L"6Low-E+12Ar+6(高透）";
-			table->setTextString(dataStartRow+i,5,str);
+			table->setTextString(dataStartRow + i, 5, pWinAtt->m_material.sGlassSerial);
 			table->setContentColor(dataStartRow+i,5,0,yellowColor);
 
 
 			//传热系数设计值
-			str = L"2.4";
+			str.Format(_T("%.2f"), pWinAtt->m_material.heatCoeff);
 			table->setTextString(dataStartRow+i,6,str);
 			table->setContentColor(dataStartRow+i,6,0,yellowColor);
 
 			//洞口宽
-			str.Format(L"%d", (int)(allWindowsTypes[i].GetW()));
+			str.Format(L"%d", W);
 			table->setTextString(dataStartRow+i,7,str);
 			table->setContentColor(dataStartRow+i,7,0,redColor);
 
 			//洞口高
-			str.Format(L"%d", (int)(allWindowsTypes[i].GetH()));
+			str.Format(L"%d", H);
 			table->setTextString(dataStartRow+i,8,str);
 			table->setContentColor(dataStartRow+i,8,0,redColor);
 
 			//樘数
-			str.Format(L"%d", allWindowsTypes[i].m_sameTypeIds.size());
+			str.Format(L"%d", nCount);
 			table->setTextString(dataStartRow+i,9,str);
 			table->setContentColor(dataStartRow+i,9,0,redColor);
 
 			//面积1
-			double area = allWindowsTypes[i].GetH() * allWindowsTypes[i].GetW()/1000000;
-			str.Format(L"%.3f", area);
+			double area = pWinAtt->GetWindowArea();
+			str.Format(L"%.2f", area);
 			table->setTextString(dataStartRow+i,10,str);
 			table->setContentColor(dataStartRow+i,10,0,yellowColor);
-			allArea1 += area * allWindowsTypes[i].m_sameTypeIds.size();
+			allArea1 += area * nCount;
 
 			//面积2
-			str.Format(L"%.3f", area);
+			str.Format(L"%.2f", area);
 			table->setTextString(dataStartRow+i,11,str);
 			table->setContentColor(dataStartRow+i,11,0,yellowColor);
 
 			//开启方式
-			str = L"内平开";
+			str = pWinAtt->m_openType;
 			table->setTextString(dataStartRow+i,12,str);
 			table->setContentColor(dataStartRow+i,12,0,redColor);
 		
-			//通风开启面积
-			// W1*(H-H2)/1000000;
-			double area2 = allWindowsTypes[i].GetW1() * 
-				(allWindowsTypes[i].GetH()-allWindowsTypes[i].GetH2())/1000000;
-			str.Format(L"%.3f", area2);
+			//通风开启面积			
+			double area2 = pWinAtt->GetTongFengQty();
+			//double area2 = allWindowsTypes[i].GetW1() *(allWindowsTypes[i].GetH()-allWindowsTypes[i].GetH2())/1000000;// W1*(H-H2)/1000000;
+			str.Format(L"%.2f", area2);
 			table->setTextString(dataStartRow+i,13,str);
 			table->setContentColor(dataStartRow+i,13,0,yellowColor);
 
@@ -249,14 +249,14 @@ void CMD_SunacWindowsTable()
 
 			//通风开启面积 百分比
 			//area2/area
-			str.Format(L"%.3f", 100*area2/area);
+			str.Format(L"%.2f", 100*area2/area);
 			table->setTextString(dataStartRow+i,14,str);
 			table->setContentColor(dataStartRow+i,14,0,yellowColor);
 
 			//使用位置
-			str = L"阳台";
-			table->setTextString(dataStartRow+i,15,str);
-			table->setContentColor(dataStartRow+i,15,0,redColor);
+			//str = L"阳台";
+			//table->setTextString(dataStartRow+i,15,str);
+			//table->setContentColor(dataStartRow+i,15,0,redColor);
 		}
 
 		//-----窗最后一个合计---//
@@ -265,7 +265,7 @@ void CMD_SunacWindowsTable()
 			table->setTextString(dataStartRow+numWindow,kk,L"-");
 		}
 		//总面积1
-		str.Format(L"%.3f", allArea1);
+		str.Format(L"%.2f", allArea1);
 		table->setTextString(dataStartRow+numWindow,10,str);
 		table->setContentColor(dataStartRow+numWindow,10,0,yellowColor);
 		
@@ -276,12 +276,12 @@ void CMD_SunacWindowsTable()
 		table->setTextString(dataStartRow+numWindow,12,L"-");
 
 		//合计通风面积
-		str.Format(L"%.3f", allArea2);
+		str.Format(L"%.2f", allArea2);
 		table->setTextString(dataStartRow+numWindow,13,str);
 		table->setContentColor(dataStartRow+numWindow,13,0,yellowColor);
 
 		//合计通风面积%
-		str.Format(L"%.3f", allArea2/allArea1 * 100);
+		str.Format(L"%.2f", allArea2/allArea1 * 100);
 		table->setTextString(dataStartRow+numWindow,14,str);
 		table->setContentColor(dataStartRow+numWindow,14,0,yellowColor);
 

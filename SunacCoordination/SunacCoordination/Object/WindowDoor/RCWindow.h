@@ -53,8 +53,6 @@ public:
 
 	//门窗面积
 	double GetWindowArea();
-	//开启面积
-	double GetOpenArea();
 
 	void SetInstanceCode(CString str);
 	CString GetInstanceCode();
