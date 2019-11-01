@@ -258,7 +258,7 @@ void CWebProjectFile::ParseProjectInfoFromXML(CMarkup xml)
 						}
 						while (xml.FindElem(_T("FileDir")))
 						{
-							CProjectDir* TempDir = new CProjectDir;
+							/*CProjectDir* TempDir = new CProjectDir;
 							xml.IntoElem();
 							{
 								if (xml.FindElem(_T("Id")))
@@ -269,7 +269,7 @@ void CWebProjectFile::ParseProjectInfoFromXML(CMarkup xml)
 								{
 									TempDir->m_sName = xml.GetData();
 								}
-								//while (xml.FindElem(_T("FileDir")))
+								GetDirsFromWeb(xml, TempDir);//ตÝน้
 								while (xml.FindElem(_T("File")))
 								{
 									CProjectFile TempFile;
@@ -314,8 +314,8 @@ void CWebProjectFile::ParseProjectInfoFromXML(CMarkup xml)
 								}
 								
 							}
-							xml.OutOfElem();
-							TempDir->m_parent = &TempData->m_rootDir;
+							xml.OutOfElem();*/
+							GetDirsFromWeb(xml)->m_parent = &TempData->m_rootDir;
 						}
 					}
 					xml.OutOfElem();
@@ -348,4 +348,74 @@ void CWebProjectFile::ParseRenameFileDirFromXML(CMarkup xml)
 void CWebProjectFile::ParseUpdateFileFromXML(CMarkup xml)
 {
 
+}
+
+CProjectDir* CWebProjectFile::GetDirsFromWeb(CMarkup xml)
+{
+	if (xml.FindElem(_T("FileDir")))
+	{
+		CProjectDir* TempSubDir = new CProjectDir;
+		xml.IntoElem();
+		{
+			if (xml.FindElem(_T("Id")))
+			{
+				TempSubDir->m_id = _ttoi(xml.GetData());
+			}
+			if (xml.FindElem(_T("Name")))
+			{
+				TempSubDir->m_sName = xml.GetData();
+			}
+
+			while (xml.FindElem(_T("FileDir")))
+			{
+				GetDirsFromWeb(xml)->m_parent = TempSubDir;
+			}
+			
+			while (xml.FindElem(_T("File")))
+			{
+				CProjectFile TempFile;
+				xml.IntoElem();
+				{
+					if (xml.FindElem(_T("Id")))
+					{
+						TempFile.m_id = _ttoi(xml.GetData());
+					}
+					if (xml.FindElem(_T("FileName")))
+					{
+						TempFile.m_sName = xml.GetData();
+					}
+					if (xml.FindElem(_T("SaveName")))
+					{
+						TempFile.m_sSaveName = xml.GetData();
+					}
+					if (xml.FindElem(_T("FileUrl")))
+					{
+						TempFile.m_sFileUrl = xml.GetData();
+					}
+					if (xml.FindElem(_T("Creator")))
+					{
+						TempFile.m_sCreator = xml.GetData();
+					}
+					if (xml.FindElem(_T("CreateTime")))
+					{
+						TempFile.m_sCreateTime = xml.GetData();
+					}
+					if (xml.FindElem(_T("Updator")))
+					{
+						TempFile.m_sUpdator = xml.GetData();
+					}
+					if (xml.FindElem(_T("UpdateTime")))
+					{
+						TempFile.m_sUpdateTime = xml.GetData();
+					}
+
+				}
+				xml.OutOfElem();
+				TempSubDir->AddFile(TempFile);
+			}
+
+		}
+		xml.OutOfElem();
+		return TempSubDir;
+	}
 }

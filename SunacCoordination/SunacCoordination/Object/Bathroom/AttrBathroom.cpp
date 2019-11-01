@@ -198,3 +198,21 @@ bool AttrBathroom::IsInstanceEqual(const AttrBathroom& p_att) const
 
 	return true;
 }
+
+CString AttrBathroom::GetPrototypeCode() const
+{
+	CString prototypeCode = m_prototypeCode;
+	int pos = prototypeCode.Find(L'_');
+	if (pos != -1)
+		prototypeCode = prototypeCode.Left(pos);
+
+	CString ret;
+	if ((m_prop.m_doorPos == E_DIR_TOP) || (m_prop.m_doorPos == E_DIR_BOTTOM))
+		ret.Format(L"%s-%0.lf¡Á%0.lf", prototypeCode, m_width, m_height);
+	else
+		ret.Format(L"%s-%0.lf¡Á%0.lf", prototypeCode, m_height, m_width);
+	if (m_prototypeCode.Find(L"_g") != -1)
+		ret += L"/g";
+
+	return ret;
+}

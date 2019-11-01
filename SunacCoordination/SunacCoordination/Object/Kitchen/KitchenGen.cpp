@@ -716,6 +716,18 @@ CString CKitchGenKI::GetShuipenDefault()
 		return L"Ë«Åè900";
 }
 
+vCString CKitchGenKI::GetBinxiangOptions()
+{
+	//Ã»ÓÐ±ùÏä
+	vCString options;
+	return options;
+}
+
+CString CKitchGenKI::GetBinxiangDefault()
+{
+	return L"";
+}
+
 vCString CKitchGenKI::GetZhaotaiOptions() 
 {
 	vCString options;

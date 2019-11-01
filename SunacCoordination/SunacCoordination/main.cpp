@@ -801,7 +801,7 @@ static void initApp()
 	CDoubleClickBlockReference *pCircleEdit = new CDoubleClickBlockReference;
 	AcDbBlockReference::desc()->addX(AcDbDoubleClickEdit::desc(), pCircleEdit);	
 
-	LoadManagedDll(MD2010_GetAppPath() + L"\\support\\Sunac2019\\rcdc.dll");
+	LoadManagedDll(MD2010_GetAppPath() + L"\\Sunac2019\\rcdc.dll");
 
 	//WEBINST;
 

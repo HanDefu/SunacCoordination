@@ -59,7 +59,7 @@ void TYUI_Disable(CWnd& wnd)
 	wnd.EnableWindow(FALSE);
 }
 
-void TYUI_InitComboBox(CComboBox& comboBox, vCString options, CString defaultValue)
+void TYUI_InitComboBox(CComboBox& comboBox, vCString options, CString defaultValue, bool bAutoEnable/* = false*/)
 {
 	comboBox.ResetContent();
 	for (UINT i = 0; i < options.size(); i++)
@@ -68,9 +68,16 @@ void TYUI_InitComboBox(CComboBox& comboBox, vCString options, CString defaultVal
 		if (defaultValue == options[i])
 			comboBox.SetCurSel(i);
 	}
+
+	if (!bAutoEnable)
+		return;
+	if (comboBox.GetCount() == 0)
+		TYUI_Disable(comboBox);
+	else
+		TYUI_Enable(comboBox);
 }
 
-void TYUI_InitComboBox(CComboBox& comboBox, vint options, int defaultValue)
+void TYUI_InitComboBox(CComboBox& comboBox, vint options, int defaultValue, bool bAutoEnable/* = false*/)
 {
 	vCString vstr(options.size());
 	CString str;
@@ -81,10 +88,10 @@ void TYUI_InitComboBox(CComboBox& comboBox, vint options, int defaultValue)
 		if (defaultValue == options[i])
 			str = vstr[i];
 	}
-	TYUI_InitComboBox(comboBox, vstr, str);
+	TYUI_InitComboBox(comboBox, vstr, str, bAutoEnable);
 }
 
-void TYUI_InitComboBox(CComboBox& comboBox, vdouble options, double defaultValue)
+void TYUI_InitComboBox(CComboBox& comboBox, vdouble options, double defaultValue, bool bAutoEnable/* = false*/)
 {
 	vCString vstr(options.size());
 	CString str;
@@ -95,10 +102,10 @@ void TYUI_InitComboBox(CComboBox& comboBox, vdouble options, double defaultValue
 		if (abs(defaultValue - options[i]) < 1E-3)
 			str = vstr[i];
 	}
-	TYUI_InitComboBox(comboBox, vstr, str);
+	TYUI_InitComboBox(comboBox, vstr, str, bAutoEnable);
 }
 
-void TYUI_InitComboBox(CComboBox& comboBox, CString options, CString defaultValue)
+void TYUI_InitComboBox(CComboBox& comboBox, CString options, CString defaultValue, bool bAutoEnable/* = false*/)
 {
 	comboBox.ResetContent();
 
@@ -116,6 +123,13 @@ void TYUI_InitComboBox(CComboBox& comboBox, CString options, CString defaultValu
 			comboBox.SetCurSel(count);
 		count++;
 	}
+
+	if (!bAutoEnable)
+		return;
+	if (comboBox.GetCount() == 0)
+		TYUI_Disable(comboBox);
+	else
+		TYUI_Enable(comboBox);
 }
 
 CString TYUI_GetComboBoxText(CComboBox& comboBox)
