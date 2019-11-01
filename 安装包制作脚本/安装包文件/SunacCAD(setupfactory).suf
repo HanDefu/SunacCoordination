@@ -33583,7 +33583,8 @@ g_HandleSystemReboot();
 <Event>
 <Name>On Post Uninstall</Name>
 <Args/>
-<Script/>
+<Script>Registry.DeleteKey(HKEY_LOCAL_MACHINE, "Software\\SunacCAD");
+</Script>
 <BookMarks count="0">
 </BookMarks>
 </Event>
@@ -33824,7 +33825,11 @@ g_HandleSystemReboot();
 <Event>
 <Name>On Post Install</Name>
 <Args/>
-<Script>result = System.Is64BitOS();
+<Script>
+--安装路径记忆
+ Registry.SetValue(HKEY_LOCAL_MACHINE, "SOFTWARE\\SunacCAD", "PATH", SessionVar.Expand("%AppFolder%"), REG_SZ);
+
+result = System.Is64BitOS();
 if (result) then
     --autocad2008 英文版 64
     --Registry.CreateKey(HKEY_LOCAL_MACHINE, "SOFTWARE\\Autodesk\\AutoCAD\\R17.1\\ACAD-6001:409\\Applications\\SunacCAD");

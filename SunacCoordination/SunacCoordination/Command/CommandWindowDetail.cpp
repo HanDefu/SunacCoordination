@@ -77,7 +77,7 @@ typedef struct WindowDetailTemplate
 
 	static CString GetTemplateFileName()
 	{
-		return MD2010_GetAppPath() + L"\\support\\Sunac2019\\Data\\Template\\WindowDetail.dwg";;
+		return MD2010_GetAppPath() + L"\\Sunac2019\\Data\\Template\\WindowDetail.dwg";;
 	}
 
 	//计算门窗的插入点
