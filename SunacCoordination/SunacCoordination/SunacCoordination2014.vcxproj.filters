@@ -370,6 +370,9 @@
     <ClCompile Include="Object\Railing\RailingStatistic.cpp">
       <Filter>Object\Railing</Filter>
     </ClCompile>
+    <ClCompile Include="AutoNameSerialize.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
     <ClCompile Include="Common\ThreadUtil.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -835,6 +838,9 @@
     <ClInclude Include="Object\Railing\RailingStatistic.h">
       <Filter>Object\Railing</Filter>
     </ClInclude>
+    <ClInclude Include="AutoNameSerialize.h">
+      <Filter>Source</Filter>
+    </ClInclude>
     <ClInclude Include="Common\ThreadUtil.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -917,7 +923,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="WebIO\SunacCadWeb\ArgumentSettingServiceSoap.nsmap" />
-    <None Include="res\Document.ico" />
     <None Include="res\画图Folder.ico" />
+    <None Include="res\Document.ico" />
   </ItemGroup>
 </Project>

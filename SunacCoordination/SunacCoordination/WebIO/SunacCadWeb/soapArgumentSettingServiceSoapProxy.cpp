@@ -10,8 +10,8 @@ compiling, linking, and/or using OpenSSL is allowed.
 A commercial use license is available from Genivia Inc., contact@genivia.com
 --------------------------------------------------------------------------------
 */
+#include "StdAfx.h"
 
-#include "stdafx.h"
 #include "soapArgumentSettingServiceSoapProxy.h"
 
 ArgumentSettingServiceSoapProxy::ArgumentSettingServiceSoapProxy() : soap(SOAP_IO_DEFAULT)
@@ -1026,6 +1026,242 @@ int ArgumentSettingServiceSoapProxy::recv_DeleteCadFileDir(_ns1__DeleteCadFileDi
 	return soap_closesock(soap);
 }
 
+int ArgumentSettingServiceSoapProxy::send_RenameCadFileDir(const char *soap_endpoint_url, const char *soap_action, _ns1__RenameCadFileDir *ns1__RenameCadFileDir)
+{
+	struct soap *soap = this;
+	struct __ns1__RenameCadFileDir soap_tmp___ns1__RenameCadFileDir;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/RenameCadFileDir";
+	soap_tmp___ns1__RenameCadFileDir.ns1__RenameCadFileDir = ns1__RenameCadFileDir;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__RenameCadFileDir(soap, &soap_tmp___ns1__RenameCadFileDir);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__RenameCadFileDir(soap, &soap_tmp___ns1__RenameCadFileDir, "-ns1:RenameCadFileDir", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__RenameCadFileDir(soap, &soap_tmp___ns1__RenameCadFileDir, "-ns1:RenameCadFileDir", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_RenameCadFileDir(_ns1__RenameCadFileDirResponse &ns1__RenameCadFileDirResponse)
+{
+	struct soap *soap = this;
+	ns1__RenameCadFileDirResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__RenameCadFileDirResponse.soap_get(soap, "ns1:RenameCadFileDirResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_GetProjectInfo(const char *soap_endpoint_url, const char *soap_action, _ns1__GetProjectInfo *ns1__GetProjectInfo)
+{
+	struct soap *soap = this;
+	struct __ns1__GetProjectInfo soap_tmp___ns1__GetProjectInfo;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/GetProjectInfo";
+	soap_tmp___ns1__GetProjectInfo.ns1__GetProjectInfo = ns1__GetProjectInfo;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__GetProjectInfo(soap, &soap_tmp___ns1__GetProjectInfo);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__GetProjectInfo(soap, &soap_tmp___ns1__GetProjectInfo, "-ns1:GetProjectInfo", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__GetProjectInfo(soap, &soap_tmp___ns1__GetProjectInfo, "-ns1:GetProjectInfo", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_GetProjectInfo(_ns1__GetProjectInfoResponse &ns1__GetProjectInfoResponse)
+{
+	struct soap *soap = this;
+	ns1__GetProjectInfoResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__GetProjectInfoResponse.soap_get(soap, "ns1:GetProjectInfoResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_UpdateCadDrawing(const char *soap_endpoint_url, const char *soap_action, _ns1__UpdateCadDrawing *ns1__UpdateCadDrawing)
+{
+	struct soap *soap = this;
+	struct __ns1__UpdateCadDrawing soap_tmp___ns1__UpdateCadDrawing;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/UpdateCadDrawing";
+	soap_tmp___ns1__UpdateCadDrawing.ns1__UpdateCadDrawing = ns1__UpdateCadDrawing;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__UpdateCadDrawing(soap, &soap_tmp___ns1__UpdateCadDrawing);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__UpdateCadDrawing(soap, &soap_tmp___ns1__UpdateCadDrawing, "-ns1:UpdateCadDrawing", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__UpdateCadDrawing(soap, &soap_tmp___ns1__UpdateCadDrawing, "-ns1:UpdateCadDrawing", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_UpdateCadDrawing(_ns1__UpdateCadDrawingResponse &ns1__UpdateCadDrawingResponse)
+{
+	struct soap *soap = this;
+	ns1__UpdateCadDrawingResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__UpdateCadDrawingResponse.soap_get(soap, "ns1:UpdateCadDrawingResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_DeleteCadDrawing(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadDrawing *ns1__DeleteCadDrawing)
+{
+	struct soap *soap = this;
+	struct __ns1__DeleteCadDrawing soap_tmp___ns1__DeleteCadDrawing;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/DeleteCadDrawing";
+	soap_tmp___ns1__DeleteCadDrawing.ns1__DeleteCadDrawing = ns1__DeleteCadDrawing;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__DeleteCadDrawing(soap, &soap_tmp___ns1__DeleteCadDrawing);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__DeleteCadDrawing(soap, &soap_tmp___ns1__DeleteCadDrawing, "-ns1:DeleteCadDrawing", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__DeleteCadDrawing(soap, &soap_tmp___ns1__DeleteCadDrawing, "-ns1:DeleteCadDrawing", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_DeleteCadDrawing(_ns1__DeleteCadDrawingResponse &ns1__DeleteCadDrawingResponse)
+{
+	struct soap *soap = this;
+	ns1__DeleteCadDrawingResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__DeleteCadDrawingResponse.soap_get(soap, "ns1:DeleteCadDrawingResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
 int ArgumentSettingServiceSoapProxy::send_StandardDesignAttribute_(const char *soap_endpoint_url, const char *soap_action, _ns1__StandardDesignAttribute *ns1__StandardDesignAttribute)
 {
 	struct soap *soap = this;
@@ -1902,6 +2138,242 @@ int ArgumentSettingServiceSoapProxy::recv_DeleteCadFileDir_(_ns1__DeleteCadFileD
 	 || soap_body_begin_in(soap))
 		return soap_closesock(soap);
 	ns1__DeleteCadFileDirResponse.soap_get(soap, "ns1:DeleteCadFileDirResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_RenameCadFileDir_(const char *soap_endpoint_url, const char *soap_action, _ns1__RenameCadFileDir *ns1__RenameCadFileDir)
+{
+	struct soap *soap = this;
+	struct __ns1__RenameCadFileDir_ soap_tmp___ns1__RenameCadFileDir_;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/RenameCadFileDir";
+	soap_tmp___ns1__RenameCadFileDir_.ns1__RenameCadFileDir = ns1__RenameCadFileDir;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__RenameCadFileDir_(soap, &soap_tmp___ns1__RenameCadFileDir_);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__RenameCadFileDir_(soap, &soap_tmp___ns1__RenameCadFileDir_, "-ns1:RenameCadFileDir", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__RenameCadFileDir_(soap, &soap_tmp___ns1__RenameCadFileDir_, "-ns1:RenameCadFileDir", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_RenameCadFileDir_(_ns1__RenameCadFileDirResponse &ns1__RenameCadFileDirResponse)
+{
+	struct soap *soap = this;
+	ns1__RenameCadFileDirResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__RenameCadFileDirResponse.soap_get(soap, "ns1:RenameCadFileDirResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_GetProjectInfo_(const char *soap_endpoint_url, const char *soap_action, _ns1__GetProjectInfo *ns1__GetProjectInfo)
+{
+	struct soap *soap = this;
+	struct __ns1__GetProjectInfo_ soap_tmp___ns1__GetProjectInfo_;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/GetProjectInfo";
+	soap_tmp___ns1__GetProjectInfo_.ns1__GetProjectInfo = ns1__GetProjectInfo;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__GetProjectInfo_(soap, &soap_tmp___ns1__GetProjectInfo_);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__GetProjectInfo_(soap, &soap_tmp___ns1__GetProjectInfo_, "-ns1:GetProjectInfo", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__GetProjectInfo_(soap, &soap_tmp___ns1__GetProjectInfo_, "-ns1:GetProjectInfo", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_GetProjectInfo_(_ns1__GetProjectInfoResponse &ns1__GetProjectInfoResponse)
+{
+	struct soap *soap = this;
+	ns1__GetProjectInfoResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__GetProjectInfoResponse.soap_get(soap, "ns1:GetProjectInfoResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_UpdateCadDrawing_(const char *soap_endpoint_url, const char *soap_action, _ns1__UpdateCadDrawing *ns1__UpdateCadDrawing)
+{
+	struct soap *soap = this;
+	struct __ns1__UpdateCadDrawing_ soap_tmp___ns1__UpdateCadDrawing_;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/UpdateCadDrawing";
+	soap_tmp___ns1__UpdateCadDrawing_.ns1__UpdateCadDrawing = ns1__UpdateCadDrawing;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__UpdateCadDrawing_(soap, &soap_tmp___ns1__UpdateCadDrawing_);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__UpdateCadDrawing_(soap, &soap_tmp___ns1__UpdateCadDrawing_, "-ns1:UpdateCadDrawing", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__UpdateCadDrawing_(soap, &soap_tmp___ns1__UpdateCadDrawing_, "-ns1:UpdateCadDrawing", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_UpdateCadDrawing_(_ns1__UpdateCadDrawingResponse &ns1__UpdateCadDrawingResponse)
+{
+	struct soap *soap = this;
+	ns1__UpdateCadDrawingResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__UpdateCadDrawingResponse.soap_get(soap, "ns1:UpdateCadDrawingResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_DeleteCadDrawing_(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadDrawing *ns1__DeleteCadDrawing)
+{
+	struct soap *soap = this;
+	struct __ns1__DeleteCadDrawing_ soap_tmp___ns1__DeleteCadDrawing_;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://10.4.64.91/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/DeleteCadDrawing";
+	soap_tmp___ns1__DeleteCadDrawing_.ns1__DeleteCadDrawing = ns1__DeleteCadDrawing;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__DeleteCadDrawing_(soap, &soap_tmp___ns1__DeleteCadDrawing_);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__DeleteCadDrawing_(soap, &soap_tmp___ns1__DeleteCadDrawing_, "-ns1:DeleteCadDrawing", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__DeleteCadDrawing_(soap, &soap_tmp___ns1__DeleteCadDrawing_, "-ns1:DeleteCadDrawing", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_DeleteCadDrawing_(_ns1__DeleteCadDrawingResponse &ns1__DeleteCadDrawingResponse)
+{
+	struct soap *soap = this;
+	ns1__DeleteCadDrawingResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__DeleteCadDrawingResponse.soap_get(soap, "ns1:DeleteCadDrawingResponse", NULL);
 	if (soap->error)
 		return soap_recv_fault(soap, 0);
 	if (soap_body_end_in(soap)

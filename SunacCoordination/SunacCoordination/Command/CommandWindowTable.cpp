@@ -181,7 +181,7 @@ void CMD_SunacWindowsTable()
 			const AttrWindow * pWinAtt = allWindowsTypes[i].GetAttribute();
 			int W = (int)(pWinAtt->GetW());
 			int H = (int)(pWinAtt->GetH());
-			int nCount = allWindowsTypes[i].m_sameTypeIds.size();
+			int nCount = (int)allWindowsTypes[i].m_sameTypeIds.size();
 
 			//序号
 			str.Format(L"%d",i+1);

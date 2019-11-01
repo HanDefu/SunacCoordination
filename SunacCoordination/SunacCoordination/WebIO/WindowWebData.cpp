@@ -274,7 +274,7 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 					}
 					if (xml.FindElem(_T("DefaultValue")))
 					{
-						tempData.defaultValue =  _ttof(xml.GetData());
+						tempData.SetDefaultValue(_ttof(xml.GetData()));
 					}
 					if (xml.FindElem(_T("Desc")))
 					{
@@ -336,66 +336,63 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 				{
 					while (xml.FindElem(_T("Drawing")))
 					{
-						while (xml.FindElem(_T("Drawing")))
+						xml.IntoElem();
 						{
-							xml.IntoElem();
+							CString sFileType, tempString, sFileName, sFileID, sImgFileName;
+							if (xml.FindElem(_T("Id")))
 							{
-								CString sFileType, tempString, sFileName, sFileID, sImgFileName;
-								if (xml.FindElem(_T("Id")))
+								sFileID = xml.GetData();
+							}
+							if (xml.FindElem(_T("ImgPath")))
+							{
+								tempString = xml.GetData();
+								if (tempString != "")
 								{
-									sFileID = xml.GetData();
-								}
-								if (xml.FindElem(_T("ImgPath")))
-								{
-									tempString = xml.GetData();
-									if (tempString != "")
-									{
-										sImgFileName = WEBINST->GetFileName(tempString);//获得带扩展名的文件名
-									}
-								}
-								if (xml.FindElem(_T("CADPath")))
-								{
-									tempString = xml.GetData();
-									if (tempString != "")
-									{
-										sFileName = WEBINST->GetFileName(tempString);//获得带扩展名的文件名
-									}
-								}
-								if (xml.FindElem(_T("CADType")))
-								{
-									sFileType = xml.GetData();
-								}
-								if (sFileType == "FrontViewFile")
-								{
-									Attrdoor.m_frontViewFile.fileName = sFileName;
-								}
-								else if (sFileType == "LeftViewFile")
-								{
-									Attrdoor.m_leftViewFile.fileName = sFileName;
-								}
-								else if (sFileType == "TopViewFile")
-								{
-									Attrdoor.m_topViewFile.fileName = sFileName;
-								}
-								else if (sFileType == "ExpandViewFile")
-								{
-									Attrdoor.m_file.fileName = sFileName;
-								}
-								//检查文件是否存在，不存在则下载
-								CString sDWGFilePath = TY_GetPrototypeFilePath() + sFileName;
-								CString sImgFilePath = TY_GetPrototypeImagePath() + sImgFileName;
-								if (!JHCom_FileExist(sDWGFilePath))
-								{
-									WEBINST->DownloadFile(_ttoi(sFileID), "CAD", sDWGFilePath);
-								}
-
-								if (!JHCom_FileExist(sImgFilePath))
-								{
-									WEBINST->DownloadFile(_ttoi(sFileID), "Img", sImgFilePath);
+									sImgFileName = WEBINST->GetFileName(tempString);//获得带扩展名的文件名
 								}
 							}
-							xml.OutOfElem();
+							if (xml.FindElem(_T("CADPath")))
+							{
+								tempString = xml.GetData();
+								if (tempString != "")
+								{
+									sFileName = WEBINST->GetFileName(tempString);//获得带扩展名的文件名
+								}
+							}
+							if (xml.FindElem(_T("CADType")))
+							{
+								sFileType = xml.GetData();
+							}
+							if (sFileType == "FrontViewFile")
+							{
+								Attrdoor.m_frontViewFile.fileName = sFileName;
+							}
+							else if (sFileType == "LeftViewFile")
+							{
+								Attrdoor.m_leftViewFile.fileName = sFileName;
+							}
+							else if (sFileType == "TopViewFile")
+							{
+								Attrdoor.m_topViewFile.fileName = sFileName;
+							}
+							else if (sFileType == "ExpandViewFile")
+							{
+								Attrdoor.m_file.fileName = sFileName;
+							}
+								//检查文件是否存在，不存在则下载
+							CString sDWGFilePath = TY_GetPrototypeFilePath() + sFileName;
+							CString sImgFilePath = TY_GetPrototypeImagePath() + sImgFileName;
+							if (!JHCom_FileExist(sDWGFilePath))
+							{
+								WEBINST->DownloadFile(_ttoi(sFileID), "CAD", sDWGFilePath);
+							}
+
+							if (!JHCom_FileExist(sImgFilePath))
+							{
+								WEBINST->DownloadFile(_ttoi(sFileID), "Img", sImgFilePath);
+							}
 						}
+						xml.OutOfElem();					
 					}
 				}
 				xml.OutOfElem();
@@ -504,7 +501,7 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 					}
 					if (xml.FindElem(_T("DefaultValue")))
 					{
-						tempData.defaultValue =  _ttof(xml.GetData());
+						tempData.SetDefaultValue(_ttof(xml.GetData()));
 					}
 					if (xml.FindElem(_T("ValueDescription")))
 					{
@@ -658,7 +655,7 @@ std::vector<AttrWindow> CWindowWebData::GetDoors(double p_width, double p_heigh,
 {
 	if (doorType == "不限")
 	{
-		doorType = "";
+		doorType = L"";
 	}
 
 	std::wstring sOpenType = doorType;

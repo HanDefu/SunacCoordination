@@ -33,7 +33,6 @@ CWindowsDimData CWindowLocalDataFromDB::GetWindowDimData(CString code, char **va
 
 	CWindowsDimData  data;
 	data.sCodeName = code;
-	data.defaultValue = defaultValue;
 	data.prompt = sComment;
 
 	valueType.Trim();
@@ -71,6 +70,8 @@ CWindowsDimData CWindowLocalDataFromDB::GetWindowDimData(CString code, char **va
 	{
 		data.type = NOVALUE;
 	}
+
+	data.SetDefaultValue(defaultValue);
 	
 	return data;
 }
