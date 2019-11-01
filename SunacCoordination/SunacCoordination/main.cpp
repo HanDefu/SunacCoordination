@@ -57,6 +57,7 @@
 #include "ProjectorFileMrg/ProjectFileMrg.h"
 #include "ProjectorFileMrg/FileUploadDownload.h"
 #include "Object/WindowStatistic/WindowStatictic.h"
+#include "AutoNameSerialize.h"
 
 
 #ifdef _DEBUG
@@ -786,6 +787,10 @@ static void initApp()
 	acrxBuildClassHierarchy();
 	acrxRegisterService(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_RAILING));
 
+	CAutoNameSerialize::rxInit();
+	acrxBuildClassHierarchy();
+	acrxRegisterService(AutoNameSerialize_DBXSERVICE);
+
 	// 为AcDbCircle类添加协议扩展
 	CDoubleClickBlockReference *pCircleEdit = new CDoubleClickBlockReference;
 	AcDbBlockReference::desc()->addX(AcDbDoubleClickEdit::desc(), pCircleEdit);	
@@ -802,6 +807,9 @@ static void unloadApp()
 {
 	// Do other cleanup tasks here  
 	acedRegCmds->removeGroup(_T("SUNAC"));  
+
+	deleteAcRxClass(CAutoNameSerialize::desc());
+	delete acrxServiceDictionary->remove(AutoNameSerialize_DBXSERVICE);
 
 	deleteAcRxClass(AttrWindow::desc());
 	delete acrxServiceDictionary->remove(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_WINDOW));
@@ -876,6 +884,7 @@ extern "C" AcRx::AppRetCode acrxEntryPoint( AcRx::AppMsgCode msg, void* appId)
 		CloseModelessDialogs(); //预览控件依赖于当前文档，关闭文档时退出对话框以防止崩溃
 		break;
 	case  AcRx::kSaveMsg:
+		InitSerialize();
 		break;
 	case AcRx::kInitDialogMsg:
 		break;

@@ -104,3 +104,21 @@ bool CKitchenAutoName::RenameKitchen(const AttrKitchen& p_att)
 
 	return false;
 }
+
+Acad::ErrorStatus CKitchenAutoName::ReadFromDwg(AcDbDwgFiler* pFiler)
+{
+	Adesk::UInt32 size;
+	pFiler->readItem(&size);
+	m_allTypeKitchens.resize(size);
+	for (UINT i = 0; i < m_allTypeKitchens.size(); i++)
+		m_allTypeKitchens[i].dwgInFields(pFiler);
+	return Acad::eOk;
+}
+
+Acad::ErrorStatus CKitchenAutoName::WriteToDwg(AcDbDwgFiler* pFiler)
+{
+	pFiler->writeItem((Adesk::UInt32)m_allTypeKitchens.size());
+	for (UINT i = 0; i < m_allTypeKitchens.size(); i++)
+		m_allTypeKitchens[i].dwgOutFields(pFiler);
+	return Acad::eOk;
+}

@@ -99,3 +99,21 @@ bool CWindowAutoName::RenameWindow(const AttrWindow& p_att)
 
 	return false;
 }
+
+Acad::ErrorStatus CWindowAutoName::ReadFromDwg(AcDbDwgFiler* pFiler)
+{
+	Adesk::UInt32 size;
+	pFiler->readItem(&size);
+	m_allTypeWindows.resize(size);
+	for (UINT i = 0; i < m_allTypeWindows.size(); i++)
+		m_allTypeWindows[i].dwgInFields(pFiler);
+	return Acad::eOk;
+}
+
+Acad::ErrorStatus CWindowAutoName::WriteToDwg(AcDbDwgFiler* pFiler)
+{
+	pFiler->writeItem((Adesk::UInt32)m_allTypeWindows.size());
+	for (UINT i = 0; i < m_allTypeWindows.size(); i++)
+		m_allTypeWindows[i].dwgOutFields(pFiler);
+	return Acad::eOk;
+}

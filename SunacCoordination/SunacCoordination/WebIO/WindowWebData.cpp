@@ -274,7 +274,7 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 					}
 					if (xml.FindElem(_T("DefaultValue")))
 					{
-						tempData.defaultValue =  _ttof(xml.GetData());
+						tempData.SetDefaultValue(_ttof(xml.GetData()));
 					}
 					if (xml.FindElem(_T("Desc")))
 					{
@@ -504,7 +504,7 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 					}
 					if (xml.FindElem(_T("DefaultValue")))
 					{
-						tempData.defaultValue =  _ttof(xml.GetData());
+						tempData.SetDefaultValue(_ttof(xml.GetData()));
 					}
 					if (xml.FindElem(_T("ValueDescription")))
 					{

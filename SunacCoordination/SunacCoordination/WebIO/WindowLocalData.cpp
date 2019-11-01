@@ -35,7 +35,7 @@ CWindowsDimData CWindowLocalData::ReadDimData(Excel::CExcelUtil &xls, CString co
 
 	CWindowsDimData  data;
 	data.sCodeName = code;
-	data.defaultValue = defaultValue;
+	data.SetDefaultValue(defaultValue);
 	data.prompt = sComment;
 
 	valueType.Trim();

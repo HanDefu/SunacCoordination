@@ -41,9 +41,8 @@ public:
 	double minValue;
 	double maxValue;
 	CString sFomula;	//公式
-	double defaultValue;
 	CString prompt;  //说明
-
+	double defaultValue;
 	double value; //具体实例中的取值
 
 public:
@@ -55,6 +54,7 @@ public:
 	//排序用
 	bool operator<(const CWindowsDimData &rhs) const;
 
+	bool SetDefaultValue(double p_value);
 	bool SetValue(double p_value);
 };
 
