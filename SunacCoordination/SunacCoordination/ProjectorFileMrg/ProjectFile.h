@@ -76,6 +76,7 @@ public:
 	bool FindFile(CString p_fileName, CProjectFile &p_fileOut) const;
 	CProjectFile* FindFile(CString p_fileName);
 
+	bool AddFolder(CProjectDir* p_dir);
 	CProjectDir*  AddFolder(CString p_sFolderName); //添加子目录
 	bool DeleteSubFolder(CString p_sFolderName);	//删除子目录
 	CProjectDir* GetSubFolder(CString p_folder);//根据子目录名获取子目录

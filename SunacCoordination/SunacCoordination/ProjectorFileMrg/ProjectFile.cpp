@@ -200,6 +200,17 @@ CString CProjectDir::GetDirFullPath()const
 	return sDirPath;
 }
 
+bool CProjectDir::AddFolder(CProjectDir* p_dir)
+{
+	if (p_dir==NULL)
+	{
+		return false;
+	}
+
+	p_dir->m_parent = this;
+	m_subDirs.push_back(p_dir);
+}
+
 CString EProjectFileStateToCString(EProjectFileState state)
 {
 	switch(state)

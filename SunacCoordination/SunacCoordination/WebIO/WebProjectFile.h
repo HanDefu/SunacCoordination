@@ -19,14 +19,18 @@ public:
 	bool RenameFolder(CString p_prjectId, CString p_sRenameDirPath, CString p_sNewDirName);
 	bool DeleteFolder(CString p_prjectId, CString p_dir);
 
+protected:
+	void ParseProjectInfoFromXML(std::wstring * p_str);
+	CProjectData* LoadOnePrjData(CMarkup xml);
+	CProjectDir* LoadDirData(CMarkup xml);
+	CProjectFile LoadFileData(CMarkup xml);
 
-	void ParseProjectInfoFromXML(CMarkup xml);
+
 	void ParseNewFileDirFromXML(CMarkup xml);
 	void ParseDeleteFileFromXML(CMarkup xml);
 	void ParseRenameFileDirFromXML(CMarkup xml);
 	void ParseUpdateFileFromXML(CMarkup xml);
 
-	CProjectDir* GetDirsFromWeb(CMarkup xml);
 
 protected:
 

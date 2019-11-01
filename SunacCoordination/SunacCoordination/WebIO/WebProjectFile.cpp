@@ -38,13 +38,8 @@ bool CWebProjectFile::GetAllProjectInfo()
 	{
 		return false;
 	}
-	CProjectFileMrg::Instance()->Clear();
 
-
-	CMarkup xml;	
-	xml.SetDoc((*(nsResponse.GetProjectInfoResult)).c_str());
-
-	ParseProjectInfoFromXML(xml);
+	ParseProjectInfoFromXML(nsResponse.GetProjectInfoResult);
 
 	return true;
 }
@@ -211,10 +206,18 @@ bool CWebProjectFile::DeleteFolder(CString p_prjectId, CString p_dir)
 	return true;
 }
 
-void CWebProjectFile::ParseProjectInfoFromXML(CMarkup xml)
+void CWebProjectFile::ParseProjectInfoFromXML(std::wstring * p_str)
 {
+	if (p_str==NULL)
+		return;
+
+	CMarkup xml;
+	xml.SetDoc(p_str->c_str());
+	CProjectFileMrg::Instance()->Clear();
+
 	xml.ResetMainPos();
 	xml.FindElem();	//根节点
+
 	xml.IntoElem();
 	{
 		if (xml.FindElem(_T("Code")))
@@ -224,101 +227,14 @@ void CWebProjectFile::ParseProjectInfoFromXML(CMarkup xml)
 				return ;
 			}
 		}
+
 		if (xml.FindElem(_T("Projects")))
 		{
 			xml.IntoElem();
 			{
 				while (xml.FindElem(_T("Project")))
 				{
-					CProjectData* TempData = new CProjectData;
-					xml.IntoElem();
-					{
-						if (xml.FindElem(_T("ProjectInfo")))
-						{
-							xml.IntoElem();
-							{
-								if (xml.FindElem(_T("Id")))
-								{
-									TempData->m_prjInfo.m_id = _ttoi(xml.GetData());
-								}
-								if (xml.FindElem(_T("Name")))
-								{
-									TempData->m_prjInfo.m_sName = xml.GetData();
-								}
-								if (xml.FindElem(_T("Area")))
-								{
-									TempData->m_prjInfo.m_sArea = xml.GetData();
-								}
-								if (xml.FindElem(_T("CityCompany")))
-								{
-									TempData->m_prjInfo.m_sCityCompany = xml.GetData();
-								}
-							}
-							xml.OutOfElem();
-						}
-						while (xml.FindElem(_T("FileDir")))
-						{
-							/*CProjectDir* TempDir = new CProjectDir;
-							xml.IntoElem();
-							{
-								if (xml.FindElem(_T("Id")))
-								{
-									TempDir->m_id = _ttoi(xml.GetData());
-								}
-								if (xml.FindElem(_T("Name")))
-								{
-									TempDir->m_sName = xml.GetData();
-								}
-								GetDirsFromWeb(xml, TempDir);//递归
-								while (xml.FindElem(_T("File")))
-								{
-									CProjectFile TempFile;
-									xml.IntoElem();
-									{
-										if (xml.FindElem(_T("Id")))
-										{
-											TempFile.m_id = _ttoi(xml.GetData());
-										}
-										if (xml.FindElem(_T("FileName")))
-										{
-											TempFile.m_sName = xml.GetData();
-										}
-										if (xml.FindElem(_T("SaveName")))
-										{
-											TempFile.m_sSaveName = xml.GetData();
-										}
-										if (xml.FindElem(_T("FileUrl")))
-										{
-											TempFile.m_sFileUrl = xml.GetData();
-										}
-										if (xml.FindElem(_T("Creator")))
-										{
-											TempFile.m_sCreator = xml.GetData();
-										}
-										if (xml.FindElem(_T("CreateTime")))
-										{
-											TempFile.m_sCreateTime = xml.GetData();
-										}
-										if (xml.FindElem(_T("Updator")))
-										{
-											TempFile.m_sUpdator = xml.GetData();
-										}
-										if (xml.FindElem(_T("UpdateTime")))
-										{
-											TempFile.m_sUpdateTime = xml.GetData();
-										}
-										
-									}
-									xml.OutOfElem();
-									TempDir->AddFile(TempFile);
-								}
-								
-							}
-							xml.OutOfElem();*/
-							GetDirsFromWeb(xml)->m_parent = &TempData->m_rootDir;
-						}
-					}
-					xml.OutOfElem();
+					CProjectData* TempData = LoadOnePrjData(xml);
 					CProjectFileMrg::Instance()->m_projects.push_back(TempData);
 				}
 			}
@@ -326,9 +242,123 @@ void CWebProjectFile::ParseProjectInfoFromXML(CMarkup xml)
 		}
 	}
 	xml.OutOfElem();
-	
-	
 }
+
+CProjectData* CWebProjectFile::LoadOnePrjData(CMarkup xml)
+{
+	CProjectData* pPrjData = new CProjectData;
+	xml.IntoElem();
+	{
+		//读取项目信息
+		if (xml.FindElem(_T("ProjectInfo")))
+		{
+			xml.IntoElem();
+			{
+				if (xml.FindElem(_T("Id")))
+				{
+					pPrjData->m_prjInfo.m_id = _ttoi(xml.GetData());
+				}
+				if (xml.FindElem(_T("Name")))
+				{
+					pPrjData->m_prjInfo.m_sName = xml.GetData();
+				}
+				if (xml.FindElem(_T("Area")))
+				{
+					pPrjData->m_prjInfo.m_sArea = xml.GetData();
+				}
+				if (xml.FindElem(_T("CityCompany")))
+				{
+					pPrjData->m_prjInfo.m_sCityCompany = xml.GetData();
+				}
+			}
+			xml.OutOfElem();
+		}
+
+		//读取项目文件夹信息
+		while (xml.FindElem(_T("FileDir")))
+		{
+			CProjectDir* pDir = LoadDirData(xml);
+			pDir->m_parent = &(pPrjData->m_rootDir);
+		}
+	}
+	xml.OutOfElem();
+	return pPrjData;
+}
+
+
+CProjectDir* CWebProjectFile::LoadDirData(CMarkup xml)
+{
+	CProjectDir* pDir = new CProjectDir;
+	xml.IntoElem();
+	{
+		if (xml.FindElem(_T("Id")))
+		{
+			pDir->m_id = _ttoi(xml.GetData());
+		}
+		if (xml.FindElem(_T("Name")))
+		{
+			pDir->m_sName = xml.GetData();
+		}
+
+		while (xml.FindElem(_T("FileDir")))
+		{
+			CProjectDir* pDir = LoadDirData(xml);
+			pDir->AddFolder(pDir);
+		}
+			
+		while (xml.FindElem(_T("File")))
+		{
+			CProjectFile prjFile = LoadFileData(xml);
+			pDir->AddFile(prjFile);
+		}
+	}
+	xml.OutOfElem();
+	return pDir;
+}
+
+CProjectFile CWebProjectFile::LoadFileData(CMarkup xml)
+{
+	CProjectFile prjFile;
+	xml.IntoElem();
+	{
+		if (xml.FindElem(_T("Id")))
+		{
+			prjFile.m_id = _ttoi(xml.GetData());
+		}
+		if (xml.FindElem(_T("FileName")))
+		{
+			prjFile.m_sName = xml.GetData();
+		}
+		if (xml.FindElem(_T("SaveName")))
+		{
+			prjFile.m_sSaveName = xml.GetData();
+		}
+		if (xml.FindElem(_T("FileUrl")))
+		{
+			prjFile.m_sFileUrl = xml.GetData();
+		}
+		if (xml.FindElem(_T("Creator")))
+		{
+			prjFile.m_sCreator = xml.GetData();
+		}
+		if (xml.FindElem(_T("CreateTime")))
+		{
+			prjFile.m_sCreateTime = xml.GetData();
+		}
+		if (xml.FindElem(_T("Updator")))
+		{
+			prjFile.m_sUpdator = xml.GetData();
+		}
+		if (xml.FindElem(_T("UpdateTime")))
+		{
+			prjFile.m_sUpdateTime = xml.GetData();
+		}
+	}
+	xml.OutOfElem();
+
+	return prjFile;
+}
+
 
 void CWebProjectFile::ParseDeleteFileFromXML(CMarkup xml)
 {
@@ -348,74 +378,4 @@ void CWebProjectFile::ParseRenameFileDirFromXML(CMarkup xml)
 void CWebProjectFile::ParseUpdateFileFromXML(CMarkup xml)
 {
 
-}
-
-CProjectDir* CWebProjectFile::GetDirsFromWeb(CMarkup xml)
-{
-	if (xml.FindElem(_T("FileDir")))
-	{
-		CProjectDir* TempSubDir = new CProjectDir;
-		xml.IntoElem();
-		{
-			if (xml.FindElem(_T("Id")))
-			{
-				TempSubDir->m_id = _ttoi(xml.GetData());
-			}
-			if (xml.FindElem(_T("Name")))
-			{
-				TempSubDir->m_sName = xml.GetData();
-			}
-
-			while (xml.FindElem(_T("FileDir")))
-			{
-				GetDirsFromWeb(xml)->m_parent = TempSubDir;
-			}
-			
-			while (xml.FindElem(_T("File")))
-			{
-				CProjectFile TempFile;
-				xml.IntoElem();
-				{
-					if (xml.FindElem(_T("Id")))
-					{
-						TempFile.m_id = _ttoi(xml.GetData());
-					}
-					if (xml.FindElem(_T("FileName")))
-					{
-						TempFile.m_sName = xml.GetData();
-					}
-					if (xml.FindElem(_T("SaveName")))
-					{
-						TempFile.m_sSaveName = xml.GetData();
-					}
-					if (xml.FindElem(_T("FileUrl")))
-					{
-						TempFile.m_sFileUrl = xml.GetData();
-					}
-					if (xml.FindElem(_T("Creator")))
-					{
-						TempFile.m_sCreator = xml.GetData();
-					}
-					if (xml.FindElem(_T("CreateTime")))
-					{
-						TempFile.m_sCreateTime = xml.GetData();
-					}
-					if (xml.FindElem(_T("Updator")))
-					{
-						TempFile.m_sUpdator = xml.GetData();
-					}
-					if (xml.FindElem(_T("UpdateTime")))
-					{
-						TempFile.m_sUpdateTime = xml.GetData();
-					}
-
-				}
-				xml.OutOfElem();
-				TempSubDir->AddFile(TempFile);
-			}
-
-		}
-		xml.OutOfElem();
-		return TempSubDir;
-	}
 }
