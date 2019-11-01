@@ -44,6 +44,8 @@ public:
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
 	bool IsInstanceEqual(const AttrBathroom& p_att) const;
 
+	CString GetPrototypeCode() const;
+
 public:
 	//原型相关属性，初始化时填写
 	CString m_sBathroomType;	//卫生间类型
