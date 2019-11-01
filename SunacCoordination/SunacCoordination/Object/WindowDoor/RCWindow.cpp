@@ -237,7 +237,7 @@ int RCWindow::CreateDims()
 		start = rightTopPt;
 		end = AcGePoint3d(start.x, start.y - A, 0);
 		mid = AcGePoint3d(start.x + offset, (start.y + end.y) / 2, 0);
-		MD2010_AddAlignedDimension2(start, end, mid);
+		MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
 	}
 
 	if (h2 > TOL)
