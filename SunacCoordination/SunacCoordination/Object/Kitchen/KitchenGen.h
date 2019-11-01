@@ -146,8 +146,8 @@ public:
 	virtual vCString GetShuipenOptions();// 获取水盆选项
 	virtual CString GetShuipenDefault(); //水盆默认值
 
-	//virtual vCString GetBinxiangOptions();// 获取冰箱选项
-	//virtual CString GetBinxiangDefault();
+	virtual vCString GetBinxiangOptions();// 获取冰箱选项
+	virtual CString GetBinxiangDefault();
 
 	virtual vCString GetZhaotaiOptions();// 获取灶台选项
 	virtual CString GetZhaotaiDefault();
