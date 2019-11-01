@@ -19,17 +19,7 @@ CBathroomAutoName* CBathroomAutoName::GetInstance()
 
 CString CBathroomAutoName::GetBathroomName(const AttrBathroom& p_att) const
 {
-	CString sBathroomName;
-	//去除原型编号中的后缀
-	CString prototype = p_att.m_prototypeCode;
-	int pos = prototype.Find(L'_');
-	if (pos != -1)
-		prototype = prototype.Left(pos);
-	//根据"原型编号_尺寸编号"生成门窗编号
-	sBathroomName.Format(L"%s-%.0lf×%.0lf", prototype, p_att.m_width, p_att.m_height);
-
-	if (prototype.Find(L"_g"))
-		sBathroomName += L"/g";
+	CString sBathroomName = p_att.GetPrototypeCode();
 
 	//镜像卫生间增加"_m"后缀
 	CString sMirror;
