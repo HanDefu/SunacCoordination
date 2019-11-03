@@ -219,12 +219,13 @@ void DlgLeftBar::OnNMDblclkTreeProjectmanagement(NMHDR *pNMHDR, LRESULT *pResult
 	CProjectData* pPrjData = CProjectFileMrg::Instance()->GetProject(prjName);
 	if (pPrjData!=NULL)
 	{
-		if (g_projectManagementDlg == NULL)
-		{
+		//if (g_projectManagementDlg == NULL)
+		//{
 			CAcModuleResourceOverride resOverride;
 			g_projectManagementDlg = new CProjectManagementDlg(pPrjData);
 			g_projectManagementDlg->Create(IDD_DIALOG_PROJECTMANAGEMENT);
-		}
+			g_projectManagementDlg->OnInitDialog();
+		//}
 
 		g_projectManagementDlg->ShowWindow(SW_SHOW);
 	}

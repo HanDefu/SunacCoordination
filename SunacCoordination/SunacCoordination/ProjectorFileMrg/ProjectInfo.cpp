@@ -249,6 +249,9 @@ CString CProjectData::GetProjectId()const
 }
 bool CProjectData::DeleteFile(CString p_sFileName, CString  p_sDirPathInProject)
 {
+	//web端更新 
+	CWebProjectFile::Instance()->DeleteFile(GetProjectId(), p_sDirPathInProject, p_sFileName);
+
 	//找到目录
 	CProjectDir* pDir = FindDir(p_sDirPathInProject);
 	if (pDir == NULL)
@@ -256,8 +259,6 @@ bool CProjectData::DeleteFile(CString p_sFileName, CString  p_sDirPathInProject)
 
 	pDir->DeleteFile(p_sFileName);
 
-	//web端更新 
-	CWebProjectFile::Instance()->DeleteFile(GetProjectId(), p_sDirPathInProject, p_sFileName);
 
 	return true;
 }
@@ -279,12 +280,19 @@ bool CProjectData::AddFolder(CString  p_sDirPathInProject, CString p_sFolderName
 
 	pDir->AddFolder(p_sFolderName);
 
-	CWebProjectFile::Instance()->NewFolder(GetProjectId(), p_sDirPathInProject);
+
+	CString sFullPath = p_sDirPathInProject + p_sFolderName;
+
+	CWebProjectFile::Instance()->NewFolder(GetProjectId(), sFullPath);
 
 	return true;
 }
 bool CProjectData::DeleteFolder(CString  p_sFolderPath)
 {
+	
+	//web端更新 
+	CWebProjectFile::Instance()->DeleteFolder(GetProjectId(), p_sFolderPath);
+	
 	//找到目录
 	CProjectDir* pDir = FindDir(p_sFolderPath);
 	if (pDir == NULL)
@@ -302,8 +310,6 @@ bool CProjectData::DeleteFolder(CString  p_sFolderPath)
 		return false;
 	}
 
-	//web端更新 
-	CWebProjectFile::Instance()->DeleteFolder(GetProjectId(), p_sFolderPath);
 
 	return bSuc; 
 }
