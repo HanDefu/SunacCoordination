@@ -209,6 +209,7 @@ bool CProjectDir::AddFolder(CProjectDir* p_dir)
 
 	p_dir->m_parent = this;
 	m_subDirs.push_back(p_dir);
+	return true;
 }
 
 CString EProjectFileStateToCString(EProjectFileState state)
