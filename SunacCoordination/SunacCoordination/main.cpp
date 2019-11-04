@@ -332,14 +332,14 @@ void ZJYTest()
 	attrwindow.SetDimData(dimdata1);
 
 	
-	dimdata1.sCodeName = _T("W2");
-	dimdata1.type = CALC;
-	dimdata1.sFomula = _T("450-a");
+	dimdata2.sCodeName = _T("W2");
+	dimdata2.type = CALC;
+	dimdata2.sFomula = _T("450-a");
 	attrwindow.SetDimData(dimdata1);
 
-	dimdata2.sCodeName = _T("H1");
-	dimdata2.type = CALC;
-	dimdata2.sFomula = _T("H-2a");
+	dimdata1.sCodeName = _T("H1");
+	dimdata1.type = CALC;
+	dimdata1.sFomula = _T("H-2a");
 	attrwindow.SetDimData(dimdata2);
 
 	attrwindow.CheckAndComplementDimeData();
