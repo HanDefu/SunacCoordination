@@ -65,6 +65,36 @@ BEGIN_MESSAGE_MAP(CProjectManagementDlg, CAcUiDialog)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
 END_MESSAGE_MAP()
 
+CString SelFilePath()
+{
+	TCHAR           szFolderPath[MAX_PATH] = {0};  
+	CString         strFolderPath = TEXT("");  
+
+	BROWSEINFO      sInfo;  
+	::ZeroMemory(&sInfo, sizeof(BROWSEINFO));  
+	sInfo.pidlRoot   = 0;  
+	sInfo.lpszTitle   = _T("请选择处理结果存储路径");  
+	sInfo.ulFlags   = BIF_RETURNONLYFSDIRS|BIF_EDITBOX|BIF_DONTGOBELOWDOMAIN;  
+	sInfo.lpfn     = NULL;  
+
+	// 显示文件夹选择对话框  
+	LPITEMIDLIST lpidlBrowse = ::SHBrowseForFolder(&sInfo);   
+	if (lpidlBrowse != NULL)  
+	{  
+		// 取得文件夹名  
+		if (::SHGetPathFromIDList(lpidlBrowse,szFolderPath))    
+		{  
+			strFolderPath = szFolderPath;  
+		}  
+	}  
+	if(lpidlBrowse != NULL)  
+	{  
+		::CoTaskMemFree(lpidlBrowse);  
+	}  
+
+	return strFolderPath;  
+}
+
 void CProjectManagementDlg::FillPjtMngTreeCtrl()
 {
 	m_TreePrjDir.DeleteAllItems();
@@ -302,19 +332,10 @@ void CProjectManagementDlg::OnGridClick(NMHDR *pNMHDR, LRESULT *pResult)
 
 	if (m_nClkCol == 8)//下载
 	{
-		CString FileName;
-		CString filter = L"参数文件(*.dwg)|*.dwg|All Files(*.*)|*.*||";
-		CFileDialog dlg(FALSE, L"dwg", sSelectedFileName, NULL, filter);
-		if(dlg.DoModal() == IDOK)
-		{
-			USES_CONVERSION;
-			CString PathName = dlg.GetPathName();
-
-			FileName = FilePathToFileName(PathName);
-			CString ParentPath = m_pPrjData->GetDirString(L"", m_selectedDir);//返回文件夹的路径
-			m_pPrjData->DownloadFile(sSelectedFileParentPath, sSelectedFileName, PathName, UIFileUpCBFunc);
-		}
-
+		CString FolderPath = SelFilePath();
+		CString FileFullPath;
+		FileFullPath = FolderPath + L"\\" + sSelectedFileName;
+		m_pPrjData->DownloadFile(sSelectedFileParentPath, sSelectedFileName, FileFullPath, UIFileUpCBFunc);
 		FillPjtGridCtrl(m_selectedDir);
 	}
 
@@ -338,6 +359,7 @@ void CProjectManagementDlg::OnBnClickedButtonDeletedir()
 
 void CProjectManagementDlg::OnBnClickedButtonDownloadall()
 {
+	CString FolderPath = SelFilePath();
 	for(int i = 1; i < m_PjtManagementGridCtrl.GetRowCount(); i++)
 	{
 		CGridCellBase* pCell = m_PjtManagementGridCtrl.GetCell(i, 0);
@@ -345,8 +367,9 @@ void CProjectManagementDlg::OnBnClickedButtonDownloadall()
 		{
 			CString sCheckedFileName = m_PjtManagementGridCtrl.GetItemText(i, 1);
 			CString sCheckedParentPath = m_pPrjData->GetDirString(L"", m_selectedDir);
+			CString FileFullName = FolderPath + L"\\" + sCheckedFileName;
 			CFileUpDownLoad::DownloadFile(sCheckedFileName, sCheckedParentPath);
-			m_pPrjData->DownloadFile(sCheckedParentPath, sCheckedFileName, L"", UIFileUpCBFunc);
+			m_pPrjData->DownloadFile(sCheckedParentPath, sCheckedFileName, FileFullName, UIFileUpCBFunc);
 		}
 	}
 }
