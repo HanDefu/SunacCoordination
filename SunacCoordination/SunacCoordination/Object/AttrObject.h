@@ -10,7 +10,6 @@
 
 #include "dbmain.h"
 #include "../Sunac_def.h"
-#include "PrototypeInfo.h"
 #include "AcString.h"
 
 #pragma warning(disable: 4275 4251)
