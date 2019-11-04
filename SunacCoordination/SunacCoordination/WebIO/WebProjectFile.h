@@ -26,10 +26,10 @@ protected:
 	CProjectFile LoadFileData(CMarkup xml);
 
 
-	void ParseNewFileDirFromXML(CMarkup xml);
+	void ParseNewFileDirFromXML(CMarkup xml, CString FileFullPath);
 	void ParseDeleteFileFromXML(CMarkup xml);
 	void ParseRenameFileDirFromXML(CMarkup xml);
-	void ParseUpdateFileFromXML(CMarkup xml);
+	void ParseUpdateFileFromXML(CMarkup xml, CString ParentPath, CString FileName);
 	void ParseDeleteDirFromXML(CMarkup xml);
 
 

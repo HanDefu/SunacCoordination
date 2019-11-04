@@ -1025,6 +1025,65 @@ int ArgumentSettingServiceSoapProxy::recv_DeleteCadFileDir(_ns1__DeleteCadFileDi
 	return soap_closesock(soap);
 }
 
+int ArgumentSettingServiceSoapProxy::send_DeleteCadFileDirByDirId(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadFileDirByDirId *ns1__DeleteCadFileDirByDirId)
+{
+	struct soap *soap = this;
+	struct __ns1__DeleteCadFileDirByDirId soap_tmp___ns1__DeleteCadFileDirByDirId;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://des.sunac.com.cn/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/DeleteCadFileDirByDirId";
+	soap_tmp___ns1__DeleteCadFileDirByDirId.ns1__DeleteCadFileDirByDirId = ns1__DeleteCadFileDirByDirId;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__DeleteCadFileDirByDirId(soap, &soap_tmp___ns1__DeleteCadFileDirByDirId);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__DeleteCadFileDirByDirId(soap, &soap_tmp___ns1__DeleteCadFileDirByDirId, "-ns1:DeleteCadFileDirByDirId", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__DeleteCadFileDirByDirId(soap, &soap_tmp___ns1__DeleteCadFileDirByDirId, "-ns1:DeleteCadFileDirByDirId", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_DeleteCadFileDirByDirId(_ns1__DeleteCadFileDirByDirIdResponse &ns1__DeleteCadFileDirByDirIdResponse)
+{
+	struct soap *soap = this;
+	ns1__DeleteCadFileDirByDirIdResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__DeleteCadFileDirByDirIdResponse.soap_get(soap, "ns1:DeleteCadFileDirByDirIdResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
 int ArgumentSettingServiceSoapProxy::send_RenameCadFileDir(const char *soap_endpoint_url, const char *soap_action, _ns1__RenameCadFileDir *ns1__RenameCadFileDir)
 {
 	struct soap *soap = this;
@@ -1252,6 +1311,65 @@ int ArgumentSettingServiceSoapProxy::recv_DeleteCadDrawing(_ns1__DeleteCadDrawin
 	 || soap_body_begin_in(soap))
 		return soap_closesock(soap);
 	ns1__DeleteCadDrawingResponse.soap_get(soap, "ns1:DeleteCadDrawingResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_DeleteCadDrawingByFileID(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadDrawingByFileID *ns1__DeleteCadDrawingByFileID)
+{
+	struct soap *soap = this;
+	struct __ns1__DeleteCadDrawingByFileID soap_tmp___ns1__DeleteCadDrawingByFileID;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://des.sunac.com.cn/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/DeleteCadDrawingByFileID";
+	soap_tmp___ns1__DeleteCadDrawingByFileID.ns1__DeleteCadDrawingByFileID = ns1__DeleteCadDrawingByFileID;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__DeleteCadDrawingByFileID(soap, &soap_tmp___ns1__DeleteCadDrawingByFileID);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__DeleteCadDrawingByFileID(soap, &soap_tmp___ns1__DeleteCadDrawingByFileID, "-ns1:DeleteCadDrawingByFileID", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__DeleteCadDrawingByFileID(soap, &soap_tmp___ns1__DeleteCadDrawingByFileID, "-ns1:DeleteCadDrawingByFileID", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_DeleteCadDrawingByFileID(_ns1__DeleteCadDrawingByFileIDResponse &ns1__DeleteCadDrawingByFileIDResponse)
+{
+	struct soap *soap = this;
+	ns1__DeleteCadDrawingByFileIDResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__DeleteCadDrawingByFileIDResponse.soap_get(soap, "ns1:DeleteCadDrawingByFileIDResponse", NULL);
 	if (soap->error)
 		return soap_recv_fault(soap, 0);
 	if (soap_body_end_in(soap)
@@ -2146,6 +2264,65 @@ int ArgumentSettingServiceSoapProxy::recv_DeleteCadFileDir_(_ns1__DeleteCadFileD
 	return soap_closesock(soap);
 }
 
+int ArgumentSettingServiceSoapProxy::send_DeleteCadFileDirByDirId_(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadFileDirByDirId *ns1__DeleteCadFileDirByDirId)
+{
+	struct soap *soap = this;
+	struct __ns1__DeleteCadFileDirByDirId_ soap_tmp___ns1__DeleteCadFileDirByDirId_;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://des.sunac.com.cn/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/DeleteCadFileDirByDirId";
+	soap_tmp___ns1__DeleteCadFileDirByDirId_.ns1__DeleteCadFileDirByDirId = ns1__DeleteCadFileDirByDirId;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__DeleteCadFileDirByDirId_(soap, &soap_tmp___ns1__DeleteCadFileDirByDirId_);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__DeleteCadFileDirByDirId_(soap, &soap_tmp___ns1__DeleteCadFileDirByDirId_, "-ns1:DeleteCadFileDirByDirId", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__DeleteCadFileDirByDirId_(soap, &soap_tmp___ns1__DeleteCadFileDirByDirId_, "-ns1:DeleteCadFileDirByDirId", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_DeleteCadFileDirByDirId_(_ns1__DeleteCadFileDirByDirIdResponse &ns1__DeleteCadFileDirByDirIdResponse)
+{
+	struct soap *soap = this;
+	ns1__DeleteCadFileDirByDirIdResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__DeleteCadFileDirByDirIdResponse.soap_get(soap, "ns1:DeleteCadFileDirByDirIdResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
 int ArgumentSettingServiceSoapProxy::send_RenameCadFileDir_(const char *soap_endpoint_url, const char *soap_action, _ns1__RenameCadFileDir *ns1__RenameCadFileDir)
 {
 	struct soap *soap = this;
@@ -2373,6 +2550,65 @@ int ArgumentSettingServiceSoapProxy::recv_DeleteCadDrawing_(_ns1__DeleteCadDrawi
 	 || soap_body_begin_in(soap))
 		return soap_closesock(soap);
 	ns1__DeleteCadDrawingResponse.soap_get(soap, "ns1:DeleteCadDrawingResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_DeleteCadDrawingByFileID_(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadDrawingByFileID *ns1__DeleteCadDrawingByFileID)
+{
+	struct soap *soap = this;
+	struct __ns1__DeleteCadDrawingByFileID_ soap_tmp___ns1__DeleteCadDrawingByFileID_;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://des.sunac.com.cn/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/DeleteCadDrawingByFileID";
+	soap_tmp___ns1__DeleteCadDrawingByFileID_.ns1__DeleteCadDrawingByFileID = ns1__DeleteCadDrawingByFileID;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__DeleteCadDrawingByFileID_(soap, &soap_tmp___ns1__DeleteCadDrawingByFileID_);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__DeleteCadDrawingByFileID_(soap, &soap_tmp___ns1__DeleteCadDrawingByFileID_, "-ns1:DeleteCadDrawingByFileID", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__DeleteCadDrawingByFileID_(soap, &soap_tmp___ns1__DeleteCadDrawingByFileID_, "-ns1:DeleteCadDrawingByFileID", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_DeleteCadDrawingByFileID_(_ns1__DeleteCadDrawingByFileIDResponse &ns1__DeleteCadDrawingByFileIDResponse)
+{
+	struct soap *soap = this;
+	ns1__DeleteCadDrawingByFileIDResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__DeleteCadDrawingByFileIDResponse.soap_get(soap, "ns1:DeleteCadDrawingByFileIDResponse", NULL);
 	if (soap->error)
 		return soap_recv_fault(soap, 0);
 	if (soap_body_end_in(soap)

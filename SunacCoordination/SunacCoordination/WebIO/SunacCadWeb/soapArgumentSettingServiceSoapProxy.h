@@ -210,6 +210,15 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
         /// Web service asynchronous operation 'recv_DeleteCadFileDir' to receive a response message from the connected endpoint, returns SOAP_OK or error code
         virtual int recv_DeleteCadFileDir(_ns1__DeleteCadFileDirResponse &ns1__DeleteCadFileDirResponse);
         //
+        /// Web service synchronous operation 'DeleteCadFileDirByDirId' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int DeleteCadFileDirByDirId(_ns1__DeleteCadFileDirByDirId *ns1__DeleteCadFileDirByDirId, _ns1__DeleteCadFileDirByDirIdResponse &ns1__DeleteCadFileDirByDirIdResponse) { return this->DeleteCadFileDirByDirId(NULL, NULL, ns1__DeleteCadFileDirByDirId, ns1__DeleteCadFileDirByDirIdResponse); }
+        /// Web service synchronous operation 'DeleteCadFileDirByDirId' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int DeleteCadFileDirByDirId(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadFileDirByDirId *ns1__DeleteCadFileDirByDirId, _ns1__DeleteCadFileDirByDirIdResponse &ns1__DeleteCadFileDirByDirIdResponse) { return this->send_DeleteCadFileDirByDirId(soap_endpoint_url, soap_action, ns1__DeleteCadFileDirByDirId) || this->recv_DeleteCadFileDirByDirId(ns1__DeleteCadFileDirByDirIdResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_DeleteCadFileDirByDirId' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_DeleteCadFileDirByDirId(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadFileDirByDirId *ns1__DeleteCadFileDirByDirId);
+        /// Web service asynchronous operation 'recv_DeleteCadFileDirByDirId' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_DeleteCadFileDirByDirId(_ns1__DeleteCadFileDirByDirIdResponse &ns1__DeleteCadFileDirByDirIdResponse);
+        //
         /// Web service synchronous operation 'RenameCadFileDir' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
         virtual int RenameCadFileDir(_ns1__RenameCadFileDir *ns1__RenameCadFileDir, _ns1__RenameCadFileDirResponse &ns1__RenameCadFileDirResponse) { return this->RenameCadFileDir(NULL, NULL, ns1__RenameCadFileDir, ns1__RenameCadFileDirResponse); }
         /// Web service synchronous operation 'RenameCadFileDir' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
@@ -245,6 +254,15 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
         virtual int send_DeleteCadDrawing(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadDrawing *ns1__DeleteCadDrawing);
         /// Web service asynchronous operation 'recv_DeleteCadDrawing' to receive a response message from the connected endpoint, returns SOAP_OK or error code
         virtual int recv_DeleteCadDrawing(_ns1__DeleteCadDrawingResponse &ns1__DeleteCadDrawingResponse);
+        //
+        /// Web service synchronous operation 'DeleteCadDrawingByFileID' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int DeleteCadDrawingByFileID(_ns1__DeleteCadDrawingByFileID *ns1__DeleteCadDrawingByFileID, _ns1__DeleteCadDrawingByFileIDResponse &ns1__DeleteCadDrawingByFileIDResponse) { return this->DeleteCadDrawingByFileID(NULL, NULL, ns1__DeleteCadDrawingByFileID, ns1__DeleteCadDrawingByFileIDResponse); }
+        /// Web service synchronous operation 'DeleteCadDrawingByFileID' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int DeleteCadDrawingByFileID(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadDrawingByFileID *ns1__DeleteCadDrawingByFileID, _ns1__DeleteCadDrawingByFileIDResponse &ns1__DeleteCadDrawingByFileIDResponse) { return this->send_DeleteCadDrawingByFileID(soap_endpoint_url, soap_action, ns1__DeleteCadDrawingByFileID) || this->recv_DeleteCadDrawingByFileID(ns1__DeleteCadDrawingByFileIDResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_DeleteCadDrawingByFileID' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_DeleteCadDrawingByFileID(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadDrawingByFileID *ns1__DeleteCadDrawingByFileID);
+        /// Web service asynchronous operation 'recv_DeleteCadDrawingByFileID' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_DeleteCadDrawingByFileID(_ns1__DeleteCadDrawingByFileIDResponse &ns1__DeleteCadDrawingByFileIDResponse);
         //
         /// Web service synchronous operation 'StandardDesignAttribute' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
         virtual int StandardDesignAttribute_(_ns1__StandardDesignAttribute *ns1__StandardDesignAttribute, _ns1__StandardDesignAttributeResponse &ns1__StandardDesignAttributeResponse) { return this->StandardDesignAttribute_(NULL, NULL, ns1__StandardDesignAttribute, ns1__StandardDesignAttributeResponse); }
@@ -381,6 +399,15 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
         /// Web service asynchronous operation 'recv_DeleteCadFileDir' to receive a response message from the connected endpoint, returns SOAP_OK or error code
         virtual int recv_DeleteCadFileDir_(_ns1__DeleteCadFileDirResponse &ns1__DeleteCadFileDirResponse);
         //
+        /// Web service synchronous operation 'DeleteCadFileDirByDirId' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int DeleteCadFileDirByDirId_(_ns1__DeleteCadFileDirByDirId *ns1__DeleteCadFileDirByDirId, _ns1__DeleteCadFileDirByDirIdResponse &ns1__DeleteCadFileDirByDirIdResponse) { return this->DeleteCadFileDirByDirId_(NULL, NULL, ns1__DeleteCadFileDirByDirId, ns1__DeleteCadFileDirByDirIdResponse); }
+        /// Web service synchronous operation 'DeleteCadFileDirByDirId' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int DeleteCadFileDirByDirId_(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadFileDirByDirId *ns1__DeleteCadFileDirByDirId, _ns1__DeleteCadFileDirByDirIdResponse &ns1__DeleteCadFileDirByDirIdResponse) { return this->send_DeleteCadFileDirByDirId_(soap_endpoint_url, soap_action, ns1__DeleteCadFileDirByDirId) || this->recv_DeleteCadFileDirByDirId_(ns1__DeleteCadFileDirByDirIdResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_DeleteCadFileDirByDirId' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_DeleteCadFileDirByDirId_(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadFileDirByDirId *ns1__DeleteCadFileDirByDirId);
+        /// Web service asynchronous operation 'recv_DeleteCadFileDirByDirId' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_DeleteCadFileDirByDirId_(_ns1__DeleteCadFileDirByDirIdResponse &ns1__DeleteCadFileDirByDirIdResponse);
+        //
         /// Web service synchronous operation 'RenameCadFileDir' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
         virtual int RenameCadFileDir_(_ns1__RenameCadFileDir *ns1__RenameCadFileDir, _ns1__RenameCadFileDirResponse &ns1__RenameCadFileDirResponse) { return this->RenameCadFileDir_(NULL, NULL, ns1__RenameCadFileDir, ns1__RenameCadFileDirResponse); }
         /// Web service synchronous operation 'RenameCadFileDir' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
@@ -416,5 +443,14 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
         virtual int send_DeleteCadDrawing_(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadDrawing *ns1__DeleteCadDrawing);
         /// Web service asynchronous operation 'recv_DeleteCadDrawing' to receive a response message from the connected endpoint, returns SOAP_OK or error code
         virtual int recv_DeleteCadDrawing_(_ns1__DeleteCadDrawingResponse &ns1__DeleteCadDrawingResponse);
+        //
+        /// Web service synchronous operation 'DeleteCadDrawingByFileID' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int DeleteCadDrawingByFileID_(_ns1__DeleteCadDrawingByFileID *ns1__DeleteCadDrawingByFileID, _ns1__DeleteCadDrawingByFileIDResponse &ns1__DeleteCadDrawingByFileIDResponse) { return this->DeleteCadDrawingByFileID_(NULL, NULL, ns1__DeleteCadDrawingByFileID, ns1__DeleteCadDrawingByFileIDResponse); }
+        /// Web service synchronous operation 'DeleteCadDrawingByFileID' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int DeleteCadDrawingByFileID_(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadDrawingByFileID *ns1__DeleteCadDrawingByFileID, _ns1__DeleteCadDrawingByFileIDResponse &ns1__DeleteCadDrawingByFileIDResponse) { return this->send_DeleteCadDrawingByFileID_(soap_endpoint_url, soap_action, ns1__DeleteCadDrawingByFileID) || this->recv_DeleteCadDrawingByFileID_(ns1__DeleteCadDrawingByFileIDResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_DeleteCadDrawingByFileID' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_DeleteCadDrawingByFileID_(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadDrawingByFileID *ns1__DeleteCadDrawingByFileID);
+        /// Web service asynchronous operation 'recv_DeleteCadDrawingByFileID' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_DeleteCadDrawingByFileID_(_ns1__DeleteCadDrawingByFileIDResponse &ns1__DeleteCadDrawingByFileIDResponse);
     };
 #endif

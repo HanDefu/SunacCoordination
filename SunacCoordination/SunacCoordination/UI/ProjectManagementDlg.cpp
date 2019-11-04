@@ -302,7 +302,19 @@ void CProjectManagementDlg::OnGridClick(NMHDR *pNMHDR, LRESULT *pResult)
 
 	if (m_nClkCol == 8)//下载
 	{
-		m_pPrjData->DownloadFile(sSelectedFileParentPath, sSelectedFileName, L"",UIFileUpCBFunc);
+		CString FileName;
+		CString filter = L"参数文件(*.dwg)|*.dwg|All Files(*.*)|*.*||";
+		CFileDialog dlg(FALSE, L"dwg", sSelectedFileName, NULL, filter);
+		if(dlg.DoModal() == IDOK)
+		{
+			USES_CONVERSION;
+			CString PathName = dlg.GetPathName();
+
+			FileName = FilePathToFileName(PathName);
+			CString ParentPath = m_pPrjData->GetDirString(L"", m_selectedDir);//返回文件夹的路径
+			m_pPrjData->DownloadFile(sSelectedFileParentPath, sSelectedFileName, PathName, UIFileUpCBFunc);
+		}
+
 		FillPjtGridCtrl(m_selectedDir);
 	}
 

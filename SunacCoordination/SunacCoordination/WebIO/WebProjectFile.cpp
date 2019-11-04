@@ -59,6 +59,9 @@ bool CWebProjectFile::UpdateFile(CString p_prjectId, CString p_dir, CString p_fi
 	TempDir = g_projectManagementDlg->m_pPrjData->FindDir(p_dir);
 	ParentDirID = TempDir->m_id;
 
+	CString cFullFilePath;
+	cFullFilePath = p_dir + L"\\" + p_fileName;
+
 	sUID = cUID;
 	sUpdateFileName = p_fileName;
 	sParentDir = p_dir;
@@ -68,7 +71,7 @@ bool CWebProjectFile::UpdateFile(CString p_prjectId, CString p_dir, CString p_fi
 	_ns1__UpdateCadDrawing ns;
 	ns.UID = &sUID;
 	ns.OID = &sPrjID;
-	ns.DrawingDir = &sParentDir;
+	ns.DrawingDirId = ParentDirID;
 	ns.DrawingFile = &sUpdateFileName;
 	ns.FileSaveName = &sFileSaveName;
 
@@ -84,7 +87,7 @@ bool CWebProjectFile::UpdateFile(CString p_prjectId, CString p_dir, CString p_fi
 
 	CMarkup xml;	
 	xml.SetDoc((*(nsResponse.UpdateCadDrawingResult)).c_str());
-	ParseUpdateFileFromXML(xml);
+	ParseUpdateFileFromXML(xml, p_dir, p_fileName);
 
 	return true;
 }
@@ -96,34 +99,33 @@ bool CWebProjectFile::DeleteFile(CString p_prjectId, CString p_dir, CString p_fi
 	cUID.Format(L"%d", WebIO::GetInstance()->GetUserID());
 	p_dir = p_dir.Trim(L"\\");
 
-	int ParentDirID;
-	CProjectDir* TempDir;
-	TempDir = g_projectManagementDlg->m_pPrjData->FindDir(p_dir);
-	ParentDirID = TempDir->m_id;
+	int DeleteFileID;
+	DeleteFileID = g_projectManagementDlg->m_pPrjData->GetFileByDirAndName(p_dir, p_fileName)->m_id;
 
 	sUID = cUID;
 	sDeleteFileName = p_fileName;
 	sParentDir = p_dir;
 	sPrjID = p_prjectId;
 
-	_ns1__DeleteCadDrawing ns;
-	ns.UID = &sUID;
+	_ns1__DeleteCadDrawingByFileID ns;
+	/*ns.UID = &sUID;
 	ns.OID = &sPrjID;
 	ns.DrawingDir = &sParentDir;
-	ns.DrawingFile = &sDeleteFileName;
+	ns.DrawingFile = &sDeleteFileName;*/
+	ns.FileID = DeleteFileID;
 
-	_ns1__DeleteCadDrawingResponse nsResponse; 
+	_ns1__DeleteCadDrawingByFileIDResponse nsResponse; 
 	ArgumentSettingServiceSoapProxy cadWeb;
 	InitSoapTime(cadWeb);
-	int nRet = cadWeb.DeleteCadDrawing(&ns, nsResponse);
+	int nRet = cadWeb.DeleteCadDrawingByFileID(&ns, nsResponse);
 
-	if (nsResponse.DeleteCadDrawingResult == NULL)
+	if (nsResponse.DeleteCadDrawingByFileIDResult == NULL)
 	{
 		return false;
 	}
 
 	CMarkup xml;	
-	xml.SetDoc((*(nsResponse.DeleteCadDrawingResult)).c_str());
+	xml.SetDoc((*(nsResponse.DeleteCadDrawingByFileIDResult)).c_str());
 	ParseDeleteFileFromXML(xml);
 
 	return true;
@@ -145,7 +147,14 @@ bool CWebProjectFile::NewFolder(CString p_prjectId, CString p_sNewDirPath)
 		TempDir = g_projectManagementDlg->m_pPrjData->FindDir(cParentDir);
 		ParentDirID = TempDir->m_id;
 	}
-	else cParentDir = L"";
+	else
+	{
+		cParentDir = L"";
+		ParentDirID = 0;
+	}
+
+	CString cFullFilePath;
+	cFullFilePath = p_sNewDirPath;
 
 
 	sUID = cUID;
@@ -157,7 +166,7 @@ bool CWebProjectFile::NewFolder(CString p_prjectId, CString p_sNewDirPath)
 	ns.UID = &sUID;
 	ns.OID = &sPrjID;
 	ns.DrawingDir = &sNewDirName;
-	ns.ParentDir = &sParentDir;
+	ns.ParentDirId = ParentDirID;
 
 	_ns1__NewCadFileDirResponse nsResponse; 
 	ArgumentSettingServiceSoapProxy cadWeb;
@@ -171,7 +180,7 @@ bool CWebProjectFile::NewFolder(CString p_prjectId, CString p_sNewDirPath)
 
 	CMarkup xml;	
 	xml.SetDoc((*(nsResponse.NewCadFileDirResult)).c_str());
-	ParseNewFileDirFromXML(xml);
+	ParseNewFileDirFromXML(xml, p_sNewDirPath);
 
 	return true;
 }
@@ -204,7 +213,7 @@ bool CWebProjectFile::RenameFolder(CString p_prjectId, CString p_sRenameDirPath,
 	ns.OID = &sPrjID;
 	ns.DrawingDir = &sOriginDirName;
 	ns.NewDrawingDir = &sNewDirName;
-	ns.ParentDir = &sParentPath;
+	ns.ParentDirId = ParentDirID;
 
 	_ns1__RenameCadFileDirResponse nsResponse; 
 	ArgumentSettingServiceSoapProxy cadWeb;
@@ -222,12 +231,18 @@ bool CWebProjectFile::RenameFolder(CString p_prjectId, CString p_sRenameDirPath,
 
 	return true;
 }
+
 bool CWebProjectFile::DeleteFolder(CString p_prjectId, CString p_dir)
 {
 	CString cUID, cDirName, cParentPath;
 	std::wstring sUID, sNewDirName, sDirName, sPrjID, sParentPath;
 
 	cUID.Format(L"%d", WebIO::GetInstance()->GetUserID());
+
+	int ParentDirID;
+	CProjectDir* TempDir;
+	TempDir = g_projectManagementDlg->m_pPrjData->FindDir(p_dir);
+	ParentDirID = TempDir->m_id;
 
 	cDirName = FilePathToFileName(p_dir.Trim(L"\\"));
 	if (cDirName != p_dir.Trim(L"\\"))//是否根目录
@@ -241,24 +256,25 @@ bool CWebProjectFile::DeleteFolder(CString p_prjectId, CString p_dir)
 	sPrjID = p_prjectId;
 	sParentPath = cParentPath;
 
-	_ns1__DeleteCadFileDir ns;
-	ns.UID = &sUID;
+	_ns1__DeleteCadFileDirByDirId ns;
+	/*ns.UID = &sUID;
 	ns.OID = &sPrjID;
 	ns.DrawingDir = &sDirName;
-	ns.ParentDir = &sParentPath;
+	ns.ParentDir = &sParentPath;*/
+	ns.DirId = ParentDirID;
 
-	_ns1__DeleteCadFileDirResponse nsResponse; 
+	_ns1__DeleteCadFileDirByDirIdResponse nsResponse; 
 	ArgumentSettingServiceSoapProxy cadWeb;
 	InitSoapTime(cadWeb);
-	int nRet = cadWeb.DeleteCadFileDir(&ns, nsResponse);
+	int nRet = cadWeb.DeleteCadFileDirByDirId(&ns, nsResponse);
 
-	if (nsResponse.DeleteCadFileDirResult == NULL)
+	if (nsResponse.DeleteCadFileDirByDirIdResult == NULL)
 	{
 		return false;
 	}
 
 	CMarkup xml;	
-	xml.SetDoc((*(nsResponse.DeleteCadFileDirResult)).c_str());
+	xml.SetDoc((*(nsResponse.DeleteCadFileDirByDirIdResult)).c_str());
 	ParseDeleteDirFromXML(xml);
 
 	return true;
@@ -350,7 +366,6 @@ CProjectData* CWebProjectFile::LoadOnePrjData(CMarkup xml)
 	return pPrjData;
 }
 
-
 CProjectDir* CWebProjectFile::LoadDirData(CMarkup xml)
 {
 	CProjectDir* pDir = new CProjectDir;
@@ -431,9 +446,26 @@ void CWebProjectFile::ParseDeleteFileFromXML(CMarkup xml)
 
 }
 
-void CWebProjectFile::ParseNewFileDirFromXML(CMarkup xml)
+void CWebProjectFile::ParseNewFileDirFromXML(CMarkup xml, CString FileFullPath)
 {
+	xml.ResetMainPos();
+	xml.FindElem();	//根节点
 
+	xml.IntoElem();
+	{
+		if (xml.FindElem(_T("Code")))
+		{
+			if(_ttoi(xml.GetData()) != 100)
+			{
+				return ;
+			}
+		}
+		if (xml.FindElem(_T("KeyId")))
+		{
+			g_projectManagementDlg->m_pPrjData->FindDir(FileFullPath)->m_id = _ttoi(xml.GetData());
+		}
+	}
+	xml.OutOfElem();
 }
 
 void CWebProjectFile::ParseRenameFileDirFromXML(CMarkup xml)
@@ -441,9 +473,26 @@ void CWebProjectFile::ParseRenameFileDirFromXML(CMarkup xml)
 
 }
 
-void CWebProjectFile::ParseUpdateFileFromXML(CMarkup xml)
+void CWebProjectFile::ParseUpdateFileFromXML(CMarkup xml, CString ParentPath, CString FileName)
 {
+	xml.ResetMainPos();
+	xml.FindElem();	//根节点
 
+	xml.IntoElem();
+	{
+		if (xml.FindElem(_T("Code")))
+		{
+			if(_ttoi(xml.GetData()) != 100)
+			{
+				return ;
+			}
+		}
+		if (xml.FindElem(_T("KeyId")))
+		{
+			g_projectManagementDlg->m_pPrjData->GetFileByDirAndName(ParentPath, FileName)->m_id = _ttoi(xml.GetData());
+		}
+	}
+	xml.OutOfElem();
 }
 
 void CWebProjectFile::ParseDeleteDirFromXML(CMarkup xml)
