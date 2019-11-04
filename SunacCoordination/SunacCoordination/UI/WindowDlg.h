@@ -46,6 +46,7 @@ public:
 	afx_msg void OnSelChangedWallDis();
 	void UpdateEnable();
 	void UpdateInstanceCode();
+	void UpdateVent();
 	void LoadDefaultValue();
 	AttrWindow* GetSelWindow();
 
@@ -73,13 +74,15 @@ protected:
 	int m_radioDoor; //门窗单选
 	int m_radioYes; //是否凸窗
 
-	vector<AttrWindow> m_allWindows;
-
-	AcDbBlockReference* m_pCurEdit;
-
 	BOOL m_autoIndex;
 	CComboBox m_viewDir;
 	CButton m_isMirror;
+
+	vector<AttrWindow> m_allWindows;
+	double m_selWidth; //选中原型的开间
+	double m_selHeight;//选中原型的进深
+
+	AcDbBlockReference* m_pCurEdit;
 
 	bool m_isMoldless;//是否非模态对话框
 };

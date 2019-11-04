@@ -374,7 +374,7 @@ void CBathroomDlg::OnBnClickedButtonInsert()
 	UpdateData(TRUE);
 	if (m_pBathroomGen == NULL)
 	{
-		MessageBox(_T("请选择原型\n"));
+		AfxMessageBox(_T("请选择原型"));
 		return;
 	}
 

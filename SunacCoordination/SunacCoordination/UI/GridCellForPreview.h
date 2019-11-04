@@ -12,6 +12,7 @@ public:
 	virtual BOOL Draw(CDC* pDC, int nRow, int nCol, CRect rect, BOOL bEraseBkgnd = TRUE);
 
 	void SetPreview(CPreviewWithDetail* preview);
+	CPreviewWithDetail* GetPreview() { return m_pPreview; }
 	void DeletePreview();
 
 	void SetName(CString p_str){m_cellName = p_str;}

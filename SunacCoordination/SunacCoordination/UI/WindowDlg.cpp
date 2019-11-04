@@ -23,6 +23,8 @@ CWindowDlg::CWindowDlg(CWnd* pParent /*=NULL*/)
 {
 	m_isMoldless = true;
 	m_pCurEdit = NULL;
+	m_selWidth = 0;
+	m_selHeight = 0;
 }
 
 CWindowDlg::~CWindowDlg()
@@ -134,7 +136,16 @@ void CWindowDlg::OnBnClickedButtonInsert()
 {
 	AttrWindow* pSel = GetSelWindow();
 	if (pSel == NULL)
+	{
+		AfxMessageBox(L"请选择原型");
 		return;
+	}
+
+	if (pSel->GetTongFengQty(false) + TOL < TYUI_GetDouble(m_ventilation))
+	{
+		AfxMessageBox(L"此原型不满足通风量要求");
+		return;
+	}
 
 	CString sNumber = TYUI_GetText(m_number);
 	if (!m_autoIndex && !CWindowAutoName::GetInstance()->IsNameValid(*pSel,sNumber))
@@ -164,8 +175,6 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		JHCOM_DeleteCadObject(m_pCurEdit->objectId());
 	}
 
-	double width = TYUI_GetDouble(m_width);
-	double height = TYUI_GetDouble(m_height);
 	double W1 = TYUI_GetDouble(m_W1);
 	double H2 = TYUI_GetDouble(m_H2);
 
@@ -181,8 +190,8 @@ void CWindowDlg::OnBnClickedButtonInsert()
 
 	oneWindow.InitParameters();
 
-	oneWindow.SetParameter(L"H", height);
-	oneWindow.SetParameter(L"W", width);
+	oneWindow.SetParameter(L"H", m_selHeight);
+	oneWindow.SetParameter(L"W", m_selWidth);
 	oneWindow.SetParameter(L"W1", W1);
 	oneWindow.SetParameter(L"H2", H2);
 
@@ -190,7 +199,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 
 	if (m_isMirror.GetCheck())
 	{
-		AcGePoint3d basePt(origin.x + width / 2, 0, 0);
+		AcGePoint3d basePt(origin.x + m_selWidth / 2, 0, 0);
 		TYCOM_Mirror(oneWindow.m_id, basePt, AcGeVector3d(0, 1, 0));
 	}
 
@@ -207,8 +216,8 @@ void CWindowDlg::OnBnClickedButtonInsert()
 
 void CWindowDlg::OnBnClickedButtonSearchwindow()
 {
-	double width = TYUI_GetDouble(m_width);
-	double height = TYUI_GetDouble(m_height);
+	m_selWidth = TYUI_GetDouble(m_width);
+	m_selHeight = TYUI_GetDouble(m_height);
 	CString openType = TYUI_GetComboBoxText(m_openType);
 	int openNum = _ttoi(TYUI_GetComboBoxText(m_openAmount));
 	CString areaType = TYUI_GetComboBoxText(m_areaType);
@@ -216,10 +225,10 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 	if (m_radioDoor == 0)
 	{
 		openType = TYUI_GetText(m_doorType);
-	    m_allWindows = WebIO::GetInstance()->GetDoors(width, height, openType, openNum, areaType);
+	    m_allWindows = WebIO::GetInstance()->GetDoors(m_selWidth, m_selHeight, openType, openNum, areaType);
 	}
 	else
-		m_allWindows = WebIO::GetInstance()->GetWindows(width, height, openType, openNum, areaType);
+		m_allWindows = WebIO::GetInstance()->GetWindows(m_selWidth, m_selHeight, openType, openNum, areaType);
 
 	m_preWindow.ClearAllPreviews();
 
@@ -245,10 +254,10 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 
 	for (UINT i = 0; i < m_allWindows.size(); i++)
 	{
-		m_allWindows[i].SetW(width);
-		m_allWindows[i].SetH(height);
+		m_allWindows[i].SetW(m_selWidth);
+		m_allWindows[i].SetH(m_selHeight);
 		CString str;
-		str.Format(L"原型编号：\n%s\n窗户面积：%.2lf\n通风量：%.2lf\n动态类型：%s\n适用范围：集团", m_allWindows[i].m_prototypeCode, width * height / 1E6, m_allWindows[i].GetTongFengQty(false), m_allWindows[i].m_isDynamic ? L"动态" : L"静态");
+		str.Format(L"原型编号：\n%s\n窗户面积：%.2lf\n通风量：%.2lf\n动态类型：%s\n适用范围：集团", m_allWindows[i].m_prototypeCode, m_selWidth * m_selHeight / 1E6, m_allWindows[i].GetTongFengQty(false), m_allWindows[i].m_isDynamic ? L"动态" : L"静态");
 
 		CString dwgPath = TY_GetPrototypeFilePath() + m_allWindows[i].GetFileName();
 		CString pngPath = TY_GetPrototypeImagePath_Local() + m_allWindows[i].GetFileName(); //门窗原型优先使用内部的图片
@@ -382,6 +391,7 @@ void CWindowDlg::OnSelChangedW1()
 	pSel->SetW1(_ttoi(sSel));
 	//更改参数会引起实例编号变化，需更新
 	UpdateInstanceCode();
+	UpdateVent();
 }
 
 void CWindowDlg::OnSelChangedH2()
@@ -394,6 +404,7 @@ void CWindowDlg::OnSelChangedH2()
 	pSel->SetH2(_ttoi(sSel));
 	//更改参数会引起实例编号变化，需更新
 	UpdateInstanceCode();
+	UpdateVent();
 }
 
 void CWindowDlg::OnBnClickedBayWindow()
@@ -456,6 +467,20 @@ void CWindowDlg::UpdateInstanceCode()
 	}
 }
 
+void CWindowDlg::UpdateVent()
+{
+	CCellRange selRange = m_preWindow.GetSelectedCellRange();
+	int nRow = selRange.GetMinRow();
+	CGridCellForPreview* pCell = m_preWindow.GetPreviewCell(nRow, 0);
+	if (pCell == NULL)
+		return;
+	AttrWindow* pSel = &m_allWindows[nRow];
+	CString str;
+	str.Format(L"原型编号：\n%s\n窗户面积：%.2lf\n通风量：%.2lf\n动态类型：%s\n适用范围：集团", pSel->m_prototypeCode, m_selWidth * m_selHeight / 1E6, pSel->GetTongFengQty(false), pSel->m_isDynamic ? L"动态" : L"静态");
+	pCell->GetPreview()->SetText(str);
+	pCell->GetPreview()->Invalidate();
+}
+
 void CWindowDlg::LoadDefaultValue()
 {
 	const vCString& doorTypes = WebIO::GetInstance()->GetConfigDict()->Door_GetTypes();
@@ -508,10 +533,10 @@ void CWindowDlg::SetEditMode(AcDbBlockReference* pBlock)
 	UpdateEnable();
 
 	//还原门窗尺寸
-	double width = pWindow->GetW();
-	double height =  pWindow->GetH();
-	TYUI_SetInt(m_width, int(width));
-	TYUI_SetInt(m_height, int(height));
+	m_selWidth = pWindow->GetW();
+	m_selHeight =  pWindow->GetH();
+	TYUI_SetInt(m_width, int(m_selWidth));
+	TYUI_SetInt(m_height, int(m_selHeight));
 
 	m_allWindows.clear();
 	m_allWindows.push_back(*pWindow);
@@ -525,7 +550,7 @@ void CWindowDlg::SetEditMode(AcDbBlockReference* pBlock)
 	m_preWindow.SetDisplayColumns(1);
 
 	CString str;
-	str.Format(L"原型编号：\n%s\n窗户面积：%.2lf\n通风量：%.2lf\n动态类型：%s\n适用范围：集团", m_allWindows[0].m_prototypeCode, width * height / 1E6, m_allWindows[0].GetTongFengQty(false), m_allWindows[0].m_isDynamic ? L"动态" : L"静态");
+	str.Format(L"原型编号：\n%s\n窗户面积：%.2lf\n通风量：%.2lf\n动态类型：%s\n适用范围：集团", m_allWindows[0].m_prototypeCode, m_selWidth * m_selHeight / 1E6, m_allWindows[0].GetTongFengQty(false), m_allWindows[0].m_isDynamic ? L"动态" : L"静态");
 
 	CString dwgPath = TY_GetPrototypeFilePath() + m_allWindows[0].GetFileName();
 	CString pngPath = TY_GetPrototypeImagePath_Local() + m_allWindows[0].GetFileName(); //门窗原型优先使用内部的图片
