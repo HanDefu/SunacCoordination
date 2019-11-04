@@ -30,6 +30,7 @@ protected:
 	void ParseDeleteFileFromXML(CMarkup xml);
 	void ParseRenameFileDirFromXML(CMarkup xml);
 	void ParseUpdateFileFromXML(CMarkup xml);
+	void ParseDeleteDirFromXML(CMarkup xml);
 
 
 protected:

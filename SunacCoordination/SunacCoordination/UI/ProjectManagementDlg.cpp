@@ -171,7 +171,7 @@ void CProjectManagementDlg::InitGridCtrl()
 	m_PjtManagementGridCtrl.SetColumnWidth(4, 60);
 	m_PjtManagementGridCtrl.SetColumnWidth(5, 140);
 	m_PjtManagementGridCtrl.SetColumnWidth(6, 80);
-	m_PjtManagementGridCtrl.SetColumnWidth(7, 60);
+	m_PjtManagementGridCtrl.SetColumnWidth(7, 75);
 	m_PjtManagementGridCtrl.SetColumnWidth(8, 40);
 	m_PjtManagementGridCtrl.SetColumnWidth(9, 40);
 
@@ -242,11 +242,11 @@ void CProjectManagementDlg::OnNMClickTreePrjdir(NMHDR *pNMHDR, LRESULT *pResult)
 	/*UINT flag;
 	CurClkItem = m_treeProjectManagement.HitTest(CurClkPoint, &flag);*/
 	CurClkItem = m_TreePrjDir.GetSelectedItem();
-	if (m_TreePrjDir.ItemHasChildren(CurClkItem))
+	/*if (m_TreePrjDir.ItemHasChildren(CurClkItem))
 	{
 		InitGridCtrl();
 		return;
-	}
+	}*/
 	m_selectedDir = FindClkDir(CurClkItem);
 	if (m_selectedDir == nullptr)
 	{
@@ -278,6 +278,7 @@ void CProjectManagementDlg::OnBnClickedButtonNewdir()
 	CurClkItem = m_TreePrjDir.GetSelectedItem();
 	m_selectedDir = FindClkDir(CurClkItem);
 	m_selectedDir->AddFolder(sNewDir);
+	m_pPrjData->AddFolder(m_pPrjData->GetDirString(L"", m_selectedDir), sNewDir);
 	m_TreePrjDir.InsertItem(sNewDir, 0, 0, CurClkItem);
 	m_TreePrjDir.Expand(CurClkItem, TVE_EXPAND);
 }
@@ -333,6 +334,7 @@ void CProjectManagementDlg::OnBnClickedButtonDownloadall()
 			CString sCheckedFileName = m_PjtManagementGridCtrl.GetItemText(i, 1);
 			CString sCheckedParentPath = m_pPrjData->GetDirString(L"", m_selectedDir);
 			CFileUpDownLoad::DownloadFile(sCheckedFileName, sCheckedParentPath);
+			m_pPrjData->DownloadFile(sCheckedParentPath, sCheckedFileName, L"", UIFileUpCBFunc);
 		}
 	}
 }
