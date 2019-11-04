@@ -31,7 +31,6 @@ protected:
 	void ParseRenameFileDirFromXML(CMarkup xml);
 	void ParseUpdateFileFromXML(CMarkup xml, CString ParentPath, CString FileName);
 	void ParseDeleteDirFromXML(CMarkup xml);
-	void ParseDeleteDirFromXML(CMarkup xml);
 
 
 protected:
