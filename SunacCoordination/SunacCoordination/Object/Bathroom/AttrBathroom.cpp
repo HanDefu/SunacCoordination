@@ -56,16 +56,7 @@ Acad::ErrorStatus AttrBathroom::dwgInFields(AcDbDwgFiler* filer)
 	filer->readItem((Adesk::UInt32*)&m_windowDoorPos);
 	filer->readItem(&m_hasPaiQiDao);
 
-	filer->readItem((Adesk::UInt32*)&m_prop.m_doorPos);
-	filer->readItem((Adesk::UInt32*)&m_prop.m_windowPos);
-	Adesk::UInt32 size;
-	filer->readItem(&size);
-	m_prop.m_sizeList.resize(size);
-	for (UINT i = 0; i < m_prop.m_sizeList.size(); i++)
-	{
-		filer->readItem(&m_prop.m_sizeList[i].xLen);
-		filer->readItem(&m_prop.m_sizeList[i].yLen);
-	}
+	m_prop.ReadFromDwg(filer);
 
 	filer->readItem(&m_width);
 	filer->readItem(&m_height);
@@ -103,14 +94,7 @@ Acad::ErrorStatus AttrBathroom::dwgOutFields(AcDbDwgFiler* filer) const
 	filer->writeItem((Adesk::UInt32)m_windowDoorPos);
 	filer->writeItem(m_hasPaiQiDao);
 
-	filer->writeItem((Adesk::UInt32)m_prop.m_doorPos);
-	filer->writeItem((Adesk::UInt32)m_prop.m_windowPos);
-	filer->writeItem((Adesk::UInt32)m_prop.m_sizeList.size());
-	for (UINT i = 0; i < m_prop.m_sizeList.size(); i++)
-	{
-		filer->writeItem(m_prop.m_sizeList[i].xLen);
-		filer->writeItem(m_prop.m_sizeList[i].yLen);
-	}
+	m_prop.WriteToDwg(filer);
 
 	filer->writeItem(m_width);
 	filer->writeItem(m_height);
