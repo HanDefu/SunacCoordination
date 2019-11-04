@@ -123,7 +123,6 @@ void CWindowStatictic::Export(CString p_sReportFile)//算量表和统计表分开输出
 
 	xls.SetVisible(false);
 
-
 	//2. 对各个门窗生成报表
 	ExportWindowReport(xls);
 

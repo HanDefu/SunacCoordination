@@ -109,11 +109,9 @@ bool CWindowMaterialUsage::ExportReportToExcel(CString p_sReportFile)
 
 	xls.SetVisible(false); 
 	xls.SetActiveSheet(2); //打开第二张表
-
 	ExportReportToExcel(xls);
 
 	xls.SaveAs(p_sReportFile);
-
 	return true;
 }
 
