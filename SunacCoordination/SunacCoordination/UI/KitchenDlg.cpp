@@ -385,7 +385,13 @@ void CKitchenDlg::OnBnClickedButtonSearch()
 	{
 		CString str;
 		str.Format(_T("原型编号：\n%s\n厨房面积：%.2lf\n通风量要求：1.5\n动态类型：%s\n适用范围：集团"), m_allKitchens[i].GetPrototypeCode(), m_rect.GetWidth() * m_rect.GetHeight() / 1E6, m_allKitchens[i].m_isDynamic ? _T("动态") : _T("静态"));
-		m_preKitchen.AddPreview(i, 0, TY_GetPrototypeFilePath() + m_allKitchens[i].GetFileName(), str);
+		CString dwgPath = TY_GetPrototypeFilePath() + m_allKitchens[i].GetFileName();
+		CString pngPath = TY_GetPrototypeImagePath_Local() + m_allKitchens[i].GetFileName();
+		pngPath.Replace(L".dwg", L".png");
+		if (PathFileExists(pngPath))
+			m_preKitchen.AddPreview(i, 0, pngPath, str);
+		else
+			m_preKitchen.AddPreview(i, 0, dwgPath, str);
 	}
 
 	m_preKitchen.SelectPreview(0, 0);
