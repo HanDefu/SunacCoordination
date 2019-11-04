@@ -34,6 +34,28 @@ WebIO::~WebIO()
 bool WebIO::Login(CString p_sUserName, CString p_key)
 {
 	//TODO
+	/*_ns1__GetAllWindows ns;
+	_ns1__GetAllWindowsResponse nsResponse;
+
+	ArgumentSettingServiceSoapProxy cadWeb;
+	InitSoapTime(cadWeb);
+	int nRet = cadWeb.GetAllWindows(&ns, nsResponse);
+
+
+	//判断返回结果是否成功
+	if (nsResponse.GetAllWindowsResult == NULL)
+	{
+		m_bLogin = false;
+		return false;
+	}
+
+
+	//解析字符串出结果
+	CMarkup xml;	
+
+	xml.SetDoc((*(nsResponse.GetAllWindowsResult)).c_str());
+
+	ParseLoginInfo(xml, p_sUserName, p_key);*/
 	m_bLogin = true;
 	return true;
 }

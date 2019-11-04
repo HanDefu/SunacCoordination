@@ -408,7 +408,7 @@ void CKitchenBathroomLocalData::InitBathroomLocalData()
 	pProp->m_windowPos = E_DIR_TOP;
 	pProp->AddSize(1850, 2750);
 
-	pBathroom = &m_allBathrooms[10];
+	pBathroom = &m_allBathrooms[11];
 	pProp = &pBathroom->m_prop;
 	//AttrObject»ùÀàÊôÐÔ
 	pBathroom->m_prototypeCode = L"TU4";
