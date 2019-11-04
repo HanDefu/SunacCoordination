@@ -33,6 +33,7 @@
 #include "Command.h"
 #include "../Common/ComFun_Math.h"
 #include "../Object/WindowStatistic/WindowStatictic.h"
+#include "../Object/KitchenBathroom/KitchenBathroomStatistic.h"
 #include "../Object/Railing/RailingStatistic.h"
 #include "../UI/ProjectManagementDlg.h"
 
@@ -136,6 +137,14 @@ void CMD_SunacBathroom()
 		g_bathroomDlg->Create(IDD_DIALOG_BATHROOM);
 	}
 	g_bathroomDlg->ShowWindow(SW_SHOW);
+}
+
+void CMD_SunacKitchenBathroomStatistic()
+{
+	CKitchenBathroomStatistic instance;
+	instance.SelectKitchenBathroom();
+	AcGePoint3d insertPoint = TY_GetPoint();
+	instance.InsertTableToCAD(insertPoint);
 }
 
 //栏杆

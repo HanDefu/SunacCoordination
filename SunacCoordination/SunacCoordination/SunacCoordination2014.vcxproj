@@ -173,11 +173,12 @@
     <ClCompile Include="Object\AirCondition\AttrAirCon.cpp" />
     <ClCompile Include="Object\AirCondition\RCAirCondition.cpp" />
     <ClCompile Include="Object\Bathroom\BathroomAutoName.cpp" />
-    <ClCompile Include="Object\KitchenBathroomProp.cpp" />
     <ClCompile Include="Object\AttrObject.cpp" />
     <ClCompile Include="Object\Bathroom\AttrBathroom.cpp" />
     <ClCompile Include="Object\Bathroom\BathroomGen.cpp" />
     <ClCompile Include="Object\Bathroom\RCBathroom.cpp" />
+    <ClCompile Include="Object\KitchenBathroom\KitchenBathroomProp.cpp" />
+    <ClCompile Include="Object\KitchenBathroom\KitchenBathroomStatistic.cpp" />
     <ClCompile Include="Object\Kitchen\AttrKitchen.cpp" />
     <ClCompile Include="Object\Kitchen\KitchenAutoName.cpp" />
     <ClCompile Include="Object\Kitchen\KitchenGen.cpp" />
@@ -303,11 +304,12 @@
     <ClInclude Include="Object\AirCondition\AttrAirCon.h" />
     <ClInclude Include="Object\AirCondition\RCAirCondition.h" />
     <ClInclude Include="Object\Bathroom\BathroomAutoName.h" />
-    <ClInclude Include="Object\KitchenBathroomProp.h" />
     <ClInclude Include="Object\AttrObject.h" />
     <ClInclude Include="Object\Bathroom\AttrBathroom.h" />
     <ClInclude Include="Object\Bathroom\BathroomGen.h" />
     <ClInclude Include="Object\Bathroom\RCBathroom.h" />
+    <ClInclude Include="Object\KitchenBathroom\KitchenBathroomProp.h" />
+    <ClInclude Include="Object\KitchenBathroom\KitchenBathroomStatistic.h" />
     <ClInclude Include="Object\Kitchen\AttrKitchen.h" />
     <ClInclude Include="Object\Kitchen\KitchenAutoName.h" />
     <ClInclude Include="Object\Kitchen\KitchenGen.h" />

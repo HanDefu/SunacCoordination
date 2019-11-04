@@ -280,9 +280,6 @@
     <ClCompile Include="UI\GridCellWithPicture.cpp">
       <Filter>UI\PreviewCtrl</Filter>
     </ClCompile>
-    <ClCompile Include="Object\KitchenBathroomProp.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="WebIO\cpp_base64\src\Base64Decoder.cpp">
       <Filter>WebIO\base64</Filter>
     </ClCompile>
@@ -372,6 +369,12 @@
     </ClCompile>
     <ClCompile Include="Common\ThreadUtil.cpp">
       <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\KitchenBathroom\KitchenBathroomProp.cpp">
+      <Filter>Object\KitchenBathroom</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\KitchenBathroom\KitchenBathroomStatistic.cpp">
+      <Filter>Object\KitchenBathroom</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -736,9 +739,6 @@
     <ClInclude Include="UI\GridCellWithPicture.h">
       <Filter>UI\PreviewCtrl</Filter>
     </ClInclude>
-    <ClInclude Include="Object\KitchenBathroomProp.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="WebIO\cpp_base64\src\Base64Decoder.h">
       <Filter>WebIO\base64</Filter>
     </ClInclude>
@@ -838,6 +838,12 @@
     <ClInclude Include="Common\ThreadUtil.h">
       <Filter>Common</Filter>
     </ClInclude>
+    <ClInclude Include="Object\KitchenBathroom\KitchenBathroomProp.h">
+      <Filter>Object\KitchenBathroom</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\KitchenBathroom\KitchenBathroomStatistic.h">
+      <Filter>Object\KitchenBathroom</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source">
@@ -908,6 +914,9 @@
     </Filter>
     <Filter Include="ProjectorFileMrg">
       <UniqueIdentifier>{5c6ebdc3-2fdc-433d-b3d8-97c74c37618a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\KitchenBathroom">
+      <UniqueIdentifier>{5d696d10-72d5-41c3-9da6-6136b5377588}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

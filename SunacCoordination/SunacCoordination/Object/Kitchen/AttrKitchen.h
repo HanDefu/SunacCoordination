@@ -4,7 +4,7 @@
 #include "dbmain.h"
 #include "../AttrObject.h"
 #include "..\PrototypeCommonDef.h"
-#include "..\KitchenBathroomProp.h"
+#include "..\KitchenBathroom\KitchenBathroomProp.h"
 
 #pragma warning(disable: 4275 4251)
 

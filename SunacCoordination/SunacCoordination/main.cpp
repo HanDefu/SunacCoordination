@@ -890,6 +890,15 @@ static void initApp()
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SKBSTATISTIC"),
+		_T("SKBSTATISTIC"),
+		ACRX_CMD_MODAL | ACRX_CMD_USEPICKSET,
+		CMD_SunacKitchenBathroomStatistic,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
 		_T("SRAILING"),
 		_T("SRAILING"),
 		ACRX_CMD_MODAL,

@@ -2,8 +2,8 @@
 #pragma once
 
 #include "dbmain.h"
-#include "AttrObject.h"
-#include "PrototypeCommonDef.h"
+#include "../AttrObject.h"
+#include "../PrototypeCommonDef.h"
 
 
 class CKitchenBathroomProp

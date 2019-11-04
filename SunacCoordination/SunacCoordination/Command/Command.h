@@ -19,6 +19,7 @@ void CMD_SunacWindowsStatistics();//统计算量
 //厨房
 void CMD_SunacKitchen();
 void CMD_SunacBathroom();
+void CMD_SunacKitchenBathroomStatistic();
 
 //栏杆
 void CMD_SunacRailing();
