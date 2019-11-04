@@ -1,14 +1,15 @@
 #include "StdAfx.h"
-#include "RailingStatistic.h"
+#include "AirConStatistic.h"
 #include "../../Common/ComFun_Interactive.h"
 #include "../../Common/ComFun_Sunac.h"
 #include "../../Common/ComFun_ACad.h"
+#include "../../Common/ComFun_Math.h"
 #include <dbtable.h>
 #include <algorithm>
 
-int CRailingStatistic::SelectRailings()
+int CAirConStatistic::SelectAirCons()
 {
-	m_allRailings.clear();
+	m_allAirCons.clear();
 
 	vAcDbObjectId ids;
 	JHCOM_SelectEnts(ids);
@@ -18,35 +19,35 @@ int CRailingStatistic::SelectRailings()
 	{
 		AcDbObject* pAttr = NULL;
 		TY_GetAttributeData(ids[i], pAttr);
-		AttrRailing* pAttrRailing = AttrRailing::cast(pAttr);
-		if (pAttrRailing == NULL)
+		AttrAirCon* pAttrAirCon = AttrAirCon::cast(pAttr);
+		if (pAttrAirCon == NULL)
 			continue;
 		count++;
-		InsertRailing(pAttrRailing);
+		InsertAirCon(pAttrAirCon);
 	}
 
 	return count;
 }
 
-void CRailingStatistic::InsertRailing(AttrRailing* pAttr)
+void CAirConStatistic::InsertAirCon(AttrAirCon* pAttr)
 {
-	for (UINT i = 0; i < m_allRailings.size(); i++)
+	for (UINT i = 0; i < m_allAirCons.size(); i++)
 	{
-		if (m_allRailings[i].first.m_instanceCode == pAttr->m_instanceCode)
+		if (JHCOM_equ(m_allAirCons[i].first, pAttr->m_power))
 		{
-			m_allRailings[i].second++;
+			m_allAirCons[i].second++;
 			return;
 		}
 	}
-	m_allRailings.push_back(make_pair(*pAttr, 1));
+	m_allAirCons.push_back(make_pair(pAttr->m_power, 1));
 }
 
-AcDbObjectId CRailingStatistic::InsertTableToCAD(AcGePoint3d insertPos)
+AcDbObjectId CAirConStatistic::InsertTableToCAD(AcGePoint3d insertPos)
 {
-	const double c_tableCellWidth[] = {20, 80, 30, 20, 50};
+	const double c_tableCellWidth[] = {20, 20, 20, 50};
 	const double c_tableCellHeight = 6;
 
-	sort(m_allRailings.begin(), m_allRailings.end(), RailingCmp);
+	sort(m_allAirCons.begin(), m_allAirCons.end());
 
 	Acad::ErrorStatus es;
 	AcDbDictionary *pDict = NULL;
@@ -61,8 +62,8 @@ AcDbObjectId CRailingStatistic::InsertTableToCAD(AcGePoint3d insertPos)
 	pTable->suppressTitleRow(false);//标题需要保留
 	pTable->suppressHeaderRow(true); //表头不需要
 
-	int rowSize = int(m_allRailings.size()) + 2;
-	int columSize = 5;
+	int rowSize = int(m_allAirCons.size()) + 2;
+	int columSize = 4;
 	pTable->setNumColumns(columSize);
 	pTable->setNumRows(rowSize);
 
@@ -97,22 +98,20 @@ AcDbObjectId CRailingStatistic::InsertTableToCAD(AcGePoint3d insertPos)
 	pTable->generateLayout();
 
 	//设置标题
-	pTable->setTextString(0, 0, L"栏杆算量表");
+	pTable->setTextString(0, 0, L"空调算量表");
 	pTable->setTextString(1, 0, L"序号");
-	pTable->setTextString(1, 1, L"栏杆编号");
-	pTable->setTextString(1, 2, L"长度");
-	pTable->setTextString(1, 3, L"数量");
-	pTable->setTextString(1, 4, L"备注");
-	for (UINT i = 0; i < m_allRailings.size(); i++)
+	pTable->setTextString(1, 1, L"匹数");
+	pTable->setTextString(1, 2, L"数量");
+	pTable->setTextString(1, 3, L"备注");
+	for (UINT i = 0; i < m_allAirCons.size(); i++)
 	{
 		CString sNum;
 		sNum.Format(L"%d", i + 1);
 		pTable->setTextString(i + 2, 0, sNum);
-		pTable->setTextString(i + 2, 1, m_allRailings[i].first.m_instanceCode);
-		sNum.Format(L"%.0lf", m_allRailings[i].first.m_length);
+		sNum.Format(L"%.1lf", m_allAirCons[i].first);
+		pTable->setTextString(i + 2, 1, sNum);
+		sNum.Format(L"%d", m_allAirCons[i].second);
 		pTable->setTextString(i + 2, 2, sNum);
-		sNum.Format(L"%d", m_allRailings[i].second);
-		pTable->setTextString(i + 2, 3, sNum);
 	}
 
 	pTable->setPosition(insertPos);
@@ -120,9 +119,4 @@ AcDbObjectId CRailingStatistic::InsertTableToCAD(AcGePoint3d insertPos)
 	pTable->setRegen();
 
 	return JHCOM_PostToModelSpace(pTable);
-}
-
-bool RailingCmp(const pair<AttrRailing, int>& x1, const pair<AttrRailing, int>& x2)
-{
-	return (x1.first.m_instanceCode < x2.first.m_instanceCode);
 }

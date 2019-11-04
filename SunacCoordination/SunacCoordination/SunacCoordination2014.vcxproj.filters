@@ -376,6 +376,9 @@
     <ClCompile Include="Object\KitchenBathroom\KitchenBathroomStatistic.cpp">
       <Filter>Object\KitchenBathroom</Filter>
     </ClCompile>
+    <ClCompile Include="Object\AirCondition\AirConStatistic.cpp">
+      <Filter>Object\AirCondition</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -843,6 +846,9 @@
     </ClInclude>
     <ClInclude Include="Object\KitchenBathroom\KitchenBathroomStatistic.h">
       <Filter>Object\KitchenBathroom</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\AirCondition\AirConStatistic.h">
+      <Filter>Object\AirCondition</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

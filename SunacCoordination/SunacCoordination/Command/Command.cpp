@@ -35,6 +35,7 @@
 #include "../Object/WindowStatistic/WindowStatictic.h"
 #include "../Object/KitchenBathroom/KitchenBathroomStatistic.h"
 #include "../Object/Railing/RailingStatistic.h"
+#include "../Object/AirCondition/AirConStatistic.h"
 #include "../UI/ProjectManagementDlg.h"
 
 
@@ -211,6 +212,14 @@ void CMD_SunacAirconditioner()
 		g_airconditionerDlg->Create(IDD_DIALOG_AIRCONDITIONER);
 	}
 	g_airconditionerDlg->ShowWindow(SW_SHOW);
+}
+
+void CMD_SunacAirconditionerStatistic()
+{
+	CAirConStatistic instance;
+	instance.SelectAirCons();
+	AcGePoint3d insertPoint = TY_GetPoint();
+	instance.InsertTableToCAD(insertPoint);
 }
 
 //标准立面

@@ -146,6 +146,9 @@ LRESULT DlgLeftBar::OnClickedPopupMenu(WPARAM mID, LPARAM notUsed)
 		SendCommandToCAD(_T("SAIRCONDITIONER"));
 		//CMD_SunacAirconditioner();
 		break;
+	case ID_COMMAND_AIRCONDITIONERQUANTITY:
+		SendCommandToCAD(_T("SAIRCONSTATISTIC"));
+		break;
 	default:
 		break;
 	}

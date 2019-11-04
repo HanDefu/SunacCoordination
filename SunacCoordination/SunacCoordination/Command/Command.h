@@ -27,6 +27,7 @@ void CMD_SunacRailingStatistic();
 
 //¿Õµ÷
 void CMD_SunacAirconditioner();
+void CMD_SunacAirconditionerStatistic();
 
 void CMD_SunacMoldings(); //Ïß½Å
 
