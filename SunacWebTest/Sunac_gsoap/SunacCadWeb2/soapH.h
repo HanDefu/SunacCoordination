@@ -378,6 +378,756 @@ inline int soap_POST_recv_std__wstring(struct soap *soap, std::wstring *p)
 }
 #endif
 
+#ifndef SOAP_TYPE__ns1__DeleteCadDrawingResponse_DEFINED
+#define SOAP_TYPE__ns1__DeleteCadDrawingResponse_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__DeleteCadDrawingResponse(struct soap*, const char*, int, const _ns1__DeleteCadDrawingResponse *, const char*);
+SOAP_FMAC3 _ns1__DeleteCadDrawingResponse * SOAP_FMAC4 soap_in__ns1__DeleteCadDrawingResponse(struct soap*, const char*, _ns1__DeleteCadDrawingResponse *, const char*);
+SOAP_FMAC1 _ns1__DeleteCadDrawingResponse * SOAP_FMAC2 soap_instantiate__ns1__DeleteCadDrawingResponse(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__DeleteCadDrawingResponse * soap_new__ns1__DeleteCadDrawingResponse(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__DeleteCadDrawingResponse(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__DeleteCadDrawingResponse * soap_new_req__ns1__DeleteCadDrawingResponse(
+	struct soap *soap)
+{
+	_ns1__DeleteCadDrawingResponse *_p = ::soap_new__ns1__DeleteCadDrawingResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__DeleteCadDrawingResponse * soap_new_set__ns1__DeleteCadDrawingResponse(
+	struct soap *soap,
+	std::wstring *DeleteCadDrawingResult)
+{
+	_ns1__DeleteCadDrawingResponse *_p = ::soap_new__ns1__DeleteCadDrawingResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__DeleteCadDrawingResponse::DeleteCadDrawingResult = DeleteCadDrawingResult;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__DeleteCadDrawingResponse(struct soap *soap, _ns1__DeleteCadDrawingResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:DeleteCadDrawingResponse", p->soap_type() == SOAP_TYPE__ns1__DeleteCadDrawingResponse ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__DeleteCadDrawingResponse(struct soap *soap, const char *URL, _ns1__DeleteCadDrawingResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:DeleteCadDrawingResponse", p->soap_type() == SOAP_TYPE__ns1__DeleteCadDrawingResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__DeleteCadDrawingResponse(struct soap *soap, const char *URL, _ns1__DeleteCadDrawingResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:DeleteCadDrawingResponse", p->soap_type() == SOAP_TYPE__ns1__DeleteCadDrawingResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__DeleteCadDrawingResponse(struct soap *soap, const char *URL, _ns1__DeleteCadDrawingResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:DeleteCadDrawingResponse", p->soap_type() == SOAP_TYPE__ns1__DeleteCadDrawingResponse ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__DeleteCadDrawingResponse * SOAP_FMAC4 soap_get__ns1__DeleteCadDrawingResponse(struct soap*, _ns1__DeleteCadDrawingResponse *, const char*, const char*);
+
+inline int soap_read__ns1__DeleteCadDrawingResponse(struct soap *soap, _ns1__DeleteCadDrawingResponse *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__DeleteCadDrawingResponse(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__DeleteCadDrawingResponse(struct soap *soap, const char *URL, _ns1__DeleteCadDrawingResponse *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__DeleteCadDrawingResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__DeleteCadDrawingResponse(struct soap *soap, _ns1__DeleteCadDrawingResponse *p)
+{
+	if (::soap_read__ns1__DeleteCadDrawingResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__DeleteCadDrawing_DEFINED
+#define SOAP_TYPE__ns1__DeleteCadDrawing_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__DeleteCadDrawing(struct soap*, const char*, int, const _ns1__DeleteCadDrawing *, const char*);
+SOAP_FMAC3 _ns1__DeleteCadDrawing * SOAP_FMAC4 soap_in__ns1__DeleteCadDrawing(struct soap*, const char*, _ns1__DeleteCadDrawing *, const char*);
+SOAP_FMAC1 _ns1__DeleteCadDrawing * SOAP_FMAC2 soap_instantiate__ns1__DeleteCadDrawing(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__DeleteCadDrawing * soap_new__ns1__DeleteCadDrawing(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__DeleteCadDrawing(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__DeleteCadDrawing * soap_new_req__ns1__DeleteCadDrawing(
+	struct soap *soap)
+{
+	_ns1__DeleteCadDrawing *_p = ::soap_new__ns1__DeleteCadDrawing(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__DeleteCadDrawing * soap_new_set__ns1__DeleteCadDrawing(
+	struct soap *soap,
+	std::wstring *UID,
+	std::wstring *OID,
+	std::wstring *DrawingDir,
+	std::wstring *DrawingFile)
+{
+	_ns1__DeleteCadDrawing *_p = ::soap_new__ns1__DeleteCadDrawing(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__DeleteCadDrawing::UID = UID;
+		_p->_ns1__DeleteCadDrawing::OID = OID;
+		_p->_ns1__DeleteCadDrawing::DrawingDir = DrawingDir;
+		_p->_ns1__DeleteCadDrawing::DrawingFile = DrawingFile;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__DeleteCadDrawing(struct soap *soap, _ns1__DeleteCadDrawing const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:DeleteCadDrawing", p->soap_type() == SOAP_TYPE__ns1__DeleteCadDrawing ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__DeleteCadDrawing(struct soap *soap, const char *URL, _ns1__DeleteCadDrawing const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:DeleteCadDrawing", p->soap_type() == SOAP_TYPE__ns1__DeleteCadDrawing ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__DeleteCadDrawing(struct soap *soap, const char *URL, _ns1__DeleteCadDrawing const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:DeleteCadDrawing", p->soap_type() == SOAP_TYPE__ns1__DeleteCadDrawing ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__DeleteCadDrawing(struct soap *soap, const char *URL, _ns1__DeleteCadDrawing const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:DeleteCadDrawing", p->soap_type() == SOAP_TYPE__ns1__DeleteCadDrawing ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__DeleteCadDrawing * SOAP_FMAC4 soap_get__ns1__DeleteCadDrawing(struct soap*, _ns1__DeleteCadDrawing *, const char*, const char*);
+
+inline int soap_read__ns1__DeleteCadDrawing(struct soap *soap, _ns1__DeleteCadDrawing *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__DeleteCadDrawing(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__DeleteCadDrawing(struct soap *soap, const char *URL, _ns1__DeleteCadDrawing *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__DeleteCadDrawing(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__DeleteCadDrawing(struct soap *soap, _ns1__DeleteCadDrawing *p)
+{
+	if (::soap_read__ns1__DeleteCadDrawing(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__UpdateCadDrawingResponse_DEFINED
+#define SOAP_TYPE__ns1__UpdateCadDrawingResponse_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__UpdateCadDrawingResponse(struct soap*, const char*, int, const _ns1__UpdateCadDrawingResponse *, const char*);
+SOAP_FMAC3 _ns1__UpdateCadDrawingResponse * SOAP_FMAC4 soap_in__ns1__UpdateCadDrawingResponse(struct soap*, const char*, _ns1__UpdateCadDrawingResponse *, const char*);
+SOAP_FMAC1 _ns1__UpdateCadDrawingResponse * SOAP_FMAC2 soap_instantiate__ns1__UpdateCadDrawingResponse(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__UpdateCadDrawingResponse * soap_new__ns1__UpdateCadDrawingResponse(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__UpdateCadDrawingResponse(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__UpdateCadDrawingResponse * soap_new_req__ns1__UpdateCadDrawingResponse(
+	struct soap *soap)
+{
+	_ns1__UpdateCadDrawingResponse *_p = ::soap_new__ns1__UpdateCadDrawingResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__UpdateCadDrawingResponse * soap_new_set__ns1__UpdateCadDrawingResponse(
+	struct soap *soap,
+	std::wstring *UpdateCadDrawingResult)
+{
+	_ns1__UpdateCadDrawingResponse *_p = ::soap_new__ns1__UpdateCadDrawingResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__UpdateCadDrawingResponse::UpdateCadDrawingResult = UpdateCadDrawingResult;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__UpdateCadDrawingResponse(struct soap *soap, _ns1__UpdateCadDrawingResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:UpdateCadDrawingResponse", p->soap_type() == SOAP_TYPE__ns1__UpdateCadDrawingResponse ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__UpdateCadDrawingResponse(struct soap *soap, const char *URL, _ns1__UpdateCadDrawingResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:UpdateCadDrawingResponse", p->soap_type() == SOAP_TYPE__ns1__UpdateCadDrawingResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__UpdateCadDrawingResponse(struct soap *soap, const char *URL, _ns1__UpdateCadDrawingResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:UpdateCadDrawingResponse", p->soap_type() == SOAP_TYPE__ns1__UpdateCadDrawingResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__UpdateCadDrawingResponse(struct soap *soap, const char *URL, _ns1__UpdateCadDrawingResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:UpdateCadDrawingResponse", p->soap_type() == SOAP_TYPE__ns1__UpdateCadDrawingResponse ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__UpdateCadDrawingResponse * SOAP_FMAC4 soap_get__ns1__UpdateCadDrawingResponse(struct soap*, _ns1__UpdateCadDrawingResponse *, const char*, const char*);
+
+inline int soap_read__ns1__UpdateCadDrawingResponse(struct soap *soap, _ns1__UpdateCadDrawingResponse *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__UpdateCadDrawingResponse(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__UpdateCadDrawingResponse(struct soap *soap, const char *URL, _ns1__UpdateCadDrawingResponse *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__UpdateCadDrawingResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__UpdateCadDrawingResponse(struct soap *soap, _ns1__UpdateCadDrawingResponse *p)
+{
+	if (::soap_read__ns1__UpdateCadDrawingResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__UpdateCadDrawing_DEFINED
+#define SOAP_TYPE__ns1__UpdateCadDrawing_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__UpdateCadDrawing(struct soap*, const char*, int, const _ns1__UpdateCadDrawing *, const char*);
+SOAP_FMAC3 _ns1__UpdateCadDrawing * SOAP_FMAC4 soap_in__ns1__UpdateCadDrawing(struct soap*, const char*, _ns1__UpdateCadDrawing *, const char*);
+SOAP_FMAC1 _ns1__UpdateCadDrawing * SOAP_FMAC2 soap_instantiate__ns1__UpdateCadDrawing(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__UpdateCadDrawing * soap_new__ns1__UpdateCadDrawing(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__UpdateCadDrawing(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__UpdateCadDrawing * soap_new_req__ns1__UpdateCadDrawing(
+	struct soap *soap)
+{
+	_ns1__UpdateCadDrawing *_p = ::soap_new__ns1__UpdateCadDrawing(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__UpdateCadDrawing * soap_new_set__ns1__UpdateCadDrawing(
+	struct soap *soap,
+	std::wstring *UID,
+	std::wstring *OID,
+	std::wstring *DrawingDir,
+	std::wstring *FileSaveName,
+	std::wstring *DrawingFile)
+{
+	_ns1__UpdateCadDrawing *_p = ::soap_new__ns1__UpdateCadDrawing(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__UpdateCadDrawing::UID = UID;
+		_p->_ns1__UpdateCadDrawing::OID = OID;
+		_p->_ns1__UpdateCadDrawing::DrawingDir = DrawingDir;
+		_p->_ns1__UpdateCadDrawing::FileSaveName = FileSaveName;
+		_p->_ns1__UpdateCadDrawing::DrawingFile = DrawingFile;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__UpdateCadDrawing(struct soap *soap, _ns1__UpdateCadDrawing const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:UpdateCadDrawing", p->soap_type() == SOAP_TYPE__ns1__UpdateCadDrawing ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__UpdateCadDrawing(struct soap *soap, const char *URL, _ns1__UpdateCadDrawing const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:UpdateCadDrawing", p->soap_type() == SOAP_TYPE__ns1__UpdateCadDrawing ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__UpdateCadDrawing(struct soap *soap, const char *URL, _ns1__UpdateCadDrawing const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:UpdateCadDrawing", p->soap_type() == SOAP_TYPE__ns1__UpdateCadDrawing ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__UpdateCadDrawing(struct soap *soap, const char *URL, _ns1__UpdateCadDrawing const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:UpdateCadDrawing", p->soap_type() == SOAP_TYPE__ns1__UpdateCadDrawing ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__UpdateCadDrawing * SOAP_FMAC4 soap_get__ns1__UpdateCadDrawing(struct soap*, _ns1__UpdateCadDrawing *, const char*, const char*);
+
+inline int soap_read__ns1__UpdateCadDrawing(struct soap *soap, _ns1__UpdateCadDrawing *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__UpdateCadDrawing(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__UpdateCadDrawing(struct soap *soap, const char *URL, _ns1__UpdateCadDrawing *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__UpdateCadDrawing(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__UpdateCadDrawing(struct soap *soap, _ns1__UpdateCadDrawing *p)
+{
+	if (::soap_read__ns1__UpdateCadDrawing(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__GetProjectInfoResponse_DEFINED
+#define SOAP_TYPE__ns1__GetProjectInfoResponse_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetProjectInfoResponse(struct soap*, const char*, int, const _ns1__GetProjectInfoResponse *, const char*);
+SOAP_FMAC3 _ns1__GetProjectInfoResponse * SOAP_FMAC4 soap_in__ns1__GetProjectInfoResponse(struct soap*, const char*, _ns1__GetProjectInfoResponse *, const char*);
+SOAP_FMAC1 _ns1__GetProjectInfoResponse * SOAP_FMAC2 soap_instantiate__ns1__GetProjectInfoResponse(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__GetProjectInfoResponse * soap_new__ns1__GetProjectInfoResponse(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__GetProjectInfoResponse(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__GetProjectInfoResponse * soap_new_req__ns1__GetProjectInfoResponse(
+	struct soap *soap)
+{
+	_ns1__GetProjectInfoResponse *_p = ::soap_new__ns1__GetProjectInfoResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__GetProjectInfoResponse * soap_new_set__ns1__GetProjectInfoResponse(
+	struct soap *soap,
+	std::wstring *GetProjectInfoResult)
+{
+	_ns1__GetProjectInfoResponse *_p = ::soap_new__ns1__GetProjectInfoResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__GetProjectInfoResponse::GetProjectInfoResult = GetProjectInfoResult;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__GetProjectInfoResponse(struct soap *soap, _ns1__GetProjectInfoResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetProjectInfoResponse", p->soap_type() == SOAP_TYPE__ns1__GetProjectInfoResponse ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__GetProjectInfoResponse(struct soap *soap, const char *URL, _ns1__GetProjectInfoResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetProjectInfoResponse", p->soap_type() == SOAP_TYPE__ns1__GetProjectInfoResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__GetProjectInfoResponse(struct soap *soap, const char *URL, _ns1__GetProjectInfoResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetProjectInfoResponse", p->soap_type() == SOAP_TYPE__ns1__GetProjectInfoResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__GetProjectInfoResponse(struct soap *soap, const char *URL, _ns1__GetProjectInfoResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetProjectInfoResponse", p->soap_type() == SOAP_TYPE__ns1__GetProjectInfoResponse ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__GetProjectInfoResponse * SOAP_FMAC4 soap_get__ns1__GetProjectInfoResponse(struct soap*, _ns1__GetProjectInfoResponse *, const char*, const char*);
+
+inline int soap_read__ns1__GetProjectInfoResponse(struct soap *soap, _ns1__GetProjectInfoResponse *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__GetProjectInfoResponse(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__GetProjectInfoResponse(struct soap *soap, const char *URL, _ns1__GetProjectInfoResponse *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__GetProjectInfoResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__GetProjectInfoResponse(struct soap *soap, _ns1__GetProjectInfoResponse *p)
+{
+	if (::soap_read__ns1__GetProjectInfoResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__GetProjectInfo_DEFINED
+#define SOAP_TYPE__ns1__GetProjectInfo_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__GetProjectInfo(struct soap*, const char*, int, const _ns1__GetProjectInfo *, const char*);
+SOAP_FMAC3 _ns1__GetProjectInfo * SOAP_FMAC4 soap_in__ns1__GetProjectInfo(struct soap*, const char*, _ns1__GetProjectInfo *, const char*);
+SOAP_FMAC1 _ns1__GetProjectInfo * SOAP_FMAC2 soap_instantiate__ns1__GetProjectInfo(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__GetProjectInfo * soap_new__ns1__GetProjectInfo(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__GetProjectInfo(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__GetProjectInfo * soap_new_req__ns1__GetProjectInfo(
+	struct soap *soap)
+{
+	_ns1__GetProjectInfo *_p = ::soap_new__ns1__GetProjectInfo(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__GetProjectInfo * soap_new_set__ns1__GetProjectInfo(
+	struct soap *soap,
+	std::wstring *UID)
+{
+	_ns1__GetProjectInfo *_p = ::soap_new__ns1__GetProjectInfo(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__GetProjectInfo::UID = UID;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__GetProjectInfo(struct soap *soap, _ns1__GetProjectInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetProjectInfo", p->soap_type() == SOAP_TYPE__ns1__GetProjectInfo ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__GetProjectInfo(struct soap *soap, const char *URL, _ns1__GetProjectInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetProjectInfo", p->soap_type() == SOAP_TYPE__ns1__GetProjectInfo ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__GetProjectInfo(struct soap *soap, const char *URL, _ns1__GetProjectInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetProjectInfo", p->soap_type() == SOAP_TYPE__ns1__GetProjectInfo ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__GetProjectInfo(struct soap *soap, const char *URL, _ns1__GetProjectInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:GetProjectInfo", p->soap_type() == SOAP_TYPE__ns1__GetProjectInfo ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__GetProjectInfo * SOAP_FMAC4 soap_get__ns1__GetProjectInfo(struct soap*, _ns1__GetProjectInfo *, const char*, const char*);
+
+inline int soap_read__ns1__GetProjectInfo(struct soap *soap, _ns1__GetProjectInfo *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__GetProjectInfo(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__GetProjectInfo(struct soap *soap, const char *URL, _ns1__GetProjectInfo *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__GetProjectInfo(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__GetProjectInfo(struct soap *soap, _ns1__GetProjectInfo *p)
+{
+	if (::soap_read__ns1__GetProjectInfo(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__RenameCadFileDirResponse_DEFINED
+#define SOAP_TYPE__ns1__RenameCadFileDirResponse_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__RenameCadFileDirResponse(struct soap*, const char*, int, const _ns1__RenameCadFileDirResponse *, const char*);
+SOAP_FMAC3 _ns1__RenameCadFileDirResponse * SOAP_FMAC4 soap_in__ns1__RenameCadFileDirResponse(struct soap*, const char*, _ns1__RenameCadFileDirResponse *, const char*);
+SOAP_FMAC1 _ns1__RenameCadFileDirResponse * SOAP_FMAC2 soap_instantiate__ns1__RenameCadFileDirResponse(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__RenameCadFileDirResponse * soap_new__ns1__RenameCadFileDirResponse(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__RenameCadFileDirResponse(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__RenameCadFileDirResponse * soap_new_req__ns1__RenameCadFileDirResponse(
+	struct soap *soap)
+{
+	_ns1__RenameCadFileDirResponse *_p = ::soap_new__ns1__RenameCadFileDirResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__RenameCadFileDirResponse * soap_new_set__ns1__RenameCadFileDirResponse(
+	struct soap *soap,
+	std::wstring *RenameCadFileDirResult)
+{
+	_ns1__RenameCadFileDirResponse *_p = ::soap_new__ns1__RenameCadFileDirResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__RenameCadFileDirResponse::RenameCadFileDirResult = RenameCadFileDirResult;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__RenameCadFileDirResponse(struct soap *soap, _ns1__RenameCadFileDirResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:RenameCadFileDirResponse", p->soap_type() == SOAP_TYPE__ns1__RenameCadFileDirResponse ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__RenameCadFileDirResponse(struct soap *soap, const char *URL, _ns1__RenameCadFileDirResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:RenameCadFileDirResponse", p->soap_type() == SOAP_TYPE__ns1__RenameCadFileDirResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__RenameCadFileDirResponse(struct soap *soap, const char *URL, _ns1__RenameCadFileDirResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:RenameCadFileDirResponse", p->soap_type() == SOAP_TYPE__ns1__RenameCadFileDirResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__RenameCadFileDirResponse(struct soap *soap, const char *URL, _ns1__RenameCadFileDirResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:RenameCadFileDirResponse", p->soap_type() == SOAP_TYPE__ns1__RenameCadFileDirResponse ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__RenameCadFileDirResponse * SOAP_FMAC4 soap_get__ns1__RenameCadFileDirResponse(struct soap*, _ns1__RenameCadFileDirResponse *, const char*, const char*);
+
+inline int soap_read__ns1__RenameCadFileDirResponse(struct soap *soap, _ns1__RenameCadFileDirResponse *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__RenameCadFileDirResponse(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__RenameCadFileDirResponse(struct soap *soap, const char *URL, _ns1__RenameCadFileDirResponse *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__RenameCadFileDirResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__RenameCadFileDirResponse(struct soap *soap, _ns1__RenameCadFileDirResponse *p)
+{
+	if (::soap_read__ns1__RenameCadFileDirResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__RenameCadFileDir_DEFINED
+#define SOAP_TYPE__ns1__RenameCadFileDir_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__RenameCadFileDir(struct soap*, const char*, int, const _ns1__RenameCadFileDir *, const char*);
+SOAP_FMAC3 _ns1__RenameCadFileDir * SOAP_FMAC4 soap_in__ns1__RenameCadFileDir(struct soap*, const char*, _ns1__RenameCadFileDir *, const char*);
+SOAP_FMAC1 _ns1__RenameCadFileDir * SOAP_FMAC2 soap_instantiate__ns1__RenameCadFileDir(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__RenameCadFileDir * soap_new__ns1__RenameCadFileDir(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__RenameCadFileDir(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__RenameCadFileDir * soap_new_req__ns1__RenameCadFileDir(
+	struct soap *soap)
+{
+	_ns1__RenameCadFileDir *_p = ::soap_new__ns1__RenameCadFileDir(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__RenameCadFileDir * soap_new_set__ns1__RenameCadFileDir(
+	struct soap *soap,
+	std::wstring *UID,
+	std::wstring *OID,
+	std::wstring *DrawingDir,
+	std::wstring *ParentDir,
+	std::wstring *NewDrawingDir)
+{
+	_ns1__RenameCadFileDir *_p = ::soap_new__ns1__RenameCadFileDir(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__RenameCadFileDir::UID = UID;
+		_p->_ns1__RenameCadFileDir::OID = OID;
+		_p->_ns1__RenameCadFileDir::DrawingDir = DrawingDir;
+		_p->_ns1__RenameCadFileDir::ParentDir = ParentDir;
+		_p->_ns1__RenameCadFileDir::NewDrawingDir = NewDrawingDir;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__RenameCadFileDir(struct soap *soap, _ns1__RenameCadFileDir const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:RenameCadFileDir", p->soap_type() == SOAP_TYPE__ns1__RenameCadFileDir ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__RenameCadFileDir(struct soap *soap, const char *URL, _ns1__RenameCadFileDir const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:RenameCadFileDir", p->soap_type() == SOAP_TYPE__ns1__RenameCadFileDir ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__RenameCadFileDir(struct soap *soap, const char *URL, _ns1__RenameCadFileDir const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:RenameCadFileDir", p->soap_type() == SOAP_TYPE__ns1__RenameCadFileDir ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__RenameCadFileDir(struct soap *soap, const char *URL, _ns1__RenameCadFileDir const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:RenameCadFileDir", p->soap_type() == SOAP_TYPE__ns1__RenameCadFileDir ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__RenameCadFileDir * SOAP_FMAC4 soap_get__ns1__RenameCadFileDir(struct soap*, _ns1__RenameCadFileDir *, const char*, const char*);
+
+inline int soap_read__ns1__RenameCadFileDir(struct soap *soap, _ns1__RenameCadFileDir *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__RenameCadFileDir(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__RenameCadFileDir(struct soap *soap, const char *URL, _ns1__RenameCadFileDir *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__RenameCadFileDir(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__RenameCadFileDir(struct soap *soap, _ns1__RenameCadFileDir *p)
+{
+	if (::soap_read__ns1__RenameCadFileDir(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
 #ifndef SOAP_TYPE__ns1__DeleteCadFileDirResponse_DEFINED
 #define SOAP_TYPE__ns1__DeleteCadFileDirResponse_DEFINED
 SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__DeleteCadFileDirResponse(struct soap*, const char*, int, const _ns1__DeleteCadFileDirResponse *, const char*);
@@ -3678,6 +4428,382 @@ inline int soap_POST_recv_SOAP_ENV__Header(struct soap *soap, struct SOAP_ENV__H
 
 #endif
 
+#ifndef SOAP_TYPE___ns1__DeleteCadDrawing__DEFINED
+#define SOAP_TYPE___ns1__DeleteCadDrawing__DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__DeleteCadDrawing_(struct soap*, struct __ns1__DeleteCadDrawing_ *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__DeleteCadDrawing_(struct soap*, const struct __ns1__DeleteCadDrawing_ *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__DeleteCadDrawing_(struct soap*, const char*, int, const struct __ns1__DeleteCadDrawing_ *, const char*);
+SOAP_FMAC3 struct __ns1__DeleteCadDrawing_ * SOAP_FMAC4 soap_in___ns1__DeleteCadDrawing_(struct soap*, const char*, struct __ns1__DeleteCadDrawing_ *, const char*);
+SOAP_FMAC1 struct __ns1__DeleteCadDrawing_ * SOAP_FMAC2 soap_instantiate___ns1__DeleteCadDrawing_(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__DeleteCadDrawing_ * soap_new___ns1__DeleteCadDrawing_(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__DeleteCadDrawing_(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__DeleteCadDrawing_ * soap_new_req___ns1__DeleteCadDrawing_(
+	struct soap *soap)
+{
+	struct __ns1__DeleteCadDrawing_ *_p = ::soap_new___ns1__DeleteCadDrawing_(soap);
+	if (_p)
+	{	::soap_default___ns1__DeleteCadDrawing_(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__DeleteCadDrawing_ * soap_new_set___ns1__DeleteCadDrawing_(
+	struct soap *soap,
+	_ns1__DeleteCadDrawing *ns1__DeleteCadDrawing)
+{
+	struct __ns1__DeleteCadDrawing_ *_p = ::soap_new___ns1__DeleteCadDrawing_(soap);
+	if (_p)
+	{	::soap_default___ns1__DeleteCadDrawing_(soap, _p);
+		_p->ns1__DeleteCadDrawing = ns1__DeleteCadDrawing;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__DeleteCadDrawing_(struct soap*, const struct __ns1__DeleteCadDrawing_ *, const char*, const char*);
+
+inline int soap_write___ns1__DeleteCadDrawing_(struct soap *soap, struct __ns1__DeleteCadDrawing_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__DeleteCadDrawing_(soap, p), 0) || ::soap_put___ns1__DeleteCadDrawing_(soap, p, "-ns1:DeleteCadDrawing", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__DeleteCadDrawing_(struct soap *soap, const char *URL, struct __ns1__DeleteCadDrawing_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__DeleteCadDrawing_(soap, p), 0) || ::soap_put___ns1__DeleteCadDrawing_(soap, p, "-ns1:DeleteCadDrawing", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__DeleteCadDrawing_(struct soap *soap, const char *URL, struct __ns1__DeleteCadDrawing_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__DeleteCadDrawing_(soap, p), 0) || ::soap_put___ns1__DeleteCadDrawing_(soap, p, "-ns1:DeleteCadDrawing", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__DeleteCadDrawing_(struct soap *soap, const char *URL, struct __ns1__DeleteCadDrawing_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__DeleteCadDrawing_(soap, p), 0) || ::soap_put___ns1__DeleteCadDrawing_(soap, p, "-ns1:DeleteCadDrawing", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__DeleteCadDrawing_ * SOAP_FMAC4 soap_get___ns1__DeleteCadDrawing_(struct soap*, struct __ns1__DeleteCadDrawing_ *, const char*, const char*);
+
+inline int soap_read___ns1__DeleteCadDrawing_(struct soap *soap, struct __ns1__DeleteCadDrawing_ *p)
+{
+	if (p)
+	{	::soap_default___ns1__DeleteCadDrawing_(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__DeleteCadDrawing_(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__DeleteCadDrawing_(struct soap *soap, const char *URL, struct __ns1__DeleteCadDrawing_ *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__DeleteCadDrawing_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__DeleteCadDrawing_(struct soap *soap, struct __ns1__DeleteCadDrawing_ *p)
+{
+	if (::soap_read___ns1__DeleteCadDrawing_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__UpdateCadDrawing__DEFINED
+#define SOAP_TYPE___ns1__UpdateCadDrawing__DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__UpdateCadDrawing_(struct soap*, struct __ns1__UpdateCadDrawing_ *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__UpdateCadDrawing_(struct soap*, const struct __ns1__UpdateCadDrawing_ *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__UpdateCadDrawing_(struct soap*, const char*, int, const struct __ns1__UpdateCadDrawing_ *, const char*);
+SOAP_FMAC3 struct __ns1__UpdateCadDrawing_ * SOAP_FMAC4 soap_in___ns1__UpdateCadDrawing_(struct soap*, const char*, struct __ns1__UpdateCadDrawing_ *, const char*);
+SOAP_FMAC1 struct __ns1__UpdateCadDrawing_ * SOAP_FMAC2 soap_instantiate___ns1__UpdateCadDrawing_(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__UpdateCadDrawing_ * soap_new___ns1__UpdateCadDrawing_(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__UpdateCadDrawing_(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__UpdateCadDrawing_ * soap_new_req___ns1__UpdateCadDrawing_(
+	struct soap *soap)
+{
+	struct __ns1__UpdateCadDrawing_ *_p = ::soap_new___ns1__UpdateCadDrawing_(soap);
+	if (_p)
+	{	::soap_default___ns1__UpdateCadDrawing_(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__UpdateCadDrawing_ * soap_new_set___ns1__UpdateCadDrawing_(
+	struct soap *soap,
+	_ns1__UpdateCadDrawing *ns1__UpdateCadDrawing)
+{
+	struct __ns1__UpdateCadDrawing_ *_p = ::soap_new___ns1__UpdateCadDrawing_(soap);
+	if (_p)
+	{	::soap_default___ns1__UpdateCadDrawing_(soap, _p);
+		_p->ns1__UpdateCadDrawing = ns1__UpdateCadDrawing;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__UpdateCadDrawing_(struct soap*, const struct __ns1__UpdateCadDrawing_ *, const char*, const char*);
+
+inline int soap_write___ns1__UpdateCadDrawing_(struct soap *soap, struct __ns1__UpdateCadDrawing_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__UpdateCadDrawing_(soap, p), 0) || ::soap_put___ns1__UpdateCadDrawing_(soap, p, "-ns1:UpdateCadDrawing", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__UpdateCadDrawing_(struct soap *soap, const char *URL, struct __ns1__UpdateCadDrawing_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__UpdateCadDrawing_(soap, p), 0) || ::soap_put___ns1__UpdateCadDrawing_(soap, p, "-ns1:UpdateCadDrawing", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__UpdateCadDrawing_(struct soap *soap, const char *URL, struct __ns1__UpdateCadDrawing_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__UpdateCadDrawing_(soap, p), 0) || ::soap_put___ns1__UpdateCadDrawing_(soap, p, "-ns1:UpdateCadDrawing", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__UpdateCadDrawing_(struct soap *soap, const char *URL, struct __ns1__UpdateCadDrawing_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__UpdateCadDrawing_(soap, p), 0) || ::soap_put___ns1__UpdateCadDrawing_(soap, p, "-ns1:UpdateCadDrawing", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__UpdateCadDrawing_ * SOAP_FMAC4 soap_get___ns1__UpdateCadDrawing_(struct soap*, struct __ns1__UpdateCadDrawing_ *, const char*, const char*);
+
+inline int soap_read___ns1__UpdateCadDrawing_(struct soap *soap, struct __ns1__UpdateCadDrawing_ *p)
+{
+	if (p)
+	{	::soap_default___ns1__UpdateCadDrawing_(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__UpdateCadDrawing_(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__UpdateCadDrawing_(struct soap *soap, const char *URL, struct __ns1__UpdateCadDrawing_ *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__UpdateCadDrawing_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__UpdateCadDrawing_(struct soap *soap, struct __ns1__UpdateCadDrawing_ *p)
+{
+	if (::soap_read___ns1__UpdateCadDrawing_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__GetProjectInfo__DEFINED
+#define SOAP_TYPE___ns1__GetProjectInfo__DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetProjectInfo_(struct soap*, struct __ns1__GetProjectInfo_ *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetProjectInfo_(struct soap*, const struct __ns1__GetProjectInfo_ *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetProjectInfo_(struct soap*, const char*, int, const struct __ns1__GetProjectInfo_ *, const char*);
+SOAP_FMAC3 struct __ns1__GetProjectInfo_ * SOAP_FMAC4 soap_in___ns1__GetProjectInfo_(struct soap*, const char*, struct __ns1__GetProjectInfo_ *, const char*);
+SOAP_FMAC1 struct __ns1__GetProjectInfo_ * SOAP_FMAC2 soap_instantiate___ns1__GetProjectInfo_(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__GetProjectInfo_ * soap_new___ns1__GetProjectInfo_(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__GetProjectInfo_(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__GetProjectInfo_ * soap_new_req___ns1__GetProjectInfo_(
+	struct soap *soap)
+{
+	struct __ns1__GetProjectInfo_ *_p = ::soap_new___ns1__GetProjectInfo_(soap);
+	if (_p)
+	{	::soap_default___ns1__GetProjectInfo_(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__GetProjectInfo_ * soap_new_set___ns1__GetProjectInfo_(
+	struct soap *soap,
+	_ns1__GetProjectInfo *ns1__GetProjectInfo)
+{
+	struct __ns1__GetProjectInfo_ *_p = ::soap_new___ns1__GetProjectInfo_(soap);
+	if (_p)
+	{	::soap_default___ns1__GetProjectInfo_(soap, _p);
+		_p->ns1__GetProjectInfo = ns1__GetProjectInfo;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetProjectInfo_(struct soap*, const struct __ns1__GetProjectInfo_ *, const char*, const char*);
+
+inline int soap_write___ns1__GetProjectInfo_(struct soap *soap, struct __ns1__GetProjectInfo_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__GetProjectInfo_(soap, p), 0) || ::soap_put___ns1__GetProjectInfo_(soap, p, "-ns1:GetProjectInfo", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__GetProjectInfo_(struct soap *soap, const char *URL, struct __ns1__GetProjectInfo_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetProjectInfo_(soap, p), 0) || ::soap_put___ns1__GetProjectInfo_(soap, p, "-ns1:GetProjectInfo", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__GetProjectInfo_(struct soap *soap, const char *URL, struct __ns1__GetProjectInfo_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetProjectInfo_(soap, p), 0) || ::soap_put___ns1__GetProjectInfo_(soap, p, "-ns1:GetProjectInfo", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__GetProjectInfo_(struct soap *soap, const char *URL, struct __ns1__GetProjectInfo_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetProjectInfo_(soap, p), 0) || ::soap_put___ns1__GetProjectInfo_(soap, p, "-ns1:GetProjectInfo", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__GetProjectInfo_ * SOAP_FMAC4 soap_get___ns1__GetProjectInfo_(struct soap*, struct __ns1__GetProjectInfo_ *, const char*, const char*);
+
+inline int soap_read___ns1__GetProjectInfo_(struct soap *soap, struct __ns1__GetProjectInfo_ *p)
+{
+	if (p)
+	{	::soap_default___ns1__GetProjectInfo_(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__GetProjectInfo_(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__GetProjectInfo_(struct soap *soap, const char *URL, struct __ns1__GetProjectInfo_ *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__GetProjectInfo_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__GetProjectInfo_(struct soap *soap, struct __ns1__GetProjectInfo_ *p)
+{
+	if (::soap_read___ns1__GetProjectInfo_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__RenameCadFileDir__DEFINED
+#define SOAP_TYPE___ns1__RenameCadFileDir__DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__RenameCadFileDir_(struct soap*, struct __ns1__RenameCadFileDir_ *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__RenameCadFileDir_(struct soap*, const struct __ns1__RenameCadFileDir_ *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__RenameCadFileDir_(struct soap*, const char*, int, const struct __ns1__RenameCadFileDir_ *, const char*);
+SOAP_FMAC3 struct __ns1__RenameCadFileDir_ * SOAP_FMAC4 soap_in___ns1__RenameCadFileDir_(struct soap*, const char*, struct __ns1__RenameCadFileDir_ *, const char*);
+SOAP_FMAC1 struct __ns1__RenameCadFileDir_ * SOAP_FMAC2 soap_instantiate___ns1__RenameCadFileDir_(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__RenameCadFileDir_ * soap_new___ns1__RenameCadFileDir_(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__RenameCadFileDir_(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__RenameCadFileDir_ * soap_new_req___ns1__RenameCadFileDir_(
+	struct soap *soap)
+{
+	struct __ns1__RenameCadFileDir_ *_p = ::soap_new___ns1__RenameCadFileDir_(soap);
+	if (_p)
+	{	::soap_default___ns1__RenameCadFileDir_(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__RenameCadFileDir_ * soap_new_set___ns1__RenameCadFileDir_(
+	struct soap *soap,
+	_ns1__RenameCadFileDir *ns1__RenameCadFileDir)
+{
+	struct __ns1__RenameCadFileDir_ *_p = ::soap_new___ns1__RenameCadFileDir_(soap);
+	if (_p)
+	{	::soap_default___ns1__RenameCadFileDir_(soap, _p);
+		_p->ns1__RenameCadFileDir = ns1__RenameCadFileDir;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__RenameCadFileDir_(struct soap*, const struct __ns1__RenameCadFileDir_ *, const char*, const char*);
+
+inline int soap_write___ns1__RenameCadFileDir_(struct soap *soap, struct __ns1__RenameCadFileDir_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__RenameCadFileDir_(soap, p), 0) || ::soap_put___ns1__RenameCadFileDir_(soap, p, "-ns1:RenameCadFileDir", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__RenameCadFileDir_(struct soap *soap, const char *URL, struct __ns1__RenameCadFileDir_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__RenameCadFileDir_(soap, p), 0) || ::soap_put___ns1__RenameCadFileDir_(soap, p, "-ns1:RenameCadFileDir", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__RenameCadFileDir_(struct soap *soap, const char *URL, struct __ns1__RenameCadFileDir_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__RenameCadFileDir_(soap, p), 0) || ::soap_put___ns1__RenameCadFileDir_(soap, p, "-ns1:RenameCadFileDir", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__RenameCadFileDir_(struct soap *soap, const char *URL, struct __ns1__RenameCadFileDir_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__RenameCadFileDir_(soap, p), 0) || ::soap_put___ns1__RenameCadFileDir_(soap, p, "-ns1:RenameCadFileDir", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__RenameCadFileDir_ * SOAP_FMAC4 soap_get___ns1__RenameCadFileDir_(struct soap*, struct __ns1__RenameCadFileDir_ *, const char*, const char*);
+
+inline int soap_read___ns1__RenameCadFileDir_(struct soap *soap, struct __ns1__RenameCadFileDir_ *p)
+{
+	if (p)
+	{	::soap_default___ns1__RenameCadFileDir_(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__RenameCadFileDir_(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__RenameCadFileDir_(struct soap *soap, const char *URL, struct __ns1__RenameCadFileDir_ *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__RenameCadFileDir_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__RenameCadFileDir_(struct soap *soap, struct __ns1__RenameCadFileDir_ *p)
+{
+	if (::soap_read___ns1__RenameCadFileDir_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
 #ifndef SOAP_TYPE___ns1__DeleteCadFileDir__DEFINED
 #define SOAP_TYPE___ns1__DeleteCadFileDir__DEFINED
 SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__DeleteCadFileDir_(struct soap*, struct __ns1__DeleteCadFileDir_ *);
@@ -5083,6 +6209,382 @@ inline int soap_GET___ns1__StandardDesignAttribute_(struct soap *soap, const cha
 inline int soap_POST_recv___ns1__StandardDesignAttribute_(struct soap *soap, struct __ns1__StandardDesignAttribute_ *p)
 {
 	if (::soap_read___ns1__StandardDesignAttribute_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__DeleteCadDrawing_DEFINED
+#define SOAP_TYPE___ns1__DeleteCadDrawing_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__DeleteCadDrawing(struct soap*, struct __ns1__DeleteCadDrawing *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__DeleteCadDrawing(struct soap*, const struct __ns1__DeleteCadDrawing *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__DeleteCadDrawing(struct soap*, const char*, int, const struct __ns1__DeleteCadDrawing *, const char*);
+SOAP_FMAC3 struct __ns1__DeleteCadDrawing * SOAP_FMAC4 soap_in___ns1__DeleteCadDrawing(struct soap*, const char*, struct __ns1__DeleteCadDrawing *, const char*);
+SOAP_FMAC1 struct __ns1__DeleteCadDrawing * SOAP_FMAC2 soap_instantiate___ns1__DeleteCadDrawing(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__DeleteCadDrawing * soap_new___ns1__DeleteCadDrawing(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__DeleteCadDrawing(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__DeleteCadDrawing * soap_new_req___ns1__DeleteCadDrawing(
+	struct soap *soap)
+{
+	struct __ns1__DeleteCadDrawing *_p = ::soap_new___ns1__DeleteCadDrawing(soap);
+	if (_p)
+	{	::soap_default___ns1__DeleteCadDrawing(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__DeleteCadDrawing * soap_new_set___ns1__DeleteCadDrawing(
+	struct soap *soap,
+	_ns1__DeleteCadDrawing *ns1__DeleteCadDrawing)
+{
+	struct __ns1__DeleteCadDrawing *_p = ::soap_new___ns1__DeleteCadDrawing(soap);
+	if (_p)
+	{	::soap_default___ns1__DeleteCadDrawing(soap, _p);
+		_p->ns1__DeleteCadDrawing = ns1__DeleteCadDrawing;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__DeleteCadDrawing(struct soap*, const struct __ns1__DeleteCadDrawing *, const char*, const char*);
+
+inline int soap_write___ns1__DeleteCadDrawing(struct soap *soap, struct __ns1__DeleteCadDrawing const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__DeleteCadDrawing(soap, p), 0) || ::soap_put___ns1__DeleteCadDrawing(soap, p, "-ns1:DeleteCadDrawing", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__DeleteCadDrawing(struct soap *soap, const char *URL, struct __ns1__DeleteCadDrawing const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__DeleteCadDrawing(soap, p), 0) || ::soap_put___ns1__DeleteCadDrawing(soap, p, "-ns1:DeleteCadDrawing", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__DeleteCadDrawing(struct soap *soap, const char *URL, struct __ns1__DeleteCadDrawing const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__DeleteCadDrawing(soap, p), 0) || ::soap_put___ns1__DeleteCadDrawing(soap, p, "-ns1:DeleteCadDrawing", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__DeleteCadDrawing(struct soap *soap, const char *URL, struct __ns1__DeleteCadDrawing const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__DeleteCadDrawing(soap, p), 0) || ::soap_put___ns1__DeleteCadDrawing(soap, p, "-ns1:DeleteCadDrawing", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__DeleteCadDrawing * SOAP_FMAC4 soap_get___ns1__DeleteCadDrawing(struct soap*, struct __ns1__DeleteCadDrawing *, const char*, const char*);
+
+inline int soap_read___ns1__DeleteCadDrawing(struct soap *soap, struct __ns1__DeleteCadDrawing *p)
+{
+	if (p)
+	{	::soap_default___ns1__DeleteCadDrawing(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__DeleteCadDrawing(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__DeleteCadDrawing(struct soap *soap, const char *URL, struct __ns1__DeleteCadDrawing *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__DeleteCadDrawing(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__DeleteCadDrawing(struct soap *soap, struct __ns1__DeleteCadDrawing *p)
+{
+	if (::soap_read___ns1__DeleteCadDrawing(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__UpdateCadDrawing_DEFINED
+#define SOAP_TYPE___ns1__UpdateCadDrawing_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__UpdateCadDrawing(struct soap*, struct __ns1__UpdateCadDrawing *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__UpdateCadDrawing(struct soap*, const struct __ns1__UpdateCadDrawing *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__UpdateCadDrawing(struct soap*, const char*, int, const struct __ns1__UpdateCadDrawing *, const char*);
+SOAP_FMAC3 struct __ns1__UpdateCadDrawing * SOAP_FMAC4 soap_in___ns1__UpdateCadDrawing(struct soap*, const char*, struct __ns1__UpdateCadDrawing *, const char*);
+SOAP_FMAC1 struct __ns1__UpdateCadDrawing * SOAP_FMAC2 soap_instantiate___ns1__UpdateCadDrawing(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__UpdateCadDrawing * soap_new___ns1__UpdateCadDrawing(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__UpdateCadDrawing(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__UpdateCadDrawing * soap_new_req___ns1__UpdateCadDrawing(
+	struct soap *soap)
+{
+	struct __ns1__UpdateCadDrawing *_p = ::soap_new___ns1__UpdateCadDrawing(soap);
+	if (_p)
+	{	::soap_default___ns1__UpdateCadDrawing(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__UpdateCadDrawing * soap_new_set___ns1__UpdateCadDrawing(
+	struct soap *soap,
+	_ns1__UpdateCadDrawing *ns1__UpdateCadDrawing)
+{
+	struct __ns1__UpdateCadDrawing *_p = ::soap_new___ns1__UpdateCadDrawing(soap);
+	if (_p)
+	{	::soap_default___ns1__UpdateCadDrawing(soap, _p);
+		_p->ns1__UpdateCadDrawing = ns1__UpdateCadDrawing;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__UpdateCadDrawing(struct soap*, const struct __ns1__UpdateCadDrawing *, const char*, const char*);
+
+inline int soap_write___ns1__UpdateCadDrawing(struct soap *soap, struct __ns1__UpdateCadDrawing const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__UpdateCadDrawing(soap, p), 0) || ::soap_put___ns1__UpdateCadDrawing(soap, p, "-ns1:UpdateCadDrawing", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__UpdateCadDrawing(struct soap *soap, const char *URL, struct __ns1__UpdateCadDrawing const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__UpdateCadDrawing(soap, p), 0) || ::soap_put___ns1__UpdateCadDrawing(soap, p, "-ns1:UpdateCadDrawing", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__UpdateCadDrawing(struct soap *soap, const char *URL, struct __ns1__UpdateCadDrawing const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__UpdateCadDrawing(soap, p), 0) || ::soap_put___ns1__UpdateCadDrawing(soap, p, "-ns1:UpdateCadDrawing", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__UpdateCadDrawing(struct soap *soap, const char *URL, struct __ns1__UpdateCadDrawing const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__UpdateCadDrawing(soap, p), 0) || ::soap_put___ns1__UpdateCadDrawing(soap, p, "-ns1:UpdateCadDrawing", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__UpdateCadDrawing * SOAP_FMAC4 soap_get___ns1__UpdateCadDrawing(struct soap*, struct __ns1__UpdateCadDrawing *, const char*, const char*);
+
+inline int soap_read___ns1__UpdateCadDrawing(struct soap *soap, struct __ns1__UpdateCadDrawing *p)
+{
+	if (p)
+	{	::soap_default___ns1__UpdateCadDrawing(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__UpdateCadDrawing(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__UpdateCadDrawing(struct soap *soap, const char *URL, struct __ns1__UpdateCadDrawing *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__UpdateCadDrawing(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__UpdateCadDrawing(struct soap *soap, struct __ns1__UpdateCadDrawing *p)
+{
+	if (::soap_read___ns1__UpdateCadDrawing(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__GetProjectInfo_DEFINED
+#define SOAP_TYPE___ns1__GetProjectInfo_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__GetProjectInfo(struct soap*, struct __ns1__GetProjectInfo *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__GetProjectInfo(struct soap*, const struct __ns1__GetProjectInfo *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__GetProjectInfo(struct soap*, const char*, int, const struct __ns1__GetProjectInfo *, const char*);
+SOAP_FMAC3 struct __ns1__GetProjectInfo * SOAP_FMAC4 soap_in___ns1__GetProjectInfo(struct soap*, const char*, struct __ns1__GetProjectInfo *, const char*);
+SOAP_FMAC1 struct __ns1__GetProjectInfo * SOAP_FMAC2 soap_instantiate___ns1__GetProjectInfo(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__GetProjectInfo * soap_new___ns1__GetProjectInfo(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__GetProjectInfo(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__GetProjectInfo * soap_new_req___ns1__GetProjectInfo(
+	struct soap *soap)
+{
+	struct __ns1__GetProjectInfo *_p = ::soap_new___ns1__GetProjectInfo(soap);
+	if (_p)
+	{	::soap_default___ns1__GetProjectInfo(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__GetProjectInfo * soap_new_set___ns1__GetProjectInfo(
+	struct soap *soap,
+	_ns1__GetProjectInfo *ns1__GetProjectInfo)
+{
+	struct __ns1__GetProjectInfo *_p = ::soap_new___ns1__GetProjectInfo(soap);
+	if (_p)
+	{	::soap_default___ns1__GetProjectInfo(soap, _p);
+		_p->ns1__GetProjectInfo = ns1__GetProjectInfo;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__GetProjectInfo(struct soap*, const struct __ns1__GetProjectInfo *, const char*, const char*);
+
+inline int soap_write___ns1__GetProjectInfo(struct soap *soap, struct __ns1__GetProjectInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__GetProjectInfo(soap, p), 0) || ::soap_put___ns1__GetProjectInfo(soap, p, "-ns1:GetProjectInfo", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__GetProjectInfo(struct soap *soap, const char *URL, struct __ns1__GetProjectInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetProjectInfo(soap, p), 0) || ::soap_put___ns1__GetProjectInfo(soap, p, "-ns1:GetProjectInfo", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__GetProjectInfo(struct soap *soap, const char *URL, struct __ns1__GetProjectInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetProjectInfo(soap, p), 0) || ::soap_put___ns1__GetProjectInfo(soap, p, "-ns1:GetProjectInfo", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__GetProjectInfo(struct soap *soap, const char *URL, struct __ns1__GetProjectInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__GetProjectInfo(soap, p), 0) || ::soap_put___ns1__GetProjectInfo(soap, p, "-ns1:GetProjectInfo", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__GetProjectInfo * SOAP_FMAC4 soap_get___ns1__GetProjectInfo(struct soap*, struct __ns1__GetProjectInfo *, const char*, const char*);
+
+inline int soap_read___ns1__GetProjectInfo(struct soap *soap, struct __ns1__GetProjectInfo *p)
+{
+	if (p)
+	{	::soap_default___ns1__GetProjectInfo(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__GetProjectInfo(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__GetProjectInfo(struct soap *soap, const char *URL, struct __ns1__GetProjectInfo *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__GetProjectInfo(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__GetProjectInfo(struct soap *soap, struct __ns1__GetProjectInfo *p)
+{
+	if (::soap_read___ns1__GetProjectInfo(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__RenameCadFileDir_DEFINED
+#define SOAP_TYPE___ns1__RenameCadFileDir_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__RenameCadFileDir(struct soap*, struct __ns1__RenameCadFileDir *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__RenameCadFileDir(struct soap*, const struct __ns1__RenameCadFileDir *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__RenameCadFileDir(struct soap*, const char*, int, const struct __ns1__RenameCadFileDir *, const char*);
+SOAP_FMAC3 struct __ns1__RenameCadFileDir * SOAP_FMAC4 soap_in___ns1__RenameCadFileDir(struct soap*, const char*, struct __ns1__RenameCadFileDir *, const char*);
+SOAP_FMAC1 struct __ns1__RenameCadFileDir * SOAP_FMAC2 soap_instantiate___ns1__RenameCadFileDir(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__RenameCadFileDir * soap_new___ns1__RenameCadFileDir(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__RenameCadFileDir(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__RenameCadFileDir * soap_new_req___ns1__RenameCadFileDir(
+	struct soap *soap)
+{
+	struct __ns1__RenameCadFileDir *_p = ::soap_new___ns1__RenameCadFileDir(soap);
+	if (_p)
+	{	::soap_default___ns1__RenameCadFileDir(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__RenameCadFileDir * soap_new_set___ns1__RenameCadFileDir(
+	struct soap *soap,
+	_ns1__RenameCadFileDir *ns1__RenameCadFileDir)
+{
+	struct __ns1__RenameCadFileDir *_p = ::soap_new___ns1__RenameCadFileDir(soap);
+	if (_p)
+	{	::soap_default___ns1__RenameCadFileDir(soap, _p);
+		_p->ns1__RenameCadFileDir = ns1__RenameCadFileDir;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__RenameCadFileDir(struct soap*, const struct __ns1__RenameCadFileDir *, const char*, const char*);
+
+inline int soap_write___ns1__RenameCadFileDir(struct soap *soap, struct __ns1__RenameCadFileDir const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__RenameCadFileDir(soap, p), 0) || ::soap_put___ns1__RenameCadFileDir(soap, p, "-ns1:RenameCadFileDir", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__RenameCadFileDir(struct soap *soap, const char *URL, struct __ns1__RenameCadFileDir const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__RenameCadFileDir(soap, p), 0) || ::soap_put___ns1__RenameCadFileDir(soap, p, "-ns1:RenameCadFileDir", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__RenameCadFileDir(struct soap *soap, const char *URL, struct __ns1__RenameCadFileDir const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__RenameCadFileDir(soap, p), 0) || ::soap_put___ns1__RenameCadFileDir(soap, p, "-ns1:RenameCadFileDir", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__RenameCadFileDir(struct soap *soap, const char *URL, struct __ns1__RenameCadFileDir const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__RenameCadFileDir(soap, p), 0) || ::soap_put___ns1__RenameCadFileDir(soap, p, "-ns1:RenameCadFileDir", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__RenameCadFileDir * SOAP_FMAC4 soap_get___ns1__RenameCadFileDir(struct soap*, struct __ns1__RenameCadFileDir *, const char*, const char*);
+
+inline int soap_read___ns1__RenameCadFileDir(struct soap *soap, struct __ns1__RenameCadFileDir *p)
+{
+	if (p)
+	{	::soap_default___ns1__RenameCadFileDir(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__RenameCadFileDir(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__RenameCadFileDir(struct soap *soap, const char *URL, struct __ns1__RenameCadFileDir *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__RenameCadFileDir(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__RenameCadFileDir(struct soap *soap, struct __ns1__RenameCadFileDir *p)
+{
+	if (::soap_read___ns1__RenameCadFileDir(soap, p))
 		return soap_closesock(soap);
 	return soap_closesock(soap);
 }
@@ -6535,6 +8037,42 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerToSOAP_ENV__Code(struct soap*, struct 
 SOAP_FMAC3 struct SOAP_ENV__Code ** SOAP_FMAC4 soap_get_PointerToSOAP_ENV__Code(struct soap*, struct SOAP_ENV__Code **, const char*, const char*);
 #endif
 
+#endif
+
+#ifndef SOAP_TYPE_PointerTo_ns1__DeleteCadDrawing_DEFINED
+#define SOAP_TYPE_PointerTo_ns1__DeleteCadDrawing_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__DeleteCadDrawing(struct soap*, _ns1__DeleteCadDrawing *const*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__DeleteCadDrawing(struct soap*, const char *, int, _ns1__DeleteCadDrawing *const*, const char *);
+SOAP_FMAC3 _ns1__DeleteCadDrawing ** SOAP_FMAC4 soap_in_PointerTo_ns1__DeleteCadDrawing(struct soap*, const char*, _ns1__DeleteCadDrawing **, const char*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__DeleteCadDrawing(struct soap*, _ns1__DeleteCadDrawing *const*, const char*, const char*);
+SOAP_FMAC3 _ns1__DeleteCadDrawing ** SOAP_FMAC4 soap_get_PointerTo_ns1__DeleteCadDrawing(struct soap*, _ns1__DeleteCadDrawing **, const char*, const char*);
+#endif
+
+#ifndef SOAP_TYPE_PointerTo_ns1__UpdateCadDrawing_DEFINED
+#define SOAP_TYPE_PointerTo_ns1__UpdateCadDrawing_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__UpdateCadDrawing(struct soap*, _ns1__UpdateCadDrawing *const*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__UpdateCadDrawing(struct soap*, const char *, int, _ns1__UpdateCadDrawing *const*, const char *);
+SOAP_FMAC3 _ns1__UpdateCadDrawing ** SOAP_FMAC4 soap_in_PointerTo_ns1__UpdateCadDrawing(struct soap*, const char*, _ns1__UpdateCadDrawing **, const char*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__UpdateCadDrawing(struct soap*, _ns1__UpdateCadDrawing *const*, const char*, const char*);
+SOAP_FMAC3 _ns1__UpdateCadDrawing ** SOAP_FMAC4 soap_get_PointerTo_ns1__UpdateCadDrawing(struct soap*, _ns1__UpdateCadDrawing **, const char*, const char*);
+#endif
+
+#ifndef SOAP_TYPE_PointerTo_ns1__GetProjectInfo_DEFINED
+#define SOAP_TYPE_PointerTo_ns1__GetProjectInfo_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__GetProjectInfo(struct soap*, _ns1__GetProjectInfo *const*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__GetProjectInfo(struct soap*, const char *, int, _ns1__GetProjectInfo *const*, const char *);
+SOAP_FMAC3 _ns1__GetProjectInfo ** SOAP_FMAC4 soap_in_PointerTo_ns1__GetProjectInfo(struct soap*, const char*, _ns1__GetProjectInfo **, const char*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__GetProjectInfo(struct soap*, _ns1__GetProjectInfo *const*, const char*, const char*);
+SOAP_FMAC3 _ns1__GetProjectInfo ** SOAP_FMAC4 soap_get_PointerTo_ns1__GetProjectInfo(struct soap*, _ns1__GetProjectInfo **, const char*, const char*);
+#endif
+
+#ifndef SOAP_TYPE_PointerTo_ns1__RenameCadFileDir_DEFINED
+#define SOAP_TYPE_PointerTo_ns1__RenameCadFileDir_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__RenameCadFileDir(struct soap*, _ns1__RenameCadFileDir *const*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__RenameCadFileDir(struct soap*, const char *, int, _ns1__RenameCadFileDir *const*, const char *);
+SOAP_FMAC3 _ns1__RenameCadFileDir ** SOAP_FMAC4 soap_in_PointerTo_ns1__RenameCadFileDir(struct soap*, const char*, _ns1__RenameCadFileDir **, const char*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__RenameCadFileDir(struct soap*, _ns1__RenameCadFileDir *const*, const char*, const char*);
+SOAP_FMAC3 _ns1__RenameCadFileDir ** SOAP_FMAC4 soap_get_PointerTo_ns1__RenameCadFileDir(struct soap*, _ns1__RenameCadFileDir **, const char*, const char*);
 #endif
 
 #ifndef SOAP_TYPE_PointerTo_ns1__DeleteCadFileDir_DEFINED

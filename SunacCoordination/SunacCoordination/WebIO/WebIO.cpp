@@ -40,7 +40,7 @@ bool WebIO::Login(CString p_sUserName, CString p_key)
 
 int WebIO::GetUserID()
 {
-	return 12;
+	return 14;
 }
 
 //注意高度值不作为搜索条件 

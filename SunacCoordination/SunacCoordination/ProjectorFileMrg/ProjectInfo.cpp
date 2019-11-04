@@ -279,7 +279,9 @@ bool CProjectData::AddFolder(CString  p_sDirPathInProject, CString p_sFolderName
 
 	pDir->AddFolder(p_sFolderName);
 
-	CWebProjectFile::Instance()->NewFolder(GetProjectId(), p_sDirPathInProject);
+	CString sFullPath = p_sDirPathInProject + p_sFolderName;
+
+	CWebProjectFile::Instance()->NewFolder(GetProjectId(), sFullPath);
 
 	return true;
 }
