@@ -133,6 +133,7 @@ LRESULT DlgLeftBar::OnClickedPopupMenu(WPARAM mID, LPARAM notUsed)
 		//CMD_SunacBathroom();
 		break;
 	case ID_COMMAND_KITCHENQUANTITY:
+		SendCommandToCAD(_T("SKBSTATISTIC"));
 		break;
 	case ID_COMMAND_RAILINGQUANTITY:
 		SendCommandToCAD(_T("SRAILINGSTATISTICS"));
@@ -144,6 +145,9 @@ LRESULT DlgLeftBar::OnClickedPopupMenu(WPARAM mID, LPARAM notUsed)
 	case ID_COMMAND_AIRCONDITIONER:
 		SendCommandToCAD(_T("SAIRCONDITIONER"));
 		//CMD_SunacAirconditioner();
+		break;
+	case ID_COMMAND_AIRCONDITIONERQUANTITY:
+		SendCommandToCAD(_T("SAIRCONSTATISTIC"));
 		break;
 	default:
 		break;

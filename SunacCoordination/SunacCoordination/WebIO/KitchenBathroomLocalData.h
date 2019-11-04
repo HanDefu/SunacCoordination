@@ -1,6 +1,5 @@
 #pragma once
 
-#include "../Object/PrototypeInfo.h"
 #include "..\Object\Kitchen\AttrKitchen.h"
 #include "..\Object\Bathroom\AttrBathroom.h"
 

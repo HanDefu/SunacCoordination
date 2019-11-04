@@ -32,10 +32,10 @@ AttrKitchen::AttrKitchen()
 	m_airVentH = 0;//排气道宽度
 
 	//Web端使用
-	m_minWidth = 0;//最小开间
-	m_maxWidth = 0;//最大开间
-	m_maxHeight = 0;//最大进深
-	m_minHeight = 0;//最小进深
+	//m_minWidth = 0;//最小开间
+	//m_maxWidth = 0;//最大开间
+	//m_maxHeight = 0;//最大进深
+	//m_minHeight = 0;//最小进深
 }
 
 AttrKitchen::~AttrKitchen()
@@ -60,16 +60,7 @@ Acad::ErrorStatus AttrKitchen::dwgInFields(AcDbDwgFiler* filer)
 	filer->readItem((Adesk::UInt32*)&m_windowDoorPos);
 	filer->readItem(&m_hasPaiQiDao);
 
-	filer->readItem((Adesk::UInt32*)&m_prop.m_doorPos);
-	filer->readItem((Adesk::UInt32*)&m_prop.m_windowPos);
-	Adesk::UInt32 size;
-	filer->readItem(&size);
-	m_prop.m_sizeList.resize(size);
-	for (UINT i = 0; i < m_prop.m_sizeList.size(); i++)
-	{
-		filer->readItem(&m_prop.m_sizeList[i].xLen);
-		filer->readItem(&m_prop.m_sizeList[i].yLen);
-	}
+	m_prop.ReadFromDwg(filer);
 
 	filer->readItem(&m_width);
 	filer->readItem(&m_height);
@@ -91,11 +82,6 @@ Acad::ErrorStatus AttrKitchen::dwgInFields(AcDbDwgFiler* filer)
 	filer->readItem(&m_angle);
 	filer->readItem(&m_isMirror);
 
-	filer->readItem(&m_minWidth);
-	filer->readItem(&m_maxWidth);
-	filer->readItem(&m_minHeight);
-	filer->readItem(&m_maxHeight);
-
 	return filer->filerStatus();
 }
 
@@ -113,14 +99,7 @@ Acad::ErrorStatus AttrKitchen::dwgOutFields(AcDbDwgFiler* filer) const
 	filer->writeItem((Adesk::UInt32)m_windowDoorPos);
 	filer->writeItem(m_hasPaiQiDao);
 
-	filer->writeItem((Adesk::UInt32)m_prop.m_doorPos);
-	filer->writeItem((Adesk::UInt32)m_prop.m_windowPos);
-	filer->writeItem((Adesk::UInt32)m_prop.m_sizeList.size());
-	for (UINT i = 0; i < m_prop.m_sizeList.size(); i++)
-	{
-		filer->writeItem(m_prop.m_sizeList[i].xLen);
-		filer->writeItem(m_prop.m_sizeList[i].yLen);
-	}
+	m_prop.WriteToDwg(filer);
 
 	filer->writeItem(m_width);
 	filer->writeItem(m_height);
@@ -138,11 +117,6 @@ Acad::ErrorStatus AttrKitchen::dwgOutFields(AcDbDwgFiler* filer) const
 
 	filer->writeItem(m_angle);
 	filer->writeItem(m_isMirror);
-
-	filer->writeItem(m_minWidth);
-	filer->writeItem(m_maxWidth);
-	filer->writeItem(m_minHeight);
-	filer->writeItem(m_maxHeight);
 
 	return filer->filerStatus();
 }

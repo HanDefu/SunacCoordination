@@ -2,6 +2,8 @@
 
 #include "AttrRailing.h"
 
+using namespace std;
+
 class CRailingStatistic
 {
 public:
@@ -11,9 +13,8 @@ public:
 	AcDbObjectId InsertTableToCAD(AcGePoint3d insertPos);
 
 protected:
-	vector<AttrRailing> m_allRailings;
-	vector<int> m_amount;
+	vector<pair<AttrRailing, int>> m_allRailings;
 };
 
 //用于插入表格时排序
-bool RailingCmp(const AttrRailing& x1, const AttrRailing& x2);
+bool RailingCmp(const pair<AttrRailing, int>& x1, const pair<AttrRailing, int>& x2);

@@ -332,14 +332,14 @@ void ZJYTest()
 	attrwindow.SetDimData(dimdata1);
 
 	
-	dimdata1.sCodeName = _T("W2");
-	dimdata1.type = CALC;
-	dimdata1.sFomula = _T("450-a");
+	dimdata2.sCodeName = _T("W2");
+	dimdata2.type = CALC;
+	dimdata2.sFomula = _T("450-a");
 	attrwindow.SetDimData(dimdata1);
 
-	dimdata2.sCodeName = _T("H1");
-	dimdata2.type = CALC;
-	dimdata2.sFomula = _T("H-2a");
+	dimdata1.sCodeName = _T("H1");
+	dimdata1.type = CALC;
+	dimdata1.sFomula = _T("H-2a");
 	attrwindow.SetDimData(dimdata2);
 
 	attrwindow.CheckAndComplementDimeData();
@@ -890,6 +890,15 @@ static void initApp()
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SKBSTATISTIC"),
+		_T("SKBSTATISTIC"),
+		ACRX_CMD_MODAL | ACRX_CMD_USEPICKSET,
+		CMD_SunacKitchenBathroomStatistic,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
 		_T("SRAILING"),
 		_T("SRAILING"),
 		ACRX_CMD_MODAL,
@@ -912,6 +921,15 @@ static void initApp()
 		_T("SAIRCONDITIONER"),
 		ACRX_CMD_MODAL,
 		CMD_SunacAirconditioner,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SAIRCONSTATISTIC"),
+		_T("SAIRCONSTATISTIC"),
+		ACRX_CMD_MODAL | ACRX_CMD_USEPICKSET,
+		CMD_SunacAirconditionerStatistic,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());

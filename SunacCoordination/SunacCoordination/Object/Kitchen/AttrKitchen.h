@@ -4,7 +4,7 @@
 #include "dbmain.h"
 #include "../AttrObject.h"
 #include "..\PrototypeCommonDef.h"
-#include "..\KitchenBathroomProp.h"
+#include "..\KitchenBathroom\KitchenBathroomProp.h"
 
 #pragma warning(disable: 4275 4251)
 
@@ -72,8 +72,8 @@ public:
 
 	//////////////////////////////////////////////////////////////////////////
 	//原型文件属性
-	double m_minWidth;//最小开间
-	double m_maxWidth;//最大开间
-	double m_maxHeight;//最大进深
-	double m_minHeight;//最小进深
+	//double m_minWidth;//最小开间
+	//double m_maxWidth;//最大开间
+	//double m_maxHeight;//最大进深
+	//double m_minHeight;//最小进深
 };

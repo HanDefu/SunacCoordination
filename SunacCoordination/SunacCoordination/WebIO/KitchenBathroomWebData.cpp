@@ -131,19 +131,19 @@ std::vector<AttrKitchen > CKitchenBathroomWebData::ParseKitchensFromXML(CMarkup 
 			}
 			if (xml.FindElem(_T("KitchenOpenSizeMin")))
 			{
-				KitchenAttr.m_minWidth = _ttof(xml.GetData());
+				//KitchenAttr.m_minWidth = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("KitchenOpenSizeMax")))
 			{
-				KitchenAttr.m_maxWidth = _ttof(xml.GetData());
+				//KitchenAttr.m_maxWidth = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("KitchenDepthsizeMin")))
 			{
-				KitchenAttr.m_minHeight = _ttof(xml.GetData());
+				//KitchenAttr.m_minHeight = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("KitchenDepthsizeMax")))
 			{
-				KitchenAttr.m_maxHeight = _ttof(xml.GetData());
+				//KitchenAttr.m_maxHeight = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("KitchenBasinSize")))
 			{
