@@ -27,6 +27,8 @@ typedef enum eViewDir
 	E_VIEW_TOP,	//平面图
 	E_VIEW_LEFT,//侧视图
 	E_VIEW_EXTEND,//展开图
+
+	E_VIEW_ALL = 0xff,
 }eViewDir;
 
 typedef enum eRailingType

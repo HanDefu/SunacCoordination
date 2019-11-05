@@ -18,6 +18,7 @@ public:
 	void FillPjtMngTreeCtrl(); //填充树控件
 	void InitGridCtrl(); //初始化GridCtrl
 	void FillPjtGridCtrl(CProjectDir* SelectedDir); //填充GridCtrl
+	void UpdateGridCtrlState(CProjectDir* SelectedDir); //更新文件状态
 	CProjectDir* FindClkDir(HTREEITEM CurClkItem); //通过递归找到树控件对应的文件夹位置
 
 // 对话框数据
@@ -49,7 +50,7 @@ public:
 	CStatic m_StcUploaderName;
 	CStatic m_StcUploadTime;
 	CTreeCtrl m_TreePrjDir;
-	CGridCtrl m_PjtManagementGridCtrl;
+	CGridCtrlEx m_PjtManagementGridCtrl;
 
 	afx_msg void OnGridClick(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedButtonUpload();
