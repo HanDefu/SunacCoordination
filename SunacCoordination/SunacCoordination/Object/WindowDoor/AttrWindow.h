@@ -138,6 +138,10 @@ public:
 	bool SetA(double newValue) { return SetValue(L"a", newValue); }//Èû·ì³ß´ç
 	bool SetR(double newValue) { return SetValue(L"R", newValue); }
 
+
+	eViewDir GetViewDir()const { return m_viewDir; }
+	void SetViewDir(eViewDir p_view){ m_viewDir = p_view; }
+
 protected:
 	CWindowsDimData* GetDimDataByCode(CString p_sCode);
 	vector<CWindowsDimData> m_dimData; //´æ´¢W/W1/W2/W3   H/H1/H2/H3 RµÄ³ß´çÊý¾Ý

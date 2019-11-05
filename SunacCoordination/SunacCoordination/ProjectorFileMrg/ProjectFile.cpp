@@ -195,6 +195,7 @@ CString CProjectDir::GetDirFullPath()const
 			break;//¸ù½Úµã
 
 		sDirPath = pParent->m_sName + _T("\\") + sDirPath;
+		pParent = pParent->m_parent;
 	}
 
 	return sDirPath;

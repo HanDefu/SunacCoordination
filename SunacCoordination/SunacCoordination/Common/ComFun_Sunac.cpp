@@ -646,15 +646,21 @@ int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt)
 	return 0;
 }
 
-bool TY_IsWindow(AcDbObjectId Id)
+bool TY_IsWindow(AcDbObjectId Id, eViewDir p_view)
 {
 	AcDbObject * pDataEnt = 0;
 
 	TY_GetAttributeData(Id, pDataEnt);
 	AttrWindow * pWindow = dynamic_cast<AttrWindow *>(pDataEnt);
-	if (pWindow != 0)
-		return true;
-	return false;
+	if (pWindow == NULL)
+		return false;
+
+	if (p_view != E_VIEW_ALL)
+	{
+		return pWindow->GetViewDir() == p_view;
+	}
+
+	return true;
 }
 
 eRCType TY_GetType(AcDbBlockReference *pBlockReference)
@@ -1198,4 +1204,39 @@ AcDbObjectId InsertBlockRefFromDwg(const TCHAR* fileName, const TCHAR* blkDefNam
 	AcDbObjectId entId = AcDbObjectId::kNull;
 	int nSuc = MD2010_InsertBlockReference_Layout(layoutname, blkDefName, entId, origin);
 	return entId;
+}
+
+vAcDbObjectId SelectWindows()
+{
+	vAcDbObjectId vIds;//当前选择的ids
+
+	acutPrintf(L"请选择需要计算门窗表的门窗");
+
+	ads_name sset;
+	acedSSGet(NULL, NULL, NULL, NULL, sset);
+
+	Adesk::Int32 length = 0;
+	acedSSLength(sset, &length);
+	for (int i = 0; i < length; i++)
+	{
+		ads_name ent;
+		acedSSName(sset, i, ent);
+
+		AcDbObjectId objId = 0;
+		acdbGetObjectId(objId, ent);
+		if (objId != 0 && TY_IsWindow(objId, E_VIEW_FRONT))
+		{
+			vIds.push_back(objId);
+		}
+	}
+	acedSSFree(sset);
+
+	CString info, str;
+	info.Format(L"共选择了%d个门窗\n", vIds.size());
+
+	if (vIds.size() == 0)
+	{
+		acutPrintf(L"未选择到门窗\n");
+	}
+	return vIds;
 }

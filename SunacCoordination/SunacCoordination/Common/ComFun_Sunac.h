@@ -65,7 +65,7 @@ AcDbObjectId TY_GetExtensionDictionaryID(AcDbObjectId id);
 int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt);
 int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt);
 
-bool TY_IsWindow(AcDbObjectId Id);
+bool TY_IsWindow(AcDbObjectId Id, eViewDir p_view);
 bool TY_Iskitchen(AcDbObjectId Id);
 bool TY_IsBathroom(AcDbObjectId Id);
 bool TY_IsAirCon(AcDbObjectId Id);
@@ -107,6 +107,9 @@ AcDbObjectId CopyBlockDefFromDwg(const TCHAR* fileName, const TCHAR* blkDefName)
 AcDbObjectId CopyBlockDefFromDatabase(AcDbDatabase* pSourceDb, AcDbDatabase* pDestDb, const TCHAR* blkDefName);
 
 AcDbObjectId InsertBlockRefFromDwg(const TCHAR* fileName, const TCHAR* blkDefName, const WCHAR *layoutname, AcGePoint3d origin);
+
+
+vAcDbObjectId SelectWindows();
 
 
 

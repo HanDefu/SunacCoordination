@@ -56,6 +56,8 @@ bool WebIO::Login(CString p_sUserName, CString p_key)
 	xml.SetDoc((*(nsResponse.GetAllWindowsResult)).c_str());
 
 	ParseLoginInfo(xml, p_sUserName, p_key);*/
+	m_acount = p_sUserName;
+	m_password = p_key;
 	m_bLogin = true;
 	return true;
 }
@@ -63,6 +65,11 @@ bool WebIO::Login(CString p_sUserName, CString p_key)
 int WebIO::GetUserID()
 {
 	return 14;
+}
+
+CString WebIO::GetUserName()
+{
+	return m_acount;
 }
 
 //注意高度值不作为搜索条件 
