@@ -48,7 +48,7 @@ int WebIO::GetUserID()
 std::vector<AttrWindow>  WebIO::GetWindows(double width, double height, CString openType, int openNum, CString gongNengQu)const
 {
 #ifdef WORK_LOCAL		//本地模式
-	vAttrWindow Local = CWindowLocalDataFromDB::Instance()->GetWindows(width, openType, openNum, gongNengQu);
+	vAttrWindow Local = CWindowLocalDataFromDB::Instance()->GetWindows(width, height, openType, openNum, gongNengQu);
 	return Local;
 #else
 	vAttrWindow Web = CWindowWebData::Instance()->GetWindows(width, height, openType, openNum, gongNengQu);
@@ -86,7 +86,7 @@ std::vector<AttrWindow>  WebIO::GetWindows(double width, double height, CString 
 std::vector<AttrWindow> WebIO::GetDoors(double width, double height, CString openType, int openNum, CString gongNengQu)const
 {
 #ifdef WORK_LOCAL//本地模式
-	return CWindowLocalDataFromDB::Instance()->GetDoors(width, openType, openNum, gongNengQu);
+	return CWindowLocalDataFromDB::Instance()->GetDoors(width, height, openType, openNum, gongNengQu);
 #else
 	return CWindowWebData::Instance()->GetDoors(width, height, openType, openNum, gongNengQu);
 #endif
