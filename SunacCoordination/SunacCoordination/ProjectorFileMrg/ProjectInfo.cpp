@@ -45,6 +45,7 @@ CString CProjectData::GenerateGuid()
 //目录层级用\分割，例如：A区\施工图 表示A区文件夹下的施工图文件夹
 CProjectDir* CProjectData::FindDir(CString p_dirPath)
 {
+	CAutoLock a(&m_Lock);
 	p_dirPath.Trim(_T('\\'));
 
 	int nPos1 = 0;
@@ -78,6 +79,7 @@ CProjectDir* CProjectData::FindDir(CString p_dirPath)
 }
 CProjectFile* CProjectData::GetFileByDirAndName(CString p_sDirPathInProject, CString p_fileName)
 {
+	CAutoLock a(&m_Lock);
 	CProjectDir* pDir = FindDir(p_sDirPathInProject);
 	if (pDir == NULL)
 	{
@@ -197,6 +199,7 @@ void CProjectData::FileDownCBFunc(CUpDownFilePara* p_upFilePara)
 		return;
 	}
 
+	CAutoLock a(&pProjectData->m_Lock);
 	CProjectFile* pPrjfile = pProjectData->GetFileByDirAndName(p_upFilePara->sDirInProject, p_upFilePara->sFileName);
 	if (pPrjfile!=NULL)
 	{
