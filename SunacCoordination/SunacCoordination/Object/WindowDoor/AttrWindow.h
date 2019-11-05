@@ -130,7 +130,7 @@ public:
 	bool SetH(double newValue) { return SetValue(L"H", newValue); }
 	bool SetH1(double newValue) { return SetValue(L"H1", newValue); }
 	bool SetH2(double newValue) { return SetValue(L"H2", newValue); }
-	bool SetH3(double newValue) { return SetValue(L"H2", newValue); }
+	bool SetH3(double newValue) { return SetValue(L"H3", newValue); }
 	bool SetW(double newValue) { return SetValue(L"W", newValue); }
 	bool SetW1(double newValue) { return SetValue(L"W1", newValue); }
 	bool SetW2(double newValue) { return SetValue(L"W2", newValue); }
