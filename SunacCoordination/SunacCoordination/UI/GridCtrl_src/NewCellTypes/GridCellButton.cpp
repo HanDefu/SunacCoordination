@@ -39,6 +39,6 @@ void CGridCellButton::OnClickDown(CPoint PointCellRelative)
 
 void CGridCellButton::OnClick(CPoint PointCellRelative)
 {
-	/*m_bPushing = !m_bPushing;
-	GetGrid()->ValidateRect(m_rect);*/
+	m_bPushing = false;
+	GetGrid()->InvalidateRect(m_rect);
 }
