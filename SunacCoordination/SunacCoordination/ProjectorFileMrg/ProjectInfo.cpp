@@ -141,7 +141,7 @@ bool CProjectData::AddFile(CString p_sFilePath, CString  p_sDirPathInProject, Fi
 	CProjectFile prjfile;
 	prjfile.m_sName = sFileName;
 	prjfile.m_sSaveName = sSaveName;
-	prjfile.m_sCreateTime = ;
+	prjfile.m_sCreateTime = sCreateTime;
 	prjfile.m_fileState = E_ProjectFile_Uploading;
 	p_pParentDir->AddFile(prjfile);	
 
