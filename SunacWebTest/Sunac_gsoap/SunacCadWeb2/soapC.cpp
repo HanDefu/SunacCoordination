@@ -18,7 +18,7 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
 
 #include "soapH.h"
 
-SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.84 2019-11-01 07:45:24 GMT")
+SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.84 2019-11-04 03:33:39 GMT")
 
 
 #ifndef WITH_NOGLOBAL
@@ -195,6 +195,8 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, const char *tag,
 		return soap_in_double(soap, tag, NULL, "xsd:double");
 	case SOAP_TYPE_std__wstring:
 		return soap_in_std__wstring(soap, tag, NULL, "xsd:string");
+	case SOAP_TYPE_PointerTo_ns1__DeleteCadDrawingByFileID:
+		return soap_in_PointerTo_ns1__DeleteCadDrawingByFileID(soap, tag, NULL, "ns1:DeleteCadDrawingByFileID");
 	case SOAP_TYPE_PointerTo_ns1__DeleteCadDrawing:
 		return soap_in_PointerTo_ns1__DeleteCadDrawing(soap, tag, NULL, "ns1:DeleteCadDrawing");
 	case SOAP_TYPE_PointerTo_ns1__UpdateCadDrawing:
@@ -203,6 +205,8 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, const char *tag,
 		return soap_in_PointerTo_ns1__GetProjectInfo(soap, tag, NULL, "ns1:GetProjectInfo");
 	case SOAP_TYPE_PointerTo_ns1__RenameCadFileDir:
 		return soap_in_PointerTo_ns1__RenameCadFileDir(soap, tag, NULL, "ns1:RenameCadFileDir");
+	case SOAP_TYPE_PointerTo_ns1__DeleteCadFileDirByDirId:
+		return soap_in_PointerTo_ns1__DeleteCadFileDirByDirId(soap, tag, NULL, "ns1:DeleteCadFileDirByDirId");
 	case SOAP_TYPE_PointerTo_ns1__DeleteCadFileDir:
 		return soap_in_PointerTo_ns1__DeleteCadFileDir(soap, tag, NULL, "ns1:DeleteCadFileDir");
 	case SOAP_TYPE_PointerTo_ns1__NewCadFileDir:
@@ -281,6 +285,14 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, const char *tag,
 			return s ? *s : NULL;
 		}
 		t = soap->tag;
+		if (!soap_match_tag(soap, t, "ns1:DeleteCadDrawingByFileIDResponse"))
+		{	*type = SOAP_TYPE__ns1__DeleteCadDrawingByFileIDResponse;
+			return soap_in__ns1__DeleteCadDrawingByFileIDResponse(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:DeleteCadDrawingByFileID"))
+		{	*type = SOAP_TYPE__ns1__DeleteCadDrawingByFileID;
+			return soap_in__ns1__DeleteCadDrawingByFileID(soap, NULL, NULL, NULL);
+		}
 		if (!soap_match_tag(soap, t, "ns1:DeleteCadDrawingResponse"))
 		{	*type = SOAP_TYPE__ns1__DeleteCadDrawingResponse;
 			return soap_in__ns1__DeleteCadDrawingResponse(soap, NULL, NULL, NULL);
@@ -312,6 +324,14 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, const char *tag,
 		if (!soap_match_tag(soap, t, "ns1:RenameCadFileDir"))
 		{	*type = SOAP_TYPE__ns1__RenameCadFileDir;
 			return soap_in__ns1__RenameCadFileDir(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:DeleteCadFileDirByDirIdResponse"))
+		{	*type = SOAP_TYPE__ns1__DeleteCadFileDirByDirIdResponse;
+			return soap_in__ns1__DeleteCadFileDirByDirIdResponse(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:DeleteCadFileDirByDirId"))
+		{	*type = SOAP_TYPE__ns1__DeleteCadFileDirByDirId;
+			return soap_in__ns1__DeleteCadFileDirByDirId(soap, NULL, NULL, NULL);
 		}
 		if (!soap_match_tag(soap, t, "ns1:DeleteCadFileDirResponse"))
 		{	*type = SOAP_TYPE__ns1__DeleteCadFileDirResponse;
@@ -500,6 +520,10 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return soap_out_double(soap, tag, id, (const double *)ptr, "xsd:double");
 	case SOAP_TYPE_std__wstring:
 		return soap_out_std__wstring(soap, tag, id, (const std::wstring *)ptr, "xsd:string");
+	case SOAP_TYPE__ns1__DeleteCadDrawingByFileIDResponse:
+		return ((_ns1__DeleteCadDrawingByFileIDResponse *)ptr)->soap_out(soap, "ns1:DeleteCadDrawingByFileIDResponse", id, "");
+	case SOAP_TYPE__ns1__DeleteCadDrawingByFileID:
+		return ((_ns1__DeleteCadDrawingByFileID *)ptr)->soap_out(soap, "ns1:DeleteCadDrawingByFileID", id, "");
 	case SOAP_TYPE__ns1__DeleteCadDrawingResponse:
 		return ((_ns1__DeleteCadDrawingResponse *)ptr)->soap_out(soap, "ns1:DeleteCadDrawingResponse", id, "");
 	case SOAP_TYPE__ns1__DeleteCadDrawing:
@@ -516,6 +540,10 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return ((_ns1__RenameCadFileDirResponse *)ptr)->soap_out(soap, "ns1:RenameCadFileDirResponse", id, "");
 	case SOAP_TYPE__ns1__RenameCadFileDir:
 		return ((_ns1__RenameCadFileDir *)ptr)->soap_out(soap, "ns1:RenameCadFileDir", id, "");
+	case SOAP_TYPE__ns1__DeleteCadFileDirByDirIdResponse:
+		return ((_ns1__DeleteCadFileDirByDirIdResponse *)ptr)->soap_out(soap, "ns1:DeleteCadFileDirByDirIdResponse", id, "");
+	case SOAP_TYPE__ns1__DeleteCadFileDirByDirId:
+		return ((_ns1__DeleteCadFileDirByDirId *)ptr)->soap_out(soap, "ns1:DeleteCadFileDirByDirId", id, "");
 	case SOAP_TYPE__ns1__DeleteCadFileDirResponse:
 		return ((_ns1__DeleteCadFileDirResponse *)ptr)->soap_out(soap, "ns1:DeleteCadFileDirResponse", id, "");
 	case SOAP_TYPE__ns1__DeleteCadFileDir:
@@ -576,6 +604,8 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return ((_ns1__StandardDesignAttributeResponse *)ptr)->soap_out(soap, "ns1:StandardDesignAttributeResponse", id, "");
 	case SOAP_TYPE__ns1__StandardDesignAttribute:
 		return ((_ns1__StandardDesignAttribute *)ptr)->soap_out(soap, "ns1:StandardDesignAttribute", id, "");
+	case SOAP_TYPE_PointerTo_ns1__DeleteCadDrawingByFileID:
+		return soap_out_PointerTo_ns1__DeleteCadDrawingByFileID(soap, tag, id, (_ns1__DeleteCadDrawingByFileID *const*)ptr, "ns1:DeleteCadDrawingByFileID");
 	case SOAP_TYPE_PointerTo_ns1__DeleteCadDrawing:
 		return soap_out_PointerTo_ns1__DeleteCadDrawing(soap, tag, id, (_ns1__DeleteCadDrawing *const*)ptr, "ns1:DeleteCadDrawing");
 	case SOAP_TYPE_PointerTo_ns1__UpdateCadDrawing:
@@ -584,6 +614,8 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return soap_out_PointerTo_ns1__GetProjectInfo(soap, tag, id, (_ns1__GetProjectInfo *const*)ptr, "ns1:GetProjectInfo");
 	case SOAP_TYPE_PointerTo_ns1__RenameCadFileDir:
 		return soap_out_PointerTo_ns1__RenameCadFileDir(soap, tag, id, (_ns1__RenameCadFileDir *const*)ptr, "ns1:RenameCadFileDir");
+	case SOAP_TYPE_PointerTo_ns1__DeleteCadFileDirByDirId:
+		return soap_out_PointerTo_ns1__DeleteCadFileDirByDirId(soap, tag, id, (_ns1__DeleteCadFileDirByDirId *const*)ptr, "ns1:DeleteCadFileDirByDirId");
 	case SOAP_TYPE_PointerTo_ns1__DeleteCadFileDir:
 		return soap_out_PointerTo_ns1__DeleteCadFileDir(soap, tag, id, (_ns1__DeleteCadFileDir *const*)ptr, "ns1:DeleteCadFileDir");
 	case SOAP_TYPE_PointerTo_ns1__NewCadFileDir:
@@ -643,6 +675,12 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	case SOAP_TYPE_std__wstring:
 		soap_serialize_std__wstring(soap, (const std::wstring *)ptr);
 		break;
+	case SOAP_TYPE__ns1__DeleteCadDrawingByFileIDResponse:
+		((_ns1__DeleteCadDrawingByFileIDResponse *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE__ns1__DeleteCadDrawingByFileID:
+		((_ns1__DeleteCadDrawingByFileID *)ptr)->soap_serialize(soap);
+		break;
 	case SOAP_TYPE__ns1__DeleteCadDrawingResponse:
 		((_ns1__DeleteCadDrawingResponse *)ptr)->soap_serialize(soap);
 		break;
@@ -666,6 +704,12 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 		break;
 	case SOAP_TYPE__ns1__RenameCadFileDir:
 		((_ns1__RenameCadFileDir *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE__ns1__DeleteCadFileDirByDirIdResponse:
+		((_ns1__DeleteCadFileDirByDirIdResponse *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE__ns1__DeleteCadFileDirByDirId:
+		((_ns1__DeleteCadFileDirByDirId *)ptr)->soap_serialize(soap);
 		break;
 	case SOAP_TYPE__ns1__DeleteCadFileDirResponse:
 		((_ns1__DeleteCadFileDirResponse *)ptr)->soap_serialize(soap);
@@ -757,6 +801,9 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	case SOAP_TYPE__ns1__StandardDesignAttribute:
 		((_ns1__StandardDesignAttribute *)ptr)->soap_serialize(soap);
 		break;
+	case SOAP_TYPE___ns1__DeleteCadDrawingByFileID_:
+		soap_serialize___ns1__DeleteCadDrawingByFileID_(soap, (const struct __ns1__DeleteCadDrawingByFileID_ *)ptr);
+		break;
 	case SOAP_TYPE___ns1__DeleteCadDrawing_:
 		soap_serialize___ns1__DeleteCadDrawing_(soap, (const struct __ns1__DeleteCadDrawing_ *)ptr);
 		break;
@@ -768,6 +815,9 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 		break;
 	case SOAP_TYPE___ns1__RenameCadFileDir_:
 		soap_serialize___ns1__RenameCadFileDir_(soap, (const struct __ns1__RenameCadFileDir_ *)ptr);
+		break;
+	case SOAP_TYPE___ns1__DeleteCadFileDirByDirId_:
+		soap_serialize___ns1__DeleteCadFileDirByDirId_(soap, (const struct __ns1__DeleteCadFileDirByDirId_ *)ptr);
 		break;
 	case SOAP_TYPE___ns1__DeleteCadFileDir_:
 		soap_serialize___ns1__DeleteCadFileDir_(soap, (const struct __ns1__DeleteCadFileDir_ *)ptr);
@@ -814,6 +864,9 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	case SOAP_TYPE___ns1__StandardDesignAttribute_:
 		soap_serialize___ns1__StandardDesignAttribute_(soap, (const struct __ns1__StandardDesignAttribute_ *)ptr);
 		break;
+	case SOAP_TYPE___ns1__DeleteCadDrawingByFileID:
+		soap_serialize___ns1__DeleteCadDrawingByFileID(soap, (const struct __ns1__DeleteCadDrawingByFileID *)ptr);
+		break;
 	case SOAP_TYPE___ns1__DeleteCadDrawing:
 		soap_serialize___ns1__DeleteCadDrawing(soap, (const struct __ns1__DeleteCadDrawing *)ptr);
 		break;
@@ -825,6 +878,9 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 		break;
 	case SOAP_TYPE___ns1__RenameCadFileDir:
 		soap_serialize___ns1__RenameCadFileDir(soap, (const struct __ns1__RenameCadFileDir *)ptr);
+		break;
+	case SOAP_TYPE___ns1__DeleteCadFileDirByDirId:
+		soap_serialize___ns1__DeleteCadFileDirByDirId(soap, (const struct __ns1__DeleteCadFileDirByDirId *)ptr);
 		break;
 	case SOAP_TYPE___ns1__DeleteCadFileDir:
 		soap_serialize___ns1__DeleteCadFileDir(soap, (const struct __ns1__DeleteCadFileDir *)ptr);
@@ -871,6 +927,9 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	case SOAP_TYPE___ns1__StandardDesignAttribute:
 		soap_serialize___ns1__StandardDesignAttribute(soap, (const struct __ns1__StandardDesignAttribute *)ptr);
 		break;
+	case SOAP_TYPE_PointerTo_ns1__DeleteCadDrawingByFileID:
+		soap_serialize_PointerTo_ns1__DeleteCadDrawingByFileID(soap, (_ns1__DeleteCadDrawingByFileID *const*)ptr);
+		break;
 	case SOAP_TYPE_PointerTo_ns1__DeleteCadDrawing:
 		soap_serialize_PointerTo_ns1__DeleteCadDrawing(soap, (_ns1__DeleteCadDrawing *const*)ptr);
 		break;
@@ -882,6 +941,9 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 		break;
 	case SOAP_TYPE_PointerTo_ns1__RenameCadFileDir:
 		soap_serialize_PointerTo_ns1__RenameCadFileDir(soap, (_ns1__RenameCadFileDir *const*)ptr);
+		break;
+	case SOAP_TYPE_PointerTo_ns1__DeleteCadFileDirByDirId:
+		soap_serialize_PointerTo_ns1__DeleteCadFileDirByDirId(soap, (_ns1__DeleteCadFileDirByDirId *const*)ptr);
 		break;
 	case SOAP_TYPE_PointerTo_ns1__DeleteCadFileDir:
 		soap_serialize_PointerTo_ns1__DeleteCadFileDir(soap, (_ns1__DeleteCadFileDir *const*)ptr);
@@ -1033,6 +1095,10 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate__ns1__DeleteCadFileDir(soap, -1, type, arrayType, n);
 	case SOAP_TYPE__ns1__DeleteCadFileDirResponse:
 		return (void*)soap_instantiate__ns1__DeleteCadFileDirResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__DeleteCadFileDirByDirId:
+		return (void*)soap_instantiate__ns1__DeleteCadFileDirByDirId(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__DeleteCadFileDirByDirIdResponse:
+		return (void*)soap_instantiate__ns1__DeleteCadFileDirByDirIdResponse(soap, -1, type, arrayType, n);
 	case SOAP_TYPE__ns1__RenameCadFileDir:
 		return (void*)soap_instantiate__ns1__RenameCadFileDir(soap, -1, type, arrayType, n);
 	case SOAP_TYPE__ns1__RenameCadFileDirResponse:
@@ -1049,6 +1115,10 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate__ns1__DeleteCadDrawing(soap, -1, type, arrayType, n);
 	case SOAP_TYPE__ns1__DeleteCadDrawingResponse:
 		return (void*)soap_instantiate__ns1__DeleteCadDrawingResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__DeleteCadDrawingByFileID:
+		return (void*)soap_instantiate__ns1__DeleteCadDrawingByFileID(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__DeleteCadDrawingByFileIDResponse:
+		return (void*)soap_instantiate__ns1__DeleteCadDrawingByFileIDResponse(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__StandardDesignAttribute:
 		return (void*)soap_instantiate___ns1__StandardDesignAttribute(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__GetAllWindows:
@@ -1079,6 +1149,8 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate___ns1__NewCadFileDir(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__DeleteCadFileDir:
 		return (void*)soap_instantiate___ns1__DeleteCadFileDir(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__DeleteCadFileDirByDirId:
+		return (void*)soap_instantiate___ns1__DeleteCadFileDirByDirId(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__RenameCadFileDir:
 		return (void*)soap_instantiate___ns1__RenameCadFileDir(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__GetProjectInfo:
@@ -1087,6 +1159,8 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate___ns1__UpdateCadDrawing(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__DeleteCadDrawing:
 		return (void*)soap_instantiate___ns1__DeleteCadDrawing(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__DeleteCadDrawingByFileID:
+		return (void*)soap_instantiate___ns1__DeleteCadDrawingByFileID(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__StandardDesignAttribute_:
 		return (void*)soap_instantiate___ns1__StandardDesignAttribute_(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__GetAllWindows_:
@@ -1117,6 +1191,8 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate___ns1__NewCadFileDir_(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__DeleteCadFileDir_:
 		return (void*)soap_instantiate___ns1__DeleteCadFileDir_(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__DeleteCadFileDirByDirId_:
+		return (void*)soap_instantiate___ns1__DeleteCadFileDirByDirId_(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__RenameCadFileDir_:
 		return (void*)soap_instantiate___ns1__RenameCadFileDir_(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__GetProjectInfo_:
@@ -1125,6 +1201,8 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate___ns1__UpdateCadDrawing_(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__DeleteCadDrawing_:
 		return (void*)soap_instantiate___ns1__DeleteCadDrawing_(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__DeleteCadDrawingByFileID_:
+		return (void*)soap_instantiate___ns1__DeleteCadDrawingByFileID_(soap, -1, type, arrayType, n);
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
 		return (void*)soap_instantiate_SOAP_ENV__Header(soap, -1, type, arrayType, n);
@@ -1342,6 +1420,18 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap *soap, struct soap_clist *p)
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__DeleteCadFileDirResponse*>(p->ptr), _ns1__DeleteCadFileDirResponse);
 		break;
+	case SOAP_TYPE__ns1__DeleteCadFileDirByDirId:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__DeleteCadFileDirByDirId*>(p->ptr), _ns1__DeleteCadFileDirByDirId);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__DeleteCadFileDirByDirId*>(p->ptr), _ns1__DeleteCadFileDirByDirId);
+		break;
+	case SOAP_TYPE__ns1__DeleteCadFileDirByDirIdResponse:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__DeleteCadFileDirByDirIdResponse*>(p->ptr), _ns1__DeleteCadFileDirByDirIdResponse);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__DeleteCadFileDirByDirIdResponse*>(p->ptr), _ns1__DeleteCadFileDirByDirIdResponse);
+		break;
 	case SOAP_TYPE__ns1__RenameCadFileDir:
 		if (p->size < 0)
 			SOAP_DELETE(soap, static_cast<_ns1__RenameCadFileDir*>(p->ptr), _ns1__RenameCadFileDir);
@@ -1389,6 +1479,18 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap *soap, struct soap_clist *p)
 			SOAP_DELETE(soap, static_cast<_ns1__DeleteCadDrawingResponse*>(p->ptr), _ns1__DeleteCadDrawingResponse);
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__DeleteCadDrawingResponse*>(p->ptr), _ns1__DeleteCadDrawingResponse);
+		break;
+	case SOAP_TYPE__ns1__DeleteCadDrawingByFileID:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__DeleteCadDrawingByFileID*>(p->ptr), _ns1__DeleteCadDrawingByFileID);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__DeleteCadDrawingByFileID*>(p->ptr), _ns1__DeleteCadDrawingByFileID);
+		break;
+	case SOAP_TYPE__ns1__DeleteCadDrawingByFileIDResponse:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__DeleteCadDrawingByFileIDResponse*>(p->ptr), _ns1__DeleteCadDrawingByFileIDResponse);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__DeleteCadDrawingByFileIDResponse*>(p->ptr), _ns1__DeleteCadDrawingByFileIDResponse);
 		break;
 	case SOAP_TYPE___ns1__StandardDesignAttribute:
 		if (p->size < 0)
@@ -1480,6 +1582,12 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap *soap, struct soap_clist *p)
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__DeleteCadFileDir*>(p->ptr), struct __ns1__DeleteCadFileDir);
 		break;
+	case SOAP_TYPE___ns1__DeleteCadFileDirByDirId:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__DeleteCadFileDirByDirId*>(p->ptr), struct __ns1__DeleteCadFileDirByDirId);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__DeleteCadFileDirByDirId*>(p->ptr), struct __ns1__DeleteCadFileDirByDirId);
+		break;
 	case SOAP_TYPE___ns1__RenameCadFileDir:
 		if (p->size < 0)
 			SOAP_DELETE(soap, static_cast<struct __ns1__RenameCadFileDir*>(p->ptr), struct __ns1__RenameCadFileDir);
@@ -1503,6 +1611,12 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap *soap, struct soap_clist *p)
 			SOAP_DELETE(soap, static_cast<struct __ns1__DeleteCadDrawing*>(p->ptr), struct __ns1__DeleteCadDrawing);
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__DeleteCadDrawing*>(p->ptr), struct __ns1__DeleteCadDrawing);
+		break;
+	case SOAP_TYPE___ns1__DeleteCadDrawingByFileID:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__DeleteCadDrawingByFileID*>(p->ptr), struct __ns1__DeleteCadDrawingByFileID);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__DeleteCadDrawingByFileID*>(p->ptr), struct __ns1__DeleteCadDrawingByFileID);
 		break;
 	case SOAP_TYPE___ns1__StandardDesignAttribute_:
 		if (p->size < 0)
@@ -1594,6 +1708,12 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap *soap, struct soap_clist *p)
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__DeleteCadFileDir_*>(p->ptr), struct __ns1__DeleteCadFileDir_);
 		break;
+	case SOAP_TYPE___ns1__DeleteCadFileDirByDirId_:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__DeleteCadFileDirByDirId_*>(p->ptr), struct __ns1__DeleteCadFileDirByDirId_);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__DeleteCadFileDirByDirId_*>(p->ptr), struct __ns1__DeleteCadFileDirByDirId_);
+		break;
 	case SOAP_TYPE___ns1__RenameCadFileDir_:
 		if (p->size < 0)
 			SOAP_DELETE(soap, static_cast<struct __ns1__RenameCadFileDir_*>(p->ptr), struct __ns1__RenameCadFileDir_);
@@ -1617,6 +1737,12 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap *soap, struct soap_clist *p)
 			SOAP_DELETE(soap, static_cast<struct __ns1__DeleteCadDrawing_*>(p->ptr), struct __ns1__DeleteCadDrawing_);
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__DeleteCadDrawing_*>(p->ptr), struct __ns1__DeleteCadDrawing_);
+		break;
+	case SOAP_TYPE___ns1__DeleteCadDrawingByFileID_:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__DeleteCadDrawingByFileID_*>(p->ptr), struct __ns1__DeleteCadDrawingByFileID_);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__DeleteCadDrawingByFileID_*>(p->ptr), struct __ns1__DeleteCadDrawingByFileID_);
 		break;
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
@@ -1813,6 +1939,14 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_finsert(struct soap *soap, int t, int tt, void *
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__DeleteCadFileDirResponse type=%d location=%p object=%p\n", t, p, q));
 		*(_ns1__DeleteCadFileDirResponse*)p = *(_ns1__DeleteCadFileDirResponse*)q;
 		break;
+	case SOAP_TYPE__ns1__DeleteCadFileDirByDirId:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__DeleteCadFileDirByDirId type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__DeleteCadFileDirByDirId*)p = *(_ns1__DeleteCadFileDirByDirId*)q;
+		break;
+	case SOAP_TYPE__ns1__DeleteCadFileDirByDirIdResponse:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__DeleteCadFileDirByDirIdResponse type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__DeleteCadFileDirByDirIdResponse*)p = *(_ns1__DeleteCadFileDirByDirIdResponse*)q;
+		break;
 	case SOAP_TYPE__ns1__RenameCadFileDir:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__RenameCadFileDir type=%d location=%p object=%p\n", t, p, q));
 		*(_ns1__RenameCadFileDir*)p = *(_ns1__RenameCadFileDir*)q;
@@ -1844,6 +1978,14 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_finsert(struct soap *soap, int t, int tt, void *
 	case SOAP_TYPE__ns1__DeleteCadDrawingResponse:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__DeleteCadDrawingResponse type=%d location=%p object=%p\n", t, p, q));
 		*(_ns1__DeleteCadDrawingResponse*)p = *(_ns1__DeleteCadDrawingResponse*)q;
+		break;
+	case SOAP_TYPE__ns1__DeleteCadDrawingByFileID:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__DeleteCadDrawingByFileID type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__DeleteCadDrawingByFileID*)p = *(_ns1__DeleteCadDrawingByFileID*)q;
+		break;
+	case SOAP_TYPE__ns1__DeleteCadDrawingByFileIDResponse:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__DeleteCadDrawingByFileIDResponse type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__DeleteCadDrawingByFileIDResponse*)p = *(_ns1__DeleteCadDrawingByFileIDResponse*)q;
 		break;
 	case SOAP_TYPE___ns1__StandardDesignAttribute:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__StandardDesignAttribute type=%d location=%p object=%p\n", t, p, q));
@@ -1905,6 +2047,10 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_finsert(struct soap *soap, int t, int tt, void *
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__DeleteCadFileDir type=%d location=%p object=%p\n", t, p, q));
 		*(struct __ns1__DeleteCadFileDir*)p = *(struct __ns1__DeleteCadFileDir*)q;
 		break;
+	case SOAP_TYPE___ns1__DeleteCadFileDirByDirId:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__DeleteCadFileDirByDirId type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__DeleteCadFileDirByDirId*)p = *(struct __ns1__DeleteCadFileDirByDirId*)q;
+		break;
 	case SOAP_TYPE___ns1__RenameCadFileDir:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__RenameCadFileDir type=%d location=%p object=%p\n", t, p, q));
 		*(struct __ns1__RenameCadFileDir*)p = *(struct __ns1__RenameCadFileDir*)q;
@@ -1920,6 +2066,10 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_finsert(struct soap *soap, int t, int tt, void *
 	case SOAP_TYPE___ns1__DeleteCadDrawing:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__DeleteCadDrawing type=%d location=%p object=%p\n", t, p, q));
 		*(struct __ns1__DeleteCadDrawing*)p = *(struct __ns1__DeleteCadDrawing*)q;
+		break;
+	case SOAP_TYPE___ns1__DeleteCadDrawingByFileID:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__DeleteCadDrawingByFileID type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__DeleteCadDrawingByFileID*)p = *(struct __ns1__DeleteCadDrawingByFileID*)q;
 		break;
 	case SOAP_TYPE___ns1__StandardDesignAttribute_:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__StandardDesignAttribute_ type=%d location=%p object=%p\n", t, p, q));
@@ -1981,6 +2131,10 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_finsert(struct soap *soap, int t, int tt, void *
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__DeleteCadFileDir_ type=%d location=%p object=%p\n", t, p, q));
 		*(struct __ns1__DeleteCadFileDir_*)p = *(struct __ns1__DeleteCadFileDir_*)q;
 		break;
+	case SOAP_TYPE___ns1__DeleteCadFileDirByDirId_:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__DeleteCadFileDirByDirId_ type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__DeleteCadFileDirByDirId_*)p = *(struct __ns1__DeleteCadFileDirByDirId_*)q;
+		break;
 	case SOAP_TYPE___ns1__RenameCadFileDir_:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__RenameCadFileDir_ type=%d location=%p object=%p\n", t, p, q));
 		*(struct __ns1__RenameCadFileDir_*)p = *(struct __ns1__RenameCadFileDir_*)q;
@@ -1996,6 +2150,10 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_finsert(struct soap *soap, int t, int tt, void *
 	case SOAP_TYPE___ns1__DeleteCadDrawing_:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__DeleteCadDrawing_ type=%d location=%p object=%p\n", t, p, q));
 		*(struct __ns1__DeleteCadDrawing_*)p = *(struct __ns1__DeleteCadDrawing_*)q;
+		break;
+	case SOAP_TYPE___ns1__DeleteCadDrawingByFileID_:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__DeleteCadDrawingByFileID_ type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__DeleteCadDrawingByFileID_*)p = *(struct __ns1__DeleteCadDrawingByFileID_*)q;
 		break;
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
@@ -2213,6 +2371,274 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_put_std__wstring(struct soap *soap, const std::ws
 SOAP_FMAC3 std::wstring * SOAP_FMAC4 soap_get_std__wstring(struct soap *soap, std::wstring *p, const char *tag, const char *type)
 {
 	if ((p = soap_in_std__wstring(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__DeleteCadDrawingByFileIDResponse::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	this->_ns1__DeleteCadDrawingByFileIDResponse::DeleteCadDrawingByFileIDResult = NULL;
+}
+
+void _ns1__DeleteCadDrawingByFileIDResponse::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__DeleteCadDrawingByFileIDResponse::DeleteCadDrawingByFileIDResult);
+#endif
+}
+
+int _ns1__DeleteCadDrawingByFileIDResponse::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__DeleteCadDrawingByFileIDResponse(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__DeleteCadDrawingByFileIDResponse(struct soap *soap, const char *tag, int id, const _ns1__DeleteCadDrawingByFileIDResponse *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__DeleteCadDrawingByFileIDResponse), type))
+		return soap->error;
+	if (a->DeleteCadDrawingByFileIDResult)
+		soap_element_result(soap, "ns1:DeleteCadDrawingByFileIDResult");
+	if (soap_out_PointerTostd__wstring(soap, "ns1:DeleteCadDrawingByFileIDResult", -1, &a->_ns1__DeleteCadDrawingByFileIDResponse::DeleteCadDrawingByFileIDResult, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__DeleteCadDrawingByFileIDResponse::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__DeleteCadDrawingByFileIDResponse(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__DeleteCadDrawingByFileIDResponse * SOAP_FMAC4 soap_in__ns1__DeleteCadDrawingByFileIDResponse(struct soap *soap, const char *tag, _ns1__DeleteCadDrawingByFileIDResponse *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__DeleteCadDrawingByFileIDResponse*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__DeleteCadDrawingByFileIDResponse, sizeof(_ns1__DeleteCadDrawingByFileIDResponse), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__DeleteCadDrawingByFileIDResponse)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__DeleteCadDrawingByFileIDResponse *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_DeleteCadDrawingByFileIDResult1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_DeleteCadDrawingByFileIDResult1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_PointerTostd__wstring(soap, "ns1:DeleteCadDrawingByFileIDResult", &a->_ns1__DeleteCadDrawingByFileIDResponse::DeleteCadDrawingByFileIDResult, "xsd:string"))
+				{	soap_flag_DeleteCadDrawingByFileIDResult1--;
+					continue;
+				}
+			}
+			soap_check_result(soap, "ns1:DeleteCadDrawingByFileIDResult");
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (_ns1__DeleteCadDrawingByFileIDResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__DeleteCadDrawingByFileIDResponse, SOAP_TYPE__ns1__DeleteCadDrawingByFileIDResponse, sizeof(_ns1__DeleteCadDrawingByFileIDResponse), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__DeleteCadDrawingByFileIDResponse * SOAP_FMAC2 soap_instantiate__ns1__DeleteCadDrawingByFileIDResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__DeleteCadDrawingByFileIDResponse(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__DeleteCadDrawingByFileIDResponse *p;
+	size_t k = sizeof(_ns1__DeleteCadDrawingByFileIDResponse);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__DeleteCadDrawingByFileIDResponse, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__DeleteCadDrawingByFileIDResponse);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__DeleteCadDrawingByFileIDResponse, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__DeleteCadDrawingByFileIDResponse location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__DeleteCadDrawingByFileIDResponse::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__DeleteCadDrawingByFileIDResponse(soap, tag ? tag : "ns1:DeleteCadDrawingByFileIDResponse", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__DeleteCadDrawingByFileIDResponse::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__DeleteCadDrawingByFileIDResponse(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__DeleteCadDrawingByFileIDResponse * SOAP_FMAC4 soap_get__ns1__DeleteCadDrawingByFileIDResponse(struct soap *soap, _ns1__DeleteCadDrawingByFileIDResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__DeleteCadDrawingByFileIDResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__DeleteCadDrawingByFileID::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	soap_default_int(soap, &this->_ns1__DeleteCadDrawingByFileID::FileID);
+}
+
+void _ns1__DeleteCadDrawingByFileID::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+#endif
+}
+
+int _ns1__DeleteCadDrawingByFileID::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__DeleteCadDrawingByFileID(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__DeleteCadDrawingByFileID(struct soap *soap, const char *tag, int id, const _ns1__DeleteCadDrawingByFileID *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__DeleteCadDrawingByFileID), type))
+		return soap->error;
+	if (soap_out_int(soap, "ns1:FileID", -1, &a->_ns1__DeleteCadDrawingByFileID::FileID, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__DeleteCadDrawingByFileID::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__DeleteCadDrawingByFileID(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__DeleteCadDrawingByFileID * SOAP_FMAC4 soap_in__ns1__DeleteCadDrawingByFileID(struct soap *soap, const char *tag, _ns1__DeleteCadDrawingByFileID *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__DeleteCadDrawingByFileID*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__DeleteCadDrawingByFileID, sizeof(_ns1__DeleteCadDrawingByFileID), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__DeleteCadDrawingByFileID)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__DeleteCadDrawingByFileID *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_FileID1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_FileID1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_int(soap, "ns1:FileID", &a->_ns1__DeleteCadDrawingByFileID::FileID, "xsd:int"))
+				{	soap_flag_FileID1--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+		if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_FileID1 > 0))
+		{	soap->error = SOAP_OCCURS;
+			return NULL;
+		}
+	}
+	else if ((soap->mode & SOAP_XML_STRICT) && *soap->href != '#')
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	else
+	{	a = (_ns1__DeleteCadDrawingByFileID *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__DeleteCadDrawingByFileID, SOAP_TYPE__ns1__DeleteCadDrawingByFileID, sizeof(_ns1__DeleteCadDrawingByFileID), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__DeleteCadDrawingByFileID * SOAP_FMAC2 soap_instantiate__ns1__DeleteCadDrawingByFileID(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__DeleteCadDrawingByFileID(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__DeleteCadDrawingByFileID *p;
+	size_t k = sizeof(_ns1__DeleteCadDrawingByFileID);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__DeleteCadDrawingByFileID, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__DeleteCadDrawingByFileID);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__DeleteCadDrawingByFileID, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__DeleteCadDrawingByFileID location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__DeleteCadDrawingByFileID::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__DeleteCadDrawingByFileID(soap, tag ? tag : "ns1:DeleteCadDrawingByFileID", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__DeleteCadDrawingByFileID::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__DeleteCadDrawingByFileID(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__DeleteCadDrawingByFileID * SOAP_FMAC4 soap_get__ns1__DeleteCadDrawingByFileID(struct soap *soap, _ns1__DeleteCadDrawingByFileID *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__DeleteCadDrawingByFileID(soap, tag, p, type)))
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;
@@ -2649,9 +3075,9 @@ void _ns1__UpdateCadDrawing::soap_default(struct soap *soap)
 	this->soap = soap;
 	this->_ns1__UpdateCadDrawing::UID = NULL;
 	this->_ns1__UpdateCadDrawing::OID = NULL;
-	this->_ns1__UpdateCadDrawing::DrawingDir = NULL;
 	this->_ns1__UpdateCadDrawing::FileSaveName = NULL;
 	this->_ns1__UpdateCadDrawing::DrawingFile = NULL;
+	soap_default_int(soap, &this->_ns1__UpdateCadDrawing::DrawingDirId);
 }
 
 void _ns1__UpdateCadDrawing::soap_serialize(struct soap *soap) const
@@ -2660,7 +3086,6 @@ void _ns1__UpdateCadDrawing::soap_serialize(struct soap *soap) const
 #ifndef WITH_NOIDREF
 	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__UpdateCadDrawing::UID);
 	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__UpdateCadDrawing::OID);
-	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__UpdateCadDrawing::DrawingDir);
 	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__UpdateCadDrawing::FileSaveName);
 	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__UpdateCadDrawing::DrawingFile);
 #endif
@@ -2680,11 +3105,11 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__UpdateCadDrawing(struct soap *soap, con
 		return soap->error;
 	if (soap_out_PointerTostd__wstring(soap, "ns1:OID", -1, &a->_ns1__UpdateCadDrawing::OID, ""))
 		return soap->error;
-	if (soap_out_PointerTostd__wstring(soap, "ns1:DrawingDir", -1, &a->_ns1__UpdateCadDrawing::DrawingDir, ""))
-		return soap->error;
 	if (soap_out_PointerTostd__wstring(soap, "ns1:FileSaveName", -1, &a->_ns1__UpdateCadDrawing::FileSaveName, ""))
 		return soap->error;
 	if (soap_out_PointerTostd__wstring(soap, "ns1:DrawingFile", -1, &a->_ns1__UpdateCadDrawing::DrawingFile, ""))
+		return soap->error;
+	if (soap_out_int(soap, "ns1:DrawingDirId", -1, &a->_ns1__UpdateCadDrawing::DrawingDirId, ""))
 		return soap->error;
 	return soap_element_end_out(soap, tag);
 }
@@ -2711,9 +3136,9 @@ SOAP_FMAC3 _ns1__UpdateCadDrawing * SOAP_FMAC4 soap_in__ns1__UpdateCadDrawing(st
 		a->soap_default(soap);
 	size_t soap_flag_UID1 = 1;
 	size_t soap_flag_OID1 = 1;
-	size_t soap_flag_DrawingDir1 = 1;
 	size_t soap_flag_FileSaveName1 = 1;
 	size_t soap_flag_DrawingFile1 = 1;
+	size_t soap_flag_DrawingDirId1 = 1;
 	if (soap->body && *soap->href != '#')
 	{
 		for (;;)
@@ -2730,12 +3155,6 @@ SOAP_FMAC3 _ns1__UpdateCadDrawing * SOAP_FMAC4 soap_in__ns1__UpdateCadDrawing(st
 					continue;
 				}
 			}
-			if (soap_flag_DrawingDir1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
-			{	if (soap_in_PointerTostd__wstring(soap, "ns1:DrawingDir", &a->_ns1__UpdateCadDrawing::DrawingDir, "xsd:string"))
-				{	soap_flag_DrawingDir1--;
-					continue;
-				}
-			}
 			if (soap_flag_FileSaveName1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
 			{	if (soap_in_PointerTostd__wstring(soap, "ns1:FileSaveName", &a->_ns1__UpdateCadDrawing::FileSaveName, "xsd:string"))
 				{	soap_flag_FileSaveName1--;
@@ -2748,6 +3167,12 @@ SOAP_FMAC3 _ns1__UpdateCadDrawing * SOAP_FMAC4 soap_in__ns1__UpdateCadDrawing(st
 					continue;
 				}
 			}
+			if (soap_flag_DrawingDirId1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_int(soap, "ns1:DrawingDirId", &a->_ns1__UpdateCadDrawing::DrawingDirId, "xsd:int"))
+				{	soap_flag_DrawingDirId1--;
+					continue;
+				}
+			}
 			if (soap->error == SOAP_TAG_MISMATCH)
 				soap->error = soap_ignore_element(soap);
 			if (soap->error == SOAP_NO_TAG)
@@ -2757,6 +3182,14 @@ SOAP_FMAC3 _ns1__UpdateCadDrawing * SOAP_FMAC4 soap_in__ns1__UpdateCadDrawing(st
 		}
 		if (soap_element_end_in(soap, tag))
 			return NULL;
+		if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_DrawingDirId1 > 0))
+		{	soap->error = SOAP_OCCURS;
+			return NULL;
+		}
+	}
+	else if ((soap->mode & SOAP_XML_STRICT) && *soap->href != '#')
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
 	}
 	else
 	{	a = (_ns1__UpdateCadDrawing *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__UpdateCadDrawing, SOAP_TYPE__ns1__UpdateCadDrawing, sizeof(_ns1__UpdateCadDrawing), 0, soap_finsert, soap_fbase);
@@ -3216,7 +3649,7 @@ void _ns1__RenameCadFileDir::soap_default(struct soap *soap)
 	this->_ns1__RenameCadFileDir::UID = NULL;
 	this->_ns1__RenameCadFileDir::OID = NULL;
 	this->_ns1__RenameCadFileDir::DrawingDir = NULL;
-	this->_ns1__RenameCadFileDir::ParentDir = NULL;
+	soap_default_int(soap, &this->_ns1__RenameCadFileDir::ParentDirId);
 	this->_ns1__RenameCadFileDir::NewDrawingDir = NULL;
 }
 
@@ -3227,7 +3660,6 @@ void _ns1__RenameCadFileDir::soap_serialize(struct soap *soap) const
 	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__RenameCadFileDir::UID);
 	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__RenameCadFileDir::OID);
 	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__RenameCadFileDir::DrawingDir);
-	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__RenameCadFileDir::ParentDir);
 	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__RenameCadFileDir::NewDrawingDir);
 #endif
 }
@@ -3248,7 +3680,7 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__RenameCadFileDir(struct soap *soap, con
 		return soap->error;
 	if (soap_out_PointerTostd__wstring(soap, "ns1:DrawingDir", -1, &a->_ns1__RenameCadFileDir::DrawingDir, ""))
 		return soap->error;
-	if (soap_out_PointerTostd__wstring(soap, "ns1:ParentDir", -1, &a->_ns1__RenameCadFileDir::ParentDir, ""))
+	if (soap_out_int(soap, "ns1:ParentDirId", -1, &a->_ns1__RenameCadFileDir::ParentDirId, ""))
 		return soap->error;
 	if (soap_out_PointerTostd__wstring(soap, "ns1:NewDrawingDir", -1, &a->_ns1__RenameCadFileDir::NewDrawingDir, ""))
 		return soap->error;
@@ -3278,7 +3710,7 @@ SOAP_FMAC3 _ns1__RenameCadFileDir * SOAP_FMAC4 soap_in__ns1__RenameCadFileDir(st
 	size_t soap_flag_UID1 = 1;
 	size_t soap_flag_OID1 = 1;
 	size_t soap_flag_DrawingDir1 = 1;
-	size_t soap_flag_ParentDir1 = 1;
+	size_t soap_flag_ParentDirId1 = 1;
 	size_t soap_flag_NewDrawingDir1 = 1;
 	if (soap->body && *soap->href != '#')
 	{
@@ -3302,9 +3734,9 @@ SOAP_FMAC3 _ns1__RenameCadFileDir * SOAP_FMAC4 soap_in__ns1__RenameCadFileDir(st
 					continue;
 				}
 			}
-			if (soap_flag_ParentDir1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
-			{	if (soap_in_PointerTostd__wstring(soap, "ns1:ParentDir", &a->_ns1__RenameCadFileDir::ParentDir, "xsd:string"))
-				{	soap_flag_ParentDir1--;
+			if (soap_flag_ParentDirId1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_int(soap, "ns1:ParentDirId", &a->_ns1__RenameCadFileDir::ParentDirId, "xsd:int"))
+				{	soap_flag_ParentDirId1--;
 					continue;
 				}
 			}
@@ -3323,6 +3755,14 @@ SOAP_FMAC3 _ns1__RenameCadFileDir * SOAP_FMAC4 soap_in__ns1__RenameCadFileDir(st
 		}
 		if (soap_element_end_in(soap, tag))
 			return NULL;
+		if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_ParentDirId1 > 0))
+		{	soap->error = SOAP_OCCURS;
+			return NULL;
+		}
+	}
+	else if ((soap->mode & SOAP_XML_STRICT) && *soap->href != '#')
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
 	}
 	else
 	{	a = (_ns1__RenameCadFileDir *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__RenameCadFileDir, SOAP_TYPE__ns1__RenameCadFileDir, sizeof(_ns1__RenameCadFileDir), 0, soap_finsert, soap_fbase);
@@ -3378,6 +3818,274 @@ void *_ns1__RenameCadFileDir::soap_get(struct soap *soap, const char *tag, const
 SOAP_FMAC3 _ns1__RenameCadFileDir * SOAP_FMAC4 soap_get__ns1__RenameCadFileDir(struct soap *soap, _ns1__RenameCadFileDir *p, const char *tag, const char *type)
 {
 	if ((p = soap_in__ns1__RenameCadFileDir(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__DeleteCadFileDirByDirIdResponse::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	this->_ns1__DeleteCadFileDirByDirIdResponse::DeleteCadFileDirByDirIdResult = NULL;
+}
+
+void _ns1__DeleteCadFileDirByDirIdResponse::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__DeleteCadFileDirByDirIdResponse::DeleteCadFileDirByDirIdResult);
+#endif
+}
+
+int _ns1__DeleteCadFileDirByDirIdResponse::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__DeleteCadFileDirByDirIdResponse(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__DeleteCadFileDirByDirIdResponse(struct soap *soap, const char *tag, int id, const _ns1__DeleteCadFileDirByDirIdResponse *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__DeleteCadFileDirByDirIdResponse), type))
+		return soap->error;
+	if (a->DeleteCadFileDirByDirIdResult)
+		soap_element_result(soap, "ns1:DeleteCadFileDirByDirIdResult");
+	if (soap_out_PointerTostd__wstring(soap, "ns1:DeleteCadFileDirByDirIdResult", -1, &a->_ns1__DeleteCadFileDirByDirIdResponse::DeleteCadFileDirByDirIdResult, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__DeleteCadFileDirByDirIdResponse::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__DeleteCadFileDirByDirIdResponse(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__DeleteCadFileDirByDirIdResponse * SOAP_FMAC4 soap_in__ns1__DeleteCadFileDirByDirIdResponse(struct soap *soap, const char *tag, _ns1__DeleteCadFileDirByDirIdResponse *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__DeleteCadFileDirByDirIdResponse*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__DeleteCadFileDirByDirIdResponse, sizeof(_ns1__DeleteCadFileDirByDirIdResponse), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__DeleteCadFileDirByDirIdResponse)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__DeleteCadFileDirByDirIdResponse *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_DeleteCadFileDirByDirIdResult1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_DeleteCadFileDirByDirIdResult1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_PointerTostd__wstring(soap, "ns1:DeleteCadFileDirByDirIdResult", &a->_ns1__DeleteCadFileDirByDirIdResponse::DeleteCadFileDirByDirIdResult, "xsd:string"))
+				{	soap_flag_DeleteCadFileDirByDirIdResult1--;
+					continue;
+				}
+			}
+			soap_check_result(soap, "ns1:DeleteCadFileDirByDirIdResult");
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (_ns1__DeleteCadFileDirByDirIdResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__DeleteCadFileDirByDirIdResponse, SOAP_TYPE__ns1__DeleteCadFileDirByDirIdResponse, sizeof(_ns1__DeleteCadFileDirByDirIdResponse), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__DeleteCadFileDirByDirIdResponse * SOAP_FMAC2 soap_instantiate__ns1__DeleteCadFileDirByDirIdResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__DeleteCadFileDirByDirIdResponse(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__DeleteCadFileDirByDirIdResponse *p;
+	size_t k = sizeof(_ns1__DeleteCadFileDirByDirIdResponse);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__DeleteCadFileDirByDirIdResponse, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__DeleteCadFileDirByDirIdResponse);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__DeleteCadFileDirByDirIdResponse, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__DeleteCadFileDirByDirIdResponse location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__DeleteCadFileDirByDirIdResponse::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__DeleteCadFileDirByDirIdResponse(soap, tag ? tag : "ns1:DeleteCadFileDirByDirIdResponse", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__DeleteCadFileDirByDirIdResponse::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__DeleteCadFileDirByDirIdResponse(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__DeleteCadFileDirByDirIdResponse * SOAP_FMAC4 soap_get__ns1__DeleteCadFileDirByDirIdResponse(struct soap *soap, _ns1__DeleteCadFileDirByDirIdResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__DeleteCadFileDirByDirIdResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__DeleteCadFileDirByDirId::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	soap_default_int(soap, &this->_ns1__DeleteCadFileDirByDirId::DirId);
+}
+
+void _ns1__DeleteCadFileDirByDirId::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+#endif
+}
+
+int _ns1__DeleteCadFileDirByDirId::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__DeleteCadFileDirByDirId(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__DeleteCadFileDirByDirId(struct soap *soap, const char *tag, int id, const _ns1__DeleteCadFileDirByDirId *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__DeleteCadFileDirByDirId), type))
+		return soap->error;
+	if (soap_out_int(soap, "ns1:DirId", -1, &a->_ns1__DeleteCadFileDirByDirId::DirId, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__DeleteCadFileDirByDirId::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__DeleteCadFileDirByDirId(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__DeleteCadFileDirByDirId * SOAP_FMAC4 soap_in__ns1__DeleteCadFileDirByDirId(struct soap *soap, const char *tag, _ns1__DeleteCadFileDirByDirId *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__DeleteCadFileDirByDirId*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__DeleteCadFileDirByDirId, sizeof(_ns1__DeleteCadFileDirByDirId), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__DeleteCadFileDirByDirId)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__DeleteCadFileDirByDirId *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_DirId1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_DirId1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_int(soap, "ns1:DirId", &a->_ns1__DeleteCadFileDirByDirId::DirId, "xsd:int"))
+				{	soap_flag_DirId1--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+		if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_DirId1 > 0))
+		{	soap->error = SOAP_OCCURS;
+			return NULL;
+		}
+	}
+	else if ((soap->mode & SOAP_XML_STRICT) && *soap->href != '#')
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	else
+	{	a = (_ns1__DeleteCadFileDirByDirId *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__DeleteCadFileDirByDirId, SOAP_TYPE__ns1__DeleteCadFileDirByDirId, sizeof(_ns1__DeleteCadFileDirByDirId), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__DeleteCadFileDirByDirId * SOAP_FMAC2 soap_instantiate__ns1__DeleteCadFileDirByDirId(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__DeleteCadFileDirByDirId(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__DeleteCadFileDirByDirId *p;
+	size_t k = sizeof(_ns1__DeleteCadFileDirByDirId);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__DeleteCadFileDirByDirId, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__DeleteCadFileDirByDirId);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__DeleteCadFileDirByDirId, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__DeleteCadFileDirByDirId location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__DeleteCadFileDirByDirId::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__DeleteCadFileDirByDirId(soap, tag ? tag : "ns1:DeleteCadFileDirByDirId", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__DeleteCadFileDirByDirId::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__DeleteCadFileDirByDirId(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__DeleteCadFileDirByDirId * SOAP_FMAC4 soap_get__ns1__DeleteCadFileDirByDirId(struct soap *soap, _ns1__DeleteCadFileDirByDirId *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__DeleteCadFileDirByDirId(soap, tag, p, type)))
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;
@@ -3815,7 +4523,7 @@ void _ns1__NewCadFileDir::soap_default(struct soap *soap)
 	this->_ns1__NewCadFileDir::UID = NULL;
 	this->_ns1__NewCadFileDir::OID = NULL;
 	this->_ns1__NewCadFileDir::DrawingDir = NULL;
-	this->_ns1__NewCadFileDir::ParentDir = NULL;
+	soap_default_int(soap, &this->_ns1__NewCadFileDir::ParentDirId);
 }
 
 void _ns1__NewCadFileDir::soap_serialize(struct soap *soap) const
@@ -3825,7 +4533,6 @@ void _ns1__NewCadFileDir::soap_serialize(struct soap *soap) const
 	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__NewCadFileDir::UID);
 	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__NewCadFileDir::OID);
 	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__NewCadFileDir::DrawingDir);
-	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__NewCadFileDir::ParentDir);
 #endif
 }
 
@@ -3845,7 +4552,7 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__NewCadFileDir(struct soap *soap, const 
 		return soap->error;
 	if (soap_out_PointerTostd__wstring(soap, "ns1:DrawingDir", -1, &a->_ns1__NewCadFileDir::DrawingDir, ""))
 		return soap->error;
-	if (soap_out_PointerTostd__wstring(soap, "ns1:ParentDir", -1, &a->_ns1__NewCadFileDir::ParentDir, ""))
+	if (soap_out_int(soap, "ns1:ParentDirId", -1, &a->_ns1__NewCadFileDir::ParentDirId, ""))
 		return soap->error;
 	return soap_element_end_out(soap, tag);
 }
@@ -3873,7 +4580,7 @@ SOAP_FMAC3 _ns1__NewCadFileDir * SOAP_FMAC4 soap_in__ns1__NewCadFileDir(struct s
 	size_t soap_flag_UID1 = 1;
 	size_t soap_flag_OID1 = 1;
 	size_t soap_flag_DrawingDir1 = 1;
-	size_t soap_flag_ParentDir1 = 1;
+	size_t soap_flag_ParentDirId1 = 1;
 	if (soap->body && *soap->href != '#')
 	{
 		for (;;)
@@ -3896,9 +4603,9 @@ SOAP_FMAC3 _ns1__NewCadFileDir * SOAP_FMAC4 soap_in__ns1__NewCadFileDir(struct s
 					continue;
 				}
 			}
-			if (soap_flag_ParentDir1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
-			{	if (soap_in_PointerTostd__wstring(soap, "ns1:ParentDir", &a->_ns1__NewCadFileDir::ParentDir, "xsd:string"))
-				{	soap_flag_ParentDir1--;
+			if (soap_flag_ParentDirId1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_int(soap, "ns1:ParentDirId", &a->_ns1__NewCadFileDir::ParentDirId, "xsd:int"))
+				{	soap_flag_ParentDirId1--;
 					continue;
 				}
 			}
@@ -3911,6 +4618,14 @@ SOAP_FMAC3 _ns1__NewCadFileDir * SOAP_FMAC4 soap_in__ns1__NewCadFileDir(struct s
 		}
 		if (soap_element_end_in(soap, tag))
 			return NULL;
+		if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_ParentDirId1 > 0))
+		{	soap->error = SOAP_OCCURS;
+			return NULL;
+		}
+	}
+	else if ((soap->mode & SOAP_XML_STRICT) && *soap->href != '#')
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
 	}
 	else
 	{	a = (_ns1__NewCadFileDir *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__NewCadFileDir, SOAP_TYPE__ns1__NewCadFileDir, sizeof(_ns1__NewCadFileDir), 0, soap_finsert, soap_fbase);
@@ -8186,6 +8901,98 @@ SOAP_FMAC3 struct SOAP_ENV__Header * SOAP_FMAC4 soap_get_SOAP_ENV__Header(struct
 
 #endif
 
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__DeleteCadDrawingByFileID_(struct soap *soap, struct __ns1__DeleteCadDrawingByFileID_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__DeleteCadDrawingByFileID = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__DeleteCadDrawingByFileID_(struct soap *soap, const struct __ns1__DeleteCadDrawingByFileID_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__DeleteCadDrawingByFileID(soap, &a->ns1__DeleteCadDrawingByFileID);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__DeleteCadDrawingByFileID_(struct soap *soap, const char *tag, int id, const struct __ns1__DeleteCadDrawingByFileID_ *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__DeleteCadDrawingByFileID(soap, "ns1:DeleteCadDrawingByFileID", -1, &a->ns1__DeleteCadDrawingByFileID, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__DeleteCadDrawingByFileID_ * SOAP_FMAC4 soap_in___ns1__DeleteCadDrawingByFileID_(struct soap *soap, const char *tag, struct __ns1__DeleteCadDrawingByFileID_ *a, const char *type)
+{
+	size_t soap_flag_ns1__DeleteCadDrawingByFileID = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__DeleteCadDrawingByFileID_*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__DeleteCadDrawingByFileID_, sizeof(struct __ns1__DeleteCadDrawingByFileID_), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__DeleteCadDrawingByFileID_(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__DeleteCadDrawingByFileID && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__DeleteCadDrawingByFileID(soap, "ns1:DeleteCadDrawingByFileID", &a->ns1__DeleteCadDrawingByFileID, ""))
+				{	soap_flag_ns1__DeleteCadDrawingByFileID--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__DeleteCadDrawingByFileID_ * SOAP_FMAC2 soap_instantiate___ns1__DeleteCadDrawingByFileID_(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__DeleteCadDrawingByFileID_(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__DeleteCadDrawingByFileID_ *p;
+	size_t k = sizeof(struct __ns1__DeleteCadDrawingByFileID_);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__DeleteCadDrawingByFileID_, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__DeleteCadDrawingByFileID_);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__DeleteCadDrawingByFileID_, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__DeleteCadDrawingByFileID_ location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__DeleteCadDrawingByFileID_(struct soap *soap, const struct __ns1__DeleteCadDrawingByFileID_ *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__DeleteCadDrawingByFileID_(soap, tag ? tag : "-ns1:DeleteCadDrawingByFileID", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__DeleteCadDrawingByFileID_ * SOAP_FMAC4 soap_get___ns1__DeleteCadDrawingByFileID_(struct soap *soap, struct __ns1__DeleteCadDrawingByFileID_ *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__DeleteCadDrawingByFileID_(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
 SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__DeleteCadDrawing_(struct soap *soap, struct __ns1__DeleteCadDrawing_ *a)
 {
 	(void)soap; (void)a; /* appease -Wall -Werror */
@@ -8549,6 +9356,98 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__RenameCadFileDir_(struct soap *soap, c
 SOAP_FMAC3 struct __ns1__RenameCadFileDir_ * SOAP_FMAC4 soap_get___ns1__RenameCadFileDir_(struct soap *soap, struct __ns1__RenameCadFileDir_ *p, const char *tag, const char *type)
 {
 	if ((p = soap_in___ns1__RenameCadFileDir_(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__DeleteCadFileDirByDirId_(struct soap *soap, struct __ns1__DeleteCadFileDirByDirId_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__DeleteCadFileDirByDirId = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__DeleteCadFileDirByDirId_(struct soap *soap, const struct __ns1__DeleteCadFileDirByDirId_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__DeleteCadFileDirByDirId(soap, &a->ns1__DeleteCadFileDirByDirId);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__DeleteCadFileDirByDirId_(struct soap *soap, const char *tag, int id, const struct __ns1__DeleteCadFileDirByDirId_ *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__DeleteCadFileDirByDirId(soap, "ns1:DeleteCadFileDirByDirId", -1, &a->ns1__DeleteCadFileDirByDirId, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__DeleteCadFileDirByDirId_ * SOAP_FMAC4 soap_in___ns1__DeleteCadFileDirByDirId_(struct soap *soap, const char *tag, struct __ns1__DeleteCadFileDirByDirId_ *a, const char *type)
+{
+	size_t soap_flag_ns1__DeleteCadFileDirByDirId = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__DeleteCadFileDirByDirId_*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__DeleteCadFileDirByDirId_, sizeof(struct __ns1__DeleteCadFileDirByDirId_), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__DeleteCadFileDirByDirId_(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__DeleteCadFileDirByDirId && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__DeleteCadFileDirByDirId(soap, "ns1:DeleteCadFileDirByDirId", &a->ns1__DeleteCadFileDirByDirId, ""))
+				{	soap_flag_ns1__DeleteCadFileDirByDirId--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__DeleteCadFileDirByDirId_ * SOAP_FMAC2 soap_instantiate___ns1__DeleteCadFileDirByDirId_(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__DeleteCadFileDirByDirId_(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__DeleteCadFileDirByDirId_ *p;
+	size_t k = sizeof(struct __ns1__DeleteCadFileDirByDirId_);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__DeleteCadFileDirByDirId_, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__DeleteCadFileDirByDirId_);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__DeleteCadFileDirByDirId_, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__DeleteCadFileDirByDirId_ location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__DeleteCadFileDirByDirId_(struct soap *soap, const struct __ns1__DeleteCadFileDirByDirId_ *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__DeleteCadFileDirByDirId_(soap, tag ? tag : "-ns1:DeleteCadFileDirByDirId", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__DeleteCadFileDirByDirId_ * SOAP_FMAC4 soap_get___ns1__DeleteCadFileDirByDirId_(struct soap *soap, struct __ns1__DeleteCadFileDirByDirId_ *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__DeleteCadFileDirByDirId_(soap, tag, p, type)))
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;
@@ -9934,6 +10833,98 @@ SOAP_FMAC3 struct __ns1__StandardDesignAttribute_ * SOAP_FMAC4 soap_get___ns1__S
 	return p;
 }
 
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__DeleteCadDrawingByFileID(struct soap *soap, struct __ns1__DeleteCadDrawingByFileID *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__DeleteCadDrawingByFileID = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__DeleteCadDrawingByFileID(struct soap *soap, const struct __ns1__DeleteCadDrawingByFileID *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__DeleteCadDrawingByFileID(soap, &a->ns1__DeleteCadDrawingByFileID);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__DeleteCadDrawingByFileID(struct soap *soap, const char *tag, int id, const struct __ns1__DeleteCadDrawingByFileID *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__DeleteCadDrawingByFileID(soap, "ns1:DeleteCadDrawingByFileID", -1, &a->ns1__DeleteCadDrawingByFileID, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__DeleteCadDrawingByFileID * SOAP_FMAC4 soap_in___ns1__DeleteCadDrawingByFileID(struct soap *soap, const char *tag, struct __ns1__DeleteCadDrawingByFileID *a, const char *type)
+{
+	size_t soap_flag_ns1__DeleteCadDrawingByFileID = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__DeleteCadDrawingByFileID*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__DeleteCadDrawingByFileID, sizeof(struct __ns1__DeleteCadDrawingByFileID), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__DeleteCadDrawingByFileID(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__DeleteCadDrawingByFileID && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__DeleteCadDrawingByFileID(soap, "ns1:DeleteCadDrawingByFileID", &a->ns1__DeleteCadDrawingByFileID, ""))
+				{	soap_flag_ns1__DeleteCadDrawingByFileID--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__DeleteCadDrawingByFileID * SOAP_FMAC2 soap_instantiate___ns1__DeleteCadDrawingByFileID(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__DeleteCadDrawingByFileID(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__DeleteCadDrawingByFileID *p;
+	size_t k = sizeof(struct __ns1__DeleteCadDrawingByFileID);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__DeleteCadDrawingByFileID, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__DeleteCadDrawingByFileID);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__DeleteCadDrawingByFileID, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__DeleteCadDrawingByFileID location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__DeleteCadDrawingByFileID(struct soap *soap, const struct __ns1__DeleteCadDrawingByFileID *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__DeleteCadDrawingByFileID(soap, tag ? tag : "-ns1:DeleteCadDrawingByFileID", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__DeleteCadDrawingByFileID * SOAP_FMAC4 soap_get___ns1__DeleteCadDrawingByFileID(struct soap *soap, struct __ns1__DeleteCadDrawingByFileID *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__DeleteCadDrawingByFileID(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
 SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__DeleteCadDrawing(struct soap *soap, struct __ns1__DeleteCadDrawing *a)
 {
 	(void)soap; (void)a; /* appease -Wall -Werror */
@@ -10297,6 +11288,98 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__RenameCadFileDir(struct soap *soap, co
 SOAP_FMAC3 struct __ns1__RenameCadFileDir * SOAP_FMAC4 soap_get___ns1__RenameCadFileDir(struct soap *soap, struct __ns1__RenameCadFileDir *p, const char *tag, const char *type)
 {
 	if ((p = soap_in___ns1__RenameCadFileDir(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__DeleteCadFileDirByDirId(struct soap *soap, struct __ns1__DeleteCadFileDirByDirId *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__DeleteCadFileDirByDirId = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__DeleteCadFileDirByDirId(struct soap *soap, const struct __ns1__DeleteCadFileDirByDirId *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__DeleteCadFileDirByDirId(soap, &a->ns1__DeleteCadFileDirByDirId);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__DeleteCadFileDirByDirId(struct soap *soap, const char *tag, int id, const struct __ns1__DeleteCadFileDirByDirId *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__DeleteCadFileDirByDirId(soap, "ns1:DeleteCadFileDirByDirId", -1, &a->ns1__DeleteCadFileDirByDirId, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__DeleteCadFileDirByDirId * SOAP_FMAC4 soap_in___ns1__DeleteCadFileDirByDirId(struct soap *soap, const char *tag, struct __ns1__DeleteCadFileDirByDirId *a, const char *type)
+{
+	size_t soap_flag_ns1__DeleteCadFileDirByDirId = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__DeleteCadFileDirByDirId*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__DeleteCadFileDirByDirId, sizeof(struct __ns1__DeleteCadFileDirByDirId), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__DeleteCadFileDirByDirId(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__DeleteCadFileDirByDirId && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__DeleteCadFileDirByDirId(soap, "ns1:DeleteCadFileDirByDirId", &a->ns1__DeleteCadFileDirByDirId, ""))
+				{	soap_flag_ns1__DeleteCadFileDirByDirId--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__DeleteCadFileDirByDirId * SOAP_FMAC2 soap_instantiate___ns1__DeleteCadFileDirByDirId(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__DeleteCadFileDirByDirId(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__DeleteCadFileDirByDirId *p;
+	size_t k = sizeof(struct __ns1__DeleteCadFileDirByDirId);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__DeleteCadFileDirByDirId, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__DeleteCadFileDirByDirId);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__DeleteCadFileDirByDirId, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__DeleteCadFileDirByDirId location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__DeleteCadFileDirByDirId(struct soap *soap, const struct __ns1__DeleteCadFileDirByDirId *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__DeleteCadFileDirByDirId(soap, tag ? tag : "-ns1:DeleteCadFileDirByDirId", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__DeleteCadFileDirByDirId * SOAP_FMAC4 soap_get___ns1__DeleteCadFileDirByDirId(struct soap *soap, struct __ns1__DeleteCadFileDirByDirId *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__DeleteCadFileDirByDirId(soap, tag, p, type)))
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;
@@ -11859,6 +12942,65 @@ SOAP_FMAC3 struct SOAP_ENV__Code ** SOAP_FMAC4 soap_get_PointerToSOAP_ENV__Code(
 
 #endif
 
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__DeleteCadDrawingByFileID(struct soap *soap, _ns1__DeleteCadDrawingByFileID *const*a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	if (!soap_reference(soap, *a, SOAP_TYPE__ns1__DeleteCadDrawingByFileID))
+		(*a)->soap_serialize(soap);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__DeleteCadDrawingByFileID(struct soap *soap, const char *tag, int id, _ns1__DeleteCadDrawingByFileID *const*a, const char *type)
+{
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE__ns1__DeleteCadDrawingByFileID, NULL);
+	if (id < 0)
+		return soap->error;
+	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE__ns1__DeleteCadDrawingByFileID ? type : NULL);
+}
+
+SOAP_FMAC3 _ns1__DeleteCadDrawingByFileID ** SOAP_FMAC4 soap_in_PointerTo_ns1__DeleteCadDrawingByFileID(struct soap *soap, const char *tag, _ns1__DeleteCadDrawingByFileID **a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a)
+		if (!(a = (_ns1__DeleteCadDrawingByFileID **)soap_malloc(soap, sizeof(_ns1__DeleteCadDrawingByFileID *))))
+			return NULL;
+	*a = NULL;
+	if (!soap->null && *soap->href != '#')
+	{	soap_revert(soap);
+		if (!(*a = (_ns1__DeleteCadDrawingByFileID *)soap_instantiate__ns1__DeleteCadDrawingByFileID(soap, -1, soap->type, soap->arrayType, NULL)))
+			return NULL;
+		(*a)->soap_default(soap);
+		if (!(*a)->soap_in(soap, tag, NULL))
+		{	*a = NULL;
+			return NULL;
+		}
+	}
+	else
+	{	a = (_ns1__DeleteCadDrawingByFileID **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE__ns1__DeleteCadDrawingByFileID, sizeof(_ns1__DeleteCadDrawingByFileID), 0, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__DeleteCadDrawingByFileID(struct soap *soap, _ns1__DeleteCadDrawingByFileID *const*a, const char *tag, const char *type)
+{
+	if (soap_out_PointerTo_ns1__DeleteCadDrawingByFileID(soap, tag ? tag : "ns1:DeleteCadDrawingByFileID", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 _ns1__DeleteCadDrawingByFileID ** SOAP_FMAC4 soap_get_PointerTo_ns1__DeleteCadDrawingByFileID(struct soap *soap, _ns1__DeleteCadDrawingByFileID **p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PointerTo_ns1__DeleteCadDrawingByFileID(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__DeleteCadDrawing(struct soap *soap, _ns1__DeleteCadDrawing *const*a)
 {
 	(void)soap; (void)a; /* appease -Wall -Werror */
@@ -12090,6 +13232,65 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__RenameCadFileDir(struct soap *
 SOAP_FMAC3 _ns1__RenameCadFileDir ** SOAP_FMAC4 soap_get_PointerTo_ns1__RenameCadFileDir(struct soap *soap, _ns1__RenameCadFileDir **p, const char *tag, const char *type)
 {
 	if ((p = soap_in_PointerTo_ns1__RenameCadFileDir(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__DeleteCadFileDirByDirId(struct soap *soap, _ns1__DeleteCadFileDirByDirId *const*a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	if (!soap_reference(soap, *a, SOAP_TYPE__ns1__DeleteCadFileDirByDirId))
+		(*a)->soap_serialize(soap);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__DeleteCadFileDirByDirId(struct soap *soap, const char *tag, int id, _ns1__DeleteCadFileDirByDirId *const*a, const char *type)
+{
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE__ns1__DeleteCadFileDirByDirId, NULL);
+	if (id < 0)
+		return soap->error;
+	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE__ns1__DeleteCadFileDirByDirId ? type : NULL);
+}
+
+SOAP_FMAC3 _ns1__DeleteCadFileDirByDirId ** SOAP_FMAC4 soap_in_PointerTo_ns1__DeleteCadFileDirByDirId(struct soap *soap, const char *tag, _ns1__DeleteCadFileDirByDirId **a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a)
+		if (!(a = (_ns1__DeleteCadFileDirByDirId **)soap_malloc(soap, sizeof(_ns1__DeleteCadFileDirByDirId *))))
+			return NULL;
+	*a = NULL;
+	if (!soap->null && *soap->href != '#')
+	{	soap_revert(soap);
+		if (!(*a = (_ns1__DeleteCadFileDirByDirId *)soap_instantiate__ns1__DeleteCadFileDirByDirId(soap, -1, soap->type, soap->arrayType, NULL)))
+			return NULL;
+		(*a)->soap_default(soap);
+		if (!(*a)->soap_in(soap, tag, NULL))
+		{	*a = NULL;
+			return NULL;
+		}
+	}
+	else
+	{	a = (_ns1__DeleteCadFileDirByDirId **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE__ns1__DeleteCadFileDirByDirId, sizeof(_ns1__DeleteCadFileDirByDirId), 0, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__DeleteCadFileDirByDirId(struct soap *soap, _ns1__DeleteCadFileDirByDirId *const*a, const char *tag, const char *type)
+{
+	if (soap_out_PointerTo_ns1__DeleteCadFileDirByDirId(soap, tag ? tag : "ns1:DeleteCadFileDirByDirId", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 _ns1__DeleteCadFileDirByDirId ** SOAP_FMAC4 soap_get_PointerTo_ns1__DeleteCadFileDirByDirId(struct soap *soap, _ns1__DeleteCadFileDirByDirId **p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PointerTo_ns1__DeleteCadFileDirByDirId(soap, tag, p, type)))
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;

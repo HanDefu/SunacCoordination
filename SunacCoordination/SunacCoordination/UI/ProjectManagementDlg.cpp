@@ -154,11 +154,17 @@ void CProjectManagementDlg::OnBnClickedButtonUpload()
 	{
 		USES_CONVERSION;
 		CString PathName = dlg.GetPathName();
+	    long long FileSize;
+		CFileStatus FileStatus;
+		if (CFile::GetStatus(PathName, FileStatus))
+		{
+			FileSize = FileStatus.m_size;
+		}
 		
 		FileName = FilePathToFileName(PathName);
 		CString ParentPath = m_pPrjData->GetDirString(L"", m_selectedDir);//返回文件夹的路径
 
-		m_pPrjData->AddFile(PathName, ParentPath, UIFileUpCBFunc);
+		m_pPrjData->AddFile(PathName, ParentPath, UIFileUpCBFunc, FileSize);
 	}
 
 	FillPjtGridCtrl(m_selectedDir);
@@ -188,6 +194,8 @@ BOOL CProjectManagementDlg::OnInitDialog()
 
 void CProjectManagementDlg::InitGridCtrl()
 {
+	CAutoLock a(&m_Lock);
+
 	m_PjtManagementGridCtrl.DeleteAllItems();
 	
 	m_PjtManagementGridCtrl.SetFixedRowCount(1);
@@ -200,7 +208,7 @@ void CProjectManagementDlg::InitGridCtrl()
 	m_PjtManagementGridCtrl.SetItemText(0, 6, L"文件大小");
 	m_PjtManagementGridCtrl.SetItemText(0, 7, L"文件状态");
 
-	m_PjtManagementGridCtrl.SetHeaderWidth(L"3.33;+;8.33;15.56;8.33;15.56;8.89;8.33;4.44;4.44");
+	m_PjtManagementGridCtrl.SetHeaderWidth(L"3.33;+;8.33;15.56;8.33;15.56;8.89;8.33;6;6");
 
 	/*m_PjtManagementGridCtrl.SetColumnWidth(0, 25);
 	m_PjtManagementGridCtrl.SetColumnWidth(1, 205);
@@ -223,6 +231,7 @@ void CProjectManagementDlg::FillPjtGridCtrl(CProjectDir* SelectedDir)
 	CAutoLock a(&m_Lock);
 
 	m_PjtManagementGridCtrl.DeleteAllItems();
+	InitGridCtrl();
 	m_PjtManagementGridCtrl.SetRowCount((int)SelectedDir->m_subFiles.size() + 1);
 	for (UINT i = 1; i <= SelectedDir->m_subFiles.size(); i++)
 	{
@@ -363,13 +372,20 @@ void CProjectManagementDlg::OnGridClick(NMHDR *pNMHDR, LRESULT *pResult)
 		}
 		CString FileFullPath;
 		FileFullPath = FolderPath + L"\\" + sSelectedFileName;
+		if(JHCom_FileExist(FileFullPath))
+		{
+			if(IDNO == AfxMessageBox(_T("文件已存在，是否覆盖?"), MB_YESNO))
+			{
+				return;
+			}
+		}
 		m_pPrjData->DownloadFile(sSelectedFileParentPath, sSelectedFileName, FileFullPath, UIFileUpCBFunc);
 		FillPjtGridCtrl(m_selectedDir);
 	}
 
 	if (m_nClkCol == 9)//删除
 	{
-		if (IDYES == AfxMessageBox(L"确定删除?"), MB_YESNO)
+		if (IDYES == AfxMessageBox(L"确定删除?", MB_YESNO))
 		{
 			m_pPrjData->DeleteFile(sSelectedFileName,sSelectedFileParentPath);
 			FillPjtGridCtrl(m_selectedDir);
@@ -390,15 +406,30 @@ void CProjectManagementDlg::OnBnClickedButtonDeletedir()
 
 void CProjectManagementDlg::OnBnClickedButtonDownloadall()
 {
+	bool flag = false;
+	for(int i = 1; i < m_PjtManagementGridCtrl.GetRowCount(); i++)
+	{
+		CGridCellBase* pCell = m_PjtManagementGridCtrl.GetCell(i, 0);
+		if(((CGridCellCheck* )pCell)->GetCheck())
+		{
+			flag = true;
+			break;
+		}
+	}
+	if (flag == false)
+	{
+		AfxMessageBox(L"请至少选择一个文件!");
+		return;
+	}
+
+
 	CString sFolderPath = SelFilePath();
 	if (sFolderPath == _T(""))
 	{
 		return;
 	}
 
-	CString sDirPathInProject2 = m_selectedDir->GetDirFullPath();
-	CString sDirPathInProject = m_pPrjData->GetDirString(L"", m_selectedDir);
-	assert(sDirPathInProject == sDirPathInProject2);
+	CString sDirPathInProject = m_selectedDir->GetDirFullPath();
 	
 	vector<CString> fileNames;
 	for(int i = 1; i < m_PjtManagementGridCtrl.GetRowCount(); i++)
@@ -408,10 +439,18 @@ void CProjectManagementDlg::OnBnClickedButtonDownloadall()
 		{
 			CString sCheckedFileName = m_PjtManagementGridCtrl.GetItemText(i, 1);
 			CString sFileSavePath = sFolderPath + L"\\" + sCheckedFileName;
-			fileNames.push_back(sCheckedFileName);
 
 			//判断文件是否存在，若存在，则提示并退出
-
+			if(JHCom_FileExist(sFileSavePath))
+			{
+				CString sTips;
+				sTips.Format(_T("文件%s已存在，是否覆盖?"), sCheckedFileName);
+				if(IDNO == AfxMessageBox(sTips, MB_YESNO))
+				{
+					continue;
+				}
+			}
+			fileNames.push_back(sCheckedFileName);
 		}
 	}
 
@@ -427,17 +466,37 @@ void CProjectManagementDlg::OnBnClickedButtonDownloadall()
 
 void CProjectManagementDlg::OnBnClickedButtonDeleteall()
 {
+	bool flag = false;
 	for(int i = 1; i < m_PjtManagementGridCtrl.GetRowCount(); i++)
 	{
 		CGridCellBase* pCell = m_PjtManagementGridCtrl.GetCell(i, 0);
 		if(((CGridCellCheck* )pCell)->GetCheck())
 		{
-			CString sCheckedFileName = m_PjtManagementGridCtrl.GetItemText(i, 1);
-			CString sCheckedParentPath = m_pPrjData->GetDirString(L"", m_selectedDir);
-			m_pPrjData->DeleteFile(sCheckedFileName, sCheckedParentPath);
+			flag = true;
+			break;
 		}
 	}
-	FillPjtGridCtrl(m_selectedDir);
+	if (flag == false)
+	{
+		AfxMessageBox(L"请至少选择一个文件!");
+		return;
+	}
+
+
+	if (IDYES == AfxMessageBox(L"确定删除?", MB_YESNO))
+	{
+		for(int i = 1; i < m_PjtManagementGridCtrl.GetRowCount(); i++)
+		{
+			CGridCellBase* pCell = m_PjtManagementGridCtrl.GetCell(i, 0);
+			if(((CGridCellCheck* )pCell)->GetCheck())
+			{
+				CString sCheckedFileName = m_PjtManagementGridCtrl.GetItemText(i, 1);
+				CString sCheckedParentPath = m_pPrjData->GetDirString(L"", m_selectedDir);
+				m_pPrjData->DeleteFile(sCheckedFileName, sCheckedParentPath);
+			}
+		}
+		FillPjtGridCtrl(m_selectedDir);
+	}
 }
 
 CProjectManagementDlg* g_projectManagementDlg = NULL;

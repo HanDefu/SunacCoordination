@@ -75,34 +75,43 @@ void CPreviewWithDetail::SetSelected(bool bSelected)
 }
 
 
-void DrawMultLineText(CDC* pDC, CRect rect, int nRowDis, UINT nFromat, CString strText)
+void DrawMultLineText(CDC* pDC, CRect rect, int lineDis, CString sText)
 {
-	CString sTest = _T("测试文字");
-	CSize size = pDC->GetTextExtent(sTest);
-	int nRowHeight = size.cy + nRowDis;
+	if (pDC == NULL)
+		return;
 
-	CRect rtChar;
-	rtChar.top = rect.top;
-	rtChar.bottom = rtChar.top + nRowHeight;
-	rtChar.left = rect.left;
-	rtChar.right = rect.right;
+	CSize textSize = pDC->GetTextExtent("T");
+	int iTextHeight = textSize.cy;
+	int iLineSpace = iTextHeight + lineDis;
 
-	int nPos = 0;
-	
-	do 
+	int iLastStartPos = 0;
+	int iTextLen = sText.GetLength();
+	int iLineCount = (rect.Height() + lineDis) / iLineSpace;
+	CRect rcSubText(rect);
+	// 绘制每一行文本
+	for (int iIndexLine = 0; iIndexLine < iLineCount; iIndexLine++)
 	{
-		int nPos2 = strText.Find(_T('\n'), nPos);
-		if (nPos2<0)
-			break; 
-
-		CString subStr = strText.Mid(nPos, nPos2 - nPos);
-		pDC->DrawText(subStr, rtChar, nFromat);
-
-		rtChar.top = rtChar.bottom;
-		rtChar.bottom += nRowHeight;
-		nPos = nPos2+1;
-
-	} while (nPos>0);
+		// 判断文本是否已经绘制完
+		if (iLastStartPos >= iTextLen)
+			break;
+		rcSubText.top = rect.top + iLineSpace*(iIndexLine);
+		rcSubText.bottom = rcSubText.top + iTextHeight;
+		CString csSubText = sText.Mid(iLastStartPos);
+		if (iIndexLine != iLineCount - 1)
+		{
+			// 使用drawParams获取一行绘制的字符数
+			DRAWTEXTPARAMS drawParams;
+			ZeroMemory(&drawParams, sizeof(DRAWTEXTPARAMS));
+			drawParams.cbSize = sizeof(DRAWTEXTPARAMS);
+			pDC->DrawTextEx(csSubText, rcSubText, DT_LEFT | DT_EDITCONTROL | DT_WORDBREAK, &drawParams);
+			iLastStartPos += drawParams.uiLengthDrawn;
+		}
+		else
+		{
+			// 绘制最后一行
+			pDC->DrawText(csSubText, rcSubText, DT_LEFT | DT_END_ELLIPSIS | DT_EDITCONTROL);
+		}
+	}
 }
 
 void CPreviewWithDetail::DrawText(CDC* pDC)
@@ -132,9 +141,7 @@ void CPreviewWithDetail::DrawText(CDC* pDC)
 	else
 		pDC->SetTextColor(RGB(0, 0, 0));
 
-
-	//pDC->DrawText(m_sText, innerRect, DT_EDITCONTROL | DT_WORDBREAK);
-	DrawMultLineText(pDC, innerRect, 5, DT_EDITCONTROL | DT_WORDBREAK, m_sText);
+	DrawMultLineText(pDC, innerRect, 5, m_sText);
 }
 
 void CPreviewWithDetail::DrawBackGround(CDC* pDC)

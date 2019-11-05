@@ -4,6 +4,7 @@
 #include "FileUploadDownload.h"
 #include "..\Common\ComFun_String.h"
 #include "..\WebIO\WebProjectFile.h"
+#include "..\WebIO\WebIO.h"
 
 
 CProjectInfo::CProjectInfo()
@@ -119,7 +120,7 @@ bool CProjectData::DownloadFile(CString p_sDirPathInProject, CString p_fileName,
 	return true;
 }
 
-bool CProjectData::AddFile(CString p_sFilePath, CString  p_sDirPathInProject, FileUpDownCB p_cbFunc) //p_sDirPathInProject是指上传到哪个目录下,目录层级用\分割，例如：A区\施工图 表示A区文件夹下的施工图文件夹
+bool CProjectData::AddFile(CString p_sFilePath, CString  p_sDirPathInProject, FileUpDownCB p_cbFunc, long long n_fileSize) //p_sDirPathInProject是指上传到哪个目录下,目录层级用\分割，例如：A区\施工图 表示A区文件夹下的施工图文件夹
 {
 	//1上传文件到ftp中
 	CString sFileName = FilePathToFileName(p_sFilePath);
@@ -141,9 +142,12 @@ bool CProjectData::AddFile(CString p_sFilePath, CString  p_sDirPathInProject, Fi
 	sCreateTime.Format(_T("%d/%02d/%02d %02d:%02d:%02d"), nowtime.GetYear(), nowtime.GetMonth(), nowtime.GetDay(), nowtime.GetHour(), nowtime.GetMinute(), nowtime.GetSecond());
 
 	CProjectFile prjfile;
+	prjfile.m_sCreator = WebIO::GetInstance()->GetUserName();
 	prjfile.m_sName = sFileName;
 	prjfile.m_sSaveName = sSaveName;
 	prjfile.m_sCreateTime = sCreateTime;
+	prjfile.m_sFileSize = FileSizeToString(n_fileSize);
+	prjfile.m_sUpdator = WebIO::GetInstance()->GetUserName();
 	prjfile.m_fileState = E_ProjectFile_Uploading;
 	p_pParentDir->AddFile(prjfile);	
 
