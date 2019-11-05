@@ -2,6 +2,7 @@
 #include <vector>
 #include "ProjectFile.h"
 #include "FileUploadDownload.h"
+#include "../Common/ThreadUtil.h"
 
 //项目基本信息
 class CProjectInfo
@@ -57,5 +58,7 @@ protected:
 protected:
 	CProjectInfo m_prjInfo;
 	CProjectDir m_rootDir;	
+
+	CCritSec m_Lock;
 };
 
