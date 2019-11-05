@@ -33,7 +33,7 @@ public:
 	static CString GenerateGuid();
 
 	//以下函数p_sDirPathInProject表示完整的在项目中的目录,使用\分割
-	bool AddFile(CString p_sFilePath, CString  p_sDirPathInProject, FileUpDownCB p_cbFunc); //p_sParentDirPath是指上传到哪个目录下
+	bool AddFile(CString p_sFilePath, CString  p_sDirPathInProject, FileUpDownCB p_cbFunc, long long n_fileSize); //p_sParentDirPath是指上传到哪个目录下
 	bool DeleteFile(CString p_sFileName, CString  p_sDirPathInProject);
 	bool DownloadFile(CString p_sDirPathInProject, CString p_fileName, CString p_sFileLocalPath, FileUpDownCB p_cbFunc);
 

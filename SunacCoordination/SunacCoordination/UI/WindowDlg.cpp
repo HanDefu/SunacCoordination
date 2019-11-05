@@ -339,33 +339,61 @@ void CWindowDlg::OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult)
 		return;
 
 	const CWindowsDimData* dimW1 = pSel->GetDimData(L"W1");
-	if (dimW1 != NULL)
+	if (pSel->m_isDynamic && (dimW1 != NULL))
 	{
-		if ((dimW1->type == SINGLE) || (dimW1->type == MULTI))
+		if (dimW1->type == MULTI)
 		{
 			TYUI_Enable(m_W1);
 			TYUI_InitComboBox(m_W1, dimW1->valueOptions, dimW1->value);
 		}
-		else
+		else if ((dimW1->type == SINGLE) || (dimW1->type == CALC))
+		{
+			double w1 = pSel->GetW1();
+			CString sW1;
+			sW1.Format(L"%.0lf", w1);
+			TYUI_InitComboBox(m_W1, sW1, sW1);
 			TYUI_Disable(m_W1);
+		}
+		else
+		{
+			m_W1.ResetContent();
+			TYUI_Disable(m_W1);
+		}
 	}
 
 	const CWindowsDimData* dimH2 = pSel->GetDimData(L"H2");
-	if (dimH2 != NULL)
+	if (pSel->m_isDynamic && (dimH2 != NULL))
 	{
-		if ((dimH2->type == SINGLE) || (dimH2->type == MULTI))
+		if (dimH2->type == MULTI)
 		{
 			TYUI_Enable(m_H2);
 			TYUI_InitComboBox(m_H2, dimH2->valueOptions, dimH2->value);
 		}
-		else
+		else if ((dimH2->type == SINGLE) || (dimH2->type == CALC))
+		{
+			double h2 = pSel->GetH2();
+			CString sH2;
+			sH2.Format(L"%.0lf", h2);
+			TYUI_InitComboBox(m_H2, sH2, sH2);
 			TYUI_Disable(m_H2);
+		}
+		else
+		{
+			m_H2.ResetContent();
+			TYUI_Disable(m_H2);
+		}
 	}
+	if (pSel->m_isDynamic)
+	{
+		TYUI_Enable(m_isMirror);
+		m_isMirror.SetCheck(pSel->m_isMirror);
+	}
+	else
+		TYUI_Disable(m_isMirror);
 
 	pSel->m_instanceCode = CWindowAutoName::GetInstance()->GetWindowName(*pSel);
 	TYUI_SetText(m_number, pSel->m_instanceCode);
 	m_radioYes = (pSel->m_isBayWindow ? 0 : 1);
-	m_isMirror.SetCheck(pSel->m_isMirror);
 	TYUI_SetInt(m_distance, int(pSel->m_wallDis));
 
 	m_viewDir.ResetContent();

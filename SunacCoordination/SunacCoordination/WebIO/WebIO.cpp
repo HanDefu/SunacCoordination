@@ -56,6 +56,8 @@ bool WebIO::Login(CString p_sUserName, CString p_key)
 	xml.SetDoc((*(nsResponse.GetAllWindowsResult)).c_str());
 
 	ParseLoginInfo(xml, p_sUserName, p_key);*/
+	m_acount = p_sUserName;
+	m_password = p_key;
 	m_bLogin = true;
 	return true;
 }
@@ -65,12 +67,17 @@ int WebIO::GetUserID()
 	return 14;
 }
 
+CString WebIO::GetUserName()
+{
+	return m_acount;
+}
+
 //注意高度值不作为搜索条件 
 //width宽度值，openType开启类型, openNum开启扇数量  gongNengQu功能区, tongFengLiang通风量
 std::vector<AttrWindow>  WebIO::GetWindows(double width, double height, CString openType, int openNum, CString gongNengQu)const
 {
 #ifdef WORK_LOCAL		//本地模式
-	vAttrWindow Local = CWindowLocalDataFromDB::Instance()->GetWindows(width, openType, openNum, gongNengQu);
+	vAttrWindow Local = CWindowLocalDataFromDB::Instance()->GetWindows(width, height, openType, openNum, gongNengQu);
 	return Local;
 #else
 	vAttrWindow Web = CWindowWebData::Instance()->GetWindows(width, height, openType, openNum, gongNengQu);
@@ -108,7 +115,7 @@ std::vector<AttrWindow>  WebIO::GetWindows(double width, double height, CString 
 std::vector<AttrWindow> WebIO::GetDoors(double width, double height, CString openType, int openNum, CString gongNengQu)const
 {
 #ifdef WORK_LOCAL//本地模式
-	return CWindowLocalDataFromDB::Instance()->GetDoors(width, openType, openNum, gongNengQu);
+	return CWindowLocalDataFromDB::Instance()->GetDoors(width, height, openType, openNum, gongNengQu);
 #else
 	return CWindowWebData::Instance()->GetDoors(width, height, openType, openNum, gongNengQu);
 #endif
