@@ -169,7 +169,7 @@ void CWindowAdvanceDlg::InitGlassSeries()
 {
 	if (m_selAttrWindows.empty())
 	{
-		TYUI_InitComboBox(m_boLi, L"", L"");
+		m_boLi.ResetContent();
 		return;
 	}
 
@@ -192,7 +192,7 @@ void CWindowAdvanceDlg::InitAluminumSeries()
 {
 	if (m_selAttrWindows.empty())
 	{
-		TYUI_InitComboBox(m_xingCai, L"", L"");
+		m_xingCai.ResetContent();
 		return;
 	}
 
@@ -230,7 +230,7 @@ void CWindowAdvanceDlg::InitMaterialType()
 {
 	if (m_selAttrWindows.empty())
 	{
-		TYUI_InitComboBox(m_caiZhi, L"", L"");
+		m_caiZhi.ResetContent();
 		return;
 	}
 
@@ -241,12 +241,12 @@ void CWindowAdvanceDlg::InitPlugSlotSize()
 {
 	if (m_selAttrWindows.empty())
 	{
-		TYUI_InitComboBox(m_saiFeng, L"", L"");
+		m_saiFeng.ResetContent();
 		return;
 	}
 	if (m_bFuKuang == 2)
 	{
-		TYUI_InitComboBox(m_saiFeng, L"", L""); //有/无附框时的选项无交集
+		m_saiFeng.ResetContent(); //有/无附框时的选项无交集
 		TYUI_SetText(m_saiFeng, L"多种");
 		return;
 	}
@@ -309,7 +309,7 @@ void CWindowAdvanceDlg::InitAuxiliaryFrameSeries()
 {
 	if (m_selAttrWindows.empty())
 	{
-		TYUI_InitComboBox(m_fuKuangType, L"", L"");
+		m_fuKuangType.ResetContent();
 		return;
 	}
 

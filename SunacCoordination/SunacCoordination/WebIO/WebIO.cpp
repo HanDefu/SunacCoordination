@@ -34,6 +34,28 @@ WebIO::~WebIO()
 bool WebIO::Login(CString p_sUserName, CString p_key)
 {
 	//TODO
+	/*_ns1__GetAllWindows ns;
+	_ns1__GetAllWindowsResponse nsResponse;
+
+	ArgumentSettingServiceSoapProxy cadWeb;
+	InitSoapTime(cadWeb);
+	int nRet = cadWeb.GetAllWindows(&ns, nsResponse);
+
+
+	//判断返回结果是否成功
+	if (nsResponse.GetAllWindowsResult == NULL)
+	{
+		m_bLogin = false;
+		return false;
+	}
+
+
+	//解析字符串出结果
+	CMarkup xml;	
+
+	xml.SetDoc((*(nsResponse.GetAllWindowsResult)).c_str());
+
+	ParseLoginInfo(xml, p_sUserName, p_key);*/
 	m_bLogin = true;
 	return true;
 }
@@ -48,7 +70,7 @@ int WebIO::GetUserID()
 std::vector<AttrWindow>  WebIO::GetWindows(double width, double height, CString openType, int openNum, CString gongNengQu)const
 {
 #ifdef WORK_LOCAL		//本地模式
-	vAttrWindow Local = CWindowLocalDataFromDB::Instance()->GetWindows(width, openType, openNum, gongNengQu);
+	vAttrWindow Local = CWindowLocalDataFromDB::Instance()->GetWindows(width, height, openType, openNum, gongNengQu);
 	return Local;
 #else
 	vAttrWindow Web = CWindowWebData::Instance()->GetWindows(width, height, openType, openNum, gongNengQu);
@@ -86,7 +108,7 @@ std::vector<AttrWindow>  WebIO::GetWindows(double width, double height, CString 
 std::vector<AttrWindow> WebIO::GetDoors(double width, double height, CString openType, int openNum, CString gongNengQu)const
 {
 #ifdef WORK_LOCAL//本地模式
-	return CWindowLocalDataFromDB::Instance()->GetDoors(width, openType, openNum, gongNengQu);
+	return CWindowLocalDataFromDB::Instance()->GetDoors(width, height, openType, openNum, gongNengQu);
 #else
 	return CWindowWebData::Instance()->GetDoors(width, height, openType, openNum, gongNengQu);
 #endif
