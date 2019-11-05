@@ -645,7 +645,7 @@ void CMD_test()
 	std::vector<AttrWindow> WindowFromWebData2 = CWindowWebData::Instance()->GetWindows(1800, 1800, L"外开", 1, L"");
 	std::vector<AttrWindow> WindowFromLocalData = CWindowLocalData::Instance()->GetAllWindows();
 	std::vector<AttrWindow> WindowFromLocalDataFromDB = CWindowLocalDataFromDB::Instance()->GetAllWindows();
-	std::vector<AttrWindow> WindowFromLocalDataFromDB2 = CWindowLocalDataFromDB::Instance()->GetWindows(1800, L"外开", 1, L"全部");
+	std::vector<AttrWindow> WindowFromLocalDataFromDB2 = CWindowLocalDataFromDB::Instance()->GetWindows(1500, 1800, L"外开", 1, L"全部");
 
 	//test比较从excel读取的数据和数据库中读取的数据
 

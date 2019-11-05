@@ -245,7 +245,7 @@ vector<AttrWindow> CWindowLocalDataFromDB::GetAllDoors()const  //获取所有门
 	return alldoor;
 }
 
-std::vector<AttrWindow >  CWindowLocalDataFromDB::GetWindows(double width, CString openType, int openNum, CString gongNengQu)const
+std::vector<AttrWindow >  CWindowLocalDataFromDB::GetWindows(double width, double height, CString openType, int openNum, CString gongNengQu)const
 {
 	std::vector<AttrWindow> data;
 
@@ -255,6 +255,14 @@ std::vector<AttrWindow >  CWindowLocalDataFromDB::GetWindows(double width, CStri
 		if (strs[0] != "Window")
 		{
 			continue;
+		}
+
+		if (!m_allWindowsData[i].m_isDynamic)
+		{
+			double dimW = m_allWindowsData[i].GetW();
+			double dimH = m_allWindowsData[i].GetH();
+			if ((width != dimW) && (height != dimH))
+				continue;
 		}
 
 		const CWindowsDimData* pDiwW = m_allWindowsData[i].GetDimData(_T("W"));
@@ -293,7 +301,7 @@ std::vector<AttrWindow >  CWindowLocalDataFromDB::GetWindows(double width, CStri
 	return data;
 }
 
-std::vector<AttrWindow >  CWindowLocalDataFromDB::GetDoors(double width, CString openType, int openNum, CString gongNengQu)const
+std::vector<AttrWindow >  CWindowLocalDataFromDB::GetDoors(double width, double height, CString openType, int openNum, CString gongNengQu)const
 {
 	std::vector<AttrWindow> data;
 

@@ -49,7 +49,7 @@ public:
 	CStatic m_StcUploaderName;
 	CStatic m_StcUploadTime;
 	CTreeCtrl m_TreePrjDir;
-	CGridCtrl m_PjtManagementGridCtrl;
+	CGridCtrlEx m_PjtManagementGridCtrl;
 
 	afx_msg void OnGridClick(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedButtonUpload();

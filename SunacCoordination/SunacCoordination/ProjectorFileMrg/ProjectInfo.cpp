@@ -134,17 +134,21 @@ bool CProjectData::AddFile(CString p_sFilePath, CString  p_sDirPathInProject, Fi
 	if (p_pParentDir == NULL)
 		return false;
 
+	CTime nowtime = CTime::GetCurrentTime();
+	CString sCreateTime;
+	sCreateTime.Format(_T("%d/%02d/%02d %02d:%02d:%02d"), nowtime.GetYear(), nowtime.GetMonth(), nowtime.GetDay(), nowtime.GetHour(), nowtime.GetMinute(), nowtime.GetSecond());
+
 	CProjectFile prjfile;
 	prjfile.m_sName = sFileName;
 	prjfile.m_sSaveName = sSaveName;
+	prjfile.m_sCreateTime = sCreateTime;
 	prjfile.m_fileState = E_ProjectFile_Uploading;
 	p_pParentDir->AddFile(prjfile);	
 
 	//////////////////////////////////////////////////////////////////////////
 	//以日期为文件夹名
 	CString sDir;
-	CTime nowtime = CTime::GetCurrentTime();
-	sDir.Format(_T("%d%2d%2d"), nowtime.GetYear(), nowtime.GetMonth(), nowtime.GetDay());
+	sDir.Format(_T("%d%02d%02d"), nowtime.GetYear(), nowtime.GetMonth(), nowtime.GetDay());
 
 #if 0
 	//2. 上传
