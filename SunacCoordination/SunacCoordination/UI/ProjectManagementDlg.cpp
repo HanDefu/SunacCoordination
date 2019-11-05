@@ -71,10 +71,12 @@ CString SelFilePath()
 	CString         strFolderPath = TEXT("");  
 
 	BROWSEINFO      sInfo;  
-	::ZeroMemory(&sInfo, sizeof(BROWSEINFO));  
-	sInfo.pidlRoot   = 0;  
-	sInfo.lpszTitle   = _T("请选择处理结果存储路径");  
-	sInfo.ulFlags   = BIF_RETURNONLYFSDIRS|BIF_EDITBOX|BIF_DONTGOBELOWDOMAIN;  
+	::ZeroMemory(&sInfo, sizeof(BROWSEINFO));
+	
+	
+	sInfo.pidlRoot   = NULL;  
+	sInfo.lpszTitle   = _T("请选择文件存储路径");  
+	sInfo.ulFlags   = BIF_RETURNONLYFSDIRS|BIF_EDITBOX|BIF_DONTGOBELOWDOMAIN|BIF_USENEWUI;  
 	sInfo.lpfn     = NULL;  
 
 	// 显示文件夹选择对话框  
@@ -85,7 +87,11 @@ CString SelFilePath()
 		if (::SHGetPathFromIDList(lpidlBrowse,szFolderPath))    
 		{  
 			strFolderPath = szFolderPath;  
-		}  
+		}
+		else
+		{
+			return _T("");
+		}
 	}  
 	if(lpidlBrowse != NULL)  
 	{  
@@ -194,16 +200,18 @@ void CProjectManagementDlg::InitGridCtrl()
 	m_PjtManagementGridCtrl.SetItemText(0, 6, L"文件大小");
 	m_PjtManagementGridCtrl.SetItemText(0, 7, L"文件状态");
 
-	m_PjtManagementGridCtrl.SetColumnWidth(0, 30);
-	m_PjtManagementGridCtrl.SetColumnWidth(1, 140);
-	m_PjtManagementGridCtrl.SetColumnWidth(2, 60);
-	m_PjtManagementGridCtrl.SetColumnWidth(3, 150);
-	m_PjtManagementGridCtrl.SetColumnWidth(4, 60);
+	m_PjtManagementGridCtrl.SetHeaderWidth(L"3.33;+;8.33;15.56;8.33;15.56;8.89;8.33;4.44;4.44");
+
+	/*m_PjtManagementGridCtrl.SetColumnWidth(0, 25);
+	m_PjtManagementGridCtrl.SetColumnWidth(1, 205);
+	m_PjtManagementGridCtrl.SetColumnWidth(2, 75);
+	m_PjtManagementGridCtrl.SetColumnWidth(3, 140);
+	m_PjtManagementGridCtrl.SetColumnWidth(4, 75);
 	m_PjtManagementGridCtrl.SetColumnWidth(5, 140);
 	m_PjtManagementGridCtrl.SetColumnWidth(6, 80);
 	m_PjtManagementGridCtrl.SetColumnWidth(7, 75);
 	m_PjtManagementGridCtrl.SetColumnWidth(8, 40);
-	m_PjtManagementGridCtrl.SetColumnWidth(9, 40);
+	m_PjtManagementGridCtrl.SetColumnWidth(9, 40);*/
 
 	m_PjtManagementGridCtrl.SetSingleRowSelection(TRUE);
 
@@ -294,7 +302,11 @@ void CProjectManagementDlg::OnNMClickTreePrjdir(NMHDR *pNMHDR, LRESULT *pResult)
 void CProjectManagementDlg::OnBnClickedButtonNewdir()
 {
 	CNewDirDlg dlg;
-	dlg.DoModal();
+	if(IDOK != dlg.DoModal())
+	{
+		return;
+	}
+
 	CString sNewDir = dlg.m_sNewDir;
 	if (sNewDir == L"")
 	{
@@ -319,6 +331,10 @@ void CProjectManagementDlg::OnGridClick(NMHDR *pNMHDR, LRESULT *pResult)
 	m_nClkRow = pItem->iRow;
 	m_nClkCol = pItem->iColumn;
 	CString sSelectedFileName = m_PjtManagementGridCtrl.GetItemText(m_nClkRow, 1);
+	if (m_selectedDir == NULL)
+	{
+		return;
+	}
 	CString sSelectedFileParentPath = m_pPrjData->GetDirString(L"", m_selectedDir);
 	CProjectFile SelectedFile;
 
@@ -333,6 +349,10 @@ void CProjectManagementDlg::OnGridClick(NMHDR *pNMHDR, LRESULT *pResult)
 	if (m_nClkCol == 8)//下载
 	{
 		CString FolderPath = SelFilePath();
+		if (FolderPath == _T(""))
+		{
+			return;
+		}
 		CString FileFullPath;
 		FileFullPath = FolderPath + L"\\" + sSelectedFileName;
 		m_pPrjData->DownloadFile(sSelectedFileParentPath, sSelectedFileName, FileFullPath, UIFileUpCBFunc);
@@ -341,8 +361,11 @@ void CProjectManagementDlg::OnGridClick(NMHDR *pNMHDR, LRESULT *pResult)
 
 	if (m_nClkCol == 9)//删除
 	{
-		m_pPrjData->DeleteFile(sSelectedFileName,sSelectedFileParentPath);
-		FillPjtGridCtrl(m_selectedDir);
+		if (IDYES == AfxMessageBox(L"确定删除?"), MB_YESNO)
+		{
+			m_pPrjData->DeleteFile(sSelectedFileName,sSelectedFileParentPath);
+			FillPjtGridCtrl(m_selectedDir);
+		}
 	}
 }
 
@@ -360,6 +383,14 @@ void CProjectManagementDlg::OnBnClickedButtonDeletedir()
 void CProjectManagementDlg::OnBnClickedButtonDownloadall()
 {
 	CString FolderPath = SelFilePath();
+	if (FolderPath == _T(""))
+	{
+		return;
+	}
+
+
+
+
 	for(int i = 1; i < m_PjtManagementGridCtrl.GetRowCount(); i++)
 	{
 		CGridCellBase* pCell = m_PjtManagementGridCtrl.GetCell(i, 0);
@@ -368,7 +399,7 @@ void CProjectManagementDlg::OnBnClickedButtonDownloadall()
 			CString sCheckedFileName = m_PjtManagementGridCtrl.GetItemText(i, 1);
 			CString sCheckedParentPath = m_pPrjData->GetDirString(L"", m_selectedDir);
 			CString FileFullName = FolderPath + L"\\" + sCheckedFileName;
-			CFileUpDownLoad::DownloadFile(sCheckedFileName, sCheckedParentPath);
+			//CFileUpDownLoad::DownloadFile(sCheckedFileName, sCheckedParentPath);
 			m_pPrjData->DownloadFile(sCheckedParentPath, sCheckedFileName, FileFullName, UIFileUpCBFunc);
 		}
 	}
