@@ -179,3 +179,5 @@ size_t ConvertStringToUTF8( LPCTSTR strIn, char *& strOutUTF8MB );
 CString UTF8ToGBK(const std::string& strUTF8);
 
 CString GBKToUTF8(const std::string& strGBK);
+
+CString FileSizeToString(long long p_size);

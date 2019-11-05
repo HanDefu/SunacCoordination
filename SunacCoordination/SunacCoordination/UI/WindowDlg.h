@@ -42,11 +42,15 @@ public:
 	afx_msg void OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnSelChangedW1();
 	afx_msg void OnSelChangedH2();
+	afx_msg void OnSelChangedW3();
+	afx_msg void OnSelChangedH3();
+	afx_msg void OnSelChangedView();
 	afx_msg void OnBnClickedBayWindow();
 	afx_msg void OnSelChangedWallDis();
 	void UpdateEnable();
 	void UpdateInstanceCode();
 	void UpdateVent();
+	void UpdateDimDataToComboBox(CComboBox& comboBox, const AttrWindow& attrWindow, CString code);
 	void LoadDefaultValue();
 	AttrWindow* GetSelWindow();
 
@@ -58,7 +62,6 @@ protected:
 
 	CEdit m_width; //宽度
 	CEdit m_height; //高度
-	CComboBox m_doorType; //门类型
 	CComboBox m_areaType; //功能区类型
 	CComboBox m_openType; //开启类型
 	CComboBox m_openAmount; //开启扇数量
@@ -70,6 +73,9 @@ protected:
 	CComboBox m_W1; //开启扇宽度
 	CComboBox m_H2; //下固定值
 	CComboBox m_distance; //距外墙距离
+	CComboBox m_W3;
+	CComboBox m_H3;
+	CComboBox m_insertDir;
 	
 	int m_radioDoor; //门窗单选
 	int m_radioYes; //是否凸窗

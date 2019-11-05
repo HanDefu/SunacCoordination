@@ -609,3 +609,26 @@ CString GBKToUTF8(const std::string& strGBK)
 	str2 = NULL;
 	return strOutUTF8;
 }
+
+CString FileSizeToString(long long p_size)
+{
+	long long kSize = p_size >> 10; //תΪk
+	long long mSize = p_size >> 20; //תΪM
+	long long gSize = mSize >> 10; //תΪG
+
+	CString str;
+	if (gSize>0)
+	{
+		str.Format(_T("%dM"), (int)mSize);
+	}
+	else if (mSize>0)
+	{
+		str.Format(_T("%.3fM"), ((double)kSize)/1000);
+	}
+	else
+	{
+		str.Format(_T("%dK"), (int)kSize);
+	}
+
+	return str;
+}

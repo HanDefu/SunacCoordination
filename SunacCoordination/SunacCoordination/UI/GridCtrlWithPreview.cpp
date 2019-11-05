@@ -60,7 +60,14 @@ CGridCellForPreview* CGridCtrlWithPreview::AddPreview(int nRow, int nCol, CStrin
 	GetCellRect(nRow, nCol, gridRect);
 	CPreviewWithDetail* pPreview = new CPreviewWithDetail;
 	pPreview->Create(_T(""), WS_CHILD, gridRect, this);
-	pPreview->SetLayoutMode(dir);
+
+	double rate = (double)gridRect.Height() / gridRect.Width();
+	if (dir == PREVIEW_LAYOUT_VERTICAL)
+		rate = 1 / rate;
+	rate = max(0.1, rate);
+	rate = min(0.9, rate);
+	pPreview->SetLayoutMode(dir, rate);
+
 	if (sPath.Right(4) == L".dwg")
 		pPreview->SetPreview(sPath);
 	else
