@@ -68,6 +68,9 @@ public:
 	//获取登陆的用户ID
 	int GetUserID();
 
+	//解析登录xml
+	bool ParseLoginInfo(CMarkup xml, CString p_sUserName, CString p_key);
+
 
 protected:
 	CConfigDictionary m_configDic;
@@ -85,7 +88,10 @@ protected:
 
 	CRailingWebData m_railingWebData;
 
-	bool m_bLogin;	
+	bool m_bLogin;//是否登录
+	int m_userID;//用户ID
+	CString m_acount;//账号
+	CString m_password;//密码
 }; 
 
 #define WEBINST (WebIO::GetInstance())
