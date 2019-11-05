@@ -181,7 +181,8 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 
 	delete pRailing;
 	
-	OnOK();
+	ShowWindow(TRUE);
+	//OnOK();
 }
 
 LRESULT CRailingDlg::onAcadKeepFocus(WPARAM, LPARAM)
