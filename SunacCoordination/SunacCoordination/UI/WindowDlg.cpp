@@ -134,6 +134,8 @@ BOOL CWindowDlg::OnInitDialog()
 
 void CWindowDlg::OnBnClickedButtonInsert()
 {
+	UpdateData();
+
 	AttrWindow* pSel = GetSelWindow();
 	if (pSel == NULL)
 	{
@@ -275,6 +277,7 @@ void CWindowDlg::OnBnClickedRadioDoor()
 {
 	int preVal = m_radioDoor;
 	UpdateData(TRUE);
+
 	if (m_radioDoor != preVal)
 		UpdateEnable();
 }

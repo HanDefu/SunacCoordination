@@ -30,32 +30,12 @@
 //门窗表
 void CMD_SunacWindowsTable()
 {
+	CString info, str;
+
 	//第一步：选择需要统计的门窗
-	vAcDbObjectId m_vids;//当前选择的ids
-	acutPrintf(L"请选择需要计算门窗表的门窗");
-	ads_name sset;
-	acedSSGet(NULL,NULL,NULL,NULL,sset);
-	Adesk::Int32 length = 0;
-	acedSSLength(sset, &length);
-	for (int i = 0; i < length; i++)
-	{
-		ads_name ent;
-		acedSSName(sset, i, ent);
-		AcDbObjectId objId = 0;
-		acdbGetObjectId(objId, ent);
-		if (objId != 0 && TY_IsWindow(objId))
-		{
-			m_vids.push_back(objId);
-		}
-	}
-	acedSSFree(sset);
-
-	CString info,str;
-	info.Format(L"共选择了%d个门窗\n",m_vids.size());
-
+	vAcDbObjectId m_vids = SelectWindows();
 	if (m_vids.size() == 0)
 	{
-		acutPrintf(L"未选择到门窗\n");
 		return;
 	}
 
@@ -79,8 +59,7 @@ void CMD_SunacWindowsTable()
 		else
 		{
 			allWindowsTypes[index].m_sameTypeIds.push_back(oneWindow.m_id);
-		}
-		
+		}		
 	}
 
 	//第四步 开始输出数据
