@@ -175,6 +175,16 @@ BOOL CProjectManagementDlg::OnInitDialog()
 {
 	CAcUiDialog::OnInitDialog();
 
+	CRect DlgRect,CADRect;
+	GetWindowRect(DlgRect);
+	GetParent()->GetWindowRect(CADRect);
+
+	int xPos, yPos;
+	xPos = (CADRect.Width() - DlgRect.Width())/2;
+	yPos = (CADRect.Height() - DlgRect.Height())/2;
+	
+	SetWindowPos(NULL, xPos, yPos, 0, 0, SWP_NOOWNERZORDER|SWP_NOSIZE|SWP_NOZORDER);
+
 	CFont Font;
 	Font.CreatePointFont(160, L"");
 	m_StcRootName.SetFont(&Font);
@@ -237,12 +247,26 @@ void CProjectManagementDlg::FillPjtGridCtrl(CProjectDir* SelectedDir)
 	{
 		m_PjtManagementGridCtrl.SetCellType(i, 0, RUNTIME_CLASS(CGridCellCheck));
 		m_PjtManagementGridCtrl.SetItemText(i, 1, SelectedDir->m_subFiles[i - 1].m_sName);
+		m_PjtManagementGridCtrl.SetItemState(i, 1, GVIS_READONLY);
+
 		m_PjtManagementGridCtrl.SetItemText(i, 2, SelectedDir->m_subFiles[i - 1].m_sCreator);
+		m_PjtManagementGridCtrl.SetItemState(i, 2, GVIS_READONLY);
+
 		m_PjtManagementGridCtrl.SetItemText(i, 3, SelectedDir->m_subFiles[i - 1].m_sCreateTime);
+		m_PjtManagementGridCtrl.SetItemState(i, 3, GVIS_READONLY);
+
 		m_PjtManagementGridCtrl.SetItemText(i, 4, SelectedDir->m_subFiles[i - 1].m_sUpdator);
+		m_PjtManagementGridCtrl.SetItemState(i, 4, GVIS_READONLY);
+
 		m_PjtManagementGridCtrl.SetItemText(i, 5, SelectedDir->m_subFiles[i - 1].m_sUpdateTime);
+		m_PjtManagementGridCtrl.SetItemState(i, 5, GVIS_READONLY);
+
 		m_PjtManagementGridCtrl.SetItemText(i, 6, SelectedDir->m_subFiles[i - 1].m_sFileSize);
+		m_PjtManagementGridCtrl.SetItemState(i, 6, GVIS_READONLY);
+
 		m_PjtManagementGridCtrl.SetItemText(i, 7, EProjectFileStateToCString(SelectedDir->m_subFiles[i - 1].m_fileState));
+		m_PjtManagementGridCtrl.SetItemState(i, 7, GVIS_READONLY);
+
 		m_PjtManagementGridCtrl.SetItemText(i, 8, L"下载");
 		CGridCtrlUtil::SetCellButtonType(m_PjtManagementGridCtrl, i, 8);
 		m_PjtManagementGridCtrl.SetItemState(i, 8, GVIS_READONLY);
@@ -363,7 +387,7 @@ void CProjectManagementDlg::OnGridClick(NMHDR *pNMHDR, LRESULT *pResult)
 	m_StcUploaderName.SetWindowTextW(SelectedFile.m_sUpdator); 
 	m_StcUploadTime.SetWindowTextW(SelectedFile.m_sUpdateTime);
 
-	if (m_nClkCol == 8)//下载
+	if (m_nClkCol == 8 && m_nClkRow != 0)//下载
 	{
 		CString FolderPath = SelFilePath();
 		if (FolderPath == _T(""))
@@ -383,7 +407,7 @@ void CProjectManagementDlg::OnGridClick(NMHDR *pNMHDR, LRESULT *pResult)
 		FillPjtGridCtrl(m_selectedDir);
 	}
 
-	if (m_nClkCol == 9)//删除
+	if (m_nClkCol == 9 && m_nClkRow != 0)//删除
 	{
 		if (IDYES == AfxMessageBox(L"确定删除?", MB_YESNO))
 		{

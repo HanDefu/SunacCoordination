@@ -57,8 +57,11 @@ BOOL DlgLogin::OnInitDialog()
 {
 	CAcUiDialog::OnInitDialog();
 
-	m_name.SetWindowText(L"13621367728");
-	m_password.SetWindowText(L"111111");
+	/*m_name.SetWindowText(L"13621367728");
+	m_password.SetWindowText(L"111111");*/
+
+	m_name.SetWindowText(L"LeavE");
+	m_password.SetWindowText(L"123456");
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 }

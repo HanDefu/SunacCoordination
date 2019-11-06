@@ -71,7 +71,7 @@ public:
 
 
 	//½âÎöµÇÂ¼xml
-	bool ParseLoginInfo(CMarkup xml, CString p_sUserName, CString p_key);
+	bool ParseLoginInfo(CMarkup xml);
 
 
 protected:
@@ -92,7 +92,7 @@ protected:
 
 	bool m_bLogin;//ÊÇ·ñµÇÂ¼
 	int m_userID;//ÓÃ»§ID
-	CString m_acount;//ÕËºÅ
+	CString m_userName;//ÕËºÅ
 	CString m_password;//ÃÜÂë
 }; 
 

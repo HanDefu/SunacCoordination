@@ -33,17 +33,23 @@ WebIO::~WebIO()
 
 bool WebIO::Login(CString p_sUserName, CString p_key)
 {
-	//TODO
-	/*_ns1__GetAllWindows ns;
-	_ns1__GetAllWindowsResponse nsResponse;
+	_ns1__CheckUserInfo ns;
+	_ns1__CheckUserInfoResponse nsResponse;
+
+	std::wstring sUserName, sKey;
+	sUserName = p_sUserName;
+	sKey = p_key;
+
+	ns.userName = &sUserName;
+	ns.password = &sKey;
 
 	ArgumentSettingServiceSoapProxy cadWeb;
 	InitSoapTime(cadWeb);
-	int nRet = cadWeb.GetAllWindows(&ns, nsResponse);
+	int nRet = cadWeb.CheckUserInfo(&ns, nsResponse);
 
 
 	//判断返回结果是否成功
-	if (nsResponse.GetAllWindowsResult == NULL)
+	if (nsResponse.CheckUserInfoResult == NULL)
 	{
 		m_bLogin = false;
 		return false;
@@ -53,23 +59,62 @@ bool WebIO::Login(CString p_sUserName, CString p_key)
 	//解析字符串出结果
 	CMarkup xml;	
 
-	xml.SetDoc((*(nsResponse.GetAllWindowsResult)).c_str());
+	xml.SetDoc((*(nsResponse.CheckUserInfoResult)).c_str());
 
-	ParseLoginInfo(xml, p_sUserName, p_key);*/
-	m_acount = p_sUserName;
-	m_password = p_key;
-	m_bLogin = true;
-	return true;
+	if (ParseLoginInfo(xml))
+	{
+		m_userName = p_sUserName;
+		m_password = p_key;
+		m_bLogin = true;
+		return true;
+	}
+	else
+	{
+		m_bLogin = false;
+		return false;
+	}
+	
+	
 }
 
 int WebIO::GetUserID()
 {
-	return 14;
+	return m_userID;
 }
 
 CString WebIO::GetUserName()
 {
-	return m_acount;
+	return m_userName;
+}
+
+bool WebIO::ParseLoginInfo(CMarkup xml)
+{
+	xml.ResetMainPos();
+	xml.FindElem();	//根节点
+
+	xml.IntoElem();
+	{
+		if (xml.FindElem(_T("Code")))
+		{
+			if(_ttoi(xml.GetData()) != 100)
+			{
+				return false;
+			}
+		}
+		if (xml.FindElem(_T("User")))
+		{
+			xml.IntoElem();
+			{
+				if (xml.FindElem(_T("Id")))
+				{
+					m_userID = _ttoi(xml.GetData());
+				}
+			}
+			xml.OutOfElem();
+		}
+	}
+	xml.OutOfElem();
+	return true;
 }
 
 //注意高度值不作为搜索条件 

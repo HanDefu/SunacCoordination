@@ -378,6 +378,190 @@ inline int soap_POST_recv_std__wstring(struct soap *soap, std::wstring *p)
 }
 #endif
 
+#ifndef SOAP_TYPE__ns1__CheckUserInfoResponse_DEFINED
+#define SOAP_TYPE__ns1__CheckUserInfoResponse_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__CheckUserInfoResponse(struct soap*, const char*, int, const _ns1__CheckUserInfoResponse *, const char*);
+SOAP_FMAC3 _ns1__CheckUserInfoResponse * SOAP_FMAC4 soap_in__ns1__CheckUserInfoResponse(struct soap*, const char*, _ns1__CheckUserInfoResponse *, const char*);
+SOAP_FMAC1 _ns1__CheckUserInfoResponse * SOAP_FMAC2 soap_instantiate__ns1__CheckUserInfoResponse(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__CheckUserInfoResponse * soap_new__ns1__CheckUserInfoResponse(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__CheckUserInfoResponse(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__CheckUserInfoResponse * soap_new_req__ns1__CheckUserInfoResponse(
+	struct soap *soap)
+{
+	_ns1__CheckUserInfoResponse *_p = ::soap_new__ns1__CheckUserInfoResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__CheckUserInfoResponse * soap_new_set__ns1__CheckUserInfoResponse(
+	struct soap *soap,
+	std::wstring *CheckUserInfoResult)
+{
+	_ns1__CheckUserInfoResponse *_p = ::soap_new__ns1__CheckUserInfoResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__CheckUserInfoResponse::CheckUserInfoResult = CheckUserInfoResult;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__CheckUserInfoResponse(struct soap *soap, _ns1__CheckUserInfoResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:CheckUserInfoResponse", p->soap_type() == SOAP_TYPE__ns1__CheckUserInfoResponse ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__CheckUserInfoResponse(struct soap *soap, const char *URL, _ns1__CheckUserInfoResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:CheckUserInfoResponse", p->soap_type() == SOAP_TYPE__ns1__CheckUserInfoResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__CheckUserInfoResponse(struct soap *soap, const char *URL, _ns1__CheckUserInfoResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:CheckUserInfoResponse", p->soap_type() == SOAP_TYPE__ns1__CheckUserInfoResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__CheckUserInfoResponse(struct soap *soap, const char *URL, _ns1__CheckUserInfoResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:CheckUserInfoResponse", p->soap_type() == SOAP_TYPE__ns1__CheckUserInfoResponse ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__CheckUserInfoResponse * SOAP_FMAC4 soap_get__ns1__CheckUserInfoResponse(struct soap*, _ns1__CheckUserInfoResponse *, const char*, const char*);
+
+inline int soap_read__ns1__CheckUserInfoResponse(struct soap *soap, _ns1__CheckUserInfoResponse *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__CheckUserInfoResponse(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__CheckUserInfoResponse(struct soap *soap, const char *URL, _ns1__CheckUserInfoResponse *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__CheckUserInfoResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__CheckUserInfoResponse(struct soap *soap, _ns1__CheckUserInfoResponse *p)
+{
+	if (::soap_read__ns1__CheckUserInfoResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE__ns1__CheckUserInfo_DEFINED
+#define SOAP_TYPE__ns1__CheckUserInfo_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__CheckUserInfo(struct soap*, const char*, int, const _ns1__CheckUserInfo *, const char*);
+SOAP_FMAC3 _ns1__CheckUserInfo * SOAP_FMAC4 soap_in__ns1__CheckUserInfo(struct soap*, const char*, _ns1__CheckUserInfo *, const char*);
+SOAP_FMAC1 _ns1__CheckUserInfo * SOAP_FMAC2 soap_instantiate__ns1__CheckUserInfo(struct soap*, int, const char*, const char*, size_t*);
+
+inline _ns1__CheckUserInfo * soap_new__ns1__CheckUserInfo(struct soap *soap, int n = -1)
+{
+	return soap_instantiate__ns1__CheckUserInfo(soap, n, NULL, NULL, NULL);
+}
+
+inline _ns1__CheckUserInfo * soap_new_req__ns1__CheckUserInfo(
+	struct soap *soap)
+{
+	_ns1__CheckUserInfo *_p = ::soap_new__ns1__CheckUserInfo(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline _ns1__CheckUserInfo * soap_new_set__ns1__CheckUserInfo(
+	struct soap *soap,
+	std::wstring *userName,
+	std::wstring *password)
+{
+	_ns1__CheckUserInfo *_p = ::soap_new__ns1__CheckUserInfo(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->_ns1__CheckUserInfo::userName = userName;
+		_p->_ns1__CheckUserInfo::password = password;
+	}
+	return _p;
+}
+
+inline int soap_write__ns1__CheckUserInfo(struct soap *soap, _ns1__CheckUserInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:CheckUserInfo", p->soap_type() == SOAP_TYPE__ns1__CheckUserInfo ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT__ns1__CheckUserInfo(struct soap *soap, const char *URL, _ns1__CheckUserInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:CheckUserInfo", p->soap_type() == SOAP_TYPE__ns1__CheckUserInfo ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH__ns1__CheckUserInfo(struct soap *soap, const char *URL, _ns1__CheckUserInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:CheckUserInfo", p->soap_type() == SOAP_TYPE__ns1__CheckUserInfo ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send__ns1__CheckUserInfo(struct soap *soap, const char *URL, _ns1__CheckUserInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns1:CheckUserInfo", p->soap_type() == SOAP_TYPE__ns1__CheckUserInfo ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 _ns1__CheckUserInfo * SOAP_FMAC4 soap_get__ns1__CheckUserInfo(struct soap*, _ns1__CheckUserInfo *, const char*, const char*);
+
+inline int soap_read__ns1__CheckUserInfo(struct soap *soap, _ns1__CheckUserInfo *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get__ns1__CheckUserInfo(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET__ns1__CheckUserInfo(struct soap *soap, const char *URL, _ns1__CheckUserInfo *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read__ns1__CheckUserInfo(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv__ns1__CheckUserInfo(struct soap *soap, _ns1__CheckUserInfo *p)
+{
+	if (::soap_read__ns1__CheckUserInfo(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
 #ifndef SOAP_TYPE__ns1__DeleteCadDrawingByFileIDResponse_DEFINED
 #define SOAP_TYPE__ns1__DeleteCadDrawingByFileIDResponse_DEFINED
 SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__DeleteCadDrawingByFileIDResponse(struct soap*, const char*, int, const _ns1__DeleteCadDrawingByFileIDResponse *, const char*);
@@ -4802,6 +4986,100 @@ inline int soap_POST_recv_SOAP_ENV__Header(struct soap *soap, struct SOAP_ENV__H
 
 #endif
 
+#ifndef SOAP_TYPE___ns1__CheckUserInfo__DEFINED
+#define SOAP_TYPE___ns1__CheckUserInfo__DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__CheckUserInfo_(struct soap*, struct __ns1__CheckUserInfo_ *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__CheckUserInfo_(struct soap*, const struct __ns1__CheckUserInfo_ *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__CheckUserInfo_(struct soap*, const char*, int, const struct __ns1__CheckUserInfo_ *, const char*);
+SOAP_FMAC3 struct __ns1__CheckUserInfo_ * SOAP_FMAC4 soap_in___ns1__CheckUserInfo_(struct soap*, const char*, struct __ns1__CheckUserInfo_ *, const char*);
+SOAP_FMAC1 struct __ns1__CheckUserInfo_ * SOAP_FMAC2 soap_instantiate___ns1__CheckUserInfo_(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__CheckUserInfo_ * soap_new___ns1__CheckUserInfo_(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__CheckUserInfo_(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__CheckUserInfo_ * soap_new_req___ns1__CheckUserInfo_(
+	struct soap *soap)
+{
+	struct __ns1__CheckUserInfo_ *_p = ::soap_new___ns1__CheckUserInfo_(soap);
+	if (_p)
+	{	::soap_default___ns1__CheckUserInfo_(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__CheckUserInfo_ * soap_new_set___ns1__CheckUserInfo_(
+	struct soap *soap,
+	_ns1__CheckUserInfo *ns1__CheckUserInfo)
+{
+	struct __ns1__CheckUserInfo_ *_p = ::soap_new___ns1__CheckUserInfo_(soap);
+	if (_p)
+	{	::soap_default___ns1__CheckUserInfo_(soap, _p);
+		_p->ns1__CheckUserInfo = ns1__CheckUserInfo;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__CheckUserInfo_(struct soap*, const struct __ns1__CheckUserInfo_ *, const char*, const char*);
+
+inline int soap_write___ns1__CheckUserInfo_(struct soap *soap, struct __ns1__CheckUserInfo_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__CheckUserInfo_(soap, p), 0) || ::soap_put___ns1__CheckUserInfo_(soap, p, "-ns1:CheckUserInfo", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__CheckUserInfo_(struct soap *soap, const char *URL, struct __ns1__CheckUserInfo_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__CheckUserInfo_(soap, p), 0) || ::soap_put___ns1__CheckUserInfo_(soap, p, "-ns1:CheckUserInfo", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__CheckUserInfo_(struct soap *soap, const char *URL, struct __ns1__CheckUserInfo_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__CheckUserInfo_(soap, p), 0) || ::soap_put___ns1__CheckUserInfo_(soap, p, "-ns1:CheckUserInfo", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__CheckUserInfo_(struct soap *soap, const char *URL, struct __ns1__CheckUserInfo_ const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__CheckUserInfo_(soap, p), 0) || ::soap_put___ns1__CheckUserInfo_(soap, p, "-ns1:CheckUserInfo", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__CheckUserInfo_ * SOAP_FMAC4 soap_get___ns1__CheckUserInfo_(struct soap*, struct __ns1__CheckUserInfo_ *, const char*, const char*);
+
+inline int soap_read___ns1__CheckUserInfo_(struct soap *soap, struct __ns1__CheckUserInfo_ *p)
+{
+	if (p)
+	{	::soap_default___ns1__CheckUserInfo_(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__CheckUserInfo_(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__CheckUserInfo_(struct soap *soap, const char *URL, struct __ns1__CheckUserInfo_ *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__CheckUserInfo_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__CheckUserInfo_(struct soap *soap, struct __ns1__CheckUserInfo_ *p)
+{
+	if (::soap_read___ns1__CheckUserInfo_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
 #ifndef SOAP_TYPE___ns1__DeleteCadDrawingByFileID__DEFINED
 #define SOAP_TYPE___ns1__DeleteCadDrawingByFileID__DEFINED
 SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__DeleteCadDrawingByFileID_(struct soap*, struct __ns1__DeleteCadDrawingByFileID_ *);
@@ -6771,6 +7049,100 @@ inline int soap_GET___ns1__StandardDesignAttribute_(struct soap *soap, const cha
 inline int soap_POST_recv___ns1__StandardDesignAttribute_(struct soap *soap, struct __ns1__StandardDesignAttribute_ *p)
 {
 	if (::soap_read___ns1__StandardDesignAttribute_(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE___ns1__CheckUserInfo_DEFINED
+#define SOAP_TYPE___ns1__CheckUserInfo_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__CheckUserInfo(struct soap*, struct __ns1__CheckUserInfo *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__CheckUserInfo(struct soap*, const struct __ns1__CheckUserInfo *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__CheckUserInfo(struct soap*, const char*, int, const struct __ns1__CheckUserInfo *, const char*);
+SOAP_FMAC3 struct __ns1__CheckUserInfo * SOAP_FMAC4 soap_in___ns1__CheckUserInfo(struct soap*, const char*, struct __ns1__CheckUserInfo *, const char*);
+SOAP_FMAC1 struct __ns1__CheckUserInfo * SOAP_FMAC2 soap_instantiate___ns1__CheckUserInfo(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct __ns1__CheckUserInfo * soap_new___ns1__CheckUserInfo(struct soap *soap, int n = -1)
+{
+	return soap_instantiate___ns1__CheckUserInfo(soap, n, NULL, NULL, NULL);
+}
+
+inline struct __ns1__CheckUserInfo * soap_new_req___ns1__CheckUserInfo(
+	struct soap *soap)
+{
+	struct __ns1__CheckUserInfo *_p = ::soap_new___ns1__CheckUserInfo(soap);
+	if (_p)
+	{	::soap_default___ns1__CheckUserInfo(soap, _p);
+	}
+	return _p;
+}
+
+inline struct __ns1__CheckUserInfo * soap_new_set___ns1__CheckUserInfo(
+	struct soap *soap,
+	_ns1__CheckUserInfo *ns1__CheckUserInfo)
+{
+	struct __ns1__CheckUserInfo *_p = ::soap_new___ns1__CheckUserInfo(soap);
+	if (_p)
+	{	::soap_default___ns1__CheckUserInfo(soap, _p);
+		_p->ns1__CheckUserInfo = ns1__CheckUserInfo;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__CheckUserInfo(struct soap*, const struct __ns1__CheckUserInfo *, const char*, const char*);
+
+inline int soap_write___ns1__CheckUserInfo(struct soap *soap, struct __ns1__CheckUserInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize___ns1__CheckUserInfo(soap, p), 0) || ::soap_put___ns1__CheckUserInfo(soap, p, "-ns1:CheckUserInfo", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT___ns1__CheckUserInfo(struct soap *soap, const char *URL, struct __ns1__CheckUserInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__CheckUserInfo(soap, p), 0) || ::soap_put___ns1__CheckUserInfo(soap, p, "-ns1:CheckUserInfo", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH___ns1__CheckUserInfo(struct soap *soap, const char *URL, struct __ns1__CheckUserInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__CheckUserInfo(soap, p), 0) || ::soap_put___ns1__CheckUserInfo(soap, p, "-ns1:CheckUserInfo", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send___ns1__CheckUserInfo(struct soap *soap, const char *URL, struct __ns1__CheckUserInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize___ns1__CheckUserInfo(soap, p), 0) || ::soap_put___ns1__CheckUserInfo(soap, p, "-ns1:CheckUserInfo", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct __ns1__CheckUserInfo * SOAP_FMAC4 soap_get___ns1__CheckUserInfo(struct soap*, struct __ns1__CheckUserInfo *, const char*, const char*);
+
+inline int soap_read___ns1__CheckUserInfo(struct soap *soap, struct __ns1__CheckUserInfo *p)
+{
+	if (p)
+	{	::soap_default___ns1__CheckUserInfo(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get___ns1__CheckUserInfo(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET___ns1__CheckUserInfo(struct soap *soap, const char *URL, struct __ns1__CheckUserInfo *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read___ns1__CheckUserInfo(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv___ns1__CheckUserInfo(struct soap *soap, struct __ns1__CheckUserInfo *p)
+{
+	if (::soap_read___ns1__CheckUserInfo(soap, p))
 		return soap_closesock(soap);
 	return soap_closesock(soap);
 }
@@ -8787,6 +9159,15 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerToSOAP_ENV__Code(struct soap*, struct 
 SOAP_FMAC3 struct SOAP_ENV__Code ** SOAP_FMAC4 soap_get_PointerToSOAP_ENV__Code(struct soap*, struct SOAP_ENV__Code **, const char*, const char*);
 #endif
 
+#endif
+
+#ifndef SOAP_TYPE_PointerTo_ns1__CheckUserInfo_DEFINED
+#define SOAP_TYPE_PointerTo_ns1__CheckUserInfo_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__CheckUserInfo(struct soap*, _ns1__CheckUserInfo *const*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__CheckUserInfo(struct soap*, const char *, int, _ns1__CheckUserInfo *const*, const char *);
+SOAP_FMAC3 _ns1__CheckUserInfo ** SOAP_FMAC4 soap_in_PointerTo_ns1__CheckUserInfo(struct soap*, const char*, _ns1__CheckUserInfo **, const char*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__CheckUserInfo(struct soap*, _ns1__CheckUserInfo *const*, const char*, const char*);
+SOAP_FMAC3 _ns1__CheckUserInfo ** SOAP_FMAC4 soap_get_PointerTo_ns1__CheckUserInfo(struct soap*, _ns1__CheckUserInfo **, const char*, const char*);
 #endif
 
 #ifndef SOAP_TYPE_PointerTo_ns1__DeleteCadDrawingByFileID_DEFINED
