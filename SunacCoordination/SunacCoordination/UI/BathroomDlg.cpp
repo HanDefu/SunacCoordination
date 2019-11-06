@@ -206,6 +206,9 @@ void CBathroomDlg::SetEditMode(AcDbBlockReference* pBlock)
 	m_rect.SetLB(ptLB);
 	m_rect.SetRT(ptRT);
 
+	ShowInfo();
+	m_noAirOut.SetCheck(!pBathroom->m_hasPaiQiDao);
+
 	m_allBathrooms.clear();
 	m_allBathrooms.push_back(*pBathroom);
 
@@ -410,8 +413,8 @@ void CBathroomDlg::OnBnClickedButtonInsert()
 	m_pBathroomGen->GenBathroom(origin, m_angle);
 	CBathroomAutoName::GetInstance()->AddBathroomType(*m_pBathroomGen->GetBathroomAtt());
 
-	//OnOK();
-	ShowWindow(TRUE);
+	OnOK();
+	//ShowWindow(TRUE);
 }
 
 void CBathroomDlg::OnBnClickedButtonRange()
@@ -593,7 +596,7 @@ void CBathroomDlg::OnBnClickedButtonSearch()
 	for (UINT i = 0; i < m_allBathrooms.size(); i++)
 	{
 		CString str;
-		str.Format(_T("原型编号：\n%s\n厨房面积：%.2lf\n通风量要求：1.5\n动态类型：%s\n适用范围：集团"), m_allBathrooms[i].GetPrototypeCode(), m_rect.GetWidth() * m_rect.GetHeight() / 1E6, m_allBathrooms[i].m_isDynamic ? _T("动态") : _T("静态"));
+		str.Format(_T("原型编号：%s\n厨房面积：%.2lf\n通风量要求：1.5\n动态类型：%s\n适用范围：集团"), m_allBathrooms[i].GetPrototypeCode(), m_rect.GetWidth() * m_rect.GetHeight() / 1E6, m_allBathrooms[i].m_isDynamic ? _T("动态") : _T("静态"));
 		CString dwgPath = TY_GetPrototypeFilePath() + m_allBathrooms[i].GetFileName();
 		CString pngPath = TY_GetPrototypeImagePath_Local() + m_allBathrooms[i].GetFileName();
 		pngPath.Replace(L".dwg", L".png");
