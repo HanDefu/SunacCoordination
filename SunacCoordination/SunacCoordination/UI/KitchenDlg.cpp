@@ -26,7 +26,6 @@ IMPLEMENT_DYNAMIC(CKitchenDlg, CAcUiDialog)
 CKitchenDlg::CKitchenDlg(CWnd* pParent /*=NULL*/)
 	: CAcUiDialog(CKitchenDlg::IDD, pParent)
 	, m_bAutoIndex(FALSE)
-	, m_bNoAirout(FALSE)
 	, m_isStd(0)
 {
 	m_rect.SetLB(AcGePoint3d(0, 0, 0));
@@ -89,12 +88,12 @@ void CKitchenDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHECK_AUTOINDEX, m_bAutoIndex);
 	DDX_Control(pDX, IDC_EDIT_KITCHENNUMBER, m_number);
 	DDX_Control(pDX, IDC_CHECK_IMAGE, m_isMirror);
-	DDX_Check(pDX, IDC_CHECK_AIROUT, m_bNoAirout);
 	DDX_Control(pDX, IDC_EDIT_OFFSETX, m_offsetX);
 	DDX_Control(pDX, IDC_EDIT_OFFSETY, m_offsetY);
 	DDX_Control(pDX, IDC_EDIT_X, m_customX);
 	DDX_Control(pDX, IDC_EDIT_Y, m_customY);
 	DDX_Radio(pDX, IDC_RADIO_STANDARD, m_isStd);
+	DDX_Control(pDX, IDC_CHECK_AIROUT, m_noAirOut);
 }
 
 BEGIN_MESSAGE_MAP(CKitchenDlg, CAcUiDialog)
@@ -367,7 +366,7 @@ void CKitchenDlg::OnBnClickedButtonSearch()
 	double width = m_rect.GetWidth();
 	double height = m_rect.GetHeight();
 
-	m_allKitchens = WebIO::GetInstance()->GetKitchens(kitchenType, width, height, m_doorDir, m_windowDir, m_bNoAirout == FALSE);
+	m_allKitchens = WebIO::GetInstance()->GetKitchens(kitchenType, width, height, m_doorDir, m_windowDir, m_noAirOut.GetCheck() == FALSE);
 	
 	//////////////////////////////////////////////////////////////////////////
 	//3. 显示原型
@@ -384,7 +383,7 @@ void CKitchenDlg::OnBnClickedButtonSearch()
 	for (UINT i = 0; i < m_allKitchens.size(); i++)
 	{
 		CString str;
-		str.Format(_T("原型编号：\n%s\n厨房面积：%.2lf\n通风量要求：1.5\n动态类型：%s\n适用范围：集团"), m_allKitchens[i].GetPrototypeCode(), m_rect.GetWidth() * m_rect.GetHeight() / 1E6, m_allKitchens[i].m_isDynamic ? _T("动态") : _T("静态"));
+		str.Format(_T("原型编号：%s\n厨房面积：%.2lf\n通风量要求：1.5\n动态类型：%s\n适用范围：集团"), m_allKitchens[i].GetPrototypeCode(), m_rect.GetWidth() * m_rect.GetHeight() / 1E6, m_allKitchens[i].m_isDynamic ? _T("动态") : _T("静态"));
 		CString dwgPath = TY_GetPrototypeFilePath() + m_allKitchens[i].GetFileName();
 		CString pngPath = TY_GetPrototypeImagePath_Local() + m_allKitchens[i].GetFileName();
 		pngPath.Replace(L".dwg", L".png");
@@ -467,7 +466,7 @@ void CKitchenDlg::OnBnClickedNoAirout()
 {
 	UpdateData(TRUE);
 	if (m_preKitchen.GetSelectedCount() > 0)
-		EnableSetAirout(m_bNoAirout == FALSE);
+		EnableSetAirout(m_noAirOut.GetCheck() == FALSE);
 
 	//修改排气道设置后重新搜索
 	if (m_allKitchens.size() > 0)
@@ -506,6 +505,9 @@ void CKitchenDlg::SetEditMode(AcDbBlockReference* pBlock)
 	}
 	m_rect.SetLB(ptLB);
 	m_rect.SetRT(ptRT);
+
+	ShowInfo();
+	m_noAirOut.SetCheck(!pKitchen->m_hasPaiQiDao);
 
 	m_allKitchens.clear();
 	m_allKitchens.push_back(*pKitchen);
@@ -606,7 +608,7 @@ void CKitchenDlg::EnableSetProperty(bool bEnable)
 	m_isMirror.EnableWindow(bEnable);
 	GetDlgItem(IDC_CHECK_AUTOINDEX)->EnableWindow(bEnable);
 	GetDlgItem(IDC_BUTTON_INSERTKITCHEN)->EnableWindow(bEnable);
-	EnableSetAirout(bEnable && (m_bNoAirout == FALSE));
+	EnableSetAirout(bEnable && (m_noAirOut.GetCheck() == FALSE));
 }
 
 void CKitchenDlg::EnableSetAirout(bool bEnable)
@@ -632,7 +634,7 @@ bool CKitchenDlg::CheckValid(CString& errMsg)
 	errMsg = _T("");
 
 	//目前只检查排气道参数，在100-1000内为有效值
-	if (m_bNoAirout)
+	if (m_noAirOut.GetCheck() == TRUE)
 		return true;
 	double ventX, ventY;
 	int nSel = m_floorRange.GetCurSel();
