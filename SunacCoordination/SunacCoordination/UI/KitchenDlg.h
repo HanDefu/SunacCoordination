@@ -3,6 +3,7 @@
 #include "../Common/ComFun_Sunac.h"
 #include "../Object/Kitchen/KitchenGen.h"
 #include "ComFun_MFC.h"
+#include "afxwin.h"
 
 // CKitchenDlg 对话框
 
@@ -39,6 +40,7 @@ public:
 	CComboBox m_benchWidth;
 	CComboBox m_fridgeType;
 	CButton m_isMirror;
+	CButton m_noAirOut;
 	CEdit m_number;
 	CEdit m_offsetX;
 	CEdit m_offsetY;
@@ -50,7 +52,6 @@ public:
 	TYRect m_rect;
 	E_DIRECTION m_doorDir;
 	E_DIRECTION m_windowDir;
-	BOOL m_bNoAirout;// 是否含排气道
 	int m_isStd; //国标/自定义
 	int m_angle; //插入时旋转角，可能取值为0, 90, 180, 270
 
