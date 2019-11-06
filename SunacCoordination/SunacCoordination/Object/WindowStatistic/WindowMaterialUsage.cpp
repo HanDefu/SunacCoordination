@@ -129,7 +129,7 @@ void CWindowMaterialUsage::ExportWindowInfo(Excel::CExcelUtil& p_excel)//Êä³ö»ù±
 {
 	CString str;
 
-	p_excel.SetCellValue(2, 2, m_winAtt.m_prototypeCode);
+	p_excel.SetCellValue(2, 2, m_winAtt.m_instanceCode);
 
 	//ÐÍ²ÄÏµÁÐ
 	p_excel.SetCellValue(2, 5, m_winAtt.m_material.sAluminumSerial);
