@@ -71,20 +71,20 @@ void CTreeCtrlEx::DrawBackGround(CDC* pDC)
 void CTreeCtrlEx::DrawItem(CDC* pDC)
 {
 	HTREEITEM hCurrentItem;//绘制的当前项句柄
-	CRect CurItemRect;//当前项的区域
+	CRect curItemRect;//当前项的区域
 	//int CurItemState;//当前项的状态
  
 	hCurrentItem = GetFirstVisibleItem();//获取第一个可见的项,返回它的句柄值
 	do 
 	{
-		if (GetItemRect(hCurrentItem,CurItemRect,TRUE))
+		if (GetItemRect(hCurrentItem,curItemRect,TRUE))
 		{
-			CRect fillRect(0,CurItemRect.top,m_ClientRect.right,CurItemRect.bottom);
+			CRect fillRect(0,curItemRect.top,m_ClientRect.right,curItemRect.bottom);
  
 			//CurItemState = GetItemState(hCurrentItem,TVIF_STATE);
  
 			//当前正绘制的项已超出窗口的边界，所以不绘制，并退出绘制
-			if (CurItemRect.bottom > m_ClientRect.bottom)  
+			if (curItemRect.bottom > m_ClientRect.bottom)  
 			{
 				break;
 			}
@@ -99,24 +99,27 @@ void CTreeCtrlEx::DrawItem(CDC* pDC)
 				pDC->FillSolidRect(&fillRect, GetSysColor(COLOR_MENUHILIGHT));
 			}*/
 			//绘制分割线
-			if (GetParentItem(hCurrentItem) == NULL)
+			if (hCurrentItem == GetFirstVisibleItem())
 			{
-				CPoint ptTopLeft = fillRect.TopLeft();
+				CPoint ptTopLeft(fillRect.left, fillRect.top);
 				CPoint ptTopRight(fillRect.right, fillRect.top);
-				CPoint ptBottomLeft(fillRect.left, fillRect.bottom);
-				CPoint ptBottomRight = fillRect.BottomRight();
-				ptBottomLeft.y--;
-				ptBottomRight.y--;
 
 				pDC->MoveTo(ptTopLeft);
 				pDC->LineTo(ptTopRight);
+			}
+			HTREEITEM hParentItem = GetParentItem(hCurrentItem);
+			HTREEITEM hNextItem = GetNextVisibleItem(hCurrentItem);
+			if ((hParentItem == NULL) || (hNextItem != NULL) && (GetParentItem(hNextItem) == NULL))
+			{
+				CPoint ptBottomLeft(fillRect.left, fillRect.bottom - 1);
+				CPoint ptBottomRight(fillRect.right, fillRect.bottom - 1);
+
 				pDC->MoveTo(ptBottomLeft);
 				pDC->LineTo(ptBottomRight);
 			}
 			//绘制文字
-			CurItemRect.right = m_ClientRect.right;
- 
-			DrawItemText(pDC, hCurrentItem, CurItemRect);
+			curItemRect.right = m_ClientRect.right;
+			DrawItemText(pDC, hCurrentItem, curItemRect);
 		}
 	} while ((hCurrentItem = GetNextVisibleItem(hCurrentItem)) != NULL);
 }
@@ -143,20 +146,12 @@ void CTreeCtrlEx::OnLButtonDown(UINT nFlags, CPoint point)
 	{
 		//一级节点设置选中状态
 		SelectItem(hSel);
-		//收起其它项
-		/*for (HTREEITEM i = GetFirstVisibleItem(); i != NULL; i = GetNextVisibleItem(i))
-		{
-			if (hSel != i)
-				Expand(i, TVE_COLLAPSE);
-		}*/
 		Expand(hSel, TVE_TOGGLE);
-		Invalidate(FALSE);
 	}
 	else
 	{
 		//二级节点设置高亮
 		m_CurMouseItem = hSel;
-		Invalidate(FALSE);
 
 		//弹出菜单的位置与当前节点对齐
 		if (m_MenuID > 0)
@@ -188,6 +183,8 @@ void CTreeCtrlEx::OnLButtonDown(UINT nFlags, CPoint point)
 			}
 		}
 	}
+
+	Invalidate(FALSE);
 }
 
 void CTreeCtrlEx::OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
