@@ -13,6 +13,7 @@ public:
 protected:
 	virtual void OnClickDown(CPoint PointCellRelative);
 	virtual void OnClick(CPoint PointCellRelative);
+	void OnMouseLeave() override;
 	//virtual void OnLButtonUp(UINT nFlags, CPoint point);
 protected:
 	CRect m_rect;
