@@ -69,7 +69,10 @@ void CWindowDlg::PostNcDestroy()
 BOOL CWindowDlg::PreTranslateMessage(MSG *pMsg)
 {
 	if ((pMsg->message == WM_KEYDOWN) && (pMsg->wParam == VK_RETURN))
+	{
+		InsertAllWindows();
 		return TRUE;
+	}
 	return CAcUiDialog::PreTranslateMessage(pMsg);
 }
 
@@ -195,14 +198,21 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	else if (sel == 1)
 	{
 		double rotateAngle = 0;
+		AcGeVector3d offsetXY(0, 0, 0);
 		CString sDir = TYUI_GetComboBoxText(m_insertDir);
-		if (sDir == L"下侧")
+		if (sDir == L"南")
+		{
 			rotateAngle = PI;
-		if (sDir == L"左侧")
+			offsetXY.x += m_selWidth;
+		}
+		if (sDir == L"西")
 			rotateAngle = PI / 2;
-		if (sDir == L"右侧")
+		if (sDir == L"东")
+		{
 			rotateAngle = -PI / 2;
-		oneWindow.Insert(TY_GetPrototypeFilePath() + pSel->m_topViewFile.fileName, origin, rotateAngle, L"0", 256);
+			offsetXY.y += m_selWidth;
+		}
+		oneWindow.Insert(TY_GetPrototypeFilePath() + pSel->m_topViewFile.fileName, origin + offsetXY, rotateAngle, L"0", 256);
 	}
 	else
 		oneWindow.Insert(TY_GetPrototypeFilePath() + pSel->m_leftViewFile.fileName, origin, 0, L"0", 256);
@@ -575,7 +585,7 @@ void CWindowDlg::LoadDefaultValue()
 	TYUI_InitComboBox(m_distance, wallDis, wallDis.empty() ? L"" : wallDis[0]);
 
 	m_viewDir.SetCurSel(0);
-	m_insertDir.SetCurSel(1);
+	m_insertDir.SetCurSel(0);
 	OnSelChangedView();
 	m_autoIndex = TRUE;
 	m_number.SetReadOnly(TRUE);
@@ -636,6 +646,62 @@ void CWindowDlg::SetEditMode(AcDbBlockReference* pBlock)
 	m_preWindow.SelectPreview(0, 0);
 
 	TYUI_SetText(*GetDlgItem(IDC_BUTTON_INSERTWINDOW), L"确定");
+}
+
+void CWindowDlg::InsertAllWindows()
+{
+	ShowWindow(SW_HIDE);
+	AcGePoint3d origin = TY_GetPoint();
+
+	for (UINT i = 0; i < m_allWindows.size(); i++)
+	{
+		AttrWindow* pSel = &m_allWindows[i];
+		RCWindow oneWindow;
+
+		AcGePoint3d insertPt;
+
+		insertPt.x = origin.x + (m_selWidth + 100) * (i % 8);
+		insertPt.y = origin.y + (m_selHeight + 100) * (i / 8);
+
+		int sel = m_viewDir.GetCurSel();
+		if (sel == 0)
+			oneWindow.Insert(TY_GetPrototypeFilePath() + pSel->m_frontViewFile.fileName, insertPt, 0, L"0", 256);
+		else if (sel == 1)
+		{
+			double rotateAngle = 0;
+			CString sDir = TYUI_GetComboBoxText(m_insertDir);
+			if (sDir == L"南")
+				rotateAngle = PI;
+			if (sDir == L"西")
+				rotateAngle = PI / 2;
+			if (sDir == L"东")
+				rotateAngle = -PI / 2;
+			oneWindow.Insert(TY_GetPrototypeFilePath() + pSel->m_topViewFile.fileName, insertPt, rotateAngle, L"0", 256);
+		}
+		else
+			oneWindow.Insert(TY_GetPrototypeFilePath() + pSel->m_leftViewFile.fileName, insertPt, 0, L"0", 256);
+
+		oneWindow.InitParameters();
+
+		oneWindow.SetParameter(L"H", m_selHeight);
+		oneWindow.SetParameter(L"W", m_selWidth);
+
+		oneWindow.RunParameters();
+
+		if (m_isMirror.GetCheck())
+		{
+			AcGePoint3d basePt(insertPt.x + m_selWidth / 2, 0, 0);
+			TYCOM_Mirror(oneWindow.m_id, basePt, AcGeVector3d(0, 1, 0));
+		}
+
+		CWindowAutoName::GetInstance()->AddWindowType(*pSel);
+
+		//把UI的数据记录在图框的扩展字典中
+		AttrWindow * pWindow = new AttrWindow(*pSel);
+		oneWindow.AddAttribute(pWindow);
+		pWindow->close();
+	}
+	ShowWindow(SW_SHOW);
 }
 
 CWindowDlg* g_windowDlg = NULL;

@@ -23,6 +23,7 @@ CString CWindowAutoName::GetWindowName(const AttrWindow& p_att) const
 	//去除原型编号中的"Window_"前缀
 	CString prototype = p_att.GetMainPrototypeCode();
 	prototype.Replace(L"Window_", L"");
+	prototype.Replace(L"Door_", L"");
 	//根据"原型编号_尺寸编号"生成门窗编号
 	sWindowName.Format(L"%s_%02d%02d", prototype, (int)p_att.GetW() / 100, (int)p_att.GetH() / 100);
 
