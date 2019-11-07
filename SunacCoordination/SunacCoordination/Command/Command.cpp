@@ -64,11 +64,21 @@ void CMD_Login()
 	CAcModuleResourceOverride resOverride;
 
 	DlgLogin dlg;
-	//if(IDOK == dlg.DoModal())
-	//{
+/*
+#ifdef WORK_LOCAL
+	CADPalette_RemoveP();
+	CADPalette_AddP();
+
+#else
+	if(IDOK == dlg.DoModal())
+	{
 		CADPalette_RemoveP();
 		CADPalette_AddP();
-	//}
+	}
+#endif*/
+	dlg.DoModal();
+	CADPalette_RemoveP();
+	CADPalette_AddP();
 }
 
 //窗
