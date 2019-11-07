@@ -241,8 +241,8 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	oneWindow.AddAttribute(pWindow);
 	pWindow->close();
 
-	//ShowWindow(TRUE);
-	OnOK();
+	ShowWindow(TRUE);
+	//OnOK();
 }
 
 void CWindowDlg::OnBnClickedButtonSearchwindow()
