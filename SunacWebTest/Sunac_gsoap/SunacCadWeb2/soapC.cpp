@@ -18,7 +18,7 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
 
 #include "soapH.h"
 
-SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.84 2019-11-04 03:33:39 GMT")
+SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.84 2019-11-06 05:46:37 GMT")
 
 
 #ifndef WITH_NOGLOBAL
@@ -195,6 +195,8 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, const char *tag,
 		return soap_in_double(soap, tag, NULL, "xsd:double");
 	case SOAP_TYPE_std__wstring:
 		return soap_in_std__wstring(soap, tag, NULL, "xsd:string");
+	case SOAP_TYPE_PointerTo_ns1__CheckUserInfo:
+		return soap_in_PointerTo_ns1__CheckUserInfo(soap, tag, NULL, "ns1:CheckUserInfo");
 	case SOAP_TYPE_PointerTo_ns1__DeleteCadDrawingByFileID:
 		return soap_in_PointerTo_ns1__DeleteCadDrawingByFileID(soap, tag, NULL, "ns1:DeleteCadDrawingByFileID");
 	case SOAP_TYPE_PointerTo_ns1__DeleteCadDrawing:
@@ -285,6 +287,14 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, const char *tag,
 			return s ? *s : NULL;
 		}
 		t = soap->tag;
+		if (!soap_match_tag(soap, t, "ns1:CheckUserInfoResponse"))
+		{	*type = SOAP_TYPE__ns1__CheckUserInfoResponse;
+			return soap_in__ns1__CheckUserInfoResponse(soap, NULL, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns1:CheckUserInfo"))
+		{	*type = SOAP_TYPE__ns1__CheckUserInfo;
+			return soap_in__ns1__CheckUserInfo(soap, NULL, NULL, NULL);
+		}
 		if (!soap_match_tag(soap, t, "ns1:DeleteCadDrawingByFileIDResponse"))
 		{	*type = SOAP_TYPE__ns1__DeleteCadDrawingByFileIDResponse;
 			return soap_in__ns1__DeleteCadDrawingByFileIDResponse(soap, NULL, NULL, NULL);
@@ -520,6 +530,10 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return soap_out_double(soap, tag, id, (const double *)ptr, "xsd:double");
 	case SOAP_TYPE_std__wstring:
 		return soap_out_std__wstring(soap, tag, id, (const std::wstring *)ptr, "xsd:string");
+	case SOAP_TYPE__ns1__CheckUserInfoResponse:
+		return ((_ns1__CheckUserInfoResponse *)ptr)->soap_out(soap, "ns1:CheckUserInfoResponse", id, "");
+	case SOAP_TYPE__ns1__CheckUserInfo:
+		return ((_ns1__CheckUserInfo *)ptr)->soap_out(soap, "ns1:CheckUserInfo", id, "");
 	case SOAP_TYPE__ns1__DeleteCadDrawingByFileIDResponse:
 		return ((_ns1__DeleteCadDrawingByFileIDResponse *)ptr)->soap_out(soap, "ns1:DeleteCadDrawingByFileIDResponse", id, "");
 	case SOAP_TYPE__ns1__DeleteCadDrawingByFileID:
@@ -604,6 +618,8 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return ((_ns1__StandardDesignAttributeResponse *)ptr)->soap_out(soap, "ns1:StandardDesignAttributeResponse", id, "");
 	case SOAP_TYPE__ns1__StandardDesignAttribute:
 		return ((_ns1__StandardDesignAttribute *)ptr)->soap_out(soap, "ns1:StandardDesignAttribute", id, "");
+	case SOAP_TYPE_PointerTo_ns1__CheckUserInfo:
+		return soap_out_PointerTo_ns1__CheckUserInfo(soap, tag, id, (_ns1__CheckUserInfo *const*)ptr, "ns1:CheckUserInfo");
 	case SOAP_TYPE_PointerTo_ns1__DeleteCadDrawingByFileID:
 		return soap_out_PointerTo_ns1__DeleteCadDrawingByFileID(soap, tag, id, (_ns1__DeleteCadDrawingByFileID *const*)ptr, "ns1:DeleteCadDrawingByFileID");
 	case SOAP_TYPE_PointerTo_ns1__DeleteCadDrawing:
@@ -674,6 +690,12 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	{
 	case SOAP_TYPE_std__wstring:
 		soap_serialize_std__wstring(soap, (const std::wstring *)ptr);
+		break;
+	case SOAP_TYPE__ns1__CheckUserInfoResponse:
+		((_ns1__CheckUserInfoResponse *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE__ns1__CheckUserInfo:
+		((_ns1__CheckUserInfo *)ptr)->soap_serialize(soap);
 		break;
 	case SOAP_TYPE__ns1__DeleteCadDrawingByFileIDResponse:
 		((_ns1__DeleteCadDrawingByFileIDResponse *)ptr)->soap_serialize(soap);
@@ -801,6 +823,9 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	case SOAP_TYPE__ns1__StandardDesignAttribute:
 		((_ns1__StandardDesignAttribute *)ptr)->soap_serialize(soap);
 		break;
+	case SOAP_TYPE___ns1__CheckUserInfo_:
+		soap_serialize___ns1__CheckUserInfo_(soap, (const struct __ns1__CheckUserInfo_ *)ptr);
+		break;
 	case SOAP_TYPE___ns1__DeleteCadDrawingByFileID_:
 		soap_serialize___ns1__DeleteCadDrawingByFileID_(soap, (const struct __ns1__DeleteCadDrawingByFileID_ *)ptr);
 		break;
@@ -864,6 +889,9 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	case SOAP_TYPE___ns1__StandardDesignAttribute_:
 		soap_serialize___ns1__StandardDesignAttribute_(soap, (const struct __ns1__StandardDesignAttribute_ *)ptr);
 		break;
+	case SOAP_TYPE___ns1__CheckUserInfo:
+		soap_serialize___ns1__CheckUserInfo(soap, (const struct __ns1__CheckUserInfo *)ptr);
+		break;
 	case SOAP_TYPE___ns1__DeleteCadDrawingByFileID:
 		soap_serialize___ns1__DeleteCadDrawingByFileID(soap, (const struct __ns1__DeleteCadDrawingByFileID *)ptr);
 		break;
@@ -926,6 +954,9 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 		break;
 	case SOAP_TYPE___ns1__StandardDesignAttribute:
 		soap_serialize___ns1__StandardDesignAttribute(soap, (const struct __ns1__StandardDesignAttribute *)ptr);
+		break;
+	case SOAP_TYPE_PointerTo_ns1__CheckUserInfo:
+		soap_serialize_PointerTo_ns1__CheckUserInfo(soap, (_ns1__CheckUserInfo *const*)ptr);
 		break;
 	case SOAP_TYPE_PointerTo_ns1__DeleteCadDrawingByFileID:
 		soap_serialize_PointerTo_ns1__DeleteCadDrawingByFileID(soap, (_ns1__DeleteCadDrawingByFileID *const*)ptr);
@@ -1119,6 +1150,10 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate__ns1__DeleteCadDrawingByFileID(soap, -1, type, arrayType, n);
 	case SOAP_TYPE__ns1__DeleteCadDrawingByFileIDResponse:
 		return (void*)soap_instantiate__ns1__DeleteCadDrawingByFileIDResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__CheckUserInfo:
+		return (void*)soap_instantiate__ns1__CheckUserInfo(soap, -1, type, arrayType, n);
+	case SOAP_TYPE__ns1__CheckUserInfoResponse:
+		return (void*)soap_instantiate__ns1__CheckUserInfoResponse(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__StandardDesignAttribute:
 		return (void*)soap_instantiate___ns1__StandardDesignAttribute(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__GetAllWindows:
@@ -1161,6 +1196,8 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate___ns1__DeleteCadDrawing(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__DeleteCadDrawingByFileID:
 		return (void*)soap_instantiate___ns1__DeleteCadDrawingByFileID(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__CheckUserInfo:
+		return (void*)soap_instantiate___ns1__CheckUserInfo(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__StandardDesignAttribute_:
 		return (void*)soap_instantiate___ns1__StandardDesignAttribute_(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__GetAllWindows_:
@@ -1203,6 +1240,8 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate___ns1__DeleteCadDrawing_(soap, -1, type, arrayType, n);
 	case SOAP_TYPE___ns1__DeleteCadDrawingByFileID_:
 		return (void*)soap_instantiate___ns1__DeleteCadDrawingByFileID_(soap, -1, type, arrayType, n);
+	case SOAP_TYPE___ns1__CheckUserInfo_:
+		return (void*)soap_instantiate___ns1__CheckUserInfo_(soap, -1, type, arrayType, n);
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
 		return (void*)soap_instantiate_SOAP_ENV__Header(soap, -1, type, arrayType, n);
@@ -1492,6 +1531,18 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap *soap, struct soap_clist *p)
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__DeleteCadDrawingByFileIDResponse*>(p->ptr), _ns1__DeleteCadDrawingByFileIDResponse);
 		break;
+	case SOAP_TYPE__ns1__CheckUserInfo:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__CheckUserInfo*>(p->ptr), _ns1__CheckUserInfo);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__CheckUserInfo*>(p->ptr), _ns1__CheckUserInfo);
+		break;
+	case SOAP_TYPE__ns1__CheckUserInfoResponse:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<_ns1__CheckUserInfoResponse*>(p->ptr), _ns1__CheckUserInfoResponse);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<_ns1__CheckUserInfoResponse*>(p->ptr), _ns1__CheckUserInfoResponse);
+		break;
 	case SOAP_TYPE___ns1__StandardDesignAttribute:
 		if (p->size < 0)
 			SOAP_DELETE(soap, static_cast<struct __ns1__StandardDesignAttribute*>(p->ptr), struct __ns1__StandardDesignAttribute);
@@ -1618,6 +1669,12 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap *soap, struct soap_clist *p)
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__DeleteCadDrawingByFileID*>(p->ptr), struct __ns1__DeleteCadDrawingByFileID);
 		break;
+	case SOAP_TYPE___ns1__CheckUserInfo:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__CheckUserInfo*>(p->ptr), struct __ns1__CheckUserInfo);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__CheckUserInfo*>(p->ptr), struct __ns1__CheckUserInfo);
+		break;
 	case SOAP_TYPE___ns1__StandardDesignAttribute_:
 		if (p->size < 0)
 			SOAP_DELETE(soap, static_cast<struct __ns1__StandardDesignAttribute_*>(p->ptr), struct __ns1__StandardDesignAttribute_);
@@ -1743,6 +1800,12 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap *soap, struct soap_clist *p)
 			SOAP_DELETE(soap, static_cast<struct __ns1__DeleteCadDrawingByFileID_*>(p->ptr), struct __ns1__DeleteCadDrawingByFileID_);
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__DeleteCadDrawingByFileID_*>(p->ptr), struct __ns1__DeleteCadDrawingByFileID_);
+		break;
+	case SOAP_TYPE___ns1__CheckUserInfo_:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct __ns1__CheckUserInfo_*>(p->ptr), struct __ns1__CheckUserInfo_);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct __ns1__CheckUserInfo_*>(p->ptr), struct __ns1__CheckUserInfo_);
 		break;
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
@@ -1987,6 +2050,14 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_finsert(struct soap *soap, int t, int tt, void *
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__DeleteCadDrawingByFileIDResponse type=%d location=%p object=%p\n", t, p, q));
 		*(_ns1__DeleteCadDrawingByFileIDResponse*)p = *(_ns1__DeleteCadDrawingByFileIDResponse*)q;
 		break;
+	case SOAP_TYPE__ns1__CheckUserInfo:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__CheckUserInfo type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__CheckUserInfo*)p = *(_ns1__CheckUserInfo*)q;
+		break;
+	case SOAP_TYPE__ns1__CheckUserInfoResponse:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy _ns1__CheckUserInfoResponse type=%d location=%p object=%p\n", t, p, q));
+		*(_ns1__CheckUserInfoResponse*)p = *(_ns1__CheckUserInfoResponse*)q;
+		break;
 	case SOAP_TYPE___ns1__StandardDesignAttribute:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__StandardDesignAttribute type=%d location=%p object=%p\n", t, p, q));
 		*(struct __ns1__StandardDesignAttribute*)p = *(struct __ns1__StandardDesignAttribute*)q;
@@ -2071,6 +2142,10 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_finsert(struct soap *soap, int t, int tt, void *
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__DeleteCadDrawingByFileID type=%d location=%p object=%p\n", t, p, q));
 		*(struct __ns1__DeleteCadDrawingByFileID*)p = *(struct __ns1__DeleteCadDrawingByFileID*)q;
 		break;
+	case SOAP_TYPE___ns1__CheckUserInfo:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__CheckUserInfo type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__CheckUserInfo*)p = *(struct __ns1__CheckUserInfo*)q;
+		break;
 	case SOAP_TYPE___ns1__StandardDesignAttribute_:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__StandardDesignAttribute_ type=%d location=%p object=%p\n", t, p, q));
 		*(struct __ns1__StandardDesignAttribute_*)p = *(struct __ns1__StandardDesignAttribute_*)q;
@@ -2154,6 +2229,10 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_finsert(struct soap *soap, int t, int tt, void *
 	case SOAP_TYPE___ns1__DeleteCadDrawingByFileID_:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__DeleteCadDrawingByFileID_ type=%d location=%p object=%p\n", t, p, q));
 		*(struct __ns1__DeleteCadDrawingByFileID_*)p = *(struct __ns1__DeleteCadDrawingByFileID_*)q;
+		break;
+	case SOAP_TYPE___ns1__CheckUserInfo_:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct __ns1__CheckUserInfo_ type=%d location=%p object=%p\n", t, p, q));
+		*(struct __ns1__CheckUserInfo_*)p = *(struct __ns1__CheckUserInfo_*)q;
 		break;
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
@@ -2371,6 +2450,278 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_put_std__wstring(struct soap *soap, const std::ws
 SOAP_FMAC3 std::wstring * SOAP_FMAC4 soap_get_std__wstring(struct soap *soap, std::wstring *p, const char *tag, const char *type)
 {
 	if ((p = soap_in_std__wstring(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__CheckUserInfoResponse::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	this->_ns1__CheckUserInfoResponse::CheckUserInfoResult = NULL;
+}
+
+void _ns1__CheckUserInfoResponse::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__CheckUserInfoResponse::CheckUserInfoResult);
+#endif
+}
+
+int _ns1__CheckUserInfoResponse::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__CheckUserInfoResponse(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__CheckUserInfoResponse(struct soap *soap, const char *tag, int id, const _ns1__CheckUserInfoResponse *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__CheckUserInfoResponse), type))
+		return soap->error;
+	if (a->CheckUserInfoResult)
+		soap_element_result(soap, "ns1:CheckUserInfoResult");
+	if (soap_out_PointerTostd__wstring(soap, "ns1:CheckUserInfoResult", -1, &a->_ns1__CheckUserInfoResponse::CheckUserInfoResult, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__CheckUserInfoResponse::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__CheckUserInfoResponse(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__CheckUserInfoResponse * SOAP_FMAC4 soap_in__ns1__CheckUserInfoResponse(struct soap *soap, const char *tag, _ns1__CheckUserInfoResponse *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__CheckUserInfoResponse*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__CheckUserInfoResponse, sizeof(_ns1__CheckUserInfoResponse), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__CheckUserInfoResponse)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__CheckUserInfoResponse *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_CheckUserInfoResult1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_CheckUserInfoResult1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_PointerTostd__wstring(soap, "ns1:CheckUserInfoResult", &a->_ns1__CheckUserInfoResponse::CheckUserInfoResult, "xsd:string"))
+				{	soap_flag_CheckUserInfoResult1--;
+					continue;
+				}
+			}
+			soap_check_result(soap, "ns1:CheckUserInfoResult");
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (_ns1__CheckUserInfoResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__CheckUserInfoResponse, SOAP_TYPE__ns1__CheckUserInfoResponse, sizeof(_ns1__CheckUserInfoResponse), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__CheckUserInfoResponse * SOAP_FMAC2 soap_instantiate__ns1__CheckUserInfoResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__CheckUserInfoResponse(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__CheckUserInfoResponse *p;
+	size_t k = sizeof(_ns1__CheckUserInfoResponse);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__CheckUserInfoResponse, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__CheckUserInfoResponse);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__CheckUserInfoResponse, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__CheckUserInfoResponse location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__CheckUserInfoResponse::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__CheckUserInfoResponse(soap, tag ? tag : "ns1:CheckUserInfoResponse", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__CheckUserInfoResponse::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__CheckUserInfoResponse(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__CheckUserInfoResponse * SOAP_FMAC4 soap_get__ns1__CheckUserInfoResponse(struct soap *soap, _ns1__CheckUserInfoResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__CheckUserInfoResponse(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void _ns1__CheckUserInfo::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	this->_ns1__CheckUserInfo::userName = NULL;
+	this->_ns1__CheckUserInfo::password = NULL;
+}
+
+void _ns1__CheckUserInfo::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__CheckUserInfo::userName);
+	soap_serialize_PointerTostd__wstring(soap, &this->_ns1__CheckUserInfo::password);
+#endif
+}
+
+int _ns1__CheckUserInfo::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out__ns1__CheckUserInfo(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out__ns1__CheckUserInfo(struct soap *soap, const char *tag, int id, const _ns1__CheckUserInfo *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE__ns1__CheckUserInfo), type))
+		return soap->error;
+	if (soap_out_PointerTostd__wstring(soap, "ns1:userName", -1, &a->_ns1__CheckUserInfo::userName, ""))
+		return soap->error;
+	if (soap_out_PointerTostd__wstring(soap, "ns1:password", -1, &a->_ns1__CheckUserInfo::password, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *_ns1__CheckUserInfo::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in__ns1__CheckUserInfo(soap, tag, this, type);
+}
+
+SOAP_FMAC3 _ns1__CheckUserInfo * SOAP_FMAC4 soap_in__ns1__CheckUserInfo(struct soap *soap, const char *tag, _ns1__CheckUserInfo *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (_ns1__CheckUserInfo*)soap_id_enter(soap, soap->id, a, SOAP_TYPE__ns1__CheckUserInfo, sizeof(_ns1__CheckUserInfo), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE__ns1__CheckUserInfo)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (_ns1__CheckUserInfo *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_userName1 = 1;
+	size_t soap_flag_password1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_userName1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_PointerTostd__wstring(soap, "ns1:userName", &a->_ns1__CheckUserInfo::userName, "xsd:string"))
+				{	soap_flag_userName1--;
+					continue;
+				}
+			}
+			if (soap_flag_password1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_PointerTostd__wstring(soap, "ns1:password", &a->_ns1__CheckUserInfo::password, "xsd:string"))
+				{	soap_flag_password1--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (_ns1__CheckUserInfo *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE__ns1__CheckUserInfo, SOAP_TYPE__ns1__CheckUserInfo, sizeof(_ns1__CheckUserInfo), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 _ns1__CheckUserInfo * SOAP_FMAC2 soap_instantiate__ns1__CheckUserInfo(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate__ns1__CheckUserInfo(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	_ns1__CheckUserInfo *p;
+	size_t k = sizeof(_ns1__CheckUserInfo);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE__ns1__CheckUserInfo, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, _ns1__CheckUserInfo);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, _ns1__CheckUserInfo, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated _ns1__CheckUserInfo location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int _ns1__CheckUserInfo::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out__ns1__CheckUserInfo(soap, tag ? tag : "ns1:CheckUserInfo", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *_ns1__CheckUserInfo::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get__ns1__CheckUserInfo(soap, this, tag, type);
+}
+
+SOAP_FMAC3 _ns1__CheckUserInfo * SOAP_FMAC4 soap_get__ns1__CheckUserInfo(struct soap *soap, _ns1__CheckUserInfo *p, const char *tag, const char *type)
+{
+	if ((p = soap_in__ns1__CheckUserInfo(soap, tag, p, type)))
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;
@@ -8901,6 +9252,98 @@ SOAP_FMAC3 struct SOAP_ENV__Header * SOAP_FMAC4 soap_get_SOAP_ENV__Header(struct
 
 #endif
 
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__CheckUserInfo_(struct soap *soap, struct __ns1__CheckUserInfo_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__CheckUserInfo = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__CheckUserInfo_(struct soap *soap, const struct __ns1__CheckUserInfo_ *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__CheckUserInfo(soap, &a->ns1__CheckUserInfo);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__CheckUserInfo_(struct soap *soap, const char *tag, int id, const struct __ns1__CheckUserInfo_ *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__CheckUserInfo(soap, "ns1:CheckUserInfo", -1, &a->ns1__CheckUserInfo, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__CheckUserInfo_ * SOAP_FMAC4 soap_in___ns1__CheckUserInfo_(struct soap *soap, const char *tag, struct __ns1__CheckUserInfo_ *a, const char *type)
+{
+	size_t soap_flag_ns1__CheckUserInfo = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__CheckUserInfo_*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__CheckUserInfo_, sizeof(struct __ns1__CheckUserInfo_), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__CheckUserInfo_(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__CheckUserInfo && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__CheckUserInfo(soap, "ns1:CheckUserInfo", &a->ns1__CheckUserInfo, ""))
+				{	soap_flag_ns1__CheckUserInfo--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__CheckUserInfo_ * SOAP_FMAC2 soap_instantiate___ns1__CheckUserInfo_(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__CheckUserInfo_(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__CheckUserInfo_ *p;
+	size_t k = sizeof(struct __ns1__CheckUserInfo_);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__CheckUserInfo_, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__CheckUserInfo_);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__CheckUserInfo_, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__CheckUserInfo_ location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__CheckUserInfo_(struct soap *soap, const struct __ns1__CheckUserInfo_ *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__CheckUserInfo_(soap, tag ? tag : "-ns1:CheckUserInfo", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__CheckUserInfo_ * SOAP_FMAC4 soap_get___ns1__CheckUserInfo_(struct soap *soap, struct __ns1__CheckUserInfo_ *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__CheckUserInfo_(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
 SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__DeleteCadDrawingByFileID_(struct soap *soap, struct __ns1__DeleteCadDrawingByFileID_ *a)
 {
 	(void)soap; (void)a; /* appease -Wall -Werror */
@@ -10828,6 +11271,98 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__StandardDesignAttribute_(struct soap *
 SOAP_FMAC3 struct __ns1__StandardDesignAttribute_ * SOAP_FMAC4 soap_get___ns1__StandardDesignAttribute_(struct soap *soap, struct __ns1__StandardDesignAttribute_ *p, const char *tag, const char *type)
 {
 	if ((p = soap_in___ns1__StandardDesignAttribute_(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default___ns1__CheckUserInfo(struct soap *soap, struct __ns1__CheckUserInfo *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+	a->ns1__CheckUserInfo = NULL;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize___ns1__CheckUserInfo(struct soap *soap, const struct __ns1__CheckUserInfo *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTo_ns1__CheckUserInfo(soap, &a->ns1__CheckUserInfo);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out___ns1__CheckUserInfo(struct soap *soap, const char *tag, int id, const struct __ns1__CheckUserInfo *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_out_PointerTo_ns1__CheckUserInfo(soap, "ns1:CheckUserInfo", -1, &a->ns1__CheckUserInfo, ""))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__CheckUserInfo * SOAP_FMAC4 soap_in___ns1__CheckUserInfo(struct soap *soap, const char *tag, struct __ns1__CheckUserInfo *a, const char *type)
+{
+	size_t soap_flag_ns1__CheckUserInfo = 1;
+	short soap_flag;
+	(void)tag; (void)type; /* appease -Wall -Werror */
+	a = (struct __ns1__CheckUserInfo*)soap_id_enter(soap, "", a, SOAP_TYPE___ns1__CheckUserInfo, sizeof(struct __ns1__CheckUserInfo), NULL, NULL, NULL, NULL);
+	if (!a)
+		return NULL;
+	soap_default___ns1__CheckUserInfo(soap, a);
+		for (soap_flag = 0;; soap_flag = 1)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_ns1__CheckUserInfo && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTo_ns1__CheckUserInfo(soap, "ns1:CheckUserInfo", &a->ns1__CheckUserInfo, ""))
+				{	soap_flag_ns1__CheckUserInfo--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH && soap_flag)
+			{	soap->error = SOAP_OK;
+				break;
+			}
+			if (soap_flag && soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+	return a;
+}
+
+SOAP_FMAC1 struct __ns1__CheckUserInfo * SOAP_FMAC2 soap_instantiate___ns1__CheckUserInfo(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate___ns1__CheckUserInfo(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct __ns1__CheckUserInfo *p;
+	size_t k = sizeof(struct __ns1__CheckUserInfo);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE___ns1__CheckUserInfo, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct __ns1__CheckUserInfo);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct __ns1__CheckUserInfo, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct __ns1__CheckUserInfo location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put___ns1__CheckUserInfo(struct soap *soap, const struct __ns1__CheckUserInfo *a, const char *tag, const char *type)
+{
+	if (soap_out___ns1__CheckUserInfo(soap, tag ? tag : "-ns1:CheckUserInfo", -2, a, type))
+		return soap->error;
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 struct __ns1__CheckUserInfo * SOAP_FMAC4 soap_get___ns1__CheckUserInfo(struct soap *soap, struct __ns1__CheckUserInfo *p, const char *tag, const char *type)
+{
+	if ((p = soap_in___ns1__CheckUserInfo(soap, tag, p, type)))
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;
@@ -12941,6 +13476,65 @@ SOAP_FMAC3 struct SOAP_ENV__Code ** SOAP_FMAC4 soap_get_PointerToSOAP_ENV__Code(
 }
 
 #endif
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__CheckUserInfo(struct soap *soap, _ns1__CheckUserInfo *const*a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	if (!soap_reference(soap, *a, SOAP_TYPE__ns1__CheckUserInfo))
+		(*a)->soap_serialize(soap);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTo_ns1__CheckUserInfo(struct soap *soap, const char *tag, int id, _ns1__CheckUserInfo *const*a, const char *type)
+{
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE__ns1__CheckUserInfo, NULL);
+	if (id < 0)
+		return soap->error;
+	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE__ns1__CheckUserInfo ? type : NULL);
+}
+
+SOAP_FMAC3 _ns1__CheckUserInfo ** SOAP_FMAC4 soap_in_PointerTo_ns1__CheckUserInfo(struct soap *soap, const char *tag, _ns1__CheckUserInfo **a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a)
+		if (!(a = (_ns1__CheckUserInfo **)soap_malloc(soap, sizeof(_ns1__CheckUserInfo *))))
+			return NULL;
+	*a = NULL;
+	if (!soap->null && *soap->href != '#')
+	{	soap_revert(soap);
+		if (!(*a = (_ns1__CheckUserInfo *)soap_instantiate__ns1__CheckUserInfo(soap, -1, soap->type, soap->arrayType, NULL)))
+			return NULL;
+		(*a)->soap_default(soap);
+		if (!(*a)->soap_in(soap, tag, NULL))
+		{	*a = NULL;
+			return NULL;
+		}
+	}
+	else
+	{	a = (_ns1__CheckUserInfo **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE__ns1__CheckUserInfo, sizeof(_ns1__CheckUserInfo), 0, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTo_ns1__CheckUserInfo(struct soap *soap, _ns1__CheckUserInfo *const*a, const char *tag, const char *type)
+{
+	if (soap_out_PointerTo_ns1__CheckUserInfo(soap, tag ? tag : "ns1:CheckUserInfo", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 _ns1__CheckUserInfo ** SOAP_FMAC4 soap_get_PointerTo_ns1__CheckUserInfo(struct soap *soap, _ns1__CheckUserInfo **p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PointerTo_ns1__CheckUserInfo(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
 
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTo_ns1__DeleteCadDrawingByFileID(struct soap *soap, _ns1__DeleteCadDrawingByFileID *const*a)
 {

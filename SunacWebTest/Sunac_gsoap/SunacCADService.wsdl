@@ -314,6 +314,21 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="CheckUserInfo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="userName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="password" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CheckUserInfoResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CheckUserInfoResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="StandardDesignAttributeSoapIn">
@@ -442,6 +457,12 @@
   <wsdl:message name="DeleteCadDrawingByFileIDSoapOut">
     <wsdl:part name="parameters" element="tns:DeleteCadDrawingByFileIDResponse" />
   </wsdl:message>
+  <wsdl:message name="CheckUserInfoSoapIn">
+    <wsdl:part name="parameters" element="tns:CheckUserInfo" />
+  </wsdl:message>
+  <wsdl:message name="CheckUserInfoSoapOut">
+    <wsdl:part name="parameters" element="tns:CheckUserInfoResponse" />
+  </wsdl:message>
   <wsdl:portType name="ArgumentSettingServiceSoap">
     <wsdl:operation name="StandardDesignAttribute">
       <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">标准模块属性；1、标准部品库：外窗、门、栏杆;2、厨房、卫生间、空调</wsdl:documentation>
@@ -544,9 +565,14 @@
       <wsdl:output message="tns:DeleteCadDrawingSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="DeleteCadDrawingByFileID">
-      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">项目图纸上传根据文件ID</wsdl:documentation>
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">项目文件删除根据文件ID</wsdl:documentation>
       <wsdl:input message="tns:DeleteCadDrawingByFileIDSoapIn" />
       <wsdl:output message="tns:DeleteCadDrawingByFileIDSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckUserInfo">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">验证用户登陆</wsdl:documentation>
+      <wsdl:input message="tns:CheckUserInfoSoapIn" />
+      <wsdl:output message="tns:CheckUserInfoSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="ArgumentSettingServiceSoap" type="tns:ArgumentSettingServiceSoap">
@@ -740,6 +766,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="CheckUserInfo">
+      <soap:operation soapAction="http://tempuri.org/CheckUserInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="ArgumentSettingServiceSoap12" type="tns:ArgumentSettingServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -925,6 +960,15 @@
     </wsdl:operation>
     <wsdl:operation name="DeleteCadDrawingByFileID">
       <soap12:operation soapAction="http://tempuri.org/DeleteCadDrawingByFileID" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckUserInfo">
+      <soap12:operation soapAction="http://tempuri.org/CheckUserInfo" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

@@ -264,6 +264,15 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
         /// Web service asynchronous operation 'recv_DeleteCadDrawingByFileID' to receive a response message from the connected endpoint, returns SOAP_OK or error code
         virtual int recv_DeleteCadDrawingByFileID(_ns1__DeleteCadDrawingByFileIDResponse &ns1__DeleteCadDrawingByFileIDResponse);
         //
+        /// Web service synchronous operation 'CheckUserInfo' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int CheckUserInfo(_ns1__CheckUserInfo *ns1__CheckUserInfo, _ns1__CheckUserInfoResponse &ns1__CheckUserInfoResponse) { return this->CheckUserInfo(NULL, NULL, ns1__CheckUserInfo, ns1__CheckUserInfoResponse); }
+        /// Web service synchronous operation 'CheckUserInfo' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int CheckUserInfo(const char *soap_endpoint_url, const char *soap_action, _ns1__CheckUserInfo *ns1__CheckUserInfo, _ns1__CheckUserInfoResponse &ns1__CheckUserInfoResponse) { return this->send_CheckUserInfo(soap_endpoint_url, soap_action, ns1__CheckUserInfo) || this->recv_CheckUserInfo(ns1__CheckUserInfoResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_CheckUserInfo' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_CheckUserInfo(const char *soap_endpoint_url, const char *soap_action, _ns1__CheckUserInfo *ns1__CheckUserInfo);
+        /// Web service asynchronous operation 'recv_CheckUserInfo' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_CheckUserInfo(_ns1__CheckUserInfoResponse &ns1__CheckUserInfoResponse);
+        //
         /// Web service synchronous operation 'StandardDesignAttribute' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
         virtual int StandardDesignAttribute_(_ns1__StandardDesignAttribute *ns1__StandardDesignAttribute, _ns1__StandardDesignAttributeResponse &ns1__StandardDesignAttributeResponse) { return this->StandardDesignAttribute_(NULL, NULL, ns1__StandardDesignAttribute, ns1__StandardDesignAttributeResponse); }
         /// Web service synchronous operation 'StandardDesignAttribute' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
@@ -452,5 +461,14 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
         virtual int send_DeleteCadDrawingByFileID_(const char *soap_endpoint_url, const char *soap_action, _ns1__DeleteCadDrawingByFileID *ns1__DeleteCadDrawingByFileID);
         /// Web service asynchronous operation 'recv_DeleteCadDrawingByFileID' to receive a response message from the connected endpoint, returns SOAP_OK or error code
         virtual int recv_DeleteCadDrawingByFileID_(_ns1__DeleteCadDrawingByFileIDResponse &ns1__DeleteCadDrawingByFileIDResponse);
+        //
+        /// Web service synchronous operation 'CheckUserInfo' with default endpoint and default SOAP Action header, returns SOAP_OK or error code
+        virtual int CheckUserInfo_(_ns1__CheckUserInfo *ns1__CheckUserInfo, _ns1__CheckUserInfoResponse &ns1__CheckUserInfoResponse) { return this->CheckUserInfo_(NULL, NULL, ns1__CheckUserInfo, ns1__CheckUserInfoResponse); }
+        /// Web service synchronous operation 'CheckUserInfo' to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int CheckUserInfo_(const char *soap_endpoint_url, const char *soap_action, _ns1__CheckUserInfo *ns1__CheckUserInfo, _ns1__CheckUserInfoResponse &ns1__CheckUserInfoResponse) { return this->send_CheckUserInfo_(soap_endpoint_url, soap_action, ns1__CheckUserInfo) || this->recv_CheckUserInfo_(ns1__CheckUserInfoResponse) ? this->error : SOAP_OK; }
+        /// Web service asynchronous operation 'send_CheckUserInfo' to send a request message to the specified endpoint and SOAP Action header, returns SOAP_OK or error code
+        virtual int send_CheckUserInfo_(const char *soap_endpoint_url, const char *soap_action, _ns1__CheckUserInfo *ns1__CheckUserInfo);
+        /// Web service asynchronous operation 'recv_CheckUserInfo' to receive a response message from the connected endpoint, returns SOAP_OK or error code
+        virtual int recv_CheckUserInfo_(_ns1__CheckUserInfoResponse &ns1__CheckUserInfoResponse);
     };
 #endif

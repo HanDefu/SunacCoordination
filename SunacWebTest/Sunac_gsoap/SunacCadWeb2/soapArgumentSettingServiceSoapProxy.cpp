@@ -1379,6 +1379,65 @@ int ArgumentSettingServiceSoapProxy::recv_DeleteCadDrawingByFileID(_ns1__DeleteC
 	return soap_closesock(soap);
 }
 
+int ArgumentSettingServiceSoapProxy::send_CheckUserInfo(const char *soap_endpoint_url, const char *soap_action, _ns1__CheckUserInfo *ns1__CheckUserInfo)
+{
+	struct soap *soap = this;
+	struct __ns1__CheckUserInfo soap_tmp___ns1__CheckUserInfo;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://des.sunac.com.cn/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/CheckUserInfo";
+	soap_tmp___ns1__CheckUserInfo.ns1__CheckUserInfo = ns1__CheckUserInfo;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__CheckUserInfo(soap, &soap_tmp___ns1__CheckUserInfo);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__CheckUserInfo(soap, &soap_tmp___ns1__CheckUserInfo, "-ns1:CheckUserInfo", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__CheckUserInfo(soap, &soap_tmp___ns1__CheckUserInfo, "-ns1:CheckUserInfo", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_CheckUserInfo(_ns1__CheckUserInfoResponse &ns1__CheckUserInfoResponse)
+{
+	struct soap *soap = this;
+	ns1__CheckUserInfoResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__CheckUserInfoResponse.soap_get(soap, "ns1:CheckUserInfoResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
 int ArgumentSettingServiceSoapProxy::send_StandardDesignAttribute_(const char *soap_endpoint_url, const char *soap_action, _ns1__StandardDesignAttribute *ns1__StandardDesignAttribute)
 {
 	struct soap *soap = this;
@@ -2609,6 +2668,65 @@ int ArgumentSettingServiceSoapProxy::recv_DeleteCadDrawingByFileID_(_ns1__Delete
 	 || soap_body_begin_in(soap))
 		return soap_closesock(soap);
 	ns1__DeleteCadDrawingByFileIDResponse.soap_get(soap, "ns1:DeleteCadDrawingByFileIDResponse", NULL);
+	if (soap->error)
+		return soap_recv_fault(soap, 0);
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+int ArgumentSettingServiceSoapProxy::send_CheckUserInfo_(const char *soap_endpoint_url, const char *soap_action, _ns1__CheckUserInfo *ns1__CheckUserInfo)
+{
+	struct soap *soap = this;
+	struct __ns1__CheckUserInfo_ soap_tmp___ns1__CheckUserInfo_;
+	if (soap_endpoint_url != NULL)
+		soap_endpoint = soap_endpoint_url;
+	if (soap_endpoint == NULL)
+		soap_endpoint = "http://des.sunac.com.cn/SunacCADService.asmx";
+	if (soap_action == NULL)
+		soap_action = "http://tempuri.org/CheckUserInfo";
+	soap_tmp___ns1__CheckUserInfo_.ns1__CheckUserInfo = ns1__CheckUserInfo;
+	soap_begin(soap);
+	soap->encodingStyle = NULL; /* use SOAP literal style */
+	soap_serializeheader(soap);
+	soap_serialize___ns1__CheckUserInfo_(soap, &soap_tmp___ns1__CheckUserInfo_);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || soap_put___ns1__CheckUserInfo_(soap, &soap_tmp___ns1__CheckUserInfo_, "-ns1:CheckUserInfo", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	}
+	if (soap_end_count(soap))
+		return soap->error;
+	if (soap_connect(soap, soap_endpoint, soap_action)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || soap_put___ns1__CheckUserInfo_(soap, &soap_tmp___ns1__CheckUserInfo_, "-ns1:CheckUserInfo", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+int ArgumentSettingServiceSoapProxy::recv_CheckUserInfo_(_ns1__CheckUserInfoResponse &ns1__CheckUserInfoResponse)
+{
+	struct soap *soap = this;
+	ns1__CheckUserInfoResponse.soap_default(soap);
+	if (soap_begin_recv(soap)
+	 || soap_envelope_begin_in(soap)
+	 || soap_recv_header(soap)
+	 || soap_body_begin_in(soap))
+		return soap_closesock(soap);
+	ns1__CheckUserInfoResponse.soap_get(soap, "ns1:CheckUserInfoResponse", NULL);
 	if (soap->error)
 		return soap_recv_fault(soap, 0);
 	if (soap_body_end_in(soap)

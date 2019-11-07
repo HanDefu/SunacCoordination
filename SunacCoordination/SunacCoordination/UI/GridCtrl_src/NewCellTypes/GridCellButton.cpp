@@ -10,6 +10,7 @@
 static char THIS_FILE[] = __FILE__;
 #endif  
 
+
 IMPLEMENT_DYNCREATE(CGridCellButton, CGridCell)
 	CGridCellButton::CGridCellButton(void)
 {
@@ -33,6 +34,7 @@ BOOL CGridCellButton::Draw(CDC* pDC, int nRow, int nCol, CRect rect, BOOL bErase
 }
 void CGridCellButton::OnClickDown(CPoint PointCellRelative)
 {
+	m_oriRect = m_rect;
 	m_bPushing = !m_bPushing;
 	GetGrid()->InvalidateRect(m_rect);
 }
@@ -40,11 +42,19 @@ void CGridCellButton::OnClickDown(CPoint PointCellRelative)
 void CGridCellButton::OnClick(CPoint PointCellRelative)
 {
 	m_bPushing = FALSE;
-	GetGrid()->InvalidateRect(m_rect);
+	GetGrid()->InvalidateRect(m_oriRect);
 }
 
-void CGridCellButton::OnMouseLeave()
+void CGridCellButton::OnMouseOver()
 {
-	m_bPushing = TRUE;
-	GetGrid()->InvalidateRect(m_rect);
+	TRACKMOUSEEVENT   tme;
+	tme.cbSize = sizeof(TRACKMOUSEEVENT);
+	tme.dwFlags = TME_HOVER | TME_LEAVE;
+	tme.dwHoverTime = HOVER_DEFAULT;
+	//tme.hwndTrack = m_hWnd;
+	_TrackMouseEvent(&tme);
+	m_bPushing = FALSE;
+	GetGrid()->InvalidateRect(m_oriRect);
+	__super::OnMouseOver();
+
 }
