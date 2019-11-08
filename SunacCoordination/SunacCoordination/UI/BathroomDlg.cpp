@@ -381,14 +381,6 @@ void CBathroomDlg::OnBnClickedButtonInsert()
 		return;
 	}
 
-	//检查参数合法性
-	CString errMsg;
-	if (!m_pBathroomGen->CheckParameter(errMsg))
-	{
-		AfxMessageBox(errMsg);
-		return;
-	}
-
 	CString newInstanceCode = TYUI_GetText(m_number);
 	if (!CBathroomAutoName::GetInstance()->IsNameValid(*m_pBathroomGen->GetBathroomAtt(), newInstanceCode))
 	{
@@ -397,6 +389,14 @@ void CBathroomDlg::OnBnClickedButtonInsert()
 	}
 
 	UpdateAttribute();
+	//检查参数合法性
+	CString errMsg;
+	if (!m_pBathroomGen->CheckParameter(errMsg))
+	{
+		AfxMessageBox(errMsg);
+		return;
+	}
+
 	if (!m_autoIndex.GetCheck())
 	{
 		m_pBathroomGen->GetBathroomAtt()->SetInstanceCode(newInstanceCode);

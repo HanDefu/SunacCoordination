@@ -311,6 +311,11 @@ void CWindowDlg::OnBnClickedRadioDoor()
 void CWindowDlg::OnBnClickedCalculate()
 {
 	double area = TYUI_GetDouble(m_area);
+	if (area <= 0)
+	{
+		AfxMessageBox(L"无效的房屋面积");
+		return;
+	}
 
 	CString sRate = TYUI_GetText(m_rate);
 	double rate = _ttof(sRate);

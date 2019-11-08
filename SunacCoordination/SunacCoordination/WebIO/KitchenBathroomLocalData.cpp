@@ -369,11 +369,11 @@ void CKitchenBathroomLocalData::InitBathroomLocalData()
 	pBathroom->m_isJiTuan = true;
 	//AttrBathroom类属性
 	pBathroom->m_sBathroomType = L"U型";
-	pBathroom->m_windowDoorPos = DUIKAI;
+	pBathroom->m_windowDoorPos = CHUIZHIKAI;
 	pBathroom->m_hasPaiQiDao = true;
 	//原型尺寸与门窗初始位置
 	pProp->m_doorPos = E_DIR_LEFT;
-	pProp->m_windowPos = E_DIR_RIGHT;
+	pProp->m_windowPos = E_DIR_TOP;
 	pProp->AddSize(1600, 2450);
 
 	pBathroom = &m_allBathrooms[9];
@@ -385,11 +385,11 @@ void CKitchenBathroomLocalData::InitBathroomLocalData()
 	pBathroom->m_isJiTuan = true;
 	//AttrBathroom类属性
 	pBathroom->m_sBathroomType = L"U型";
-	pBathroom->m_windowDoorPos = CHUIZHIKAI;
+	pBathroom->m_windowDoorPos = DUIKAI;
 	pBathroom->m_hasPaiQiDao = true;
 	//原型尺寸与门窗初始位置
 	pProp->m_doorPos = E_DIR_LEFT;
-	pProp->m_windowPos = E_DIR_TOP;
+	pProp->m_windowPos = E_DIR_RIGHT;
 	pProp->AddSize(1850, 2000);
 
 	pBathroom = &m_allBathrooms[10];

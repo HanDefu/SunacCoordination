@@ -200,3 +200,25 @@ CString AttrBathroom::GetPrototypeCode() const
 
 	return ret;
 }
+
+void AttrBathroom::GetAirVentSize(double& ventX, double& ventY)
+{
+	if (m_hasPaiQiDao)
+	{
+		if (m_isGuoBiao) //ЙњБъ
+		{
+			ventX = m_airVentOffsetX + c_bathroomAirVentSize[m_floorRange];
+			ventY = m_airVentOffsetY + c_bathroomAirVentSize[m_floorRange];
+		}
+		else
+		{
+			ventX = m_airVentW;
+			ventY = m_airVentH;
+		}
+	}
+	else
+	{
+		ventX = 0;
+		ventY = 0;
+	}
+}

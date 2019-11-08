@@ -53,6 +53,8 @@ public:
 
 	virtual int SetMatongPos(AcDbObjectId bathroomId, double yLen);
 
+	virtual bool CheckParameter(CString& errMsg); //插入前检查参数合法性
+
 protected:
 	int SetMatongPos_I3(AcDbObjectId bathroomId, double yLen);
 	int SetMatongPos_I4(AcDbObjectId bathroomId, double yLen);
@@ -87,6 +89,8 @@ class CBathroomGenKL : public CBathroomGen
 {
 public:
 	CBathroomGenKL(AttrBathroom* p_att) : CBathroomGen(p_att) {}
+
+	virtual bool CheckParameter(CString& errMsg); //插入前检查参数合法性
 
 	//int SetMatongPos(AcDbObjectId bathroomId, double yLen);
 };
