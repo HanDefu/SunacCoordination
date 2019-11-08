@@ -29,7 +29,7 @@ public:
 	CProjectData();
 	~CProjectData();
 
-	CString GetDirString(CString sName, CProjectDir* p_parentDir);
+	CString GetDirString(CString sName, CProjectDir* p_parentDir) const;
 
 	static CString GenerateGuid();
 
@@ -46,7 +46,7 @@ public:
 	CProjectDir* FindDir(CString p_dirPath);
 	CProjectFile* GetFileByDirAndName(CString p_sDirPathInProject, CString p_fileName);
 
-	const CProjectDir* GetRootDir() { return &m_rootDir; }
+	const CProjectDir* GetRootDir() const { return &m_rootDir; }
 	CProjectInfo GetPrjInfo()const { return m_prjInfo; }
 	CString GetProjectId()const;
 

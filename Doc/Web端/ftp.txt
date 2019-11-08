@@ -12,9 +12,23 @@ ftp文件目录：d:\ProjectFiles
 生产环境1：10.4.0.139  端口2121  被动模式端口范围37421 - 37450
 生产环境2：10.4.0.140  端口2131  被动模式端口范围37451 - 37480
 生产环境域名：http://ades.sunac.com.cn  
-生产环境对应的公网ip: 1.203.161.237
- 1.203.161.246
+生产环境139对应的公网ip: 1.203.161.246
 
 
-
+电脑账号密码：
 administrator              CADpass!#%246
+
+
+
+
+
+
+ftp设置网络共享目录的解决方法：
+https://forum.filezilla-project.org/viewtopic.php?f=6&t=9200
+
+CAD生产系统共享磁盘信息：
+\\192.168.7.209\CAD
+账号：caduser
+密码：CadPwd1@
+
+ftp的共享目录设置为\\192.168.7.209\CAD\ProjectFiles

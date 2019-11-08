@@ -28,6 +28,7 @@ CProjectManagementDlg::CProjectManagementDlg(CProjectData* pPrjData,CWnd* pParen
 
 CProjectManagementDlg::~CProjectManagementDlg()
 {
+
 }
 
 void CProjectManagementDlg::DoDataExchange(CDataExchange* pDX)
@@ -304,7 +305,6 @@ void CProjectManagementDlg::UpdateGridCtrlState(CProjectDir* SelectedDir)
 
 CProjectDir* CProjectManagementDlg::FindClkDir(HTREEITEM CurClkItem)
 {
-
 	CProjectDir* RootDir = (CProjectDir *)m_pPrjData->GetRootDir();
 	if (CurClkItem == NULL)
 	{
@@ -342,11 +342,13 @@ void CProjectManagementDlg::OnNMClickTreePrjdir(NMHDR *pNMHDR, LRESULT *pResult)
 	{
 		return;
 	}
-	else if (m_selectedDir->m_subFiles.empty())
+
+	if (m_selectedDir->m_subFiles.empty())
 	{
 		InitGridCtrl();
 		return;
 	}
+
 	FillPjtGridCtrl(m_selectedDir);
 }
 
@@ -387,6 +389,7 @@ void CProjectManagementDlg::OnGridClick(NMHDR *pNMHDR, LRESULT *pResult)
 	{
 		return;
 	}
+
 	CString sSelectedFileParentPath = m_pPrjData->GetDirString(L"", m_selectedDir);
 	CProjectFile SelectedFile;
 
