@@ -4,7 +4,6 @@
 #include "../Common/ThreadUtil.h"
 using namespace std;
 
-//#define MULTI_THREAD_DOWNUPLOAD
 
 class CUpDownFilePara;
 
