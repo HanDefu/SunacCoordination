@@ -340,7 +340,7 @@ bool CProjectData::RenameFolder(CString p_sFolderPath, CString p_newName)
 	return true; 
 }
 
-CString CProjectData::GetDirString(CString sName, CProjectDir* p_parentDir)
+CString CProjectData::GetDirString(CString sName, CProjectDir* p_parentDir) const
 {
 	CString temp = sName;
 	CProjectDir* tempDir = p_parentDir;

@@ -484,3 +484,16 @@ CRCRailingT7::CRCRailingT7()
 	m_B1 = 1510;
 	m_B2 = 1716;
 }
+
+AcDbObjectId CRCRailingT7::GenerateRailing_NonStandard(AcGePoint3d p_pos)
+{
+	AcDbObjectId id = CRCRailingTieyi::GenerateRailing_NonStandard(p_pos);
+
+	double Ln = GetNonstandardLen() - GetPillarWidth() * 2;
+	if (Ln<200)
+	{
+		DQ_SetDynamicAttribute(id, _T("可见性"), _T("单格"));
+	}
+
+	return id;
+}
