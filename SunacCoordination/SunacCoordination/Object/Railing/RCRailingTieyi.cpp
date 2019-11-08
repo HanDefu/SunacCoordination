@@ -194,7 +194,7 @@ bool CRCRailingTieyi::GenRailing()  //对栏杆总长进行判断，如果栏杆总长小于1550，
 	double k2 = GenK(GetLength(), B2(), N_2, n_2);
 
 	//对k(栏杆侧边留空间隙)进行判断，如果大于105，那么标准栏杆尺寸就为1380，否则就为1260
-	if (k1 <= 105 && k1 > 0)
+	if (k1 <= 105 && k1 >= 0)
 	{
 		m_B = m_B1;
 		m_N = N_1;
