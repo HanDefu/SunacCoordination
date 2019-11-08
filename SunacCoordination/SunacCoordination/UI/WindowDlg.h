@@ -56,6 +56,9 @@ public:
 
 	void SetEditMode(AcDbBlockReference* pBlock);
 
+	//插入全部，测试用
+	void InsertAllWindows();
+
 protected:
 
 	CGridCtrlWithPreview m_preWindow;
