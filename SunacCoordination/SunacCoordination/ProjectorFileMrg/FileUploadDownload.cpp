@@ -215,7 +215,7 @@ CFileUpDownLoadFtp::~CFileUpDownLoadFtp()
 		TerminateThread(m_downLoadThread, 0);
 	}
 
-	while (m_upFileParasQueue.empty())
+	while (m_upFileParasQueue.empty()==false)
 	{
 		delete m_upFileParasQueue.front();
 		m_upFileParasQueue.pop();

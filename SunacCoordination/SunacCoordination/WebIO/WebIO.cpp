@@ -171,7 +171,7 @@ std::vector<AttrKitchen> WebIO::GetKitchens(EKitchType p_type, double p_xLen, do
 #ifdef WORK_LOCAL//本地模式
 	return m_kitchenBathroomLocalData.GetKitchens(p_type, p_xLen, p_yLen, p_doorDir, p_windowDir, p_hasPaiQiDao);
 #else	
-	CString WindowDoorPos;
+	/*CString WindowDoorPos;
 	if (abs(p_doorDir - p_windowDir) == 2)
 	{
 		WindowDoorPos = L"门窗对开";
@@ -180,8 +180,10 @@ std::vector<AttrKitchen> WebIO::GetKitchens(EKitchType p_type, double p_xLen, do
 	{
 		WindowDoorPos = L"门窗垂直开";
 	}
-
-	return m_kitchenBathroomWebData.GetKitchens(p_xLen, p_yLen, WindowDoorPos, KitchenTypeToCString(p_type), (p_hasPaiQiDao == true)? 1:0);
+	
+	return m_kitchenBathroomWebData.GetKitchens(p_xLen, p_yLen, WindowDoorPos, KitchenTypeToCString(p_type), (p_hasPaiQiDao == true)? 1:0);*/
+	m_kitchenBathroomWebData.m_allKitchens = m_kitchenBathroomWebData.GetAllKitchens();
+	return m_kitchenBathroomWebData.GetKitchens(p_type, p_xLen, p_yLen, p_doorDir, p_windowDir, p_hasPaiQiDao);
 #endif
 }
 
@@ -199,14 +201,16 @@ std::vector<AttrBathroom> WebIO::GetBathrooms(EBathroomType p_type, double p_xLe
 #ifdef WORK_LOCAL//本地模式
 	return m_kitchenBathroomLocalData.GetBathrooms(p_type, p_xLen, p_yLen, p_doorDir, p_windowDir);
 #else
-	CString WindowDoorPos;
+	/*CString WindowDoorPos;
 	if (abs(p_doorDir - p_windowDir) == 2)
 	{
 		WindowDoorPos = L"门窗对开";
 	}
 	else WindowDoorPos = L"门窗垂直开";
 
-	return m_kitchenBathroomWebData.GetBathrooms(p_xLen, p_yLen, WindowDoorPos, BathroomTypeToCString(p_type));
+	return m_kitchenBathroomWebData.GetBathrooms(p_xLen, p_yLen, WindowDoorPos, BathroomTypeToCString(p_type));*/
+	m_kitchenBathroomWebData.m_allBathrooms = m_kitchenBathroomWebData.GetAllBathrooms();
+	return m_kitchenBathroomWebData.GetBathrooms(p_type, p_xLen, p_yLen, p_doorDir, p_windowDir); 
 #endif
 }
 

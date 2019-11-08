@@ -712,8 +712,8 @@ void CMD_test()
 	CKitchenBathroomWebData BathroomFromWeb;
 	std::vector<AttrKitchen> KitchenFromLocalData = WebIO::GetInstance()->GetAllKitchens();
 	std::vector<AttrKitchen> KitchenFromWebData = KitchenFromWeb.GetAllKitchens();
-	std::vector<AttrKitchen> KitchenFromWebData2 = KitchenFromWeb.GetKitchens(1800, 2600, L"门窗对开", L"L型", true);
-	std::vector<AttrBathroom> BathroomFromWebData = BathroomFromWeb.GetBathrooms(1800, 2000, L"门窗垂直开", L"L型");
+	//std::vector<AttrKitchen> KitchenFromWebData2 = KitchenFromWeb.GetKitchens(1800, 2600, L"门窗对开", L"L型", true);
+	//std::vector<AttrBathroom> BathroomFromWebData = BathroomFromWeb.GetBathrooms(1800, 2000, L"门窗垂直开", L"L型");
 	/*
 	for(int i = 0; i < attrs2.size(); i++ )
 	{

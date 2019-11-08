@@ -491,6 +491,10 @@ void CWebProjectFile::ParseUpdateFileFromXML(CMarkup xml, CString ParentPath, CS
 		{
 			g_projectManagementDlg->m_pPrjData->GetFileByDirAndName(ParentPath, FileName)->m_id = _ttoi(xml.GetData());
 		}
+		if (xml.FindElem(_T("CadUriPath")))
+		{
+			g_projectManagementDlg->m_pPrjData->GetFileByDirAndName(ParentPath, FileName)->m_sFileUrl = xml.GetData();
+		}
 	}
 	xml.OutOfElem();
 }

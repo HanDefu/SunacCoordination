@@ -5726,6 +5726,7 @@ void CGridCtrl::OnMouseMove(UINT /*nFlags*/, CPoint point)
     // If outside client area, return (unless we are drag n dropping)
     if (m_MouseMode != MOUSE_DRAGGING && !rect.PtInRect(point))
         return;
+
 #endif
 
     // Sometimes a MOUSEMOVE message can come after the left buttons
@@ -5829,6 +5830,19 @@ void CGridCtrl::OnMouseMove(UINT /*nFlags*/, CPoint point)
                 CCellID idCurrentCell = GetCellFromPt(point);
                 if (!IsValid(idCurrentCell))
                     return;
+
+				CGridCellBase *pCell = NULL;
+				pCell = GetCell(idCurrentCell.row, idCurrentCell.col);
+				CRect TempRect;
+				GetCellRect(idCurrentCell, TempRect);
+				if (idCurrentCell.IsValid())
+				{
+					if(point.x < TempRect.left + 10 || point.x > TempRect.right - 10 || point.y < TempRect.bottom + 10 || point.y > TempRect.top - 10 || point.x > TempRect.left || point.x < TempRect.right || point.y > TempRect.bottom || point.y < TempRect.top)   
+					{   
+						pCell->OnMouseLeave();
+					}
+				}
+
 
                 if (idCurrentCell != GetFocusCell())
                 {
@@ -6083,7 +6097,6 @@ void CGridCtrl::OnLButtonDown(UINT nFlags, CPoint point)
     else if (IsCellSelected(m_LeftClickDownCell))
     {
         SetFocusCell(m_LeftClickDownCell.row, m_LeftClickDownCell.col);
-
         // If control is pressed then unselect the cell or row (depending on the list mode)
         if (nFlags & MK_CONTROL)
         {

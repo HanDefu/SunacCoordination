@@ -53,8 +53,13 @@ void CGridCellButton::OnMouseOver()
 	tme.dwHoverTime = HOVER_DEFAULT;
 	//tme.hwndTrack = m_hWnd;
 	_TrackMouseEvent(&tme);*/
-	SetTimer(NULL, 1, 60, NULL);
 	m_bPushing = FALSE;
 	GetGrid()->InvalidateRect(m_oriRect);
 
+}
+
+void CGridCellButton::OnMouseLeave()
+{
+	m_bPushing = FALSE;
+	GetGrid()->InvalidateRect(m_oriRect);
 }

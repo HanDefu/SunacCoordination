@@ -14,6 +14,7 @@ protected:
 	virtual void OnClickDown(CPoint PointCellRelative);
 	virtual void OnClick(CPoint PointCellRelative);
 	virtual void OnMouseOver();
+	virtual void OnMouseLeave();
 	//virtual void OnLButtonUp(UINT nFlags, CPoint point);
 protected:
 	CRect m_oriRect;

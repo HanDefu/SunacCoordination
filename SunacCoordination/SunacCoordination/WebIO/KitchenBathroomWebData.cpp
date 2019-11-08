@@ -9,7 +9,7 @@
 #include <string>
 
 
-std::vector<AttrKitchen > CKitchenBathroomWebData::ParseKitchensFromXML(CMarkup xml)const
+std::vector<AttrKitchen > CKitchenBathroomWebData::ParseKitchensFromXML(CMarkup xml)
 {
 	std::vector<AttrKitchen> vKitchenAttrs;
 	AttrKitchen KitchenAttr;
@@ -168,7 +168,7 @@ std::vector<AttrKitchen > CKitchenBathroomWebData::ParseKitchensFromXML(CMarkup 
 	return vKitchenAttrs;
 }
 
-std::vector<AttrBathroom > CKitchenBathroomWebData::ParseBathroomsFromXML(CMarkup xml)const
+std::vector<AttrBathroom > CKitchenBathroomWebData::ParseBathroomsFromXML(CMarkup xml)
 {
 	std::vector<AttrBathroom> vBathroomAttrs;
 	AttrBathroom BathroomAttr;
@@ -275,20 +275,24 @@ std::vector<AttrBathroom > CKitchenBathroomWebData::ParseBathroomsFromXML(CMarku
 			{
 				BathroomAttr.m_sBathroomType = xml.GetData();
 			}
-			if (xml.FindElem(_T("BathroomShortsideSizeMin")))
+			if (xml.FindElem(_T("BathroomShortSideMin")))
 			{
+				BathroomAttr.m_prop.m_minX = _ttoi(xml.GetData());
 				//BathroomAttr.m_ = _ttof(xml.GetData());
 			}
-			if (xml.FindElem(_T("BathroomShortsideSizeMax")))
+			if (xml.FindElem(_T("BathroomShortSideMax")))
 			{
+				BathroomAttr.m_prop.m_maxX = _ttoi(xml.GetData());
 				//BathroomAttr.m_ = _ttof(xml.GetData());
 			}
-			if (xml.FindElem(_T("BathroomLongsideSizeMin")))
+			if (xml.FindElem(_T("BathroomLongSizeMin")))
 			{
+				BathroomAttr.m_prop.m_minY = _ttoi(xml.GetData());
 				//BathroomAttr.m_ = _ttof(xml.GetData());
 			}
-			if (xml.FindElem(_T("BathroomLongsideSizeMax")))
+			if (xml.FindElem(_T("BathroomLongSizeMax")))
 			{
+				BathroomAttr.m_prop.m_maxY = _ttoi(xml.GetData());
 				//BathroomAttr.m_ = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("BathroomDoorWindowPosition")))
@@ -315,7 +319,7 @@ std::vector<AttrBathroom > CKitchenBathroomWebData::ParseBathroomsFromXML(CMarku
 	return vBathroomAttrs;
 }
 
-std::vector<AttrKitchen> CKitchenBathroomWebData::GetAllKitchens()const
+std::vector<AttrKitchen> CKitchenBathroomWebData::GetAllKitchens()
 {
 	_ns1__GetAllKitchen ns;
 	_ns1__GetAllKitchenResponse nsResponse;
@@ -324,12 +328,10 @@ std::vector<AttrKitchen> CKitchenBathroomWebData::GetAllKitchens()const
 	InitSoapTime(cadWeb);
 	int nRet = cadWeb.GetAllKitchen(&ns, nsResponse);
 
-	std::vector<AttrKitchen> vKitchenAttrs;
-
 	//判断返回结果是否成功
 	if (nsResponse.GetAllKitchenResult == NULL)
 	{
-		return vKitchenAttrs;
+		return m_allKitchens;
 	}
 
 	//解析字符串出结果
@@ -337,11 +339,12 @@ std::vector<AttrKitchen> CKitchenBathroomWebData::GetAllKitchens()const
 
 	xml.SetDoc((*(nsResponse.GetAllKitchenResult)).c_str());
 
-	vKitchenAttrs = ParseKitchensFromXML(xml);
+	m_allKitchens = ParseKitchensFromXML(xml);
 
-	return vKitchenAttrs;
+	return m_allKitchens;
 }
 
+/*
 std::vector<AttrKitchen> CKitchenBathroomWebData::GetKitchens( double kaiJian, double jinShen, CString weiZhiGuanXi, CString type, bool hasPaiQiDao)const 
 {
 	_ns1__GetAllKitchenParam ns;
@@ -383,9 +386,47 @@ std::vector<AttrKitchen> CKitchenBathroomWebData::GetKitchens( double kaiJian, d
 
 	return vKitchenAttrs;
 
+}*/
+
+std::vector<AttrKitchen> CKitchenBathroomWebData::GetKitchens(EKitchType p_type, double p_xLen, double p_yLen, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir, bool p_hasPaiQiDao)
+{
+	vector<AttrKitchen> ret;
+
+	int xLen = int(p_xLen + 0.5);
+	int yLen = int(p_yLen + 0.5);
+	int width = xLen;
+	int height = yLen;
+	if (p_doorDir == E_DIR_LEFT || p_doorDir == E_DIR_RIGHT)
+		swap(width, height);
+
+	CString sType;
+	switch (p_type)
+	{
+	case E_KITCH_U:
+		sType = L"KU";
+		break;
+	case E_KITCH_L:
+		sType = L"KL";
+		break;
+	case E_KITCH_I:
+		sType = L"KI";
+		break;
+	}
+
+	for (UINT i = 0; i < m_allKitchens.size(); i++)
+	{
+		if ((p_type == E_BATHROOM_ALL || m_allBathrooms[i].m_prototypeCode.Left(2) == sType) && m_allBathrooms[i].m_prop.MatchPrototype(xLen, yLen, p_doorDir, p_windowDir))
+		{
+			ret.push_back(m_allKitchens[i]);
+			ret.back().m_width = width;
+			ret.back().m_height = height;
+		}
+	}
+
+	return ret;
 }
 
-std::vector<AttrBathroom> CKitchenBathroomWebData::GetAllBathrooms()const
+std::vector<AttrBathroom> CKitchenBathroomWebData::GetAllBathrooms()
 {
 	std::wstring sBathroomDoorWindowPosition, sToiletType;
 
@@ -396,12 +437,10 @@ std::vector<AttrBathroom> CKitchenBathroomWebData::GetAllBathrooms()const
 	InitSoapTime(cadWeb);
 	int nRet = cadWeb.GetAllBathroom(&ns, nsResponse);
 
-	std::vector<AttrBathroom> vBathroomAttrs;
-
 	//判断返回结果是否成功
 	if (nsResponse.GetAllBathroomResult == NULL)
 	{
-		return vBathroomAttrs;
+		return m_allBathrooms;
 	}
 
 	//解析字符串出结果
@@ -409,11 +448,12 @@ std::vector<AttrBathroom> CKitchenBathroomWebData::GetAllBathrooms()const
 
 	xml.SetDoc((*(nsResponse.GetAllBathroomResult)).c_str());
 
-	vBathroomAttrs = ParseBathroomsFromXML(xml);
+	m_allBathrooms = ParseBathroomsFromXML(xml);
 
-	return vBathroomAttrs;
+	return m_allBathrooms;
 }
 
+/*
 std::vector<AttrBathroom> CKitchenBathroomWebData::GetBathrooms(double width, double height, CString weiZhiGuanXi, CString type)const
 {
 	std::wstring sWindowDoorPosition = weiZhiGuanXi;
@@ -447,4 +487,42 @@ std::vector<AttrBathroom> CKitchenBathroomWebData::GetBathrooms(double width, do
 	vBathroomAttrs = ParseBathroomsFromXML(xml);
 
 	return vBathroomAttrs;
+}*/
+
+std::vector<AttrBathroom> CKitchenBathroomWebData::GetBathrooms(EBathroomType p_type, double p_xLen, double p_yLen, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir)
+{
+	vector<AttrBathroom> ret;
+
+	int xLen = int(p_xLen + 0.5);
+	int yLen = int(p_yLen + 0.5);
+	int width = xLen;
+	int height = yLen;
+	if (p_doorDir == E_DIR_LEFT || p_doorDir == E_DIR_RIGHT)
+		swap(width, height);
+
+	CString sType;
+	switch (p_type)
+	{
+	case E_BATHROOM_I:
+		sType = L"TI";
+		break;
+	case E_BATHROOM_L:
+		sType = L"TL";
+		break;
+	case E_BATHROOM_U:
+		sType = L"TU";
+		break;
+	}
+
+	for (UINT i = 0; i < m_allBathrooms.size(); i++)
+	{
+		if (((p_type == E_BATHROOM_ALL) || (m_allBathrooms[i].m_prototypeCode.Left(2) == sType)) && m_allBathrooms[i].m_prop.MatchPrototype(xLen, yLen, p_doorDir, p_windowDir))
+		{
+			ret.push_back(m_allBathrooms[i]);
+			ret.back().m_width = width;
+			ret.back().m_height = height;
+		}
+	}
+
+	return ret;
 }
