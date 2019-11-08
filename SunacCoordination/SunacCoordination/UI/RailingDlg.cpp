@@ -146,7 +146,15 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 	railingAtt.m_length = m_width;
 	railingAtt.m_prototypeCode = pCell->GetName();
 	railingAtt.m_railingType = railingAtt.m_prototypeCode.Find(_T("_T"))>0 ? E_RAILING_TIEYI : E_RAILING_BOLI;
-	railingAtt.SetInstanceCode(m_sRailingId);
+
+	if (m_bRailingAutoName)
+	{
+		m_sRailingId = railingAtt.AutoInstanceCode();
+	}
+	else
+	{
+		railingAtt.SetInstanceCode(m_sRailingId);
+	}
 
 	//Éú³É
 	CRCRailing* pRailing = CreateRailing(railingAtt);

@@ -1,5 +1,10 @@
 #pragma once
 #include <vector>
+#include <queue>
+#include "../Common/ThreadUtil.h"
+using namespace std;
+
+//#define MULTI_THREAD_DOWNUPLOAD
 
 class CUpDownFilePara;
 
@@ -38,26 +43,22 @@ public:
 
 
 
-class CFileUpDownLoad //项目的数据
+class CFileUpDownLoadWeb //项目的数据
 {
-	CFileUpDownLoad();
+	CFileUpDownLoadWeb();
 public:
-	static CFileUpDownLoad* Instance();
-	~CFileUpDownLoad();
+	static CFileUpDownLoadWeb* Instance();
+	~CFileUpDownLoadWeb();
 
 	void StopAll(); //停止所有上传下载,主要是程序退出时
+	void SetAppQuit(){ m_bWaitingForQuit = true; }
 
 	//strFileURLInServer待下载文件的URL,  strFileLocalFullPath存放到本地的路径
 	static bool DownloadFile(const CString& strFileURLInServer, const CString & strFileLocalFullPath);
-	static bool UploadFile(CString p_sFilePath, CString p_ftpSaveName, CString p_ftpDir);
 
 	void DownloadFileByThread(CUpDownFilePara p_upFilePara);
-	void UploadFileByThread(CUpDownFilePara p_upFilePara);
-
-	void SetAppQuit(){ m_bWaitingForQuit = true; }
 
 protected:
-	static DWORD UploadFileThreadFunc(LPVOID pama);
 	static DWORD DownloadFileThreadFunc(LPVOID pama);
 
 protected:
@@ -65,7 +66,41 @@ protected:
 
 	vector<HANDLE> m_allTheadHandle;
 
-
 	bool m_bWaitingForQuit; //程序退出中
 };
 
+//////////////////////////////////////////////////////////////////////////
+
+class CFileUpDownLoadFtp //项目的数据
+{
+	CFileUpDownLoadFtp();
+public:
+	static CFileUpDownLoadFtp* Instance();
+	~CFileUpDownLoadFtp();
+
+	void StopAll(); //停止所有上传下载,主要是程序退出时
+	void SetAppQuit(){ m_bWaitingForQuit = true; }
+
+	static bool UploadFile(CString p_sFilePath, CString p_ftpSaveName, CString p_ftpDir);
+
+	void UploadFileByThread(CUpDownFilePara p_upFilePara);
+
+protected:
+	static DWORD OneUploadFileThreadFunc(LPVOID pama);
+	static DWORD FTPThreadFunc(LPVOID pama);
+	CUpDownFilePara* GetFrontDownFilePara();
+
+protected:
+	//多线程下载用
+	vector<CUpDownFilePara*> m_allUpFileParas;
+	vector<HANDLE> m_allTheadHandle;
+
+
+	//单线程下载用
+	HANDLE m_downLoadThread;
+	queue<CUpDownFilePara* > m_upFileParasQueue;
+
+	CCritSec m_Lock;
+	bool m_bUseMultiThread;
+	bool m_bWaitingForQuit; //程序退出中
+};

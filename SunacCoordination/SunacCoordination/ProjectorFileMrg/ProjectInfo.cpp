@@ -115,7 +115,7 @@ bool CProjectData::DownloadFile(CString p_sDirPathInProject, CString p_fileName,
 	downFilePara.progress = 0; //进度，0-100
 	downFilePara.pCaller = this; //调用者
 
-	CFileUpDownLoad::Instance()->DownloadFileByThread(downFilePara);
+	CFileUpDownLoadWeb::Instance()->DownloadFileByThread(downFilePara);
 
 	return true;
 }
@@ -180,7 +180,7 @@ bool CProjectData::AddFile(CString p_sFilePath, CString  p_sDirPathInProject, Fi
 	upFilePara.progress = 0; //进度，0-100
 	upFilePara.pCaller = this; //调用者
 
-	CFileUpDownLoad::Instance()->UploadFileByThread(upFilePara);
+	CFileUpDownLoadFtp::Instance()->UploadFileByThread(upFilePara);
 #endif
 
 	return true;
@@ -340,7 +340,7 @@ bool CProjectData::RenameFolder(CString p_sFolderPath, CString p_newName)
 	return true; 
 }
 
-CString CProjectData::GetDirString(CString sName, CProjectDir* p_parentDir)
+CString CProjectData::GetDirString(CString sName, CProjectDir* p_parentDir) const
 {
 	CString temp = sName;
 	CProjectDir* tempDir = p_parentDir;
