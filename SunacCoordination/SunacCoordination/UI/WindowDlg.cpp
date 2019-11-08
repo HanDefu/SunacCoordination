@@ -241,8 +241,8 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	oneWindow.AddAttribute(pWindow);
 	pWindow->close();
 
-	//ShowWindow(TRUE);
-	OnOK();
+	ShowWindow(TRUE);
+	//OnOK();
 }
 
 void CWindowDlg::OnBnClickedButtonSearchwindow()
@@ -392,8 +392,8 @@ void CWindowDlg::OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult)
 		m_viewDir.AddString(L"平面");
 	if ((!pSel->m_leftViewFile.fileName.IsEmpty()) && PathFileExists(TY_GetPrototypeFilePath() + pSel->m_leftViewFile.fileName))
 		m_viewDir.AddString(L"侧视");
-	if (m_viewDir.GetCount() > 0)
-		m_viewDir.SetCurSel(0);
+	if (pSel->m_viewDir < 3)
+		m_viewDir.SetCurSel(pSel->m_viewDir);
 	OnSelChangedView();
 
 	UpdateData(FALSE);
@@ -453,14 +453,24 @@ void CWindowDlg::OnSelChangedH3()
 
 void CWindowDlg::OnSelChangedView()
 {
+	AttrWindow* pSel = GetSelWindow();
+	if (pSel == NULL)
+		return;
+
 	CString sView = TYUI_GetComboBoxText(m_viewDir);
+	
 	if (sView == L"平面")
 	{
+		pSel->m_viewDir = E_VIEW_TOP;
 		TYUI_Show(*GetDlgItem(IDC_STATIC_DIR));
 		TYUI_Show(m_insertDir);
 	}
 	else
 	{
+		if (sView == L"立面")
+			pSel->m_viewDir = E_VIEW_FRONT;
+		else if (sView == L"侧视")
+			pSel->m_viewDir = E_VIEW_LEFT;
 		TYUI_Hide(*GetDlgItem(IDC_STATIC_DIR));
 		TYUI_Hide(m_insertDir);
 	}
@@ -660,8 +670,8 @@ void CWindowDlg::InsertAllWindows()
 
 		AcGePoint3d insertPt;
 
-		insertPt.x = origin.x + (m_selWidth + 100) * (i % 8);
-		insertPt.y = origin.y + (m_selHeight + 100) * (i / 8);
+		insertPt.x = origin.x + (m_selWidth + 100) * (i % 5);
+		insertPt.y = origin.y + (m_selHeight + 100) * (i / 5);
 
 		int sel = m_viewDir.GetCurSel();
 		if (sel == 0)
@@ -669,14 +679,21 @@ void CWindowDlg::InsertAllWindows()
 		else if (sel == 1)
 		{
 			double rotateAngle = 0;
+			AcGeVector3d offsetXY(0, 0, 0);
 			CString sDir = TYUI_GetComboBoxText(m_insertDir);
 			if (sDir == L"南")
+			{
 				rotateAngle = PI;
+				offsetXY.x += m_selWidth;
+			}
 			if (sDir == L"西")
 				rotateAngle = PI / 2;
 			if (sDir == L"东")
+			{
 				rotateAngle = -PI / 2;
-			oneWindow.Insert(TY_GetPrototypeFilePath() + pSel->m_topViewFile.fileName, insertPt, rotateAngle, L"0", 256);
+				offsetXY.y += m_selWidth;
+			}
+			oneWindow.Insert(TY_GetPrototypeFilePath() + pSel->m_topViewFile.fileName, origin + offsetXY, rotateAngle, L"0", 256);
 		}
 		else
 			oneWindow.Insert(TY_GetPrototypeFilePath() + pSel->m_leftViewFile.fileName, insertPt, 0, L"0", 256);

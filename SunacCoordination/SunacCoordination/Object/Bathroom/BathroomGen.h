@@ -63,6 +63,15 @@ class CBathroomGenKU : public CBathroomGen
 public:
 	CBathroomGenKU(AttrBathroom* p_att) : CBathroomGen(p_att) {}
 
+	virtual vCString GetTaipenOptions() { return vCString(0); }
+	virtual CString GetTaipenDefault() { return L""; }
+
+	virtual vCString GetMatongOptions() {return vCString(0); }
+	virtual CString GetMatongDefault() { return L""; }
+
+	virtual vCString GetGuanxiquOptions() {return vCString(0); }
+	virtual CString GetGuanxiquDefault() { return L""; }
+
 	//U型为静态厨房，不需要检查
 	virtual bool CheckParameter(CString& errMsg) { return true; }
 

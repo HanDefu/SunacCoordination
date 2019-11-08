@@ -1086,7 +1086,8 @@ extern "C" AcRx::AppRetCode acrxEntryPoint( AcRx::AppMsgCode msg, void* appId)
 			InitMenu();
 		break;
 	case AcRx::kQuitMsg:
-		CFileUpDownLoad::Instance()->SetAppQuit();
+		CFileUpDownLoadWeb::Instance()->SetAppQuit();
+		CFileUpDownLoadFtp::Instance()->SetAppQuit();
 		break;
 	case  AcRx::kLoadDwgMsg:
 		break;

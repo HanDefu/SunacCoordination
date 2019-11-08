@@ -12,6 +12,8 @@
 #include "..\ProjectorFileMrg\ProjectFile.h"
 #include "../Common/ComFun_String.h"
 
+#define WM_FILE_STATE_CHANGE (WM_USER + 100)  
+
 
 // CProjectManagementDlg 对话框
 
@@ -63,6 +65,7 @@ BEGIN_MESSAGE_MAP(CProjectManagementDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDC_BUTTON_DOWNLOADALL, &CProjectManagementDlg::OnBnClickedButtonDownloadall)
 	ON_BN_CLICKED(IDC_BUTTON_DELETEALL, &CProjectManagementDlg::OnBnClickedButtonDeleteall)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
+	ON_MESSAGE(WM_FILE_STATE_CHANGE, OnUpdateFileState)
 END_MESSAGE_MAP()
 
 CString SelFilePath()
@@ -137,12 +140,20 @@ void CProjectManagementDlg::FillPjtMngTreeCtrl()
 	m_TreePrjDir.Expand(hTreeItem, TVE_EXPAND);
 }
 
+LRESULT CProjectManagementDlg::OnUpdateFileState(WPARAM, LPARAM)
+{
+	FillPjtGridCtrl(m_selectedDir);
+
+	return 0;
+}
 // CProjectManagementDlg 消息处理程序
 
 static void UIFileUpCBFunc(CUpDownFilePara* p_fileUpdownPara)
 {
 	//更新当前文件的状态
-	g_projectManagementDlg->FillPjtGridCtrl(g_projectManagementDlg->m_selectedDir);
+	::PostMessage(g_projectManagementDlg->m_hWnd, WM_FILE_STATE_CHANGE, 0, 0);
+
+	//g_projectManagementDlg->FillPjtGridCtrl(g_projectManagementDlg->m_selectedDir); //采用消息机制更新界面，此处注释
 }
 
 void CProjectManagementDlg::OnBnClickedButtonUpload()

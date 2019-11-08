@@ -47,14 +47,14 @@ void CGridCellButton::OnClick(CPoint PointCellRelative)
 
 void CGridCellButton::OnMouseOver()
 {
-	TRACKMOUSEEVENT   tme;
+	/*TRACKMOUSEEVENT   tme;
 	tme.cbSize = sizeof(TRACKMOUSEEVENT);
 	tme.dwFlags = TME_HOVER | TME_LEAVE;
 	tme.dwHoverTime = HOVER_DEFAULT;
 	//tme.hwndTrack = m_hWnd;
-	_TrackMouseEvent(&tme);
+	_TrackMouseEvent(&tme);*/
+	SetTimer(NULL, 1, 60, NULL);
 	m_bPushing = FALSE;
 	GetGrid()->InvalidateRect(m_oriRect);
-	__super::OnMouseOver();
 
 }

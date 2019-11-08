@@ -27,6 +27,7 @@ public:
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);
+	afx_msg LRESULT OnUpdateFileState(WPARAM, LPARAM);
 
 	DECLARE_MESSAGE_MAP()
 public:
@@ -51,11 +52,11 @@ public:
 	CStatic m_StcUploadTime;
 	CTreeCtrl m_TreePrjDir;
 	CGridCtrlEx m_PjtManagementGridCtrl;
+	CStatic m_StcRootName;
 
 	afx_msg void OnGridClick(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedButtonUpload();
 	virtual BOOL OnInitDialog();
-	CStatic m_StcRootName;
 	afx_msg void OnNMClickTreePrjdir(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnBnClickedButtonNewdir();
 	afx_msg void OnBnClickedButtonDeletedir();

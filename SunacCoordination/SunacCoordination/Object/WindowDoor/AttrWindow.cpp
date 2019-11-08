@@ -261,7 +261,7 @@ void AttrWindow::CheckAndComplementDimeData() //检查并补全Dim数据，W/H/a确保都有
 		CWindowsDimData dimData;
 		dimData.sCodeName = _T("A");
 		dimData.type = UNLIMIT;
-		dimData.SetDefaultValue(0);
+		dimData.SetDefaultValue(25);
 		SetDimData(dimData);
 	}
 }
