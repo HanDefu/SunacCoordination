@@ -194,7 +194,7 @@ bool CRCRailingTieyi::GenRailing()  //对栏杆总长进行判断，如果栏杆总长小于1550，
 	double k2 = GenK(GetLength(), B2(), N_2, n_2);
 
 	//对k(栏杆侧边留空间隙)进行判断，如果大于105，那么标准栏杆尺寸就为1380，否则就为1260
-	if (k1 <= 105 && k1 > 0)
+	if (k1 <= 105 && k1 >= 0)
 	{
 		m_B = m_B1;
 		m_N = N_1;
@@ -483,4 +483,17 @@ CRCRailingT7::CRCRailingT7()
 {
 	m_B1 = 1510;
 	m_B2 = 1716;
+}
+
+AcDbObjectId CRCRailingT7::GenerateRailing_NonStandard(AcGePoint3d p_pos)
+{
+	AcDbObjectId id = CRCRailingTieyi::GenerateRailing_NonStandard(p_pos);
+
+	double Ln = GetNonstandardLen() - GetPillarWidth() * 2;
+	if (Ln<200)
+	{
+		DQ_SetDynamicAttribute(id, _T("可见性"), _T("单格"));
+	}
+
+	return id;
 }

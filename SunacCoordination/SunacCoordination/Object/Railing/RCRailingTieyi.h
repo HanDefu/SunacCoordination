@@ -149,5 +149,7 @@ public:
 	virtual double GetHandRailHeight()const { return 100; };	//·öÊÖºñ¶È¸ß
 
 	virtual double GetMinHeight()const { return 1000; }
+protected:
+	virtual AcDbObjectId GenerateRailing_NonStandard(AcGePoint3d pos);
 };
 

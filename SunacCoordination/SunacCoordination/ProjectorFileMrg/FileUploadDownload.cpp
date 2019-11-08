@@ -305,7 +305,7 @@ DWORD CFileUpDownLoadFtp::FTPThreadFunc(LPVOID pama)
 		}
 		else
 		{
-			Sleep(100);
+			Sleep(50);
 		}
 	}
 

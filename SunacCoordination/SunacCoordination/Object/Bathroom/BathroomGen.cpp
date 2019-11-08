@@ -149,19 +149,8 @@ AcDbObjectId CBathroomGen::GenBathroom(const AcGePoint3d p_pos, int p_angle)
 	//烟道
 	if (m_attr.m_hasPaiQiDao)
 	{
-		double airVentW = 0;
-		double airVentH = 0;
-		if (m_attr.m_isGuoBiao) //国标
-		{
-			airVentW = m_attr.m_airVentOffsetX + c_bathroomAirVentSize[m_attr.m_floorRange];
-			airVentH = m_attr.m_airVentOffsetY + c_bathroomAirVentSize[m_attr.m_floorRange];
-		}
-		else
-		{
-			airVentW = m_attr.m_airVentW;
-			airVentH = m_attr.m_airVentH;
-		}
-		assert(airVentW > 0 && airVentH > 0);
+		double airVentW, airVentH;
+		m_attr.GetAirVentSize(airVentW, airVentH);
 		oneBathroom.SetParameter(L"排气道X尺寸", airVentW);
 		oneBathroom.SetParameter(L"排气道Y尺寸", airVentH);
 	}
@@ -209,6 +198,54 @@ int CBathroomGenKI::SetMatongPos(AcDbObjectId bathroomId, double yLen)
 		return SetMatongPos_I4(bathroomId, yLen);
 }
 
+bool CBathroomGenKI::CheckParameter(CString& errMsg)
+{
+	double xLen = GetXLength();
+	double yLen = GetYLength();
+
+	double ventX, ventY;
+	m_attr.GetAirVentSize(ventX, ventY);
+	if ((ventX <= 0) || (ventY <= 0))
+	{
+		errMsg = L"无效的排气道尺寸";
+		return false;
+	}
+	if (ventX + 1010 > xLen + TOL)
+	{
+		errMsg = L"无法放置淋浴房，请减小排气道X方向尺寸";
+		return false;
+	}
+
+	double matongWidth = _ttof(m_attr.m_matongWidth);
+	double taipenWidth = _ttof(m_attr.m_taipenWidth);
+	double guanxiWidth = m_attr.m_guanXiWidth;
+
+	double minYLen;
+	bool isG = (m_attr.m_prototypeCode.Find(L"_g") != -1);
+	bool isI4 = (m_attr.m_prototypeCode.Find(L"I4") != -1);
+	if (isG)
+	{
+		if (guanxiWidth + TOL < taipenWidth)
+		{
+			errMsg = L"台盆不能超出盥洗区";
+			return false;
+		}
+		minYLen = ventY + 570 + matongWidth + guanxiWidth;
+	}
+	else
+		minYLen = ventY + 470 + matongWidth + taipenWidth;
+	if (isI4)
+		minYLen += 650;
+
+	if (minYLen > yLen + TOL)
+	{
+		errMsg.Format(L"无法放置洁具，请减小洁具或排气道尺寸后重试\n此卫生间长边为%.0lf，当前配置要求不小于%.0lf", yLen, minYLen);
+		return false;
+	}
+
+	return true;
+}
+
 int CBathroomGenKI::SetMatongPos_I3(AcDbObjectId bathroomId, double yLen)
 {
 	acDocManager->lockDocument(curDoc());
@@ -247,4 +284,37 @@ CBathroomGen* CBathroomMrg::CreateBathroomByAttribute(AttrBathroom* p_attr)
 		return new CBathroomGenKU(p_attr);
 	else
 		return NULL;
+}
+
+bool CBathroomGenKL::CheckParameter(CString& errMsg)
+{
+	double xLen = GetXLength();
+	double yLen = GetYLength();
+
+	double ventX, ventY;
+	m_attr.GetAirVentSize(ventX, ventY);
+	if ((ventX <= 0) || (ventY <= 0))
+	{
+		errMsg = L"无效的排气道尺寸";
+		return false;
+	}
+
+	double taipenWidth = _ttof(m_attr.m_taipenWidth);
+
+	double minYLen;
+	bool isB = (m_attr.m_prototypeCode.Find(L"_b") != -1);
+	bool isL4 = (m_attr.m_prototypeCode.Find(L"L4") != -1);
+	minYLen = 1000 + taipenWidth;
+	if (isB)
+		minYLen += 100;
+	if (isL4)
+		minYLen += 650;
+
+	if (minYLen > yLen + TOL)
+	{
+		errMsg.Format(L"无法放置洁具，请减小洁具或排气道尺寸后重试\n此卫生间长边为%.0lf，当前配置要求不小于%.0lf", yLen, minYLen);
+		return false;
+	}
+
+	return true;
 }

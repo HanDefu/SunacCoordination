@@ -46,6 +46,8 @@ public:
 
 	CString GetPrototypeCode() const;
 
+	void GetAirVentSize(double& ventX, double& ventY);
+
 public:
 	//原型相关属性，初始化时填写
 	CString m_sBathroomType;	//卫生间类型

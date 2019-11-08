@@ -29,6 +29,8 @@ protected:
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);
 	afx_msg LRESULT OnUpdateFileState(WPARAM, LPARAM);
 
+	CProjectDir* GetSelectDir(){ return m_selectedDir; }
+
 	DECLARE_MESSAGE_MAP()
 public:
 	CProjectData* m_pPrjData;
