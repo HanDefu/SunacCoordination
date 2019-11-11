@@ -208,8 +208,7 @@ BOOL DlgLeftBar::OnInitDialog()
 		DEFAULT_QUALITY, // nQuality 
 		DEFAULT_PITCH | FF_SWISS, // nPitchAndFamily 
 		_T("ËÎÌו")); // lpszFac
-	//ft.CreateFont(9, 0, 0, 0, 400, 0, 0, 0, 134, 3, 2, 1, 2, TEXT("ËÎÌו"));
-	m_treeCtrlMenu.SetFont(&ft);
+	//m_treeCtrlMenu.SetFont(&ft);
 	m_treeCtrlMenu.SetItemHeight(30);
 
 	m_treeProjectManagement.SetItemHeight(20);
