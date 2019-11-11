@@ -46,10 +46,9 @@ public:
 	virtual eRCType GetType(){return TYPENUM;}
 	virtual bool isEqualTo(AttrObject*other);//基础数据一致
 	
-	//得到从服务器下载到本地的一个文件（含路径）
-	//或者是本地本身就存在的一个文件路径
-	//成功返回0 否则返回-1
-	int GetFile(CString &filePathName);
+	////得到从服务器下载到本地的一个文件（含路径），或者是本地本身就存在的一个文件路径，成功返回0 否则返回-1
+	//int GetFile(CString &filePathName);
+
 	CString GetFileName()const{ return m_file.fileName; }
 	void SetFileName(CString p_str){ m_file.fileName = p_str; }
 
@@ -60,21 +59,16 @@ public:
 public:
 	Adesk::Int32 m_version;		//文件版本 序列化时使用
 
-	//在原型初始化时填写
-	CString m_prototypeCode;	//原型编号 //所有原型名称用原型编号
-
+	//原型属性
+	CString m_prototypeCode;//原型编号 //所有原型名称用原型编号
 	CDwgFileInfo m_file;	//原型文件名,包含.dwg，但不包含路径
-	//CString m_fileName;			
-	//CString m_type;			//原型类型 //改为通过GetType函数返回
-	bool m_isDynamic;			//是否动态块
-	bool m_isJiTuan;			//是否集团
-
-	//从Web获取数据后填写
+	bool m_isDynamic;		//是否动态块
+	bool m_isJiTuan;		//是否集团
 	CString m_quyuId;			//区域ID
 	CString m_quyuName;			//区域名称
 
 	//////////////////////////////////////////////////////////////////////////
-	//具体实例的属性
+	//实例属性
 	CString m_instanceCode;		//实例编号
 };
 

@@ -171,18 +171,18 @@ bool AttrObject::isEqualTo(AttrObject*other)
 		);*/
 }
 
-int AttrObject::GetFile(CString &filePathName)
-{
-	//首先本地搜索
-	bool has = GSINST->GetLocalFile(m_file.fileName, filePathName);
-	if (has)
-		return 0;
-	
-	////如果本地不存在这个文件 去服务器下载一个文件到本地
-	//int ret = WebIO::DownloadFile(m_prototypeCode, filePathName);
-	//if (ret != 0)
-	//	filePathName = L"";
-
-	return 0;
-}
+//int AttrObject::GetFile(CString &filePathName)
+//{
+//	//首先本地搜索
+//	bool has = GSINST->GetLocalFile(m_file.fileName, filePathName);
+//	if (has)
+//		return 0;
+//	
+//	////如果本地不存在这个文件 去服务器下载一个文件到本地
+//	//int ret = WebIO::DownloadFile(m_prototypeCode, filePathName);
+//	//if (ret != 0)
+//	//	filePathName = L"";
+//
+//	return 0;
+//}
 
