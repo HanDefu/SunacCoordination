@@ -67,6 +67,7 @@ BEGIN_MESSAGE_MAP(CProjectManagementDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDC_BUTTON_DELETEALL, &CProjectManagementDlg::OnBnClickedButtonDeleteall)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
 	ON_MESSAGE(WM_FILE_STATE_CHANGE, OnUpdateFileState)
+	ON_NOTIFY(NM_CUSTOMDRAW, IDC_TREE_PRJDIR, &CProjectManagementDlg::OnCustomdraw)
 END_MESSAGE_MAP()
 
 CString SelFilePath()
@@ -126,6 +127,8 @@ void CProjectManagementDlg::FillPjtMngTreeCtrl()
 
 	vector<const CProjectDir*> allDirs;
 	vector<HTREEITEM> allItems;
+	COLORREF DefaultColor;
+	DefaultColor = RGB(0x09, 0x37, 0xF7);
 	allDirs.push_back(m_pPrjData->GetRootDir());
 	allItems.push_back(hTreeItem);
 
@@ -134,6 +137,7 @@ void CProjectManagementDlg::FillPjtMngTreeCtrl()
 		for (UINT j = 0; j < allDirs[i]->m_subDirs.size(); j++)
 		{
 			HTREEITEM item = m_TreePrjDir.InsertItem(allDirs[i]->m_subDirs[j]->m_sName, 0, 0, allItems[i]);
+			m_TreePrjDir.SetItemData(allItems[i], DefaultColor);
 			allDirs.push_back(allDirs[i]->m_subDirs[j]);
 			allItems.push_back(item);
 		}
@@ -552,3 +556,64 @@ BOOL CloseProjectManagementDlg()
 	}
 	return ret;
 }
+
+void CProjectManagementDlg::OnCustomdraw(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMCUSTOMDRAW pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>(pNMHDR);
+	// TODO: 在此添加控件通知处理程序代码
+	/*if (this->m_hWnd != pNMHDR->hwndFrom)
+		return;*/
+
+	LPNMTVCUSTOMDRAW pCustomDraw = (LPNMTVCUSTOMDRAW)pNMHDR;
+	switch (pCustomDraw->nmcd.dwDrawStage)
+	{
+	case CDDS_PREPAINT:
+		// Need to process this case and set pResult to CDRF_NOTIFYITEMDRAW, 
+		// otherwise parent will never receive CDDS_ITEMPREPAINT notification. (GGH) 
+		*pResult = CDRF_NOTIFYITEMDRAW;
+		return;
+
+	case CDDS_ITEMPREPAINT:  //失去焦点后被选项各种颜色
+		if (this->IsWindowEnabled() == 1)
+		{
+			if ((pCustomDraw->nmcd.uItemState & (CDIS_FOCUS)) == 0
+				&& (pCustomDraw->nmcd.uItemState & (CDIS_SELECTED)) == CDIS_SELECTED) // selected
+			{
+				pCustomDraw->clrTextBk = RGB(0, 128, 220);  //失去焦点后被选项背景颜色
+				pCustomDraw->clrText = RGB(255, 255, 255);  //失去焦点后被选项文本颜色
+			}
+			*pResult = CDRF_NOTIFYPOSTPAINT;
+			return;
+		}
+		else {
+			*pResult = CDRF_DODEFAULT;
+			return;
+		}
+	case CDDS_ITEMPOSTPAINT:  //失去焦点后给被选项画一个外框，这个case根据需要可有可无
+		if (this->IsWindowEnabled() == 1)
+		{
+			if ((pCustomDraw->nmcd.uItemState & (CDIS_FOCUS)) == 0
+				&& (pCustomDraw->nmcd.uItemState & (CDIS_SELECTED)) == CDIS_SELECTED) // selected
+			{
+				CRect   rcText;
+				HTREEITEM hItem = (HTREEITEM)pCustomDraw->nmcd.dwItemSpec;
+				m_TreePrjDir.GetItemRect(hItem, &rcText, true);
+				CPen penBlue(PS_SOLID, 1, RGB(255, 0, 0));  //失去焦点后被选项的外框颜色
+				CDC* pDC = CDC::FromHandle(pCustomDraw->nmcd.hdc);
+				CBrush* pBrush = CBrush::FromHandle((HBRUSH)GetStockObject(NULL_BRUSH));
+				CBrush* pOldBrush = pDC->SelectObject(pBrush);
+				CPen* pOldPen = pDC->SelectObject(&penBlue);
+				pDC->Rectangle(&rcText);
+				pDC->SelectObject(pOldBrush);
+				pDC->SelectObject(pOldPen);
+			}
+			*pResult = CDRF_SKIPDEFAULT;
+			return;
+		}
+		else {
+			*pResult = CDRF_DODEFAULT;
+			return;
+		}
+	}
+}
+
