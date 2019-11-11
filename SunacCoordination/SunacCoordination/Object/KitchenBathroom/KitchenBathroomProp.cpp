@@ -94,6 +94,15 @@ bool CKitchenBathroomProp::MatchPrototype(int p_xLen, int p_yLen, E_DIRECTION p_
 	return true;
 }
 
+bool CKitchenBathroomProp::MatchPrototype(int p_xLen, int p_yLen)
+{
+	if (p_xLen <= m_maxX && p_xLen >= m_minX && p_yLen <= m_maxY && p_yLen >= m_minY)
+		return true;
+	if (p_xLen <= m_maxY && p_xLen >= m_minY && p_yLen <= m_maxX && p_yLen >= m_minX)
+		return true;
+	return false;
+}
+
 eWindowDoorPos CKitchenBathroomProp::GetWindowDoorPos() const
 {
 	if (abs(m_doorPos - m_windowPos) == 2)
@@ -115,6 +124,21 @@ bool CKitchenBathroomProp::GetRotateAngle(E_DIRECTION p_doorPos, E_DIRECTION p_w
 	p_angle = ((p_doorPos - m_doorPos + 4) % 4) * 90;
 
 	return true;
+}
+
+bool CKitchenBathroomProp::GetRotateAngle(int p_xLen, int p_yLen, int& p_angle)
+{
+	if (p_xLen <= m_maxX && p_xLen >= m_minX && p_yLen <= m_maxY && p_yLen >= m_minY)
+	{
+		p_angle = 0;
+		return true;
+	}
+	if (p_xLen <= m_maxY && p_xLen >= m_minY && p_yLen <= m_maxX && p_yLen >= m_minX)
+	{
+		p_angle = 90;
+		return true;
+	}
+	return false;
 }
 
 Acad::ErrorStatus CKitchenBathroomProp::ReadFromDwg(AcDbDwgFiler* filer)

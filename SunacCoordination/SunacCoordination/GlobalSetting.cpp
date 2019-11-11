@@ -27,15 +27,17 @@ CString GlobalSetting::GetFtpIp()const
 	}
 }
 
-string GlobalSetting::GetCADServiceUrl()const
+const char* GlobalSetting::GetCADServiceUrl()const
 {
+	const string sUrlTestMode = "http://des.sunac.com.cn/SunacCADService.asmx?WSDL";
+	const string sUrl = "http://ades.sunac.com.cn/SunacCADService.asmx?WSDL";
 	if (m_bTestMode)
 	{
-		return "http://des.sunac.com.cn/SunacCADService.asmx?WSDL";
+		return sUrlTestMode.c_str();
 	}
 	else
 	{
-		return "http://ades.sunac.com.cn/SunacCADService.asmx?WSDL";
+		return sUrl.c_str();
 	}
 }
 

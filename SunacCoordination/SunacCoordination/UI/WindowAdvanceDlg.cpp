@@ -21,6 +21,7 @@ CWindowAdvanceDlg::CWindowAdvanceDlg(CWnd* pParent /*=NULL*/)
 	: CAcUiDialog(CWindowAdvanceDlg::IDD, pParent)
 	, m_sCode(_T(""))
 	, m_bFuKuang(FALSE)
+	, m_fJieNeng(0)
 {
 	m_isMoldless = true;
 }
@@ -37,8 +38,12 @@ INT_PTR CWindowAdvanceDlg::DoModal()
 
 void CWindowAdvanceDlg::OnOK()
 {
+	UpdateData();
+
 	for (UINT i = 0; i < m_selAttrWindows.size(); i++)
 	{
+		if (m_fJieNeng>0)
+			m_selAttrWindows[i]->m_material.heatCoeff = m_fJieNeng;
 		if (m_xingCai.GetCurSel() >= 0)
 			m_selAttrWindows[i]->m_material.sAluminumSerial = TYUI_GetComboBoxText(m_xingCai);
 		if (m_boLi.GetCurSel() >= 0)
@@ -86,13 +91,14 @@ void CWindowAdvanceDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CAcUiDialog::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_EDIT_CODE, m_sCode);
-	DDX_Control(pDX, IDC_COMBO_JIENENG, m_jieNeng);
 	DDX_Control(pDX, IDC_COMBO_CAIZHI, m_caiZhi);
 	DDX_Control(pDX, IDC_COMBO_XINGCAI, m_xingCai);
 	DDX_Control(pDX, IDC_COMBO_BOLI, m_boLi);
 	DDX_Check(pDX, IDC_CHECK_FUKUANG, m_bFuKuang);
 	DDX_Control(pDX, IDC_COMBO_FUKUANG, m_fuKuangType);
 	DDX_Control(pDX, IDC_COMBO_SAIFENG, m_saiFeng);
+	DDX_Text(pDX, IDC_EDIT_JIENENG, m_fJieNeng);
+	DDX_Control(pDX, IDC_EDIT_JIENENG, m_eidtJieneng);
 }
 
 BOOL CWindowAdvanceDlg::OnInitDialog()
@@ -157,9 +163,15 @@ void CWindowAdvanceDlg::OnBnClickedAuxiliaryFrame()
 {
 	m_bFuKuang = !m_bFuKuang;
 	if (m_bFuKuang == FALSE)
+	{
 		TYUI_Disable(m_fuKuangType);
+		m_fuKuangType.SetWindowText(_T(""));
+	}
 	else
+	{
 		TYUI_Enable(m_fuKuangType);
+	}
+
 	//是否有附框会影响塞缝尺寸选项
 	InitPlugSlotSize();
 	UpdateData(FALSE);
@@ -338,3 +350,4 @@ BOOL CloseWindowAdvanceDlg()
 		g_windowAdvanceDlg = NULL;
 	return ret;
 }
+

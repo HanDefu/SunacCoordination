@@ -57,6 +57,17 @@ void CBathroomGen::SelectGuanxiWidth(AcDbObjectId bathroomId, double width)
 	acDocManager->unlockDocument(curDoc());
 }
 
+void CBathroomGen::SetMatongPos(AcDbObjectId bathroomId)
+{
+	double pos = GetMatongPos();
+	if (pos < 0)
+		return;
+
+	acDocManager->lockDocument(curDoc());
+	TYCOM_SetDynamicBlockValue(bathroomId, L"ÂíÍ°¾àÇ½Y", pos);
+	acDocManager->unlockDocument(curDoc());
+}
+
 //////////////////////////////////////////////////////////////////////////
 vCString CBathroomGen::GetTaipenOptions()
 {
@@ -161,7 +172,7 @@ AcDbObjectId CBathroomGen::GenBathroom(const AcGePoint3d p_pos, int p_angle)
 	SelectMatong(id, m_attr.m_matongWidth);
 	SelectGuanxiWidth(id, m_attr.m_guanXiWidth);
 
-	SetMatongPos(id, yLen);
+	SetMatongPos(id);
 
 	//////////////////////////////////////////////////////////////////////////
 	//ÏÈ¾µÏñ´¦Àí
@@ -189,13 +200,13 @@ AcDbObjectId CBathroomGen::GenBathroom(const AcGePoint3d p_pos, int p_angle)
 	return id;
 }
 
-int CBathroomGenKI::SetMatongPos(AcDbObjectId bathroomId, double yLen)
+double CBathroomGenKI::GetMatongPos()
 {
 	CString type = m_attr.m_sBathroomType;
 	if (type.Left(3) == _T("TI3"))
-		return SetMatongPos_I3(bathroomId, yLen);
+		return GetMatongPos_I3();
 	else
-		return SetMatongPos_I4(bathroomId, yLen);
+		return GetMatongPos_I3();
 }
 
 bool CBathroomGenKI::CheckParameter(CString& errMsg)
@@ -216,7 +227,7 @@ bool CBathroomGenKI::CheckParameter(CString& errMsg)
 		return false;
 	}
 
-	double matongWidth = _ttof(m_attr.m_matongWidth);
+	double matongWidth = GetMatongPos() * 2;
 	double taipenWidth = _ttof(m_attr.m_taipenWidth);
 	double guanxiWidth = m_attr.m_guanXiWidth;
 
@@ -246,32 +257,20 @@ bool CBathroomGenKI::CheckParameter(CString& errMsg)
 	return true;
 }
 
-int CBathroomGenKI::SetMatongPos_I3(AcDbObjectId bathroomId, double yLen)
+double CBathroomGenKI::GetMatongPos_I3()
 {
-	acDocManager->lockDocument(curDoc());
-
-	if (yLen > 2600)
-		TYCOM_SetDynamicBlockValue(bathroomId, L"ÂíÍ°¾àÇ½Y", 450.0);
+	if (m_attr.m_height > 2600 + TOL)
+		return 450;
 	else
-		TYCOM_SetDynamicBlockValue(bathroomId, L"ÂíÍ°¾àÇ½Y", 400.0);
-
-	acDocManager->unlockDocument(curDoc());
-
-	return 0;
+		return 400;
 }
 
-int CBathroomGenKI::SetMatongPos_I4(AcDbObjectId bathroomId, double yLen)
+double CBathroomGenKI::GetMatongPos_I4()
 {
-	acDocManager->lockDocument(curDoc());
-
-	if (yLen > 3200)
-		TYCOM_SetDynamicBlockValue(bathroomId, L"ÂíÍ°¾àÇ½Y", 450.0);
+	if (m_attr.m_height > 3200 + TOL)
+		return 450;
 	else
-		TYCOM_SetDynamicBlockValue(bathroomId, L"ÂíÍ°¾àÇ½Y", 400.0);
-
-	acDocManager->unlockDocument(curDoc());
-
-	return 0;
+		return 400;
 }
 
 CBathroomGen* CBathroomMrg::CreateBathroomByAttribute(AttrBathroom* p_attr)
