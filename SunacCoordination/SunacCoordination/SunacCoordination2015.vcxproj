@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AutoNameSerialize.cpp" />
     <ClCompile Include="Command\Command.cpp" />
     <ClCompile Include="Command\CommandWindowDetail.cpp" />
     <ClCompile Include="Command\CommandWindowTable.cpp" />
@@ -38,6 +39,7 @@
     <ClCompile Include="Common\TYRect.cpp" />
     <ClCompile Include="GlobalSetting.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Object\AirCondition\AirConStatistic.cpp" />
     <ClCompile Include="Object\AirCondition\AttrAirCon.cpp" />
     <ClCompile Include="Object\AirCondition\RCAirCondition.cpp" />
     <ClCompile Include="Object\AttrObject.cpp" />
@@ -46,12 +48,12 @@
     <ClCompile Include="Object\Bathroom\BathroomCom.cpp" />
     <ClCompile Include="Object\Bathroom\BathroomGen.cpp" />
     <ClCompile Include="Object\Bathroom\RCBathroom.cpp" />
-    <ClCompile Include="Object\KitchenBathroomProp.cpp" />
+    <ClCompile Include="Object\KitchenBathroom\KitchenBathroomProp.cpp" />
+    <ClCompile Include="Object\KitchenBathroom\KitchenBathroomStatistic.cpp" />
     <ClCompile Include="Object\Kitchen\AttrKitchen.cpp" />
     <ClCompile Include="Object\Kitchen\KitchenAutoName.cpp" />
     <ClCompile Include="Object\Kitchen\KitchenGen.cpp" />
     <ClCompile Include="Object\Kitchen\RCKitchen.cpp" />
-    <ClCompile Include="Object\PrototypeInfo.cpp" />
     <ClCompile Include="Object\Railing\AttrRailing.cpp" />
     <ClCompile Include="Object\Railing\RailingStatistic.cpp" />
     <ClCompile Include="Object\Railing\RCRailing.cpp" />
@@ -143,6 +145,7 @@
     <ClCompile Include="WebIO\WindowWebData.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AutoNameSerialize.h" />
     <ClInclude Include="Command\Command.h" />
     <ClInclude Include="Command\CommandWindowDetail.h" />
     <ClInclude Include="Command\CommandWindowTable.h" />
@@ -163,6 +166,7 @@
     <ClInclude Include="Common\TYRect.h" />
     <ClInclude Include="GlobalSetting.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="Object\AirCondition\AirConStatistic.h" />
     <ClInclude Include="Object\AirCondition\AttrAirCon.h" />
     <ClInclude Include="Object\AirCondition\RCAirCondition.h" />
     <ClInclude Include="Object\AttrObject.h" />
@@ -171,13 +175,13 @@
     <ClInclude Include="Object\Bathroom\BathroomCom.h" />
     <ClInclude Include="Object\Bathroom\BathroomGen.h" />
     <ClInclude Include="Object\Bathroom\RCBathroom.h" />
-    <ClInclude Include="Object\KitchenBathroomProp.h" />
+    <ClInclude Include="Object\KitchenBathroom\KitchenBathroomProp.h" />
+    <ClInclude Include="Object\KitchenBathroom\KitchenBathroomStatistic.h" />
     <ClInclude Include="Object\Kitchen\AttrKitchen.h" />
     <ClInclude Include="Object\Kitchen\KitchenAutoName.h" />
     <ClInclude Include="Object\Kitchen\KitchenGen.h" />
     <ClInclude Include="Object\Kitchen\RCKitchen.h" />
     <ClInclude Include="Object\PrototypeCommonDef.h" />
-    <ClInclude Include="Object\PrototypeInfo.h" />
     <ClInclude Include="Object\Railing\AttrRailing.h" />
     <ClInclude Include="Object\Railing\RailingStatistic.h" />
     <ClInclude Include="Object\Railing\RCRailing.h" />

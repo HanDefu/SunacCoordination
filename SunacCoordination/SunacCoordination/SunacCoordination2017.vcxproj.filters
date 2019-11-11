@@ -135,12 +135,6 @@
     <ClCompile Include="Object\AttrObject.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Object\KitchenBathroomProp.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\PrototypeInfo.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="Object\RCBlock.cpp">
       <Filter>Object</Filter>
     </ClCompile>
@@ -390,6 +384,16 @@
     <ClCompile Include="WebIO\WindowLocalDataFromDB.cpp">
       <Filter>WebIO</Filter>
     </ClCompile>
+    <ClCompile Include="Object\AirCondition\AirConStatistic.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\KitchenBathroom\KitchenBathroomProp.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\KitchenBathroom\KitchenBathroomStatistic.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="AutoNameSerialize.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command\Command.h">
@@ -506,13 +510,7 @@
     <ClInclude Include="Object\AttrObject.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="Object\KitchenBathroomProp.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="Object\PrototypeCommonDef.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\PrototypeInfo.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Object\RCBlock.h">
@@ -840,6 +838,16 @@
     <ClInclude Include="WebIO\WindowLocalDataFromDB.h">
       <Filter>WebIO</Filter>
     </ClInclude>
+    <ClInclude Include="Object\AirCondition\AirConStatistic.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\KitchenBathroom\KitchenBathroomProp.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\KitchenBathroom\KitchenBathroomStatistic.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="AutoNameSerialize.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="WebIO\SunacCadWeb\ArgumentSettingServiceSoap.nsmap">
