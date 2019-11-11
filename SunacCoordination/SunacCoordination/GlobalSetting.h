@@ -1,7 +1,9 @@
 #pragma once
 #include "Sunac_def.h"
 #include <utility>
+
 using namespace std;
+
 class GlobalSetting
 {
 public:
@@ -11,18 +13,15 @@ public:
 		return &instance;
 	}
 
-	
-	//本地是否含有这个文件,如果存在给出本地的全路径地址到filePathName
-	bool GetLocalFile(CString fileName,CString &filePathName);
+	CString GetFtpIp()const;
+	const char*  GetCADServiceUrl()const;
 
 private:
 	GlobalSetting();
 	~GlobalSetting();
-	int InitLocalFiles();
 
-public:
-	bool m_syncOK;
-	vector<pair<CString,CString>> m_localFiles;
+protected:
+	bool m_bTestMode; //测试环境
 }; 
 
 #define GSINST (GlobalSetting::GetInstance())

@@ -78,7 +78,7 @@ std::vector<AttrBathroom> CKitchenBathroomLocalData::GetBathrooms(EBathroomType 
 
 	for (UINT i = 0; i < m_allBathrooms.size(); i++)
 	{
-		if ((p_type == E_BATHROOM_ALL || m_allBathrooms[i].m_prototypeCode.Left(2) == sType) && m_allBathrooms[i].m_prop.MatchPrototype(xLen, yLen, p_doorDir, p_windowDir))
+		if ((p_type == E_BATHROOM_ALL || m_allBathrooms[i].m_prototypeCode.Left(2) == sType) && m_allBathrooms[i].m_prop.MatchPrototype(xLen, yLen/*, p_doorDir, p_windowDir*/))
 		{
 			ret.push_back(m_allBathrooms[i]);
 			ret.back().m_width = width;

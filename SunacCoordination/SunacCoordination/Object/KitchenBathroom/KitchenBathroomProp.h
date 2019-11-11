@@ -18,8 +18,10 @@ public:
 	void DeleteSize(int p_xLen, int p_yLen);
 	void ClearSizeList() { m_sizeList.clear(); }
 
+	bool MatchPrototype(int p_xLen, int p_yLen); //只比尺寸，不比门窗方向
 	bool MatchPrototype(int p_xLen, int p_yLen, E_DIRECTION p_doorPos, E_DIRECTION p_windowPos);
 	eWindowDoorPos GetWindowDoorPos() const;
+	bool GetRotateAngle(int p_xLen, int p_yLen, int& p_angle); //只按长短边旋转
 	bool GetRotateAngle(E_DIRECTION p_doorPos, E_DIRECTION p_windowPos, int& p_angle, bool& p_needMirror);
 
 	Acad::ErrorStatus ReadFromDwg(AcDbDwgFiler* filer);

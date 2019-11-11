@@ -64,6 +64,7 @@ public:
 	afx_msg void OnBnClickedButtonDeletedir();
 	afx_msg void OnBnClickedButtonDownloadall();
 	afx_msg void OnBnClickedButtonDeleteall();
+	afx_msg void OnCustomdraw(NMHDR *pNMHDR, LRESULT *pResult);
 };
 
 extern CProjectManagementDlg* g_projectManagementDlg;

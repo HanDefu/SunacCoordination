@@ -469,6 +469,18 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 
 	filer->readItem(&m_wallDis);
 
+	if (m_version >= 2)
+	{
+		filer->readItem(&m_material.heatCoeff);
+		filer->readString(tempStr);
+		m_material.sAluminumSerial = tempStr.kACharPtr();
+		filer->readString(tempStr);
+		m_material.sGlassSerial = tempStr.kACharPtr();
+		filer->readItem(&m_material.bHasAuxiliaryFrame);
+		filer->readString(tempStr);
+		m_material.sAuxiliaryFrame = tempStr.kACharPtr();
+	}
+
 	return filer->filerStatus();
 }
 
@@ -548,6 +560,12 @@ Acad::ErrorStatus AttrWindow::dwgOutFields(AcDbDwgFiler* filer) const
 	filer->writeItem(m_isBayWindow);
 
 	filer->writeItem(m_wallDis);
+
+	filer->writeItem(m_material.heatCoeff);
+	filer->writeItem(m_material.sAluminumSerial);
+	filer->writeItem(m_material.sGlassSerial);
+	filer->writeItem(m_material.bHasAuxiliaryFrame);
+	filer->writeItem(m_material.sAuxiliaryFrame);
 
 	return filer->filerStatus();
 }
