@@ -4,7 +4,6 @@
 #include "../UI/GridCtrl_src/NewCellTypes/GridCellCheck.h"
 #include "GridCtrlEx.h"
 #include "../Common/ThreadUtil.h"
-//#include "../UI/ColorTreeCtrl.h"
 
 
 // CProjectManagementDlg ¶Ô»°¿ò
