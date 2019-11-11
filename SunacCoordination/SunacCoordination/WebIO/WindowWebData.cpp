@@ -179,11 +179,11 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 				else attrwindow.m_isZhuanJiao = FALSE;
 			}
 
-			double minVaule = 0;
+			double minValue = 0;
 			double maxValue = 100000;
 			if (xml.FindElem(_T("WindowSizeMin")))
 			{
-				minVaule = _ttof(xml.GetData());
+				minValue = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("WindowSizeMax")))
 			{
@@ -195,7 +195,7 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 			if (attrwindow.m_isDynamic)
 			{
 				dimDataW.type = SCOPE;
-				dimDataW.minValue = minVaule;
+				dimDataW.minValue = minValue;
 				dimDataW.maxValue = maxValue;
 			}
 			//else //TODO 支持静态的数据
@@ -437,13 +437,17 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 
 			double minValue = 0; 
 			double maxValue = 10000;
-			if (xml.FindElem(_T("DoorSizeMin")))
+			if (xml.FindElem(_T("WindowSizeMin")))
 			{
 				minValue = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("WindowSizeMax")))
 			{
 				maxValue = _ttof(xml.GetData());
+			}
+			if (xml.FindElem(_T("WindowDesignFormula")))
+			{
+				Attrdoor.m_tongFengFormula = xml.GetData();
 			}
 
 			CWindowsDimData dimDataW;
@@ -475,22 +479,30 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 				{
 					xml.IntoElem();
 					CWindowsDimData tempData;
-					if (xml.FindElem(_T("Code")))
+					if (xml.FindElem(_T("SizeNo")))
 					{
 						tempData.sCodeName = xml.GetData();
 					}
-					if (xml.FindElem(_T("ValueType")))
+					if (xml.FindElem(_T("ValueTypeName")))
 					{
 						tempData.type = ToEWindowType(xml.GetData());
 					}
-					if (xml.FindElem(_T("Value")))
+					if (xml.FindElem(_T("Val")))
 					{
 						CString value = xml.GetData();
-						std::vector<CString> strs = YT_SplitCString(value, L',');
-						for (UINT i = 0; i < strs.size(); i++)
+						if (tempData.type == MULTI)
 						{
-							tempData.valueOptions.push_back(_wtof(strs[i]));
+							std::vector<CString> strs = YT_SplitCString(value, L',');
+							for (UINT i = 0; i < strs.size(); i++)
+							{
+								tempData.valueOptions.push_back(_wtof(strs[i]));
+							}
 						}
+						else if (tempData.type == CALC)
+						{
+							tempData.sFomula = value;
+						}
+						else tempData.valueOptions.push_back(_ttof(value));
 					}
 					if (xml.FindElem(_T("MinValue")))
 					{
@@ -504,21 +516,18 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 					{
 						tempData.SetDefaultValue(_ttof(xml.GetData()));
 					}
-					if (xml.FindElem(_T("ValueDescription")))
+					if (xml.FindElem(_T("Desc")))
 					{
 						tempData.prompt = xml.GetData();
 					}
 					Attrdoor.SetDimData(tempData);
 					xml.OutOfElem();
 				}
-
-
 				xml.OutOfElem();
 			}
-			xml.OutOfElem();
-
 			Attrdoor.CheckAndComplementDimeData();
 			DoorAttrs.push_back(Attrdoor);
+			xml.OutOfElem();
 		}		
 
 		xml.OutOfElem();
