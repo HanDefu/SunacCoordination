@@ -162,7 +162,7 @@ std::vector<AttrWindow> WebIO::GetDoors(double width, double height, CString ope
 #ifdef WORK_LOCAL//本地模式
 	return CWindowLocalDataFromDB::Instance()->GetDoors(width, height, openType, openNum, gongNengQu);
 #else
-	return CWindowWebData::Instance()->GetDoors(width, height, openType, openNum, gongNengQu);
+	return CWindowWebData::Instance()->GetDoors(width, openType, openNum, gongNengQu);
 #endif
 }
 

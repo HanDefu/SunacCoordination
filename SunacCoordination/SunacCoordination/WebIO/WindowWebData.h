@@ -29,7 +29,10 @@ public:
 	std::vector<AttrWindow >  GetAllWindows()const;
 
 	std::vector<AttrWindow >  GetAllDoors()const;
-	std::vector<AttrWindow >  GetDoors(double p_width, double p_heigh, CString doorType, int openNum, CString gongNengQu)const;
+	std::vector<AttrWindow >  GetDoors(double p_width, CString doorType, int openNum, CString gongNengQu)const;
+
+	vector<AttrWindow> m_windows;
+	vector<AttrWindow> m_doors;
 
 protected:
 	std::vector<AttrWindow > ParseWindowsFromXML(CMarkup xml)const;//从XML解析窗户信息

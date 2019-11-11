@@ -17,7 +17,8 @@ CWindowWebData* CWindowWebData::Instance()
 }
 CWindowWebData::CWindowWebData()
 {
-
+	m_windows = GetAllWindows();
+	m_doors = GetAllDoors();
 }
 
 CWindowWebData::~CWindowWebData()
@@ -651,6 +652,7 @@ std::vector<AttrWindow >  CWindowWebData::GetAllDoors()const
 	return DoorAttrs;
 }
 
+/*
 std::vector<AttrWindow> CWindowWebData::GetDoors(double p_width, double p_heigh, CString doorType, int openNum, CString gongNengQu)const
 {
 	if (doorType == "不限")
@@ -687,4 +689,58 @@ std::vector<AttrWindow> CWindowWebData::GetDoors(double p_width, double p_heigh,
 	doorAtts = ParseDoorsFromXML(xml);
 
 	return doorAtts;
+}*/
+
+std::vector<AttrWindow >  CWindowWebData::GetDoors(double width, CString openType, int openNum, CString gongNengQu)const
+{
+	std::vector<AttrWindow> data;
+
+
+	for (UINT i = 0; i < m_doors.size(); i++)
+	{
+		std::vector<CString> strs = YT_SplitCString(m_doors[i].m_prototypeCode, L'_');  //用"_"拆分
+		if (strs[0] != "Door")
+		{
+			continue;
+		}
+
+		const CWindowsDimData* pDiwW = m_doors[i].GetDimData(_T("W"));
+		if (width < pDiwW->minValue || width > pDiwW->maxValue)
+		{
+			continue;
+		}
+
+		if (openType != L"不限")
+		{
+			if (openType != m_doors[i].m_openType)
+			{
+				continue;
+			}
+		}
+
+		if (openNum != 0)
+		{
+			if (openNum != m_doors[i].m_openQty)
+			{
+				continue;
+			}
+		}
+
+		if (gongNengQu != L"不限")
+		{
+			if (gongNengQu != m_doors[i].m_gongNengquType)
+			{
+				continue;
+			}
+		}
+
+		/*if (tongFengLiang != m_windows[i].ventilationFormula)
+		{
+			continue;
+		}*/
+
+		data.push_back(m_doors[i]);
+	}
+
+	return data;
 }
