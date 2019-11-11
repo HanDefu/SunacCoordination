@@ -1210,7 +1210,7 @@ vAcDbObjectId SelectWindows()
 {
 	vAcDbObjectId vIds;//当前选择的ids
 
-	acutPrintf(L"请选择需要计算门窗表的门窗");
+	acutPrintf(L"请选择门窗");
 
 	ads_name sset;
 	acedSSGet(NULL, NULL, NULL, NULL, sset);
@@ -1231,12 +1231,15 @@ vAcDbObjectId SelectWindows()
 	}
 	acedSSFree(sset);
 
-	CString info, str;
-	info.Format(L"共选择了%d个门窗\n", vIds.size());
-
 	if (vIds.size() == 0)
 	{
 		acutPrintf(L"未选择到门窗\n");
+	}
+	else
+	{
+		CString info;
+		info.Format(L"共选择了%d个门窗\n", vIds.size());
+		acutPrintf(info);
 	}
 	return vIds;
 }

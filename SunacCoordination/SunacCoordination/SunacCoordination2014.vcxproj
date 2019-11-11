@@ -224,6 +224,7 @@
     <ClCompile Include="Tool\Regedit.cpp" />
     <ClCompile Include="UI\AirconditionerDlg.cpp" />
     <ClCompile Include="UI\BathroomDlg.cpp" />
+    <ClCompile Include="UI\ColorTreeCtrl.cpp" />
     <ClCompile Include="UI\ComFun_MFC.cpp" />
     <ClCompile Include="UI\DlgLeftBar.cpp" />
     <ClCompile Include="UI\DlgLogin.cpp" />
@@ -368,6 +369,7 @@
     <ClInclude Include="Tool\SQLite\sqlite3ext.h" />
     <ClInclude Include="UI\AirconditionerDlg.h" />
     <ClInclude Include="UI\BathroomDlg.h" />
+    <ClInclude Include="UI\ColorTreeCtrl.h" />
     <ClInclude Include="UI\ComFun_MFC.h" />
     <ClInclude Include="UI\DlgLeftBar.h" />
     <ClInclude Include="UI\DlgLogin.h" />
