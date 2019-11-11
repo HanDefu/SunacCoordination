@@ -46,6 +46,8 @@ public:
 
 	CString m_sCode;
 	CComboBox m_jieNeng;
+	CEdit m_eidtJieneng;
+	double m_fJieNeng;// 节能系数
 	CComboBox m_caiZhi;
 	CComboBox m_xingCai;
 	CComboBox m_boLi;
