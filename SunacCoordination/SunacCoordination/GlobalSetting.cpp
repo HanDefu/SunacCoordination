@@ -8,43 +8,34 @@
 
 GlobalSetting::GlobalSetting()
 {
-	InitLocalFiles();
-	m_syncOK = false;
+	m_bTestMode = true;
 }
 
 GlobalSetting::~GlobalSetting()
 {
 	
 }
-
-int GlobalSetting::InitLocalFiles()
+CString GlobalSetting::GetFtpIp()const
 {
-	//if (m_localFiles.size() > 0)
-		//return 0;
-
-	CString localFilePath = TY_GetPrototypeFilePath();
-	//CTime curTime1 = GetTickCount();
-	m_localFiles = TY_FindFilesInDirecotry(L"*.dwg",localFilePath);
-	//CTime curTime2 = GetTickCount();
-	//CTimeSpan sp = curTime2 - curTime1;
-	//int second = sp.GetSeconds();
-	return 0;
+	if (m_bTestMode)
+	{
+		return L"10.4.64.91";
+	}
+	else
+	{
+		return L"1.203.161.246";
+	}
 }
 
-bool GlobalSetting::GetLocalFile(CString fileName,CString &filePathName)
+string GlobalSetting::GetCADServiceUrl()const
 {
-	InitLocalFiles();
-
-	std::pair<CString,CString> filePair;
-	filePair.first = fileName;
-	filePair.second = TY_GetPrototypeFilePath() + fileName;
-	vector<pair<CString,CString>>::iterator it = 
-		std::find(m_localFiles.begin(),m_localFiles.end(), filePair);
-	if (it != m_localFiles.end())
+	if (m_bTestMode)
 	{
-		filePathName = filePair.second;
-		return true;
+		return "http://des.sunac.com.cn/SunacCADService.asmx?WSDL";
 	}
-	return false;
+	else
+	{
+		return "http://ades.sunac.com.cn/SunacCADService.asmx?WSDL";
+	}
 }
 

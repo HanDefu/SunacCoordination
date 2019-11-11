@@ -2,6 +2,7 @@
 #include < afxinet.h>
 #include "..\Common\ComFun_String.h"
 #include "FileUploadDownload.h"
+#include "..\GlobalSetting.h"
 
 CFileUpDownLoadWeb* CFileUpDownLoadWeb::Instance()
 {
@@ -323,7 +324,7 @@ bool CFileUpDownLoadFtp::UploadFile(CString p_sFilePath, CString p_ftpSaveName, 
 	try
 	{
 		//pFtpConnection = m_pInetsession->GetFtpConnection(L"192.168.13.13", L"test", L"1234", 21); //本地测试
-		pFtpConnection = m_pInetsession->GetFtpConnection(L"10.4.64.91", L"caduploader", L"ty19@scad", 2121, TRUE); //测试环境, 由于本地使用通常是带网关的局域网，需设置被动模式
+		pFtpConnection = m_pInetsession->GetFtpConnection(GSINST->GetFtpIp(), L"caduploader", L"ty19@scad", 2121, TRUE); //测试环境10.4.64.91, 由于本地使用通常是带网关的局域网，需设置被动模式
 		//pFtpConnection = m_pInetsession->GetFtpConnection(L"1.203.161.246", L"caduploader", L"ty19@scad", 2121, TRUE); //生产环境, 由于本地使用通常是带网关的局域网，需设置被动模式
 
 		if (pFtpConnection == NULL)

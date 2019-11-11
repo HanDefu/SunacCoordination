@@ -72,9 +72,6 @@ static HANDLE mThreadHandle = 0;
 ACRX_DEFINE_MEMBERS(AcDbDoubleClickEdit);
 enum Acad::ErrorStatus __stdcall LoadManagedDll(ACHAR const *path);
 /////////////////////////////////////////////////////////////////////////////
-// Define the sole extension module object.
-//和服务器同步数据
-static void SyncDataWithService(void * ptr);
 
 AC_IMPLEMENT_EXTENSION_MODULE(theArxDLL);
 
@@ -1008,8 +1005,6 @@ static void initApp()
 	LoadManagedDll(MD2010_GetAppPath() + L"\\Sunac2019\\rcdc.dll");
 
 	//WEBINST;
-
-	//mThreadHandle = (HANDLE)_beginthread(&SyncDataWithService, 0, 0);
 }
 
 
@@ -1105,12 +1100,5 @@ extern "C" AcRx::AppRetCode acrxEntryPoint( AcRx::AppMsgCode msg, void* appId)
 	return AcRx::kRetOK;
 }
 
-static void SyncDataWithService(void * ptr)
-{
-	while (1)
-	{
-		Sleep(1000);
-	}
-	GSINST->m_syncOK = true;
-}
+
 
