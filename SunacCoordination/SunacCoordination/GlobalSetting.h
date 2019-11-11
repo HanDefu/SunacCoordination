@@ -14,7 +14,7 @@ public:
 	}
 
 	CString GetFtpIp()const;
-	string GetCADServiceUrl()const;
+	const char*  GetCADServiceUrl()const;
 
 private:
 	GlobalSetting();

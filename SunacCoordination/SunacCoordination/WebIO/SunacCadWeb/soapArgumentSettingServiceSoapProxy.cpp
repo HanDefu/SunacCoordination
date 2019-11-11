@@ -149,7 +149,7 @@ int ArgumentSettingServiceSoapProxy::send_StandardDesignAttribute(const char *so
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/StandardDesignAttribute";
 	soap_tmp___ns1__StandardDesignAttribute.ns1__StandardDesignAttribute = ns1__StandardDesignAttribute;
@@ -208,7 +208,7 @@ int ArgumentSettingServiceSoapProxy::send_GetAllWindows(const char *soap_endpoin
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/GetAllWindows";
 	soap_tmp___ns1__GetAllWindows.ns1__GetAllWindows = ns1__GetAllWindows;
@@ -267,7 +267,7 @@ int ArgumentSettingServiceSoapProxy::send_GetWindows(const char *soap_endpoint_u
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/GetWindows";
 	soap_tmp___ns1__GetWindows.ns1__GetWindows = ns1__GetWindows;
@@ -326,7 +326,7 @@ int ArgumentSettingServiceSoapProxy::send_GetAllDoor(const char *soap_endpoint_u
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/GetAllDoor";
 	soap_tmp___ns1__GetAllDoor.ns1__GetAllDoor = ns1__GetAllDoor;
@@ -385,7 +385,7 @@ int ArgumentSettingServiceSoapProxy::send_GetAllDoorByParam(const char *soap_end
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/GetAllDoorByParam";
 	soap_tmp___ns1__GetAllDoorByParam.ns1__GetAllDoorByParam = ns1__GetAllDoorByParam;
@@ -444,7 +444,7 @@ int ArgumentSettingServiceSoapProxy::send_GetAllKitchen(const char *soap_endpoin
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/GetAllKitchen";
 	soap_tmp___ns1__GetAllKitchen.ns1__GetAllKitchen = ns1__GetAllKitchen;
@@ -503,7 +503,7 @@ int ArgumentSettingServiceSoapProxy::send_GetAllKitchenParam(const char *soap_en
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/GetAllKitchenParam";
 	soap_tmp___ns1__GetAllKitchenParam.ns1__GetAllKitchenParam = ns1__GetAllKitchenParam;
@@ -562,7 +562,7 @@ int ArgumentSettingServiceSoapProxy::send_GetAllBathroom(const char *soap_endpoi
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/GetAllBathroom";
 	soap_tmp___ns1__GetAllBathroom.ns1__GetAllBathroom = ns1__GetAllBathroom;
@@ -621,7 +621,7 @@ int ArgumentSettingServiceSoapProxy::send_GetAllBathroomByParam(const char *soap
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/GetAllBathroomByParam";
 	soap_tmp___ns1__GetAllBathroomByParam.ns1__GetAllBathroomByParam = ns1__GetAllBathroomByParam;
@@ -680,7 +680,7 @@ int ArgumentSettingServiceSoapProxy::send_GetAllHandrailByParam(const char *soap
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/GetAllHandrailByParam";
 	soap_tmp___ns1__GetAllHandrailByParam.ns1__GetAllHandrailByParam = ns1__GetAllHandrailByParam;
@@ -739,7 +739,7 @@ int ArgumentSettingServiceSoapProxy::send_GetAllAirconditionerByParam(const char
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/GetAllAirconditionerByParam";
 	soap_tmp___ns1__GetAllAirconditionerByParam.ns1__GetAllAirconditionerByParam = ns1__GetAllAirconditionerByParam;
@@ -798,7 +798,7 @@ int ArgumentSettingServiceSoapProxy::send_CadFileDownload(const char *soap_endpo
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/CadFileDownload";
 	soap_tmp___ns1__CadFileDownload.ns1__CadFileDownload = ns1__CadFileDownload;
@@ -857,7 +857,7 @@ int ArgumentSettingServiceSoapProxy::send_CadImgDownload(const char *soap_endpoi
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/CadImgDownload";
 	soap_tmp___ns1__CadImgDownload.ns1__CadImgDownload = ns1__CadImgDownload;
@@ -916,7 +916,7 @@ int ArgumentSettingServiceSoapProxy::send_NewCadFileDir(const char *soap_endpoin
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/NewCadFileDir";
 	soap_tmp___ns1__NewCadFileDir.ns1__NewCadFileDir = ns1__NewCadFileDir;
@@ -975,7 +975,7 @@ int ArgumentSettingServiceSoapProxy::send_DeleteCadFileDir(const char *soap_endp
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/DeleteCadFileDir";
 	soap_tmp___ns1__DeleteCadFileDir.ns1__DeleteCadFileDir = ns1__DeleteCadFileDir;
@@ -1034,7 +1034,7 @@ int ArgumentSettingServiceSoapProxy::send_DeleteCadFileDirByDirId(const char *so
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/DeleteCadFileDirByDirId";
 	soap_tmp___ns1__DeleteCadFileDirByDirId.ns1__DeleteCadFileDirByDirId = ns1__DeleteCadFileDirByDirId;
@@ -1093,7 +1093,7 @@ int ArgumentSettingServiceSoapProxy::send_RenameCadFileDir(const char *soap_endp
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/RenameCadFileDir";
 	soap_tmp___ns1__RenameCadFileDir.ns1__RenameCadFileDir = ns1__RenameCadFileDir;
@@ -1152,7 +1152,7 @@ int ArgumentSettingServiceSoapProxy::send_GetProjectInfo(const char *soap_endpoi
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/GetProjectInfo";
 	soap_tmp___ns1__GetProjectInfo.ns1__GetProjectInfo = ns1__GetProjectInfo;
@@ -1211,7 +1211,7 @@ int ArgumentSettingServiceSoapProxy::send_UpdateCadDrawing(const char *soap_endp
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/UpdateCadDrawing";
 	soap_tmp___ns1__UpdateCadDrawing.ns1__UpdateCadDrawing = ns1__UpdateCadDrawing;
@@ -1270,7 +1270,7 @@ int ArgumentSettingServiceSoapProxy::send_DeleteCadDrawing(const char *soap_endp
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/DeleteCadDrawing";
 	soap_tmp___ns1__DeleteCadDrawing.ns1__DeleteCadDrawing = ns1__DeleteCadDrawing;
@@ -1329,7 +1329,7 @@ int ArgumentSettingServiceSoapProxy::send_DeleteCadDrawingByFileID(const char *s
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/DeleteCadDrawingByFileID";
 	soap_tmp___ns1__DeleteCadDrawingByFileID.ns1__DeleteCadDrawingByFileID = ns1__DeleteCadDrawingByFileID;
@@ -1388,7 +1388,7 @@ int ArgumentSettingServiceSoapProxy::send_CheckUserInfo(const char *soap_endpoin
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/CheckUserInfo";
 	soap_tmp___ns1__CheckUserInfo.ns1__CheckUserInfo = ns1__CheckUserInfo;
@@ -1447,7 +1447,7 @@ int ArgumentSettingServiceSoapProxy::send_StandardDesignAttribute_(const char *s
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/StandardDesignAttribute";
 	soap_tmp___ns1__StandardDesignAttribute_.ns1__StandardDesignAttribute = ns1__StandardDesignAttribute;
@@ -1506,7 +1506,7 @@ int ArgumentSettingServiceSoapProxy::send_GetAllWindows_(const char *soap_endpoi
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/GetAllWindows";
 	soap_tmp___ns1__GetAllWindows_.ns1__GetAllWindows = ns1__GetAllWindows;
@@ -1565,7 +1565,7 @@ int ArgumentSettingServiceSoapProxy::send_GetWindows_(const char *soap_endpoint_
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/GetWindows";
 	soap_tmp___ns1__GetWindows_.ns1__GetWindows = ns1__GetWindows;
@@ -1624,7 +1624,7 @@ int ArgumentSettingServiceSoapProxy::send_GetAllDoor_(const char *soap_endpoint_
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/GetAllDoor";
 	soap_tmp___ns1__GetAllDoor_.ns1__GetAllDoor = ns1__GetAllDoor;
@@ -1683,7 +1683,7 @@ int ArgumentSettingServiceSoapProxy::send_GetAllDoorByParam_(const char *soap_en
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/GetAllDoorByParam";
 	soap_tmp___ns1__GetAllDoorByParam_.ns1__GetAllDoorByParam = ns1__GetAllDoorByParam;
@@ -1742,7 +1742,7 @@ int ArgumentSettingServiceSoapProxy::send_GetAllKitchen_(const char *soap_endpoi
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/GetAllKitchen";
 	soap_tmp___ns1__GetAllKitchen_.ns1__GetAllKitchen = ns1__GetAllKitchen;
@@ -1801,7 +1801,7 @@ int ArgumentSettingServiceSoapProxy::send_GetAllKitchenParam_(const char *soap_e
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/GetAllKitchenParam";
 	soap_tmp___ns1__GetAllKitchenParam_.ns1__GetAllKitchenParam = ns1__GetAllKitchenParam;
@@ -1860,7 +1860,7 @@ int ArgumentSettingServiceSoapProxy::send_GetAllBathroom_(const char *soap_endpo
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/GetAllBathroom";
 	soap_tmp___ns1__GetAllBathroom_.ns1__GetAllBathroom = ns1__GetAllBathroom;
@@ -1919,7 +1919,7 @@ int ArgumentSettingServiceSoapProxy::send_GetAllBathroomByParam_(const char *soa
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/GetAllBathroomByParam";
 	soap_tmp___ns1__GetAllBathroomByParam_.ns1__GetAllBathroomByParam = ns1__GetAllBathroomByParam;
@@ -1978,7 +1978,7 @@ int ArgumentSettingServiceSoapProxy::send_GetAllHandrailByParam_(const char *soa
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/GetAllHandrailByParam";
 	soap_tmp___ns1__GetAllHandrailByParam_.ns1__GetAllHandrailByParam = ns1__GetAllHandrailByParam;
@@ -2037,7 +2037,7 @@ int ArgumentSettingServiceSoapProxy::send_GetAllAirconditionerByParam_(const cha
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/GetAllAirconditionerByParam";
 	soap_tmp___ns1__GetAllAirconditionerByParam_.ns1__GetAllAirconditionerByParam = ns1__GetAllAirconditionerByParam;
@@ -2096,7 +2096,7 @@ int ArgumentSettingServiceSoapProxy::send_CadFileDownload_(const char *soap_endp
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/CadFileDownload";
 	soap_tmp___ns1__CadFileDownload_.ns1__CadFileDownload = ns1__CadFileDownload;
@@ -2155,7 +2155,7 @@ int ArgumentSettingServiceSoapProxy::send_CadImgDownload_(const char *soap_endpo
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/CadImgDownload";
 	soap_tmp___ns1__CadImgDownload_.ns1__CadImgDownload = ns1__CadImgDownload;
@@ -2214,7 +2214,7 @@ int ArgumentSettingServiceSoapProxy::send_NewCadFileDir_(const char *soap_endpoi
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/NewCadFileDir";
 	soap_tmp___ns1__NewCadFileDir_.ns1__NewCadFileDir = ns1__NewCadFileDir;
@@ -2273,7 +2273,7 @@ int ArgumentSettingServiceSoapProxy::send_DeleteCadFileDir_(const char *soap_end
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/DeleteCadFileDir";
 	soap_tmp___ns1__DeleteCadFileDir_.ns1__DeleteCadFileDir = ns1__DeleteCadFileDir;
@@ -2332,7 +2332,7 @@ int ArgumentSettingServiceSoapProxy::send_DeleteCadFileDirByDirId_(const char *s
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/DeleteCadFileDirByDirId";
 	soap_tmp___ns1__DeleteCadFileDirByDirId_.ns1__DeleteCadFileDirByDirId = ns1__DeleteCadFileDirByDirId;
@@ -2391,7 +2391,7 @@ int ArgumentSettingServiceSoapProxy::send_RenameCadFileDir_(const char *soap_end
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/RenameCadFileDir";
 	soap_tmp___ns1__RenameCadFileDir_.ns1__RenameCadFileDir = ns1__RenameCadFileDir;
@@ -2450,7 +2450,7 @@ int ArgumentSettingServiceSoapProxy::send_GetProjectInfo_(const char *soap_endpo
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/GetProjectInfo";
 	soap_tmp___ns1__GetProjectInfo_.ns1__GetProjectInfo = ns1__GetProjectInfo;
@@ -2509,7 +2509,7 @@ int ArgumentSettingServiceSoapProxy::send_UpdateCadDrawing_(const char *soap_end
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/UpdateCadDrawing";
 	soap_tmp___ns1__UpdateCadDrawing_.ns1__UpdateCadDrawing = ns1__UpdateCadDrawing;
@@ -2568,7 +2568,7 @@ int ArgumentSettingServiceSoapProxy::send_DeleteCadDrawing_(const char *soap_end
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/DeleteCadDrawing";
 	soap_tmp___ns1__DeleteCadDrawing_.ns1__DeleteCadDrawing = ns1__DeleteCadDrawing;
@@ -2627,7 +2627,7 @@ int ArgumentSettingServiceSoapProxy::send_DeleteCadDrawingByFileID_(const char *
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/DeleteCadDrawingByFileID";
 	soap_tmp___ns1__DeleteCadDrawingByFileID_.ns1__DeleteCadDrawingByFileID = ns1__DeleteCadDrawingByFileID;
@@ -2686,7 +2686,7 @@ int ArgumentSettingServiceSoapProxy::send_CheckUserInfo_(const char *soap_endpoi
 	if (soap_endpoint_url != NULL)
 		soap_endpoint = soap_endpoint_url;
 	if (soap_endpoint == NULL)
-		soap_endpoint = GSINST->GetCADServiceUrl().c_str();
+		soap_endpoint = GSINST->GetCADServiceUrl();
 	if (soap_action == NULL)
 		soap_action = "http://tempuri.org/CheckUserInfo";
 	soap_tmp___ns1__CheckUserInfo_.ns1__CheckUserInfo = ns1__CheckUserInfo;
