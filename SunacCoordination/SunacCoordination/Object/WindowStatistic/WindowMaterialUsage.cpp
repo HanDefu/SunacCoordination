@@ -200,7 +200,7 @@ void CWindowMaterialUsage::ExportWindowInfo(Excel::CExcelUtil& p_excel)//Êä³ö»ù±
 	double area = m_winAtt.GetH()* m_winAtt.GetW()/1e6; //µ¥Î»©O	
 	if (m_winAtt.HasValue(_T("R")))
 	{
-		area = ((m_winAtt.GetH1()+ m_winAtt.GetH2())* (m_winAtt.GetW()- m_winAtt.GetA()* 2)+ 3.14* m_winAtt.GetR()* m_winAtt.GetR()/ 2)/1e6;
+		area = ((m_winAtt.GetH1()+ m_winAtt.GetH2()+ m_winAtt.GetA())* m_winAtt.GetW()+ 3.14* (m_winAtt.GetR()+ m_winAtt.GetA())* (m_winAtt.GetR()+ m_winAtt.GetA())/ 2)/1e6;;
 	}
 	str.Format(_T("%.2f"), area);
 	p_excel.SetCellValue(2, 12, str);
@@ -212,7 +212,7 @@ void CWindowMaterialUsage::ExportWindowInfo(Excel::CExcelUtil& p_excel)//Êä³ö»ù±
 	double circumference = (m_winAtt.GetH() + m_winAtt.GetW()) * 2 / 1000;	
 	if (m_winAtt.HasValue(_T("R")))
 	{
-		circumference = ((m_winAtt.GetH1()+ m_winAtt.GetH2())* 2+ (m_winAtt.GetW()-m_winAtt.GetA()* 2)+ 3.14* m_winAtt.GetR())/1000;
+		circumference = ((m_winAtt.GetH1()+ m_winAtt.GetH2()+ m_winAtt.GetA())* 2+ m_winAtt.GetW()+ 3.14* (m_winAtt.GetR()+ m_winAtt.GetA()))/1000;
 	}
 	str.Format(_T("%.2f"), circumference);
 	p_excel.SetCellValue(15, 9, str);
