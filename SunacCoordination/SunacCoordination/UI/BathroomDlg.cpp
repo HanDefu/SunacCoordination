@@ -338,8 +338,11 @@ void CBathroomDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	CKitchenBathroomProp* pCurSelPrototype = &pCurSelBathroom->m_prop;
 
 	lockUpdate = true;
-	bool needMirror;
-	pCurSelPrototype->GetRotateAngle(m_doorDir, m_windowDir, m_angle, needMirror);
+	bool needMirror = false;
+	//pCurSelPrototype->GetRotateAngle(m_doorDir, m_windowDir, m_angle, needMirror);
+	int width = int(m_rect.GetWidth() + 0.5);
+	int height = int(m_rect.GetHeight() + 0.5);
+	pCurSelPrototype->GetRotateAngle(width, height, m_angle);
 	pCurSelBathroom->m_angle = m_angle;
 	if (pCurSelPrototype->GetWindowDoorPos() == CHUIZHIKAI)
 	{
