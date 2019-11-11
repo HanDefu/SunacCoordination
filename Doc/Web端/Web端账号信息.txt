@@ -1,3 +1,12 @@
+web service接口地址：
+测试环境：
+http://10.4.64.91/SunacCADService.asmx?WSDL
+http://des.sunac.com.cn/SunacCADService.asmx?WSDL
+
+生成环境：
+http://ades.sunac.com.cn/SunacCADService.asmx?WSDL
+
+ftp账号密码
 账号：　caduploader
 密码：　ty19@scad
 
@@ -11,8 +20,8 @@ ftp文件目录：d:\ProjectFiles
 
 生产环境1：10.4.0.139  端口2121  被动模式端口范围37421 - 37450
 生产环境2：10.4.0.140  端口2131  被动模式端口范围37451 - 37480
-生产环境域名：http://ades.sunac.com.cn  
-生产环境139对应的公网ip: 1.203.161.246
+生产环境10.4.0.139对应的公网ip: 1.203.161.246
+生产环境域名：http://ades.sunac.com.cn 
 
 
 电脑账号密码：
