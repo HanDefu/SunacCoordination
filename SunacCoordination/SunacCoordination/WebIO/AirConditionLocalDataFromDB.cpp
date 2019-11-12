@@ -150,6 +150,11 @@ std::vector<AttrAirCon >  CAirConditionLocalDataFromDB::GetAirCons(double p_airC
 			continue;
 		}
 
+		if ((p_airConRainRiser != L"·ñ") != m_allAirconditions[i].m_hasRainPipe)
+		{
+			continue;
+		}
+
 		if (p_airConRainRiser != L"·ñ")
 		{
 			if (p_airConRainRiserPos !=  m_allAirconditions[i].m_rainPipePos)
