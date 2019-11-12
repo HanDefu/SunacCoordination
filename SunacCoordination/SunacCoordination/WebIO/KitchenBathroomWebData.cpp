@@ -7,7 +7,32 @@
 #include "WebCommon.h"
 #include "WebIO.h"
 #include <string>
+#include <vector>
+#include <algorithm>
 
+CKitchenBathroomWebData::CKitchenBathroomWebData()
+{
+	m_allBathrooms = GetAllBathrooms();
+	m_allKitchens = GetAllKitchens();
+}
+
+bool SortKitchenFun(AttrKitchen attr1, AttrKitchen attr2)
+{
+	if (attr1.m_isDynamic)
+	{
+		return false;
+	}
+	else return true;
+}
+
+bool SortBathroomFun(AttrBathroom attr1, AttrBathroom attr2)
+{
+	if (attr1.m_isDynamic)
+	{
+		return false;
+	}
+	else return true;
+}
 
 std::vector<AttrKitchen > CKitchenBathroomWebData::ParseKitchensFromXML(CMarkup xml)
 {
@@ -111,6 +136,15 @@ std::vector<AttrKitchen > CKitchenBathroomWebData::ParseKitchensFromXML(CMarkup 
 			if (xml.FindElem(_T("AreaName")))
 			{
 				KitchenAttr.m_quyuName = xml.GetData();
+			}
+			if (xml.FindElem(_T("DynamicType")))
+			{
+				CString flag = xml.GetData();
+				if (flag == "1" || flag == L"ÊÇ")
+				{
+					KitchenAttr.m_isDynamic = true;
+				}
+				else KitchenAttr.m_isDynamic = false;
 			}
 			if (xml.FindElem(_T("KitchenTypeName")))
 			{
@@ -275,6 +309,15 @@ std::vector<AttrBathroom > CKitchenBathroomWebData::ParseBathroomsFromXML(CMarku
 			{
 				BathroomAttr.m_quyuName = xml.GetData();
 			}
+			if (xml.FindElem(_T("DynamicType")))
+			{
+				CString flag = xml.GetData();
+				if (flag == "1" || flag == L"ÊÇ")
+				{
+					BathroomAttr.m_isDynamic = true;
+				}
+				else BathroomAttr.m_isDynamic = false;
+			}
 			if (xml.FindElem(_T("BathroomTypeName")))
 			{
 				BathroomAttr.m_sBathroomType = xml.GetData();
@@ -345,6 +388,7 @@ std::vector<AttrKitchen> CKitchenBathroomWebData::GetAllKitchens()
 
 	m_allKitchens = ParseKitchensFromXML(xml);
 
+	sort(m_allKitchens.begin(), m_allKitchens.end(), SortKitchenFun);
 	return m_allKitchens;
 }
 
@@ -427,6 +471,7 @@ std::vector<AttrKitchen> CKitchenBathroomWebData::GetKitchens(EKitchType p_type,
 		}
 	}
 
+	sort(ret.begin(), ret.end(), SortKitchenFun);
 	return ret;
 }
 
@@ -454,6 +499,7 @@ std::vector<AttrBathroom> CKitchenBathroomWebData::GetAllBathrooms()
 
 	m_allBathrooms = ParseBathroomsFromXML(xml);
 
+	sort(m_allBathrooms.begin(), m_allBathrooms.end(), SortBathroomFun);
 	return m_allBathrooms;
 }
 
@@ -528,5 +574,6 @@ std::vector<AttrBathroom> CKitchenBathroomWebData::GetBathrooms(EBathroomType p_
 		}
 	}
 
+	sort(ret.begin(), ret.end(), SortBathroomFun);
 	return ret;
 }

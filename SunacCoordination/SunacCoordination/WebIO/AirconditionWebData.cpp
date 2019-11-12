@@ -14,6 +14,16 @@ CAirConditionWebData* CAirConditionWebData::Instance()
 	static CAirConditionWebData instance;
 	return &instance;
 }
+
+CAirConditionWebData::CAirConditionWebData()
+{
+	m_allAirconditions = GetAllAirCons();
+}
+
+CAirConditionWebData::~CAirConditionWebData()
+{
+}
+/*
 std::vector<AttrAirCon> CAirConditionWebData::GetAirCons(double piShu, CString weiZhi, bool hasYuShuiGuan, CString yuShuiGuanWeizhi)
 {
 	CString AirconditionerIsRainpipe_;
@@ -35,10 +45,10 @@ std::vector<AttrAirCon> CAirConditionWebData::GetAirCons(double piShu, CString w
 	ns.AirconditionerPipePosition = &sAirconditionerPipePosition;
 	ns.AirconditionerIsRainpipe = &sAirconditionerIsRainpipe;
 	ns.RainpipePosition = &sRainpipePosition;
-	/*ns.AirconditionerPower = 0;
+	/ *ns.AirconditionerPower = 0;
 	ns.AirconditionerPipePosition = 0;
 	ns.AirconditionerIsRainpipe = 0;
-	ns.RainpipePosition = 0;*/
+	ns.RainpipePosition = 0;* /
 
 	_ns1__GetAllAirconditionerByParamResponse nsResponse;
 
@@ -61,7 +71,7 @@ std::vector<AttrAirCon> CAirConditionWebData::GetAirCons(double piShu, CString w
 
 	AirConAtts = ParseAirConditionersFromXML(xml);
 	return AirConAtts;
-}
+}*/
 
 std::vector<AttrAirCon > CAirConditionWebData::ParseAirConditionersFromXML(CMarkup xml)const
 {
@@ -187,12 +197,12 @@ std::vector<AttrAirCon > CAirConditionWebData::ParseAirConditionersFromXML(CMark
 			{
 				AirConAttr.m_pipePos = xml.GetData();
 			}
-			if (xml.FindElem(_T("AirconditionerIsRainpipe")))
+			if (xml.FindElem(_T("AirconditionerIsRainPipe")))
 			{
 				CString str = xml.GetData();
-				AirConAttr.m_hasRainPipe = (str==_T("是"))? true : false;
+				AirConAttr.m_hasRainPipe = (str ==_T("1"))? true : false;
 			}
-			if (xml.FindElem(_T("AirconditionerRainpipePostion")))
+			if (xml.FindElem(_T("AirconditionerRainPipePositionName")))
 			{
 				AirConAttr.m_rainPipePos = xml.GetData();
 			}
@@ -217,18 +227,52 @@ std::vector<AttrAirCon> CAirConditionWebData::GetAllAirCons()
 	InitSoapTime(cadWeb);
 	int nRet = cadWeb.GetAllAirconditionerByParam(&ns, nsResponse);
 
-	std::vector<AttrAirCon> AirConAtts;
-
 	//判断返回结果是否成功
 	if (nsResponse.GetAllAirconditionerByParamResult == NULL)
 	{
-		return AirConAtts;
+		return m_allAirconditions;
 	}
 
 	//解析字符串出结果
 	CMarkup xml;
 	xml.SetDoc((*(nsResponse.GetAllAirconditionerByParamResult)).c_str());
 
-	AirConAtts = ParseAirConditionersFromXML(xml);
-	return AirConAtts;
+	m_allAirconditions = ParseAirConditionersFromXML(xml);
+	return m_allAirconditions;
+}
+
+std::vector<AttrAirCon >  CAirConditionWebData::GetAirCons(double p_airConHorseNumber, CString p_airConPipePos, CString p_airConRainRiser, CString p_airConRainRiserPos)const
+{
+	std::vector<AttrAirCon> data;
+
+	for (UINT i =0; i < m_allAirconditions.size(); i++)
+	{
+		if (p_airConHorseNumber != m_allAirconditions[i].m_power)
+		{
+			continue;
+		}
+
+		if (p_airConPipePos != m_allAirconditions[i].m_pipePos)
+		{
+			continue;
+		}
+
+		if ((p_airConRainRiser != L"否") != m_allAirconditions[i].m_hasRainPipe)
+		{
+			continue;
+		}
+
+		if (p_airConRainRiser != L"否")
+		{
+			if (p_airConRainRiserPos !=  m_allAirconditions[i].m_rainPipePos)
+			{
+				continue;
+			}
+		}
+
+		data.push_back(m_allAirconditions[i]);
+	}
+
+	return data;
+
 }
