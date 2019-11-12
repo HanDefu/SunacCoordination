@@ -824,8 +824,8 @@ static void initApp()
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
-		_T("SWINDOW"),
-		_T("SWINDOW"),
+		_T("SWINDESIGN"),
+		_T("SWINDESIGN"),
 		ACRX_CMD_MODAL,
 		CMD_SunacWindow,
 		NULL,
@@ -842,8 +842,8 @@ static void initApp()
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
-		_T("SWINDOWSTATISTICS"),
-		_T("SWINDOWSTATISTICS"),
+		_T("SWINSTATISTICS"),
+		_T("SWINSTATISTICS"),
 		ACRX_CMD_MODAL,
 		CMD_SunacWindowsStatistics,
 		NULL,
@@ -851,8 +851,35 @@ static void initApp()
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
-		_T("SWINDOWTABLE"),
-		_T("SWINDOWTABLE"),
+		_T("SWINFLOOR"),
+		_T("SWINFLOOR"),
+		ACRX_CMD_MODAL,
+		CMD_SunacWindowFloorSetting,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SWINFTOP2FRONT"),
+		_T("SWINFTOP2FRONT"),
+		ACRX_CMD_MODAL,
+		CMD_SunacWindowTop2Front,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SWINFFRONT2TOP"),
+		_T("SWINFFRONT2TOP"),
+		ACRX_CMD_MODAL,
+		CMD_SunacWindowFront2Top,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SWINTABLE"),
+		_T("SWINTABLE"),
 		ACRX_CMD_MODAL,
 		CMD_SunacWindowsTable,
 		NULL,
@@ -860,8 +887,8 @@ static void initApp()
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
-		_T("SWINDOWDETAIL"),
-		_T("SWINDOWDETAIL"),
+		_T("SWINDETAIL"),
+		_T("SWINDETAIL"),
 		ACRX_CMD_MODAL,
 		CMD_SunacWindowDetail,
 		NULL,

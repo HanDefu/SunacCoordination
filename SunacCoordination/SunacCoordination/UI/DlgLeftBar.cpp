@@ -102,7 +102,7 @@ LRESULT DlgLeftBar::OnClickedPopupMenu(WPARAM mID, LPARAM notUsed)
 	switch (mID)
 	{
 	case ID_COMMAND_WINDOW:
-		SendCommandToCAD(_T("SWINDOW"));
+		SendCommandToCAD(_T("SWINDESIGN"));
 		//CMD_SunacWindow();
 		break;
 
@@ -110,17 +110,26 @@ LRESULT DlgLeftBar::OnClickedPopupMenu(WPARAM mID, LPARAM notUsed)
 		SendCommandToCAD(_T("SWINADVANCE"));
 		//CMD_SunacWindowAdvanceDesign();
 		break;
+	case ID_COMMAND_WINDOW_FLOORSETTING: //楼层设置
+		SendCommandToCAD(_T("SWINFLOOR"));
+		break;
+	case ID_COMMAND_WINDOW_TOP2FRONT: //平面到立面
+		SendCommandToCAD(_T("SWINFTOP2FRONT"));
+		break;
+	case ID_COMMAND_WINDOW_FRONT2TOP: //立面到平面
+		SendCommandToCAD(_T("SWINFFRONT2TOP"));
+		break;
 
 	case ID_COMMAND_WINDOWQUANTITY://门窗算量
-		SendCommandToCAD(_T("SWINDOWSTATISTICS"));
+		SendCommandToCAD(_T("SWINSTATISTICS"));
 		//CMD_SunacWindowsStatistics();
 		break;
 	case ID_COMMAND_WINDOWTABLE:
-		SendCommandToCAD(_T("SWINDOWTABLE"));
+		SendCommandToCAD(_T("SWINTABLE"));
 		//CMD_SunacWindowsTable();
 		break;
 	case ID_COMMAND_WINDOWDETAIL:	//门窗详图
-		SendCommandToCAD(_T("SWINDOWDETAIL"));
+		SendCommandToCAD(_T("SWINDETAIL"));
 		//CMD_SunacWindowDetail();
 		break;
 

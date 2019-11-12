@@ -51,6 +51,7 @@ public:
 	void UpdateInstanceCode();
 	void UpdateVent();
 	void UpdateDimDataToComboBox(CComboBox& comboBox, const AttrWindow& attrWindow, CString code);
+	void InitDimComboBoxInt(CComboBox& comboBox, vdouble options, double dimValue);
 	void LoadDefaultValue();
 	AttrWindow* GetSelWindow();
 
@@ -69,8 +70,9 @@ protected:
 	CComboBox m_openType; //开启类型
 	CComboBox m_openAmount; //开启扇数量
 	CEdit m_ventilation; //通风量
-	CEdit m_area; //面积
-	CComboBox m_rate; //比值
+
+	//CEdit m_area; //面积
+	//CComboBox m_rate; //比值
 
 	CEdit m_number; //门窗编号
 	CComboBox m_W1; //开启扇宽度

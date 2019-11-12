@@ -10,6 +10,7 @@
 #include "../GlobalSetting.h"
 #include "../Object/WindowDoor/WindowAutoName.h"
 #include "../Common/ComFun_ACad.h"
+#include "DlgWindowAirCalc.h"
 
 // CWindowDlg 对话框
 
@@ -92,8 +93,8 @@ void CWindowDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT_NUMBER, m_number);
 	DDX_Radio(pDX, IDC_RADIO_DOOR, m_radioDoor);
 	DDX_Radio(pDX, IDC_RADIO_YES, m_radioYes);
-	DDX_Control(pDX, IDC_EDIT_AREA, m_area);
-	DDX_Control(pDX, IDC_COMBO_RATE, m_rate);
+	//DDX_Control(pDX, IDC_EDIT_AREA, m_area);
+	//DDX_Control(pDX, IDC_COMBO_RATE, m_rate);
 	DDX_Check(pDX, IDC_CHECK_AUTOINDEX, m_autoIndex);
 	DDX_Control(pDX, IDC_COMBO_VIEWDIR, m_viewDir);
 	DDX_Control(pDX, IDC_CHECK_IMAGE, m_isMirror);
@@ -185,10 +186,10 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		JHCOM_DeleteCadObject(m_pCurEdit->objectId());
 	}
 
-	double W1 = TYUI_GetDouble(m_W1);
-	double H2 = TYUI_GetDouble(m_H2);
-	double W3 = TYUI_GetDouble(m_W3);
-	double H3 = TYUI_GetDouble(m_H3);
+	int W1 = TYUI_GetInt(m_W1);
+	int H2 = TYUI_GetInt(m_H2);
+	int W3 = TYUI_GetInt(m_W3);
+	int H3 = TYUI_GetInt(m_H3);
 
 	RCWindow oneWindow;
 
@@ -310,10 +311,19 @@ void CWindowDlg::OnBnClickedRadioDoor()
 
 void CWindowDlg::OnBnClickedCalculate()
 {
+#if 1
+	UpdateData(TRUE);
+	CDlgWindowAirCalc dlg;
+	if (dlg.DoModal()==IDOK)
+	{
+		TYUI_SetDouble(m_ventilation, dlg.m_airQuality);
+		UpdateData(FALSE);
+	}
+#else
 	double area = TYUI_GetDouble(m_area);
 	if (area <= 0)
 	{
-		AfxMessageBox(L"无效的房屋面积");
+		AfxMessageBox(L"无效的房间面积");
 		return;
 	}
 
@@ -324,6 +334,7 @@ void CWindowDlg::OnBnClickedCalculate()
 		rate /= _ttof(sRate.Mid(pos + 1));
 
 	TYUI_SetDouble(m_ventilation, area * rate);
+#endif
 }
 
 void CWindowDlg::OnBnClickedAutoIndex()
@@ -556,23 +567,60 @@ void CWindowDlg::UpdateDimDataToComboBox(CComboBox& comboBox, const AttrWindow& 
 	const CWindowsDimData* pDimData = attrWindow.GetDimData(code);
 	if (pDimData == NULL)
 		return;
-	if (pDimData->type == MULTI)
+
+	switch (pDimData->type)
+	{
+	case SINGLE://固定值
+	{
+					TYUI_Enable(comboBox);
+					double dimValue = attrWindow.GetValue(code);
+					vdouble options(1, dimValue);
+					InitDimComboBoxInt(comboBox, options, dimValue);
+					break;
+	}
+	case MULTI://值系列
 	{
 		TYUI_Enable(comboBox);
-		TYUI_InitComboBox(comboBox, pDimData->valueOptions, pDimData->value);
+		InitDimComboBoxInt(comboBox, pDimData->valueOptions, pDimData->value);
+		break;
 	}
-	else if ((pDimData->type == SINGLE) || (pDimData->type == CALC))
+	case SCOPE://范围
+	case UNLIMIT://不限
 	{
-		TYUI_Enable(comboBox);
-		double dimValue = attrWindow.GetValue(code);
-		vdouble options(1, dimValue);
-		TYUI_InitComboBox(comboBox, options, dimValue);
+				   TYUI_Enable(comboBox);
+				   double dimValue = attrWindow.GetValue(code, true);
+				   vdouble options(1, dimValue);
+				   InitDimComboBoxInt(comboBox, options, dimValue);
+				   break;
 	}
-	else
+	case CALC://公式
 	{
-		comboBox.ResetContent();
-		TYUI_Disable(comboBox);
+				  TYUI_Disable(comboBox);
+				  double dimValue = attrWindow.GetValue(code);
+				  vdouble options(1, dimValue);
+				  InitDimComboBoxInt(comboBox, options, dimValue);
+				  break;
 	}
+	case NOVALUE: //无
+	default:
+	{
+			   comboBox.ResetContent();
+			   TYUI_Disable(comboBox);
+			   break;
+
+	}
+	}
+}
+
+void CWindowDlg::InitDimComboBoxInt(CComboBox& comboBox, vdouble options, double dimValue)
+{
+	vint nOptins;
+	for (UINT i = 0; i < options.size(); i++)
+	{
+		nOptins.push_back((int)options[i]);
+	}
+
+	TYUI_InitComboBox(comboBox, nOptins, (int)dimValue);
 }
 
 void CWindowDlg::LoadDefaultValue()
@@ -585,13 +633,11 @@ void CWindowDlg::LoadDefaultValue()
 	const vCString& openTypes = WebIO::GetInstance()->GetConfigDict()->Window_GetOpenTypes();
 	const vCString& areaTypes = WebIO::GetInstance()->GetConfigDict()->GetGongNengQus();
 	//const vCString& openAmount = WebIO::GetInstance()->GetConfigDict()->Window_GetOpenAmount();
-	const vCString& rate = WebIO::GetInstance()->GetConfigDict()->Window_GetRate();
 	const vCString& wallDis = WebIO::GetInstance()->GetConfigDict()->Window_GetWallDis();
 
 	TYUI_SetInt(m_width, 1500);
 	TYUI_SetInt(m_height, 1800);
 	TYUI_SetInt(m_ventilation, 0);
-	TYUI_SetInt(m_area, 0);
 	TYUI_SetText(m_number, L"");
 	
 	if (m_radioDoor == 0)
@@ -600,8 +646,11 @@ void CWindowDlg::LoadDefaultValue()
 		TYUI_InitComboBox(m_openType, openTypes, openTypes.empty()? L"" : openTypes[0]);
 	TYUI_InitComboBox(m_areaType, areaTypes, areaTypes.empty() ? L"" : areaTypes[0]);
 	TYUI_InitComboBox(m_openAmount, openAmount, openAmount.empty() ? L"" : openAmount[0]);
-	TYUI_InitComboBox(m_rate, rate, rate.empty() ? L"" : rate[0]);
 	TYUI_InitComboBox(m_distance, wallDis, wallDis.empty() ? L"" : wallDis[0]);
+
+	//TYUI_SetInt(m_area, 0);
+	//const vCString& rate = WebIO::GetInstance()->GetConfigDict()->Window_GetRate();
+	//TYUI_InitComboBox(m_rate, rate, rate.empty() ? L"" : rate[0]);
 
 	m_viewDir.SetCurSel(0);
 	m_insertDir.SetCurSel(0);

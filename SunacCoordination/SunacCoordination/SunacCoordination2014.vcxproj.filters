@@ -379,6 +379,9 @@
     <ClCompile Include="Object\AirCondition\AirConStatistic.cpp">
       <Filter>Object\AirCondition</Filter>
     </ClCompile>
+    <ClCompile Include="UI\DlgWindowAirCalc.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -849,6 +852,9 @@
     </ClInclude>
     <ClInclude Include="Object\AirCondition\AirConStatistic.h">
       <Filter>Object\AirCondition</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DlgWindowAirCalc.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
