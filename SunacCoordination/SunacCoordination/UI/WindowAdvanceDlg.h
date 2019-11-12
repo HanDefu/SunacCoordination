@@ -33,9 +33,11 @@ protected:
 public:
 	afx_msg void OnBnClickedSelectOnDwg();
 	afx_msg void OnBnClickedAuxiliaryFrame();
+	void InitHeatCoeffCtrl(); //初始化传热系数
 	void InitGlassSeries(); //玻璃选型
 	void InitAluminumSeries(); //型材系列
 	void InitMaterialType(); //材质类型
+
 	void InitPlugSlotSize(); //塞缝尺寸
 	void InitAuxiliaryFrame(); //附框
 	void InitAuxiliaryFrameSeries();
@@ -45,9 +47,11 @@ public:
 	vector<AttrWindow*> m_selAttrWindows;
 
 	CString m_sCode;
-	CComboBox m_jieNeng;
+
+	//CComboBox m_jieNeng;
 	CEdit m_eidtJieneng;
 	double m_fJieNeng;// 节能系数
+
 	CComboBox m_caiZhi;
 	CComboBox m_xingCai;
 	CComboBox m_boLi;
