@@ -225,6 +225,7 @@ const CWindowsDimData* AttrWindow::GetDimData(CString p_sCode)const
 	//assert(false);
 	return NULL;
 }
+
 CWindowsDimData* AttrWindow::GetDimDataByCode(CString p_sCode)
 {
 	for (UINT i = 0; i < m_dimData.size(); i++)
@@ -236,7 +237,6 @@ CWindowsDimData* AttrWindow::GetDimDataByCode(CString p_sCode)
 	}
 	return NULL;
 }
-
 
 void AttrWindow::CheckAndComplementDimeData() //检查并补全Dim数据，W/H/a确保都有
 {
