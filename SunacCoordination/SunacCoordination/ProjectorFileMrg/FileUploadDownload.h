@@ -58,7 +58,7 @@ public:
 	void DownloadFileByThread(CUpDownFilePara p_upFilePara);
 
 protected:
-	static DWORD DownloadFileThreadFunc(LPVOID pama);
+	 static DWORD WINAPI DownloadFileThreadFunc(LPVOID pama);
 
 protected:
 	vector<CUpDownFilePara*> m_allUpFileParas;
@@ -85,8 +85,8 @@ public:
 	void UploadFileByThread(CUpDownFilePara p_upFilePara);
 
 protected:
-	static DWORD OneUploadFileThreadFunc(LPVOID pama);
-	static DWORD FTPThreadFunc(LPVOID pama);
+	static DWORD WINAPI OneUploadFileThreadFunc(LPVOID pama);
+	static DWORD WINAPI FTPThreadFunc(LPVOID pama);
 	CUpDownFilePara* GetFrontDownFilePara();
 
 protected:

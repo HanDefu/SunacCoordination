@@ -241,10 +241,18 @@ void CKitchenDlg::OnBnClickedButtonRange()
 void CKitchenDlg::ShowInfo()
 {
 	CString sInfo;
-	if ((abs(m_windowDir - m_doorDir) % 2) == 0)
-		sInfo.Format(_T("厨房信息：%.0lf x %.0lf,门窗对开"), m_rect.GetWidth(), m_rect.GetHeight());
+	if (IsKitchRectValid(m_rect))
+		sInfo.Format(_T("厨房信息：%.0lf x %.0lf"), m_rect.GetWidth(), m_rect.GetHeight());
 	else
-		sInfo.Format(_T("厨房信息：%.0lf x %.0lf,门窗垂直开"), m_rect.GetWidth(), m_rect.GetHeight());
+		sInfo = L"厨房信息：未知尺寸";
+
+	if ((m_windowDir != E_DIR_UNKNOWN) && (m_doorDir != E_DIR_UNKNOWN))
+	{
+		if ((abs(m_windowDir - m_doorDir) % 2) == 0)
+			sInfo += L"，门窗对开";
+		else
+			sInfo += L"，门窗垂直开";
+	}
 
 	GetDlgItem(IDC_STATIC_DIR)->SetWindowText(sInfo);
 }
@@ -252,6 +260,11 @@ void CKitchenDlg::ShowInfo()
 bool CKitchenDlg::IsKitchRectValid(TYRect rect)
 {
 	if (rect.GetWidth() < 1000 || rect.GetHeight() < 1000)
+	{
+		return false;
+	}
+
+	if (rect.GetWidth() > 10000 || rect.GetHeight() > 10000)
 	{
 		return false;
 	}

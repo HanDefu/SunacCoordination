@@ -192,7 +192,25 @@ BOOL DlgLeftBar::OnInitDialog()
 	m_tab.InsertItem(0, _T("标准库"));
 	m_tab.InsertItem(1, _T("项目管理"));
 	m_tab.SetCurSel(0);
+
+	CFont ft;
+	ft.CreateFont(10, // nHeight 
+		0, // nWidth 
+		0, // nEscapement 
+		0, // nOrientation 
+		FW_NORMAL, // nWeight 
+		FALSE, // bItalic 
+		FALSE, // bUnderline 
+		0, // cStrikeOut 
+		ANSI_CHARSET, // nCharSet 
+		OUT_DEFAULT_PRECIS, // nOutPrecision 
+		CLIP_DEFAULT_PRECIS, // nClipPrecision 
+		DEFAULT_QUALITY, // nQuality 
+		DEFAULT_PITCH | FF_SWISS, // nPitchAndFamily 
+		_T("宋体")); // lpszFac
+	//m_treeCtrlMenu.SetFont(&ft);
 	m_treeCtrlMenu.SetItemHeight(30);
+
 	m_treeProjectManagement.SetItemHeight(20);
 	FillTreeItem();
 	FillProjectManagementTreeItem();
