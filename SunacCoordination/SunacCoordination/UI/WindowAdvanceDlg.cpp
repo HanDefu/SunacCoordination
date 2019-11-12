@@ -163,9 +163,15 @@ void CWindowAdvanceDlg::OnBnClickedAuxiliaryFrame()
 {
 	m_bFuKuang = !m_bFuKuang;
 	if (m_bFuKuang == FALSE)
+	{
 		TYUI_Disable(m_fuKuangType);
+		m_fuKuangType.SetWindowText(_T(""));
+	}
 	else
+	{
 		TYUI_Enable(m_fuKuangType);
+	}
+
 	//是否有附框会影响塞缝尺寸选项
 	InitPlugSlotSize();
 	UpdateData(FALSE);
