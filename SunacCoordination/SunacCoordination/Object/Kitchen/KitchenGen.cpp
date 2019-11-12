@@ -731,7 +731,7 @@ CString CKitchGenKI::GetBinxiangDefault()
 vCString CKitchGenKI::GetZhaotaiOptions() 
 {
 	vCString options;
-	if (m_attr.m_height < 3350)
+	if (m_attr.m_height <= 3350)
 	{
 		options.push_back(L"800");
 	}
@@ -744,7 +744,7 @@ vCString CKitchGenKI::GetZhaotaiOptions()
 
 CString CKitchGenKI::GetZhaotaiDefault()
 {
-	if (m_attr.m_height < 3350)
+	if (m_attr.m_height <= 3350)
 	{
 		return L"800";
 	}
