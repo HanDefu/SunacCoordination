@@ -577,10 +577,14 @@ void CWindowDlg::UpdateDimDataToComboBox(CComboBox& comboBox, const AttrWindow& 
 
 void CWindowDlg::LoadDefaultValue()
 {
+	vCString openAmount;
+	openAmount.push_back(L"²»ÏÞ");
+	openAmount.push_back(L"1");
+	openAmount.push_back(L"2");
 	const vCString& doorTypes = WebIO::GetInstance()->GetConfigDict()->Door_GetTypes();
 	const vCString& openTypes = WebIO::GetInstance()->GetConfigDict()->Window_GetOpenTypes();
 	const vCString& areaTypes = WebIO::GetInstance()->GetConfigDict()->GetGongNengQus();
-	const vCString& openAmount = WebIO::GetInstance()->GetConfigDict()->Window_GetOpenAmount();
+	//const vCString& openAmount = WebIO::GetInstance()->GetConfigDict()->Window_GetOpenAmount();
 	const vCString& rate = WebIO::GetInstance()->GetConfigDict()->Window_GetRate();
 	const vCString& wallDis = WebIO::GetInstance()->GetConfigDict()->Window_GetWallDis();
 
