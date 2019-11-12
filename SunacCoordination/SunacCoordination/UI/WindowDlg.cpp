@@ -563,10 +563,10 @@ void CWindowDlg::UpdateDimDataToComboBox(CComboBox& comboBox, const AttrWindow& 
 	}
 	else if ((pDimData->type == SINGLE) || (pDimData->type == CALC))
 	{
+		TYUI_Enable(comboBox);
 		double dimValue = attrWindow.GetValue(code);
 		vdouble options(1, dimValue);
 		TYUI_InitComboBox(comboBox, options, dimValue);
-		TYUI_Disable(comboBox);
 	}
 	else
 	{
