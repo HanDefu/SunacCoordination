@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <atlconv.h>
+#include<iostream>
 #include "../Object/WindowDoor/AttrWindow.h"
 #include "../Object/Bathroom/AttrBathroom.h"
 #include "../Object/Kitchen/AttrKitchen.h"

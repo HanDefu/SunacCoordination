@@ -6,8 +6,11 @@
 #include "../Common\ComFun_Str.h"
 #include "..\Common\ComFun_String.h"
 #include "..\Common\ComFun_Sunac.h"
+#include "WindowLocalData.h"
 #include "WebCommon.h"
 #include "WebIO.h"
+#include <vector>
+#include <algorithm>
 
 
 CWindowWebData* CWindowWebData::Instance()
@@ -25,7 +28,6 @@ CWindowWebData::~CWindowWebData()
 {
 
 }
-
 
 std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 {
@@ -152,14 +154,14 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 			{
 				//attrwindow.m_type = xml.GetData();
 			}
-			if (xml.FindElem(_T("WindowDynamicType")))
+			if (xml.FindElem(_T("DynamicType")))
 			{
 				CString flag = xml.GetData();
 				if (flag == "1" || flag == L"ÊÇ")
 				{
-					attrwindow.m_isDynamic = TRUE;
+					attrwindow.m_isDynamic = true;
 				}
-				else attrwindow.m_isDynamic = FALSE;
+				else attrwindow.m_isDynamic = false;
 			}
 			if (xml.FindElem(_T("WindowOpenTypeName")))
 			{
@@ -462,6 +464,7 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 			Attrdoor.SetDimData(dimDataW);
 
 			CWindowsDimData dimDataH;
+
 			dimDataH.sCodeName = L"H";
 			if (Attrdoor.m_isDynamic)
 			{
@@ -592,6 +595,8 @@ std::vector<AttrWindow> CWindowWebData::GetWindows(double p_width, double p_heig
 
 	windowAtts = ParseWindowsFromXML(xml);
 
+
+	sort(windowAtts.begin(), windowAtts.end(), SortWinFun);
 	return windowAtts;
 
 }
@@ -624,8 +629,8 @@ std::vector<AttrWindow>  CWindowWebData::GetAllWindows()const
 
 	allWindowAtts = ParseWindowsFromXML(xml);
 
+	sort(allWindowAtts.begin(), allWindowAtts.end(), SortWinFun);
 	return allWindowAtts;
-
 }
 
 std::vector<AttrWindow >  CWindowWebData::GetAllDoors()const
@@ -658,6 +663,7 @@ std::vector<AttrWindow >  CWindowWebData::GetAllDoors()const
 
 	DoorAttrs = ParseDoorsFromXML(xml);
 
+	sort(DoorAttrs.begin(), DoorAttrs.end(), SortWinFun);
 	return DoorAttrs;
 }
 
@@ -751,5 +757,6 @@ std::vector<AttrWindow >  CWindowWebData::GetDoors(double width, CString openTyp
 		data.push_back(m_doors[i]);
 	}
 
+	sort(data.begin(), data.end(), SortWinFun);
 	return data;
 }
