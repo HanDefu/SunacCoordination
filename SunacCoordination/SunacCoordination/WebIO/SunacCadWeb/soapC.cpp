@@ -16,10 +16,10 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
 #pragma option push -w-8004
 #endif
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "soapH.h"
 
-SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.84 2019-11-06 05:46:37 GMT")
+SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.84 2019-11-11 08:36:17 GMT")
 
 
 #ifndef WITH_NOGLOBAL

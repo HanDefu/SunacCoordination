@@ -6,8 +6,11 @@
 #include "../Common\ComFun_Str.h"
 #include "..\Common\ComFun_String.h"
 #include "..\Common\ComFun_Sunac.h"
+#include "WindowLocalData.h"
 #include "WebCommon.h"
 #include "WebIO.h"
+#include <vector>
+#include <algorithm>
 
 
 CWindowWebData* CWindowWebData::Instance()
@@ -17,14 +20,14 @@ CWindowWebData* CWindowWebData::Instance()
 }
 CWindowWebData::CWindowWebData()
 {
-
+	m_windows = GetAllWindows();
+	m_doors = GetAllDoors();
 }
 
 CWindowWebData::~CWindowWebData()
 {
 
 }
-
 
 std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 {
@@ -151,14 +154,14 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 			{
 				//attrwindow.m_type = xml.GetData();
 			}
-			if (xml.FindElem(_T("WindowDynamicType")))
+			if (xml.FindElem(_T("DynamicType")))
 			{
 				CString flag = xml.GetData();
 				if (flag == "1" || flag == L"是")
 				{
-					attrwindow.m_isDynamic = TRUE;
+					attrwindow.m_isDynamic = true;
 				}
-				else attrwindow.m_isDynamic = FALSE;
+				else attrwindow.m_isDynamic = false;
 			}
 			if (xml.FindElem(_T("WindowOpenTypeName")))
 			{
@@ -178,11 +181,11 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 				else attrwindow.m_isZhuanJiao = FALSE;
 			}
 
-			double minVaule = 0;
+			double minValue = 0;
 			double maxValue = 100000;
 			if (xml.FindElem(_T("WindowSizeMin")))
 			{
-				minVaule = _ttof(xml.GetData());
+				minValue = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("WindowSizeMax")))
 			{
@@ -194,7 +197,7 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 			if (attrwindow.m_isDynamic)
 			{
 				dimDataW.type = SCOPE;
-				dimDataW.minValue = minVaule;
+				dimDataW.minValue = minValue;
 				dimDataW.maxValue = maxValue;
 			}
 			//else //TODO 支持静态的数据
@@ -436,13 +439,17 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 
 			double minValue = 0; 
 			double maxValue = 10000;
-			if (xml.FindElem(_T("DoorSizeMin")))
+			if (xml.FindElem(_T("WindowSizeMin")))
 			{
 				minValue = _ttof(xml.GetData());
 			}
 			if (xml.FindElem(_T("WindowSizeMax")))
 			{
 				maxValue = _ttof(xml.GetData());
+			}
+			if (xml.FindElem(_T("WindowDesignFormula")))
+			{
+				Attrdoor.m_tongFengFormula = xml.GetData();
 			}
 
 			CWindowsDimData dimDataW;
@@ -457,6 +464,7 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 			Attrdoor.SetDimData(dimDataW);
 
 			CWindowsDimData dimDataH;
+
 			dimDataH.sCodeName = L"H";
 			if (Attrdoor.m_isDynamic)
 			{
@@ -474,22 +482,30 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 				{
 					xml.IntoElem();
 					CWindowsDimData tempData;
-					if (xml.FindElem(_T("Code")))
+					if (xml.FindElem(_T("SizeNo")))
 					{
 						tempData.sCodeName = xml.GetData();
 					}
-					if (xml.FindElem(_T("ValueType")))
+					if (xml.FindElem(_T("ValueTypeName")))
 					{
 						tempData.type = ToEWindowType(xml.GetData());
 					}
-					if (xml.FindElem(_T("Value")))
+					if (xml.FindElem(_T("Val")))
 					{
 						CString value = xml.GetData();
-						std::vector<CString> strs = YT_SplitCString(value, L',');
-						for (UINT i = 0; i < strs.size(); i++)
+						if (tempData.type == MULTI)
 						{
-							tempData.valueOptions.push_back(_wtof(strs[i]));
+							std::vector<CString> strs = YT_SplitCString(value, L',');
+							for (UINT i = 0; i < strs.size(); i++)
+							{
+								tempData.valueOptions.push_back(_wtof(strs[i]));
+							}
 						}
+						else if (tempData.type == CALC)
+						{
+							tempData.sFomula = value;
+						}
+						else tempData.valueOptions.push_back(_ttof(value));
 					}
 					if (xml.FindElem(_T("MinValue")))
 					{
@@ -503,21 +519,18 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 					{
 						tempData.SetDefaultValue(_ttof(xml.GetData()));
 					}
-					if (xml.FindElem(_T("ValueDescription")))
+					if (xml.FindElem(_T("Desc")))
 					{
 						tempData.prompt = xml.GetData();
 					}
 					Attrdoor.SetDimData(tempData);
 					xml.OutOfElem();
 				}
-
-
 				xml.OutOfElem();
 			}
-			xml.OutOfElem();
-
 			Attrdoor.CheckAndComplementDimeData();
 			DoorAttrs.push_back(Attrdoor);
+			xml.OutOfElem();
 		}		
 
 		xml.OutOfElem();
@@ -582,6 +595,8 @@ std::vector<AttrWindow> CWindowWebData::GetWindows(double p_width, double p_heig
 
 	windowAtts = ParseWindowsFromXML(xml);
 
+
+	sort(windowAtts.begin(), windowAtts.end(), SortWinFun);
 	return windowAtts;
 
 }
@@ -614,8 +629,8 @@ std::vector<AttrWindow>  CWindowWebData::GetAllWindows()const
 
 	allWindowAtts = ParseWindowsFromXML(xml);
 
+	sort(allWindowAtts.begin(), allWindowAtts.end(), SortWinFun);
 	return allWindowAtts;
-
 }
 
 std::vector<AttrWindow >  CWindowWebData::GetAllDoors()const
@@ -648,9 +663,11 @@ std::vector<AttrWindow >  CWindowWebData::GetAllDoors()const
 
 	DoorAttrs = ParseDoorsFromXML(xml);
 
+	sort(DoorAttrs.begin(), DoorAttrs.end(), SortWinFun);
 	return DoorAttrs;
 }
 
+/*
 std::vector<AttrWindow> CWindowWebData::GetDoors(double p_width, double p_heigh, CString doorType, int openNum, CString gongNengQu)const
 {
 	if (doorType == "不限")
@@ -687,4 +704,59 @@ std::vector<AttrWindow> CWindowWebData::GetDoors(double p_width, double p_heigh,
 	doorAtts = ParseDoorsFromXML(xml);
 
 	return doorAtts;
+}*/
+
+std::vector<AttrWindow >  CWindowWebData::GetDoors(double width, CString openType, int openNum, CString gongNengQu)const
+{
+	std::vector<AttrWindow> data;
+
+
+	for (UINT i = 0; i < m_doors.size(); i++)
+	{
+		std::vector<CString> strs = YT_SplitCString(m_doors[i].m_prototypeCode, L'_');  //用"_"拆分
+		if (strs[0] != "Door")
+		{
+			continue;
+		}
+
+		const CWindowsDimData* pDiwW = m_doors[i].GetDimData(_T("W"));
+		if (width < pDiwW->minValue || width > pDiwW->maxValue)
+		{
+			continue;
+		}
+
+		if (openType != L"不限")
+		{
+			if (openType != m_doors[i].m_openType)
+			{
+				continue;
+			}
+		}
+
+		if (openNum != 0)
+		{
+			if (openNum != m_doors[i].m_openQty)
+			{
+				continue;
+			}
+		}
+
+		if (gongNengQu != L"不限")
+		{
+			if (gongNengQu != m_doors[i].m_gongNengquType)
+			{
+				continue;
+			}
+		}
+
+		/*if (tongFengLiang != m_windows[i].ventilationFormula)
+		{
+			continue;
+		}*/
+
+		data.push_back(m_doors[i]);
+	}
+
+	sort(data.begin(), data.end(), SortWinFun);
+	return data;
 }

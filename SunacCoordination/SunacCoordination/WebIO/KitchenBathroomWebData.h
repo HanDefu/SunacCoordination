@@ -10,7 +10,7 @@
 class CKitchenBathroomWebData
 {
 public:
-	CKitchenBathroomWebData(){ }
+	CKitchenBathroomWebData();
 	~CKitchenBathroomWebData(){}
 
 	bool GetKitchenById(CString p_sId, AttrKitchen& value)const;
@@ -48,3 +48,5 @@ protected:
 
 };
 
+bool SortKitchenFun(AttrKitchen attr1, AttrKitchen attr2);
+bool SortBathroomFun(AttrBathroom attr1, AttrBathroom attr2);

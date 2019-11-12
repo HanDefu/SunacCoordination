@@ -1,6 +1,8 @@
 #include "StdAfx.h"
 #include "string"
 #include "afx.h"
+#include <vector>
+#include <algorithm>
 #include "WindowLocalDataFromDB.h"
 #include "../Common/ComFun_String.h"
 #include "../Common/ComFun_Sunac.h"
@@ -10,6 +12,15 @@ CWindowLocalDataFromDB* CWindowLocalDataFromDB::Instance()
 {
 	static CWindowLocalDataFromDB instance;
 	return &instance;
+}
+
+bool SortWinFun(AttrWindow attr1, AttrWindow attr2)
+{
+	if (attr1.m_isDynamic)
+	{
+		return false;
+	}
+	else return true;
 }
 
 CWindowLocalDataFromDB::CWindowLocalDataFromDB()
@@ -72,7 +83,6 @@ CWindowsDimData CWindowLocalDataFromDB::GetWindowDimData(CString code, char **va
 	}
 
 	data.SetDefaultValue(defaultValue);
-	
 	return data;
 }
 
@@ -228,6 +238,8 @@ vector<AttrWindow> CWindowLocalDataFromDB::GetAllWindows()const //获取所有窗户
 			allwin.push_back(m_allWindowsData[i]);
 		}
 	}
+
+	sort(allwin.begin(), allwin.end(), SortWinFun);
 	return allwin;
 }
 
@@ -242,6 +254,8 @@ vector<AttrWindow> CWindowLocalDataFromDB::GetAllDoors()const  //获取所有门
 			alldoor.push_back(m_allWindowsData[i]);
 		}
 	}
+
+	sort(alldoor.begin(), alldoor.end(), SortWinFun);
 	return alldoor;
 }
 
@@ -298,6 +312,7 @@ std::vector<AttrWindow >  CWindowLocalDataFromDB::GetWindows(double width, doubl
 		data.push_back(m_allWindowsData[i]);
 	}
 
+	sort(data.begin(), data.end(), SortWinFun);
 	return data;
 }
 
@@ -351,5 +366,6 @@ std::vector<AttrWindow >  CWindowLocalDataFromDB::GetDoors(double width, double 
 		data.push_back(m_allWindowsData[i]);
 	}
 
+	sort(data.begin(), data.end(), SortWinFun);
 	return data;
 }
