@@ -38,3 +38,4 @@ protected:
 	vector<AttrWindow> m_allWindowsData; //À˘”–√≈¥∞
 };
 
+bool SortWinFun(AttrWindow attr1, AttrWindow attr2);

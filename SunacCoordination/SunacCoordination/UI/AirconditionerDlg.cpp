@@ -178,7 +178,8 @@ void CAirconditionerDlg::UpdatePreview() //当空调对话框中的控件的值�
 	else
 	{
 		//图形文件路径
-		m_fileName = TY_GetPrototypeFilePath() + m_allAirCons[0].m_prototypeCode + L".dwg";
+		m_fileName = TY_GetPrototypeFilePath() + m_allAirCons[0].m_file.fileName;
+		//m_fileName = TY_GetPrototypeFilePath() + m_allAirCons[0].m_prototypeCode + L".dwg";
 		m_preAirCon.SetDwgFile(m_fileName);
 		m_btnInbsert.EnableWindow(TRUE);
 	}

@@ -743,7 +743,7 @@ void CMD_test()
 	std::vector<AttrRailing> RailingFromWebData = RailingFromWeb.GetRailings(E_RAILING_BOLI);
 
 	std::vector<AttrAirCon> AirConLocalDataFromDB = CAirConditionLocalDataFromDB::Instance()->GetAllAirCons();
-	std::vector<AttrAirCon> AirConFromWebData = CAirConditionWebData::Instance()->GetAirCons(1.5, "后面", 1, "侧面");
+	//std::vector<AttrAirCon> AirConFromWebData = CAirConditionWebData::Instance()->GetAirCons(1.5, "后面", 1, "侧面");
 	return;
 }
 

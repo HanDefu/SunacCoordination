@@ -3,6 +3,8 @@
 #include <float.h>
 #include <acdocman.h>
 #include <dbxutil.h>
+#include <vector>
+#include <algorithm>
 #include <utility>
 #include <iostream>
 #include <fstream>
@@ -160,16 +162,20 @@ std::vector<AttrWindow>  WebIO::GetWindows(double width, double height, CString 
 std::vector<AttrWindow> WebIO::GetDoors(double width, double height, CString openType, int openNum, CString gongNengQu)const
 {
 #ifdef WORK_LOCAL//本地模式
-	return CWindowLocalDataFromDB::Instance()->GetDoors(width, height, openType, openNum, gongNengQu);
+	vAttrWindow Local = CWindowLocalDataFromDB::Instance()->GetDoors(width, height, openType, openNum, gongNengQu);
+	return Local;
 #else
-	return CWindowWebData::Instance()->GetDoors(width, height, openType, openNum, gongNengQu);
+	vAttrWindow Web = CWindowWebData::Instance()->GetDoors(width, openType, openNum, gongNengQu);
+	return Web;
 #endif
 }
 
 std::vector<AttrKitchen> WebIO::GetKitchens(EKitchType p_type, double p_xLen, double p_yLen, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir, bool p_hasPaiQiDao)
 {
 #ifdef WORK_LOCAL//本地模式
-	return m_kitchenBathroomLocalData.GetKitchens(p_type, p_xLen, p_yLen, p_doorDir, p_windowDir, p_hasPaiQiDao);
+	vector<AttrKitchen> Local = m_kitchenBathroomLocalData.GetKitchens(p_type, p_xLen, p_yLen, p_doorDir, p_windowDir, p_hasPaiQiDao);
+	sort(Local.begin(), Local.end(), SortKitchenFun);
+	return Local;
 #else	
 	/*CString WindowDoorPos;
 	if (abs(p_doorDir - p_windowDir) == 2)
@@ -182,24 +188,31 @@ std::vector<AttrKitchen> WebIO::GetKitchens(EKitchType p_type, double p_xLen, do
 	}
 	
 	return m_kitchenBathroomWebData.GetKitchens(p_xLen, p_yLen, WindowDoorPos, KitchenTypeToCString(p_type), (p_hasPaiQiDao == true)? 1:0);*/
-	m_kitchenBathroomWebData.m_allKitchens = m_kitchenBathroomWebData.GetAllKitchens();
-	return m_kitchenBathroomWebData.GetKitchens(p_type, p_xLen, p_yLen, p_doorDir, p_windowDir, p_hasPaiQiDao);
+	vector<AttrKitchen> Web = m_kitchenBathroomWebData.GetKitchens(p_type, p_xLen, p_yLen, p_doorDir, p_windowDir, p_hasPaiQiDao);
+	sort(Web.begin(), Web.end(), SortKitchenFun);
+	return Web;
 #endif
 }
 
 std::vector<AttrKitchen> WebIO::GetAllKitchens()
 {
 #ifdef WORK_LOCAL//本地模式
-	return m_kitchenBathroomLocalData.GetAllKitchens();
+	vector<AttrKitchen> Local = m_kitchenBathroomLocalData.GetAllKitchens();
+	sort(Local.begin(), Local.end(), SortKitchenFun);
+	return Local;
 #else
-	return m_kitchenBathroomWebData.GetAllKitchens();
+	vector<AttrKitchen> Web = m_kitchenBathroomWebData.GetAllKitchens();
+	sort(Web.begin(), Web.end(), SortKitchenFun);
+	return Web;
 #endif
 }
 
 std::vector<AttrBathroom> WebIO::GetBathrooms(EBathroomType p_type, double p_xLen, double p_yLen, E_DIRECTION p_doorDir, E_DIRECTION p_windowDir)
 {
 #ifdef WORK_LOCAL//本地模式
-	return m_kitchenBathroomLocalData.GetBathrooms(p_type, p_xLen, p_yLen, p_doorDir, p_windowDir);
+	vector<AttrBathroom> Local = m_kitchenBathroomLocalData.GetBathrooms(p_type, p_xLen, p_yLen, p_doorDir, p_windowDir);
+	sort(Local.begin(), Local.end(), SortBathroomFun);
+	return Local;
 #else
 	/*CString WindowDoorPos;
 	if (abs(p_doorDir - p_windowDir) == 2)
@@ -209,17 +222,22 @@ std::vector<AttrBathroom> WebIO::GetBathrooms(EBathroomType p_type, double p_xLe
 	else WindowDoorPos = L"门窗垂直开";
 
 	return m_kitchenBathroomWebData.GetBathrooms(p_xLen, p_yLen, WindowDoorPos, BathroomTypeToCString(p_type));*/
-	m_kitchenBathroomWebData.m_allBathrooms = m_kitchenBathroomWebData.GetAllBathrooms();
-	return m_kitchenBathroomWebData.GetBathrooms(p_type, p_xLen, p_yLen, p_doorDir, p_windowDir); 
+	vector<AttrBathroom> Web = m_kitchenBathroomWebData.GetBathrooms(p_type, p_xLen, p_yLen, p_doorDir, p_windowDir);
+	sort(Web.begin(), Web.end(), SortBathroomFun);
+	return Web;
 #endif
 }
 
 std::vector<AttrBathroom> WebIO::GetAllBathrooms()
 {
 #ifdef WORK_LOCAL//本地模式
-	return m_kitchenBathroomLocalData.GetAllBathrooms();
+	vector<AttrBathroom> Local = m_kitchenBathroomLocalData.GetAllBathrooms();
+	sort(Local.begin(), Local.end(), SortBathroomFun);
+	return Local;
 #else
-	return m_kitchenBathroomWebData.GetAllBathrooms();
+	vector<AttrBathroom> Web = m_kitchenBathroomWebData.GetAllBathrooms();
+	sort(Web.begin(), Web.end(), SortBathroomFun);
+	return Web;
 #endif
 }
 
@@ -229,7 +247,7 @@ std::vector<AttrAirCon> WebIO::GetAirCons(double piShu, CString weiZhi, CString 
 #ifdef WORK_LOCAL//本地模式
 	return CAirConditionLocalDataFromDB::Instance()->GetAirCons(piShu, weiZhi, hasYuShuiGuan, yuShuiGuanWeizhi);
 #else
-	return CAirConditionWebData::Instance()->GetAirCons(piShu, weiZhi, (hasYuShuiGuan == L"有"), yuShuiGuanWeizhi);
+	return CAirConditionWebData::Instance()->GetAirCons(piShu, weiZhi, hasYuShuiGuan, yuShuiGuanWeizhi);
 #endif
 }
 

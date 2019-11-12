@@ -1,5 +1,8 @@
 #include "stdafx.h"
 #include "KitchenBathroomLocalData.h"
+#include "KitchenBathroomWebData.h"
+#include <vector>
+#include <algorithm>
 
 
 CKitchenBathroomLocalData::CKitchenBathroomLocalData()
@@ -47,7 +50,8 @@ std::vector<AttrKitchen> CKitchenBathroomLocalData::GetKitchens(EKitchType p_typ
 			ret.back().m_height = height;
 		}
 	}
-
+	
+	sort(ret.begin(), ret.end(), SortKitchenFun);
 	return ret;
 }
 
@@ -86,6 +90,7 @@ std::vector<AttrBathroom> CKitchenBathroomLocalData::GetBathrooms(EBathroomType 
 		}
 	}
 
+	sort(ret.begin(), ret.end(), SortBathroomFun);
 	return ret;
 }
 
