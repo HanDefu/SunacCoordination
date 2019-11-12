@@ -815,15 +815,16 @@ CKitchGenSTATIC::CKitchGenSTATIC(AttrKitchen* p_att)
 
 CKitchGen* CKitchMrg::CreateKitchGenByKitchType(AttrKitchen* p_attr)
 {
-	if ((p_attr->m_prototypeCode.Left(3) == L"KUq") && (p_attr->m_prototypeCode.Find(L"_c") == -1))
+	CString prototypeCode = p_attr->m_prototypeCode.MakeUpper();
+	if ((prototypeCode == L"KUQ") && (prototypeCode.Find(L"_C") == -1))
 		return new CKitchGenKUQ(p_attr);
-	else if (p_attr->m_prototypeCode.Left(3) == L"KUq")
+	else if (prototypeCode.Left(3) == L"KUQ")
 		return new CKitchGenKUQ_C(p_attr);
-	else if (p_attr->m_prototypeCode.Left(3) == L"KUs")
+	else if (prototypeCode.Left(3) == L"KUS")
 		return new CKitchGenKUS(p_attr);
-	else if (p_attr->m_prototypeCode.Left(2) == L"KL")
+	else if (prototypeCode.Left(2) == L"KL")
 		return new CKitchGenKL(p_attr);
-	else if (p_attr->m_prototypeCode.Left(2) == L"KI")
+	else if (prototypeCode.Left(2) == L"KI")
 		return new CKitchGenKI(p_attr);
 	else
 		return NULL;
