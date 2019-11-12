@@ -137,6 +137,11 @@ bool CBathroomDlg::IsBathroomRectValid(TYRect rect)
 		return false;
 	}
 
+	if (rect.GetWidth() > 10000 || rect.GetHeight() > 10000)
+	{
+		return false;
+	}
+
 	return true;
 }
 
@@ -434,7 +439,7 @@ void CBathroomDlg::OnBnClickedButtonRange()
 
 	m_rect = rect;
 
-	if (m_doorDir == E_DIR_UNKNOWN)
+	/*if (m_doorDir == E_DIR_UNKNOWN)
 	{
 		ads_point pt;
 		acedInitGet(32,NULL);
@@ -464,7 +469,7 @@ void CBathroomDlg::OnBnClickedButtonRange()
 		while (m_doorDir == m_windowDir);
 
 		ShowInfo();
-	}
+	}*/
 	ShowWindow(true);
 	ShowInfo();
 	ClearPreviews();
@@ -473,11 +478,19 @@ void CBathroomDlg::OnBnClickedButtonRange()
 void CBathroomDlg::ShowInfo()
 {
 	CString sInfo;
-	if ((abs(m_windowDir - m_doorDir) % 2) == 0)
-		sInfo.Format(_T("卫生间信息：%.0lf x %.0lf,门窗对开"), m_rect.GetWidth(), m_rect.GetHeight());
+	if (IsBathroomRectValid(m_rect))
+		sInfo.Format(_T("卫生间信息：%.0lf x %.0lf"), m_rect.GetWidth(), m_rect.GetHeight());
 	else
-		sInfo.Format(_T("卫生间信息：%.0lf x %.0lf,门窗垂直开"), m_rect.GetWidth(), m_rect.GetHeight());
+		sInfo = L"卫生间信息：未知尺寸";
 
+	if ((m_windowDir != E_DIR_UNKNOWN) && (m_doorDir != E_DIR_UNKNOWN))
+	{
+		if ((abs(m_windowDir - m_doorDir) % 2) == 0)
+			sInfo += L"，门窗对开";
+		else
+			sInfo += L"，门窗垂直开";
+	}
+	
 	GetDlgItem(IDC_STATIC_DIR)->SetWindowText(sInfo);
 }
 
@@ -557,7 +570,7 @@ void CBathroomDlg::OnBnClickedButtonSearch()
 		AfxMessageBox(_T("请先选择卫生间范围\n"));
 		return;
 	}
-	if (m_doorDir == E_DIR_UNKNOWN || m_windowDir == E_DIR_UNKNOWN)
+	/*if (m_doorDir == E_DIR_UNKNOWN || m_windowDir == E_DIR_UNKNOWN)
 	{
 		AfxMessageBox(_T("请先选择门窗方向\n"));
 		return;
@@ -566,7 +579,7 @@ void CBathroomDlg::OnBnClickedButtonSearch()
 	{
 		AfxMessageBox(_T("门窗方向不能相同\n"));
 		return;
-	}
+	}*/
 
 	//////////////////////////////////////////////////////////////////////////
 	//2. 搜索原型
