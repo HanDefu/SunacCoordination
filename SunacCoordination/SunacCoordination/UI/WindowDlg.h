@@ -62,12 +62,15 @@ public:
 	//插入全部，测试用
 	void InsertAllWindows();
 
+	double GetArea()const { return (double(m_nWidth*m_nHeight)) / 1e6; }
+
 protected:
 
 	CGridCtrlWithPreview m_preWindow;
 
-	CEdit m_width; //宽度
-	CEdit m_height; //高度
+	int m_nWidth;
+	int m_nHeight;
+
 	CComboBox m_areaType; //功能区类型
 	CComboBox m_openType; //开启类型
 	CComboBox m_openAmount; //开启扇数量
@@ -92,12 +95,11 @@ protected:
 	CButton m_isMirror;
 
 	vector<AttrWindow> m_allWindows;
-	double m_selWidth; //选中原型的开间
-	double m_selHeight;//选中原型的进深
 
 	AcDbBlockReference* m_pCurEdit;
 
 	bool m_isMoldless;//是否非模态对话框
+public:
 };
 
 extern CWindowDlg* g_windowDlg;
