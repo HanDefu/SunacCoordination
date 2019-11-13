@@ -75,6 +75,8 @@ struct CWindowMaterial	//门窗材料系列
 	}
 };
 
+
+
 //////////////////////////////////////////////////////////////////////////
 
 
@@ -138,6 +140,8 @@ public:
 	bool SetA(double newValue) { return SetValue(L"a", newValue); }//塞缝尺寸
 	bool SetR(double newValue) { return SetValue(L"R", newValue); }
 
+	bool SetHeightUnderWindow(double newValue);
+
 
 	eViewDir GetViewDir()const { return m_viewDir; }
 	void SetViewDir(eViewDir p_view){ m_viewDir = p_view; }
@@ -173,7 +177,7 @@ public:
 
 	bool   m_isBayWindow;	 //是否凸窗
 	double m_wallDis;		 //外墙距离
-
+	double m_heightUnderWindow; //窗下墙高度
 };
 
 typedef std::vector<AttrWindow> vAttrWindow;

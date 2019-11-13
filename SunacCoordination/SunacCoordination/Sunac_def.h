@@ -1,11 +1,17 @@
 #pragma once
+#include <vector>
+using namespace std;
 
 #define  SUNAC_DEBUG
 #define  SUNAC_ATTRIBUTE_ENTITY L"SUNAC_ATTRIBUTE_ENTITY"
-//#define  SUNAC_COMMON_STR_LEN (256)
-#define  FILE_VERSION ((Adesk::Int32)1)
 
-//#define  WORK_LOCAL//是否本地工作模式
+
+#define  FILE_VERSION ((Adesk::Int32)3)
+//版本2，门窗增加深化设计材质属性保存
+//20191113 版本3，门窗增加窗下墙高度属性
+
+
+#define  WORK_LOCAL//是否本地工作模式
 #define	 CHECK_USE//是否检测权限
 
 //模块类型
@@ -96,4 +102,25 @@ struct CDwgFileInfo
 		id = 0;
 		PreviewID = 0;
 	}
+};
+
+class CFloorInfo
+{
+public:
+	CFloorInfo();
+
+	bool SetFloors(CString p_sFloors);
+	CString GetFloors()const { return m_sFloors; }
+
+	UINT GetFloorCount()const{ return m_nAllFloors.size(); }
+	vector<int> GetAllFloor()const{ return m_nAllFloors; }
+
+	void SetFloorHeight(double p_height) { m_floorHeight = p_height; }
+	double GetFloorHeight()const { return m_floorHeight; }
+
+protected:
+	CString m_sFloors; //楼层范围，逗号分隔，多楼层用-分隔，示例： 2-5,7
+	double m_floorHeight; //层高
+
+	vector<int> m_nAllFloors;
 };

@@ -140,35 +140,68 @@ BOOL CWindowDlg::OnInitDialog()
 
 	return TRUE;
 }
+bool CWindowDlg::CheckValueModulo(CString p_sType, int p_value) //检查数据是否是50的模数
+{
+	if (p_value%50!=0)
+	{
+		CString str;
+		str.Format(_T("%s值必须是50的倍数"), p_sType);
+		AfxMessageBox(str);
+		return false;
+	}
 
+	return true;
+}
 void CWindowDlg::OnBnClickedButtonInsert()
 {
 	UpdateData();
 
-	AttrWindow* pSel = GetSelWindow();
-	if (pSel == NULL)
+	AttrWindow* pSelWinAttr = GetSelWindow();
+	if (pSelWinAttr == NULL)
 	{
 		AfxMessageBox(L"请选择原型");
 		return;
 	}
 
-	if (pSel->GetTongFengQty(false) + TOL < TYUI_GetDouble(m_ventilation))
+	if (pSelWinAttr->GetTongFengQty(false) + TOL < TYUI_GetDouble(m_ventilation))
 	{
 		AfxMessageBox(L"此原型不满足通风量要求");
 		return;
 	}
 
-	CString sNumber = TYUI_GetText(m_number);
-	if (!m_autoIndex && !CWindowAutoName::GetInstance()->IsNameValid(*pSel,sNumber))
+	//检查设置值
+	int W1 = TYUI_GetInt(m_W1);
+	int H2 = TYUI_GetInt(m_H2);
+	int W3 = TYUI_GetInt(m_W3);
+	int H3 = TYUI_GetInt(m_H3);
+	if (CheckValueModulo(_T("开启扇宽度"), W1) == false ||
+		CheckValueModulo(_T("下固定高度"), H2) == false ||
+		CheckValueModulo(_T("转角宽度"), W3) == false ||
+		CheckValueModulo(_T("窗下墙高度"), H3) == false)
 	{
-		AfxMessageBox(L"此编号已被占用");
 		return;
 	}
-	else
+	//在检查原型编号前设置属性值
+	pSelWinAttr->SetW1(W1);
+	pSelWinAttr->SetH2(H2);
+	pSelWinAttr->SetW3(W3);
+	pSelWinAttr->SetH3(H3);
+
+	//自动编号下更新原型编号
+	UpdateInstanceCode();
+
+	CString sNumber = TYUI_GetText(m_number);
+	if (!m_autoIndex && !CWindowAutoName::GetInstance()->IsNameValid(*pSelWinAttr,sNumber))
 	{
-		pSel->SetInstanceCode(sNumber);
-		CWindowAutoName::GetInstance()->RenameWindow(*pSel);
+		AfxMessageBox(L"此编号已被占用,请重新输入编号");
+		return;
 	}
+
+	pSelWinAttr->SetInstanceCode(sNumber);
+	CWindowAutoName::GetInstance()->RenameWindow(*pSelWinAttr);
+
+	//////////////////////////////////////////////////////////////////////////
+	const eViewDir viewDir = (eViewDir)m_viewDir.GetCurSel();
 
 	ShowWindow(FALSE);
 
@@ -186,17 +219,12 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		JHCOM_DeleteCadObject(m_pCurEdit->objectId());
 	}
 
-	int W1 = TYUI_GetInt(m_W1);
-	int H2 = TYUI_GetInt(m_H2);
-	int W3 = TYUI_GetInt(m_W3);
-	int H3 = TYUI_GetInt(m_H3);
-
 	RCWindow oneWindow;
-
-	int sel = m_viewDir.GetCurSel();
-	if (sel == 0)
-		oneWindow.Insert(TY_GetPrototypeFilePath() + pSel->m_frontViewFile.fileName, origin, 0, L"0", 256);
-	else if (sel == 1)
+	if (viewDir == E_VIEW_FRONT) //立面
+	{
+		oneWindow.Insert(TY_GetPrototypeFilePath() + pSelWinAttr->m_frontViewFile.fileName, origin, 0, L"0", 256);
+	}
+	else if (viewDir == E_VIEW_TOP)
 	{
 		double rotateAngle = 0;
 		AcGeVector3d offsetXY(0, 0, 0);
@@ -213,10 +241,12 @@ void CWindowDlg::OnBnClickedButtonInsert()
 			rotateAngle = -PI / 2;
 			offsetXY.y += m_selWidth;
 		}
-		oneWindow.Insert(TY_GetPrototypeFilePath() + pSel->m_topViewFile.fileName, origin + offsetXY, rotateAngle, L"0", 256);
+		oneWindow.Insert(TY_GetPrototypeFilePath() + pSelWinAttr->m_topViewFile.fileName, origin + offsetXY, rotateAngle, L"0", 256);
 	}
 	else
-		oneWindow.Insert(TY_GetPrototypeFilePath() + pSel->m_leftViewFile.fileName, origin, 0, L"0", 256);
+	{
+		oneWindow.Insert(TY_GetPrototypeFilePath() + pSelWinAttr->m_leftViewFile.fileName, origin, 0, L"0", 256);
+	}
 
 	oneWindow.InitParameters();
 
@@ -235,10 +265,10 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		TYCOM_Mirror(oneWindow.m_id, basePt, AcGeVector3d(0, 1, 0));
 	}
 
-	CWindowAutoName::GetInstance()->AddWindowType(*pSel);
+	CWindowAutoName::GetInstance()->AddWindowType(*pSelWinAttr);
 
 	//把UI的数据记录在图框的扩展字典中
-	AttrWindow * pWindow = new AttrWindow(*pSel);
+	AttrWindow * pWindow = new AttrWindow(*pSelWinAttr);
 	oneWindow.AddAttribute(pWindow);
 	pWindow->close();
 
@@ -339,15 +369,15 @@ void CWindowDlg::OnBnClickedCalculate()
 
 void CWindowDlg::OnBnClickedAutoIndex()
 {
-	AttrWindow* pSel = GetSelWindow();
-	if (pSel == NULL)
+	AttrWindow* pSelWinAttr = GetSelWindow();
+	if (pSelWinAttr == NULL)
 		return;
 
 	UpdateData(TRUE);
 	if (m_autoIndex)
 	{
 		m_number.SetReadOnly(TRUE);
-		CString newName = CWindowAutoName::GetInstance()->GetWindowName(*pSel);
+		CString newName = CWindowAutoName::GetInstance()->GetWindowName(*pSelWinAttr);
 		TYUI_SetText(m_number, newName);
 	}
 	else
@@ -370,46 +400,51 @@ void CWindowDlg::OnBnClickedSelOnDwg()
 void CWindowDlg::OnBnClickedMirror()
 {
 	UpdateData(TRUE);
-	AttrWindow* pSel = GetSelWindow();
-	if (pSel == NULL)
+	AttrWindow* pSelWinAttr = GetSelWindow();
+	if (pSelWinAttr == NULL)
 		return;
-	pSel->m_isMirror = (m_isMirror.GetCheck() != FALSE);
+	pSelWinAttr->m_isMirror = (m_isMirror.GetCheck() != FALSE);
 	UpdateInstanceCode();
 }
 
 void CWindowDlg::OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult)
 {
-	AttrWindow* pSel = GetSelWindow();
-	if (pSel == NULL)
+	AttrWindow* pSelWinAttr = GetSelWindow();
+	if (pSelWinAttr == NULL)
 		return;
 
-	UpdateDimDataToComboBox(m_W1, *pSel, L"W1");
-	UpdateDimDataToComboBox(m_H2, *pSel, L"H2");
-	UpdateDimDataToComboBox(m_W3, *pSel, L"W3");
-	UpdateDimDataToComboBox(m_H3, *pSel, L"H3");
+	UpdateDimDataToComboBox(m_W1, *pSelWinAttr, L"W1");
+	UpdateDimDataToComboBox(m_H2, *pSelWinAttr, L"H2");
+	UpdateDimDataToComboBox(m_W3, *pSelWinAttr, L"W3");
 
-	if (pSel->m_isDynamic)
+	//UpdateDimDataToComboBox(m_H3, *pSelWinAttr, L"H3");
+	vint nH3Optins;
+	nH3Optins.push_back(600);
+	nH3Optins.push_back(900);
+	TYUI_InitComboBox(m_W3, nH3Optins, 900);
+
+	if (pSelWinAttr->m_isDynamic)
 	{
 		TYUI_Enable(m_isMirror);
-		m_isMirror.SetCheck(pSel->m_isMirror);
+		m_isMirror.SetCheck(pSelWinAttr->m_isMirror);
 	}
 	else
 		TYUI_Disable(m_isMirror);
 
-	pSel->m_instanceCode = CWindowAutoName::GetInstance()->GetWindowName(*pSel);
-	TYUI_SetText(m_number, pSel->m_instanceCode);
-	m_radioYes = (pSel->m_isBayWindow ? 0 : 1);
-	TYUI_SetInt(m_distance, int(pSel->m_wallDis));
+	pSelWinAttr->m_instanceCode = CWindowAutoName::GetInstance()->GetWindowName(*pSelWinAttr);
+	TYUI_SetText(m_number, pSelWinAttr->m_instanceCode);
+	m_radioYes = (pSelWinAttr->m_isBayWindow ? 0 : 1);
+	TYUI_SetInt(m_distance, int(pSelWinAttr->m_wallDis));
 
 	m_viewDir.ResetContent();
-	if ((!pSel->m_frontViewFile.fileName.IsEmpty()) && PathFileExists(TY_GetPrototypeFilePath() + pSel->m_frontViewFile.fileName))
+	if ((!pSelWinAttr->m_frontViewFile.fileName.IsEmpty()) && PathFileExists(TY_GetPrototypeFilePath() + pSelWinAttr->m_frontViewFile.fileName))
 		m_viewDir.AddString(L"立面");
-	if ((!pSel->m_topViewFile.fileName.IsEmpty()) && PathFileExists(TY_GetPrototypeFilePath() + pSel->m_topViewFile.fileName))
+	if ((!pSelWinAttr->m_topViewFile.fileName.IsEmpty()) && PathFileExists(TY_GetPrototypeFilePath() + pSelWinAttr->m_topViewFile.fileName))
 		m_viewDir.AddString(L"平面");
-	if ((!pSel->m_leftViewFile.fileName.IsEmpty()) && PathFileExists(TY_GetPrototypeFilePath() + pSel->m_leftViewFile.fileName))
+	if ((!pSelWinAttr->m_leftViewFile.fileName.IsEmpty()) && PathFileExists(TY_GetPrototypeFilePath() + pSelWinAttr->m_leftViewFile.fileName))
 		m_viewDir.AddString(L"侧视");
-	if (pSel->m_viewDir < 3)
-		m_viewDir.SetCurSel(pSel->m_viewDir);
+	if (pSelWinAttr->m_viewDir < 3)
+		m_viewDir.SetCurSel(pSelWinAttr->m_viewDir);
 	OnSelChangedView();
 
 	UpdateData(FALSE);
@@ -417,12 +452,12 @@ void CWindowDlg::OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult)
 
 void CWindowDlg::OnSelChangedW1()
 {
-	AttrWindow* pSel = GetSelWindow();
-	if (pSel == NULL)
+	AttrWindow* pSelWinAttr = GetSelWindow();
+	if (pSelWinAttr == NULL)
 		return;
 
 	CString sSel = TYUI_GetComboBoxText(m_W1);
-	pSel->SetW1(_ttoi(sSel));
+	pSelWinAttr->SetW1(_ttoi(sSel));
 	//更改参数会引起实例编号变化，需更新
 	UpdateInstanceCode();
 	UpdateVent();
@@ -430,12 +465,12 @@ void CWindowDlg::OnSelChangedW1()
 
 void CWindowDlg::OnSelChangedH2()
 {
-	AttrWindow* pSel = GetSelWindow();
-	if (pSel == NULL)
+	AttrWindow* pSelWinAttr = GetSelWindow();
+	if (pSelWinAttr == NULL)
 		return;
 
 	CString sSel = TYUI_GetComboBoxText(m_H2);
-	pSel->SetH2(_ttoi(sSel));
+	pSelWinAttr->SetH2(_ttoi(sSel));
 	//更改参数会引起实例编号变化，需更新
 	UpdateInstanceCode();
 	UpdateVent();
@@ -443,12 +478,12 @@ void CWindowDlg::OnSelChangedH2()
 
 void CWindowDlg::OnSelChangedW3()
 {
-	AttrWindow* pSel = GetSelWindow();
-	if (pSel == NULL)
+	AttrWindow* pSelWinAttr = GetSelWindow();
+	if (pSelWinAttr == NULL)
 		return;
 
 	CString sSel = TYUI_GetComboBoxText(m_W3);
-	pSel->SetW3(_ttoi(sSel));
+	pSelWinAttr->SetW3(_ttoi(sSel));
 	//更改参数会引起实例编号变化，需更新
 	UpdateInstanceCode();
 	UpdateVent();
@@ -456,12 +491,13 @@ void CWindowDlg::OnSelChangedW3()
 
 void CWindowDlg::OnSelChangedH3()
 {
-	AttrWindow* pSel = GetSelWindow();
-	if (pSel == NULL)
+	AttrWindow* pSelWinAttr = GetSelWindow();
+	if (pSelWinAttr == NULL)
 		return;
 
 	CString sSel = TYUI_GetComboBoxText(m_H3);
-	pSel->SetH3(_ttoi(sSel));
+	pSelWinAttr->SetH3(_ttoi(sSel));
+
 	//更改参数会引起实例编号变化，需更新
 	UpdateInstanceCode();
 	UpdateVent();
@@ -469,24 +505,24 @@ void CWindowDlg::OnSelChangedH3()
 
 void CWindowDlg::OnSelChangedView()
 {
-	AttrWindow* pSel = GetSelWindow();
-	if (pSel == NULL)
+	AttrWindow* pSelWinAttr = GetSelWindow();
+	if (pSelWinAttr == NULL)
 		return;
 
 	CString sView = TYUI_GetComboBoxText(m_viewDir);
 	
 	if (sView == L"平面")
 	{
-		pSel->m_viewDir = E_VIEW_TOP;
+		pSelWinAttr->m_viewDir = E_VIEW_TOP;
 		TYUI_Show(*GetDlgItem(IDC_STATIC_DIR));
 		TYUI_Show(m_insertDir);
 	}
 	else
 	{
 		if (sView == L"立面")
-			pSel->m_viewDir = E_VIEW_FRONT;
+			pSelWinAttr->m_viewDir = E_VIEW_FRONT;
 		else if (sView == L"侧视")
-			pSel->m_viewDir = E_VIEW_LEFT;
+			pSelWinAttr->m_viewDir = E_VIEW_LEFT;
 		TYUI_Hide(*GetDlgItem(IDC_STATIC_DIR));
 		TYUI_Hide(m_insertDir);
 	}
@@ -495,20 +531,20 @@ void CWindowDlg::OnSelChangedView()
 void CWindowDlg::OnBnClickedBayWindow()
 {
 	UpdateData(TRUE);
-	AttrWindow* pSel = GetSelWindow();
-	if (pSel == NULL)
+	AttrWindow* pSelWinAttr = GetSelWindow();
+	if (pSelWinAttr == NULL)
 		return;
 
-	pSel->m_isBayWindow = (m_radioYes == 0);
+	pSelWinAttr->m_isBayWindow = (m_radioYes == 0);
 }
 
 void CWindowDlg::OnSelChangedWallDis()
 {
-	AttrWindow* pSel = GetSelWindow();
-	if (pSel == NULL)
+	AttrWindow* pSelWinAttr = GetSelWindow();
+	if (pSelWinAttr == NULL)
 		return;
 
-	pSel->m_wallDis = _ttof(TYUI_GetComboBoxText(m_distance));
+	pSelWinAttr->m_wallDis = _ttof(TYUI_GetComboBoxText(m_distance));
 }
 
 void CWindowDlg::UpdateEnable()
@@ -536,13 +572,16 @@ void CWindowDlg::UpdateEnable()
 
 void CWindowDlg::UpdateInstanceCode()
 {
-	AttrWindow* pSel = GetSelWindow();
-	if (pSel == NULL)
-		return;
 	if (m_autoIndex)
 	{
-		pSel->m_instanceCode = CWindowAutoName::GetInstance()->GetWindowName(*pSel);
-		TYUI_SetText(m_number, pSel->m_instanceCode);
+		AttrWindow* pSelWinAttr = GetSelWindow();
+		if (pSelWinAttr == NULL)
+			return;
+
+		UpdateData(TRUE);
+		pSelWinAttr->m_instanceCode = CWindowAutoName::GetInstance()->GetWindowName(*pSelWinAttr);
+		TYUI_SetText(m_number, pSelWinAttr->m_instanceCode);
+		UpdateData(FALSE);
 	}
 }
 
@@ -553,9 +592,9 @@ void CWindowDlg::UpdateVent()
 	CGridCellForPreview* pCell = m_preWindow.GetPreviewCell(nRow, 0);
 	if (pCell == NULL)
 		return;
-	AttrWindow* pSel = &m_allWindows[nRow];
+	AttrWindow* pSelWinAttr = &m_allWindows[nRow];
 	CString str;
-	str.Format(L"原型编号：%s\n窗户面积：%.2lf\n通风量：%.2lf\n动态类型：%s\n适用范围：集团", pSel->m_prototypeCode, m_selWidth * m_selHeight / 1E6, pSel->GetTongFengQty(false), pSel->m_isDynamic ? L"动态" : L"静态");
+	str.Format(L"原型编号：%s\n窗户面积：%.2lf\n通风量：%.2lf\n动态类型：%s\n适用范围：集团", pSelWinAttr->m_prototypeCode, m_selWidth * m_selHeight / 1E6, pSelWinAttr->GetTongFengQty(false), pSelWinAttr->m_isDynamic ? L"动态" : L"静态");
 	pCell->GetPreview()->SetText(str);
 	pCell->GetPreview()->Invalidate();
 }
@@ -723,7 +762,7 @@ void CWindowDlg::InsertAllWindows()
 
 	for (UINT i = 0; i < m_allWindows.size(); i++)
 	{
-		AttrWindow* pSel = &m_allWindows[i];
+		AttrWindow* pSelWinAttr = &m_allWindows[i];
 		RCWindow oneWindow;
 
 		AcGePoint3d insertPt;
@@ -733,7 +772,7 @@ void CWindowDlg::InsertAllWindows()
 
 		int sel = m_viewDir.GetCurSel();
 		if (sel == 0)
-			oneWindow.Insert(TY_GetPrototypeFilePath() + pSel->m_frontViewFile.fileName, insertPt, 0, L"0", 256);
+			oneWindow.Insert(TY_GetPrototypeFilePath() + pSelWinAttr->m_frontViewFile.fileName, insertPt, 0, L"0", 256);
 		else if (sel == 1)
 		{
 			double rotateAngle = 0;
@@ -751,10 +790,10 @@ void CWindowDlg::InsertAllWindows()
 				rotateAngle = -PI / 2;
 				offsetXY.y += m_selWidth;
 			}
-			oneWindow.Insert(TY_GetPrototypeFilePath() + pSel->m_topViewFile.fileName, origin + offsetXY, rotateAngle, L"0", 256);
+			oneWindow.Insert(TY_GetPrototypeFilePath() + pSelWinAttr->m_topViewFile.fileName, origin + offsetXY, rotateAngle, L"0", 256);
 		}
 		else
-			oneWindow.Insert(TY_GetPrototypeFilePath() + pSel->m_leftViewFile.fileName, insertPt, 0, L"0", 256);
+			oneWindow.Insert(TY_GetPrototypeFilePath() + pSelWinAttr->m_leftViewFile.fileName, insertPt, 0, L"0", 256);
 
 		oneWindow.InitParameters();
 
@@ -769,10 +808,10 @@ void CWindowDlg::InsertAllWindows()
 			TYCOM_Mirror(oneWindow.m_id, basePt, AcGeVector3d(0, 1, 0));
 		}
 
-		CWindowAutoName::GetInstance()->AddWindowType(*pSel);
+		CWindowAutoName::GetInstance()->AddWindowType(*pSelWinAttr);
 
 		//把UI的数据记录在图框的扩展字典中
-		AttrWindow * pWindow = new AttrWindow(*pSel);
+		AttrWindow * pWindow = new AttrWindow(*pSelWinAttr);
 		oneWindow.AddAttribute(pWindow);
 		pWindow->close();
 	}

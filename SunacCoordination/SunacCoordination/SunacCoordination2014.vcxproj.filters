@@ -382,6 +382,9 @@
     <ClCompile Include="UI\DlgWindowAirCalc.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="Sunac_def.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
