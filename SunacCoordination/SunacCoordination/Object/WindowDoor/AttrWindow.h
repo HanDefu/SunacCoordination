@@ -142,6 +142,9 @@ public:
 
 	bool SetHeightUnderWindow(double newValue);
 
+	CFloorInfo GetFloorInfo()const { return m_floorInfo; }
+	void SetFloorInfo(CFloorInfo p_info){ m_floorInfo = p_info; }
+
 
 	eViewDir GetViewDir()const { return m_viewDir; }
 	void SetViewDir(eViewDir p_view){ m_viewDir = p_view; }

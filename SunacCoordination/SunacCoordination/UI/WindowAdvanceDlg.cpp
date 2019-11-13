@@ -43,20 +43,38 @@ void CWindowAdvanceDlg::OnOK()
 
 	for (UINT i = 0; i < m_selAttrWindows.size(); i++)
 	{
-		if (m_fJieNeng>0)
+		//节能
+		CString sJieNeng;
+		m_eidtJieneng.GetWindowText(sJieNeng);
+		if (sJieNeng.Find(_T("多种"))<0 && m_fJieNeng>0)
 			m_selAttrWindows[i]->m_material.heatCoeff = m_fJieNeng;
+
+		//型材
 		if (m_xingCai.GetCurSel() >= 0)
 			m_selAttrWindows[i]->m_material.sAluminumSerial = TYUI_GetComboBoxText(m_xingCai);
+
+		//玻璃
 		if (m_boLi.GetCurSel() >= 0)
 			m_selAttrWindows[i]->m_material.sGlassSerial = TYUI_GetComboBoxText(m_boLi);
+
+		//塞缝尺寸
 		if (m_saiFeng.GetCurSel() >= 0)
 			m_selAttrWindows[i]->SetA(TYUI_GetDouble(m_saiFeng));
+
 		if (m_bFuKuang < 2)
+		{
 			m_selAttrWindows[i]->m_material.bHasAuxiliaryFrame = (m_bFuKuang != FALSE);
-		if (m_selAttrWindows[i]->m_material.bHasAuxiliaryFrame && (m_fuKuangType.GetCurSel() >= 0))
-			m_selAttrWindows[i]->m_material.sAuxiliaryFrame = TYUI_GetComboBoxText(m_fuKuangType);
-		if (!m_selAttrWindows[i]->m_material.bHasAuxiliaryFrame)
-			m_selAttrWindows[i]->m_material.sAuxiliaryFrame.Empty();
+
+			if (false == m_selAttrWindows[i]->m_material.bHasAuxiliaryFrame)
+			{
+				m_selAttrWindows[i]->m_material.sAuxiliaryFrame.Empty();
+			}
+			else
+			{
+				if ((m_fuKuangType.GetCurSel() >= 0))
+					m_selAttrWindows[i]->m_material.sAuxiliaryFrame = TYUI_GetComboBoxText(m_fuKuangType);
+			}
+		}
 	}
 
 	CAcUiDialog::OnOK();

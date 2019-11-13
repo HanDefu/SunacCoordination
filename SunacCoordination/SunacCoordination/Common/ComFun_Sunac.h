@@ -57,9 +57,12 @@ int MD2010_GetAllTypedObjectsInLayer(vAcDbObjectId &allEntites, CString layname,
 void YT_UpdateBlockReference(AcDbObjectId &entId);
 
 
-AcGePoint3d TY_GetPoint(CString prompt = L"请选择插入点");
+bool TY_GetPoint(AcGePoint3d &ptOut, CString prompt = L"请选择插入点");
 TYRect TY_GetOneRect();
 int TY_GetTwoPoints(AcGePoint3d &pnt1, AcGePoint3d &pnt2);
+
+bool GetRealInput(const TCHAR* prompt, double defaultVal, int precision, double &ret);
+bool GetStringInput(CString prompt, CString &strOut);
 
 AcDbObjectId TY_GetExtensionDictionaryID(AcDbObjectId id);
 int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt);
@@ -111,7 +114,7 @@ AcDbObjectId CopyBlockDefFromDatabase(AcDbDatabase* pSourceDb, AcDbDatabase* pDe
 AcDbObjectId InsertBlockRefFromDwg(const TCHAR* fileName, const TCHAR* blkDefName, const WCHAR *layoutname, AcGePoint3d origin);
 
 
-vAcDbObjectId SelectWindows();
+vAcDbObjectId SelectWindows(eViewDir p_view);
 
 
 

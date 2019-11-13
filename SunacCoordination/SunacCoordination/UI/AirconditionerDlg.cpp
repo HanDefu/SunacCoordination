@@ -205,7 +205,7 @@ void CAirconditionerDlg::OnBnClickedButtonInsertac()
 {	
 	UpdatePreview();
 
-	ShowWindow(FALSE);
+	ShowWindow(SW_HIDE);
 
 	AcGeVector3d offsetXY;
 	AcGePoint3d pnt;
@@ -213,8 +213,14 @@ void CAirconditionerDlg::OnBnClickedButtonInsertac()
 	//获取插入点
 	if (m_pCurEdit == NULL)
 	{
-		pnt = TY_GetPoint();
+		bool bSuc = TY_GetPoint(pnt);
 		acedPostCommandPrompt();
+		if (bSuc == false)
+		{
+			ShowWindow(SW_SHOW);
+			return;
+		}
+
 	}
 	else
 	{

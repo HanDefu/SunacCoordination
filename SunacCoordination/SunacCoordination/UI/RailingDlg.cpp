@@ -169,12 +169,17 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 	}
 
 	//—°‘Ò≤Â»Îµ„
-	ShowWindow(FALSE);
+	ShowWindow(SW_HIDE);
 	AcGePoint3d pnt;
 	if (m_pCurEdit == NULL)
 	{
-		pnt = TY_GetPoint();
+		bool bSuc = TY_GetPoint(pnt);
 		acedPostCommandPrompt();
+		if (bSuc == false)
+		{
+			ShowWindow(SW_SHOW);
+			return;
+		}
 	}
 	else
 	{

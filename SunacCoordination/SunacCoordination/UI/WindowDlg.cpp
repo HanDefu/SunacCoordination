@@ -214,8 +214,13 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	AcGePoint3d origin;
 	if (m_pCurEdit == NULL)
 	{
-		origin = TY_GetPoint();
+		bool bSuc = TY_GetPoint(origin);
 		acedPostCommandPrompt();
+		if (bSuc == false)
+		{
+			ShowWindow(SW_SHOW);
+			return;
+		}
 	}
 	else
 	{
@@ -439,7 +444,7 @@ void CWindowDlg::OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult)
 	vint nH3Optins;
 	nH3Optins.push_back(600);
 	nH3Optins.push_back(900);
-	TYUI_InitComboBox(m_comboW3, nH3Optins, 900);
+	TYUI_InitComboBox(m_comboH3, nH3Optins, 900);
 
 	if (pSelWinAttr->m_isDynamic)
 	{
@@ -777,7 +782,14 @@ void CWindowDlg::SetEditMode(AcDbBlockReference* pBlock)
 void CWindowDlg::InsertAllWindows()
 {
 	ShowWindow(SW_HIDE);
-	AcGePoint3d origin = TY_GetPoint();
+
+	AcGePoint3d origin;
+	bool bSuc = TY_GetPoint(origin);
+	if (bSuc == false)
+	{
+		ShowWindow(SW_SHOW);
+		return;
+	}
 
 	for (UINT i = 0; i < m_allWindows.size(); i++)
 	{

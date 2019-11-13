@@ -517,18 +517,18 @@ void YT_UpdateBlockReference(AcDbObjectId &entId)
 	pBlkRef->close();
 }
 
-AcGePoint3d TY_GetPoint(CString prompt)
+bool TY_GetPoint(AcGePoint3d &ptOut, CString prompt)
 {
 	ads_point pt;
 	acedInitGet(32,NULL);
 	if(acedGetPoint(NULL,prompt,pt)!=RTNORM) //第一角点选择
 	{
-		return AcGePoint3d(0,0,0);
+		ptOut = AcGePoint3d(0, 0, 0);
+		return false;
 	}
 
-	AcGePoint3d pnt(pt[0], pt[1], pt[2]);
-
-	return pnt;
+	ptOut = AcGePoint3d(pt[0], pt[1], pt[2]);
+	return true;
 }
 
 TYRect TY_GetOneRect()
@@ -573,6 +573,42 @@ int TY_GetTwoPoints(AcGePoint3d &pnt1, AcGePoint3d &pnt2)
 
 	return 0;
 }
+
+bool GetRealInput(const TCHAR* prompt, double defaultVal, int precision, double &ret)
+{
+	CString strPrompt = prompt;
+	strPrompt.TrimRight();
+	strPrompt.TrimRight(TEXT(":"));
+	CString strDefaultValue;
+	strDefaultValue.Format(TEXT("<%%.%df>:"), precision);	// 得到类似“%.2f”的格式字符串
+	strPrompt.Format(strPrompt + strDefaultValue, defaultVal);
+
+	ret = defaultVal;
+	int rc = acedGetReal(strPrompt, &ret);
+	if (rc == RTNORM || rc == RTNONE)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool GetStringInput(CString prompt, CString &strOut)
+{
+	int rcc = 0;
+	ACHAR num[256] = L"\0";
+	rcc = acedGetString(0, prompt, num);
+	if (rcc == RTCAN)
+		return false;
+	else if (rcc != RTCAN&&rcc != RTNORM)
+		return false;
+
+	strOut = CString(num);
+	return true;
+}
+
 
 AcDbObjectId TY_GetExtensionDictionaryID(AcDbObjectId id)
 {
@@ -1214,7 +1250,7 @@ AcDbObjectId InsertBlockRefFromDwg(const TCHAR* fileName, const TCHAR* blkDefNam
 	return entId;
 }
 
-vAcDbObjectId SelectWindows()
+vAcDbObjectId SelectWindows(eViewDir p_view)
 {
 	vAcDbObjectId vIds;//当前选择的ids
 
@@ -1232,7 +1268,7 @@ vAcDbObjectId SelectWindows()
 
 		AcDbObjectId objId = 0;
 		acdbGetObjectId(objId, ent);
-		if (objId != 0 && TY_IsWindow(objId, E_VIEW_FRONT))
+		if (objId != 0 && TY_IsWindow(objId, p_view ))
 		{
 			vIds.push_back(objId);
 		}

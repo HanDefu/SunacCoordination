@@ -122,12 +122,15 @@ void CMD_SunacWindowDetail()
 	CString str;
 
 	//第一步：选择需要统计的门窗
-	vAcDbObjectId m_vids = SelectWindows();
+	vAcDbObjectId m_vids = SelectWindows(E_VIEW_FRONT);
 	if (m_vids.size() == 0)
 		return;
 
 	//第二步  选择门窗表插入点
-	AcGePoint3d pnt = TY_GetPoint(L"请选择门窗详图插入点");
+	AcGePoint3d pnt;
+	bool bSuc = TY_GetPoint(pnt, L"请选择门窗详图插入点");
+	if (bSuc == false)
+		return;
 
 	//第三步：读取门窗数据并且分类汇总
 	vRCWindow allWindowsTypes;

@@ -30,13 +30,14 @@
 #include "../UI/MyPaletteSet.h"
 #include "../UI/DlgLogin.h"
 #include "../UI/WindowAdvanceDlg.h"
-#include "Command.h"
 #include "../Common/ComFun_Math.h"
 #include "../Object/WindowStatistic/WindowStatictic.h"
 #include "../Object/KitchenBathroom/KitchenBathroomStatistic.h"
 #include "../Object/Railing/RailingStatistic.h"
 #include "../Object/AirCondition/AirConStatistic.h"
 #include "../UI/ProjectManagementDlg.h"
+#include "../WebIO/WebIO.h"
+#include "Command.h"
 
 
 void SendCommandToCAD(CString cmd) //此函数尚未调通
@@ -74,13 +75,16 @@ void CMD_Login()
 
 void CMD_ShowCADPalette()
 {
-	if (g_pPaletteSet == NULL)
+	if (WebIO::GetInstance()->IsLogin())
 	{
-		CADPalette_AddP();
-	}
-	else
-	{
-		CADPalette_RemoveP();
+		if (g_pPaletteSet == NULL)
+		{
+			CADPalette_AddP();
+		}
+		else
+		{
+			CADPalette_RemoveP();
+		}
 	}
 }
 //窗
@@ -117,10 +121,92 @@ void CMD_SunacWindowAdvanceDesign() //门窗深化设计
 
 void CMD_SunacWindowFloorSetting()//门窗楼层设置
 {
-	//TODO
+	//1.选择需要设置楼层的门窗
+	vAcDbObjectId m_vids = SelectWindows(E_VIEW_TOP);
+	if (m_vids.size() == 0)
+	{
+		return;
+	}
+
+	CFloorInfo floorInfo;
+
+	//2. 楼层区间
+	CString sFloors;
+	bool bSuc = GetStringInput(_T("请输入楼层区间逗号分隔,(示例 2-5,7,8):"), sFloors);
+	if (bSuc==false)
+		return;
+
+	while (floorInfo.SetFloors(sFloors) == false && bSuc)
+	{
+		bSuc = GetStringInput(_T("格式错误，请输入楼层区间逗号分隔,(示例 2-5,7,8):"), sFloors);
+	}
+	if (bSuc == false)
+		return;
+
+	//////////////////////////////////////////////////////////////////////////
+	//3.层高
+	double height = 2900;
+	bSuc = GetRealInput(_T("请输入楼层高度:"), 2900, 0, height);
+	if (bSuc == false)
+		return;
+	while (floorInfo.SetFloorHeight(height) == false && bSuc)
+	{
+		bSuc = GetRealInput(_T("楼层高度错误，请输入楼层高度:"), 2900, 0, height);
+	}
+	if (bSuc == false)
+		return;
+
+
+	//////////////////////////////////////////////////////////////////////////
+	//设置到选中的门窗中
+	for (UINT i = 0; i < m_vids.size(); i++)
+	{
+		RCWindow oneWindow;
+		oneWindow.m_id = m_vids[i];
+		oneWindow.InitParameters();
+
+		AttrWindow* pAtt = oneWindow.GetAttribute();
+		if (pAtt!=NULL)
+		{
+			pAtt->SetFloorInfo(floorInfo);
+			pAtt->close();
+		}
+	}
+
+	acutPrintf(_T("设置楼层信息成功\n"));
 }
+
 void CMD_SunacWindowTop2Front()//门窗平面到立面
 {
+	//1.选择需要设置楼层的门窗
+	vAcDbObjectId m_vids = SelectWindows(E_VIEW_TOP);
+	if (m_vids.size() == 0)
+	{
+		return;
+	}
+
+	AcGePoint3d insertPos;
+	bool bSuc = TY_GetPoint(insertPos, L"请选择立面图插入点");
+	if (bSuc == false)
+		return;
+
+	vector<AttrWindow>  winAtts;
+	for (UINT i = 0; i < m_vids.size(); i++)
+	{
+		RCWindow oneWindow;
+		oneWindow.m_id = m_vids[i];
+		oneWindow.InitParameters();
+
+		AttrWindow* pAtt = oneWindow.GetAttribute();
+		if (pAtt != NULL)
+		{
+			AttrWindow attTemp(*pAtt);
+			winAtts.push_back(attTemp);
+			pAtt->close();
+		}
+	}
+
+
 	//TODO
 }
 void CMD_SunacWindowFront2Top()//门窗立面到平面
@@ -172,7 +258,10 @@ void CMD_SunacKitchenBathroomStatistic()
 {
 	CKitchenBathroomStatistic instance;
 	instance.SelectKitchenBathroom();
-	AcGePoint3d insertPoint = TY_GetPoint();
+	AcGePoint3d insertPoint;
+	bool bSuc = TY_GetPoint(insertPoint);
+	if (bSuc == false)
+		return;
 	instance.InsertTableToCAD(insertPoint);
 }
 
@@ -200,7 +289,10 @@ void CMD_SunacRailingStatistic()
 {
 	CRailingStatistic instance;
 	instance.SelectRailings();
-	AcGePoint3d insertPoint = TY_GetPoint();
+	AcGePoint3d insertPoint;
+	bool bSuc = TY_GetPoint(insertPoint);
+	if (bSuc == false)
+		return;
 	instance.InsertTableToCAD(insertPoint);
 }
 
@@ -246,7 +338,10 @@ void CMD_SunacAirconditionerStatistic()
 {
 	CAirConStatistic instance;
 	instance.SelectAirCons();
-	AcGePoint3d insertPoint = TY_GetPoint();
+	AcGePoint3d insertPoint;
+	bool bSuc = TY_GetPoint(insertPoint);
+	if (bSuc == false)
+		return;
 	instance.InsertTableToCAD(insertPoint);
 }
 
@@ -272,7 +367,7 @@ void CMD_SunacWaterproof()
 void CMD_SunacWindowsStatistics()
 {
 	//第一步：选择需要统计的门窗
-	vAcDbObjectId m_vids = SelectWindows();
+	vAcDbObjectId m_vids = SelectWindows(E_VIEW_FRONT);
 	if (m_vids.size() == 0)
 	{
 		return;
@@ -304,7 +399,7 @@ void CMD_SunacWindowsStatistics()
 	{
 		AfxMessageBox(_T("型材系列未设置"));
 
-		//TODO 高亮未设置的门窗
+		//TODO 高亮设置的门窗
 		return;
 	}
 

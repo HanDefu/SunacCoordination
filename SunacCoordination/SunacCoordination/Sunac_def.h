@@ -115,7 +115,7 @@ public:
 	int GetFloorCount()const{ return (int)(m_nAllFloors.size()); }
 	vector<int> GetAllFloor()const{ return m_nAllFloors; }
 
-	void SetFloorHeight(double p_height) { m_floorHeight = p_height; }
+	bool SetFloorHeight(double p_height);
 	double GetFloorHeight()const { return m_floorHeight; }
 
 protected:

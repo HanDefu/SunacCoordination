@@ -1,10 +1,23 @@
 #include "StdAfx.h"
+#include <algorithm>
 #include "Sunac_def.h"
 #include "Common/ComFun_String.h"
 
 CFloorInfo::CFloorInfo()
 {
 	m_floorHeight = 2900;
+}
+
+
+bool CFloorInfo::SetFloorHeight(double p_height)
+{ 
+	if (p_height>100 &&p_height<10000)
+	{
+		m_floorHeight = p_height;
+		return true;
+	} 
+
+	return false;
 }
 
 bool CFloorInfo::SetFloors(CString p_sFloors)
@@ -30,7 +43,7 @@ bool CFloorInfo::SetFloors(CString p_sFloors)
 				return false;
 			}
 
-			for (UINT n = nStart; n < nEnd; n++)
+			for (int n = nStart; n <= nEnd; n++)
 			{
 				floors.push_back(n);
 			}
@@ -46,6 +59,10 @@ bool CFloorInfo::SetFloors(CString p_sFloors)
 			floors.push_back(nFloor);
 		}
 	}
+
+	//È¥³ýÖØ¸´ÔªËØ
+	sort(floors.begin(), floors.end());
+	floors.erase(unique(floors.begin(), floors.end()), floors.end());
 
 	m_sFloors = p_sFloors;
 	m_nAllFloors = floors;
