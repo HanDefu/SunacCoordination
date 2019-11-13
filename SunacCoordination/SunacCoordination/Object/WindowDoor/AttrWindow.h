@@ -178,6 +178,8 @@ public:
 	bool   m_isBayWindow;	 //是否凸窗
 	double m_wallDis;		 //外墙距离
 	double m_heightUnderWindow; //窗下墙高度
+
+	CFloorInfo m_floorInfo; //楼层信息
 };
 
 typedef std::vector<AttrWindow> vAttrWindow;

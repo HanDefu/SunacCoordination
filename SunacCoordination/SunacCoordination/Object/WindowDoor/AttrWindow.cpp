@@ -481,6 +481,14 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 	if (m_version>=3)
 	{
 		filer->readItem(&m_heightUnderWindow);
+
+		filer->readString(tempStr);
+		CString sFloors = tempStr.kACharPtr();
+		m_floorInfo.SetFloors(sFloors);
+
+		double floorHeight;
+		filer->readItem(&floorHeight);
+		m_floorInfo.SetFloorHeight(floorHeight);
 	}
 
 	if (m_version >= 2)
@@ -575,7 +583,14 @@ Acad::ErrorStatus AttrWindow::dwgOutFields(AcDbDwgFiler* filer) const
 
 	filer->writeItem(m_wallDis);
 
-	filer->writeItem(m_heightUnderWindow);
+	//FILE_VERSION 3 新增
+	{
+		filer->writeItem(m_heightUnderWindow);
+
+		filer->writeItem(m_floorInfo.GetFloors());
+		filer->writeItem(m_floorInfo.GetFloorHeight());
+	}
+	
 
 	//FILE_VERSION 2 新增
 	filer->writeItem(m_material.heatCoeff);
