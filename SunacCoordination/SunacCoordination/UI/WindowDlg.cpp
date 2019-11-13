@@ -148,10 +148,10 @@ bool CWindowDlg::CheckValueModulo(CComboBox& comboBox, CString p_sType, int p_va
 	{
 		return true;
 	}
-	if (p_value%50!=0)
+	if (p_value%10!=0)
 	{
 		CString str;
-		str.Format(_T("%s值必须是50的倍数"), p_sType);
+		str.Format(_T("%s值必须是10的倍数"), p_sType);
 		AfxMessageBox(str);
 		return false;
 	}
@@ -175,18 +175,18 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		return;
 	}
 
-	//检查设置值
 	int W1 = TYUI_GetInt(m_comboW1);
 	int H2 = TYUI_GetInt(m_comboH2);
 	int W3 = TYUI_GetInt(m_comboW3);
 	int H3 = TYUI_GetInt(m_comboH3);
-	if (CheckValueModulo(m_comboW1, _T("开启扇宽度"), W1) == false ||
-		CheckValueModulo(m_comboH2, _T("下固定高度"), H2) == false ||
-		CheckValueModulo(m_comboW3, _T("转角宽度"), W3) == false ||
-		CheckValueModulo(m_comboH3, _T("窗下墙高度"), H3) == false)
-	{
-		return;
-	}
+	////检查设置值
+	//if (CheckValueModulo(m_comboW1, _T("开启扇宽度"), W1) == false ||
+	//	CheckValueModulo(m_comboH2, _T("下固定高度"), H2) == false ||
+	//	CheckValueModulo(m_comboW3, _T("转角宽度"), W3) == false ||
+	//	CheckValueModulo(m_comboH3, _T("窗下墙高度"), H3) == false)
+	//{
+	//	return;
+	//}
 	//在检查原型编号前设置属性值
 	pSelWinAttr->SetW1(W1);
 	pSelWinAttr->SetH2(H2);
