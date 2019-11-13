@@ -85,8 +85,8 @@ void CWindowDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_OPENTYPE, m_openType);
 	DDX_Control(pDX, IDC_COMBO_OPENAMOUNT, m_openAmount);
 	DDX_Control(pDX, IDC_EDIT_VENTILATION, m_ventilation);
-	DDX_Control(pDX, IDC_COMBO_OPENWIDTH, m_W1);
-	DDX_Control(pDX, IDC_COMBO_FIXEDVALUE, m_H2);
+	DDX_Control(pDX, IDC_COMBO_OPENWIDTH, m_comboW1);
+	DDX_Control(pDX, IDC_COMBO_FIXEDVALUE, m_comboH2);
 	DDX_Control(pDX, IDC_COMBO_DISTANCE, m_distance);
 	DDX_Control(pDX, IDC_EDIT_WIDTH, m_width);
 	DDX_Control(pDX, IDC_EDIT_HEIGHT, m_height);
@@ -98,8 +98,8 @@ void CWindowDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHECK_AUTOINDEX, m_autoIndex);
 	DDX_Control(pDX, IDC_COMBO_VIEWDIR, m_viewDir);
 	DDX_Control(pDX, IDC_CHECK_IMAGE, m_isMirror);
-	DDX_Control(pDX, IDC_COMBO_W3, m_W3);
-	DDX_Control(pDX, IDC_COMBO_H3, m_H3);
+	DDX_Control(pDX, IDC_COMBO_W3, m_comboW3);
+	DDX_Control(pDX, IDC_COMBO_H3, m_comboH3);
 	DDX_Control(pDX, IDC_COMBO_DIR, m_insertDir);
 }
 
@@ -140,8 +140,12 @@ BOOL CWindowDlg::OnInitDialog()
 
 	return TRUE;
 }
-bool CWindowDlg::CheckValueModulo(CString p_sType, int p_value) //检查数据是否是50的模数
+bool CWindowDlg::CheckValueModulo(CComboBox& comboBox, CString p_sType, int p_value) //检查数据是否是50的模数
 {
+	if (comboBox.IsWindowEnabled()==FALSE)
+	{
+		return true;
+	}
 	if (p_value%50!=0)
 	{
 		CString str;
@@ -170,14 +174,14 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	}
 
 	//检查设置值
-	int W1 = TYUI_GetInt(m_W1);
-	int H2 = TYUI_GetInt(m_H2);
-	int W3 = TYUI_GetInt(m_W3);
-	int H3 = TYUI_GetInt(m_H3);
-	if (CheckValueModulo(_T("开启扇宽度"), W1) == false ||
-		CheckValueModulo(_T("下固定高度"), H2) == false ||
-		CheckValueModulo(_T("转角宽度"), W3) == false ||
-		CheckValueModulo(_T("窗下墙高度"), H3) == false)
+	int W1 = TYUI_GetInt(m_comboW1);
+	int H2 = TYUI_GetInt(m_comboH2);
+	int W3 = TYUI_GetInt(m_comboW3);
+	int H3 = TYUI_GetInt(m_comboH3);
+	if (CheckValueModulo(m_comboW1, _T("开启扇宽度"), W1) == false ||
+		CheckValueModulo(m_comboH2, _T("下固定高度"), H2) == false ||
+		CheckValueModulo(m_comboW3, _T("转角宽度"), W3) == false ||
+		CheckValueModulo(m_comboH3, _T("窗下墙高度"), H3) == false)
 	{
 		return;
 	}
@@ -413,15 +417,15 @@ void CWindowDlg::OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult)
 	if (pSelWinAttr == NULL)
 		return;
 
-	UpdateDimDataToComboBox(m_W1, *pSelWinAttr, L"W1");
-	UpdateDimDataToComboBox(m_H2, *pSelWinAttr, L"H2");
-	UpdateDimDataToComboBox(m_W3, *pSelWinAttr, L"W3");
+	UpdateDimDataToComboBox(m_comboW1, *pSelWinAttr, L"W1");
+	UpdateDimDataToComboBox(m_comboH2, *pSelWinAttr, L"H2");
+	UpdateDimDataToComboBox(m_comboW3, *pSelWinAttr, L"W3");
 
-	//UpdateDimDataToComboBox(m_H3, *pSelWinAttr, L"H3");
+	//UpdateDimDataToComboBox(m_comboH3, *pSelWinAttr, L"H3");
 	vint nH3Optins;
 	nH3Optins.push_back(600);
 	nH3Optins.push_back(900);
-	TYUI_InitComboBox(m_W3, nH3Optins, 900);
+	TYUI_InitComboBox(m_comboW3, nH3Optins, 900);
 
 	if (pSelWinAttr->m_isDynamic)
 	{
@@ -456,7 +460,7 @@ void CWindowDlg::OnSelChangedW1()
 	if (pSelWinAttr == NULL)
 		return;
 
-	CString sSel = TYUI_GetComboBoxText(m_W1);
+	CString sSel = TYUI_GetComboBoxText(m_comboW1);
 	pSelWinAttr->SetW1(_ttoi(sSel));
 	//更改参数会引起实例编号变化，需更新
 	UpdateInstanceCode();
@@ -469,7 +473,7 @@ void CWindowDlg::OnSelChangedH2()
 	if (pSelWinAttr == NULL)
 		return;
 
-	CString sSel = TYUI_GetComboBoxText(m_H2);
+	CString sSel = TYUI_GetComboBoxText(m_comboH2);
 	pSelWinAttr->SetH2(_ttoi(sSel));
 	//更改参数会引起实例编号变化，需更新
 	UpdateInstanceCode();
@@ -482,7 +486,7 @@ void CWindowDlg::OnSelChangedW3()
 	if (pSelWinAttr == NULL)
 		return;
 
-	CString sSel = TYUI_GetComboBoxText(m_W3);
+	CString sSel = TYUI_GetComboBoxText(m_comboW3);
 	pSelWinAttr->SetW3(_ttoi(sSel));
 	//更改参数会引起实例编号变化，需更新
 	UpdateInstanceCode();
@@ -495,7 +499,7 @@ void CWindowDlg::OnSelChangedH3()
 	if (pSelWinAttr == NULL)
 		return;
 
-	CString sSel = TYUI_GetComboBoxText(m_H3);
+	CString sSel = TYUI_GetComboBoxText(m_comboH3);
 	pSelWinAttr->SetH3(_ttoi(sSel));
 
 	//更改参数会引起实例编号变化，需更新
@@ -556,14 +560,14 @@ void CWindowDlg::UpdateEnable()
 	if (m_radioDoor == 0)
 	{
 		TYUI_Disable(m_openAmount);
-		TYUI_Disable(m_W1);
+		TYUI_Disable(m_comboW1);
 		TYUI_Disable(*GetDlgItem(IDC_RADIO_YES));
 		TYUI_Disable(*GetDlgItem(IDC_RADIO_NO));
 	}
 	else
 	{
 		TYUI_Enable(m_openAmount);
-		TYUI_Enable(m_W1);
+		TYUI_Enable(m_comboW1);
 		TYUI_Enable(*GetDlgItem(IDC_RADIO_YES));
 		TYUI_Enable(*GetDlgItem(IDC_RADIO_NO));
 	}

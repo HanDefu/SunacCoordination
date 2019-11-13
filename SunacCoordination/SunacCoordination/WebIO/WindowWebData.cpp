@@ -115,8 +115,8 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 								attrwindow.m_file.fileName = sFileName;
 							}
 							//检查文件是否存在，不存在则下载
-							CString sDWGFilePath = TY_GetPrototypeFilePath() + sFileName;
-							CString sImgFilePath = TY_GetPrototypeImagePath() + sImgFileName;
+							CString sDWGFilePath = TY_GetPrototypeFilePath_Web() + sFileName;
+							CString sImgFilePath = TY_GetPrototypeImagePath_Web() + sImgFileName;
 							if (!JHCom_FileExist(sDWGFilePath))
 							{
 								WEBINST->DownloadFile(_ttoi(sFileID), "CAD", sDWGFilePath);
