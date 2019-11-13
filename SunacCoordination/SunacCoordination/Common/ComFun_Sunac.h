@@ -81,9 +81,11 @@ bool TY_IsPairsEqual(vRCPairKeyStrValue &A, vRCPairKeyStrValue &B);
 
 CString TY_GetDataFilePath();
 CString TY_GetPrototypeFilePath();
-CString TY_GetPrototypeFilePath_Local();
 CString TY_GetPrototypeImagePath();
+CString TY_GetPrototypeFilePath_Local();
 CString TY_GetPrototypeImagePath_Local();
+CString TY_GetPrototypeFilePath_Web();
+CString TY_GetPrototypeImagePath_Web();
 
 char* TY_GetAluminumDatabasePath();
 char* TY_GetLocalDataDatabasePath();

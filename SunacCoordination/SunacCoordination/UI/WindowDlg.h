@@ -55,6 +55,8 @@ public:
 	void LoadDefaultValue();
 	AttrWindow* GetSelWindow();
 
+	bool CheckValueModulo(CComboBox& comboBox, CString p_sType, int p_value); //检查数据是否是50的模数
+
 	void SetEditMode(AcDbBlockReference* pBlock);
 
 	//插入全部，测试用
@@ -75,11 +77,11 @@ protected:
 	//CComboBox m_rate; //比值
 
 	CEdit m_number; //门窗编号
-	CComboBox m_W1; //开启扇宽度
-	CComboBox m_H2; //下固定值
+	CComboBox m_comboW1; //开启扇宽度
+	CComboBox m_comboH2; //下固定值
+	CComboBox m_comboW3;	//转角宽度
+	CComboBox m_comboH3; //窗下墙高
 	CComboBox m_distance; //距外墙距离
-	CComboBox m_W3;
-	CComboBox m_H3;
 	CComboBox m_insertDir;
 	
 	int m_radioDoor; //门窗单选

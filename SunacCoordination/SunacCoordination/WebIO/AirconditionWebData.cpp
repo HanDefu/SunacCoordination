@@ -145,7 +145,7 @@ std::vector<AttrAirCon > CAirConditionWebData::ParseAirConditionersFromXML(CMark
 							}
 
 							//检查文件是否存在，不存在则下载
-							CString sDWGFilePath = TY_GetPrototypeFilePath() + sFileName;
+							CString sDWGFilePath = TY_GetPrototypeFilePath_Web() + sFileName;
 							if (!JHCom_FileExist(sDWGFilePath))
 							{
 								WEBINST->DownloadFile(_ttoi(sFileID), "CAD", sDWGFilePath);

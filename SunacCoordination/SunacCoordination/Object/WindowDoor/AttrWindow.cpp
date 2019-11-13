@@ -161,6 +161,7 @@ AttrWindow::AttrWindow()
 	m_viewDir = E_VIEW_FRONT;
 	m_isBayWindow = false;
 	m_wallDis = 0.0;
+	m_heightUnderWindow = 900;
 }
 
 AttrWindow::~AttrWindow()
@@ -405,6 +406,14 @@ bool AttrWindow::SetValue(CString p_sCode, double p_dValue)
 	return pDimData->SetValue(p_dValue);
 }
 
+bool AttrWindow::SetHeightUnderWindow(double newValue)
+{
+	m_heightUnderWindow = newValue;
+
+	SetH3(newValue);//原型的H3也是窗下高度
+	return true;
+}
+
 Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 {
 	assertWriteEnabled();
@@ -468,6 +477,19 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 	filer->readItem(&m_isBayWindow);
 
 	filer->readItem(&m_wallDis);
+
+	if (m_version>=3)
+	{
+		filer->readItem(&m_heightUnderWindow);
+
+		filer->readString(tempStr);
+		CString sFloors = tempStr.kACharPtr();
+		m_floorInfo.SetFloors(sFloors);
+
+		double floorHeight;
+		filer->readItem(&floorHeight);
+		m_floorInfo.SetFloorHeight(floorHeight);
+	}
 
 	if (m_version >= 2)
 	{
@@ -561,6 +583,16 @@ Acad::ErrorStatus AttrWindow::dwgOutFields(AcDbDwgFiler* filer) const
 
 	filer->writeItem(m_wallDis);
 
+	//FILE_VERSION 3 新增
+	{
+		filer->writeItem(m_heightUnderWindow);
+
+		filer->writeItem(m_floorInfo.GetFloors());
+		filer->writeItem(m_floorInfo.GetFloorHeight());
+	}
+	
+
+	//FILE_VERSION 2 新增
 	filer->writeItem(m_material.heatCoeff);
 	filer->writeItem(m_material.sAluminumSerial);
 	filer->writeItem(m_material.sGlassSerial);
