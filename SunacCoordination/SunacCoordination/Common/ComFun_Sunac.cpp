@@ -852,11 +852,19 @@ CString TY_GetDataFilePath()
 
 CString TY_GetPrototypeFilePath()
 {
-	CString appPath = MD2010_GetAppPath();
 #ifdef WORK_LOCAL//本地模式
-	return appPath + L"\\Sunac2019\\LocalMode\\";
+	return TY_GetPrototypeFilePath_Local();
 #else
-	return appPath + L"\\Sunac2019\\Files\\";
+	return TY_GetPrototypeFilePath_Web();
+#endif
+}
+
+CString TY_GetPrototypeImagePath()
+{
+#ifdef WORK_LOCAL//本地模式
+	return TY_GetPrototypeImagePath_Local();
+#else
+	return TY_GetPrototypeImagePath_Web();
 #endif
 }
 CString TY_GetPrototypeFilePath_Local()
@@ -864,20 +872,20 @@ CString TY_GetPrototypeFilePath_Local()
 	CString sPath = MD2010_GetAppPath()+ L"\\Sunac2019\\LocalMode\\";
 	return sPath;
 }
-
-CString TY_GetPrototypeImagePath()
-{
-	CString appPath = MD2010_GetAppPath();
-#ifdef WORK_LOCAL//本地模式
-	return appPath + L"\\Sunac2019\\Image\\";
-#else
-	return appPath + L"\\Sunac2019\\Files\\";
-#endif
-}
 CString TY_GetPrototypeImagePath_Local()
 {
-	CString appPath = MD2010_GetAppPath();
-	return appPath + L"\\Sunac2019\\Image\\";
+	CString sPath = MD2010_GetAppPath() + L"\\Sunac2019\\Image\\";
+	return sPath;
+}
+CString TY_GetPrototypeFilePath_Web()
+{
+	CString sPath = MD2010_GetAppPath() + L"\\Sunac2019\\Files\\";
+	return sPath;
+}
+CString TY_GetPrototypeImagePath_Web()
+{
+	CString sPath = MD2010_GetAppPath() + L"\\Sunac2019\\Files\\";
+	return sPath;
 }
 
 char* TY_GetAluminumDatabasePath()

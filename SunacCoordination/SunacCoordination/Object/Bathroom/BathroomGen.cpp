@@ -102,14 +102,20 @@ CString CBathroomGen::GetGuanxiquDefault()
 
 void CBathroomGen::InitBathroomByDefault()
 {
-	if (GetBathroomAtt()->m_taipenWidth.IsEmpty())
-		GetBathroomAtt()->m_taipenWidth = GetTaipenDefault();
-	if (GetBathroomAtt()->m_matongWidth.IsEmpty())
+	vCString taipenOptions = GetTaipenOptions();
+	vCString matongOptions = GetMatongOptions();
+	CString& taipen = GetBathroomAtt()->m_taipenWidth;
+	CString& matong = GetBathroomAtt()->m_matongWidth;
+	double& guanxiqu = GetBathroomAtt()->m_guanXiWidth;
+
+	if (TYCOM_vFind(taipen, taipenOptions) == -1)
+		taipen = GetTaipenDefault();
+	if (TYCOM_vFind(matong, matongOptions) == -1)
 		GetBathroomAtt()->m_matongWidth = GetMatongDefault();
 	if (m_attr.m_prototypeCode.Find(L"_g") == -1)
-		GetBathroomAtt()->m_guanXiWidth = 0;
-	else if (GetBathroomAtt()->m_guanXiWidth == 0)
-		GetBathroomAtt()->m_guanXiWidth = _ttof(GetGuanxiquDefault());
+		guanxiqu = 0;
+	else if (guanxiqu == 0)
+		guanxiqu = _ttof(GetGuanxiquDefault());
 	GetBathroomAtt()->m_instanceCode = CBathroomAutoName::GetInstance()->GetBathroomName(*GetBathroomAtt());
 }
 
@@ -172,6 +178,7 @@ AcDbObjectId CBathroomGen::GenBathroom(const AcGePoint3d p_pos, int p_angle)
 	SelectMatong(id, m_attr.m_matongWidth);
 	SelectGuanxiWidth(id, m_attr.m_guanXiWidth);
 
+	SetVantTotalSize(id);
 	SetMatongPos(id);
 
 	//////////////////////////////////////////////////////////////////////////
@@ -227,6 +234,7 @@ bool CBathroomGenKI::CheckParameter(CString& errMsg)
 		return false;
 	}
 
+	double linyuWidth = max(ventY + 420, 850.0);
 	double matongWidth = GetMatongPos() * 2;
 	double taipenWidth = _ttof(m_attr.m_taipenWidth);
 	double guanxiWidth = m_attr.m_guanXiWidth;
@@ -241,10 +249,10 @@ bool CBathroomGenKI::CheckParameter(CString& errMsg)
 			errMsg = L"台盆不能超出盥洗区";
 			return false;
 		}
-		minYLen = ventY + 570 + matongWidth + guanxiWidth;
+		minYLen = linyuWidth + matongWidth + guanxiWidth + 150;
 	}
 	else
-		minYLen = ventY + 470 + matongWidth + taipenWidth;
+		minYLen = linyuWidth + matongWidth + taipenWidth + 50;
 	if (isI4)
 		minYLen += 650;
 
@@ -255,6 +263,18 @@ bool CBathroomGenKI::CheckParameter(CString& errMsg)
 	}
 
 	return true;
+}
+
+void CBathroomGenKI::SetVantTotalSize(AcDbObjectId bathroomId)
+{
+	double ventX, ventY;
+	m_attr.GetAirVentSize(ventX, ventY);
+	double width = max(790.0, ventY + 360);
+
+	acDocManager->lockDocument(curDoc());
+	TYCOM_SetDynamicBlockValue(bathroomId, L"排气道立管X总尺寸", ventX);
+	TYCOM_SetDynamicBlockValue(bathroomId, L"排气道立管Y总尺寸", width);
+	acDocManager->unlockDocument(curDoc());
 }
 
 double CBathroomGenKI::GetMatongPos_I3()
@@ -298,14 +318,25 @@ bool CBathroomGenKL::CheckParameter(CString& errMsg)
 		return false;
 	}
 
+	bool isB = (m_attr.m_prototypeCode.Find(L"_b") != -1);
+	bool isL4 = (m_attr.m_prototypeCode.Find(L"L4") != -1);
+
+	double minXLen = ventX + 470 + 900;
+	if (isB)
+		minXLen += 50; //标准淋浴房实际宽度为950
+
+	if (minXLen > xLen + TOL)
+	{
+		errMsg = L"无法放置淋浴房，请减小排气道X方向尺寸后重试";
+		return false;
+	}
+
 	double taipenWidth = _ttof(m_attr.m_taipenWidth);
 
 	double minYLen;
-	bool isB = (m_attr.m_prototypeCode.Find(L"_b") != -1);
-	bool isL4 = (m_attr.m_prototypeCode.Find(L"L4") != -1);
-	minYLen = 1000 + taipenWidth;
+	minYLen = 980 + 50 + taipenWidth;
 	if (isB)
-		minYLen += 100;
+		minYLen -= 30; //标准淋浴房实际宽度为950
 	if (isL4)
 		minYLen += 650;
 
@@ -316,4 +347,21 @@ bool CBathroomGenKL::CheckParameter(CString& errMsg)
 	}
 
 	return true;
+}
+
+void CBathroomGenKL::SetVantTotalSize(AcDbObjectId bathroomId)
+{
+	double xLen = GetXLength();
+	double ventX, ventY;
+	m_attr.GetAirVentSize(ventX, ventY);
+
+	if (m_attr.m_prototypeCode.Find(L"_b") == -1)
+		ventX = xLen - 1010;
+	else
+		ventX += 360;
+
+	acDocManager->lockDocument(curDoc());
+	TYCOM_SetDynamicBlockValue(bathroomId, L"排气道立管X总尺寸", ventX);
+	TYCOM_SetDynamicBlockValue(bathroomId, L"排气道立管Y总尺寸", ventY);
+	acDocManager->unlockDocument(curDoc());
 }

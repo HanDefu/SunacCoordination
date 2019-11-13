@@ -51,33 +51,40 @@ public:
 	void UpdateInstanceCode();
 	void UpdateVent();
 	void UpdateDimDataToComboBox(CComboBox& comboBox, const AttrWindow& attrWindow, CString code);
+	void InitDimComboBoxInt(CComboBox& comboBox, vdouble options, double dimValue);
 	void LoadDefaultValue();
 	AttrWindow* GetSelWindow();
+
+	bool CheckValueModulo(CComboBox& comboBox, CString p_sType, int p_value); //检查数据是否是50的模数
 
 	void SetEditMode(AcDbBlockReference* pBlock);
 
 	//插入全部，测试用
 	void InsertAllWindows();
 
+	double GetArea()const { return (double(m_nWidth*m_nHeight)) / 1e6; }
+
 protected:
 
 	CGridCtrlWithPreview m_preWindow;
 
-	CEdit m_width; //宽度
-	CEdit m_height; //高度
+	int m_nWidth;
+	int m_nHeight;
+
 	CComboBox m_areaType; //功能区类型
 	CComboBox m_openType; //开启类型
 	CComboBox m_openAmount; //开启扇数量
 	CEdit m_ventilation; //通风量
-	CEdit m_area; //面积
-	CComboBox m_rate; //比值
+
+	//CEdit m_area; //面积
+	//CComboBox m_rate; //比值
 
 	CEdit m_number; //门窗编号
-	CComboBox m_W1; //开启扇宽度
-	CComboBox m_H2; //下固定值
+	CComboBox m_comboW1; //开启扇宽度
+	CComboBox m_comboH2; //下固定值
+	CComboBox m_comboW3;	//转角宽度
+	CComboBox m_comboH3; //窗下墙高
 	CComboBox m_distance; //距外墙距离
-	CComboBox m_W3;
-	CComboBox m_H3;
 	CComboBox m_insertDir;
 	
 	int m_radioDoor; //门窗单选
@@ -88,12 +95,11 @@ protected:
 	CButton m_isMirror;
 
 	vector<AttrWindow> m_allWindows;
-	double m_selWidth; //选中原型的开间
-	double m_selHeight;//选中原型的进深
 
 	AcDbBlockReference* m_pCurEdit;
 
 	bool m_isMoldless;//是否非模态对话框
+public:
 };
 
 extern CWindowDlg* g_windowDlg;

@@ -275,7 +275,7 @@ std::vector<AttrWindow >  CWindowLocalDataFromDB::GetWindows(double width, doubl
 		{
 			double dimW = m_allWindowsData[i].GetW();
 			double dimH = m_allWindowsData[i].GetH();
-			if ((width != dimW) && (height != dimH))
+			if ((width != dimW) || (height != dimH))
 				continue;
 		}
 

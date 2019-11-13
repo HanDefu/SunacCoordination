@@ -113,6 +113,19 @@ void CMD_SunacWindowAdvanceDesign() //门窗深化设计
 	g_windowAdvanceDlg->ShowWindow(SW_SHOW);
 }
 
+void CMD_SunacWindowFloorSetting()//门窗楼层设置
+{
+	//TODO
+}
+void CMD_SunacWindowTop2Front()//门窗平面到立面
+{
+	//TODO
+}
+void CMD_SunacWindowFront2Top()//门窗立面到平面
+{
+	//TODO
+}
+
 //厨房
 void CMD_SunacKitchen()
 {

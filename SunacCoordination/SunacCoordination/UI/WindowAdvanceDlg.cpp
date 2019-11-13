@@ -5,6 +5,7 @@
 #include "WindowAdvanceDlg.h"
 #include "../Common/ComFun_Interactive.h"
 #include "../Common/ComFun_Sunac.h"
+#include "../Common/ComFun_Math.h"
 #include "../Object/WindowStatistic/AluminumSeries.h"
 #include "../Object/WindowStatistic/GlassSeries.h"
 #include "../Object/WindowStatistic/AuxiliaryFrameSeries.h"
@@ -106,6 +107,7 @@ BOOL CWindowAdvanceDlg::OnInitDialog()
 	CAcUiDialog::OnInitDialog();
 	OnBnClickedSelectOnDwg();
 	InitAluminumSeries();
+	InitHeatCoeffCtrl();
 	InitGlassSeries();
 	InitMaterialType();
 	InitAuxiliaryFrame();
@@ -198,6 +200,25 @@ void CWindowAdvanceDlg::InitGlassSeries()
 	}
 	defValue = m_selAttrWindows[0]->m_material.sGlassSerial;
 	TYUI_InitComboBox(m_boLi, glassOptions, defValue);
+}
+void CWindowAdvanceDlg::InitHeatCoeffCtrl() //初始化传热系数
+{
+	if (m_selAttrWindows.empty())
+	{
+		return;
+	}
+
+	for (UINT i = 0; i < m_selAttrWindows.size(); i++)
+	{
+		if (JHCOM_equ(m_selAttrWindows[i]->m_material.heatCoeff, m_selAttrWindows[0]->m_material.heatCoeff, 0.01) == false)
+		{
+			TYUI_SetText(m_eidtJieneng, L"多种");
+			return;
+		}
+	}
+	CString str;
+	str.Format(_T("%.2f"), m_selAttrWindows[0]->m_material.heatCoeff);
+	TYUI_SetText(m_eidtJieneng, str);
 }
 
 void CWindowAdvanceDlg::InitAluminumSeries()
