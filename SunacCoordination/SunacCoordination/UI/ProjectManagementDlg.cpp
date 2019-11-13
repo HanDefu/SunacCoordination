@@ -145,18 +145,44 @@ void CProjectManagementDlg::FillPjtMngTreeCtrl()
 	m_TreePrjDir.Expand(hTreeItem, TVE_EXPAND);
 }
 
-LRESULT CProjectManagementDlg::OnUpdateFileState(WPARAM, LPARAM)
+LRESULT CProjectManagementDlg::OnUpdateFileState(WPARAM FileName, LPARAM)
 {
 	FillPjtGridCtrl(m_selectedDir);
 
+	/*vector<bool> flag;
+	for (vector<bool>::iterator it = flag.begin(); it != flag.end(); it++)
+	{
+		*it = true;
+	}*/
+	for (int i = 0; i < m_PjtManagementGridCtrl.GetRowCount(); i++)
+	{
+		if (m_PjtManagementGridCtrl.GetItemText(i, 1) == *(CString *)FileName)
+		{
+			AfxMessageBox(m_PjtManagementGridCtrl.GetItemText(i, 1) + m_PjtManagementGridCtrl.GetItemText(i, 7));
+		}
+		/*if (m_PjtManagementGridCtrl.GetItemText(i, 7) == "下载成功！")
+		{
+			CString TempString;
+			TempString.Format(_T("%s下载成功！"), m_PjtManagementGridCtrl.GetItemText(i, 1));
+			AfxMessageBox(TempString);
+		}
+		if (m_PjtManagementGridCtrl.GetItemText(i, 7) == "上传成功！")
+		{
+			CString TempString;
+			TempString.Format(_T("%s上传成功！"), m_PjtManagementGridCtrl.GetItemText(i, 1));
+			AfxMessageBox(TempString);
+		}*/
+	}
 	return 0;
 }
 // CProjectManagementDlg 消息处理程序
 
 static void UIFileUpCBFunc(CUpDownFilePara* p_fileUpdownPara)
 {
+	CString* FileName = &p_fileUpdownPara->sFileName; 
+
 	//更新当前文件的状态
-	::PostMessage(g_projectManagementDlg->m_hWnd, WM_FILE_STATE_CHANGE, 0, 0);
+	::SendMessage(g_projectManagementDlg->m_hWnd, WM_FILE_STATE_CHANGE, (WPARAM)FileName, 0);
 
 	//g_projectManagementDlg->FillPjtGridCtrl(g_projectManagementDlg->m_selectedDir); //采用消息机制更新界面，此处注释
 }
@@ -291,7 +317,6 @@ void CProjectManagementDlg::FillPjtGridCtrl(CProjectDir* SelectedDir)
 		CGridCtrlUtil::SetCellButtonType(m_PjtManagementGridCtrl, i, 9);
 		m_PjtManagementGridCtrl.SetItemState(i, 9, GVIS_READONLY);
 	}
-
 	UpdateData();
 }
 void CProjectManagementDlg::UpdateGridCtrlState(CProjectDir* SelectedDir)
