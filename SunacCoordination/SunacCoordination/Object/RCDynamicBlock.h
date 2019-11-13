@@ -31,7 +31,7 @@ public:
 	RCDynamicBlock & operator=(const RCDynamicBlock &rhs);
 
 	int SetParameter(CString key, double value);
-	int SetParameter(CString key, int value);
+	//int SetParameter(CString key, int value); //数据都存为double型，为避免误用，此处注释，YUAN191113
 	int SetParameter(CString key, CString value);
 
 	int GetParameter(CString key, double &value);
