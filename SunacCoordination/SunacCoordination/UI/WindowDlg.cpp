@@ -256,12 +256,12 @@ void CWindowDlg::OnBnClickedButtonInsert()
 
 	oneWindow.InitParameters();
 
-	oneWindow.SetParameter(L"H", m_nHeight);
-	oneWindow.SetParameter(L"W", m_nWidth);
-	oneWindow.SetParameter(L"W1", W1);
-	oneWindow.SetParameter(L"H2", H2);
-	oneWindow.SetParameter(L"W3", W3);
-	oneWindow.SetParameter(L"H3", H3);
+	oneWindow.SetParameter(L"H", (double)m_nHeight);
+	oneWindow.SetParameter(L"W", (double)m_nWidth);
+	oneWindow.SetParameter(L"W1", (double)W1);
+	oneWindow.SetParameter(L"H2", (double)H2);
+	oneWindow.SetParameter(L"W3", (double)W3);
+	oneWindow.SetParameter(L"H3", (double)H3);
 
 	oneWindow.RunParameters();
 

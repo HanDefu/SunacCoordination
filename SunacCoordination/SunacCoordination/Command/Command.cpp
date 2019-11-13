@@ -64,23 +64,25 @@ void CMD_Login()
 	CAcModuleResourceOverride resOverride;
 
 	DlgLogin dlg;
-/*
-#ifdef WORK_LOCAL
-	CADPalette_RemoveP();
-	CADPalette_AddP();
-
-#else
-	if(IDOK == dlg.DoModal())
+	//if(IDOK == dlg.DoModal())
+	dlg.DoModal();  //TODO
 	{
 		CADPalette_RemoveP();
 		CADPalette_AddP();
 	}
-#endif*/
-	dlg.DoModal();
-	CADPalette_RemoveP();
-	CADPalette_AddP();
 }
 
+void CMD_ShowCADPalette()
+{
+	if (g_pPaletteSet == NULL)
+	{
+		CADPalette_AddP();
+	}
+	else
+	{
+		CADPalette_RemoveP();
+	}
+}
 //窗
 void CMD_SunacWindow()
 {
@@ -347,6 +349,7 @@ void CADPalette_RemoveP()
 {
 	if (g_pPaletteSet == NULL)
 		return;
+
 	while (g_pPaletteSet->GetPaletteCount() > 0)
 	{
 		CAdUiPalette* pPalette = g_pPaletteSet->GetPalette(0);

@@ -7,6 +7,7 @@ void CADPalette_AddP();
 void CADPalette_RemoveP();
 
 void CMD_Login();
+void CMD_ShowCADPalette();
 
 //´°»§
 void CMD_SunacWindow();
