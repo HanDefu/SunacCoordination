@@ -102,14 +102,20 @@ CString CBathroomGen::GetGuanxiquDefault()
 
 void CBathroomGen::InitBathroomByDefault()
 {
-	if (GetBathroomAtt()->m_taipenWidth.IsEmpty())
-		GetBathroomAtt()->m_taipenWidth = GetTaipenDefault();
-	if (GetBathroomAtt()->m_matongWidth.IsEmpty())
+	vCString taipenOptions = GetTaipenOptions();
+	vCString matongOptions = GetMatongOptions();
+	CString& taipen = GetBathroomAtt()->m_taipenWidth;
+	CString& matong = GetBathroomAtt()->m_matongWidth;
+	double& guanxiqu = GetBathroomAtt()->m_guanXiWidth;
+
+	if (TYCOM_vFind(taipen, taipenOptions) == -1)
+		taipen = GetTaipenDefault();
+	if (TYCOM_vFind(matong, matongOptions) == -1)
 		GetBathroomAtt()->m_matongWidth = GetMatongDefault();
 	if (m_attr.m_prototypeCode.Find(L"_g") == -1)
-		GetBathroomAtt()->m_guanXiWidth = 0;
-	else if (GetBathroomAtt()->m_guanXiWidth == 0)
-		GetBathroomAtt()->m_guanXiWidth = _ttof(GetGuanxiquDefault());
+		guanxiqu = 0;
+	else if (guanxiqu == 0)
+		guanxiqu = _ttof(GetGuanxiquDefault());
 	GetBathroomAtt()->m_instanceCode = CBathroomAutoName::GetInstance()->GetBathroomName(*GetBathroomAtt());
 }
 

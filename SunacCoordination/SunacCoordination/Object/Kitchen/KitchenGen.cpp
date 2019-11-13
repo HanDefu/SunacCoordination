@@ -161,12 +161,20 @@ CString CKitchGen::GetZhaotaiDefault()
 
 void CKitchGen::InitKitchenByDefault()
 {
-	if (GetKitchenAtt()->m_shuiPenType.IsEmpty())
-		GetKitchenAtt()->m_shuiPenType = GetShuipenDefault();
-	if (GetKitchenAtt()->m_bingXiangType.IsEmpty())
-		GetKitchenAtt()->m_bingXiangType = GetBinxiangDefault();
-	if (GetKitchenAtt()->m_zaoTaiType.IsEmpty())
-		GetKitchenAtt()->m_zaoTaiType = GetZhaotaiDefault();
+	vCString shuipenOptions = GetShuipenOptions();
+	vCString bingxiangOptions = GetBinxiangOptions();
+	vCString zaotaiOptions = GetZhaotaiOptions();
+	CString& shuipen = GetKitchenAtt()->m_shuiPenType;
+	CString& bingxiang = GetKitchenAtt()->m_bingXiangType;
+	CString& zaotai = GetKitchenAtt()->m_zaoTaiType;
+
+	if (TYCOM_vFind(shuipen, shuipenOptions) == -1)
+		shuipen = GetShuipenDefault();
+	if (TYCOM_vFind(bingxiang, bingxiangOptions) == -1)
+		bingxiang = GetBinxiangDefault();
+	if (TYCOM_vFind(zaotai, zaotaiOptions) == -1)
+		zaotai = GetZhaotaiDefault();
+
 	GetKitchenAtt()->m_instanceCode = CKitchenAutoName::GetInstance()->GetKitchenName(*GetKitchenAtt());
 }
 
