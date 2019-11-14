@@ -176,6 +176,7 @@ int RCDynamicBlock::InitParameters()
 
 	AcDbBlockReference *pBlkRef = AcDbBlockReference::cast(pEnt);
 	m_blockInsertPos = pBlkRef->position();
+	pBlkRef->getGeomExtents(m_blockExtent);
 	// initialise a AcDbDynBlockReference from the object id of the blockreference
 	AcDbDynBlockReference* pDynBlkRef = new AcDbDynBlockReference(pBlkRef->objectId());
 	//Don't forget to close the blockreference here, otherwise you wont be able to modify properties

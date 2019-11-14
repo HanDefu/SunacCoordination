@@ -37,6 +37,7 @@ public:
 	CString m_blockRecordName;//
 
 	AcGePoint3d m_blockInsertPos;
+	AcDbExtents m_blockExtent;
 };
 
 

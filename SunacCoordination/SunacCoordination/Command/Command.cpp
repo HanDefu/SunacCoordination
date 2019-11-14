@@ -232,7 +232,8 @@ void CMD_SunacWindowTop2Front()//门窗平面到立面
 	//////////////////////////////////////////////////////////////////////////
 	AcDbObjectIdArray idsNoFloorInfo; //没有设置楼层的窗户
 	vector<AttrWindow>  winAtts;
-	vector<AcGePoint3d> allPos;
+	vector<AcGePoint3d> allPos; //插入点
+	vector<AcDbExtents> allExtents; //插入点
 	for (UINT i = 0; i < m_vids.size(); i++)
 	{
 		RCWindow oneWindow;
@@ -252,6 +253,7 @@ void CMD_SunacWindowTop2Front()//门窗平面到立面
 			pAtt->close();
 
 			allPos.push_back(oneWindow.m_blockInsertPos);
+			allExtents.push_back(oneWindow.m_blockExtent);
 		}
 	}
 
@@ -268,18 +270,27 @@ void CMD_SunacWindowTop2Front()//门窗平面到立面
 	//判断窗户的方向
 	E_DIRECTION viewDir = E_DIR_BOTTOM;
 
+	vector<double> allXvalue;
+	if (viewDir==E_DIR_BOTTOM)
+	{
+		for (UINT i = 0; i < allExtents.size(); i++)
+		{
+			allXvalue.push_back(allExtents[i].minPoint().x);
+		}
+	}
+	else
+	{
+		//TODO
+		return;
+	}
+
 	//对原来的窗户进行排序，找到最左侧的位置
 	double minX = 1e10; 
-	double minY = 1e10;
-	for (UINT i = 0; i < allPos.size(); i++)
+	for (UINT i = 0; i < allXvalue.size(); i++)
 	{
-		if (allPos[i].x<minX)
+		if (allXvalue[i]<minX)
 		{
-			minX = allPos[i].x;
-		}
-		if (allPos[i].y<minY)
-		{
-			minY = allPos[i].y;
+			minX = allXvalue[i];
 		}
 	}
 
@@ -287,13 +298,13 @@ void CMD_SunacWindowTop2Front()//门窗平面到立面
 	//////////////////////////////////////////////////////////////////////////
 	AcDbObjectIdArray windowObjIds;
 	AcDbObjectIdArray oneFloorIds;
-	for (UINT i = 0; i < allPos.size(); i++)
+	for (UINT i = 0; i < winAtts.size(); i++)
 	{
 		const AttrWindow& curWinAtt = winAtts[i];
 
 		//当前列的插入点
 		AcGePoint3d posColum = insertPos;
-		posColum.x += allPos[i].x - minX;
+		posColum.x += allXvalue[i] - minX;
 
 		const CFloorInfo floorInfo = curWinAtt.GetFloorInfo();
 		const vector<int>  allFloos = floorInfo.GetAllFloor();
@@ -302,11 +313,12 @@ void CMD_SunacWindowTop2Front()//门窗平面到立面
 
 		const int curFloor = allFloos[0];
 		AcGePoint3d pos = posColum;
-		pos.y += floorInfo.GetFloorHeight()* (curFloor - 1);
-		if (curWinAtt.GetType() == WINDOW)
-		{
-			pos.y += curWinAtt.GetHeightUnderWindow();
-		}
+		//yuan 选择左下角窗户时以下注释，Y方向选择楼层基准位置时放开
+		//pos.y += floorInfo.GetFloorHeight()* (curFloor - 1);
+		//if (curWinAtt.GetType() == WINDOW)
+		//{
+		//	pos.y += curWinAtt.GetHeightUnderWindow();
+		//}
 
 		AcDbObjectId idOut = GenerateWindow(curWinAtt, pos);
 		windowObjIds.append(idOut);
@@ -315,7 +327,7 @@ void CMD_SunacWindowTop2Front()//门窗平面到立面
 
 	Acad::ErrorStatus es;
 	//其他楼层采用复制方式
-	for (UINT i = 0; i < allPos.size(); i++)
+	for (UINT i = 0; i < winAtts.size(); i++)
 	{
 		const AttrWindow& curWinAtt = winAtts[i];
 
