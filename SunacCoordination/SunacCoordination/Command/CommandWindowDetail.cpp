@@ -57,7 +57,7 @@ typedef struct WindowDetailTemplate
 	const static int areaY= 630;
 
 	//开启面积
-	const static int openAreaX = 2700;
+	const static int openAreaX = 2630;
 	const static int openAreaY = 150;
 
     //注释

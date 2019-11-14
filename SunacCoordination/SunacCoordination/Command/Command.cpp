@@ -286,6 +286,7 @@ void CMD_SunacWindowTop2Front()//门窗平面到立面
 
 	//////////////////////////////////////////////////////////////////////////
 	AcDbObjectIdArray windowObjIds;
+	AcDbObjectIdArray oneFloorIds;
 	for (UINT i = 0; i < allPos.size(); i++)
 	{
 		const AttrWindow& curWinAtt = winAtts[i];
@@ -294,21 +295,55 @@ void CMD_SunacWindowTop2Front()//门窗平面到立面
 		AcGePoint3d posColum = insertPos;
 		posColum.x += allPos[i].x - minX;
 
-		CFloorInfo floorInfo = curWinAtt.GetFloorInfo();
-		vector<int>  allFloos = floorInfo.GetAllFloor();
-		for (UINT n = 0; n < allFloos.size(); n++)
-		{
-			int curFloor = allFloos[n];
-			AcGePoint3d pos = posColum;
-			pos.y += floorInfo.GetFloorHeight()* (curFloor - 1);
-			if (curWinAtt.GetType() == WINDOW)
-			{
-				pos.y += curWinAtt.GetHeightUnderWindow();
-			}
+		const CFloorInfo floorInfo = curWinAtt.GetFloorInfo();
+		const vector<int>  allFloos = floorInfo.GetAllFloor();
+		if (allFloos.size()==0)
+			continue;
 
-			AcDbObjectId idOut= GenerateWindow(curWinAtt, pos);
+		const int curFloor = allFloos[0];
+		AcGePoint3d pos = posColum;
+		pos.y += floorInfo.GetFloorHeight()* (curFloor - 1);
+		if (curWinAtt.GetType() == WINDOW)
+		{
+			pos.y += curWinAtt.GetHeightUnderWindow();
+		}
+
+		AcDbObjectId idOut = GenerateWindow(curWinAtt, pos);
+		windowObjIds.append(idOut);
+		oneFloorIds.append(idOut);
+	}
+
+	Acad::ErrorStatus es;
+	//其他楼层采用复制方式
+	for (UINT i = 0; i < allPos.size(); i++)
+	{
+		const AttrWindow& curWinAtt = winAtts[i];
+
+		AcDbEntity* pEnt = NULL;
+		es = acdbOpenObject(pEnt, oneFloorIds[i], AcDb::kForRead);
+		if (es != Acad::eOk)
+			continue;
+
+		const CFloorInfo floorInfo = curWinAtt.GetFloorInfo();
+		const vector<int>  allFloos = floorInfo.GetAllFloor();
+		if (allFloos.size()==0)
+			continue;
+		
+		const int firstFloor = allFloos[0];
+		for (UINT n = 1; n < allFloos.size(); n++)
+		{
+			AcGeMatrix3d xform;
+			xform.setTranslation(AcGeVector3d(0, (allFloos[n] - firstFloor)*floorInfo.GetFloorHeight(), 0));
+			
+			AcDbEntity*  pCopyObj = NULL;
+			es = pEnt->getTransformedCopy(xform, pCopyObj);
+			AcDbObjectId idOut = JHCOM_PostToModelSpace(pCopyObj);
+			pCopyObj->close();
+
 			windowObjIds.append(idOut);
 		}
+
+		pEnt->close();
 	}
 }
 
