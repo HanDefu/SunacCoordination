@@ -192,6 +192,11 @@ void CProjectManagementDlg::OnBnClickedButtonUpload()
 	CString FileName;
 	CString filter = L"参数文件(*.dwg)|*.dwg|All Files(*.*)|*.*||";
     CFileDialog dlg(FALSE, L"dwg", L"*.dwg", NULL, filter);
+	if (!m_selectedDir)
+	{
+		AfxMessageBox(L"请选择有效目录！");
+		return;
+	}
 	if(dlg.DoModal() == IDOK)
 	{
 		USES_CONVERSION;
@@ -231,6 +236,8 @@ BOOL CProjectManagementDlg::OnInitDialog()
 	Font.CreatePointFont(160, L"");
 	m_StcRootName.SetFont(&Font);
 	Font.Detach();
+
+	m_selectedDir = nullptr;
 
 	InitGridCtrl();	
 
