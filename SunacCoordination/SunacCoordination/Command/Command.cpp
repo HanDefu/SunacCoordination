@@ -31,6 +31,7 @@
 #include "../UI/DlgLogin.h"
 #include "../UI/WindowAdvanceDlg.h"
 #include "../Common/ComFun_Math.h"
+#include "../Common/ComFun_ACad.h"
 #include "../Object/WindowStatistic/WindowStatictic.h"
 #include "../Object/KitchenBathroom/KitchenBathroomStatistic.h"
 #include "../Object/Railing/RailingStatistic.h"
@@ -180,6 +181,40 @@ void CMD_SunacWindowFloorSetting()//门窗楼层设置
 	acutPrintf(_T("设置楼层信息成功\n"));
 }
 
+AcDbObjectId  GenerateWindow(const AttrWindow& curWinAtt, AcGePoint3d pos)
+{
+	RCWindow oneWindow;
+	AcDbObjectId id = oneWindow.Insert(curWinAtt.GetPrototypeDwgFilePath(E_VIEW_FRONT), pos, 0, L"0", 256);
+
+	oneWindow.InitParameters();
+
+	oneWindow.SetParameter(L"H", (double)curWinAtt.GetH());
+	oneWindow.SetParameter(L"W", (double)curWinAtt.GetW());
+	oneWindow.SetParameter(L"W1", (double)curWinAtt.GetW1());
+	if (curWinAtt.HasValue(_T("H2")))
+		oneWindow.SetParameter(L"H2", (double)curWinAtt.GetH2());
+	if (curWinAtt.HasValue(_T("W3")))
+		oneWindow.SetParameter(L"W3", (double)curWinAtt.GetW3());
+	if (curWinAtt.HasValue(_T("H3")))
+		oneWindow.SetParameter(L"H3", (double)curWinAtt.GetH3());
+
+	oneWindow.RunParameters();
+
+	if (curWinAtt.m_isMirror && (curWinAtt.m_isMirrorWindow == false))
+	{
+		AcGePoint3d basePt(pos.x + curWinAtt.GetW() / 2, 0, 0);
+		TYCOM_Mirror(oneWindow.m_id, basePt, AcGeVector3d(0, 1, 0));
+	}
+
+
+	//把UI的数据记录在图框的扩展字典中
+	AttrWindow * pWindow = new AttrWindow(curWinAtt);
+	oneWindow.AddAttribute(pWindow);
+	pWindow->close();
+
+	return id;
+}
+
 void CMD_SunacWindowTop2Front()//门窗平面到立面
 {
 	//1.选择需要设置楼层的门窗
@@ -194,7 +229,10 @@ void CMD_SunacWindowTop2Front()//门窗平面到立面
 	if (bSuc == false)
 		return;
 
+	//////////////////////////////////////////////////////////////////////////
+	AcDbObjectIdArray idsNoFloorInfo; //没有设置楼层的窗户
 	vector<AttrWindow>  winAtts;
+	vector<AcGePoint3d> allPos;
 	for (UINT i = 0; i < m_vids.size(); i++)
 	{
 		RCWindow oneWindow;
@@ -204,15 +242,77 @@ void CMD_SunacWindowTop2Front()//门窗平面到立面
 		AttrWindow* pAtt = oneWindow.GetAttribute();
 		if (pAtt != NULL)
 		{
+			if (pAtt->GetFloorInfo().GetAllFloor().size() == 0)
+			{
+				idsNoFloorInfo.append(m_vids[i]);
+			}
+			
 			AttrWindow attTemp(*pAtt);
 			winAtts.push_back(attTemp);
 			pAtt->close();
+
+			allPos.push_back(oneWindow.m_blockInsertPos);
+		}
+	}
+
+	if (idsNoFloorInfo.length()>0)
+	{
+		AfxMessageBox(_T("部分窗户未设置楼层和层高"));
+		for (int i = 0; i < idsNoFloorInfo.length(); i++)
+		{
+			JHCOM_HilightObject(idsNoFloorInfo[i], true);
+		}
+		return;
+	}
+
+	//判断窗户的方向
+	E_DIRECTION viewDir = E_DIR_BOTTOM;
+
+	//对原来的窗户进行排序，找到最左侧的位置
+	double minX = 1e10; 
+	double minY = 1e10;
+	for (UINT i = 0; i < allPos.size(); i++)
+	{
+		if (allPos[i].x<minX)
+		{
+			minX = allPos[i].x;
+		}
+		if (allPos[i].y<minY)
+		{
+			minY = allPos[i].y;
 		}
 	}
 
 
-	//TODO
+	//////////////////////////////////////////////////////////////////////////
+	AcDbObjectIdArray windowObjIds;
+	for (UINT i = 0; i < allPos.size(); i++)
+	{
+		const AttrWindow& curWinAtt = winAtts[i];
+
+		//当前列的插入点
+		AcGePoint3d posColum = insertPos;
+		posColum.x += allPos[i].x - minX;
+
+		CFloorInfo floorInfo = curWinAtt.GetFloorInfo();
+		vector<int>  allFloos = floorInfo.GetAllFloor();
+		for (UINT n = 0; n < allFloos.size(); n++)
+		{
+			int curFloor = allFloos[n];
+			AcGePoint3d pos = posColum;
+			pos.y += floorInfo.GetFloorHeight()* (curFloor - 1);
+			if (curWinAtt.GetType() == WINDOW)
+			{
+				pos.y += curWinAtt.GetHeightUnderWindow();
+			}
+
+			AcDbObjectId idOut= GenerateWindow(curWinAtt, pos);
+			windowObjIds.append(idOut);
+		}
+	}
 }
+
+
 void CMD_SunacWindowFront2Top()//门窗立面到平面
 {
 	//TODO
@@ -401,9 +501,12 @@ void CMD_SunacWindowsStatistics()
 
 	if (idsNonAlserials.size()>0)
 	{
-		AfxMessageBox(_T("型材系列未设置"));
+		AfxMessageBox(_T("部分窗户型材系列未设置"));
 
-		//TODO 高亮设置的门窗
+		for (UINT i = 0; i < idsNonAlserials.size(); i++)
+		{
+			JHCOM_HilightObject(idsNonAlserials[i], true);
+		}
 		return;
 	}
 

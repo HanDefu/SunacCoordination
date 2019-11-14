@@ -69,14 +69,6 @@ inline CString BathroomTypeToCString(EBathroomType type)
 	}
 }
 
-enum E_DIRECTION
-{
-	E_DIR_BOTTOM= 0,
-	E_DIR_RIGHT,
-	E_DIR_TOP,
-	E_DIR_LEFT,
-	E_DIR_UNKNOWN
-};
 
 //Â¥²ãÇø¼ä
 enum E_KITCHEN_FLOOR_RANGE

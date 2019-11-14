@@ -237,7 +237,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	RCWindow oneWindow;
 	if (viewDir == E_VIEW_FRONT) //Á¢Ãæ
 	{
-		oneWindow.Insert(TY_GetPrototypeFilePath() + pSelWinAttr->m_frontViewFile.fileName, origin, 0, L"0", 256);
+		oneWindow.Insert(pSelWinAttr->GetPrototypeDwgFilePath(E_VIEW_FRONT), origin, 0, L"0", 256);
 	}
 	else if (viewDir == E_VIEW_TOP)
 	{
@@ -259,11 +259,17 @@ void CWindowDlg::OnBnClickedButtonInsert()
 			offsetXY.y += m_nWidth;
 		}
 
-		oneWindow.Insert(TY_GetPrototypeFilePath() + pSelWinAttr->m_topViewFile.fileName, origin + offsetXY, rotateAngle, L"0", 256);
+		oneWindow.Insert(pSelWinAttr->GetPrototypeDwgFilePath(E_VIEW_TOP), origin + offsetXY, rotateAngle, L"0", 256);
+	}
+	else if (viewDir == E_VIEW_LEFT)
+	{
+		oneWindow.Insert(pSelWinAttr->GetPrototypeDwgFilePath(E_VIEW_LEFT), origin, 0, L"0", 256);
 	}
 	else
 	{
-		oneWindow.Insert(TY_GetPrototypeFilePath() + pSelWinAttr->m_leftViewFile.fileName, origin, 0, L"0", 256);
+		assert(false);
+		ShowWindow(TRUE);
+		return;
 	}
 
 	oneWindow.InitParameters();
@@ -459,7 +465,7 @@ void CWindowDlg::OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult)
 	vint nH3Optins;
 	nH3Optins.push_back(600);
 	nH3Optins.push_back(900);
-	TYUI_InitComboBox(m_comboH3, nH3Optins, 900);
+	TYUI_InitComboBox(m_comboH3, nH3Optins, (int)(pSelWinAttr->GetHeightUnderWindow()));
 
 	if (pSelWinAttr->m_isDynamic)
 	{

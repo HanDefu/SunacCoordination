@@ -803,3 +803,32 @@ E_WindowDoorType AttrWindow::GetWindowDoorType() const
 	return ToWindowDoorType(m_openType + sType);
 }
 
+CString AttrWindow::GetPrototypeDwgFilePath(eViewDir p_view)const
+{
+	CString sFileName;
+	switch (p_view)
+	{
+	case E_VIEW_FRONT:
+		sFileName = m_frontViewFile.fileName;
+		break;
+	case E_VIEW_TOP:
+		sFileName = m_topViewFile.fileName;
+		break;
+	case E_VIEW_LEFT:
+		sFileName = m_leftViewFile.fileName;
+		break;
+	case E_VIEW_EXTEND:
+		sFileName = m_file.fileName;
+		break;
+	default:
+		break;
+	}
+
+	if (sFileName.IsEmpty())
+	{
+		return sFileName;
+	}
+
+
+	return TY_GetPrototypeFilePath() + sFileName;
+}

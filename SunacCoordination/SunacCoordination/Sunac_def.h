@@ -37,6 +37,15 @@ typedef enum eViewDir
 	E_VIEW_ALL = 0xff,
 }eViewDir;
 
+enum E_DIRECTION
+{
+	E_DIR_BOTTOM = 0,
+	E_DIR_RIGHT,
+	E_DIR_TOP,
+	E_DIR_LEFT,
+	E_DIR_UNKNOWN
+};
+
 typedef enum eRailingType
 {
 	E_RAILING_TIEYI,//Ьњве
