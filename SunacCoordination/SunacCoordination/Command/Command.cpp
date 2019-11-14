@@ -86,6 +86,10 @@ void CMD_ShowCADPalette()
 			CADPalette_RemoveP();
 		}
 	}
+	else
+	{
+		AfxMessageBox(_T("请先登录"));
+	}
 }
 //窗
 void CMD_SunacWindow()

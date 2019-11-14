@@ -28,6 +28,8 @@ CWindowDlg::CWindowDlg(CWnd* pParent /*=NULL*/)
 	m_pCurEdit = NULL;
 	m_nWidth = 0;
 	m_nHeight = 0;
+
+	m_selectRect = TYRect(AcGePoint3d::kOrigin, AcGePoint3d::kOrigin);
 }
 
 CWindowDlg::~CWindowDlg()
@@ -83,24 +85,24 @@ void CWindowDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CAcUiDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_PREVIEW_WINDOW, m_preWindow);
-	DDX_Control(pDX, IDC_COMBO_AREATYPE, m_areaType);
-	DDX_Control(pDX, IDC_COMBO_OPENTYPE, m_openType);
-	DDX_Control(pDX, IDC_COMBO_OPENAMOUNT, m_openAmount);
-	DDX_Control(pDX, IDC_EDIT_VENTILATION, m_ventilation);
+	DDX_Control(pDX, IDC_COMBO_AREATYPE, m_comboAreaType);
+	DDX_Control(pDX, IDC_COMBO_OPENTYPE, m_comboOpenType);
+	DDX_Control(pDX, IDC_COMBO_OPENAMOUNT, m_comboOpenAmount);
+	DDX_Control(pDX, IDC_EDIT_VENTILATION, m_editVentilation);
 	DDX_Control(pDX, IDC_COMBO_OPENWIDTH, m_comboW1);
 	DDX_Control(pDX, IDC_COMBO_FIXEDVALUE, m_comboH2);
-	DDX_Control(pDX, IDC_COMBO_DISTANCE, m_distance);
+	DDX_Control(pDX, IDC_COMBO_DISTANCE, m_comboOutWallDistance);
 	DDX_Control(pDX, IDC_EDIT_NUMBER, m_number);
 	DDX_Radio(pDX, IDC_RADIO_DOOR, m_radioDoor);
 	DDX_Radio(pDX, IDC_RADIO_YES, m_radioYes);
 	//DDX_Control(pDX, IDC_EDIT_AREA, m_area);
 	//DDX_Control(pDX, IDC_COMBO_RATE, m_rate);
 	DDX_Check(pDX, IDC_CHECK_AUTOINDEX, m_autoIndex);
-	DDX_Control(pDX, IDC_COMBO_VIEWDIR, m_viewDir);
+	DDX_Control(pDX, IDC_COMBO_VIEWDIR, m_comboViewDir);
 	DDX_Control(pDX, IDC_CHECK_IMAGE, m_isMirror);
 	DDX_Control(pDX, IDC_COMBO_W3, m_comboW3);
 	DDX_Control(pDX, IDC_COMBO_H3, m_comboH3);
-	DDX_Control(pDX, IDC_COMBO_DIR, m_insertDir);
+	DDX_Control(pDX, IDC_COMBO_DIR, m_comboInsertDir);
 	DDX_Text(pDX, IDC_EDIT_WIDTH, m_nWidth);
 	DDX_Text(pDX, IDC_EDIT_HEIGHT, m_nHeight);
 }
@@ -169,7 +171,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		return;
 	}
 
-	if (pSelWinAttr->GetTongFengQty(false) + TOL < TYUI_GetDouble(m_ventilation))
+	if (pSelWinAttr->GetTongFengQty(false) + TOL < TYUI_GetDouble(m_editVentilation))
 	{
 		AfxMessageBox(L"此原型不满足通风量要求");
 		return;
@@ -187,6 +189,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	//{
 	//	return;
 	//}
+
 	//在检查原型编号前设置属性值
 	pSelWinAttr->SetW1(W1);
 	pSelWinAttr->SetH2(H2);
@@ -207,10 +210,11 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	CWindowAutoName::GetInstance()->RenameWindow(*pSelWinAttr);
 
 	//////////////////////////////////////////////////////////////////////////
-	const eViewDir viewDir = (eViewDir)m_viewDir.GetCurSel();
+	const eViewDir viewDir = (eViewDir)m_comboViewDir.GetCurSel();
 
 	ShowWindow(FALSE);
 
+	//选择插入点
 	AcGePoint3d origin;
 	if (m_pCurEdit == NULL)
 	{
@@ -239,19 +243,22 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	{
 		double rotateAngle = 0;
 		AcGeVector3d offsetXY(0, 0, 0);
-		CString sDir = TYUI_GetComboBoxText(m_insertDir);
+		CString sDir = TYUI_GetComboBoxText(m_comboInsertDir);
 		if (sDir == L"南")
 		{
 			rotateAngle = PI;
 			offsetXY.x += m_nWidth;
 		}
-		if (sDir == L"西")
+		else if (sDir == L"西")
+		{
 			rotateAngle = PI / 2;
-		if (sDir == L"东")
+		}
+		else if (sDir == L"东")
 		{
 			rotateAngle = -PI / 2;
 			offsetXY.y += m_nWidth;
 		}
+
 		oneWindow.Insert(TY_GetPrototypeFilePath() + pSelWinAttr->m_topViewFile.fileName, origin + offsetXY, rotateAngle, L"0", 256);
 	}
 	else
@@ -291,9 +298,9 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 {
 	UpdateData();
 
-	CString openType = TYUI_GetComboBoxText(m_openType);
-	int openNum = _ttoi(TYUI_GetComboBoxText(m_openAmount));
-	CString areaType = TYUI_GetComboBoxText(m_areaType);
+	CString openType = TYUI_GetComboBoxText(m_comboOpenType);
+	int openNum = _ttoi(TYUI_GetComboBoxText(m_comboOpenAmount));
+	CString areaType = TYUI_GetComboBoxText(m_comboAreaType);
 
 	if (m_radioDoor == 0)
 		m_allWindows = WebIO::GetInstance()->GetDoors(m_nWidth, m_nHeight, openType, openNum, areaType);
@@ -358,7 +365,7 @@ void CWindowDlg::OnBnClickedCalculate()
 	CDlgWindowAirCalc dlg;
 	if (dlg.DoModal()==IDOK)
 	{
-		TYUI_SetDouble(m_ventilation, dlg.m_airQuality);
+		TYUI_SetDouble(m_editVentilation, dlg.m_airQuality);
 		UpdateData(FALSE);
 	}
 #else
@@ -375,7 +382,7 @@ void CWindowDlg::OnBnClickedCalculate()
 	if (pos != -1)
 		rate /= _ttof(sRate.Mid(pos + 1));
 
-	TYUI_SetDouble(m_ventilation, area * rate);
+	TYUI_SetDouble(m_editVentilation, area * rate);
 #endif
 }
 
@@ -405,11 +412,19 @@ void CWindowDlg::OnBnClickedSelOnDwg()
 	int width = int(rect.GetWidth() + 0.5);
 	int height = int(rect.GetHeight() + 0.5);
 
+	//针对平面图下东西侧窗自动检测宽度
+	if (width<400 && width<height)
+	{
+		swap(width, height);
+	}
+
 	if (width<100 || width>1000000)
 	{
 		AfxMessageBox(_T("门洞尺寸区间不合理"));
 		return;
 	}
+
+	m_selectRect = rect;
 
 	m_nWidth = width;
 	if (height>=400 && height<3000) //若是平面图的高度则不改变原来的高度值
@@ -457,17 +472,24 @@ void CWindowDlg::OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult)
 	pSelWinAttr->m_instanceCode = CWindowAutoName::GetInstance()->GetWindowName(*pSelWinAttr);
 	TYUI_SetText(m_number, pSelWinAttr->m_instanceCode);
 	m_radioYes = (pSelWinAttr->m_isBayWindow ? 0 : 1);
-	TYUI_SetInt(m_distance, int(pSelWinAttr->m_wallDis));
+	TYUI_SetInt(m_comboOutWallDistance, int(pSelWinAttr->m_wallDis));
 
-	m_viewDir.ResetContent();
+	//设置视图方向
+	CString sView = TYUI_GetComboBoxText(m_comboViewDir);
+	m_comboViewDir.ResetContent();
 	if ((!pSelWinAttr->m_frontViewFile.fileName.IsEmpty()) && PathFileExists(TY_GetPrototypeFilePath() + pSelWinAttr->m_frontViewFile.fileName))
-		m_viewDir.AddString(L"立面");
+		m_comboViewDir.AddString(L"立面");
 	if ((!pSelWinAttr->m_topViewFile.fileName.IsEmpty()) && PathFileExists(TY_GetPrototypeFilePath() + pSelWinAttr->m_topViewFile.fileName))
-		m_viewDir.AddString(L"平面");
+		m_comboViewDir.AddString(L"平面");
 	if ((!pSelWinAttr->m_leftViewFile.fileName.IsEmpty()) && PathFileExists(TY_GetPrototypeFilePath() + pSelWinAttr->m_leftViewFile.fileName))
-		m_viewDir.AddString(L"侧视");
-	if (pSelWinAttr->m_viewDir < 3)
-		m_viewDir.SetCurSel(pSelWinAttr->m_viewDir);
+		m_comboViewDir.AddString(L"侧视");
+
+	//保持原来的视图方向
+	if (sView.IsEmpty()==FALSE)
+	{
+		m_comboViewDir.SelectString(0, sView);
+	}
+
 	OnSelChangedView();
 
 	UpdateData(FALSE);
@@ -532,22 +554,23 @@ void CWindowDlg::OnSelChangedView()
 	if (pSelWinAttr == NULL)
 		return;
 
-	CString sView = TYUI_GetComboBoxText(m_viewDir);
-	
+	CString sView = TYUI_GetComboBoxText(m_comboViewDir);
+	if (sView == L"平面")
+		pSelWinAttr->m_viewDir = E_VIEW_TOP;
+	else if (sView == L"立面")
+		pSelWinAttr->m_viewDir = E_VIEW_FRONT;
+	else if (sView == L"侧视")
+		pSelWinAttr->m_viewDir = E_VIEW_LEFT;
+
 	if (sView == L"平面")
 	{
-		pSelWinAttr->m_viewDir = E_VIEW_TOP;
 		TYUI_Show(*GetDlgItem(IDC_STATIC_DIR));
-		TYUI_Show(m_insertDir);
+		TYUI_Show(m_comboInsertDir);
 	}
 	else
 	{
-		if (sView == L"立面")
-			pSelWinAttr->m_viewDir = E_VIEW_FRONT;
-		else if (sView == L"侧视")
-			pSelWinAttr->m_viewDir = E_VIEW_LEFT;
 		TYUI_Hide(*GetDlgItem(IDC_STATIC_DIR));
-		TYUI_Hide(m_insertDir);
+		TYUI_Hide(m_comboInsertDir);
 	}
 }
 
@@ -567,7 +590,7 @@ void CWindowDlg::OnSelChangedWallDis()
 	if (pSelWinAttr == NULL)
 		return;
 
-	pSelWinAttr->m_wallDis = _ttof(TYUI_GetComboBoxText(m_distance));
+	pSelWinAttr->m_wallDis = _ttof(TYUI_GetComboBoxText(m_comboOutWallDistance));
 }
 
 void CWindowDlg::UpdateEnable()
@@ -578,14 +601,14 @@ void CWindowDlg::UpdateEnable()
 
 	if (m_radioDoor == 0)
 	{
-		TYUI_Disable(m_openAmount);
+		TYUI_Disable(m_comboOpenAmount);
 		TYUI_Disable(m_comboW1);
 		TYUI_Disable(*GetDlgItem(IDC_RADIO_YES));
 		TYUI_Disable(*GetDlgItem(IDC_RADIO_NO));
 	}
 	else
 	{
-		TYUI_Enable(m_openAmount);
+		TYUI_Enable(m_comboOpenAmount);
 		TYUI_Enable(m_comboW1);
 		TYUI_Enable(*GetDlgItem(IDC_RADIO_YES));
 		TYUI_Enable(*GetDlgItem(IDC_RADIO_NO));
@@ -704,19 +727,19 @@ void CWindowDlg::LoadDefaultValue()
 	TYUI_SetText(m_number, L"");
 	
 	if (m_radioDoor == 0)
-		TYUI_InitComboBox(m_openType, doorTypes, doorTypes.empty() ? L"" : doorTypes[0]);
+		TYUI_InitComboBox(m_comboOpenType, doorTypes, doorTypes.empty() ? L"" : doorTypes[0]);
 	else
-		TYUI_InitComboBox(m_openType, openTypes, openTypes.empty()? L"" : openTypes[0]);
-	TYUI_InitComboBox(m_areaType, areaTypes, areaTypes.empty() ? L"" : areaTypes[0]);
-	TYUI_InitComboBox(m_openAmount, openAmount, openAmount.empty() ? L"" : openAmount[0]);
-	TYUI_InitComboBox(m_distance, wallDis, wallDis.empty() ? L"" : wallDis[0]);
+		TYUI_InitComboBox(m_comboOpenType, openTypes, openTypes.empty()? L"" : openTypes[0]);
+	TYUI_InitComboBox(m_comboAreaType, areaTypes, areaTypes.empty() ? L"" : areaTypes[0]);
+	TYUI_InitComboBox(m_comboOpenAmount, openAmount, openAmount.empty() ? L"" : openAmount[0]);
+	TYUI_InitComboBox(m_comboOutWallDistance, wallDis, wallDis.empty() ? L"" : wallDis[0]);
 
 	//TYUI_SetInt(m_area, 0);
 	//const vCString& rate = WebIO::GetInstance()->GetConfigDict()->Window_GetRate();
 	//TYUI_InitComboBox(m_rate, rate, rate.empty() ? L"" : rate[0]);
 
-	m_viewDir.SetCurSel(0);
-	m_insertDir.SetCurSel(0);
+	m_comboViewDir.SetCurSel(0);
+	m_comboInsertDir.SetCurSel(0);
 	OnSelChangedView();
 	m_autoIndex = TRUE;
 	m_number.SetReadOnly(TRUE);
@@ -801,14 +824,14 @@ void CWindowDlg::InsertAllWindows()
 		insertPt.x = origin.x + (m_nWidth + 100) * (i % 5);
 		insertPt.y = origin.y + (m_nHeight + 100) * (i / 5);
 
-		int sel = m_viewDir.GetCurSel();
+		int sel = m_comboViewDir.GetCurSel();
 		if (sel == 0)
 			oneWindow.Insert(TY_GetPrototypeFilePath() + pSelWinAttr->m_frontViewFile.fileName, insertPt, 0, L"0", 256);
 		else if (sel == 1)
 		{
 			double rotateAngle = 0;
 			AcGeVector3d offsetXY(0, 0, 0);
-			CString sDir = TYUI_GetComboBoxText(m_insertDir);
+			CString sDir = TYUI_GetComboBoxText(m_comboInsertDir);
 			if (sDir == L"南")
 			{
 				rotateAngle = PI;

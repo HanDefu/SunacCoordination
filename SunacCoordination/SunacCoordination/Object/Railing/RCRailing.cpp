@@ -52,14 +52,18 @@ CString CRCRailing::GetPrototypeFilePath()const
 {
 	return TY_GetPrototypeFilePath_Local() + m_railingAtt.m_prototypeCode + L".dwg";
 }
-bool CRCRailing::CheckLengthHeight()
+bool CRCRailing::CheckLength()
 {
-	return (m_railingAtt.m_length > GetMinWidth()) && (m_railingAtt.m_height > GetMinHeight());
+	return (m_railingAtt.m_length >= GetMinWidth());
+}
+bool CRCRailing::CheckHeight()
+{
+	return (m_railingAtt.m_height >= GetMinHeight());
 }
 //start ÎªÀ¸¸ËµÄ×óÏÂ½Ç
 int CRCRailing::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut)
 {
-	if (CheckLengthHeight()==false)
+	if (CheckLength()==false || CheckHeight()==false)
 	{
 		return -1;
 	}

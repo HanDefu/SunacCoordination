@@ -11,7 +11,7 @@ using namespace std;
 //20191113 版本3，门窗增加窗下墙高度属性
 
 
-//#define  WORK_LOCAL//是否本地工作模式
+#define  WORK_LOCAL//是否本地工作模式
 #define	 CHECK_USE//是否检测权限
 
 //模块类型

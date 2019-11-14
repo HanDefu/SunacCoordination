@@ -802,3 +802,4 @@ E_WindowDoorType AttrWindow::GetWindowDoorType() const
 	CString sType = (GetType() == WINDOW ? L"¥∞" : L"√≈");
 	return ToWindowDoorType(m_openType + sType);
 }
+

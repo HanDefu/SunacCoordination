@@ -160,11 +160,25 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 	CRCRailing* pRailing = CreateRailing(railingAtt);
 
 	//检查数据
-	if (pRailing->CheckLengthHeight()==false ||
-		pRailing->GenRailing() == false)
+	CString str;
+	if (pRailing->CheckLength() == false )
 	{
+		str.Format(_T("栏杆长度必须大于等于%d"), (int)(pRailing->GetMinWidth()));
+		AfxMessageBox(str);
 		delete pRailing;
+		return;
+	}
+	if (pRailing->CheckHeight() == false)
+	{
+		str.Format(_T("栏杆高度必须大于等于%d"), (int)(pRailing->GetMinHeight()));
+		AfxMessageBox(str);
+		delete pRailing;
+		return;
+	}
+	if (pRailing->GenRailing() == false)
+	{
 		AfxMessageBox(_T("此栏杆长度无法生成"));
+		delete pRailing;
 		return;
 	}
 

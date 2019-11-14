@@ -257,7 +257,7 @@ void CTreeCtrlEx::OnClickedPopupMenu(UINT nID)
 void CTreeCtrlEx::DrawItemText(CDC * pDC,HTREEITEM pItem,CRect Rect)
 {
 	CFont Font;
-	Font.CreatePointFont(105,_T("Calibri"));//创建字体
+	Font.CreatePointFont(90,_T("Calibri"));//创建字体
 	pDC->SelectObject(&Font);
 	CString ItemText = GetItemText(pItem);
 	pDC->SetBkMode(TRANSPARENT);
