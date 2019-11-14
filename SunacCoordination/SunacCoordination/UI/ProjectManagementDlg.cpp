@@ -192,6 +192,11 @@ void CProjectManagementDlg::OnBnClickedButtonUpload()
 	CString FileName;
 	CString filter = L"参数文件(*.dwg)|*.dwg|All Files(*.*)|*.*||";
     CFileDialog dlg(FALSE, L"dwg", L"*.dwg", NULL, filter);
+	if (!m_selectedDir)
+	{
+		AfxMessageBox(L"请选择有效目录！");
+		return;
+	}
 	if(dlg.DoModal() == IDOK)
 	{
 		USES_CONVERSION;
@@ -231,6 +236,8 @@ BOOL CProjectManagementDlg::OnInitDialog()
 	Font.CreatePointFont(160, L"");
 	m_StcRootName.SetFont(&Font);
 	Font.Detach();
+
+	m_selectedDir = nullptr;
 
 	InitGridCtrl();	
 
@@ -384,6 +391,12 @@ void CProjectManagementDlg::OnNMClickTreePrjdir(NMHDR *pNMHDR, LRESULT *pResult)
 
 void CProjectManagementDlg::OnBnClickedButtonNewdir()
 {
+	if (m_TreePrjDir.GetSelectedCount() == 0)
+	{
+		AfxMessageBox(L"请选择正确的目录！");
+		return;
+	}
+
 	CNewDirDlg dlg;
 	if(IDOK != dlg.DoModal())
 	{
@@ -396,6 +409,8 @@ void CProjectManagementDlg::OnBnClickedButtonNewdir()
 		AfxMessageBox(L"请输入目录名！");
 		return;
 	}
+	
+
 	CPoint CurClkPoint;
 	GetCursorPos(&CurClkPoint);
 	m_TreePrjDir.ScreenToClient(&CurClkPoint);
@@ -462,6 +477,11 @@ void CProjectManagementDlg::OnGridClick(NMHDR *pNMHDR, LRESULT *pResult)
 
 void CProjectManagementDlg::OnBnClickedButtonDeletedir()
 {
+	if (!m_selectedDir)
+	{
+		AfxMessageBox(L"请选择正确的目录！");
+		return;
+	}
 	CString sDeleteDir;
 	sDeleteDir = m_pPrjData->GetDirString(L"", m_selectedDir);
 	m_pPrjData->DeleteFolder(sDeleteDir);
