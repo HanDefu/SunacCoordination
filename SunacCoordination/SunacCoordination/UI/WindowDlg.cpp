@@ -728,7 +728,7 @@ void CWindowDlg::LoadDefaultValue()
 	const vCString& wallDis = WebIO::GetInstance()->GetConfigDict()->Window_GetWallDis();
 
 	m_nWidth = 1500;
-	m_nHeight = 1800;
+	m_nHeight = 1700;
 
 	TYUI_SetText(m_number, L"");
 	
