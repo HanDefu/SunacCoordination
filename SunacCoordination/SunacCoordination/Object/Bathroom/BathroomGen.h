@@ -37,10 +37,9 @@ protected:
 	virtual void SelectMatong(AcDbObjectId bathroomId, CString matong);
 	virtual void SelectGuanxiWidth(AcDbObjectId bathroomId, double width);
 
-	virtual double GetMatongPos() { return -1; }
-	virtual void SetMatongPos(AcDbObjectId bathroomId); //自动计算并设置马桶位置
-
-	virtual void SetVantTotalSize(AcDbObjectId bathroomId) {}; //自动计算并设置排气道立管总尺寸
+	virtual void SetMatongPos(AcDbObjectId bathroomId) {} //自动计算并设置马桶位置
+	virtual void SetVantTotalSize(AcDbObjectId bathroomId) {} //自动计算并设置排气道立管总尺寸
+	virtual void SetXiyijiPos(AcDbObjectId bathroomId) {} //自动计算并设置排气道立管总尺寸
 
 	virtual double GetXLength() { return min(m_attr.m_width, m_attr.m_height); } //短边位于X方向
 	virtual double GetYLength() { return max(m_attr.m_width, m_attr.m_height); } //长边位于Y方向
@@ -54,13 +53,14 @@ class CBathroomGenKI : public CBathroomGen
 public:
 	CBathroomGenKI(AttrBathroom* p_att) : CBathroomGen(p_att) {}
 
-	virtual double GetMatongPos();
-
 	virtual bool CheckParameter(CString& errMsg); //插入前检查参数合法性
 
 	virtual void SetVantTotalSize(AcDbObjectId bathroomId);
+	virtual void SetMatongPos(AcDbObjectId bathroomId);
+	virtual void SetXiyijiPos(AcDbObjectId bathroomId);
 
 protected:
+	double GetMatongPos();
 	double GetMatongPos_I3();
 	double GetMatongPos_I4();
 };
@@ -98,6 +98,7 @@ public:
 	virtual bool CheckParameter(CString& errMsg); //插入前检查参数合法性
 
 	virtual void SetVantTotalSize(AcDbObjectId bathroomId);
+	virtual void SetXiyijiPos(AcDbObjectId bathroomId);
 
 	//int SetMatongPos(AcDbObjectId bathroomId, double yLen);
 };
