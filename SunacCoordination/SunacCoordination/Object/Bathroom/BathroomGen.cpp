@@ -57,17 +57,6 @@ void CBathroomGen::SelectGuanxiWidth(AcDbObjectId bathroomId, double width)
 	acDocManager->unlockDocument(curDoc());
 }
 
-void CBathroomGen::SetMatongPos(AcDbObjectId bathroomId)
-{
-	double pos = GetMatongPos();
-	if (pos < 0)
-		return;
-
-	acDocManager->lockDocument(curDoc());
-	TYCOM_SetDynamicBlockValue(bathroomId, L"马桶距墙Y", pos);
-	acDocManager->unlockDocument(curDoc());
-}
-
 //////////////////////////////////////////////////////////////////////////
 vCString CBathroomGen::GetTaipenOptions()
 {
@@ -180,6 +169,7 @@ AcDbObjectId CBathroomGen::GenBathroom(const AcGePoint3d p_pos, int p_angle)
 
 	SetVantTotalSize(id);
 	SetMatongPos(id);
+	SetXiyijiPos(id);
 
 	//////////////////////////////////////////////////////////////////////////
 	//先镜像处理
@@ -235,7 +225,7 @@ bool CBathroomGenKI::CheckParameter(CString& errMsg)
 	}
 
 	double linyuWidth = max(ventY + 420, 850.0);
-	double matongWidth = GetMatongPos() * 2;
+	double matongWidth = _ttof(m_attr.m_matongWidth);
 	double taipenWidth = _ttof(m_attr.m_taipenWidth);
 	double guanxiWidth = m_attr.m_guanXiWidth;
 
@@ -274,6 +264,24 @@ void CBathroomGenKI::SetVantTotalSize(AcDbObjectId bathroomId)
 	acDocManager->lockDocument(curDoc());
 	TYCOM_SetDynamicBlockValue(bathroomId, L"排气道立管X总尺寸", ventX);
 	TYCOM_SetDynamicBlockValue(bathroomId, L"排气道立管Y总尺寸", width);
+	acDocManager->unlockDocument(curDoc());
+}
+
+void CBathroomGenKI::SetMatongPos(AcDbObjectId bathroomId)
+{
+	double pos = GetMatongPos();
+	acDocManager->lockDocument(curDoc());
+	TYCOM_SetDynamicBlockValue(bathroomId, L"马桶距墙Y", pos);
+	acDocManager->unlockDocument(curDoc());
+}
+
+void CBathroomGenKI::SetXiyijiPos(AcDbObjectId bathroomId)
+{
+	double taipen = _ttof(m_attr.m_taipenWidth);
+	double xiyijiPos = taipen + 350;
+
+	acDocManager->lockDocument(curDoc());
+	TYCOM_SetDynamicBlockValue(bathroomId, L"洗衣机距墙Y", xiyijiPos);
 	acDocManager->unlockDocument(curDoc());
 }
 
@@ -334,9 +342,9 @@ bool CBathroomGenKL::CheckParameter(CString& errMsg)
 	double taipenWidth = _ttof(m_attr.m_taipenWidth);
 
 	double minYLen;
-	minYLen = 980 + 50 + taipenWidth;
+	minYLen = 730 + ventY + taipenWidth;
 	if (isB)
-		minYLen -= 30; //标准淋浴房实际宽度为950
+		minYLen = 1000 + taipenWidth; //标准淋浴房实际宽度为950
 	if (isL4)
 		minYLen += 650;
 
@@ -363,5 +371,15 @@ void CBathroomGenKL::SetVantTotalSize(AcDbObjectId bathroomId)
 	acDocManager->lockDocument(curDoc());
 	TYCOM_SetDynamicBlockValue(bathroomId, L"排气道立管X总尺寸", ventX);
 	TYCOM_SetDynamicBlockValue(bathroomId, L"排气道立管Y总尺寸", ventY);
+	acDocManager->unlockDocument(curDoc());
+}
+
+void CBathroomGenKL::SetXiyijiPos(AcDbObjectId bathroomId)
+{
+	double taipen = _ttof(m_attr.m_taipenWidth);
+	double xiyijiPos = taipen + 325;
+
+	acDocManager->lockDocument(curDoc());
+	TYCOM_SetDynamicBlockValue(bathroomId, L"洗衣机距墙Y", xiyijiPos);
 	acDocManager->unlockDocument(curDoc());
 }
