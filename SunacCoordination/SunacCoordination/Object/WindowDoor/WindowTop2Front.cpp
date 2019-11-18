@@ -207,6 +207,7 @@ AcDbObjectId  CWindowTop2Front::GenerateWindow(const AttrWindow& curWinAtt, AcGe
 
 	//把UI的数据记录在图框的扩展字典中
 	AttrWindow * pWindow = new AttrWindow(curWinAtt);
+	pWindow->m_viewDir = p_view;
 	oneWindow.AddAttribute(pWindow);
 	pWindow->close();
 
