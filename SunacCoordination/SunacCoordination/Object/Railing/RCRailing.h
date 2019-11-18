@@ -30,7 +30,8 @@ public:
 	AttrRailing GetRailingAtt()const { return m_railingAtt; }
 
 	virtual bool SetLength(double p_length);
-	virtual bool CheckLengthHeight();
+	virtual bool CheckLength();
+	virtual bool CheckHeight();
 	virtual bool GenRailing() = 0;
 	virtual int GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut);
 

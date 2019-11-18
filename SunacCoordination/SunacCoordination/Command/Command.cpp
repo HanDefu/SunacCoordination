@@ -31,10 +31,12 @@
 #include "../UI/DlgLogin.h"
 #include "../UI/WindowAdvanceDlg.h"
 #include "../Common/ComFun_Math.h"
+#include "../Common/ComFun_ACad.h"
 #include "../Object/WindowStatistic/WindowStatictic.h"
 #include "../Object/KitchenBathroom/KitchenBathroomStatistic.h"
 #include "../Object/Railing/RailingStatistic.h"
 #include "../Object/AirCondition/AirConStatistic.h"
+#include "../Object/WindowDoor/WindowTop2Front.h"
 #include "../UI/ProjectManagementDlg.h"
 #include "../WebIO/WebIO.h"
 #include "Command.h"
@@ -85,6 +87,10 @@ void CMD_ShowCADPalette()
 		{
 			CADPalette_RemoveP();
 		}
+	}
+	else
+	{
+		AfxMessageBox(_T("请先登录"));
 	}
 }
 //窗
@@ -178,37 +184,10 @@ void CMD_SunacWindowFloorSetting()//门窗楼层设置
 
 void CMD_SunacWindowTop2Front()//门窗平面到立面
 {
-	//1.选择需要设置楼层的门窗
-	vAcDbObjectId m_vids = SelectWindows(E_VIEW_TOP);
-	if (m_vids.size() == 0)
-	{
-		return;
-	}
-
-	AcGePoint3d insertPos;
-	bool bSuc = TY_GetPoint(insertPos, L"请选择立面图插入点");
-	if (bSuc == false)
-		return;
-
-	vector<AttrWindow>  winAtts;
-	for (UINT i = 0; i < m_vids.size(); i++)
-	{
-		RCWindow oneWindow;
-		oneWindow.m_id = m_vids[i];
-		oneWindow.InitParameters();
-
-		AttrWindow* pAtt = oneWindow.GetAttribute();
-		if (pAtt != NULL)
-		{
-			AttrWindow attTemp(*pAtt);
-			winAtts.push_back(attTemp);
-			pAtt->close();
-		}
-	}
-
-
-	//TODO
+	CWindowTop2Front::GenFrontFromTop();
 }
+
+
 void CMD_SunacWindowFront2Top()//门窗立面到平面
 {
 	//TODO
@@ -397,9 +376,12 @@ void CMD_SunacWindowsStatistics()
 
 	if (idsNonAlserials.size()>0)
 	{
-		AfxMessageBox(_T("型材系列未设置"));
+		AfxMessageBox(_T("部分窗户型材系列未设置"));
 
-		//TODO 高亮设置的门窗
+		for (UINT i = 0; i < idsNonAlserials.size(); i++)
+		{
+			JHCOM_HilightObject(idsNonAlserials[i], true);
+		}
 		return;
 	}
 

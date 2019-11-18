@@ -141,6 +141,7 @@ public:
 	bool SetR(double newValue) { return SetValue(L"R", newValue); }
 
 	bool SetHeightUnderWindow(double newValue);
+	double GetHeightUnderWindow()const { return m_heightUnderWindow; }
 
 	CFloorInfo GetFloorInfo()const { return m_floorInfo; }
 	void SetFloorInfo(CFloorInfo p_info){ m_floorInfo = p_info; }
@@ -148,6 +149,8 @@ public:
 
 	eViewDir GetViewDir()const { return m_viewDir; }
 	void SetViewDir(eViewDir p_view){ m_viewDir = p_view; }
+
+	CString GetPrototypeDwgFilePath(eViewDir p_view)const;
 
 protected:
 	CWindowsDimData* GetDimDataByCode(CString p_sCode);
@@ -176,7 +179,7 @@ public:
 	//以下属性为具体外窗插入时才设置,单个窗户实例的属性，非原型属性
 	//视图属性
 	bool m_isMirror;//是否镜像
-	eViewDir m_viewDir;//视图方向
+	eViewDir m_viewDir;//视图方向，平面图、立面图、侧视图
 
 	bool   m_isBayWindow;	 //是否凸窗
 	double m_wallDis;		 //外墙距离

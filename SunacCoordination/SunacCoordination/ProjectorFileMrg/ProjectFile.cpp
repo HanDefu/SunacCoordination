@@ -218,7 +218,7 @@ CString EProjectFileStateToCString(EProjectFileState state)
 	switch(state)
 	{
 	case E_ProjectFile_Normal:
-		return L"准备就绪";
+		return L"";
 		break;
 	case E_ProjectFile_Downloading:
 		return L"下载中...";

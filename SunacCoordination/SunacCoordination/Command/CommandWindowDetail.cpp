@@ -48,21 +48,22 @@ typedef struct WindowDetailTemplate
 	const static int idX = 130;
 	const static int idY = 650;
 
-	//功能区
-	const static int gongNengQuX = 1450;
-	const static int gongNengQuY = 360;
-
 	//面积
-	const static int areaX= 2450;
-	const static int areaY= 630;
+	const static int areaX= 1760;
+	const static int areaY= 690;
 
 	//开启面积
-	const static int openAreaX = 2700;
-	const static int openAreaY = 150;
+	const static int openAreaX = 1960;
+	const static int openAreaY = 190;
 
-    //注释
-	const static int noteX = 3400;
-	const static int noteY = 500;
+	//功能区
+	const static int gongNengQuX = 3220;
+	const static int gongNengQuY = 690;
+
+	//窗下墙高度
+	const static int heightUnderWindowX = 3310;
+	const static int heightUnderWindowY = 190;
+
 
 	//标注宽度
 	const static int biaoZhuWid = 300;
@@ -189,20 +190,39 @@ void CMD_SunacWindowDetail()
 			allWindowsTypes[i].GetInstanceCode());
 
 		//窗面积
-		str.Format(L"%.2f", pWinAtt->GetWindowArea());
+		str.Format(L"%.2fm", pWinAtt->GetWindowArea());
 		JHCOM_CreateText(AcGePoint3d(windowDetailTemplates[i].pnt.x + windowDetailTemplates[i].areaX,
 			windowDetailTemplates[i].pnt.y + windowDetailTemplates[i].areaY,0),
 			AcGeVector3d(0,0,1), 
 			120, 0, 
 			str);
+		JHCOM_CreateText(AcGePoint3d(windowDetailTemplates[i].pnt.x + windowDetailTemplates[i].areaX+470,
+			windowDetailTemplates[i].pnt.y + windowDetailTemplates[i].areaY+85, 0),
+			AcGeVector3d(0, 0, 1),
+			60, 0,
+			_T("2")); //绘制㎡符号
 
 		//开启面积
-		str.Format(L"%.2f", pWinAtt->GetTongFengQty());
+		str.Format(L"%.2fm", pWinAtt->GetTongFengQty());
 		JHCOM_CreateText(AcGePoint3d(windowDetailTemplates[i].pnt.x + windowDetailTemplates[i].openAreaX,
 			windowDetailTemplates[i].pnt.y + windowDetailTemplates[i].openAreaY,0),
 			AcGeVector3d(0,0,1), 
 			120, 0, 
 			str);
+		JHCOM_CreateText(AcGePoint3d(windowDetailTemplates[i].pnt.x + windowDetailTemplates[i].openAreaX + 470,
+			windowDetailTemplates[i].pnt.y + windowDetailTemplates[i].openAreaY+85, 0),
+			AcGeVector3d(0, 0, 1),
+			60, 0,
+			_T("2")); //绘制㎡符号
+
+		//窗下墙高度
+		str.Format(L"%dmm", (int)(pWinAtt->GetHeightUnderWindow()));
+		JHCOM_CreateText(AcGePoint3d(windowDetailTemplates[i].pnt.x + windowDetailTemplates[i].heightUnderWindowX,
+			windowDetailTemplates[i].pnt.y + windowDetailTemplates[i].heightUnderWindowY, 0),
+			AcGeVector3d(0,0,1), 
+			120, 0, 
+			str);
+
 	}
 
 	//第四步 开始输出数据

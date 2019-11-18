@@ -385,6 +385,9 @@
     <ClCompile Include="Sunac_def.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Object\WindowDoor\WindowTop2Front.cpp">
+      <Filter>Object\WindowDoor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -858,6 +861,9 @@
     </ClInclude>
     <ClInclude Include="UI\DlgWindowAirCalc.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\WindowTop2Front.h">
+      <Filter>Object\WindowDoor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
