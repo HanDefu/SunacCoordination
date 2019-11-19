@@ -391,6 +391,12 @@ void CProjectManagementDlg::OnNMClickTreePrjdir(NMHDR *pNMHDR, LRESULT *pResult)
 
 void CProjectManagementDlg::OnBnClickedButtonNewdir()
 {
+	if (m_TreePrjDir.GetSelectedCount() == 0)
+	{
+		AfxMessageBox(L"请选择正确的目录！");
+		return;
+	}
+
 	CNewDirDlg dlg;
 	if(IDOK != dlg.DoModal())
 	{
@@ -403,6 +409,8 @@ void CProjectManagementDlg::OnBnClickedButtonNewdir()
 		AfxMessageBox(L"请输入目录名！");
 		return;
 	}
+	
+
 	CPoint CurClkPoint;
 	GetCursorPos(&CurClkPoint);
 	m_TreePrjDir.ScreenToClient(&CurClkPoint);
@@ -469,6 +477,11 @@ void CProjectManagementDlg::OnGridClick(NMHDR *pNMHDR, LRESULT *pResult)
 
 void CProjectManagementDlg::OnBnClickedButtonDeletedir()
 {
+	if (!m_selectedDir)
+	{
+		AfxMessageBox(L"请选择正确的目录！");
+		return;
+	}
 	CString sDeleteDir;
 	sDeleteDir = m_pPrjData->GetDirString(L"", m_selectedDir);
 	m_pPrjData->DeleteFolder(sDeleteDir);
