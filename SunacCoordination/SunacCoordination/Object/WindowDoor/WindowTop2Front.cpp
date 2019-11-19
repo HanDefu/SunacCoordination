@@ -22,7 +22,7 @@ bool CWindowTop2Front::GenFrontFromTop()
 		return false;
 
 	AcGePoint3d insertPos;
-	bool bSuc = TY_GetPoint(insertPos, L"ÇëÑ¡ÔñÁ¢ÃæÍ¼²åÈëµã");
+	bool bSuc = TY_GetPoint(insertPos, L"ÇëÑ¡ÔñÁ¢ÃæÍ¼²åÈëµã(¿¿ÍâÇ½Î»ÖÃ)");
 	if (bSuc == false)
 		return false;
 
@@ -165,27 +165,37 @@ bool CWindowTop2Front::GetTopViewWindowDirection(E_DIRECTION &windowDir) //µÃµ½Æ
 	bool bSuc = false;
 	do 
 	{
-		bool bSuc = GetStringInput(_T("ÇëÊäÈë´°»§³¯Ïò[¶«(E) Î÷(W) ÄÏ(S) ±±(N)]<S>:"), sDir);
+		bSuc = GetStringInput(_T("\nÇëÊäÈë´°»§³¯Ïò[¶«(E) Î÷(W) ÄÏ(S) ±±(N)]<S>:"), sDir);
 		if (bSuc == false)
 			return false;
 
+		sDir.Trim();
 		sDir.MakeUpper();
+		if (sDir.IsEmpty())
+		{
+			windowDir = E_DIR_BOTTOM;
+			break;
+		}
 
 		if (sDir.Find(_T('E')) >= 0 || sDir.Find(_T('¶«')) >= 0)
 		{
 			windowDir = E_DIR_RIGHT;
+			break;
 		}
 		else if (sDir.Find(_T('W')) >= 0 || sDir.Find(_T('Î÷')) >= 0)
 		{
-			windowDir = E_DIR_RIGHT;
+			windowDir = E_DIR_LEFT;
+			break;
 		}
 		else if (sDir.Find(_T('S')) >= 0 || sDir.Find(_T('ÄÏ')) >= 0)
 		{
-			windowDir = E_DIR_RIGHT;
+			windowDir = E_DIR_BOTTOM;
+			break;
 		}
 		else if (sDir.Find(_T('N')) >= 0 || sDir.Find(_T('±±')) >= 0)
 		{
-			windowDir = E_DIR_RIGHT;
+			windowDir = E_DIR_TOP;
+			break;
 		}
 
 	} while (bSuc);
