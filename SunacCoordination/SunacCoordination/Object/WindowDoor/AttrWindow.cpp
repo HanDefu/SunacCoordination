@@ -627,7 +627,7 @@ bool AttrWindow::isEqualTo(AttrObject*other)
 		);
 }
 
-bool AttrWindow::IsPrototypeEqual(const AttrWindow& p_att)
+bool AttrWindow::IsPrototypeEqual_test(const AttrWindow& p_att)
 {
 	AttrWindow LocalData = *this;
 	if (!p_att.m_dimData.empty() && !m_dimData.empty())

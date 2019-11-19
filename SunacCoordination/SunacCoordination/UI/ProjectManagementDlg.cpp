@@ -592,7 +592,6 @@ BOOL CloseProjectManagementDlg()
 void CProjectManagementDlg::OnCustomdraw(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMCUSTOMDRAW pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>(pNMHDR);
-	// TODO: 在此添加控件通知处理程序代码
 	/*if (this->m_hWnd != pNMHDR->hwndFrom)
 		return;*/
 

@@ -68,7 +68,7 @@ void CMD_Login()
 
 	DlgLogin dlg;
 	//if(IDOK == dlg.DoModal())
-	dlg.DoModal();  //TODO
+	dlg.DoModal();  //TODO 测试版本下不论登录是否成功都进入
 	{
 		CADPalette_RemoveP();
 		CADPalette_AddP();

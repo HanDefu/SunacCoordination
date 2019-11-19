@@ -15,6 +15,12 @@ bool CWindowTop2Front::GenFrontFromTop()
 		return false;
 	}
 
+
+	E_DIRECTION windowDir = E_DIR_BOTTOM;
+	bool bSuc1 = GetTopViewWindowDirection(windowDir);
+	if (bSuc1 == false)
+		return false;
+
 	AcGePoint3d insertPos;
 	bool bSuc = TY_GetPoint(insertPos, L"请选择立面图插入点");
 	if (bSuc == false)
@@ -58,7 +64,7 @@ bool CWindowTop2Front::GenFrontFromTop()
 		return false;
 	}
 	
-	vector<double> allXvalue = GetAllXValueInFrontView(allExtents);
+	vector<double> allXvalue = GetAllXValueInFrontView(allExtents, windowDir);
 	if (allXvalue.size()==0)
 	{
 		return false;
@@ -150,30 +156,107 @@ AcDbObjectIdArray CWindowTop2Front::CopyAllFloorByOneFloor(const AcDbObjectIdArr
 	return windowObjIds;
 }
 
-E_DIRECTION CWindowTop2Front::GetTopViewWindowDirection(const vector<AcDbExtents> &allExtents) //得到平面窗户的方位，上、下左右
+bool CWindowTop2Front::GetTopViewWindowDirection(E_DIRECTION &windowDir) //得到平面窗户的方位，上、下左右
 {
-	E_DIRECTION viewDir = E_DIR_BOTTOM;
+	windowDir = E_DIR_BOTTOM;
 
-	//TODO
-	return viewDir;
+	CString sDir = _T("S");
+
+	bool bSuc = false;
+	do 
+	{
+		bool bSuc = GetStringInput(_T("请输入窗户朝向[东(E) 西(W) 南(S) 北(N)]<S>:"), sDir);
+		if (bSuc == false)
+			return false;
+
+		sDir.MakeUpper();
+
+		if (sDir.Find(_T('E')) >= 0 || sDir.Find(_T('东')) >= 0)
+		{
+			windowDir = E_DIR_RIGHT;
+		}
+		else if (sDir.Find(_T('W')) >= 0 || sDir.Find(_T('西')) >= 0)
+		{
+			windowDir = E_DIR_RIGHT;
+		}
+		else if (sDir.Find(_T('S')) >= 0 || sDir.Find(_T('南')) >= 0)
+		{
+			windowDir = E_DIR_RIGHT;
+		}
+		else if (sDir.Find(_T('N')) >= 0 || sDir.Find(_T('北')) >= 0)
+		{
+			windowDir = E_DIR_RIGHT;
+		}
+
+	} while (bSuc);
+
+	return bSuc;
 }
 
-vector<double> CWindowTop2Front::GetAllXValueInFrontView(const vector<AcDbExtents> &allExtents) //获取各窗户在立面视图上的x值
+vector<double> CWindowTop2Front::GetAllXValueInFrontView(const vector<AcDbExtents> &allExtents, const E_DIRECTION windowDir) //获取各窗户在立面视图上的x值
 {
-	//判断窗户的方向
-	E_DIRECTION viewDir = GetTopViewWindowDirection(allExtents);
-
 	vector<double> allXvalue;
-	if (viewDir == E_DIR_BOTTOM)
+
+	switch (windowDir)
 	{
-		for (UINT i = 0; i < allExtents.size(); i++)
-		{
-			allXvalue.push_back(allExtents[i].minPoint().x);
-		}
+	case E_DIR_BOTTOM:
+	{
+						 for (UINT i = 0; i < allExtents.size(); i++)
+						 {
+							 allXvalue.push_back(allExtents[i].minPoint().x);
+						 }
+						 break;
 	}
-	else
+
+	case E_DIR_TOP:
 	{
-		//TODO
+					  double maxX = -1e10;
+					  for (UINT i = 0; i < allExtents.size(); i++)
+					  {
+						  double xValue = allExtents[i].maxPoint().x;
+						  allXvalue.push_back(xValue);
+						  if (maxX<xValue)
+						  {
+							  maxX = xValue;
+						  }
+					  }
+
+					  for (UINT i = 0; i < allXvalue.size(); i++)
+					  {
+						  allXvalue[i] = maxX - allXvalue[i];
+					  }
+		break;
+	}
+	case E_DIR_LEFT:
+	{
+					   double maxY = -1e10;
+					   for (UINT i = 0; i < allExtents.size(); i++)
+					   {
+						   double yValue = allExtents[i].minPoint().y;
+						   allXvalue.push_back(yValue);
+						   if (maxY < yValue)
+						   {
+							   maxY = yValue;
+						   }
+					   }
+					   for (UINT i = 0; i < allXvalue.size(); i++)
+					   {
+						   allXvalue[i] = maxY - allXvalue[i];
+					   }
+					   break;
+	}
+	case E_DIR_RIGHT:
+	{
+						for (UINT i = 0; i < allExtents.size(); i++)
+						{
+							double valueY = allExtents[i].minPoint().y;
+							allXvalue.push_back(valueY);
+						}
+						break;
+	}
+	default:
+		assert(false);
+		break;
 	}
 
 	return allXvalue;

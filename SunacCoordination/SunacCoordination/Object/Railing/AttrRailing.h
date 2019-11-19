@@ -29,7 +29,7 @@ public:
 	//virtual AttrRailing & operator=(const AttrRailing &rhs);
 
 	virtual bool isEqualTo(AttrObject*other);//基础数据一致
-	virtual bool IsPrototypeEqual(const AttrRailing& p_att);
+	virtual bool IsPrototypeEqual_test(const AttrRailing& p_att);
 	virtual eRCType GetType() {return RAILING;}
 
 	//{{AFX_ARX_METHODS(ZffDwgScale)

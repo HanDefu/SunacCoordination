@@ -115,7 +115,7 @@ bool AttrAirCon::isEqualTo(AttrObject*other)
 		);*/
 }
 
-bool AttrAirCon::IsPrototypeEqual(const AttrAirCon& p_att)
+bool AttrAirCon::IsPrototypeEqual_test(const AttrAirCon& p_att)
 {
 	if (p_att.m_power != m_power)
 	{

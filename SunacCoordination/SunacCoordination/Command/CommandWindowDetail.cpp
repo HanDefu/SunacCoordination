@@ -180,7 +180,7 @@ void CMD_SunacWindowDetail()
 		//JHCOM_CreateText(AcGePoint3d(windowDetailTemplates[i].pnt.x + windowDetailTemplates[i].gongNengQuX,
 		//	                      windowDetailTemplates[i].pnt.y + windowDetailTemplates[i].gongNengQuY,0),
 		//	AcGeVector3d(0,0,1), 
-		//	120, 0, L"厨房"); //TODO
+		//	120, 0, L"厨房"); 
 
 		//门窗编号
 		JHCOM_CreateText(AcGePoint3d(windowDetailTemplates[i].pnt.x + windowDetailTemplates[i].idX,

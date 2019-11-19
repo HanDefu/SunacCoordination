@@ -49,7 +49,7 @@ public:
 
 	virtual eRCType GetType() {return AIRCON;}
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
-	virtual bool IsPrototypeEqual(const AttrAirCon& p_att);
+	virtual bool IsPrototypeEqual_test(const AttrAirCon& p_att);
 
 	CString AutoInstanceCode(); //空调自动编号只考虑匹数，仅用于统计，不用于查找块
 

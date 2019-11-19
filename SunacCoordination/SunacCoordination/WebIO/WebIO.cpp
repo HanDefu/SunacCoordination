@@ -142,7 +142,7 @@ std::vector<AttrWindow>  WebIO::GetWindows(double width, double height, CString 
 			if (curWebWin.m_prototypeCode == Local[j].m_prototypeCode)
 			{
 				bFind = true;
-				if(Local[j].IsPrototypeEqual(Web[i]))
+				if(Local[j].IsPrototypeEqual_test(Web[i]))
 				{
 					AfxMessageBox(L"确实相等！");
 				}

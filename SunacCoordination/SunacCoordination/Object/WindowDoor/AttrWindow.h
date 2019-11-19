@@ -98,7 +98,7 @@ public:
 
 	virtual eRCType GetType()const;
 	virtual bool isEqualTo(AttrObject*other);//¥∞–Õ «∑Ò“ª÷¬
-	bool IsPrototypeEqual(const AttrWindow& p_att);
+	bool IsPrototypeEqual_test(const AttrWindow& p_att);
 	bool IsInstanceEqual(const AttrWindow& p_att) const;
 
 	E_WindowDoorType GetWindowDoorType()const;

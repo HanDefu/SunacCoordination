@@ -89,7 +89,7 @@ bool AttrRailing::isEqualTo(AttrObject*other)
 		);*/
 }
 
-bool AttrRailing::IsPrototypeEqual(const AttrRailing& p_att)
+bool AttrRailing::IsPrototypeEqual_test(const AttrRailing& p_att)
 {
 	if (p_att.m_height != m_height)
 	{
