@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include <dbidmap.h>
 #include "../../Common/ComFun_ACad.h"
 #include "../../Common/ComFun_Sunac.h"
 #include "WindowTop2Front.h"
@@ -22,7 +23,7 @@ bool CWindowTop2Front::GenFrontFromTop()
 		return false;
 
 	AcGePoint3d insertPos;
-	bool bSuc = TY_GetPoint(insertPos, L"请选择立面图插入点(靠外墙位置)");
+	bool bSuc = TY_GetPoint(insertPos, L"\n请选择立面图插入点");
 	if (bSuc == false)
 		return false;
 
@@ -46,6 +47,7 @@ bool CWindowTop2Front::GenFrontFromTop()
 			}
 
 			AttrWindow attTemp(*pAtt);
+			attTemp.m_viewDir = E_VIEW_FRONT;  //新生成的为立面图
 			winAtts.push_back(attTemp);
 			pAtt->close();
 
@@ -142,12 +144,19 @@ AcDbObjectIdArray CWindowTop2Front::CopyAllFloorByOneFloor(const AcDbObjectIdArr
 			AcGeMatrix3d xform;
 			xform.setTranslation(AcGeVector3d(0, (allFloos[n] - firstFloor)*floorInfo.GetFloorHeight(), 0));
 
-			AcDbEntity*  pCopyObj = NULL;
-			es = pEnt->getTransformedCopy(xform, pCopyObj);
-			AcDbObjectId idOut = JHCOM_PostToModelSpace(pCopyObj);
-			pCopyObj->close();
+			AcDbEntity*  pCopyEntity = NULL;
+			es = pEnt->getTransformedCopy(xform, pCopyEntity);
+			if (pCopyEntity!=NULL)
+			{
+				AcDbObjectId idOut = JHCOM_PostToModelSpace(pCopyEntity);
+				pCopyEntity->close();
 
-			windowObjIds.append(idOut);
+				AttrWindow * pWindowAtt = new AttrWindow(curWinAtt);
+				TY_AddAttributeData(idOut, pWindowAtt);
+				pWindowAtt->close();
+
+				windowObjIds.append(idOut);
+			}
 		}
 
 		pEnt->close();

@@ -218,7 +218,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	AcGePoint3d origin;
 	if (m_pCurEdit == NULL)
 	{
-		bool bSuc = TY_GetPoint(origin);
+		bool bSuc = TY_GetPoint(origin, L"请选择插入点(靠外墙位置)"); 
 		acedPostCommandPrompt();
 		if (bSuc == false)
 		{
@@ -412,7 +412,14 @@ void CWindowDlg::OnBnClickedAutoIndex()
 void CWindowDlg::OnBnClickedSelOnDwg()
 {
 	ShowWindow(false);
-	TYRect rect = TY_GetOneRect();
+	TYRect rect;
+	bool bSuc = TY_GetOneRect(rect);
+	if (bSuc == false)
+	{
+		ShowWindow(SW_SHOW);
+		return;
+	}
+
 	ShowWindow(true);
 	
 	int width = int(rect.GetWidth() + 0.5);

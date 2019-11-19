@@ -58,7 +58,7 @@ AcDbObjectId RCBlock::Insert(CString fileName, AcGePoint3d origin, double angle,
 
 AcDbObjectId RCBlock::AirInsert(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color)
 {
-	CString m_blockRecordName = FilePathToFileNameWithoutExtension(fileName);
+	m_blockRecordName = FilePathToFileNameWithoutExtension(fileName); //TODO zjy
 	acDocManager->lockDocument(curDoc());
 	MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, fileName, m_blockRecordName,  m_id, origin, angle, AcGeScale3d(1), layerName, color);
 	acDocManager->unlockDocument(curDoc());
@@ -89,8 +89,8 @@ bool RCBlock::isEqualTo(RCObject*other)
 	if (!RCObject::isEqualTo(other))
 		return false;
 
-	if (m_blockRecordName != pObj->m_blockRecordName)
-		return false;
+	//if (m_blockRecordName != pObj->m_blockRecordName)
+	//	return false;
 
 	return true;
 }

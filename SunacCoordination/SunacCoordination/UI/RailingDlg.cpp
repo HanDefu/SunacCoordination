@@ -251,9 +251,12 @@ void CRailingDlg::OnBnClickedButtonSelectline()
 {
 	ShowWindow(FALSE);
 	AcGePoint3d pnt1, pnt2;
-	TY_GetTwoPoints(pnt1, pnt2);
-
+	bool bSuc = TY_GetTwoPoints(pnt1, pnt2);
 	ShowWindow(TRUE);
+	if (bSuc==false)
+	{
+		return;
+	}
 
 	double len = pnt2.x - pnt1.x;
 	m_width = len;

@@ -58,8 +58,8 @@ void YT_UpdateBlockReference(AcDbObjectId &entId);
 
 
 bool TY_GetPoint(AcGePoint3d &ptOut, CString prompt = L"«Î—°‘Ò≤Â»Îµ„");
-TYRect TY_GetOneRect();
-int TY_GetTwoPoints(AcGePoint3d &pnt1, AcGePoint3d &pnt2);
+bool TY_GetOneRect(TYRect& p_rect);
+bool TY_GetTwoPoints(AcGePoint3d &pnt1, AcGePoint3d &pnt2);
 
 bool GetRealInput(const TCHAR* prompt, double defaultVal, int precision, double &ret);
 bool GetStringInput(CString prompt, CString &strOut);

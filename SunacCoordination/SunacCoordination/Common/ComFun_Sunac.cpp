@@ -531,17 +531,18 @@ bool TY_GetPoint(AcGePoint3d &ptOut, CString prompt)
 	return true;
 }
 
-TYRect TY_GetOneRect()
+bool TY_GetOneRect(TYRect& p_rect)
 {
 	ads_point pt,result;
 	acedInitGet(32,NULL);
 	if(acedGetPoint(NULL,L"\n请选择第一角点\n",pt)!=RTNORM) //第一角点选择
 	{
-		return TYRect();
+		return false;
 	}
+
 	if(acedGetCorner(pt,L"\n请选择对角点\n",result)!=RTNORM)//框选
 	{
-		return TYRect();
+		return false;
 	}
 
 	AcGePoint3d pnt1(pt[0],pt[1],pt[2]);
@@ -551,27 +552,28 @@ TYRect TY_GetOneRect()
 	rect.Add(pnt1);
 	rect.Add(pnt2);
 
-	return rect;
+	p_rect = rect;
+	return true;
 }
 
-int TY_GetTwoPoints(AcGePoint3d &pnt1, AcGePoint3d &pnt2)
+bool TY_GetTwoPoints(AcGePoint3d &pnt1, AcGePoint3d &pnt2)
 {
 	ads_point pt,result;
 	acedInitGet(32,NULL);
 	if(acedGetPoint(NULL,L"请选择第一个点\n",pt)!=RTNORM) //第一角点选择
 	{
-		return 0;
+		return false;
 	}
 
 	if(acedGetPoint(pt,L"请选择第二个点\n",result)!=RTNORM) //第一角点选择
 	{
-		return 0;
+		return false;
 	}
 
 	pnt1 = AcGePoint3d(pt[0],pt[1],pt[2]);
 	pnt2 = AcGePoint3d(result[0],result[1],result[2]);
 
-	return 0;
+	return true;
 }
 
 bool GetRealInput(const TCHAR* prompt, double defaultVal, int precision, double &ret)
@@ -1254,7 +1256,7 @@ vAcDbObjectId SelectWindows(eViewDir p_view)
 {
 	vAcDbObjectId vIds;//当前选择的ids
 
-	acutPrintf(L"请选择门窗");
+	acutPrintf(L"\n请选择门窗");
 
 	ads_name sset;
 	acedSSGet(NULL, NULL, NULL, NULL, sset);
@@ -1277,12 +1279,12 @@ vAcDbObjectId SelectWindows(eViewDir p_view)
 
 	if (vIds.size() == 0)
 	{
-		acutPrintf(L"未选择到门窗\n");
+		acutPrintf(L"\n未选择到门窗\n");
 	}
 	else
 	{
 		CString info;
-		info.Format(L"共选择了%d个门窗\n", vIds.size());
+		info.Format(L"\n共选择了%d个门窗\n", vIds.size());
 		acutPrintf(info);
 	}
 	return vIds;

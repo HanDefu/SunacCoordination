@@ -428,7 +428,13 @@ void CBathroomDlg::OnBnClickedButtonInsert()
 void CBathroomDlg::OnBnClickedButtonRange()
 {
 	ShowWindow(false);
-	TYRect rect = TY_GetOneRect();
+	TYRect rect;
+	bool bSuc = TY_GetOneRect(rect);
+	if (bSuc==false)
+	{
+		ShowWindow(SW_SHOW);
+		return;
+	}
 
 	if (IsBathroomRectValid(rect)==false)
 	{
