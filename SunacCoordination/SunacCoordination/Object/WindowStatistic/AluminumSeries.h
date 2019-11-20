@@ -2,18 +2,17 @@
 
 enum E_WindowDoorType
 {
-	E_WindowDoor_NC = 0,	//内开窗
-	E_WindowDoor_WC,		//外开窗
+	E_WindowDoor_NC = 0,	//内开窗，包括内开窗，内开内倒窗
+	E_WindowDoor_WC,		//外开窗，包括外开窗、外开上悬窗
 	E_WindowDoor_TC,		//推拉窗
 
-	E_WindowDoor_WM = 0x10,	//外开门
+	E_WindowDoor_WM = 0x10,	//外开门，包括外开门、门连窗
 	E_WindowDoor_TLM,		//推拉门
 	E_WindowDoor_TSTLM,		//提升推拉门
 };
 
 E_WindowDoorType ToWindowDoorType(CString type);
-CString WindowTypeToCString(E_WindowDoorType type);
-
+CString WindowDoorTypeToCSting(E_WindowDoorType type);
 
 
 enum E_AluminumType
@@ -25,7 +24,6 @@ enum E_AluminumType
 
 E_AluminumType ToE_AluminumType(CString type);
 CString AluminumTypeToCSting(E_AluminumType type);
-CString WindowDoorTypeToCSting(E_WindowDoorType type);
 //型材数据
 struct CAluminumData
 {

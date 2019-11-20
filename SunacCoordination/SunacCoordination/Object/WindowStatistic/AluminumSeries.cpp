@@ -10,27 +10,27 @@
 
 E_WindowDoorType ToWindowDoorType(CString type)
 {
-	if (type == "内开窗")
+	if (type == L"内开窗" || type == L"内开内倒窗")
 	{
 		return E_WindowDoor_NC;
 	}
-	else if (type == "外开窗")
+	else if (type == L"外开窗" || type == L"上悬窗")
 	{
 		return E_WindowDoor_WC;
 	}
-	else if (type == "推拉窗")
+	else if (type == L"推拉窗")
 	{
 		return E_WindowDoor_TC;
 	}
-	else if (type == "外开门")
+	else if (type == L"外开门" || type == L"门连窗")
 	{
 		return E_WindowDoor_WM;
 	}
-	else if (type == "推拉门")
+	else if (type == L"推拉门")
 	{
 		return E_WindowDoor_TLM;
 	}
-	else if (type == "提升推拉门")
+	else if (type == L"提升推拉门")
 	{
 		return E_WindowDoor_TSTLM;
 	}
@@ -41,47 +41,35 @@ E_WindowDoorType ToWindowDoorType(CString type)
 	}
 }
 
-CString WindowTypeToCString(E_WindowDoorType type)
+CString WindowDoorTypeToCSting(E_WindowDoorType type)
 {
 	switch (type)
 	{
 	case E_WindowDoor_NC:
-	{
 							return L"内开窗";
 							break;
-	}
 	case E_WindowDoor_WC:
-	{
 							return L"外开窗";
 							break;
-	}
 	case E_WindowDoor_TC:
-	{
 							return L"推拉窗";
 							break;
-	}
 	case E_WindowDoor_WM:
-	{
 							return L"外开门";
 							break;
-	}
 	case E_WindowDoor_TLM:
-	{
-							  return L"推拉门";
-							  break;
-	}
+							 return L"推拉门";
+							 break;
+
 	case E_WindowDoor_TSTLM:
-	{
-							  return L"提升推拉门";
-							  break;
-	}
+							   return L"提升推拉门";
+							   break;
 	default:
-	{
 			   return L"内开窗";
 			   break;
 	}
-	}
 }
+
 
 CAluminumSeries* CAluminumSeries::Instance()
 {
@@ -136,43 +124,6 @@ CString AluminumTypeToCSting(E_AluminumType type)
 	default:
 		{
 			return L"断桥隔热铝型材";
-			break;
-		}
-	}
-}
-
-CString WindowDoorTypeToCSting(E_WindowDoorType type)
-{
-	switch(type)
-	{
-	case E_WindowDoor_NC:
-		{
-			return L"内开窗";
-			break;
-		}
-	case E_WindowDoor_WC:
-		{
-			return L"外开窗";
-			break;
-		}
-	case E_WindowDoor_TC:
-		{
-			return L"推拉窗";
-			break;
-		}
-	case E_WindowDoor_WM:
-		{
-			return L"外开门";
-			break;
-		}
-	case E_WindowDoor_TLM:
-		{
-			return L"推拉门";
-			break;
-		}
-	default:
-		{
-			return L"提升推拉门";
 			break;
 		}
 	}
@@ -264,7 +215,7 @@ bool CAluminumSeries::GetAluminumDataBySeriesAndName(E_WindowDoorType p_winType,
 		return false;
 	}
 	char* cErrMsg;
-	CString sWinType = WindowTypeToCString(p_winType);
+	CString sWinType = WindowDoorTypeToCSting(p_winType);
 	CString sqlString;
 	sqlString.Format(L"select * from `AluminumSeries` where `WindowDoorType` = '%s' and `Serial` = '%s' and `Name` = '%s' limit 1;", sWinType, p_serials, sName);
 	
@@ -330,7 +281,7 @@ vector<CString> CAluminumSeries::GetAluminumSerialsByWindowType(E_WindowDoorType
 		return AlSeries;
 	}
 	char* cErrMsg;
-	CString sWinType = WindowTypeToCString(p_winType);
+	CString sWinType = WindowDoorTypeToCSting(p_winType);
 	CString sqlString;
 	sqlString.Format(L"select distinct Serial  from `AluminumSeries` where `WindowDoorType` = '%s' and `Serial`  !='';", sWinType);
 	

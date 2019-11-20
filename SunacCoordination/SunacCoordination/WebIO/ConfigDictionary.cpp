@@ -286,9 +286,10 @@ vCString CConfigDictionary::Window_GetOpenTypes()const
 		vCString strs;
 		strs.push_back(L"不限");
 		strs.push_back(L"内开");
+		strs.push_back(L"内开内倒");
 		strs.push_back(L"外开");
-		strs.push_back(L"推拉");
 		strs.push_back(L"上悬");
+		strs.push_back(L"推拉");
 		return strs;
 	}
 }
@@ -361,8 +362,10 @@ vCString CConfigDictionary::Door_GetTypes()const
 	{
 		vCString strs;
 		strs.push_back(L"不限");
-		strs.push_back(L"推拉");
 		strs.push_back(L"外开");
+		strs.push_back(L"推拉");
+		strs.push_back(L"提升推拉");
+		strs.push_back(L"门连窗");
 		return strs;
 	}
 }
