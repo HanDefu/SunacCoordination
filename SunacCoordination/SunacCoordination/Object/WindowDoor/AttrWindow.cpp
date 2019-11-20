@@ -800,7 +800,13 @@ bool AttrWindow::IsInstanceEqual(const AttrWindow& p_att) const
 E_WindowAluminumType AttrWindow::GetWindowDoorAluminumType() const
 {
 	CString sType = (GetType() == WINDOW ? L"¥∞" : L"√≈");
-	return ToWindowDoorAluminumType(m_openType + sType);
+
+	CString sFullName = m_openType;
+	if (m_openType.Find(sType)<0)
+	{
+		sFullName = m_openType + sType;
+	}
+	return ToWindowDoorAluminumType(sFullName);
 }
 
 CString AttrWindow::GetPrototypeDwgFilePath(eViewDir p_view)const

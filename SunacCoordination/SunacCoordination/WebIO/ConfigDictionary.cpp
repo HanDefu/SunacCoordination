@@ -234,9 +234,8 @@ vCString CConfigDictionary::GetQuyus()const
 		strs.push_back(L"上海区域");
 		strs.push_back(L"西南区域");
 		strs.push_back(L"东南区域");
-		strs.push_back(L"广深区域");
+		strs.push_back(L"华南区域");
 		strs.push_back(L"华中区域");
-		strs.push_back(L"海南区域");
 		return strs;
 	}
 }
