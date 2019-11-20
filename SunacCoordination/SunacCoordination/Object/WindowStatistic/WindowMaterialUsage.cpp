@@ -62,7 +62,7 @@ double CWindowMaterialUsage::GetVauleByFomula(CString p_sFomula)
 			else
 			{
 				//ÆäËûµÄ´Ó¿Û¼õ³ß´ç±ßÀïÈ¡
-				bool bSuc = CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(m_winAtt.GetWindowDoorType(), m_winAtt.m_material.sAluminumSerial, sParaName, valueOut);
+				bool bSuc = CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(m_winAtt.GetWindowDoorAluminumType(), m_winAtt.m_material.sAluminumSerial, sParaName, valueOut);
 				assert(bSuc);
 			}
 			parser.SetVar(sParaName, valueOut);
@@ -218,19 +218,19 @@ void CWindowMaterialUsage::ExportWindowInfo(Excel::CExcelUtil& p_excel)//Êä³ö»ù±
 	p_excel.SetCellValue(15, 9, str);
 }
 
-E_WindowDoorType  CWindowMaterialUsage::GetSpecialWinType(E_WindowDoorType winType, CString p_sAlName)const  //p_sAlNameÂÁÐÍ²ÄÃû³Æ
+E_WindowAluminumType  CWindowMaterialUsage::GetSpecialWinType(E_WindowAluminumType winType, CString p_sAlName)const  //p_sAlNameÂÁÐÍ²ÄÃû³Æ
 {
-	if (winType==E_WindowDoor_WM && p_sAlName.CompareNoCase(_T("ÄÚ¿ªÉÈ"))==0)
+	if (winType==E_WindowAluminum_WM && p_sAlName.CompareNoCase(_T("ÄÚ¿ªÉÈ"))==0)
 	{
-		return E_WindowDoor_NC;
+		return E_WindowAluminum_NC;
 	}
 
 	return winType;
 }
 
-CString CWindowMaterialUsage::GetSpecialAlSerial(E_WindowDoorType winType, CString p_sAlName)const
+CString CWindowMaterialUsage::GetSpecialAlSerial(E_WindowAluminumType winType, CString p_sAlName)const
 {
-	if (winType==E_WindowDoor_WM && p_sAlName.CompareNoCase(_T("ÄÚ¿ªÉÈ"))==0)
+	if (winType==E_WindowAluminum_WM && p_sAlName.CompareNoCase(_T("ÄÚ¿ªÉÈ"))==0)
 	{
 		CString sAlSerial = m_winAtt.m_material.sAluminumSerial;
 		if (sAlSerial.CompareNoCase(_T("SW55MÏµÁÐ"))==0)
@@ -276,7 +276,7 @@ void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öÐÍ²ÄÊý¾
 		alFormulas = CWindowFormula::Instance()->GetAluminumFormulas(m_winAtt.GetMainPrototypeCode());
 	}
 
-	E_WindowDoorType winType = m_winAtt.GetWindowDoorType();
+	E_WindowAluminumType winType = m_winAtt.GetWindowDoorAluminumType();
 
 	int nRow = 17; //ÐÍ²ÄÊý¾Ý¿ªÊ¼ÐÐºÅÎª17
 	for (UINT i=0; i<alFormulas.size(); i++, nRow++)
@@ -308,7 +308,7 @@ void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öÐÍ²ÄÊý¾
 		if (bSuc == false) 
 		{
 			//Ã»ÓÐÔò¼ì²éÊÇ·ñÓÐ°üº¬ÁËÆäËûµÄÀàÐÍÃÅ´°µÄÐÍ²Ä
-			E_WindowDoorType wintype2 = GetSpecialWinType(winType, alFormulas[i].m_name);
+			E_WindowAluminumType wintype2 = GetSpecialWinType(winType, alFormulas[i].m_name);
 			CString sAlSerial2 = GetSpecialAlSerial(winType, alFormulas[i].m_name);
 			bSuc = CAluminumSeries::Instance()->GetAluminumDataBySeriesAndName(wintype2, sAlSerial2, alFormulas[i].m_name, dataOut);
 

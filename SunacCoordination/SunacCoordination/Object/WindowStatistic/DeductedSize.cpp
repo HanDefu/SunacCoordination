@@ -29,9 +29,9 @@ static int OutputDeductedSize(void *NotUsed, int nCol, char **value, char **ColN
 	return 0;
 }
 
-bool CDeductedSize::GetDeductedSizeBySeriesAndName(E_WindowDoorType p_winType, CString p_serials, CString sDeductedName, double &p_valueOut)
+bool CDeductedSize::GetDeductedSizeBySeriesAndName(E_WindowAluminumType p_winType, CString p_serials, CString sDeductedName, double &p_valueOut)
 {
-	CString sWinType = WindowDoorTypeToCSting(p_winType);
+	CString sWinType = WindowDoorAluminumTypeToCSting(p_winType);
 	return GetDeductedSizeBySeriesAndName(sWinType, p_serials, sDeductedName, p_valueOut);
 }
 

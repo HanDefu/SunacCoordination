@@ -101,7 +101,7 @@ public:
 	bool IsPrototypeEqual_test(const AttrWindow& p_att);
 	bool IsInstanceEqual(const AttrWindow& p_att) const;
 
-	E_WindowDoorType GetWindowDoorType()const;
+	E_WindowAluminumType GetWindowDoorAluminumType()const;
 
 	CString GetPrototypeCode()const { return m_prototypeCode; }
 	CString GetMainPrototypeCode()const; //返回原型主编码，如Window_NC2_1 返回的值为Window_NC2

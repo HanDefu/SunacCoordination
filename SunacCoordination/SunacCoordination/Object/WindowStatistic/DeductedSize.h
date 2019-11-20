@@ -10,7 +10,7 @@ public:
 	virtual ~CDeductedSize();
 
 	//通过门窗类型p_sWinType、型材系列p_serials，型材名称sDeductedName获取型材数据,没查找到返回false
-	bool GetDeductedSizeBySeriesAndName(E_WindowDoorType p_winType, CString p_serials, CString sDeductedName, double &p_valueOut);
+	bool GetDeductedSizeBySeriesAndName(E_WindowAluminumType p_winType, CString p_serials, CString sDeductedName, double &p_valueOut);
 
 	//使用表DeductedSize
 protected:

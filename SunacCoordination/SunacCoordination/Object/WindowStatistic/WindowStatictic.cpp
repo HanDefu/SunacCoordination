@@ -30,25 +30,25 @@ void CWindowUsage::InitWindMaterialUsage()
 		m_pMaterialUsage = NULL;
 	}
 
-	E_WindowDoorType winDoorType = winAtt.GetWindowDoorType();
+	E_WindowAluminumType winDoorType = winAtt.GetWindowDoorAluminumType();
 	switch (winDoorType)
 	{
-	case E_WindowDoor_NC:
+	case E_WindowAluminum_NC:
 		m_pMaterialUsage = new CWindowMaterialUsageNC(winAtt, nCount);
 		break;
-	case E_WindowDoor_WC:
+	case E_WindowAluminum_WC:
 		m_pMaterialUsage = new CWindowMaterialUsageWC(winAtt, nCount);
 		break;
-	case E_WindowDoor_TC:
+	case E_WindowAluminum_TC:
 		m_pMaterialUsage = new CWindowMaterialUsageTC(winAtt, nCount);
 		break;
-	case E_WindowDoor_WM:
+	case E_WindowAluminum_WM:
 		m_pMaterialUsage = new CWindowMaterialUsageWM(winAtt, nCount);
 		break;
-	case E_WindowDoor_TLM:
+	case E_WindowAluminum_TLM:
 		m_pMaterialUsage = new CWindowMaterialUsageTLM(winAtt, nCount);
 		break;
-	case E_WindowDoor_TSTLM:
+	case E_WindowAluminum_TSTLM:
 		m_pMaterialUsage = new CWindowMaterialUsageTSTLM(winAtt, nCount);
 		break;
 	default:
@@ -235,7 +235,7 @@ bool CWindowStatictic::GenerateReport(Excel::CExcelUtil& xls)
 		}
 
 		//窗型(二级分项)
-		xls.SetCellValue(nRow, 5, WindowDoorTypeToCSting(m_windows[i].winAtt.GetWindowDoorType()));
+		xls.SetCellValue(nRow, 5, WindowDoorAluminumTypeToCSting(m_windows[i].winAtt.GetWindowDoorAluminumType()));
 
 		//门窗编号
 		xls.SetCellValue(nRow, 6, m_windows[i].winAtt.GetInstanceCode());

@@ -37,8 +37,8 @@ protected:
 	virtual void ExportFuliaoInfo(Excel::CExcelUtil& p_excel);//输出辅料数据
 
 	//部分情况下需要用到其他类型的型材，以下函数获取对应的型材
-	E_WindowDoorType  GetSpecialWinType(E_WindowDoorType winType, CString p_sAlName)const ; //p_sAlName铝型材名称
-	CString GetSpecialAlSerial(E_WindowDoorType winType, CString p_sAlName)const;
+	E_WindowAluminumType  GetSpecialWinType(E_WindowAluminumType winType, CString p_sAlName)const ; //p_sAlName铝型材名称
+	CString GetSpecialAlSerial(E_WindowAluminumType winType, CString p_sAlName)const;
 
 protected:
 	const AttrWindow m_winAtt;

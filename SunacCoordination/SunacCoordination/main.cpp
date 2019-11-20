@@ -758,11 +758,11 @@ void CMD_TEST2()
 	vAlFormula = CWindowFormula::Instance()->GetAluminumFormulas(L"Window_NC1");
 	vGlassFormula = CWindowFormula::Instance()->GetGlassFormulas(L"Window_NC1");
 	vHardwareFormula = CWindowFormula::Instance()->GetHardwareData(L"Window_NC1");
-	CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(E_WindowDoor_NC, L"SW55M系列", L"M1", DeductedSizeData);
-	CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(E_WindowDoor_WC, L"SW55M系列", L"M1", DeductedSizeData);
-	CAluminumSeries::Instance()->GetAluminumDataBySeriesAndName(E_WindowDoor_NC, L"SW55M系列", L"假中梃", AlData);
+	CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(E_WindowAluminum_NC, L"SW55M系列", L"M1", DeductedSizeData);
+	CDeductedSize::Instance()->GetDeductedSizeBySeriesAndName(E_WindowAluminum_WC, L"SW55M系列", L"M1", DeductedSizeData);
+	CAluminumSeries::Instance()->GetAluminumDataBySeriesAndName(E_WindowAluminum_NC, L"SW55M系列", L"假中梃", AlData);
 	CAluminumSeries::Instance()->GetAluminumSerialByCode(L"SN60T002", AlSeries);
-	vAlSeries = CAluminumSeries::Instance()->GetAluminumSerialsByWindowType(E_WindowDoor_NC);*/
+	vAlSeries = CAluminumSeries::Instance()->GetAluminumSerialsByWindowType(E_WindowAluminum_NC);*/
 	//CFileUpDownLoad::UploadFile(L"D:\\Drawing1.dwg", L"1234567778.dwg", _T("20191030"));
 	//CFileUpDownLoad::DownloadFile(L"http://fastsoft.onlinedown.net/down/idm_ald.exe", L"F:\\FTPServer\\Test.exe");
 	if(CWebProjectFile::Instance()->GetAllProjectInfo())

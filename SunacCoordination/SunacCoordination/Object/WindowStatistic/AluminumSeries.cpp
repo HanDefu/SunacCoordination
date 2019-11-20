@@ -8,60 +8,60 @@
 
 
 
-E_WindowDoorType ToWindowDoorType(CString type)
+E_WindowAluminumType ToWindowDoorAluminumType(CString type)
 {
 	if (type == L"内开窗" || type == L"内开内倒窗")
 	{
-		return E_WindowDoor_NC;
+		return E_WindowAluminum_NC;
 	}
 	else if (type == L"外开窗" || type == L"上悬窗")
 	{
-		return E_WindowDoor_WC;
+		return E_WindowAluminum_WC;
 	}
 	else if (type == L"推拉窗")
 	{
-		return E_WindowDoor_TC;
+		return E_WindowAluminum_TC;
 	}
 	else if (type == L"外开门" || type == L"门连窗")
 	{
-		return E_WindowDoor_WM;
+		return E_WindowAluminum_WM;
 	}
 	else if (type == L"推拉门")
 	{
-		return E_WindowDoor_TLM;
+		return E_WindowAluminum_TLM;
 	}
 	else if (type == L"提升推拉门")
 	{
-		return E_WindowDoor_TSTLM;
+		return E_WindowAluminum_TSTLM;
 	}
 	else
 	{
 		assert(false);
-		return E_WindowDoor_NC;
+		return E_WindowAluminum_NC;
 	}
 }
 
-CString WindowDoorTypeToCSting(E_WindowDoorType type)
+CString WindowDoorAluminumTypeToCSting(E_WindowAluminumType type)
 {
 	switch (type)
 	{
-	case E_WindowDoor_NC:
+	case E_WindowAluminum_NC:
 							return L"内开窗";
 							break;
-	case E_WindowDoor_WC:
+	case E_WindowAluminum_WC:
 							return L"外开窗";
 							break;
-	case E_WindowDoor_TC:
+	case E_WindowAluminum_TC:
 							return L"推拉窗";
 							break;
-	case E_WindowDoor_WM:
+	case E_WindowAluminum_WM:
 							return L"外开门";
 							break;
-	case E_WindowDoor_TLM:
+	case E_WindowAluminum_TLM:
 							 return L"推拉门";
 							 break;
 
-	case E_WindowDoor_TSTLM:
+	case E_WindowAluminum_TSTLM:
 							   return L"提升推拉门";
 							   break;
 	default:
@@ -142,7 +142,7 @@ void CAluminumSeries::InitAluminum()
 	AluminumData.sName = "";
 	AluminumData.sSerial = "";
 	AluminumData.weightPerMeter = 0;
-	AluminumData.windowDoorType = E_WindowDoor_NC;
+	AluminumData.windowDoorType = E_WindowAluminum_NC;
 	AluminumData.wastageRate = 0.125;
 	AluminumData.aluminumType = E_断桥隔热铝型材;
 }
@@ -153,7 +153,7 @@ static int OutputAlData(void *NotUsed, int nCol, char **value, char **ColName)
 	{
 		if (strcmp(ColName[i], "WindowDoorType") == 0)
 		{
-			AluminumData.windowDoorType = ToWindowDoorType(UTF8ToGBK(value[i]));
+			AluminumData.windowDoorType = ToWindowDoorAluminumType(UTF8ToGBK(value[i]));
 		}
 		else if (strcmp(ColName[i],"Code") == 0)
 		{
@@ -202,7 +202,7 @@ static int OutputAlSeriesFromProtoType(void *NotUsed, int nCol, char **value, ch
 }
 
 
-bool CAluminumSeries::GetAluminumDataBySeriesAndName(E_WindowDoorType p_winType, CString p_serials, CString sName, CAluminumData& p_dataOut)
+bool CAluminumSeries::GetAluminumDataBySeriesAndName(E_WindowAluminumType p_winType, CString p_serials, CString sName, CAluminumData& p_dataOut)
 {
 	InitAluminum();
 	sqlite3 * pDB3 = NULL;
@@ -215,7 +215,7 @@ bool CAluminumSeries::GetAluminumDataBySeriesAndName(E_WindowDoorType p_winType,
 		return false;
 	}
 	char* cErrMsg;
-	CString sWinType = WindowDoorTypeToCSting(p_winType);
+	CString sWinType = WindowDoorAluminumTypeToCSting(p_winType);
 	CString sqlString;
 	sqlString.Format(L"select * from `AluminumSeries` where `WindowDoorType` = '%s' and `Serial` = '%s' and `Name` = '%s' limit 1;", sWinType, p_serials, sName);
 	
@@ -268,7 +268,7 @@ bool CAluminumSeries::GetAluminumSerialByCode(CString p_code, CString& p_serialO
 	return true;
 }
 
-vector<CString> CAluminumSeries::GetAluminumSerialsByWindowType(E_WindowDoorType p_winType)
+vector<CString> CAluminumSeries::GetAluminumSerialsByWindowType(E_WindowAluminumType p_winType)
 {
 	AlSeries.clear();
 	sqlite3 * pDB3 = NULL;
@@ -281,7 +281,7 @@ vector<CString> CAluminumSeries::GetAluminumSerialsByWindowType(E_WindowDoorType
 		return AlSeries;
 	}
 	char* cErrMsg;
-	CString sWinType = WindowDoorTypeToCSting(p_winType);
+	CString sWinType = WindowDoorAluminumTypeToCSting(p_winType);
 	CString sqlString;
 	sqlString.Format(L"select distinct Serial  from `AluminumSeries` where `WindowDoorType` = '%s' and `Serial`  !='';", sWinType);
 	
