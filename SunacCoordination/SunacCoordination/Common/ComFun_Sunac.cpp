@@ -1252,6 +1252,51 @@ AcDbObjectId InsertBlockRefFromDwg(const TCHAR* fileName, const TCHAR* blkDefNam
 	return entId;
 }
 
+
+//bool SelectViewDir(eViewDir& p_defaultDir);
+//{
+//	CString sDir;
+//
+//	bool bSuc = false;
+//	do
+//	{
+//		bSuc = GetStringInput(_T("\n门窗视图方向[平面图(T) 西(W) 南(S) 北(N)]<S>:"), sDir);
+//		if (bSuc == false)
+//			return false;
+//
+//		sDir.Trim();
+//		sDir.MakeUpper();
+//		if (sDir.IsEmpty())
+//		{
+//			windowDir = E_DIR_BOTTOM;
+//			break;
+//		}
+//
+//		if (sDir.Find(_T('E')) >= 0 || sDir.Find(_T('东')) >= 0)
+//		{
+//			windowDir = E_DIR_RIGHT;
+//			break;
+//		}
+//		else if (sDir.Find(_T('W')) >= 0 || sDir.Find(_T('西')) >= 0)
+//		{
+//			windowDir = E_DIR_LEFT;
+//			break;
+//		}
+//		else if (sDir.Find(_T('S')) >= 0 || sDir.Find(_T('南')) >= 0)
+//		{
+//			windowDir = E_DIR_BOTTOM;
+//			break;
+//		}
+//		else if (sDir.Find(_T('N')) >= 0 || sDir.Find(_T('北')) >= 0)
+//		{
+//			windowDir = E_DIR_TOP;
+//			break;
+//		}
+//
+//	} while (bSuc);
+//
+//	return bSuc;
+//}
 vAcDbObjectId SelectWindows(eViewDir p_view)
 {
 	vAcDbObjectId vIds;//当前选择的ids

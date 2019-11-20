@@ -33,8 +33,8 @@ void CMD_SunacWindowsTable()
 	CString info, str;
 
 	//第一步：选择需要统计的门窗
-	vAcDbObjectId m_vids = SelectWindows(E_VIEW_FRONT);
-	if (m_vids.size() == 0)
+	vAcDbObjectId winIds = SelectWindows(E_VIEW_FRONT);
+	if (winIds.size() == 0)
 	{
 		return;
 	}
@@ -47,10 +47,10 @@ void CMD_SunacWindowsTable()
 
 	//第三步：读取门窗数据并且分类汇总
 	vRCWindow allWindowsTypes;
-	for (UINT i = 0; i < m_vids.size(); i++)
+	for (UINT i = 0; i < winIds.size(); i++)
 	{
 		RCWindow oneWindow;
-		oneWindow.m_id = m_vids[i];
+		oneWindow.m_id = winIds[i];
 		oneWindow.InitParameters();
 		oneWindow.GetAttribute();
 		int index = vFind(oneWindow,allWindowsTypes);

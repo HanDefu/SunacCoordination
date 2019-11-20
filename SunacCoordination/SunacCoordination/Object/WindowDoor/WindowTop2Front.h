@@ -12,6 +12,5 @@ protected:
 	static vector<double> GetAllXValueInFrontView(const vector<AcDbExtents> &allExtents, const E_DIRECTION windowDir); //获取各窗户在立面视图上的x值
 
 	static 	AcDbObjectIdArray CopyAllFloorByOneFloor(const AcDbObjectIdArray& oneFloorIds, const vector<AttrWindow> &winAtts);
-	;
 };
 

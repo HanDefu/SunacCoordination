@@ -10,8 +10,8 @@
 bool CWindowTop2Front::GenFrontFromTop()
 {
 	//1.选择需要设置楼层的门窗
-	vAcDbObjectId m_vids = SelectWindows(E_VIEW_TOP);
-	if (m_vids.size() == 0)
+	vAcDbObjectId winIds = SelectWindows(E_VIEW_TOP);
+	if (winIds.size() == 0)
 	{
 		return false;
 	}
@@ -32,10 +32,10 @@ bool CWindowTop2Front::GenFrontFromTop()
 	vector<AttrWindow>  winAtts;
 	vector<AcGePoint3d> allPos; //插入点
 	vector<AcDbExtents> allExtents; //插入点
-	for (UINT i = 0; i < m_vids.size(); i++)
+	for (UINT i = 0; i < winIds.size(); i++)
 	{
 		RCWindow oneWindow;
-		oneWindow.m_id = m_vids[i];
+		oneWindow.m_id = winIds[i];
 		oneWindow.InitParameters();
 
 		AttrWindow* pAtt = oneWindow.GetAttribute();
@@ -43,7 +43,7 @@ bool CWindowTop2Front::GenFrontFromTop()
 		{
 			if (pAtt->GetFloorInfo().GetAllFloor().size() == 0)
 			{
-				idsNoFloorInfo.append(m_vids[i]);
+				idsNoFloorInfo.append(winIds[i]);
 			}
 
 			AttrWindow attTemp(*pAtt);

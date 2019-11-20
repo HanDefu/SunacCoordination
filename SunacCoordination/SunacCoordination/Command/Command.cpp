@@ -128,8 +128,8 @@ void CMD_SunacWindowAdvanceDesign() //门窗深化设计
 void CMD_SunacWindowFloorSetting()//门窗楼层设置
 {
 	//1.选择需要设置楼层的门窗
-	vAcDbObjectId m_vids = SelectWindows(E_VIEW_TOP);
-	if (m_vids.size() == 0)
+	vAcDbObjectId winIds = SelectWindows(E_VIEW_TOP);
+	if (winIds.size() == 0)
 	{
 		return;
 	}
@@ -165,10 +165,10 @@ void CMD_SunacWindowFloorSetting()//门窗楼层设置
 
 	//////////////////////////////////////////////////////////////////////////
 	//设置到选中的门窗中
-	for (UINT i = 0; i < m_vids.size(); i++)
+	for (UINT i = 0; i < winIds.size(); i++)
 	{
 		RCWindow oneWindow;
-		oneWindow.m_id = m_vids[i];
+		oneWindow.m_id = winIds[i];
 		oneWindow.InitParameters();
 
 		AttrWindow* pAtt = oneWindow.GetAttribute();
@@ -346,8 +346,8 @@ void CMD_SunacWaterproof()
 void CMD_SunacWindowsStatistics()
 {
 	//第一步：选择需要统计的门窗
-	vAcDbObjectId m_vids = SelectWindows(E_VIEW_FRONT);
-	if (m_vids.size() == 0)
+	vAcDbObjectId winIds = SelectWindows(E_VIEW_FRONT);
+	if (winIds.size() == 0)
 	{
 		return;
 	}
@@ -355,10 +355,10 @@ void CMD_SunacWindowsStatistics()
 	vector<AcDbObjectId> idsNonAlserials; //未设置型材系列的门窗
 
 	vector<AttrWindow>  winAtts;
-	for (UINT i = 0; i < m_vids.size(); i++)
+	for (UINT i = 0; i < winIds.size(); i++)
 	{
 		RCWindow oneWindow;
-		oneWindow.m_id = m_vids[i];
+		oneWindow.m_id = winIds[i];
 		oneWindow.InitParameters();
 
 		AttrWindow* pAtt= oneWindow.GetAttribute();
@@ -369,7 +369,7 @@ void CMD_SunacWindowsStatistics()
 
 			if (attTemp.m_material.sAluminumSerial.IsEmpty())
 			{
-				idsNonAlserials.push_back(m_vids[i]);
+				idsNonAlserials.push_back(winIds[i]);
 			}
 		}
 	}
