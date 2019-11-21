@@ -46,8 +46,8 @@ public:
 
 	CGridCtrlWithPreview m_preRailing;
 	CComboBox m_comboRailingType;
-	double m_height;// 栏杆高度	
-	double m_width;// 栏杆长度
+	int m_height;// 栏杆高度	
+	int m_width;// 栏杆长度
 	CEdit m_editRailingID;
 	CString m_sRailingId;
 	BOOL m_bRailingAutoName;// 自动编号
