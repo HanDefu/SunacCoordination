@@ -29,15 +29,15 @@ CString GlobalSetting::GetFtpIp()const
 
 const char* GlobalSetting::GetCADServiceUrl()const
 {
-	const string sUrlTestMode = "http://des.sunac.com.cn/SunacCADService.asmx?WSDL";
-	const string sUrl = "http://ades.sunac.com.cn/SunacCADService.asmx?WSDL";
+	static const char sUrlTestMode[256] = "http://des.sunac.com.cn/SunacCADService.asmx";
+	static const char sUrl[256] = "http://ades.sunac.com.cn/SunacCADService.asmx";
 	if (m_bTestMode)
 	{
-		return sUrlTestMode.c_str();
+		return sUrlTestMode;
 	}
 	else
 	{
-		return sUrl.c_str();
+		return sUrl;
 	}
 }
 
