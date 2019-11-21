@@ -113,7 +113,7 @@ AcDbObjectId CopyBlockDefFromDatabase(AcDbDatabase* pSourceDb, AcDbDatabase* pDe
 
 AcDbObjectId InsertBlockRefFromDwg(const TCHAR* fileName, const TCHAR* blkDefName, const WCHAR *layoutname, AcGePoint3d origin);
 
-bool SelectViewDir(eViewDir& p_defaultDir);
+bool SelectViewDir(eViewDir& p_viewDir);
 vAcDbObjectId SelectWindows(eViewDir p_view);
 
 

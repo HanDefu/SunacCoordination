@@ -128,7 +128,14 @@ void CMD_SunacWindowAdvanceDesign() //门窗深化设计
 void CMD_SunacWindowFloorSetting()//门窗楼层设置
 {
 	//1.选择需要设置楼层的门窗
-	vAcDbObjectId winIds = SelectWindows(E_VIEW_TOP);
+	eViewDir viewDir = E_VIEW_TOP;
+	bool bSuc1 = SelectViewDir(viewDir);
+	if (bSuc1==false)
+	{
+		return;
+	}
+	
+	vAcDbObjectId winIds = SelectWindows(viewDir);
 	if (winIds.size() == 0)
 	{
 		return;
@@ -346,7 +353,13 @@ void CMD_SunacWaterproof()
 void CMD_SunacWindowsStatistics()
 {
 	//第一步：选择需要统计的门窗
-	vAcDbObjectId winIds = SelectWindows(E_VIEW_FRONT);
+	eViewDir viewDir = E_VIEW_FRONT;
+	bool bSuc1 = SelectViewDir(viewDir);
+	if (bSuc1 == false)
+	{
+		return;
+	}
+	vAcDbObjectId winIds = SelectWindows(viewDir);
 	if (winIds.size() == 0)
 	{
 		return;

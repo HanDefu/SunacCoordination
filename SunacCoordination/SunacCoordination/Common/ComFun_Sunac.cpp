@@ -1253,55 +1253,48 @@ AcDbObjectId InsertBlockRefFromDwg(const TCHAR* fileName, const TCHAR* blkDefNam
 }
 
 
-//bool SelectViewDir(eViewDir& p_defaultDir);
-//{
-//	CString sDir;
-//
-//	bool bSuc = false;
-//	do
-//	{
-//		bSuc = GetStringInput(_T("\n门窗视图方向[平面图(T) 西(W) 南(S) 北(N)]<S>:"), sDir);
-//		if (bSuc == false)
-//			return false;
-//
-//		sDir.Trim();
-//		sDir.MakeUpper();
-//		if (sDir.IsEmpty())
-//		{
-//			windowDir = E_DIR_BOTTOM;
-//			break;
-//		}
-//
-//		if (sDir.Find(_T('E')) >= 0 || sDir.Find(_T('东')) >= 0)
-//		{
-//			windowDir = E_DIR_RIGHT;
-//			break;
-//		}
-//		else if (sDir.Find(_T('W')) >= 0 || sDir.Find(_T('西')) >= 0)
-//		{
-//			windowDir = E_DIR_LEFT;
-//			break;
-//		}
-//		else if (sDir.Find(_T('S')) >= 0 || sDir.Find(_T('南')) >= 0)
-//		{
-//			windowDir = E_DIR_BOTTOM;
-//			break;
-//		}
-//		else if (sDir.Find(_T('N')) >= 0 || sDir.Find(_T('北')) >= 0)
-//		{
-//			windowDir = E_DIR_TOP;
-//			break;
-//		}
-//
-//	} while (bSuc);
-//
-//	return bSuc;
-//}
+bool SelectViewDir(eViewDir& p_viewDir)
+{
+	CString sDir;
+
+	bool bSuc = false;
+	do
+	{
+		bSuc = GetStringInput(_T("\n需要选择的门窗视图方向[平面图(T) 立面图(F)]<T>:"), sDir);
+		if (bSuc == false)
+			return false;
+
+		sDir.Trim();
+		sDir.MakeUpper();
+		if (sDir.IsEmpty())
+		{
+			p_viewDir = E_VIEW_TOP;
+			break;
+		}
+
+		if (sDir.Find(_T('T')) >= 0 || sDir.Find(_T("平面")) >= 0)
+		{
+			p_viewDir = E_VIEW_TOP;
+			break;
+		}
+		else if (sDir.Find(_T('F')) >= 0 || sDir.Find(_T("立面")) >= 0)
+		{
+			p_viewDir = E_VIEW_FRONT;
+			break;
+		}
+
+	} while (bSuc);
+
+	return bSuc;
+}
+
 vAcDbObjectId SelectWindows(eViewDir p_view)
 {
 	vAcDbObjectId vIds;//当前选择的ids
 
 	acutPrintf(L"\n请选择门窗");
+
+	//TODO 选择全部和自动过滤
 
 	ads_name sset;
 	acedSSGet(NULL, NULL, NULL, NULL, sset);

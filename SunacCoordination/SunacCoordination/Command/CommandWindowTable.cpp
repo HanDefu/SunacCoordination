@@ -33,7 +33,13 @@ void CMD_SunacWindowsTable()
 	CString info, str;
 
 	//第一步：选择需要统计的门窗
-	vAcDbObjectId winIds = SelectWindows(E_VIEW_FRONT);
+	eViewDir viewDir = E_VIEW_FRONT;
+	bool bSuc1 = SelectViewDir(viewDir);
+	if (bSuc1 == false)
+	{
+		return;
+	}
+	vAcDbObjectId winIds = SelectWindows(viewDir);
 	if (winIds.size() == 0)
 	{
 		return;
