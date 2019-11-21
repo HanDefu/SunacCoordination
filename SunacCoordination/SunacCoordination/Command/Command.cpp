@@ -40,6 +40,7 @@
 #include "../UI/ProjectManagementDlg.h"
 #include "../WebIO/WebIO.h"
 #include "Command.h"
+#include "CommandWindowDetail.h"
 
 
 void SendCommandToCAD(CString cmd) //此函数尚未调通
@@ -125,17 +126,14 @@ void CMD_SunacWindowAdvanceDesign() //门窗深化设计
 	g_windowAdvanceDlg->ShowWindow(SW_SHOW);
 }
 
+void CMD_SunacWindowDetail()
+{
+	CWindowDetail::DrawWindowDetail();
+}
 void CMD_SunacWindowFloorSetting()//门窗楼层设置
 {
 	//1.选择需要设置楼层的门窗
-	eViewDir viewDir = E_VIEW_TOP;
-	bool bSuc1 = SelectViewDir(viewDir);
-	if (bSuc1==false)
-	{
-		return;
-	}
-	
-	vAcDbObjectId winIds = SelectWindows(viewDir);
+	vAcDbObjectId winIds = SelectWindows(E_VIEW_TOP);
 	if (winIds.size() == 0)
 	{
 		return;

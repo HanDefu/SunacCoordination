@@ -1,16 +1,4 @@
-﻿//
-//////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright 2013 Autodesk, Inc.  All rights reserved.
-//
-//  Use of this software is subject to the terms of the Autodesk license 
-//  agreement provided at the time of installation or download, or which 
-//  otherwise accompanies this software in either electronic or hard copy form.   
-//
-//////////////////////////////////////////////////////////////////////////////
-//
-// AsdkAcUiSample.cpp : Defines the initialization routines for the DLL.
-//
+﻿
 #include "StdAfx.h"
 
 #if defined(_DEBUG) && !defined(AC_FULL_DEBUG)
@@ -21,106 +9,39 @@
 #include <dbgroup.h>
 #include <geassign.h>
 #include "accmd.h"
-#include "../Common/ComFun_Sunac.h"
+#include "dbtable.h"
+#include "../Object/RCBlock.h"
 #include "../Object/WindowDoor/RCWindow.h"
 #include "../Common/ComFun_ACad.h"
-#include "dbtable.h"
-#include "../Tool/DocLock.h"
 #include "../Common/ComFun_Str.h"
-#include "../Object/RCBlock.h"
+#include "../Common/ComFun_Sunac.h"
+#include "../Tool/DocLock.h"
+#include "CommandWindowDetail.h"
 
-//改结构体代表插入进来的一个门窗详图的块
-//Sunac2019\Data\Template\WindowDetail.dwg
-typedef struct WindowDetailTemplate
+
+CWindowDetailTemplate::CWindowDetailTemplate()
 {
-	WindowDetailTemplate()
-	{
-		pnt = AcGePoint3d(0,0,0);//插入点
-	}
-
-    AcGePoint3d pnt;//外窗插入点
-
-	//总宽度高度
-	const static int width = 4000;
-	const static int height = 4500;
-
-	//原型编号
-	const static int idX = 130;
-	const static int idY = 650;
-
-	//面积
-	const static int areaX= 1760;
-	const static int areaY= 690;
-
-	//开启面积
-	const static int openAreaX = 1960;
-	const static int openAreaY = 190;
-
-	//功能区
-	const static int gongNengQuX = 3220;
-	const static int gongNengQuY = 690;
-
-	//窗下墙高度
-	const static int heightUnderWindowX = 3310;
-	const static int heightUnderWindowY = 190;
-
-
-	//标注宽度
-	const static int biaoZhuWid = 300;
-
-	RCBlock thisBlock;
-
-	//得到模板的插入点
-	AcGePoint3d GetInsertPnt(AcGePoint3d basePnt, int rowIndex, int columnIndex)
-	{
-		return AcGePoint3d(basePnt.x + columnIndex*width, basePnt.y - (rowIndex+1) * height, 0);
-	}
-
-	static CString GetTemplateFileName()
-	{
-		return MD2010_GetAppPath() + L"\\Sunac2019\\Data\\Template\\WindowDetail.dwg";;
-	}
-
-	//计算门窗的插入点
-	AcGePoint3d GetInsertPntWindow(double winwid, double winHei)
-	{
-		return AcGePoint3d(pnt.x + (width - winwid - biaoZhuWid * 2)/2,//宽度两边平分
-			             pnt.y + 4500 - 900 - winHei,//高度顶端一致
-						 0);
-	}
-}SWindowDetailTemplate;
-
-typedef std::vector<SWindowDetailTemplate> vSWindowDetailTemplate;
-
-static int InsertTemplates(vRCWindow &allWindowsTypes, AcGePoint3d pnt, vSWindowDetailTemplate &windowDetailTemplates)
-{
-	int columnNum = 3;
-
-	int rowIndex = 0, columnIndex = 0;
-	int size = (int)allWindowsTypes.size();
-	for (int i = 0; i < size; i++)
-	{
-		rowIndex = (int)(i/3);
-		columnIndex = i%3;
-
-        SWindowDetailTemplate oneTemplate;
-		oneTemplate.pnt = oneTemplate.GetInsertPnt(pnt,rowIndex,columnIndex);
-		
-		AcDbObjectId id = oneTemplate.thisBlock.Insert(WindowDetailTemplate::GetTemplateFileName(),
-			oneTemplate.pnt,
-			0,
-			L"0",
-			0);
-		windowDetailTemplates.push_back(oneTemplate);
-	}
-    return 0;
+	pnt = AcGePoint3d(0, 0, 0);//插入点
 }
 
+bool CWindowDetailTemplate::InsertTemplates(int p_index, AcGePoint3d p_pnt)
+{
+	const int countPerCoulum = 3;
+	int rowIndex = (int)(p_index / countPerCoulum);
+	int columnIndex = p_index%countPerCoulum;
+
+	pnt = GetInsertPnt(p_pnt, rowIndex, columnIndex);
+
+	AcDbObjectId id = thisBlock.Insert(GetTemplateFileName(), pnt, 	0, L"0",  0);
+
+	return true;
+}
+
+
 //门窗详图
-void CMD_SunacWindowDetail()
+void CWindowDetail::DrawWindowDetail()
 {
 	CDocLock lockEnt;
-	CString str;
 
 	//第一步：选择需要统计的门窗
 	eViewDir viewDir = E_VIEW_FRONT;
@@ -140,102 +61,214 @@ void CMD_SunacWindowDetail()
 		return;
 
 	//第三步：读取门窗数据并且分类汇总
-	vRCWindow allWindowsTypes;
-	for (UINT i = 0; i < winIds.size(); i++)
+	CWindowCountArray winCountArray;
+	winCountArray.InitByWindowIds(winIds);
+
+
+	//////////////////////////////////////////////////////////////////////////
+	for (int i = 0; i < winCountArray.GetCount(); i++)
 	{
-		RCWindow oneWindow;
-		oneWindow.m_id = winIds[i];
-		oneWindow.InitParameters();
-		oneWindow.GetAttribute();
-		int index = vFind(oneWindow,allWindowsTypes);
-		if (index == -1)
-		{
-			oneWindow.m_sameTypeIds.push_back(oneWindow.m_id);
-			allWindowsTypes.push_back(oneWindow);
-		}
-		else
-		{
-			allWindowsTypes[index].m_sameTypeIds.push_back(oneWindow.m_id);
-		}
-	}
+		const AttrWindow& winAtt = winCountArray.GetWindow(i).winAtt;
 
-	//注：前面三步基本同门窗表
-	//第四步：4.1首先插入门窗表模板
-	vSWindowDetailTemplate windowDetailTemplates;
-	InsertTemplates(allWindowsTypes, pnt, windowDetailTemplates);
+		//4.1首先插入门窗表模板
+		CWindowDetailTemplate winDetailTemplate;
+		winDetailTemplate.InsertTemplates(i, pnt);
 
-	//4.2 插图门窗图块---写入文字
-	//windowDetailTemplates 和 allWindowsTypes 的数量是一致的
-	for (UINT i = 0; i < allWindowsTypes.size(); i++)
-	{
-		const AttrWindow * pWinAtt = allWindowsTypes[i].GetAttribute();
+		AcGePoint3d winPnt = winDetailTemplate.GetInsertPntWindow(winAtt.GetW(), winAtt.GetH());
 
-		AcGePoint3d winPnt = windowDetailTemplates[i].GetInsertPntWindow(allWindowsTypes[i].GetW(), allWindowsTypes[i].GetH());
-		allWindowsTypes[i].Insert
-			(
-			    ACDB_MODEL_SPACE,
-			    allWindowsTypes[i].GetBlockRecordName(),
-				winPnt,
-				0,
-				L"0",
-				0
-			);
-		allWindowsTypes[i].RunParameters();
+		AcDbObjectId idOut = GenerateWindow(winAtt, winPnt, E_VIEW_FRONT, false);
 
-		////功能区
-		//JHCOM_CreateText(AcGePoint3d(windowDetailTemplates[i].pnt.x + windowDetailTemplates[i].gongNengQuX,
-		//	                      windowDetailTemplates[i].pnt.y + windowDetailTemplates[i].gongNengQuY,0),
-		//	AcGeVector3d(0,0,1), 
-		//	120, 0, L"厨房"); 
+		CreateDataText(winAtt, winDetailTemplate);
 
-		//门窗编号
-		JHCOM_CreateText(AcGePoint3d(windowDetailTemplates[i].pnt.x + windowDetailTemplates[i].idX,
-			windowDetailTemplates[i].pnt.y + windowDetailTemplates[i].idY,0),
-			AcGeVector3d(0,0,1), 
-			120, 0, 
-			allWindowsTypes[i].GetInstanceCode());
-
-		//窗面积
-		str.Format(L"%.2fm", pWinAtt->GetWindowArea());
-		JHCOM_CreateText(AcGePoint3d(windowDetailTemplates[i].pnt.x + windowDetailTemplates[i].areaX,
-			windowDetailTemplates[i].pnt.y + windowDetailTemplates[i].areaY,0),
-			AcGeVector3d(0,0,1), 
-			120, 0, 
-			str);
-		JHCOM_CreateText(AcGePoint3d(windowDetailTemplates[i].pnt.x + windowDetailTemplates[i].areaX+470,
-			windowDetailTemplates[i].pnt.y + windowDetailTemplates[i].areaY+85, 0),
-			AcGeVector3d(0, 0, 1),
-			60, 0,
-			_T("2")); //绘制㎡符号
-
-		//开启面积
-		str.Format(L"%.2fm", pWinAtt->GetTongFengQty());
-		JHCOM_CreateText(AcGePoint3d(windowDetailTemplates[i].pnt.x + windowDetailTemplates[i].openAreaX,
-			windowDetailTemplates[i].pnt.y + windowDetailTemplates[i].openAreaY,0),
-			AcGeVector3d(0,0,1), 
-			120, 0, 
-			str);
-		JHCOM_CreateText(AcGePoint3d(windowDetailTemplates[i].pnt.x + windowDetailTemplates[i].openAreaX + 470,
-			windowDetailTemplates[i].pnt.y + windowDetailTemplates[i].openAreaY+85, 0),
-			AcGeVector3d(0, 0, 1),
-			60, 0,
-			_T("2")); //绘制㎡符号
-
-		//窗下墙高度
-		str.Format(L"%dmm", (int)(pWinAtt->GetHeightUnderWindow()));
-		JHCOM_CreateText(AcGePoint3d(windowDetailTemplates[i].pnt.x + windowDetailTemplates[i].heightUnderWindowX,
-			windowDetailTemplates[i].pnt.y + windowDetailTemplates[i].heightUnderWindowY, 0),
-			AcGeVector3d(0,0,1), 
-			120, 0, 
-			str);
-
-	}
-
-	//第四步 开始输出数据
-	for (UINT i = 0; i < allWindowsTypes.size(); i++)
-	{
-		allWindowsTypes[i].CreateDims();
+		CreateDetailDims(winAtt, idOut);
 	}
 
 	return;
+}
+
+bool CWindowDetail::CreateDataText(const AttrWindow& winAtt, CWindowDetailTemplate winDetailTemplate)
+{
+	CString str;
+	////功能区
+	//JHCOM_CreateText(AcGePoint3d(winDetailTemplate.pnt.x + winDetailTemplate.gongNengQuX,
+	//	                      winDetailTemplate.pnt.y + winDetailTemplate.gongNengQuY,0),
+	//	AcGeVector3d(0,0,1), 
+	//	120, 0, L"厨房"); 
+
+	//门窗编号
+	JHCOM_CreateText(AcGePoint3d(winDetailTemplate.pnt.x + winDetailTemplate.idX,
+		winDetailTemplate.pnt.y + winDetailTemplate.idY, 0),
+		AcGeVector3d(0, 0, 1),
+		120, 0,
+		winAtt.GetInstanceCode());
+
+	//窗面积
+	str.Format(L"%.2fm", winAtt.GetWindowArea());
+	JHCOM_CreateText(AcGePoint3d(winDetailTemplate.pnt.x + winDetailTemplate.areaX,
+		winDetailTemplate.pnt.y + winDetailTemplate.areaY, 0),
+		AcGeVector3d(0, 0, 1),
+		120, 0,
+		str);
+	JHCOM_CreateText(AcGePoint3d(winDetailTemplate.pnt.x + winDetailTemplate.areaX + 470,
+		winDetailTemplate.pnt.y + winDetailTemplate.areaY + 85, 0),
+		AcGeVector3d(0, 0, 1),
+		60, 0,
+		_T("2")); //绘制㎡符号
+
+	//开启面积
+	str.Format(L"%.2fm", winAtt.GetTongFengQty());
+	JHCOM_CreateText(AcGePoint3d(winDetailTemplate.pnt.x + winDetailTemplate.openAreaX,
+		winDetailTemplate.pnt.y + winDetailTemplate.openAreaY, 0),
+		AcGeVector3d(0, 0, 1),
+		120, 0,
+		str);
+	JHCOM_CreateText(AcGePoint3d(winDetailTemplate.pnt.x + winDetailTemplate.openAreaX + 470,
+		winDetailTemplate.pnt.y + winDetailTemplate.openAreaY + 85, 0),
+		AcGeVector3d(0, 0, 1),
+		60, 0,
+		_T("2")); //绘制㎡符号
+
+	//窗下墙高度
+	str.Format(L"%dmm", (int)(winAtt.GetHeightUnderWindow()));
+	JHCOM_CreateText(AcGePoint3d(winDetailTemplate.pnt.x + winDetailTemplate.heightUnderWindowX,
+		winDetailTemplate.pnt.y + winDetailTemplate.heightUnderWindowY, 0),
+		AcGeVector3d(0, 0, 1),
+		120, 0,
+		str);
+
+	return true;
+}
+
+int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
+{
+	CDocLock lockEnt;
+	if (m_id == 0)
+		return -1;
+
+	const double W = winAtt.GetW();
+	const double H = winAtt.GetH();
+	const double A = winAtt.GetA();
+
+	TYRect rect;
+	DQ_GetBlockReferenceInsertPoint(m_id, rect.m_lb);
+	rect.m_rt.x = rect.m_lb.x + W;
+	rect.m_rt.y = rect.m_lb.y + H;
+	rect.m_rt.z = 0;
+
+	//JHCOM_GetObjectMinMaxPoint(m_id, rect.m_lb, rect.m_rt);
+	double offset = 150;
+
+	//----------------先标注竖向的--------------------//
+	const double h2 = winAtt.GetH2();
+	const double h1 = winAtt.GetH1();
+	const AcGePoint3d  rightBottomPt = rect.GetRB();
+	const AcGePoint3d  rightTopPt = rect.GetRT();
+
+	AcGePoint3d  start = rightBottomPt;
+	AcGePoint3d  end = rightBottomPt;
+	AcGePoint3d  mid = rightBottomPt;
+
+	int colorIndex = 2;
+	int textHeight = 80;
+	CString layer = L"0";
+
+	if (A > TOL)//如果A值存在 先标注两端的A
+	{
+		start = rightBottomPt;
+		end = AcGePoint3d(start.x, start.y + A, 0);
+		mid = AcGePoint3d(start.x + offset, (start.y + end.y) / 2, 0);
+		MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+
+		start = rightTopPt;
+		end = AcGePoint3d(start.x, start.y - A, 0);
+		mid = AcGePoint3d(start.x + offset, (start.y + end.y) / 2, 0);
+		MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+	}
+
+	if (h2 > TOL)
+	{
+		start = AcGePoint3d(rightBottomPt.x, rightBottomPt.y + A, 0);
+		end = AcGePoint3d(start.x, start.y + h2, 0);
+		mid = AcGePoint3d(start.x + offset, start.y + h2 / 2, 0);
+		MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+	}
+
+	//H1一定有
+	start = AcGePoint3d(rightBottomPt.x, rightBottomPt.y + A + h2, 0);
+	end = AcGePoint3d(start.x, start.y + h1, 0);
+	mid = AcGePoint3d(start.x + offset, start.y + h1 / 2, 0);
+	MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+
+	//总高度一定有
+	start = rightBottomPt;
+	end = rightTopPt;
+	mid = AcGePoint3d(start.x + offset * 2, (start.y + end.y) / 2, 0);
+	MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+
+	//////////////////////////////////////////////////////////////////////////
+	//----------------标注横向的--------------------//
+
+	double W1 = winAtt.GetW1();
+	double W2 = winAtt.GetW2();
+	double W3 = winAtt.GetW3();
+
+	start = rect.GetLT();
+	end = start;
+	mid = start;
+	if (A > TOL)//如果A值存在 先标注两端的A
+	{
+		end.x += A;
+		mid.x += A / 2;
+		mid.y += offset;
+		MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+
+		AcGePoint3d start1 = rect.GetRT();
+		AcGePoint3d end1 = start1;
+		AcGePoint3d mid1 = start1;
+		end1.x -= A;
+		mid1.x -= A / 2;
+		mid1.y += offset;
+		MD2010_AddAlignedDimension2(start1, end1, mid1, layer, colorIndex, textHeight);
+	}
+
+	//W1 都会存在
+	start = end;
+	mid = end;
+	end.x += W1;
+	mid.x += W1 / 2;
+	mid.y += offset;
+	MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+
+	//标注W2
+	if (W2 > TOL)
+	{
+		start = end;
+		mid = end;
+		end.x += W2;
+		mid.x += W2 / 2;
+		mid.y += offset;
+		MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+	}
+
+	//最后可能还有一个W1
+	if (W - W1 - W2 - A * 2 > TOL)
+	{
+		start = end;
+		mid = end;
+		end.x += W1;
+		mid.x += W1 / 2;
+		mid.y += offset;
+		MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+	}
+
+	//标注总的宽度
+	start = rect.GetLT();
+	mid = start;
+	end = start;
+	end.x += W;
+	mid.x += W / 2;
+	mid.y += offset * 2;
+	MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+
+	return 0;
 }

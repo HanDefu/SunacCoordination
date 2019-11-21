@@ -189,3 +189,33 @@ public:
 };
 
 typedef std::vector<AttrWindow> vAttrWindow;
+
+
+class CWindowAndCount
+{
+public:
+	CWindowAndCount();
+
+public:
+	AttrWindow winAtt;
+	int nCount;
+
+	AcDbObjectIdArray objIds;
+};
+
+class CWindowCountArray
+{
+public:
+	void InitByWindowIds(const vAcDbObjectId& p_winIds);
+	void InitByWindowAtts(const vector<AttrWindow>& p_winAtts, const vector<AcDbObjectId>& p_ids);
+
+	int GetCount()const { return (int)(m_winCountArray.size()); }
+
+	const CWindowAndCount& GetWindow(int p_index){ return m_winCountArray[p_index]; }
+
+private:
+	vector<CWindowAndCount> m_winCountArray;
+};
+
+AcDbObjectId  GenerateWindow(const AttrWindow& curWinAtt, AcGePoint3d pos, eViewDir p_view, bool p_bWithAttribut);
+

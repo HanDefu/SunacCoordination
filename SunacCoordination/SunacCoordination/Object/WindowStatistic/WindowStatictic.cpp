@@ -30,30 +30,7 @@ void CWindowUsage::InitWindMaterialUsage()
 		m_pMaterialUsage = NULL;
 	}
 
-	E_WindowAluminumType winDoorType = winAtt.GetWindowDoorAluminumType();
-	switch (winDoorType)
-	{
-	case E_WindowAluminum_NC:
-		m_pMaterialUsage = new CWindowMaterialUsageNC(winAtt, nCount);
-		break;
-	case E_WindowAluminum_WC:
-		m_pMaterialUsage = new CWindowMaterialUsageWC(winAtt, nCount);
-		break;
-	case E_WindowAluminum_TC:
-		m_pMaterialUsage = new CWindowMaterialUsageTC(winAtt, nCount);
-		break;
-	case E_WindowAluminum_WM:
-		m_pMaterialUsage = new CWindowMaterialUsageWM(winAtt, nCount);
-		break;
-	case E_WindowAluminum_TLM:
-		m_pMaterialUsage = new CWindowMaterialUsageTLM(winAtt, nCount);
-		break;
-	case E_WindowAluminum_TSTLM:
-		m_pMaterialUsage = new CWindowMaterialUsageTSTLM(winAtt, nCount);
-		break;
-	default:
-		break;
-	}
+	m_pMaterialUsage = CreateWindowMaterialUsage(winAtt, nCount);
 }
 
 
@@ -94,7 +71,14 @@ void CWindowStatictic::WindowClassify(const vector<AttrWindow>& p_winAtts)
 			if (m_windows[n].winAtt.GetInstanceCode().CompareNoCase(sInstanceCode)==0)
 			{
 				bFind = true;
-				m_windows[n].nCount++;
+				if (p_winAtts[i].m_viewDir==E_VIEW_TOP) //平面图
+				{
+					m_windows[n].nCount+= p_winAtts[i].m_floorInfo.GetFloorCount();
+				}
+				else
+				{
+					m_windows[n].nCount++;
+				}
 				break;
 			}
 		}
@@ -103,7 +87,14 @@ void CWindowStatictic::WindowClassify(const vector<AttrWindow>& p_winAtts)
 		{
 			CWindowUsage winNew;
 			winNew.winAtt = p_winAtts[i];
-			winNew.nCount = 1;
+			if (p_winAtts[i].m_viewDir == E_VIEW_TOP) //平面图
+			{
+				winNew.nCount = p_winAtts[i].m_floorInfo.GetFloorCount();
+			}
+			else
+			{
+				winNew.nCount = 1;
+			}
 			m_windows.push_back(winNew);
 		}
 	}

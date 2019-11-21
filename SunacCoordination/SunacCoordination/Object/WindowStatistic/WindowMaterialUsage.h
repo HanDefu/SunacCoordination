@@ -135,3 +135,6 @@ public:
 protected:
 	virtual void ExportFuliaoInfo(Excel::CExcelUtil& p_excel);//输出辅料数据
 };
+
+
+CWindowMaterialUsage* CreateWindowMaterialUsage(const AttrWindow& winAtt, const int nCount);

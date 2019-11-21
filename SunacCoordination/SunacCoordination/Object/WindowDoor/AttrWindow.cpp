@@ -345,8 +345,12 @@ double AttrWindow::GetValue(CString p_sCode, bool bDefaultValue/* = false*/) con
 		assert(false);
 		return 0;
 	}
+
+	if (pDimData->type == NOVALUE)
+	{
+		return 0;
+	}
 	
-	assert(pDimData->type != NOVALUE);
 	if (pDimData->type == CALC)
 	{
 		CFormulaParser parser(pDimData->sFomula);
@@ -837,4 +841,141 @@ CString AttrWindow::GetPrototypeDwgFilePath(eViewDir p_view)const
 
 
 	return TY_GetPrototypeFilePath() + sFileName;
+}
+
+//////////////////////////////////////////////////////////////////////////
+CWindowAndCount::CWindowAndCount()
+{
+	nCount = 0;
+}
+
+void CWindowCountArray::InitByWindowIds(const vAcDbObjectId& p_winIds)
+{
+	vector<AttrWindow>  winAtts;
+	vector<AcDbObjectId>  winIds;
+	for (UINT i = 0; i < p_winIds.size(); i++)
+	{
+		RCWindow oneWindow;
+		oneWindow.m_id = p_winIds[i];
+		oneWindow.InitParameters();
+
+		AttrWindow* pAtt = oneWindow.GetAttribute();
+		if (pAtt != NULL)
+		{
+			AttrWindow attTemp(*pAtt);
+			winAtts.push_back(attTemp);
+
+			winIds.push_back(p_winIds[i]);
+		}
+	}
+
+	InitByWindowAtts(winAtts, winIds);
+}
+
+//vRCWindow allWindowsTypes;
+//for (UINT i = 0; i < winIds.size(); i++)
+//{
+//	RCWindow oneWindow;
+//	oneWindow.m_id = winIds[i];
+//	oneWindow.InitParameters();
+//	oneWindow.GetAttribute();
+//	int index = vFind(oneWindow, allWindowsTypes);
+//	if (index == -1)
+//	{
+//		oneWindow.m_sameTypeIds.push_back(oneWindow.m_id);
+//		allWindowsTypes.push_back(oneWindow);
+//	}
+//	else
+//	{
+//		allWindowsTypes[index].m_sameTypeIds.push_back(oneWindow.m_id);
+//	}
+//}
+
+void CWindowCountArray::InitByWindowAtts(const vector<AttrWindow>& p_winAtts, const vector<AcDbObjectId>& p_ids)
+{
+	assert(p_ids.size() == p_winAtts.size());
+	bool bUseIds = p_ids.size() == p_winAtts.size();
+	for (UINT i = 0; i < p_winAtts.size(); i++)
+	{
+		CString sInstanceCode = p_winAtts[i].GetInstanceCode(); //原型编号
+		bool bFind = false;
+		for (UINT n = 0; n < m_winCountArray.size(); n++)
+		{
+			if (m_winCountArray[n].winAtt.GetInstanceCode().CompareNoCase(sInstanceCode) == 0)
+			{
+				bFind = true;
+				if (p_winAtts[i].m_viewDir == E_VIEW_TOP) //平面图
+				{
+					m_winCountArray[n].nCount += p_winAtts[i].m_floorInfo.GetFloorCount();
+				}
+				else
+				{
+					m_winCountArray[n].nCount++;
+				}
+
+				m_winCountArray[n].objIds.append(p_ids[i]);
+				break;
+			}
+		}
+
+		if (bFind == false)
+		{
+			CWindowAndCount winNew;
+			winNew.winAtt = p_winAtts[i];
+			if (p_winAtts[i].m_viewDir == E_VIEW_TOP) //平面图
+			{
+				winNew.nCount = p_winAtts[i].m_floorInfo.GetFloorCount();
+			}
+			else
+			{
+				winNew.nCount = 1;
+			}
+			winNew.objIds.append(p_ids[i]);
+			m_winCountArray.push_back(winNew);
+		}
+	}
+}
+
+
+AcDbObjectId  GenerateWindow(const AttrWindow& curWinAtt, AcGePoint3d pos, eViewDir p_view, bool p_bWithAttribut)
+{
+	RCWindow oneWindow;
+	AcDbObjectId id = oneWindow.Insert(curWinAtt.GetPrototypeDwgFilePath(p_view), pos, 0, L"0", 256);
+
+	oneWindow.InitParameters();
+
+	oneWindow.SetParameter(L"H", (double)curWinAtt.GetH());
+	oneWindow.SetParameter(L"W", (double)curWinAtt.GetW());
+
+	oneWindow.SetParameter(L"W1", (double)curWinAtt.GetW1());
+	if (curWinAtt.HasValue(_T("W2")))
+		oneWindow.SetParameter(L"W2", (double)curWinAtt.GetW2());
+	if (curWinAtt.HasValue(_T("W3")))
+		oneWindow.SetParameter(L"W3", (double)curWinAtt.GetW3());
+
+	if (curWinAtt.HasValue(_T("H1")))
+		oneWindow.SetParameter(L"H1", (double)curWinAtt.GetH1());
+	if (curWinAtt.HasValue(_T("H2")))
+		oneWindow.SetParameter(L"H2", (double)curWinAtt.GetH2());
+	if (curWinAtt.HasValue(_T("H3")))
+		oneWindow.SetParameter(L"H3", (double)curWinAtt.GetH3());
+
+	oneWindow.RunParameters();
+
+	if (curWinAtt.m_isMirror && (curWinAtt.m_isMirrorWindow == false))
+	{
+		AcGePoint3d basePt(pos.x + curWinAtt.GetW() / 2, 0, 0);
+		TYCOM_Mirror(oneWindow.m_id, basePt, AcGeVector3d(0, 1, 0));
+	}
+
+	if (p_bWithAttribut)
+	{
+		//把数据记录在图框的扩展字典中
+		AttrWindow * pWindow = new AttrWindow(curWinAtt);
+		pWindow->m_viewDir = p_view;
+		oneWindow.AddAttribute(pWindow);
+		pWindow->close();
+	}
+
+	return id;
 }

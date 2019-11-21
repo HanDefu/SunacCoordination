@@ -716,3 +716,35 @@ double CWindowMaterialUsage::GetHardwareUsageAmount()const 	//获取该窗户的五金用
 {
 	return m_hardwareNumber;
 }
+
+
+CWindowMaterialUsage* CreateWindowMaterialUsage(const AttrWindow& winAtt, const int nCount)
+{
+	CWindowMaterialUsage* pMaterialUsage = NULL;
+	E_WindowAluminumType winDoorType = winAtt.GetWindowDoorAluminumType();
+	switch (winDoorType)
+	{
+	case E_WindowAluminum_NC:
+		pMaterialUsage = new CWindowMaterialUsageNC(winAtt, nCount);
+		break;
+	case E_WindowAluminum_WC:
+		pMaterialUsage = new CWindowMaterialUsageWC(winAtt, nCount);
+		break;
+	case E_WindowAluminum_TC:
+		pMaterialUsage = new CWindowMaterialUsageTC(winAtt, nCount);
+		break;
+	case E_WindowAluminum_WM:
+		pMaterialUsage = new CWindowMaterialUsageWM(winAtt, nCount);
+		break;
+	case E_WindowAluminum_TLM:
+		pMaterialUsage = new CWindowMaterialUsageTLM(winAtt, nCount);
+		break;
+	case E_WindowAluminum_TSTLM:
+		pMaterialUsage = new CWindowMaterialUsageTSTLM(winAtt, nCount);
+		break;
+	default:
+		break;
+	}
+	
+	return pMaterialUsage;
+}

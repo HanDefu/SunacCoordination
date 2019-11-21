@@ -107,7 +107,7 @@ bool CWindowTop2Front::GenFrontFromTop()
 		//	pos.y += curWinAtt.GetHeightUnderWindow();
 		//}
 
-		AcDbObjectId idOut = GenerateWindow(curWinAtt, pos, E_VIEW_FRONT);
+		AcDbObjectId idOut = GenerateWindow(curWinAtt, pos, E_VIEW_FRONT, true);
 		oneFloorIds.append(idOut);
 	}
 
@@ -281,37 +281,3 @@ vector<double> CWindowTop2Front::GetAllXValueInFrontView(const vector<AcDbExtent
 	return allXvalue;
 }
 
-AcDbObjectId  CWindowTop2Front::GenerateWindow(const AttrWindow& curWinAtt, AcGePoint3d pos, eViewDir p_view)
-{
-	RCWindow oneWindow;
-	AcDbObjectId id = oneWindow.Insert(curWinAtt.GetPrototypeDwgFilePath(p_view), pos, 0, L"0", 256);
-
-	oneWindow.InitParameters();
-
-	oneWindow.SetParameter(L"H", (double)curWinAtt.GetH());
-	oneWindow.SetParameter(L"W", (double)curWinAtt.GetW());
-	oneWindow.SetParameter(L"W1", (double)curWinAtt.GetW1());
-	if (curWinAtt.HasValue(_T("H2")))
-		oneWindow.SetParameter(L"H2", (double)curWinAtt.GetH2());
-	if (curWinAtt.HasValue(_T("W3")))
-		oneWindow.SetParameter(L"W3", (double)curWinAtt.GetW3());
-	if (curWinAtt.HasValue(_T("H3")))
-		oneWindow.SetParameter(L"H3", (double)curWinAtt.GetH3());
-
-	oneWindow.RunParameters();
-
-	if (curWinAtt.m_isMirror && (curWinAtt.m_isMirrorWindow == false))
-	{
-		AcGePoint3d basePt(pos.x + curWinAtt.GetW() / 2, 0, 0);
-		TYCOM_Mirror(oneWindow.m_id, basePt, AcGeVector3d(0, 1, 0));
-	}
-
-
-	//把UI的数据记录在图框的扩展字典中
-	AttrWindow * pWindow = new AttrWindow(curWinAtt);
-	pWindow->m_viewDir = p_view;
-	oneWindow.AddAttribute(pWindow);
-	pWindow->close();
-
-	return id;
-}

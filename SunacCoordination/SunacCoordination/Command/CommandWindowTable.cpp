@@ -1,16 +1,4 @@
-﻿//
-//////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright 2013 Autodesk, Inc.  All rights reserved.
-//
-//  Use of this software is subject to the terms of the Autodesk license 
-//  agreement provided at the time of installation or download, or which 
-//  otherwise accompanies this software in either electronic or hard copy form.   
-//
-//////////////////////////////////////////////////////////////////////////////
-//
-// AsdkAcUiSample.cpp : Defines the initialization routines for the DLL.
-//
+﻿
 #include "StdAfx.h"
 
 #if defined(_DEBUG) && !defined(AC_FULL_DEBUG)
@@ -52,27 +40,12 @@ void CMD_SunacWindowsTable()
 		return;
 
 	//第三步：读取门窗数据并且分类汇总
-	vRCWindow allWindowsTypes;
-	for (UINT i = 0; i < winIds.size(); i++)
-	{
-		RCWindow oneWindow;
-		oneWindow.m_id = winIds[i];
-		oneWindow.InitParameters();
-		oneWindow.GetAttribute();
-		int index = vFind(oneWindow,allWindowsTypes);
-		if (index == -1)
-		{
-			oneWindow.m_sameTypeIds.push_back(oneWindow.m_id);
-			allWindowsTypes.push_back(oneWindow);
-		}
-		else
-		{
-			allWindowsTypes[index].m_sameTypeIds.push_back(oneWindow.m_id);
-		}		
-	}
+
+	CWindowCountArray winCountArray;
+	winCountArray.InitByWindowIds(winIds);
 
 	//第四步 开始输出数据
-	int numWindow = (int)allWindowsTypes.size();
+	int numWindow = (int)winCountArray.GetCount();
 	Acad::ErrorStatus es;
 	AcDbTable *table = new AcDbTable();
 	int dataStartRow = 3;
@@ -155,130 +128,128 @@ void CMD_SunacWindowsTable()
 	table->setTextString(1,16,L"备注");
 
 	//--------外窗数据写出------//
-	if (numWindow >= 1)
+
+	//合并左侧的一竖列
+	table->mergeCells(dataStartRow,dataStartRow+numWindow-1,0,0);
+		//合并合计的那一个
+	table->mergeCells(dataStartRow+numWindow,dataStartRow+numWindow,0,1);
+
+	table->setTextString(dataStartRow,0,L"外窗");
+	table->setTextString(dataStartRow+numWindow, 0, L"合计");
+	//table->setAlignment(dataStartRow,0,AcDb::CellAlignment::kMiddleCenter);
+
+	//-------6.逐个写入外窗的数据------//
+	for (int i = 0; i < numWindow; i++)
 	{
-		//合并左侧的一竖列
-		table->mergeCells(dataStartRow,dataStartRow+numWindow-1,0,0);
-		 //合并合计的那一个
-		table->mergeCells(dataStartRow+numWindow,dataStartRow+numWindow,0,1);
+		const CWindowAndCount& winAndCount = winCountArray.GetWindow(i);
+		const AttrWindow * pWinAtt = &(winAndCount.winAtt);
+		int W = (int)(pWinAtt->GetW());
+		int H = (int)(pWinAtt->GetH());
 
-	    table->setTextString(dataStartRow,0,L"外窗");
-		table->setTextString(dataStartRow+numWindow, 0, L"合计");
-		//table->setAlignment(dataStartRow,0,AcDb::CellAlignment::kMiddleCenter);
+		//序号
+		str.Format(L"%d",i+1);
+		table->setTextString(dataStartRow+i,1,str);
 
-		//-------6.逐个写入外窗的数据------//
-		for (int i = 0; i < numWindow; i++)
-		{
-			const AttrWindow * pWinAtt = allWindowsTypes[i].GetAttribute();
-			int W = (int)(pWinAtt->GetW());
-			int H = (int)(pWinAtt->GetH());
-			int nCount = (int)allWindowsTypes[i].m_sameTypeIds.size();
+		//门窗编号
+		table->setTextString(dataStartRow + i, 2, pWinAtt->GetInstanceCode());
+		table->setContentColor(dataStartRow+i,2,0,redColor);
 
-			//序号
-			str.Format(L"%d",i+1);
-			table->setTextString(dataStartRow+i,1,str);
+		//型材种类
+		str = L"铝合金";
+		table->setTextString(dataStartRow+i,4,str);
+		table->setContentColor(dataStartRow+i,4,0,yellowColor);
 
-			//门窗编号
-			table->setTextString(dataStartRow + i, 2, pWinAtt->GetInstanceCode());
-			table->setContentColor(dataStartRow+i,2,0,redColor);
-
-			//型材种类
-			str = L"铝合金";
-			table->setTextString(dataStartRow+i,4,str);
-			table->setContentColor(dataStartRow+i,4,0,yellowColor);
-
-			//玻璃构造
-			table->setTextString(dataStartRow + i, 5, pWinAtt->m_material.sGlassSerial);
-			table->setContentColor(dataStartRow+i,5,0,yellowColor);
+		//玻璃构造
+		table->setTextString(dataStartRow + i, 5, pWinAtt->m_material.sGlassSerial);
+		table->setContentColor(dataStartRow+i,5,0,yellowColor);
 
 
-			//传热系数设计值
-			str.Format(_T("%.2f"), pWinAtt->m_material.heatCoeff);
-			table->setTextString(dataStartRow+i,6,str);
-			table->setContentColor(dataStartRow+i,6,0,yellowColor);
+		//传热系数设计值
+		str.Format(_T("%.2f"), pWinAtt->m_material.heatCoeff);
+		table->setTextString(dataStartRow+i,6,str);
+		table->setContentColor(dataStartRow+i,6,0,yellowColor);
 
-			//洞口宽
-			str.Format(L"%d", W);
-			table->setTextString(dataStartRow+i,7,str);
-			table->setContentColor(dataStartRow+i,7,0,redColor);
+		//洞口宽
+		str.Format(L"%d", W);
+		table->setTextString(dataStartRow+i,7,str);
+		table->setContentColor(dataStartRow+i,7,0,redColor);
 
-			//洞口高
-			str.Format(L"%d", H);
-			table->setTextString(dataStartRow+i,8,str);
-			table->setContentColor(dataStartRow+i,8,0,redColor);
+		//洞口高
+		str.Format(L"%d", H);
+		table->setTextString(dataStartRow+i,8,str);
+		table->setContentColor(dataStartRow+i,8,0,redColor);
 
-			//樘数
-			str.Format(L"%d", nCount);
-			table->setTextString(dataStartRow+i,9,str);
-			table->setContentColor(dataStartRow+i,9,0,redColor);
+		//樘数
+		str.Format(L"%d", winAndCount.nCount);
+		table->setTextString(dataStartRow+i,9,str);
+		table->setContentColor(dataStartRow+i,9,0,redColor);
 
-			//面积1
-			double area = pWinAtt->GetWindowArea();
-			str.Format(L"%.2f", area);
-			table->setTextString(dataStartRow+i,10,str);
-			table->setContentColor(dataStartRow+i,10,0,yellowColor);
-			allArea1 += area * nCount;
+		//面积1
+		double area = pWinAtt->GetWindowArea();
+		str.Format(L"%.2f", area);
+		table->setTextString(dataStartRow+i,10,str);
+		table->setContentColor(dataStartRow+i,10,0,yellowColor);
+		allArea1 += area * winAndCount.nCount;
 
-			//面积2
-			str.Format(L"%.2f", area);
-			table->setTextString(dataStartRow+i,11,str);
-			table->setContentColor(dataStartRow+i,11,0,yellowColor);
+		//面积2
+		str.Format(L"%.2f", area);
+		table->setTextString(dataStartRow+i,11,str);
+		table->setContentColor(dataStartRow+i,11,0,yellowColor);
 
-			//开启方式
-			str = pWinAtt->m_openType;
-			table->setTextString(dataStartRow+i,12,str);
-			table->setContentColor(dataStartRow+i,12,0,redColor);
+		//开启方式
+		str = pWinAtt->m_openType;
+		table->setTextString(dataStartRow+i,12,str);
+		table->setContentColor(dataStartRow+i,12,0,redColor);
 		
-			//通风开启面积			
-			double area2 = pWinAtt->GetTongFengQty();
-			//double area2 = allWindowsTypes[i].GetW1() *(allWindowsTypes[i].GetH()-allWindowsTypes[i].GetH2())/1000000;// W1*(H-H2)/1000000;
-			str.Format(L"%.2f", area2);
-			table->setTextString(dataStartRow+i,13,str);
-			table->setContentColor(dataStartRow+i,13,0,yellowColor);
+		//通风开启面积			
+		double area2 = pWinAtt->GetTongFengQty();
+		//double area2 = allWindowsTypes[i].GetW1() *(allWindowsTypes[i].GetH()-allWindowsTypes[i].GetH2())/1000000;// W1*(H-H2)/1000000;
+		str.Format(L"%.2f", area2);
+		table->setTextString(dataStartRow+i,13,str);
+		table->setContentColor(dataStartRow+i,13,0,yellowColor);
 
-			allArea2 += area2 * allWindowsTypes[i].m_sameTypeIds.size();
+		allArea2 += area2 * winAndCount.nCount;
 
-			//通风开启面积 百分比
-			//area2/area
-			str.Format(L"%.2f", 100*area2/area);
-			table->setTextString(dataStartRow+i,14,str);
-			table->setContentColor(dataStartRow+i,14,0,yellowColor);
+		//通风开启面积 百分比
+		//area2/area
+		str.Format(L"%.2f", 100*area2/area);
+		table->setTextString(dataStartRow+i,14,str);
+		table->setContentColor(dataStartRow+i,14,0,yellowColor);
 
-			//使用位置
-			//str = L"阳台";
-			//table->setTextString(dataStartRow+i,15,str);
-			//table->setContentColor(dataStartRow+i,15,0,redColor);
-		}
-
-		//-----窗最后一个合计---//
-		for (int kk = 2; kk <= 9; kk++ )
-		{
-			table->setTextString(dataStartRow+numWindow,kk,L"-");
-		}
-		//总面积1
-		str.Format(L"%.2f", allArea1);
-		table->setTextString(dataStartRow+numWindow,10,str);
-		table->setContentColor(dataStartRow+numWindow,10,0,yellowColor);
-		
-		//总面积2
-		table->setTextString(dataStartRow+numWindow,11,str);
-		table->setContentColor(dataStartRow+numWindow,11,0,yellowColor);
-
-		table->setTextString(dataStartRow+numWindow,12,L"-");
-
-		//合计通风面积
-		str.Format(L"%.2f", allArea2);
-		table->setTextString(dataStartRow+numWindow,13,str);
-		table->setContentColor(dataStartRow+numWindow,13,0,yellowColor);
-
-		//合计通风面积%
-		str.Format(L"%.2f", allArea2/allArea1 * 100);
-		table->setTextString(dataStartRow+numWindow,14,str);
-		table->setContentColor(dataStartRow+numWindow,14,0,yellowColor);
-
-		table->setTextString(dataStartRow+numWindow,15,L"-");
-
+		//使用位置
+		//str = L"阳台";
+		//table->setTextString(dataStartRow+i,15,str);
+		//table->setContentColor(dataStartRow+i,15,0,redColor);
 	}
+
+	//-----窗最后一个合计---//
+	for (int kk = 2; kk <= 9; kk++ )
+	{
+		table->setTextString(dataStartRow+numWindow,kk,L"-");
+	}
+	//总面积1
+	str.Format(L"%.2f", allArea1);
+	table->setTextString(dataStartRow+numWindow,10,str);
+	table->setContentColor(dataStartRow+numWindow,10,0,yellowColor);
+		
+	//总面积2
+	table->setTextString(dataStartRow+numWindow,11,str);
+	table->setContentColor(dataStartRow+numWindow,11,0,yellowColor);
+
+	table->setTextString(dataStartRow+numWindow,12,L"-");
+
+	//合计通风面积
+	str.Format(L"%.2f", allArea2);
+	table->setTextString(dataStartRow+numWindow,13,str);
+	table->setContentColor(dataStartRow+numWindow,13,0,yellowColor);
+
+	//合计通风面积%
+	str.Format(L"%.2f", allArea2/allArea1 * 100);
+	table->setTextString(dataStartRow+numWindow,14,str);
+	table->setContentColor(dataStartRow+numWindow,14,0,yellowColor);
+
+	table->setTextString(dataStartRow+numWindow,15,L"-");
+
 
 	AcDbObjectId tableId = JHCOM_PostToModelSpace(table);
 

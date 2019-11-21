@@ -5,7 +5,6 @@ class CWindowTop2Front
 {
 public:
 	static bool GenFrontFromTop();
-	static AcDbObjectId  GenerateWindow(const AttrWindow& curWinAtt, AcGePoint3d pos, eViewDir p_view);
 
 protected:
 	static bool GetTopViewWindowDirection(E_DIRECTION &windowDir); //得到平面窗户的方位，上、下左右
