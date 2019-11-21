@@ -423,7 +423,14 @@ AcDbObjectId CRCRailingT5::GenerateRailing_NonStandard(AcGePoint3d p_pos)
 	int n1 = (int)(Ln1 / (Getb() * 2));
 	int n2 = (int)(Ln2 / (Getb() * 2));
 	bool bUp = n1 > n2;
-	DQ_SetDynamicAttribute(id1, _T("可见性"), bUp ? _T("向上") : _T("向下"));
+	if (n2==0)
+	{
+		DQ_SetDynamicAttribute(id1, _T("可见性"), _T("1个"));
+	}
+	else
+	{
+		DQ_SetDynamicAttribute(id1, _T("可见性"), bUp ? _T("向上") : _T("向下"));
+	}
 
 	return id1;
 }
