@@ -41,10 +41,9 @@ void DlgLogin::OnBnClickedOk()
 {
 	//Acad::ErrorStatus es = acDocManager->sendStringToExecute(curDoc(), L"REMOVEBLOCKREFDOUBLECLICK\n");
 	
-	CString sUserName, sPassword;
-	m_name.GetWindowTextW(sUserName);
-	m_password.GetWindowTextW(sPassword);
-	if (!WebIO::GetInstance()->Login(sUserName, sPassword))
+	m_name.GetWindowTextW(m_sName);
+	m_password.GetWindowTextW(m_sPassword);
+	if (!WebIO::GetInstance()->Login(m_sName, m_sPassword))
 	{
 		AfxMessageBox(L"用户名或密码输入错误！");
 		return;
@@ -60,8 +59,11 @@ BOOL DlgLogin::OnInitDialog()
 	/*m_name.SetWindowText(L"13621367728");
 	m_password.SetWindowText(L"111111");*/
 
-	m_name.SetWindowText(L"LeavE");
-	m_password.SetWindowText(L"123456");
+	m_sName = L"LeavE";
+	m_sPassword = L"123456";
+
+	m_name.SetWindowText(m_sName);
+	m_password.SetWindowText(m_sPassword);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 }
