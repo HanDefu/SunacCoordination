@@ -5,6 +5,8 @@
 #include "DlgLogin.h"
 #include "afxdialogex.h"
 #include "../WebIO/WebIO.h"
+#include "..\Common\TYFormula.h"
+#include "..\Common\ComFun_Sunac.h"
 
 
 // DlgLogin dialog
@@ -26,6 +28,7 @@ void DlgLogin::DoDataExchange(CDataExchange* pDX)
 	CAcUiDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_EDIT1, m_name);
 	DDX_Control(pDX, IDC_EDIT2, m_password);
+	DDX_Control(pDX, IDC_CHECK_IsSavePassword, m_IsSavePassword);
 }
 
 
@@ -48,6 +51,25 @@ void DlgLogin::OnBnClickedOk()
 		AfxMessageBox(L"用户名或密码输入错误！");
 		return;
 	}
+
+	CString sSaveUserInfoFilePath = TY_GetDataFilePath() + _T("账号密码表.xlsx");
+	Excel::CExcelUtil xls;
+	bool bSuc = xls.OpenExcel(sSaveUserInfoFilePath); //打开表格
+	if (bSuc==false)
+	{
+		AfxMessageBox(_T("无法打开 账号密码表.xlsx"));
+		return;
+	}
+
+	xls.SetVisible(false); 
+	xls.SetCellValue(2, 1, m_sName);
+	if (m_IsSavePassword.GetCheck())
+	{
+		xls.SetCellValue(2, 2, m_sPassword);
+	}
+	else xls.SetCellValue(2, 2, L"");
+	xls.SaveExcel();
+
 	CAcUiDialog::OnOK();
 }
 
@@ -59,8 +81,19 @@ BOOL DlgLogin::OnInitDialog()
 	/*m_name.SetWindowText(L"13621367728");
 	m_password.SetWindowText(L"111111");*/
 
-	m_sName = L"LeavE";
-	m_sPassword = L"123456";
+	CString sSaveUserInfoFilePath = TY_GetDataFilePath() + _T("账号密码表.xlsx");
+	Excel::CExcelUtil xls;
+	bool bSuc = xls.OpenExcel(sSaveUserInfoFilePath); //打开表格
+	if (bSuc==false)
+	{
+		AfxMessageBox(_T("无法打开 账号密码表.xlsx"));
+		return FALSE;
+	}
+
+	xls.SetVisible(false); 
+	m_sName = xls.GetCellValue(2, 1);
+	m_sPassword = xls.GetCellValue(2, 2);
+	xls.CloseExcel();
 
 	m_name.SetWindowText(m_sName);
 	m_password.SetWindowText(m_sPassword);

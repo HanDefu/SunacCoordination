@@ -26,4 +26,5 @@ public:
 	CString m_sPassword;
 	CEdit m_name;
 	CEdit m_password;
+	CButton m_IsSavePassword;
 };

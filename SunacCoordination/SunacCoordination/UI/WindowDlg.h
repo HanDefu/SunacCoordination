@@ -61,7 +61,7 @@ public:
 	void SetEditMode(AcDbBlockReference* pBlock);
 
 	//插入全部，测试用
-	void InsertAllWindows();
+	void InsertAllWindows_Test();
 
 	double GetArea()const { return (double(m_nWidth*m_nHeight)) / 1e6; }
 
@@ -101,6 +101,8 @@ protected:
 	bool m_isMoldless;//是否非模态对话框
 
 	TYRect m_selectRect;
+
+	bool m_bHasInsert; //执行过插入操作
 public:
 };
 

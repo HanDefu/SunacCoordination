@@ -30,6 +30,8 @@ CWindowDlg::CWindowDlg(CWnd* pParent /*=NULL*/)
 	m_nHeight = 0;
 
 	m_selectRect = TYRect(AcGePoint3d::kOrigin, AcGePoint3d::kOrigin);
+
+	m_bHasInsert = false;
 }
 
 CWindowDlg::~CWindowDlg()
@@ -73,10 +75,24 @@ void CWindowDlg::PostNcDestroy()
 
 BOOL CWindowDlg::PreTranslateMessage(MSG *pMsg)
 {
-	if ((pMsg->message == WM_KEYDOWN) && (pMsg->wParam == VK_RETURN))
+	if ((pMsg->message == WM_KEYDOWN))
 	{
-		InsertAllWindows();
-		return TRUE;
+		bool isCtrlKeyDown = (GetKeyState(VK_CONTROL) & 0x80) != 0;
+		const UINT key = pMsg->wParam;
+		if (key == VK_RETURN)
+		{
+			return TRUE;
+		}
+		else if (key == 'T' && isCtrlKeyDown)
+		{
+			InsertAllWindows_Test();
+			return TRUE;
+		}
+		else if (key == VK_SPACE && m_bHasInsert) //如果已经有插入，则可按空格连续插入
+		{
+			OnBnClickedButtonInsert();
+			return TRUE;
+		}
 	}
 	return CAcUiDialog::PreTranslateMessage(pMsg);
 }
@@ -297,6 +313,8 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	pWindow->close();
 
 	ShowWindow(TRUE);
+
+	m_bHasInsert = true;
 	//OnOK();
 }
 
@@ -815,7 +833,7 @@ void CWindowDlg::SetEditMode(AcDbBlockReference* pBlock)
 	TYUI_SetText(*GetDlgItem(IDC_BUTTON_INSERTWINDOW), L"确定");
 }
 
-void CWindowDlg::InsertAllWindows()
+void CWindowDlg::InsertAllWindows_Test()
 {
 	ShowWindow(SW_HIDE);
 

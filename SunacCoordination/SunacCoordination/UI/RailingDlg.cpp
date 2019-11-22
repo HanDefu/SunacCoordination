@@ -259,7 +259,7 @@ void CRailingDlg::OnBnClickedButtonSelectline()
 	}
 
 	double len = pnt2.x - pnt1.x;
-	m_width = len;
+	m_width = (int)(len+0.4); //ËÄÉáÎåÈë
 	UpdateData(FALSE);
 }
 
@@ -380,8 +380,8 @@ void CRailingDlg::SetEditMode(AcDbBlockReference* pBlock)
 	if (pRailing == NULL)
 		return;
 
-	m_width = pRailing->m_length;
-	m_height = pRailing->m_height;
+	m_width = (int)(pRailing->m_length);
+	m_height = (int)(pRailing->m_height);
 	UpdateData(FALSE);
 
 	for (int i = 0; i < m_preRailing.GetRowCount(); i++)
