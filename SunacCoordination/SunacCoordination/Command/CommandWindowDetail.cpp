@@ -76,7 +76,7 @@ void CWindowDetail::DrawWindowDetail()
 
 		AcGePoint3d winPnt = winDetailTemplate.GetInsertPntWindow(winAtt.GetW(), winAtt.GetH());
 
-		AcDbObjectId idOut = GenerateWindow(winAtt, winPnt, E_VIEW_FRONT, false);
+		AcDbObjectId idOut = GenerateWindow(winAtt, winPnt, E_VIEW_FRONT, E_DIR_BOTTOM, false);
 
 		CreateDataText(winAtt, winDetailTemplate);
 

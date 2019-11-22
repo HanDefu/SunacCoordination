@@ -227,6 +227,12 @@ void CWindowDlg::OnBnClickedButtonInsert()
 
 	//////////////////////////////////////////////////////////////////////////
 	const eViewDir viewDir = (eViewDir)m_comboViewDir.GetCurSel();
+	E_DIRECTION winDir = E_DIR_BOTTOM;
+	if (viewDir == E_VIEW_TOP)
+	{
+		CString sDir = TYUI_GetComboBoxText(m_comboInsertDir);
+		winDir = String2Direction(sDir);
+	}
 
 	ShowWindow(FALSE);
 
@@ -250,67 +256,17 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		JHCOM_DeleteCadObject(m_pCurEdit->objectId());
 	}
 
-	RCWindow oneWindow;
-	if (viewDir == E_VIEW_FRONT) //立面
-	{
-		oneWindow.Insert(pSelWinAttr->GetPrototypeDwgFilePath(E_VIEW_FRONT), origin, 0, L"0", 256);
-	}
-	else if (viewDir == E_VIEW_TOP)
-	{
-		double rotateAngle = 0;
-		AcGeVector3d offsetXY(0, 0, 0);
-		CString sDir = TYUI_GetComboBoxText(m_comboInsertDir);
-		if (sDir == L"南")
-		{
-			rotateAngle = PI;
-			offsetXY.x += m_nWidth;
-		}
-		else if (sDir == L"西")
-		{
-			rotateAngle = PI / 2;
-		}
-		else if (sDir == L"东")
-		{
-			rotateAngle = -PI / 2;
-			offsetXY.y += m_nWidth;
-		}
-
-		oneWindow.Insert(pSelWinAttr->GetPrototypeDwgFilePath(E_VIEW_TOP), origin + offsetXY, rotateAngle, L"0", 256);
-	}
-	else if (viewDir == E_VIEW_LEFT)
-	{
-		oneWindow.Insert(pSelWinAttr->GetPrototypeDwgFilePath(E_VIEW_LEFT), origin, 0, L"0", 256);
-	}
-	else
+	//////////////////////////////////////////////////////////////////////////
+	AcDbObjectId idOut = GenerateWindow(*pSelWinAttr, origin, viewDir, winDir, true, L"0");
+	if (idOut==AcDbObjectId::kNull)
 	{
 		assert(false);
 		ShowWindow(TRUE);
 		return;
 	}
-
-	oneWindow.InitParameters();
-
-	oneWindow.SetParameter(L"H", (double)m_nHeight);
-	oneWindow.SetParameter(L"W", (double)m_nWidth);
-	oneWindow.SetParameter(L"W1", (double)W1);
-	oneWindow.SetParameter(L"H2", (double)H2);
-	oneWindow.SetParameter(L"W3", (double)W3);
-	oneWindow.SetParameter(L"H3", (double)H3);
-
-	oneWindow.RunParameters();
-
-	if (m_isMirror.GetCheck())
-	{
-		AcGePoint3d basePt(origin.x + m_nWidth / 2, 0, 0);
-		TYCOM_Mirror(oneWindow.m_id, basePt, AcGeVector3d(0, 1, 0));
-	}
+	
 
 	CWindowAutoName::GetInstance()->AddWindowType(*pSelWinAttr);
-
-	//把UI的数据记录在图框的扩展字典中
-	AttrWindow * pWindow = new AttrWindow(*pSelWinAttr);
-	oneWindow.AddAttribute(pWindow);
-	pWindow->close();
 
 	ShowWindow(TRUE);
 

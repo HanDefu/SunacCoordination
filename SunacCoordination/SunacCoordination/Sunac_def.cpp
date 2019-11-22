@@ -3,6 +3,48 @@
 #include "Sunac_def.h"
 #include "Common/ComFun_String.h"
 
+
+E_DIRECTION String2Direction(CString p_sDir)
+{
+	if (p_sDir.Find(_T("下"))>=0 || p_sDir.Find(_T("南"))>=0 || p_sDir.CompareNoCase(_T("S"))==0)
+	{
+		return E_DIR_BOTTOM;
+	}
+	else if (p_sDir.Find(_T("右")) >= 0 || p_sDir.Find(_T("东")) >= 0 || p_sDir.CompareNoCase(_T("E")) == 0)
+	{
+		return E_DIR_RIGHT;
+	}
+	else if (p_sDir.Find(_T("上")) >= 0 || p_sDir.Find(_T("北")) >= 0 || p_sDir.CompareNoCase(_T("N")) == 0)
+	{
+		return E_DIR_TOP;
+	}
+	else if (p_sDir.Find(_T("左")) >= 0 || p_sDir.Find(_T("西")) >= 0 || p_sDir.CompareNoCase(_T("W")) == 0)
+	{
+		return E_DIR_LEFT;
+	}
+	else
+	{
+		return E_DIR_UNKNOWN;
+	}
+}
+
+eRailingType ToERailingType(CString type)
+{
+	if (type == "铁艺" || type == "铁艺栏杆")
+	{
+		return E_RAILING_TIEYI;
+	}
+	else if (type == "玻璃" || type == "玻璃栏杆")
+	{
+		return E_RAILING_BOLI;
+	}
+	else
+	{
+		ASSERT(FALSE);
+		return E_RAILING_TIEYI;
+	}
+}
+
 CFloorInfo::CFloorInfo()
 {
 	m_floorHeight = 2900;

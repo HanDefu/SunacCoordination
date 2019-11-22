@@ -937,11 +937,44 @@ void CWindowCountArray::InitByWindowAtts(const vector<AttrWindow>& p_winAtts, co
 }
 
 
-AcDbObjectId  GenerateWindow(const AttrWindow& curWinAtt, AcGePoint3d pos, eViewDir p_view, bool p_bWithAttribut)
+AcDbObjectId  GenerateWindow(const AttrWindow& curWinAtt, AcGePoint3d pos, 
+	eViewDir p_view, E_DIRECTION p_winDir, 
+	bool p_bWithAttribut, CString p_sLayerName)
 {
-	RCWindow oneWindow;
-	AcDbObjectId id = oneWindow.Insert(curWinAtt.GetPrototypeDwgFilePath(p_view), pos, 0, L"0", 256);
+	double rotateAngle = 0;
+	if (p_view == E_VIEW_TOP)
+	{
+		AcGeVector3d offsetXY(0, 0, 0);
+		switch (p_winDir)
+		{
+		case E_DIR_BOTTOM:
+			rotateAngle = PI;
+			offsetXY.x += curWinAtt.GetW();
+			break;
+		case E_DIR_RIGHT:
+			rotateAngle = -PI / 2;
+			offsetXY.y += curWinAtt.GetW();
+			break;
+		case E_DIR_TOP:
+			break;
+		case E_DIR_LEFT:
+			rotateAngle = PI / 2;
+			break;
+		case E_DIR_UNKNOWN:
+		default:
+			return AcDbObjectId::kNull;
+			break;
+		}
 
+		pos += offsetXY;
+	}
+
+	CString sBlockDwgFileName = curWinAtt.GetPrototypeDwgFilePath(p_view);
+	RCWindow oneWindow;
+	AcDbObjectId id = oneWindow.Insert(sBlockDwgFileName, pos, rotateAngle, p_sLayerName, 256);
+
+	//////////////////////////////////////////////////////////////////////////
+	//更新参数
 	oneWindow.InitParameters();
 
 	oneWindow.SetParameter(L"H", (double)curWinAtt.GetH());
@@ -961,6 +994,7 @@ AcDbObjectId  GenerateWindow(const AttrWindow& curWinAtt, AcGePoint3d pos, eView
 		oneWindow.SetParameter(L"H3", (double)curWinAtt.GetH3());
 
 	oneWindow.RunParameters();
+	//////////////////////////////////////////////////////////////////////////
 
 	if (curWinAtt.m_isMirror && (curWinAtt.m_isMirrorWindow == false))
 	{
@@ -968,6 +1002,7 @@ AcDbObjectId  GenerateWindow(const AttrWindow& curWinAtt, AcGePoint3d pos, eView
 		TYCOM_Mirror(oneWindow.m_id, basePt, AcGeVector3d(0, 1, 0));
 	}
 
+	//添加属性
 	if (p_bWithAttribut)
 	{
 		//把数据记录在图框的扩展字典中
