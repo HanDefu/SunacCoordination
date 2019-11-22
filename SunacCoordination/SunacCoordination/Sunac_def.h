@@ -39,12 +39,15 @@ typedef enum eViewDir
 
 enum E_DIRECTION
 {
-	E_DIR_BOTTOM = 0,
-	E_DIR_RIGHT,
-	E_DIR_TOP,
-	E_DIR_LEFT,
+	E_DIR_BOTTOM = 0,	//下侧、南方
+	E_DIR_RIGHT,	//右侧、东方
+	E_DIR_TOP,		//上侧、北方
+	E_DIR_LEFT,		//左侧、西方
 	E_DIR_UNKNOWN
 };
+
+E_DIRECTION String2Direction(CString p_sDir);
+
 
 typedef enum eRailingType
 {
@@ -53,22 +56,7 @@ typedef enum eRailingType
 	E_RAILING_ALL = 0x10,//全部
 }eRailingType;
 
-inline eRailingType ToERailingType(CString type)
-{
-	if (type == "铁艺" || type == "铁艺栏杆")
-	{
-		return E_RAILING_TIEYI;
-	} 
-	else if (type == "玻璃" || type == "玻璃栏杆")
-	{
-		return E_RAILING_BOLI;
-	}
-	else
-	{
-		ASSERT(FALSE);
-		return E_RAILING_TIEYI;
-	}
-}
+eRailingType ToERailingType(CString type);
 
 enum E_Prototype_Type
 {
