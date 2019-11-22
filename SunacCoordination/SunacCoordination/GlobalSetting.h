@@ -22,6 +22,10 @@ private:
 
 protected:
 	bool m_bTestMode; //≤‚ ‘ª∑æ≥
+
+
+	CString m_userName;
+	CString m_password;
 }; 
 
 #define GSINST (GlobalSetting::GetInstance())
