@@ -78,7 +78,7 @@ BOOL CWindowDlg::PreTranslateMessage(MSG *pMsg)
 	if ((pMsg->message == WM_KEYDOWN))
 	{
 		bool isCtrlKeyDown = (GetKeyState(VK_CONTROL) & 0x80) != 0;
-		const UINT key = pMsg->wParam;
+		const UINT key = (UINT)(pMsg->wParam);
 		if (key == VK_RETURN)
 		{
 			return TRUE;
