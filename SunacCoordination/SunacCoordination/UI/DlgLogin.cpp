@@ -64,13 +64,12 @@ void DlgLogin::OnBnClickedOk()
 BOOL DlgLogin::OnInitDialog()
 {
 	CAcUiDialog::OnInitDialog();
-
-	/*m_name.SetWindowText(L"13621367728");
-	m_password.SetWindowText(L"111111");*/
-
+	
 	m_bSavePwd = GlobalSetting::GetInstance()->m_bRememberPwd;
 	m_sUserName = GlobalSetting::GetInstance()->m_userName;
 	m_sPassword = GlobalSetting::GetInstance()->m_password;
+
+	UpdateData(FALSE);
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 }

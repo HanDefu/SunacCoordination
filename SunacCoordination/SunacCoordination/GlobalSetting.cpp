@@ -10,9 +10,9 @@
 
 GlobalSetting::GlobalSetting()
 {
+	m_bTestMode = false;
 	m_bRememberPwd = false;
 	LoadFromXml();
-	m_bTestMode = false;
 }
 
 GlobalSetting::~GlobalSetting()
@@ -46,7 +46,7 @@ const char* GlobalSetting::GetCADServiceUrl()const
 }
 CString GlobalSetting::GetXmlFilePath()
 {
-	CString sFile = MD2010_GetAppPath() + +_T("Settings.xml");
+	CString sFile = MD2010_GetAppPath() + _T("\\Sunac2019\\Settings.xml");
 	return sFile;
 }
 

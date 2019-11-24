@@ -937,11 +937,15 @@ void CWindowCountArray::InitByWindowAtts(const vector<AttrWindow>& p_winAtts, co
 }
 
 
-AcDbObjectId  GenerateWindow(const AttrWindow& curWinAtt, AcGePoint3d pos, 
+AcDbObjectId  GenerateWindow(const AttrWindow& curWinAtt, const AcGePoint3d pos, 
 	eViewDir p_view, E_DIRECTION p_winDir, 
 	bool p_bWithAttribut, CString p_sLayerName)
 {
+	AcGePoint3d insertPos = pos;
 	double rotateAngle = 0;
+	AcGePoint3d mirrorBasePt(pos.x + curWinAtt.GetW() / 2, 0, 0);
+	AcGeVector3d mirrorAxis = AcGeVector3d(0, 1, 0);
+
 	if (p_view == E_VIEW_TOP)
 	{
 		AcGeVector3d offsetXY(0, 0, 0);
@@ -954,11 +958,15 @@ AcDbObjectId  GenerateWindow(const AttrWindow& curWinAtt, AcGePoint3d pos,
 		case E_DIR_RIGHT:
 			rotateAngle = -PI / 2;
 			offsetXY.y += curWinAtt.GetW();
+			mirrorBasePt = AcGePoint3d(0, pos.y + curWinAtt.GetW() / 2, 0);
+			mirrorAxis = AcGeVector3d(1, 0, 0);
 			break;
 		case E_DIR_TOP:
 			break;
 		case E_DIR_LEFT:
 			rotateAngle = PI / 2;
+			mirrorBasePt = AcGePoint3d(0, pos.y + curWinAtt.GetW() / 2, 0);
+			mirrorAxis = AcGeVector3d(1, 0, 0);
 			break;
 		case E_DIR_UNKNOWN:
 		default:
@@ -966,12 +974,12 @@ AcDbObjectId  GenerateWindow(const AttrWindow& curWinAtt, AcGePoint3d pos,
 			break;
 		}
 
-		pos += offsetXY;
+		insertPos += offsetXY;
 	}
 
 	CString sBlockDwgFileName = curWinAtt.GetPrototypeDwgFilePath(p_view);
 	RCWindow oneWindow;
-	AcDbObjectId id = oneWindow.Insert(sBlockDwgFileName, pos, rotateAngle, p_sLayerName, 256);
+	AcDbObjectId id = oneWindow.Insert(sBlockDwgFileName, insertPos, rotateAngle, p_sLayerName, 256);
 
 	//////////////////////////////////////////////////////////////////////////
 	//更新参数
@@ -996,10 +1004,14 @@ AcDbObjectId  GenerateWindow(const AttrWindow& curWinAtt, AcGePoint3d pos,
 	oneWindow.RunParameters();
 	//////////////////////////////////////////////////////////////////////////
 
-	if (curWinAtt.m_isMirror && (curWinAtt.m_isMirrorWindow == false))
+	bool bMirror = curWinAtt.m_isMirror;
+	if (p_view == E_VIEW_TOP)
 	{
-		AcGePoint3d basePt(pos.x + curWinAtt.GetW() / 2, 0, 0);
-		TYCOM_Mirror(oneWindow.m_id, basePt, AcGeVector3d(0, 1, 0));
+		bMirror = !bMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题
+	}
+	if (bMirror && (curWinAtt.m_isMirrorWindow == false))
+	{
+		TYCOM_Mirror(oneWindow.m_id, mirrorBasePt, mirrorAxis);
 	}
 
 	//添加属性

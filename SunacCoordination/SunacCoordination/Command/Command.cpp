@@ -68,8 +68,8 @@ void CMD_Login()
 	CAcModuleResourceOverride resOverride;
 
 	DlgLogin dlg;
-	//if(IDOK == dlg.DoModal())
-	dlg.DoModal();  //TODO 测试版本下不论登录是否成功都进入
+	if(IDOK == dlg.DoModal())
+	//dlg.DoModal();  测试版本下不论登录是否成功都进入
 	{
 		CADPalette_RemoveP();
 		CADPalette_AddP();
@@ -97,6 +97,12 @@ void CMD_ShowCADPalette()
 //窗
 void CMD_SunacWindow()
 {
+	if (WebIO::GetInstance()->IsLogin()==false)
+	{
+		acutPrintf(_T("请先登录\n"));
+		return;
+	}
+
 	CAcModuleResourceOverride resOverride;
 
 	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
@@ -116,6 +122,12 @@ void CMD_SunacWindow()
 
 void CMD_SunacWindowAdvanceDesign() //门窗深化设计
 {
+	if (WebIO::GetInstance()->IsLogin() == false)
+	{
+		acutPrintf(_T("请先登录\n"));
+		return;
+	}
+
 	CAcModuleResourceOverride resOverride;
 
 	if (g_windowAdvanceDlg == NULL)
@@ -128,10 +140,22 @@ void CMD_SunacWindowAdvanceDesign() //门窗深化设计
 
 void CMD_SunacWindowDetail()
 {
+	if (WebIO::GetInstance()->IsLogin() == false)
+	{
+		acutPrintf(_T("请先登录\n"));
+		return;
+	}
+
 	CWindowDetail::DrawWindowDetail();
 }
 void CMD_SunacWindowFloorSetting()//门窗楼层设置
 {
+	if (WebIO::GetInstance()->IsLogin() == false)
+	{
+		acutPrintf(_T("请先登录\n"));
+		return;
+	}
+
 	//1.选择需要设置楼层的门窗
 	vAcDbObjectId winIds = SelectWindows(E_VIEW_TOP);
 	if (winIds.size() == 0)
@@ -189,6 +213,12 @@ void CMD_SunacWindowFloorSetting()//门窗楼层设置
 
 void CMD_SunacWindowTop2Front()//门窗平面到立面
 {
+	if (WebIO::GetInstance()->IsLogin() == false)
+	{
+		acutPrintf(_T("请先登录\n"));
+		return;
+	}
+
 	CWindowTop2Front::GenFrontFromTop();
 }
 
@@ -201,6 +231,12 @@ void CMD_SunacWindowFront2Top()//门窗立面到平面
 //厨房
 void CMD_SunacKitchen()
 {
+	if (WebIO::GetInstance()->IsLogin() == false)
+	{
+		acutPrintf(_T("请先登录\n"));
+		return;
+	}
+
 	CAcModuleResourceOverride resOverride;
 
 	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
@@ -221,6 +257,12 @@ void CMD_SunacKitchen()
 //卫生间
 void CMD_SunacBathroom()
 {
+	if (WebIO::GetInstance()->IsLogin() == false)
+	{
+		acutPrintf(_T("请先登录\n"));
+		return;
+	}
+
 	CAcModuleResourceOverride resOverride;
 
 	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
@@ -252,6 +294,12 @@ void CMD_SunacKitchenBathroomStatistic()
 //栏杆
 void CMD_SunacRailing()
 {
+	if (WebIO::GetInstance()->IsLogin() == false)
+	{
+		acutPrintf(_T("请先登录\n"));
+		return;
+	}
+
 	CAcModuleResourceOverride resOverride;
 
 	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
@@ -301,6 +349,12 @@ void CMD_SunacFilling()
 //空调
 void CMD_SunacAirconditioner()
 {
+	if (WebIO::GetInstance()->IsLogin() == false)
+	{
+		acutPrintf(_T("请先登录\n"));
+		return;
+	}
+
 	CAcModuleResourceOverride resOverride;
 
 	//Memory freed on PostNcDestroy(call delete this;) or cancel function.

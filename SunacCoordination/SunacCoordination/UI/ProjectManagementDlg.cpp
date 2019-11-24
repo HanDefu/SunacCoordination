@@ -482,8 +482,14 @@ void CProjectManagementDlg::OnBnClickedButtonDeletedir()
 		AfxMessageBox(L"请选择正确的目录！");
 		return;
 	}
+	
 	CString sDeleteDir;
 	sDeleteDir = m_pPrjData->GetDirString(L"", m_selectedDir);
+	if (sDeleteDir == "\0")
+	{
+		AfxMessageBox(L"此目录不能删除！");
+		return;
+	}
 	m_pPrjData->DeleteFolder(sDeleteDir);
 	HTREEITEM DeleteTreeItem;
 	DeleteTreeItem = m_TreePrjDir.GetSelectedItem();
