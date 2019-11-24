@@ -158,7 +158,7 @@ LRESULT CProjectManagementDlg::OnUpdateFileState(WPARAM FileName, LPARAM)
 	{
 		if (m_PjtManagementGridCtrl.GetItemText(i, 1) == *(CString *)FileName)
 		{
-			AfxMessageBox(m_PjtManagementGridCtrl.GetItemText(i, 1) + m_PjtManagementGridCtrl.GetItemText(i, 7));
+			AfxMessageBox(m_PjtManagementGridCtrl.GetItemText(i, 1) + _T(" ") + m_PjtManagementGridCtrl.GetItemText(i, 7));
 		}
 		/*if (m_PjtManagementGridCtrl.GetItemText(i, 7) == "下载成功！")
 		{
@@ -169,7 +169,7 @@ LRESULT CProjectManagementDlg::OnUpdateFileState(WPARAM FileName, LPARAM)
 		if (m_PjtManagementGridCtrl.GetItemText(i, 7) == "上传成功！")
 		{
 			CString TempString;
-			TempString.Format(_T("%s上传成功！"), m_PjtManagementGridCtrl.GetItemText(i, 1));
+			TempString.Format(_T("%s 上传成功！"), m_PjtManagementGridCtrl.GetItemText(i, 1));
 			AfxMessageBox(TempString);
 		}*/
 	}
@@ -447,13 +447,18 @@ void CProjectManagementDlg::OnGridClick(NMHDR *pNMHDR, LRESULT *pResult)
 
 	if (m_nClkCol == 8 && m_nClkRow != 0)//下载
 	{
-		CString FolderPath = SelFilePath();
-		if (FolderPath == _T(""))
-		{
+		CString sFolderPath = SelFilePath();
+		if (sFolderPath == _T(""))
 			return;
+
+		if (sFolderPath.ReverseFind(L'\\') != sFolderPath.GetLength() - 1)
+		{
+			sFolderPath += L"\\";
 		}
+		
+
 		CString FileFullPath;
-		FileFullPath = FolderPath + L"\\" + sSelectedFileName;
+		FileFullPath = sFolderPath + sSelectedFileName;
 		if(JHCom_FileExist(FileFullPath))
 		{
 			if(IDNO == AfxMessageBox(_T("文件已存在，是否覆盖?"), MB_YESNO))
