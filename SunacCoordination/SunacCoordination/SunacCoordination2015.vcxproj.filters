@@ -400,6 +400,10 @@
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="AutoNameSerialize.cpp" />
+    <ClCompile Include="Sunac_def.cpp" />
+    <ClCompile Include="UI\DlgWindowAirCalc.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command\Command.h">
@@ -854,6 +858,9 @@
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="AutoNameSerialize.h" />
+    <ClInclude Include="UI\DlgWindowAirCalc.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="props\AcRxDefault.def">

@@ -394,6 +394,10 @@
     <ClCompile Include="Object\AirCondition\AirConStatistic.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="UI\DlgWindowAirCalc.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Sunac_def.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command\Command.h">
@@ -847,6 +851,9 @@
     </ClInclude>
     <ClInclude Include="Object\AirCondition\AirConStatistic.h">
       <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DlgWindowAirCalc.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
