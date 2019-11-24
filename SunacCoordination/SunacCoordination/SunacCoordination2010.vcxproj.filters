@@ -398,6 +398,9 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="Sunac_def.cpp" />
+    <ClCompile Include="Object\WindowDoor\WindowTop2Front.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command\Command.h">
@@ -854,6 +857,9 @@
     </ClInclude>
     <ClInclude Include="UI\DlgWindowAirCalc.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\WindowTop2Front.h">
+      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
