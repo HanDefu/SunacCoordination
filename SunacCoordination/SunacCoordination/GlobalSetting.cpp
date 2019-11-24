@@ -10,9 +10,9 @@
 
 GlobalSetting::GlobalSetting()
 {
-	m_bTestMode = true;
 	m_bRememberPwd = false;
 	LoadFromXml();
+	m_bTestMode = false;
 }
 
 GlobalSetting::~GlobalSetting()

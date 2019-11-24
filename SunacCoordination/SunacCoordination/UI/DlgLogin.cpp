@@ -47,7 +47,7 @@ void DlgLogin::OnBnClickedOk()
 {	
 	UpdateData();
 
-	if (!WebIO::GetInstance()->Login(m_sPassword, m_sPassword))
+	if (!WebIO::GetInstance()->Login(m_sUserName, m_sPassword))
 	{
 		AfxMessageBox(L"用户名或密码输入错误！");
 		return;
