@@ -10,7 +10,7 @@
 
 GlobalSetting::GlobalSetting()
 {
-	m_bTestMode = true;
+	m_bTestMode = false;
 	m_bRememberPwd = false;
 	LoadFromXml();
 }
@@ -65,6 +65,7 @@ bool GlobalSetting::LoadFromXml()
 
 		if (xml.FindElem(_T("TestMode")))
 			m_bTestMode = xml.GetData()==_T("TRUE") ? true :false;
+		m_bTestMode = false;
 
 		if (xml.FindElem(_T("RememberPwd")))
 			m_bRememberPwd = xml.GetData() == _T("TRUE") ? true : false;
