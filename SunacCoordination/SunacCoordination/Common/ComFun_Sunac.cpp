@@ -918,6 +918,10 @@ CString TY_GetPrototypeImagePath_Local()
 CString TY_GetPrototypeFilePath_Web()
 {
 	CString sPath = MD2010_GetAppPath() + L"\\Sunac2019\\Files\\";
+	if (!JHCom_FileExist(sPath.Trim(L"\\")))
+	{
+		CreateDirectory(sPath.Trim(L"\\"), NULL);
+	}
 	return sPath;
 }
 CString TY_GetPrototypeImagePath_Web()

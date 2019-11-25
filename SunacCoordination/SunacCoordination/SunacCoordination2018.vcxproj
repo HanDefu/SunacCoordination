@@ -70,6 +70,7 @@
     <ClCompile Include="Object\WindowDoor\AttrWindow.cpp" />
     <ClCompile Include="Object\WindowDoor\RCWindow.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowAutoName.cpp" />
+    <ClCompile Include="Object\WindowDoor\WindowTop2Front.cpp" />
     <ClCompile Include="Object\WindowStatistic\AluminumSeries.cpp" />
     <ClCompile Include="Object\WindowStatistic\AuxiliaryFrameSeries.cpp" />
     <ClCompile Include="Object\WindowStatistic\DeductedSize.cpp" />
@@ -200,6 +201,7 @@
     <ClInclude Include="Object\WindowDoor\AttrWindow.h" />
     <ClInclude Include="Object\WindowDoor\RCWindow.h" />
     <ClInclude Include="Object\WindowDoor\WindowAutoName.h" />
+    <ClInclude Include="Object\WindowDoor\WindowTop2Front.h" />
     <ClInclude Include="Object\WindowStatistic\AluminumSeries.h" />
     <ClInclude Include="Object\WindowStatistic\AuxiliaryFrameSeries.h" />
     <ClInclude Include="Object\WindowStatistic\DeductedSize.h" />
@@ -389,12 +391,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\ARX2018\</OutDir>
-    <IntDir>$(Platform)\$(Configuration)\ARX2018\</IntDir>
+    <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)\ARX2018\</OutDir>
+    <IntDir>$(SolutionDir)\Temp\$(Platform)\$(Configuration)\ARX2018\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)$(Configuration)\ARX2018X86\</OutDir>
-    <IntDir>$(Configuration)\ARX2018X86\</IntDir>
+    <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)\ARX2018X86\</OutDir>
+    <IntDir>$(SolutionDir)\Temp\$(Platform)\$(Configuration)\ARX2018X86\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

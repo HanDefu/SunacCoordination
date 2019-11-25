@@ -387,12 +387,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\ARX2012\</OutDir>
-    <IntDir>$(Platform)\$(Configuration)\ARX2012\</IntDir>
+    <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)\ARX2012\</OutDir>
+    <IntDir>$(SolutionDir)\Temp\$(Platform)\$(Configuration)\ARX2012\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)$(Configuration)\ARX2012X86\</OutDir>
-    <IntDir>$(Configuration)\ARX2012X86\</IntDir>
+    <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)\ARX2012X86\</OutDir>
+    <IntDir>$(SolutionDir)\Temp\$(Platform)\$(Configuration)\ARX2012X86\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
