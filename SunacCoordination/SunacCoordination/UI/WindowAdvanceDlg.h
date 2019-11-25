@@ -55,9 +55,10 @@ public:
 	CComboBox m_caiZhi;
 	CComboBox m_xingCai;
 	CComboBox m_boLi;
+
 	int m_bFuKuang;
 	CComboBox m_fuKuangType;
-	CComboBox m_saiFeng;
+	CComboBox m_saiFeng; //Èû·ì³ß´ç
 };
 
 extern CWindowAdvanceDlg* g_windowAdvanceDlg;
