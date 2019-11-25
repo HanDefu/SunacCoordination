@@ -417,6 +417,13 @@
     <ClCompile Include="Object\KitchenBathroom\KitchenBathroomStatistic.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="Sunac_def.cpp" />
+    <ClCompile Include="UI\DlgWindowAirCalc.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowDoor\WindowTop2Front.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command\Command.h">
@@ -879,6 +886,12 @@
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Object\KitchenBathroom\KitchenBathroomStatistic.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DlgWindowAirCalc.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\WindowTop2Front.h">
       <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>

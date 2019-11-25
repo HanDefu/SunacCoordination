@@ -149,10 +149,18 @@ typedef std::vector<RCPairKeyStrValue> vRCPairKeyStrValue;
 #include <afxcontrolbars.h>
 #include <afxdisp.h>
 
-#if (defined ARX_2010) || (defined ARX_2011) || (defined ARX_2012)
+#ifndef _ttof
 #define _ttof       _wtof
+#endif
+
+#ifndef nullptr
 #define nullptr NULL
-#endif // ARX_2010
+#endif
+
+//#if (defined ARX_2010) || (defined ARX_2011) || (defined ARX_2012)
+//#define _ttof       _wtof
+//#define nullptr NULL
+//#endif // ARX_2010
 
 #include "Sunac_def.h"
 

@@ -1,5 +1,4 @@
 #pragma once
-#include "stdAfx.h"
 #include "malloc.h" 
 
 //HKEY_USERS

@@ -7,6 +7,7 @@ using namespace std;
 class GlobalSetting
 {
 public:
+	~GlobalSetting();
 	static GlobalSetting *GetInstance()
 	{
 		static GlobalSetting instance;
@@ -18,12 +19,15 @@ public:
 
 private:
 	GlobalSetting();
-	~GlobalSetting();
 
-protected:
+	CString GetXmlFilePath();
+	bool LoadFromXml();
+	bool SaveToXml();
+
+public:
 	bool m_bTestMode; //测试环境
 
-
+	bool m_bRememberPwd; //记住密码
 	CString m_userName;
 	CString m_password;
 }; 

@@ -78,7 +78,7 @@ BOOL CWindowDlg::PreTranslateMessage(MSG *pMsg)
 	if ((pMsg->message == WM_KEYDOWN))
 	{
 		bool isCtrlKeyDown = (GetKeyState(VK_CONTROL) & 0x80) != 0;
-		const UINT key = pMsg->wParam;
+		const UINT key = (UINT)(pMsg->wParam);
 		if (key == VK_RETURN)
 		{
 			return TRUE;
@@ -120,7 +120,9 @@ void CWindowDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_H3, m_comboH3);
 	DDX_Control(pDX, IDC_COMBO_DIR, m_comboInsertDir);
 	DDX_Text(pDX, IDC_EDIT_WIDTH, m_nWidth);
+	DDV_MinMaxInt(pDX, m_nWidth, 100, 20000);
 	DDX_Text(pDX, IDC_EDIT_HEIGHT, m_nHeight);
+	DDV_MinMaxInt(pDX, m_nHeight, 100, 5000);
 }
 
 

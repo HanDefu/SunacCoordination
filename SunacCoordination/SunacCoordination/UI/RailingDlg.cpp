@@ -57,9 +57,9 @@ void CRailingDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_PREVIEW_RAILING, m_preRailing);
 	DDX_Control(pDX, IDC_COMBO_RAILINGTYPE, m_comboRailingType);
 	DDX_Text(pDX, IDC_EDIT_RAILINGHEIGHT, m_height);
-	DDV_MinMaxDouble(pDX, m_height, 100, 10000);
+	DDV_MinMaxInt(pDX, m_height, 100, 10000);
 	DDX_Text(pDX, IDC_EDIT_HOLEWIDTH, m_width);
-	DDV_MinMaxDouble(pDX, m_width, 100, 100000);
+	DDV_MinMaxInt(pDX, m_width, 100, 100000);
 	DDX_Check(pDX, IDC_CHECK_AUTOINDEX, m_bRailingAutoName);
 	DDX_Text(pDX, IDC_EDIT_RAILINGNUMBER, m_sRailingId);
 	DDX_Control(pDX, IDC_EDIT_RAILINGNUMBER, m_editRailingID);

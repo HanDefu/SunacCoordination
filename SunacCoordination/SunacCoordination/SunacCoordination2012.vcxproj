@@ -70,6 +70,7 @@
     <ClCompile Include="Object\WindowDoor\AttrWindow.cpp" />
     <ClCompile Include="Object\WindowDoor\RCWindow.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowAutoName.cpp" />
+    <ClCompile Include="Object\WindowDoor\WindowTop2Front.cpp" />
     <ClCompile Include="Object\WindowStatistic\AluminumSeries.cpp" />
     <ClCompile Include="Object\WindowStatistic\AuxiliaryFrameSeries.cpp" />
     <ClCompile Include="Object\WindowStatistic\DeductedSize.cpp" />
@@ -81,7 +82,10 @@
     <ClCompile Include="ProjectorFileMrg\ProjectFile.cpp" />
     <ClCompile Include="ProjectorFileMrg\ProjectFileMrg.cpp" />
     <ClCompile Include="ProjectorFileMrg\ProjectInfo.cpp" />
-    <ClCompile Include="StdAfx.cpp" />
+    <ClCompile Include="StdAfx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Sunac_def.cpp" />
     <ClCompile Include="Tool\DoubleClickBlockReference.cpp" />
     <ClCompile Include="Tool\Excel\CExcel.cpp" />
     <ClCompile Include="Tool\Excel\Excel.cpp" />
@@ -92,6 +96,7 @@
     <ClCompile Include="UI\ComFun_MFC.cpp" />
     <ClCompile Include="UI\DlgLeftBar.cpp" />
     <ClCompile Include="UI\DlgLogin.cpp" />
+    <ClCompile Include="UI\DlgWindowAirCalc.cpp" />
     <ClCompile Include="UI\FacadeDlg.cpp" />
     <ClCompile Include="UI\FillingDlg.cpp" />
     <ClCompile Include="UI\GridCellForPreview.cpp" />
@@ -198,6 +203,7 @@
     <ClInclude Include="Object\WindowDoor\AttrWindow.h" />
     <ClInclude Include="Object\WindowDoor\RCWindow.h" />
     <ClInclude Include="Object\WindowDoor\WindowAutoName.h" />
+    <ClInclude Include="Object\WindowDoor\WindowTop2Front.h" />
     <ClInclude Include="Object\WindowStatistic\AluminumSeries.h" />
     <ClInclude Include="Object\WindowStatistic\AuxiliaryFrameSeries.h" />
     <ClInclude Include="Object\WindowStatistic\DeductedSize.h" />
@@ -236,6 +242,7 @@
     <ClInclude Include="UI\ComFun_MFC.h" />
     <ClInclude Include="UI\DlgLeftBar.h" />
     <ClInclude Include="UI\DlgLogin.h" />
+    <ClInclude Include="UI\DlgWindowAirCalc.h" />
     <ClInclude Include="UI\FacadeDlg.h" />
     <ClInclude Include="UI\FillingDlg.h" />
     <ClInclude Include="UI\GridCellForPreview.h" />
@@ -380,12 +387,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\ARX2012\</OutDir>
-    <IntDir>$(Platform)\$(Configuration)\ARX2012\</IntDir>
+    <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)\ARX2012\</OutDir>
+    <IntDir>$(SolutionDir)\Temp\$(Platform)\$(Configuration)\ARX2012\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)$(Configuration)\ARX2012X86\</OutDir>
-    <IntDir>$(Configuration)\ARX2012X86\</IntDir>
+    <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)\ARX2012X86\</OutDir>
+    <IntDir>$(SolutionDir)\Temp\$(Platform)\$(Configuration)\ARX2012X86\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -445,16 +452,17 @@
     <ClCompile>
       <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>RADPACK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\lib-x64;.\Tool\SQLite;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2012_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
+      <AdditionalDependencies>acdbmgd.lib;sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

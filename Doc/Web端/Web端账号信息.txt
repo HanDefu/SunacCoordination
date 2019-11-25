@@ -23,6 +23,8 @@ ftp文件目录：d:\ProjectFiles
 生产环境10.4.0.139对应的公网ip: 1.203.161.246
 生产环境域名：http://ades.sunac.com.cn 
 
+生产环境的ftp的 FileZilla 的Passive mode settings中的 External Server IP Address 设置为1.203.161.246
+
 
 电脑账号密码：
 administrator              CADpass!#%246

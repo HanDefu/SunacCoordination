@@ -22,9 +22,7 @@ protected:
 public:
 	afx_msg void OnBnClickedOk();
 	virtual BOOL OnInitDialog();
-	CString m_sName;
 	CString m_sPassword;
-	CEdit m_name;
-	CEdit m_password;
-	CButton m_IsSavePassword;
+	CString m_sUserName;
+	BOOL m_bSavePwd;
 };
