@@ -129,9 +129,9 @@ CString MD2010_GetAppPath()
 		return sunacCADPath;
 	}
 	//系统安装注册表 读取模式
-    sunacCADPath = Regedit::GetString(L"PATH");
+    sunacCADPath = Regedit::GetString(L"PATH") + L"Support";
     if (sunacCADPath.GetLength() > 0)
-	    return sunacCADPath;
+	    return sunacCADPath.Trim(L"\\");
 
 	//如果注册表不存在 读取cad安装目录
 	WCHAR lpFileName[MAX_PATH];
