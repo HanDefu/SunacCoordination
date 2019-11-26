@@ -128,25 +128,34 @@ CString MD2010_GetAppPath()
 	{
 		return sunacCADPath;
 	}
+
 	//系统安装注册表 读取模式
     sunacCADPath = Regedit::GetString(L"PATH") + L"Support";
-    if (sunacCADPath.GetLength() > 0)
-	    return sunacCADPath.Trim(L"\\");
-
-	//如果注册表不存在 读取cad安装目录
-	WCHAR lpFileName[MAX_PATH];
-	GetModuleFileName(AfxGetInstanceHandle(),lpFileName,MAX_PATH);
-	CString strFileName = lpFileName;
-	int nIndex = strFileName.ReverseFind ('\\');
-	CString strPath;
-	if (nIndex > 0)
+	if (sunacCADPath.GetLength() > 0 && PathIsDirectory(sunacCADPath))
 	{
-		strPath = strFileName.Left (nIndex);
+		return sunacCADPath.Trim(L"\\");
 	}
 	else
 	{
-		strPath = "";
+		//如果注册表不存在 读取cad安装目录
+		WCHAR lpFileName[MAX_PATH];
+		GetModuleFileName(AfxGetInstanceHandle(),lpFileName,MAX_PATH);
+
+		CString strFileName = lpFileName;
+		int nIndex = strFileName.ReverseFind ('\\');
+		CString strPath;
+		if (nIndex > 0)
+		{
+			strPath = strFileName.Left (nIndex);
+		}
+		else
+		{
+			strPath = "";
+		}
+		strPath += L"\\Support";
+
+		sunacCADPath = strPath;
+		return sunacCADPath;
 	}
-	strPath += L"\\Support";
-	return strPath;
+
 }
