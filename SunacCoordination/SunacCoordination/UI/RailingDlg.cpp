@@ -206,6 +206,11 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 	AcDbObjectId railingId;
 	int nRet = pRailing->GenerateRailing(pnt, railingId);
 
+	if (Acad::eOk == acdbOpenObject(m_pCurEdit, railingId, AcDb::kForRead))
+	{
+		m_pCurEdit->close();
+	}
+
 	delete pRailing;
 	
 	ShowWindow(TRUE);
