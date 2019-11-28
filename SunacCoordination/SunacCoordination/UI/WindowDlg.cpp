@@ -266,11 +266,9 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		ShowWindow(TRUE);
 		return;
 	}
-	
-	if (Acad::eOk == acdbOpenObject(m_pCurEdit, idOut, AcDb::kForRead))
-	{
+
+	if(Acad::eOk == acdbOpenObject(m_pCurEdit,idOut,AcDb::kForRead))
 		m_pCurEdit->close();
-	}
 
 	CWindowAutoName::GetInstance()->AddWindowType(*pSelWinAttr);
 

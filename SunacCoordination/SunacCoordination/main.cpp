@@ -1037,7 +1037,7 @@ static void initApp()
 	CDoubleClickBlockReference *pCircleEdit = new CDoubleClickBlockReference;
 	AcDbBlockReference::desc()->addX(AcDbDoubleClickEdit::desc(), pCircleEdit);	
 
-	LoadManagedDll(MD2010_GetAppPath() + L"\\Sunac2019\\rcdc.dll");
+	LoadManagedDll(MD2010_GetAppPath() + L"\\Sunac2019\\External_DLL\\rcdc.dll");
 
 	//WEBINST;
 }
@@ -1103,6 +1103,11 @@ extern "C" AcRx::AppRetCode acrxEntryPoint( AcRx::AppMsgCode msg, void* appId)
 	switch( msg ) 
 	{
 	case AcRx::kInitAppMsg: 
+#ifndef _WIN64
+		SetDllDirectory(MD2010_GetAppPath() + L"\\Sunac2019\\External_DLL\\x86");
+#else
+		SetDllDirectory(MD2010_GetAppPath() + L"\\Sunac2019\\External_DLL\\x64");
+#endif
 		acrxDynamicLinker->unlockApplication(appId);
 		acrxDynamicLinker->registerAppMDIAware(appId);
 		initApp(); 

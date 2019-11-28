@@ -44,7 +44,7 @@ UINT SetValue2(HKEY rootkey,LPCTSTR SubKey,LPCWSTR Name,DWORD dwValue )
 }
 
 
-UINT Regedit::SetValue(HKEY rootkey,LPCTSTR SubKey,wchar_t *Name1,double mmnumber)
+UINT Regedit::SetValue(HKEY rootkey,LPCTSTR SubKey,LPCTSTR Name1,double mmnumber)
 {
 	int i=1;//i=1为成功
 	HKEY hKey; 
@@ -68,7 +68,7 @@ UINT Regedit::SetValue(HKEY rootkey,LPCTSTR SubKey,wchar_t *Name1,double mmnumbe
 	return i;
 }
 
-UINT Regedit::QueryValue(HKEY rootkey,LPCTSTR SubKey,wchar_t *Name1,double& mmnumber)
+UINT Regedit::QueryValue(HKEY rootkey,LPCTSTR SubKey,LPCTSTR Name1,double& mmnumber)
 {
 	int i=1;//1为成功
 	HKEY hKey;
@@ -92,7 +92,7 @@ UINT Regedit::QueryValue(HKEY rootkey,LPCTSTR SubKey,wchar_t *Name1,double& mmnu
 	return i;
 }
 
-UINT Regedit::QueryString(HKEY rootkey,LPCTSTR SubKey,wchar_t *Name1,CString& kword)
+UINT Regedit::QueryString(HKEY rootkey,LPCTSTR SubKey,LPCTSTR Name1,CString& kword)
 {
 	int i=1;//1为成功
 	HKEY hKey;
@@ -118,7 +118,7 @@ UINT Regedit::QueryString(HKEY rootkey,LPCTSTR SubKey,wchar_t *Name1,CString& kw
 	return i;
 }
 
-UINT Regedit::SetString(HKEY rootkey,LPCTSTR SubKey,wchar_t *Name1,wchar_t* kword)
+UINT Regedit::SetString(HKEY rootkey,LPCTSTR SubKey,LPCTSTR Name1,LPCTSTR kword)
 {
 	int i=1;//i=1为成功
 	HKEY hKey; 
@@ -160,7 +160,7 @@ double Regedit::GetDouble(CString name)
 	int rcc = 0;
 	LPCTSTR SubKey=SUBKEY;
 
-	int ar = Regedit::QueryValue(MAINKEY,SubKey,name.GetBuffer(),msb);
+	int ar = Regedit::QueryValue(MAINKEY,SubKey,name,msb);
 	if(ar == 1)
 		return msb;
 	else 
@@ -179,7 +179,7 @@ double Regedit::GetDouble(CString name)
 void Regedit::SetDouble(CString name, double value)
 {
 	LPCTSTR SubKey=SUBKEY;
-	Regedit::SetValue(MAINKEY,SubKey,name.GetBuffer(),value);
+	Regedit::SetValue(MAINKEY,SubKey,name,value);
 }
 
 /*-------------------------------------------------------------------------
@@ -193,10 +193,10 @@ void Regedit::SetDouble(CString name, double value)
 CString Regedit::GetString(CString name)
 {
 	CString msb = L"";
-	int rcc = 0;
 	LPCTSTR SubKey=SUBKEY;
 
-	int ar = Regedit::QueryString(MAINKEY,SubKey,name.GetBuffer(),msb);
+	int ar = Regedit::QueryString(MAINKEY,SubKey,name,msb);
+
 	if(ar == 1)
 		return msb;
 	else 
@@ -217,7 +217,7 @@ int Regedit::SetString(CString name,CString msb)
 	int rcc = 0;
 	LPCTSTR SubKey=SUBKEY;
 
-	int ar = Regedit::SetString(MAINKEY,SubKey,name.GetBuffer(),msb.GetBuffer());
+	int ar = Regedit::SetString(MAINKEY,SubKey,name,msb);
 	if(ar == 1)
 		return 1;
 	else 

@@ -12,10 +12,10 @@ class Regedit
 public:
 	Regedit(void);
 	~Regedit(void);
-	static UINT SetValue(HKEY rootkey,LPCTSTR SubKey,wchar_t *Name1,double mmnumber);
-	static UINT QueryValue(HKEY rootkey,LPCTSTR SubKey,wchar_t *Name1,double& mmnumber);
-	static UINT QueryString(HKEY rootkey,LPCTSTR SubKey,wchar_t *Name1,CString& kword);
-	static UINT SetString(HKEY rootkey,LPCTSTR SubKey,wchar_t *Name1,wchar_t* kword);
+	static UINT SetValue(HKEY rootkey,LPCTSTR SubKey,LPCTSTR Name1,double mmnumber);
+	static UINT QueryValue(HKEY rootkey,LPCTSTR SubKey,LPCTSTR Name1,double& mmnumber);
+	static UINT QueryString(HKEY rootkey,LPCTSTR SubKey,LPCTSTR Name1,CString& kword);
+	static UINT SetString(HKEY rootkey,LPCTSTR SubKey,LPCTSTR Name1,LPCTSTR kword);
 
 	static bool GetDoubleManuly(CString name, CString prompt, double& value);
 	static void SetDouble(CString name, double value);
