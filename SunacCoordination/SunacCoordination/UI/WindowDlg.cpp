@@ -266,7 +266,9 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		ShowWindow(TRUE);
 		return;
 	}
-	
+
+	if(Acad::eOk == acdbOpenObject(m_pCurEdit,idOut,AcDb::kForRead))
+		m_pCurEdit->close();
 
 	CWindowAutoName::GetInstance()->AddWindowType(*pSelWinAttr);
 
@@ -778,8 +780,8 @@ void CWindowDlg::SetEditMode(AcDbBlockReference* pBlock)
 	str.Format(L"原型编号：%s\n窗户面积：%.2lf\n通风量：%.2lf\n动态类型：%s\n适用范围：集团", 
 		m_allWindows[0].m_prototypeCode, GetArea(), m_allWindows[0].GetTongFengQty(false), m_allWindows[0].m_isDynamic ? L"动态" : L"静态");
 
-	CString dwgPath = TY_GetPrototypeFilePath() + m_allWindows[0].GetFileName();
-	CString pngPath = TY_GetPrototypeImagePath_Local() + m_allWindows[0].GetFileName(); //门窗原型优先使用内部的图片
+	CString dwgPath = TY_GetPrototypeFilePath() + L"\\" + m_allWindows[0].GetFileName();
+	CString pngPath = TY_GetPrototypeImagePath_Local() + L"\\" + m_allWindows[0].GetFileName(); //门窗原型优先使用内部的图片
 	pngPath.Replace(L".dwg", L".png");
 	if (PathFileExists(pngPath))
 		m_preWindow.AddPreview(0, 0, pngPath, str);
