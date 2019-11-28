@@ -118,7 +118,7 @@
       <ModuleDefinitionFile>.\props\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
       <AdditionalDependencies>acdbmgd.lib;sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>sqlite3.dll</DelayLoadDLLs>
+      <DelayLoadDLLs>sqlite3.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -149,6 +149,7 @@
       <TargetMachine>MachineX64</TargetMachine>
       <AdditionalDependencies>acdbmgd.lib;Tool\SQLite\sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)SunacCAD2014X64.arx</OutputFile>
+      <DelayLoadDLLs>sqlite3.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
