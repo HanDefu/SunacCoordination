@@ -917,17 +917,21 @@ CString TY_GetPrototypeImagePath_Local()
 }
 CString TY_GetPrototypeFilePath_Web()
 {
-	CString sPath = MD2010_GetAppPath() + L"\\Sunac2019\\Files\\";
-	if (!JHCom_FileExist(sPath.Trim(L"\\")))
+	CString sPath = MD2010_GetAppPath() + L"\\Sunac2019\\Files";
+	if (!JHCom_FileExist(sPath))//判断Files文件夹是否存在，如果不存在则创建
 	{
-		CreateDirectory(sPath.Trim(L"\\"), NULL);
+		CreateDirectory(sPath, NULL);
 	}
-	return sPath;
+	return sPath + L"\\";
 }
 CString TY_GetPrototypeImagePath_Web()
 {
-	CString sPath = MD2010_GetAppPath() + L"\\Sunac2019\\Files\\";
-	return sPath;
+	CString sPath = MD2010_GetAppPath() + L"\\Sunac2019\\Files";
+	if (!JHCom_FileExist(sPath))//判断Files文件夹是否存在，如果不存在则创建
+	{
+		CreateDirectory(sPath, NULL);
+	}
+	return sPath + L"\\";
 }
 
 char* TY_GetAluminumDatabasePath()

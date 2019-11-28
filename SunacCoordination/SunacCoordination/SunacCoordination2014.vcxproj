@@ -39,6 +39,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>false</UseOfMfc>
+    <CLRSupport>false</CLRSupport>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -154,6 +155,7 @@
     <ClCompile Include="Command\CommandWindowDetail.cpp" />
     <ClCompile Include="Command\CommandWindowTable.cpp" />
     <ClCompile Include="Common\AcessDatabase.cpp" />
+    <ClCompile Include="Common\AES.cpp" />
     <ClCompile Include="Common\ComFun_ACad.cpp" />
     <ClCompile Include="Common\ComFun_ACAD_Common.cpp" />
     <ClCompile Include="Common\ComFun_ACAD_Geometry.cpp" />
@@ -288,6 +290,7 @@
     <ClInclude Include="Command\CommandWindowDetail.h" />
     <ClInclude Include="Command\CommandWindowTable.h" />
     <ClInclude Include="Common\AcessDatabase.h" />
+    <ClInclude Include="Common\AES.h" />
     <ClInclude Include="Common\ComFun_ACad.h" />
     <ClInclude Include="Common\ComFun_ACAD_Common.h" />
     <ClInclude Include="Common\ComFun_ACAD_Geometry.h" />

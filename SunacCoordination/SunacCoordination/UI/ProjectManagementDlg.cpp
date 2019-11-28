@@ -445,7 +445,7 @@ void CProjectManagementDlg::OnGridClick(NMHDR *pNMHDR, LRESULT *pResult)
 	m_StcUploaderName.SetWindowTextW(SelectedFile.m_sUpdator); 
 	m_StcUploadTime.SetWindowTextW(SelectedFile.m_sUpdateTime);
 
-	if (m_nClkCol == 8 && m_nClkRow != 0)//ÏÂÔØ
+	if (m_nClkCol == 8 && m_nClkRow != 0 && m_nClkRow <= m_selectedDir->m_subFiles.size())//ÏÂÔØ
 	{
 		CString sFolderPath = SelFilePath();
 		if (sFolderPath == _T(""))
@@ -470,7 +470,7 @@ void CProjectManagementDlg::OnGridClick(NMHDR *pNMHDR, LRESULT *pResult)
 		FillPjtGridCtrl(m_selectedDir);
 	}
 
-	if (m_nClkCol == 9 && m_nClkRow != 0)//É¾³ý
+	if (m_nClkCol == 9 && m_nClkRow != 0 && m_nClkRow <= m_selectedDir->m_subFiles.size())//É¾³ý
 	{
 		if (IDYES == AfxMessageBox(L"È·¶¨É¾³ý?", MB_YESNO))
 		{

@@ -632,3 +632,37 @@ CString FileSizeToString(long long p_size)
 
 	return str;
 }
+
+
+string bytesToHexString(const byte* input, size_t length) 
+{
+	string ret;
+	const char cHex[] = "0123456789ABCDEF";
+	for (size_t i = 0; i < length; i++)
+	{
+		byte temp = *(input + i);
+		char x = cHex[temp / 16];
+		char y = cHex[temp % 16];
+		ret += x;
+		ret += y;
+	}
+	return ret;
+}
+
+void HexStringToBytes(string input, byte* pOutput)
+{
+	string ret;
+	for (int i = 0; i < input.length(); i += 2)
+	{
+		int x, y;
+		if (input[i] >= 'A')
+			x = input[i] - 'A' + 10;
+		else
+			x = input[i] - '0';
+		if (input[i+1] >= 'A')
+			y = input[i+1] - 'A' + 10;
+		else
+			y = input[i+1] - '0';
+		*pOutput++ = char(x*16+y);
+	}
+}
