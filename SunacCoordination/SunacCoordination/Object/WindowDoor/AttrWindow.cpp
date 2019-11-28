@@ -336,6 +336,19 @@ bool AttrWindow::HasValue(CString p_sCode)const
 
 	return true;
 }
+bool AttrWindow::IsValueCanbeSet(CString p_sCode)const //当前代号对应的值能否被设置
+{
+	const CWindowsDimData* pDimData = GetDimData(p_sCode);
+	if (pDimData == NULL || 
+		pDimData->type == NOVALUE ||
+		pDimData->type==CALC) //若为计算的也不能设置
+	{
+		return false;
+	}
+
+	return true;
+
+}
 
 double AttrWindow::GetValue(CString p_sCode, bool bDefaultValue/* = false*/) const
 {
