@@ -19,6 +19,7 @@ x64
 *.dwl2
 *.exp
 *.pch
+*.user
 
 # Prerequisites
 *.d
