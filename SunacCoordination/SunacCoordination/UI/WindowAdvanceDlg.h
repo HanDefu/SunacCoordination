@@ -42,6 +42,8 @@ public:
 	void InitAuxiliaryFrame(); //附框
 	void InitAuxiliaryFrameSeries();
 
+	void InitAllOption();//将传热系数到附框所有的初始化在此函数中调用
+
 	bool m_isMoldless;	//是否非模态对话框
 
 	vector<AttrWindow*> m_selAttrWindows;
