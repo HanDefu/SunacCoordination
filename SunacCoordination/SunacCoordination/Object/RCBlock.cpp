@@ -19,6 +19,7 @@ File description:
 #include "../Common/ComFun_Str.h"
 #include "../Common/ComFun_ACAD_Common.h"
 #include "../Common/ComFun_String.h"
+#include "../Common/ComFun_Layer.h"
 #include <acdocman.h>
 
 //default constructor
@@ -46,28 +47,27 @@ RCBlock & RCBlock::operator=(const RCBlock &other)
 
 AcDbObjectId RCBlock::Insert(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color)
 {
-	WCHAR blockname[256] = L"";
-	CF_STR_get_file_name(fileName, blockname);
-	CF_STR_get_file_name_2(blockname, blockname);
-	m_blockRecordName = CString(blockname);
-	acDocManager->lockDocument(curDoc());
-	MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, fileName, m_blockRecordName,  m_id, origin, angle, AcGeScale3d(1), layerName, color);
-	acDocManager->unlockDocument(curDoc());
-	return m_id;
-}
+	//WCHAR blockname[256] = L"";
+	//CF_STR_get_file_name(fileName, blockname);
+	//CF_STR_get_file_name_2(blockname, blockname);
+	//m_blockRecordName = CString(blockname);
+	m_blockRecordName = FilePathToFileNameWithoutExtension(fileName);
 
-AcDbObjectId RCBlock::AirInsert(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color)
-{
-	m_blockRecordName = FilePathToFileNameWithoutExtension(fileName); //TODO zjy
 	acDocManager->lockDocument(curDoc());
+	//检查图层是否存在，不存在则创建
+	AcDbObjectId layerId = JHCOM_GetLayerID(layerName);
+	if (layerId==AcDbObjectId::kNull)
+	{
+		JHCOM_CreateNewLayer(layerName);
+	}
+
 	MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, fileName, m_blockRecordName,  m_id, origin, angle, AcGeScale3d(1), layerName, color);
 	acDocManager->unlockDocument(curDoc());
 	return m_id;
 }
 
 //对于已经存在的图块定义的插入
-AcDbObjectId RCBlock::Insert(CString layoutname, CString blockDefineName, 
-	AcGePoint3d origin, double angle, CString layerName, int color)
+AcDbObjectId RCBlock::Insert(CString layoutname, CString blockDefineName, AcGePoint3d origin, double angle, CString layerName, int color)
 {
 	CString name;
 	MD2010_GetCurrentLayer(name);

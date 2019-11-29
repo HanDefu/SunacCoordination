@@ -220,7 +220,6 @@ void CAirconditionerDlg::OnBnClickedButtonInsertac()
 			ShowWindow(SW_SHOW);
 			return;
 		}
-
 	}
 	else
 	{
@@ -232,7 +231,7 @@ void CAirconditionerDlg::OnBnClickedButtonInsertac()
 
 	RCAirCondition blockAirCon;
 	//将块插入图形空间
-	blockAirCon.AirInsert(m_fileName, pnt, 0, L"0", 256);
+	blockAirCon.Insert(m_fileName, pnt, 0, L"Sunac_Aircondition", 256);
 
 	//上下镜像
 	if (m_upDownImage.GetCheck())

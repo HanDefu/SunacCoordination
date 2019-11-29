@@ -259,7 +259,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	}
 
 	//////////////////////////////////////////////////////////////////////////
-	AcDbObjectId idOut = GenerateWindow(*pSelWinAttr, origin, viewDir, winDir, true, L"0");
+	AcDbObjectId idOut = GenerateWindow(*pSelWinAttr, origin, viewDir, winDir, true, L"Sunac_Window");
 	if (idOut==AcDbObjectId::kNull)
 	{
 		assert(false);
@@ -814,7 +814,7 @@ void CWindowDlg::InsertAllWindows_Test()
 
 		int sel = m_comboViewDir.GetCurSel();
 		if (sel == 0)
-			oneWindow.Insert(TY_GetPrototypeFilePath() + pSelWinAttr->m_frontViewFile.fileName, insertPt, 0, L"0", 256);
+			oneWindow.Insert(TY_GetPrototypeFilePath() + pSelWinAttr->m_frontViewFile.fileName, insertPt, 0, L"Sunac_Window", 256);
 		else if (sel == 1)
 		{
 			double rotateAngle = 0;
@@ -832,10 +832,10 @@ void CWindowDlg::InsertAllWindows_Test()
 				rotateAngle = -PI / 2;
 				offsetXY.y += m_nWidth;
 			}
-			oneWindow.Insert(TY_GetPrototypeFilePath() + pSelWinAttr->m_topViewFile.fileName, origin + offsetXY, rotateAngle, L"0", 256);
+			oneWindow.Insert(TY_GetPrototypeFilePath() + pSelWinAttr->m_topViewFile.fileName, origin + offsetXY, rotateAngle, L"Sunac_Window", 256);
 		}
 		else
-			oneWindow.Insert(TY_GetPrototypeFilePath() + pSelWinAttr->m_leftViewFile.fileName, insertPt, 0, L"0", 256);
+			oneWindow.Insert(TY_GetPrototypeFilePath() + pSelWinAttr->m_leftViewFile.fileName, insertPt, 0, L"Sunac_Window", 256);
 
 		oneWindow.InitParameters();
 

@@ -32,7 +32,7 @@ bool CWindowDetailTemplate::InsertTemplates(int p_index, AcGePoint3d p_pnt)
 
 	pnt = GetInsertPnt(p_pnt, rowIndex, columnIndex);
 
-	AcDbObjectId id = thisBlock.Insert(GetTemplateFileName(), pnt, 	0, L"0",  0);
+	AcDbObjectId id = thisBlock.Insert(GetTemplateFileName(), pnt, 	0, L"Sunac_window",  0);
 
 	return true;
 }
@@ -76,7 +76,7 @@ void CWindowDetail::DrawWindowDetail()
 
 		AcGePoint3d winPnt = winDetailTemplate.GetInsertPntWindow(winAtt.GetW(), winAtt.GetH());
 
-		AcDbObjectId idOut = GenerateWindow(winAtt, winPnt, E_VIEW_FRONT, E_DIR_BOTTOM, false);
+		AcDbObjectId idOut = GenerateWindow(winAtt, winPnt, E_VIEW_FRONT, E_DIR_BOTTOM, false, L"Sunac_Window");
 
 		CreateDataText(winAtt, winDetailTemplate);
 
@@ -170,7 +170,7 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 
 	int colorIndex = 2;
 	int textHeight = 80;
-	CString layer = L"0";
+	CString layer = L"0"; //TODO
 
 	if (A > TOL)//如果A值存在 先标注两端的A
 	{

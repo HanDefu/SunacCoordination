@@ -147,7 +147,7 @@ AcDbObjectId CBathroomGen::GenBathroom(const AcGePoint3d p_pos, int p_angle)
 	RCBathroom oneBathroom;
 
 	//先插入到原点，最后再做镜像和旋转处理
-	AcDbObjectId id = oneBathroom.Insert(TY_GetPrototypeFilePath() + m_attr.GetFileName(), p_pos, 0, L"0", 256);
+	AcDbObjectId id = oneBathroom.Insert(TY_GetPrototypeFilePath() + m_attr.GetFileName(), p_pos, 0, L"Sunac_Bathroom", 256);
 	oneBathroom.InitParameters();
 	oneBathroom.SetParameter(L"X边长", xLen);
 	oneBathroom.SetParameter(L"Y边长", yLen);

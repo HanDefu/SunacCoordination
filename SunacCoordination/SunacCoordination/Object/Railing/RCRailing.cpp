@@ -22,6 +22,8 @@ File description:
 #include "../../Common/ComFun_ACAD_Common.h"
 #include "../../Common/ComFun_ACad.h"
 #include "../../Common/ComFun_Sunac.h"
+#include "../../Common/ComFun_Layer.h"
+#include "../../Tool/DocLock.h"
 #include "RCRailingTieyi.h"
 #include "RCRailingBoli.h"
  
@@ -73,12 +75,24 @@ int CRCRailing::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut)
 	if (bSuc == false)
 		return -1;
 
+	CDocLock docLock; //锁定文档用，勿删
+
 	CString sRailingDefName = m_railingAtt.GetInstanceCode();
 	if (sRailingDefName.IsEmpty())
 	{
 		assert(false);
 		sRailingDefName.Format(_T("%s_%d_%d"), m_railingAtt.m_prototypeCode, (int)(m_railingAtt.m_length), (int)(m_railingAtt.m_height));
 	}
+
+
+	CString oldLayerName;
+	MD2010_GetCurrentLayer(oldLayerName);
+	CString sRalingLayerName = _T("Sunac_Railing");
+	if (JHCOM_GetLayerID(sRalingLayerName)==AcDbObjectId::kNull)
+	{
+		JHCOM_CreateNewLayer(sRalingLayerName);
+	}
+	MD2010_SetCurrentLayer(sRalingLayerName);
 
 	//若之前有，则直接插入
 	AcDbObjectId railingBlockDef = MD2010_GetBlockDefID(sRailingDefName);
@@ -91,6 +105,8 @@ int CRCRailing::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut)
 	AttrRailing* pAttRailing = new AttrRailing(m_railingAtt);
 	TY_AddAttributeData(p_railingIdOut, pAttRailing);
 	pAttRailing->close();
+
+	MD2010_SetCurrentLayer(oldLayerName);
 
 	return 0;
 }

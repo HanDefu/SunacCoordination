@@ -218,5 +218,5 @@ private:
 	vector<CWindowAndCount> m_winCountArray;
 };
 
-AcDbObjectId  GenerateWindow(const AttrWindow& curWinAtt, const AcGePoint3d pos, eViewDir p_view, E_DIRECTION p_winDir, bool p_bWithAttribut, CString p_sLayerName = L"0");
+AcDbObjectId  GenerateWindow(const AttrWindow& curWinAtt, const AcGePoint3d pos, eViewDir p_view, E_DIRECTION p_winDir, bool p_bWithAttribut, CString p_sLayerName);
 

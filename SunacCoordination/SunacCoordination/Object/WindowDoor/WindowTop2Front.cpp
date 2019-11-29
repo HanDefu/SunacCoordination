@@ -107,7 +107,7 @@ bool CWindowTop2Front::GenFrontFromTop()
 		//	pos.y += curWinAtt.GetHeightUnderWindow();
 		//}
 
-		AcDbObjectId idOut = GenerateWindow(curWinAtt, pos, E_VIEW_FRONT, E_DIR_BOTTOM, true);
+		AcDbObjectId idOut = GenerateWindow(curWinAtt, pos, E_VIEW_FRONT, E_DIR_BOTTOM, true, L"Sunac_Window");
 		oneFloorIds.append(idOut);
 	}
 
