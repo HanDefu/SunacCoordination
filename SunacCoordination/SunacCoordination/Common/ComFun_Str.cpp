@@ -120,7 +120,7 @@ CHAR* WCHARTOCHAR(const WCHAR * pchar)
 	return m_pchar;
 }
 
-//此函数用于获得AutoCAD的安装路径，返回该路径。
+//此函数用于获得插件的安装路径，返回该路径。
 CString MD2010_GetAppPath()
 {
 	static CString sunacCADPath;
@@ -130,7 +130,7 @@ CString MD2010_GetAppPath()
 	}
 
 	//系统安装注册表 读取模式
-    sunacCADPath = Regedit::GetString(L"PATH") + L"Support";
+    sunacCADPath = Regedit::GetString(L"PATH");
 	if (sunacCADPath.GetLength() > 0 && PathIsDirectory(sunacCADPath))
 	{
 		return sunacCADPath.Trim(L"\\");
@@ -143,18 +143,17 @@ CString MD2010_GetAppPath()
 
 		CString strFileName = lpFileName;
 		int nIndex = strFileName.ReverseFind ('\\');
-		CString strPath;
 		if (nIndex > 0)
 		{
-			strPath = strFileName.Left (nIndex);
+			strFileName = strFileName.Left (nIndex);
 		}
 		else
 		{
-			strPath = "";
+			strFileName = "";
 		}
-		strPath += L"\\Support";
+		strFileName += L"\\Support";
 
-		sunacCADPath = strPath;
+		sunacCADPath = strFileName;
 		return sunacCADPath;
 	}
 

@@ -12,8 +12,8 @@
 
 CKitchenBathroomWebData::CKitchenBathroomWebData()
 {
-	m_allBathrooms = GetAllBathrooms();
-	m_allKitchens = GetAllKitchens();
+	//m_allBathrooms = GetAllBathrooms();
+	//m_allKitchens = GetAllKitchens();
 }
 
 bool SortKitchenFun(AttrKitchen attr1, AttrKitchen attr2)

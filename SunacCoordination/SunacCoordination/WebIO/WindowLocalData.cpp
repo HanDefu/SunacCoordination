@@ -17,7 +17,7 @@ CWindowLocalData* CWindowLocalData::Instance()
 CWindowLocalData::CWindowLocalData()
 {
 	CString localWindowPath = TY_GetDataFilePath();
-	LoadDataFromExcel((localWindowPath + ("原型数据.xlsx")));
+	LoadDataFromExcel(localWindowPath + "原型数据.xlsx");
 }
 
 CWindowLocalData::~CWindowLocalData()

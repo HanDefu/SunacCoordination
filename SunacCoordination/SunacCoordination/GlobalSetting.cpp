@@ -7,6 +7,10 @@
 #include "Tool/MarkupXml/Markup.h"
 #include "Common/ComFun_Str.h"
 #include "Common/ComFun_Sunac.h"
+#include "Common/AES.h"
+#include "Common/ComFun_Convert.h"
+
+
 
 GlobalSetting::GlobalSetting()
 {
@@ -72,13 +76,30 @@ bool GlobalSetting::LoadFromXml()
 		if (xml.FindElem(_T("UserName")))
 			m_userName = xml.GetData();
 		if (m_bRememberPwd && xml.FindElem(_T("Password")))
-			m_password = xml.GetData();
-
+		{
+			unsigned char key[] = 
+			{
+				0x2b, 0x7e, 0x15, 0x16, 
+				0x28, 0xae, 0xd2, 0xa6, 
+				0xab, 0xf7, 0x15, 0x88, 
+				0x09, 0xcf, 0x4f, 0x3c
+			};
+			AES aes(key);
+			string input = CT2A(xml.GetData());
+			byte bOutput[128];
+			HexStringToBytes(input, bOutput);
+			aes.InvCipher(bOutput, 128);
+			m_password = (const wchar_t*) bOutput;
+			//m_password = xml.GetData();
+		}
 		xml.OutOfElem();
 	}
 
 	return true;
 }
+
+
+
 bool GlobalSetting::SaveToXml()
 {
 	CString sFile = GetXmlFilePath();
@@ -94,7 +115,20 @@ bool GlobalSetting::SaveToXml()
 		xml.AddElem(_T("UserName"), m_userName);
 		if (m_bRememberPwd)
 		{
-			xml.AddElem(_T("Password"), m_password);
+			unsigned char key[] = 
+			{
+				0x2b, 0x7e, 0x15, 0x16, 
+				0x28, 0xae, 0xd2, 0xa6, 
+				0xab, 0xf7, 0x15, 0x88, 
+				0x09, 0xcf, 0x4f, 0x3c
+			};
+			AES aes(key);
+
+			void* tempchar = m_password.GetBuffer(128);
+			aes.Cipher(tempchar, 128);
+			CString hexString = bytesToHexString((const byte*)tempchar, 128).c_str();
+			m_password.ReleaseBuffer();
+			xml.AddElem(_T("Password"), hexString);
 		}
 	}
 	xml.OutOfElem();
