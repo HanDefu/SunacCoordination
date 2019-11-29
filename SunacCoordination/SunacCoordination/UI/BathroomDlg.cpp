@@ -198,15 +198,15 @@ void CBathroomDlg::SetEditMode(AcDbBlockReference* pBlock)
 	m_doorDir = E_DIRECTION((pBathroom->m_angle / 90 + pBathroom->m_prop.m_doorPos) % 4);
 	m_windowDir = E_DIRECTION((pBathroom->m_angle / 90 + pBathroom->m_prop.m_windowPos) % 4);
 	AcGePoint3d ptRT = ptLB;
-	if (m_doorDir == E_DIR_BOTTOM || m_doorDir == E_DIR_TOP)
+	if (pBathroom->m_angle / 180 == 0)
 	{
-		ptRT.x += pBathroom->m_width;
-		ptRT.y += pBathroom->m_height;
+		ptRT.x += pBathroom->m_xLen;
+		ptRT.y += pBathroom->m_yLen;
 	}
 	else
 	{
-		ptRT.x += pBathroom->m_height;
-		ptRT.y += pBathroom->m_width;
+		ptRT.x += pBathroom->m_yLen;
+		ptRT.y += pBathroom->m_xLen;
 	}
 	m_rect.SetLB(ptLB);
 	m_rect.SetRT(ptRT);
@@ -343,19 +343,7 @@ void CBathroomDlg::OnSelChanged(NMHDR *pNMHDR, LRESULT *pResult)
 	CKitchenBathroomProp* pCurSelPrototype = &pCurSelBathroom->m_prop;
 
 	lockUpdate = true;
-	bool needMirror = false;
-	//pCurSelPrototype->GetRotateAngle(m_doorDir, m_windowDir, m_angle, needMirror);
-	int width = int(m_rect.GetWidth() + 0.5);
-	int height = int(m_rect.GetHeight() + 0.5);
-	pCurSelPrototype->GetRotateAngle(width, height, m_angle);
-	pCurSelBathroom->m_angle = m_angle;
-	if (pCurSelPrototype->GetWindowDoorPos() == CHUIZHIKAI)
-	{
-		TYUI_Disable(m_isMirror);
-		pCurSelBathroom->m_isMirror = needMirror;
-	}
-	else
-		TYUI_Enable(m_isMirror);
+	m_angle = pCurSelBathroom->m_angle;
 	m_isMirror.SetCheck(pCurSelBathroom->m_isMirror);
 
 	//设置属性区选项
@@ -417,6 +405,7 @@ void CBathroomDlg::OnBnClickedButtonInsert()
 	if (m_pCurEdit != NULL)
 	{
 		JHCOM_DeleteCadObject(m_pCurEdit->objectId());
+		m_pCurEdit = NULL;
 	}
 	m_pBathroomGen->GenBathroom(origin, m_angle);
 	CBathroomAutoName::GetInstance()->AddBathroomType(*m_pBathroomGen->GetBathroomAtt());
@@ -608,7 +597,7 @@ void CBathroomDlg::OnBnClickedButtonSearch()
 	m_preBathroom.ClearAllPreviews();
 	if (m_allBathrooms.empty())
 	{
-		AfxMessageBox(_T("未找到符合条件的记录,请确保面宽进深为150递增\n"));
+		AfxMessageBox(_T("未找到符合条件的记录\n"));
 		return;
 	}
 	m_preBathroom.SetRowCount((int)m_allBathrooms.size());

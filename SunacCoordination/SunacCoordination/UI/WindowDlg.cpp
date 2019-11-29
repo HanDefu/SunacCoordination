@@ -28,6 +28,7 @@ CWindowDlg::CWindowDlg(CWnd* pParent /*=NULL*/)
 	m_pCurEdit = NULL;
 	m_nWidth = 0;
 	m_nHeight = 0;
+	m_nThickness = 200;
 
 	m_selectRect = TYRect(AcGePoint3d::kOrigin, AcGePoint3d::kOrigin);
 
@@ -213,6 +214,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	pSelWinAttr->SetH2(H2);
 	pSelWinAttr->SetW3(W3);
 	pSelWinAttr->SetH3(H3);
+	pSelWinAttr->SetD(m_nThickness);
 
 	//自动编号下更新原型编号
 	UpdateInstanceCode();
@@ -256,6 +258,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		m_pCurEdit->getGeomExtents(ext);
 		origin = ext.minPoint();
 		JHCOM_DeleteCadObject(m_pCurEdit->objectId());
+		m_pCurEdit = NULL;
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -266,9 +269,6 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		ShowWindow(TRUE);
 		return;
 	}
-
-	if(Acad::eOk == acdbOpenObject(m_pCurEdit,idOut,AcDb::kForRead))
-		m_pCurEdit->close();
 
 	CWindowAutoName::GetInstance()->AddWindowType(*pSelWinAttr);
 
@@ -418,9 +418,13 @@ void CWindowDlg::OnBnClickedSelOnDwg()
 	m_selectRect = rect;
 
 	m_nWidth = width;
-	if (height>=400 && height<3000) //若是平面图的高度则不改变原来的高度值
+	if (height>=400 && height<3000) //若是平面图则将高度作为墙厚度
 	{
 		m_nHeight = height;
+	}
+	else
+	{
+		m_nThickness = height;
 	}
 
 	UpdateData(FALSE);

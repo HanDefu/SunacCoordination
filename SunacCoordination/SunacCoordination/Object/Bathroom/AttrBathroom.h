@@ -58,8 +58,8 @@ public:
 	CKitchenBathroomProp m_prop;
 
 	//搜索到原型后填写
-	double m_width;				//开间
-	double m_height;			//进深
+	double m_xLen;				//短边长
+	double m_yLen;				//长边长
 
 	//插入时填写
 	CString m_taipenWidth;		//台盆宽度

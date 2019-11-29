@@ -41,9 +41,6 @@ protected:
 	virtual void SetVantTotalSize(AcDbObjectId bathroomId) {} //自动计算并设置排气道立管总尺寸
 	virtual void SetXiyijiPos(AcDbObjectId bathroomId) {} //自动计算并设置排气道立管总尺寸
 
-	virtual double GetXLength() { return min(m_attr.m_width, m_attr.m_height); } //短边位于X方向
-	virtual double GetYLength() { return max(m_attr.m_width, m_attr.m_height); } //长边位于Y方向
-
 protected:
 	AttrBathroom m_attr;
 };
