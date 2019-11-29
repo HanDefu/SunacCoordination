@@ -159,6 +159,8 @@ AcDbObjectId CBathroomGen::GenBathroom(const AcGePoint3d p_pos, int p_angle)
 		m_attr.GetAirVentSize(airVentW, airVentH);
 		oneBathroom.SetParameter(L"排气道X尺寸", airVentW);
 		oneBathroom.SetParameter(L"排气道Y尺寸", airVentH);
+		oneBathroom.SetParameter(L"排气道偏移X", m_attr.m_airVentOffsetX);
+		oneBathroom.SetParameter(L"排气道偏移Y", m_attr.m_airVentOffsetY);
 	}
 	//////////////////////////////////////////////////////////////////////////
 	oneBathroom.RunParameters();
