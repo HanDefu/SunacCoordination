@@ -56,7 +56,7 @@ public:
 	void LoadDefaultValue();
 	AttrWindow* GetSelWindow();
 
-	bool CheckValueModulo(CComboBox& comboBox, CString p_sType, int p_value); //检查数据是否是50的模数
+	bool CheckValueModulo(CComboBox& comboBox, CString p_sType, int p_value, int moduloVale = 50); //检查数据是否是50的模数
 
 	void SetEditMode(AcDbBlockReference* pBlock);
 
