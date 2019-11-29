@@ -26,6 +26,8 @@ public:
 
 	virtual void InitKitchenByDefault();
 
+	virtual bool CheckParameter(CString& errMsg) { return true; } //插入前检查参数合法性
+
 	//其余的属性值可以通过直接设置AttrKitchen对象的变量实现
 	AttrKitchen* GetKitchenAtt(){ return &m_attr; }
 
@@ -50,6 +52,8 @@ protected:
 
 	virtual double GetXLength(); //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
 	virtual double GetYLength(); //获得x方向的长度，width是面宽，height是进深，但有时候width并非x方向
+
+	bool GetPaiqidaoSize(double & p_width, double &p_height);
 
 protected:
 	AttrKitchen m_attr;
@@ -152,9 +156,16 @@ public:
 	virtual vCString GetZhaotaiOptions();// 获取灶台选项
 	virtual CString GetZhaotaiDefault();
 
+	virtual bool CheckParameter(CString& errMsg); //插入前检查参数合法性
+
 protected:
 	int SetShuiPenPos(AcDbObjectId kitchenId, double kaiJian, double jinShen, CString shuiPenType);
 	int SetZaoTaiPos(AcDbObjectId kitchenId, double kaiJian, double jinShen, CString zaoTaiType);
+
+	double GetShuipenOffset(const CString shuiPenType);
+	double GetZaotaiOffset(const CString zaoTaiType);
+	double GetShuipenLen(const CString shuiPenType);
+	double GetZaotaiLen(const CString zaoTaiType);
 
 };
 class CKitchGenSTATIC: public CKitchGen////静态厨房

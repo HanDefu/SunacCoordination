@@ -224,6 +224,10 @@ AcDbObjectId CKitchGen::GenKitchen(const AcGePoint3d p_pos, int p_angle)
 		assert(airVentW > 0 && airVentH > 0);
 		oneKitchen.SetParameter(L"排气道X尺寸", airVentW);
 		oneKitchen.SetParameter(L"排气道Y尺寸", airVentH);
+		oneKitchen.SetParameter(L"排气道偏移X", m_attr.m_airVentOffsetX);
+		oneKitchen.SetParameter(L"排气道偏移Y", m_attr.m_airVentOffsetY);
+
+		oneKitchen.SetParameter(L"可见性", airVentH >= 540 ? L"大烟道" : L"小烟道"); //540为600扣去墙尺寸60
 	}
 	//////////////////////////////////////////////////////////////////////////
 	oneKitchen.RunParameters();
@@ -261,6 +265,31 @@ AcDbObjectId CKitchGen::GenKitchen(const AcGePoint3d p_pos, int p_angle)
 	pAttribute->close();
 
 	return id;
+}
+
+	//烟道
+bool CKitchGen::GetPaiqidaoSize(double & p_width, double &p_height)
+{
+	if (m_attr.m_hasPaiQiDao)
+	{
+		if (m_attr.m_isGuoBiao) //国标
+		{
+			p_width = m_attr.m_airVentOffsetX + c_kitchenAirVentSize[m_attr.m_floorRange];
+			p_height = m_attr.m_airVentOffsetY + c_kitchenAirVentSize[m_attr.m_floorRange];
+		}
+		else
+		{
+			p_width = m_attr.m_airVentW;
+			p_height = m_attr.m_airVentH;
+		}
+		return true;
+	}
+	else
+	{
+		p_width = 0; 
+		p_height = 0;
+		return false;
+	}
 }
 //////////////////////////////////////////////////////////////////////////
 
@@ -762,32 +791,40 @@ CString CKitchGenKI::GetZhaotaiDefault()
 	}
 }
 
+bool CKitchGenKI::CheckParameter(CString& errMsg)
+{
+	//检查水盆和灶台的间距大于550
+	double shuipenOffset = GetShuipenOffset(m_attr.m_shuiPenType);
+	double zhaotaiOffset = GetZaotaiOffset(m_attr.m_shuiPenType);
+
+	double shuipenLen = GetShuipenLen(m_attr.m_shuiPenType);
+	double zhaotaiLen = GetZaotaiLen(m_attr.m_shuiPenType);
+
+	double paiqidaoWidth = 0;
+	double paiqidaoHeight = 0;
+	GetPaiqidaoSize(paiqidaoWidth, paiqidaoHeight);
+
+	double zhuangxiuLen = 25; //装修面宽
+	double qiangWidth = 60; //墙厚
+
+	double dist = m_attr.m_height - shuipenOffset - zhaotaiOffset - shuipenLen / 2 - zhaotaiLen / 2 - paiqidaoWidth - zhuangxiuLen * 2 - qiangWidth;
+	if (dist<500)
+	{
+		errMsg = _T("不能满足灶台和水盆距离大于500的要求");
+		return false;
+	}
+
+	return true;
+}
+
 //KI门窗对开设置水盆的位置
 //shuiPen:"单盆600"/"单盆800"/双盆900/双盆1000/双盆1200
 int CKitchGenKI::SetShuiPenPos(AcDbObjectId kitchenId, double kaiJian, double jinShen, CString shuiPenType)
 {
 	acDocManager->lockDocument(curDoc());
 
-	if (shuiPenType == L"单盆600")
-	{
-		TYCOM_SetDynamicBlockValue(kitchenId, L"水盆距墙X", 690.0);
-	}
-	else if (shuiPenType == L"单盆800")
-	{
-		TYCOM_SetDynamicBlockValue(kitchenId, L"水盆距墙X", 840.0);
-	}
-	else if (shuiPenType == L"双盆900")
-	{
-		TYCOM_SetDynamicBlockValue(kitchenId, L"水盆距墙X", 840.0);
-	}
-	else if (shuiPenType == L"双盆100")
-	{
-		TYCOM_SetDynamicBlockValue(kitchenId, L"水盆距墙X", 940.0);
-	}
-	else if (shuiPenType == L"双盆1200")
-	{
-		TYCOM_SetDynamicBlockValue(kitchenId, L"水盆距墙X", 1040.0);
-	}
+	double offset = GetShuipenOffset(shuiPenType);
+	TYCOM_SetDynamicBlockValue(kitchenId, L"水盆距墙X", offset);
 
 	acDocManager->unlockDocument(curDoc());
 
@@ -799,19 +836,92 @@ int CKitchGenKI::SetZaoTaiPos(AcDbObjectId kitchenId, double kaiJian, double jin
 {
 	acDocManager->lockDocument(curDoc());
 
-	if (zaoTaiType == L"800")
-	{
-		TYCOM_SetDynamicBlockValue(kitchenId, L"灶台距墙X", 600.0);
-	}
-
-	if (zaoTaiType == L"900")
-	{
-		TYCOM_SetDynamicBlockValue(kitchenId, L"灶台距墙X", 650.0);
-	}
+	double offset = GetZaotaiOffset(zaoTaiType);
+	TYCOM_SetDynamicBlockValue(kitchenId, L"灶台距墙X", offset);
 
 	acDocManager->unlockDocument(curDoc());
 
 	return 0;
+}
+
+double CKitchGenKI::GetShuipenOffset(const CString shuiPenType)
+{
+	if (shuiPenType == L"单盆600")
+	{
+		return 690;
+	}
+	else if (shuiPenType == L"单盆800")
+	{
+		return 840.0;
+	}
+	else if (shuiPenType == L"双盆900")
+	{
+		return 840.0;
+	}
+	else if (shuiPenType == L"双盆1000")
+	{
+		return 940.0;
+	}
+	else if (shuiPenType == L"双盆1200")
+	{
+		return 1040.0;
+	}
+
+	return 690;
+}
+
+
+double CKitchGenKI::GetShuipenLen(const CString shuiPenType)
+{
+	if (shuiPenType == L"单盆600")
+	{
+		return 600;
+	}
+	else if (shuiPenType == L"单盆800")
+	{
+		return 800;
+	}
+	else if (shuiPenType == L"双盆900")
+	{
+		return 900;
+	}
+	else if (shuiPenType == L"双盆1000")
+	{
+		return 1000;
+	}
+	else if (shuiPenType == L"双盆1200")
+	{
+		return 1200;
+	}
+
+	return 600;
+}
+
+double CKitchGenKI::GetZaotaiOffset(const CString zaoTaiType)
+{
+	if (zaoTaiType == L"800")
+	{
+		return 600.0;
+	}
+	else if (zaoTaiType == L"900")
+	{
+		return 650.0;
+	}
+
+	return 600;
+}
+double CKitchGenKI::GetZaotaiLen(const CString zaoTaiType)
+{
+	if (zaoTaiType == L"800")
+	{
+		return 800;
+	}
+	else if (zaoTaiType == L"900")
+	{
+		return 900;
+	}
+
+	return 800;
 }
 //////////////////////////////////////////////////////////////////////////
 
