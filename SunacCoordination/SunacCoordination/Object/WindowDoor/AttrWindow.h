@@ -127,6 +127,7 @@ public:
 	double GetW3(bool bDefaultValue = false) const { return GetValue(L"W3", bDefaultValue); }
 	double GetA(bool bDefaultValue = false) const { return GetValue(L"a", bDefaultValue); } //Èû·ì³ß´ç
 	double GetR(bool bDefaultValue = false) const { return GetValue(L"R", bDefaultValue); }
+	double GetD(bool bDefaultValue = false) const { return GetValue(L"D", bDefaultValue); } //Ç½ºñ¶È
 
 	bool SetValue(CString p_sCode, double p_dValue);
 
@@ -138,8 +139,9 @@ public:
 	bool SetW1(double newValue) { return SetValue(L"W1", newValue); }
 	bool SetW2(double newValue) { return SetValue(L"W2", newValue); }
 	bool SetW3(double newValue) { return SetValue(L"W3", newValue); }
-	bool SetA(double newValue) { return SetValue(L"a", newValue); }//Èû·ì³ß´ç
+	bool SetA(double newValue) { return SetValue(L"a", newValue); } //Èû·ì³ß´ç
 	bool SetR(double newValue) { return SetValue(L"R", newValue); }
+	bool SetD(double newValue) { return SetValue(L"D", newValue); } //Ç½ºñ¶È
 
 	bool SetHeightUnderWindow(double newValue);
 	double GetHeightUnderWindow()const { return m_heightUnderWindow; }

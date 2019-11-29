@@ -61,10 +61,6 @@ std::vector<AttrBathroom> CKitchenBathroomLocalData::GetBathrooms(EBathroomType 
 
 	int xLen = int(p_xLen + 0.5);
 	int yLen = int(p_yLen + 0.5);
-	int width = xLen;
-	int height = yLen;
-	if (p_doorDir == E_DIR_LEFT || p_doorDir == E_DIR_RIGHT)
-		swap(width, height);
 
 	CString sType;
 	switch (p_type)
@@ -84,9 +80,13 @@ std::vector<AttrBathroom> CKitchenBathroomLocalData::GetBathrooms(EBathroomType 
 	{
 		if ((p_type == E_BATHROOM_ALL || m_allBathrooms[i].m_prototypeCode.Left(2) == sType) && m_allBathrooms[i].m_prop.MatchPrototype(xLen, yLen/*, p_doorDir, p_windowDir*/))
 		{
-			ret.push_back(m_allBathrooms[i]);
-			ret.back().m_width = width;
-			ret.back().m_height = height;
+			AttrBathroom currBathroom = m_allBathrooms[i];
+			currBathroom.m_prop.GetRotateAngle(xLen, yLen, currBathroom.m_angle);
+			if (currBathroom.m_angle % 180 != 0)
+				swap(xLen, yLen);
+			currBathroom.m_xLen = xLen;
+			currBathroom.m_yLen = yLen;
+			ret.push_back(currBathroom);
 		}
 	}
 

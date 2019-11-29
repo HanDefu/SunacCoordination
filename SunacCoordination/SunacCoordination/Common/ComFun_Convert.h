@@ -182,6 +182,6 @@ CString GBKToUTF8(const std::string& strGBK);
 
 CString FileSizeToString(long long p_size);
 
-string bytesToHexString(const byte* input, size_t length);//字节转化成16进制字符
+CString BytesToHexString(const byte* input, size_t length);//字节转化成16进制字符
 
-void HexStringToBytes(string input, byte* pOutput);//16进制字符转化成字节
+size_t HexStringToBytes(CString input, byte* pOutput);//16进制字符转化成字节

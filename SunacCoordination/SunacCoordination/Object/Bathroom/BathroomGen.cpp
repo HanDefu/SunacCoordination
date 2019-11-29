@@ -127,8 +127,8 @@ bool CBathroomGen::CheckParameter(CString& errMsg)
 AcDbObjectId CBathroomGen::GenBathroom(const AcGePoint3d p_pos, int p_angle)
 {
 	AcGeVector3d offsetXY;
-	const double xLen = GetXLength();
-	const double yLen = GetYLength();
+	const double xLen = m_attr.m_xLen;
+	const double yLen = m_attr.m_yLen;
 	switch (p_angle)
 	{
 	case 90:
@@ -210,8 +210,8 @@ double CBathroomGenKI::GetMatongPos()
 
 bool CBathroomGenKI::CheckParameter(CString& errMsg)
 {
-	double xLen = GetXLength();
-	double yLen = GetYLength();
+	const double xLen = m_attr.m_xLen;
+	const double yLen = m_attr.m_yLen;
 
 	double ventX, ventY;
 	m_attr.GetAirVentSize(ventX, ventY);
@@ -289,7 +289,7 @@ void CBathroomGenKI::SetXiyijiPos(AcDbObjectId bathroomId)
 
 double CBathroomGenKI::GetMatongPos_I3()
 {
-	if (m_attr.m_height > 2600 + TOL)
+	if (m_attr.m_yLen > 2600 + TOL)
 		return 450;
 	else
 		return 400;
@@ -297,7 +297,7 @@ double CBathroomGenKI::GetMatongPos_I3()
 
 double CBathroomGenKI::GetMatongPos_I4()
 {
-	if (m_attr.m_height > 3200 + TOL)
+	if (m_attr.m_yLen > 3200 + TOL)
 		return 450;
 	else
 		return 400;
@@ -317,8 +317,8 @@ CBathroomGen* CBathroomMrg::CreateBathroomByAttribute(AttrBathroom* p_attr)
 
 bool CBathroomGenKL::CheckParameter(CString& errMsg)
 {
-	double xLen = GetXLength();
-	double yLen = GetYLength();
+	const double xLen = m_attr.m_xLen;
+	const double yLen = m_attr.m_yLen;
 
 	double ventX, ventY;
 	m_attr.GetAirVentSize(ventX, ventY);
@@ -361,7 +361,7 @@ bool CBathroomGenKL::CheckParameter(CString& errMsg)
 
 void CBathroomGenKL::SetVantTotalSize(AcDbObjectId bathroomId)
 {
-	double xLen = GetXLength();
+	const double xLen = m_attr.m_xLen;
 	double ventX, ventY;
 	m_attr.GetAirVentSize(ventX, ventY);
 

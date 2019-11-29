@@ -70,6 +70,7 @@ protected:
 
 	int m_nWidth;
 	int m_nHeight;
+	int m_nThickness;
 
 	CComboBox m_comboAreaType; //功能区类型
 	CComboBox m_comboOpenType; //开启类型

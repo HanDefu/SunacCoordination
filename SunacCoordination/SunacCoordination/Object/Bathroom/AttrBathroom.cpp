@@ -16,8 +16,8 @@ ACRX_DXF_DEFINE_MEMBERS(AttrBathroom, AcDbObject,
 
 AttrBathroom::AttrBathroom()
 {
-	m_width = 0;			//开间
-	m_height = 0;			//进深
+	m_xLen = 0;			//开间
+	m_yLen = 0;			//进深
 	m_windowDoorPos = DUIKAI;
 
 	m_angle = 0;
@@ -58,8 +58,8 @@ Acad::ErrorStatus AttrBathroom::dwgInFields(AcDbDwgFiler* filer)
 
 	m_prop.ReadFromDwg(filer);
 
-	filer->readItem(&m_width);
-	filer->readItem(&m_height);
+	filer->readItem(&m_xLen);
+	filer->readItem(&m_yLen);
 
 	filer->readString(tempStr);
 	m_taipenWidth = tempStr.kACharPtr();
@@ -96,8 +96,8 @@ Acad::ErrorStatus AttrBathroom::dwgOutFields(AcDbDwgFiler* filer) const
 
 	m_prop.WriteToDwg(filer);
 
-	filer->writeItem(m_width);
-	filer->writeItem(m_height);
+	filer->writeItem(m_xLen);
+	filer->writeItem(m_yLen);
 
 	filer->writeItem(m_taipenWidth);
 	filer->writeItem(m_matongWidth);
@@ -140,9 +140,9 @@ bool AttrBathroom::IsInstanceEqual(const AttrBathroom& p_att) const
 		return false;
 
 	//比较尺寸和门窗位置
-	if (m_width != p_att.m_width)
+	if (m_xLen != p_att.m_xLen)
 		return false;
-	if (m_height != p_att.m_height)
+	if (m_yLen != p_att.m_yLen)
 		return false;
 	if (m_windowDoorPos != p_att.m_windowDoorPos)
 		return false;
@@ -191,10 +191,8 @@ CString AttrBathroom::GetPrototypeCode() const
 		prototypeCode = prototypeCode.Left(pos);
 
 	CString ret;
-	if ((m_prop.m_doorPos == E_DIR_TOP) || (m_prop.m_doorPos == E_DIR_BOTTOM))
-		ret.Format(L"%s-%0.lf×%0.lf", prototypeCode, m_width, m_height);
-	else
-		ret.Format(L"%s-%0.lf×%0.lf", prototypeCode, m_height, m_width);
+	ret.Format(L"%s-%0.lf×%0.lf", prototypeCode, m_xLen, m_yLen);
+
 	if (m_prototypeCode.Find(L"_g") != -1)
 		ret += L"/g";
 

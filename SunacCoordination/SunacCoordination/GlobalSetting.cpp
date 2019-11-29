@@ -85,12 +85,11 @@ bool GlobalSetting::LoadFromXml()
 				0x09, 0xcf, 0x4f, 0x3c
 			};
 			AES aes(key);
-			string input = CT2A(xml.GetData());
-			byte bOutput[128];
+			CString input = xml.GetData();
+			byte bOutput[cPasswordBufferSize];
 			HexStringToBytes(input, bOutput);
-			aes.InvCipher(bOutput, 128);
+			aes.InvCipher(bOutput, cPasswordBufferSize);
 			m_password = (const wchar_t*) bOutput;
-			//m_password = xml.GetData();
 		}
 		xml.OutOfElem();
 	}
@@ -123,11 +122,10 @@ bool GlobalSetting::SaveToXml()
 				0x09, 0xcf, 0x4f, 0x3c
 			};
 			AES aes(key);
-
-			void* tempchar = m_password.GetBuffer(128);
-			aes.Cipher(tempchar, 128);
-			CString hexString = bytesToHexString((const byte*)tempchar, 128).c_str();
-			m_password.ReleaseBuffer();
+			byte strBytes[cPasswordBufferSize];
+			memcpy(strBytes, m_password, cPasswordBufferSize);
+			aes.Cipher(strBytes, cPasswordBufferSize);
+			CString hexString = BytesToHexString(strBytes, cPasswordBufferSize);
 			xml.AddElem(_T("Password"), hexString);
 		}
 	}

@@ -189,6 +189,7 @@ void CKitchenDlg::OnBnClickedButtonInsert()
 	if (m_pCurEdit != NULL)
 	{
 		JHCOM_DeleteCadObject(m_pCurEdit->objectId());
+		m_pCurEdit = NULL;
 	}
 	m_pKitchGen->GenKitchen(origin, m_angle);
 	CKitchenAutoName::GetInstance()->AddKitchenType(*m_pKitchGen->GetKitchenAtt());
@@ -402,7 +403,7 @@ void CKitchenDlg::OnBnClickedButtonSearch()
 	m_preKitchen.ClearAllPreviews();
 	if (m_allKitchens.empty())
 	{
-		AfxMessageBox(_T("未找到符合条件的记录,请确保面宽进深为150递增\n"));
+		AfxMessageBox(_T("未找到符合条件的记录\n"));
 		return;
 	}
 	m_preKitchen.SetRowCount((int)m_allKitchens.size());

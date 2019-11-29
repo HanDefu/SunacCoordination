@@ -75,7 +75,7 @@ UINT Regedit::QueryValue(HKEY rootkey,LPCTSTR SubKey,LPCTSTR Name1,double& mmnum
 	DWORD dwtype;
 	char content[256];
 	DWORD cbData = 256;
-	if (RegOpenKeyEx(rootkey,SubKey,0,KEY_ALL_ACCESS,&hKey)!= ERROR_SUCCESS) 
+	if (RegOpenKeyEx(rootkey,SubKey,0,KEY_READ,&hKey)!= ERROR_SUCCESS) 
 	{ 
 		//JHCOM_Print(34,NULL,1);
 		i=0;
@@ -99,7 +99,7 @@ UINT Regedit::QueryString(HKEY rootkey,LPCTSTR SubKey,LPCTSTR Name1,CString& kwo
 	DWORD dwtype;
 	char content[256]="";
 	DWORD cbData = 256;
-	if (RegOpenKeyEx(rootkey,SubKey,0,KEY_ALL_ACCESS,&hKey)!= ERROR_SUCCESS) 
+	if (RegOpenKeyEx(rootkey,SubKey,0,KEY_READ,&hKey)!= ERROR_SUCCESS) 
 	{ 
 		//JHCOM_Print(34,NULL,1);
 		i=0;

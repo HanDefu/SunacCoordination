@@ -4,6 +4,9 @@
 
 using namespace std;
 
+const int cPasswordMaxlength = 30;
+const int cPasswordBufferSize = (cPasswordMaxlength*sizeof(wchar_t)/16+1)*16;
+
 class GlobalSetting
 {
 public:

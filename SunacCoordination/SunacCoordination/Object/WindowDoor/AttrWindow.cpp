@@ -265,6 +265,14 @@ void AttrWindow::CheckAndComplementDimeData() //检查并补全Dim数据，W/H/a确保都有
 		dimData.SetDefaultValue(25);
 		SetDimData(dimData);
 	}
+	if (GetDimData(_T("d")) == NULL) //墙厚度
+	{
+		CWindowsDimData dimData;
+		dimData.sCodeName = _T("D");
+		dimData.type = UNLIMIT;
+		dimData.SetDefaultValue(200);
+		SetDimData(dimData);
+	}
 }
 void AttrWindow::SetDimData(const CWindowsDimData& p_dim)
 {
@@ -998,21 +1006,23 @@ AcDbObjectId  GenerateWindow(const AttrWindow& curWinAtt, const AcGePoint3d pos,
 	//更新参数
 	oneWindow.InitParameters();
 
-	oneWindow.SetParameter(L"H", (double)curWinAtt.GetH());
-	oneWindow.SetParameter(L"W", (double)curWinAtt.GetW());
+	oneWindow.SetParameter(L"H", curWinAtt.GetH());
+	oneWindow.SetParameter(L"W", curWinAtt.GetW());
+	oneWindow.SetParameter(L"A", curWinAtt.GetA());
+	oneWindow.SetParameter(L"T", curWinAtt.GetD());
 
-	oneWindow.SetParameter(L"W1", (double)curWinAtt.GetW1());
+	oneWindow.SetParameter(L"W1", curWinAtt.GetW1());
 	if (curWinAtt.HasValue(_T("W2")))
-		oneWindow.SetParameter(L"W2", (double)curWinAtt.GetW2());
+		oneWindow.SetParameter(L"W2", curWinAtt.GetW2());
 	if (curWinAtt.HasValue(_T("W3")))
-		oneWindow.SetParameter(L"W3", (double)curWinAtt.GetW3());
+		oneWindow.SetParameter(L"W3", curWinAtt.GetW3());
 
 	if (curWinAtt.HasValue(_T("H1")))
-		oneWindow.SetParameter(L"H1", (double)curWinAtt.GetH1());
+		oneWindow.SetParameter(L"H1", curWinAtt.GetH1());
 	if (curWinAtt.HasValue(_T("H2")))
-		oneWindow.SetParameter(L"H2", (double)curWinAtt.GetH2());
+		oneWindow.SetParameter(L"H2", curWinAtt.GetH2());
 	if (curWinAtt.HasValue(_T("H3")))
-		oneWindow.SetParameter(L"H3", (double)curWinAtt.GetH3());
+		oneWindow.SetParameter(L"H3", curWinAtt.GetH3());
 
 	oneWindow.RunParameters();
 	//////////////////////////////////////////////////////////////////////////
