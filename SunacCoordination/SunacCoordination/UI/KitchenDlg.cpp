@@ -160,6 +160,7 @@ void CKitchenDlg::OnBnClickedButtonInsert()
 		return;
 	}
 
+
 	CString newInstanceCode = TYUI_GetText(m_number);
 	if (!CKitchenAutoName::GetInstance()->IsNameValid(*m_pKitchGen->GetKitchenAtt(), newInstanceCode))
 	{
@@ -168,6 +169,14 @@ void CKitchenDlg::OnBnClickedButtonInsert()
 	}
 
 	UpdateAttribute();
+
+	//检查参数合法性
+	if (!m_pKitchGen->CheckParameter(errMsg))
+	{
+		AfxMessageBox(errMsg);
+		return;
+	}
+
 	if (!m_bAutoIndex)
 	{
 		m_pKitchGen->GetKitchenAtt()->SetInstanceCode(newInstanceCode);

@@ -115,6 +115,7 @@ public:
 	double GetWindowArea()const;
 	
 	bool HasValue(CString p_sCode)const;
+	bool IsValueCanbeSet(CString p_sCode)const; //当前代号对应的值能否被设置
 	double GetValue(CString p_sCode, bool bDefaultValue = false) const;
 	double GetH(bool bDefaultValue = false) const { return GetValue(L"H", bDefaultValue); }
 	double GetH1(bool bDefaultValue = false) const { return GetValue(L"H1", bDefaultValue); }

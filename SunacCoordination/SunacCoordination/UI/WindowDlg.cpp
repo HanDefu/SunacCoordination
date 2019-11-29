@@ -163,16 +163,16 @@ BOOL CWindowDlg::OnInitDialog()
 
 	return TRUE;
 }
-bool CWindowDlg::CheckValueModulo(CComboBox& comboBox, CString p_sType, int p_value) //检查数据是否是50的模数
+bool CWindowDlg::CheckValueModulo(CComboBox& comboBox, CString p_sType, int p_value, int moduloVale) //检查数据是否是50的模数
 {
 	if (comboBox.IsWindowEnabled()==FALSE)
 	{
 		return true;
 	}
-	if (p_value%10!=0)
+	if (p_value%moduloVale != 0)
 	{
 		CString str;
-		str.Format(_T("%s值必须是10的倍数"), p_sType);
+		str.Format(_T("%s值必须是%d的倍数"), p_sType, moduloVale);
 		AfxMessageBox(str);
 		return false;
 	}
@@ -201,9 +201,9 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	int W3 = TYUI_GetInt(m_comboW3);
 	int H3 = TYUI_GetInt(m_comboH3);
 	////检查设置值
-	//if (CheckValueModulo(m_comboW1, _T("开启扇宽度"), W1) == false ||
-	//	CheckValueModulo(m_comboH2, _T("下固定高度"), H2) == false ||
-	//	CheckValueModulo(m_comboW3, _T("转角宽度"), W3) == false ||
+	//if ((pSelWinAttr->IsValueCanbeSet(_T("W1")) && CheckValueModulo(m_comboW1, _T("开启扇宽度"), W1) == false) ||
+	//	(pSelWinAttr->IsValueCanbeSet(_T("H2")) && CheckValueModulo(m_comboH2, _T("下固定高度"), H2) == false) ||
+	//	(pSelWinAttr->IsValueCanbeSet(_T("H2")) && CheckValueModulo(m_comboW3, _T("转角宽度"), W3)) == false ||
 	//	CheckValueModulo(m_comboH3, _T("窗下墙高度"), H3) == false)
 	//{
 	//	return;
