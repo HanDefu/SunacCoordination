@@ -157,14 +157,6 @@ BOOL CWindowAdvanceDlg::OnInitDialog()
 
 	OnBnClickedSelectOnDwg();
 
-	InitAluminumSeries();
-	InitHeatCoeffCtrl();
-	InitGlassSeries();
-	InitMaterialType();
-	InitAuxiliaryFrame();
-	InitAuxiliaryFrameSeries();
-	InitPlugSlotSize();
-
 	return TRUE;
 }
 
@@ -182,6 +174,16 @@ END_MESSAGE_MAP()
 
 // CWindowAdvanceDlg 消息处理程序
 
+void CWindowAdvanceDlg::InitAllOption()
+{
+	InitAluminumSeries();
+	InitHeatCoeffCtrl();
+	InitGlassSeries();
+	InitMaterialType();
+	InitAuxiliaryFrame();
+	InitAuxiliaryFrameSeries();
+	InitPlugSlotSize();
+}
 
 void CWindowAdvanceDlg::OnBnClickedSelectOnDwg()
 {
@@ -211,6 +213,8 @@ void CWindowAdvanceDlg::OnBnClickedSelectOnDwg()
 
 	ShowWindow(SW_SHOW);
 	UpdateData(FALSE);
+
+	InitAllOption(); //根据所选原型初始化型材系列等选项
 }
 
 void CWindowAdvanceDlg::OnBnClickedAuxiliaryFrame()
