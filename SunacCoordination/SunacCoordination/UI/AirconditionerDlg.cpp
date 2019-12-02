@@ -23,6 +23,17 @@
 
 CAirconditionerDlg* g_airconditionerDlg = NULL;
 
+void OpenAirconditionerDlg(AcDbBlockReference* pCurEdit /*= NULL*/)
+{
+	if (g_airconditionerDlg == NULL)
+	{
+		g_airconditionerDlg = new CAirconditionerDlg(acedGetAcadFrame());
+		g_airconditionerDlg->Create(IDD_DIALOG_AIRCONDITIONER);
+	}
+	g_airconditionerDlg->SetEditMode(pCurEdit);
+	g_airconditionerDlg->ShowWindow(SW_SHOW);
+}
+
 BOOL CloseAirconditionerDlg()
 {
 	if (g_airconditionerDlg == NULL)

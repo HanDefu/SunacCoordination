@@ -17,6 +17,17 @@
 
 CRailingDlg* g_railingDlg = NULL;
 
+void OpenRailingDlg(AcDbBlockReference* pCurEdit/* = NULL*/)
+{
+	if (g_railingDlg == NULL)
+	{
+		g_railingDlg = new CRailingDlg(acedGetAcadFrame());
+		g_railingDlg->Create(IDD_DIALOG_RAILING);
+	}
+	g_railingDlg->SetEditMode(pCurEdit);
+	g_railingDlg->ShowWindow(SW_SHOW);
+}
+
 BOOL CloseRailingDlg()
 {
 	if (g_railingDlg == NULL)

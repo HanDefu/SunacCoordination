@@ -65,4 +65,5 @@ public:
 };
 
 extern CAirconditionerDlg* g_airconditionerDlg;
+void OpenAirconditionerDlg(AcDbBlockReference* pCurEdit = NULL);
 BOOL CloseAirconditionerDlg();

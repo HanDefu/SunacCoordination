@@ -843,6 +843,17 @@ void CWindowDlg::InsertAllWindows_Test()
 
 CWindowDlg* g_windowDlg = NULL;
 
+void OpenWindowDlg(AcDbBlockReference* pCurEdit/* = NULL*/)
+{
+	if (g_windowDlg == NULL)
+	{
+		g_windowDlg = new CWindowDlg(acedGetAcadFrame());
+		g_windowDlg->Create(IDD_DIALOG_WINDOW);
+	}
+	g_windowDlg->SetEditMode(pCurEdit);
+	g_windowDlg->ShowWindow(SW_SHOW);
+}
+
 BOOL CloseWindowDlg()
 {
 	if (g_windowDlg == NULL)

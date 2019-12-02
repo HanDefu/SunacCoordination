@@ -11,6 +11,17 @@
 
 CBathroomDlg* g_bathroomDlg = NULL;
 
+void OpenBathroomDlg(AcDbBlockReference* pCurEdit /*= NULL*/)
+{
+	if (g_bathroomDlg == NULL)
+	{
+		g_bathroomDlg = new CBathroomDlg(acedGetAcadFrame());
+		g_bathroomDlg->Create(IDD_DIALOG_BATHROOM);
+	}
+	g_bathroomDlg->SetEditMode(pCurEdit);
+	g_bathroomDlg->ShowWindow(SW_SHOW);
+}
+
 BOOL CloseBathroomDlg()
 {
 	if (g_bathroomDlg == NULL)
@@ -23,7 +34,6 @@ BOOL CloseBathroomDlg()
 	}
 	return ret;
 }
-
 
 IMPLEMENT_DYNAMIC(CBathroomDlg, CAcUiDialog)
 

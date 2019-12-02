@@ -101,4 +101,5 @@ public:
 };
 
 extern CWindowDlg* g_windowDlg;
+void OpenWindowDlg(AcDbBlockReference* pCurEdit = NULL);
 BOOL CloseWindowDlg();

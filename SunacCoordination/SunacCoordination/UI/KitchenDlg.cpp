@@ -11,6 +11,17 @@
 
 CKitchenDlg* g_kitchenDlg = NULL;
 
+void OpenKitchenDlg(AcDbBlockReference* pCurEdit /*= NULL*/)
+{
+	if (g_kitchenDlg == NULL)
+	{
+		g_kitchenDlg = new CKitchenDlg(acedGetAcadFrame());
+		g_kitchenDlg->Create(IDD_DIALOG_KITCHEN);
+	}
+	g_kitchenDlg->SetEditMode(pCurEdit);
+	g_kitchenDlg->ShowWindow(SW_SHOW);
+}
+
 BOOL CloseKitchenDlg()
 {
 	if (g_kitchenDlg == NULL)

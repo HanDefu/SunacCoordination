@@ -22,10 +22,10 @@
 #include "../UI/BathroomDlg.h"
 #include "../UI/RailingDlg.h"
 #include "../UI/AirconditionerDlg.h"
-#include "../UI/FacadeDlg.h"
-#include "../UI/FillingDlg.h"
-#include "../UI/MoldingsDlg.h"
-#include "../UI/WaterproofDlg.h"
+//#include "../UI/FacadeDlg.h"
+//#include "../UI/FillingDlg.h"
+//#include "../UI/MoldingsDlg.h"
+//#include "../UI/WaterproofDlg.h"
 #include "../UI/MyPalette.h"
 #include "../UI/MyPaletteSet.h"
 #include "../UI/DlgLogin.h"
@@ -106,19 +106,12 @@ void CMD_SunacWindow()
 	CAcModuleResourceOverride resOverride;
 
 	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
-	if (g_windowDlg == NULL)
+	if (acDocManager->documentCount() == 0)
 	{
-		//预览控件必须在当前文档下加载
-		if (acDocManager->documentCount() == 0)
-		{
-			AfxMessageBox(L"没有可以操作的文档");
-			return;
-		}
-		g_windowDlg = new CWindowDlg(acedGetAcadFrame());
-		g_windowDlg->Create(IDD_DIALOG_WINDOW);
+		AfxMessageBox(L"没有可以操作的文档");
+		return;
 	}
-	g_windowDlg->SetEditMode(NULL);
-	g_windowDlg->ShowWindow(SW_SHOW);
+	OpenWindowDlg();
 }
 
 void CMD_SunacWindowAdvanceDesign() //门窗深化设计
@@ -131,12 +124,7 @@ void CMD_SunacWindowAdvanceDesign() //门窗深化设计
 
 	CAcModuleResourceOverride resOverride;
 
-	if (g_windowAdvanceDlg == NULL)
-	{
-		g_windowAdvanceDlg = new CWindowAdvanceDlg(acedGetAcadFrame());
-		g_windowAdvanceDlg->Create(IDD_DIALOG_WINDOW_ADVANCE);
-	}
-	g_windowAdvanceDlg->ShowWindow(SW_SHOW);
+	OpenWindowAdvanceDlg();
 }
 
 void CMD_SunacWindowDetail()
@@ -241,18 +229,12 @@ void CMD_SunacKitchen()
 	CAcModuleResourceOverride resOverride;
 
 	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
-	if (g_kitchenDlg == NULL)
+	if (acDocManager->documentCount() == 0)
 	{
-		//预览控件必须在当前文档下加载
-		if (acDocManager->documentCount() == 0)
-		{
-			AfxMessageBox(L"没有可以操作的文档");
-			return;
-		}
-		g_kitchenDlg = new CKitchenDlg(acedGetAcadFrame());
-		g_kitchenDlg->Create(IDD_DIALOG_KITCHEN);
+		AfxMessageBox(L"没有可以操作的文档");
+		return;
 	}
-	g_kitchenDlg->ShowWindow(SW_SHOW);
+	OpenKitchenDlg();
 }
 
 //卫生间
@@ -267,18 +249,12 @@ void CMD_SunacBathroom()
 	CAcModuleResourceOverride resOverride;
 
 	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
-	if (g_bathroomDlg == NULL)
+	if (acDocManager->documentCount() == 0)
 	{
-		//预览控件必须在当前文档下加载
-		if (acDocManager->documentCount() == 0)
-		{
-			AfxMessageBox(L"没有可以操作的文档");
-			return;
-		}
-		g_bathroomDlg = new CBathroomDlg(acedGetAcadFrame());
-		g_bathroomDlg->Create(IDD_DIALOG_BATHROOM);
+		AfxMessageBox(L"没有可以操作的文档");
+		return;
 	}
-	g_bathroomDlg->ShowWindow(SW_SHOW);
+	OpenBathroomDlg();
 }
 
 void CMD_SunacKitchenBathroomStatistic()
@@ -304,18 +280,12 @@ void CMD_SunacRailing()
 	CAcModuleResourceOverride resOverride;
 
 	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
-	if (g_railingDlg == NULL)
+	if (acDocManager->documentCount() == 0)
 	{
-		//预览控件必须在当前文档下加载
-		if (acDocManager->documentCount() == 0)
-		{
-			AfxMessageBox(L"没有可以操作的文档");
-			return;
-		}
-		g_railingDlg = new CRailingDlg(acedGetAcadFrame());
-		g_railingDlg->Create(IDD_DIALOG_RAILING);
+		AfxMessageBox(L"没有可以操作的文档");
+		return;
 	}
-	g_railingDlg->ShowWindow(SW_SHOW);
+	OpenRailingDlg();
 }
 
 void CMD_SunacRailingStatistic()
@@ -332,19 +302,19 @@ void CMD_SunacRailingStatistic()
 //线脚
 void CMD_SunacMoldings()
 {
-	CAcModuleResourceOverride resOverride;
+	/*CAcModuleResourceOverride resOverride;
 
 	CMoldingsDlg dlg;
-	dlg.DoModal();
+	dlg.DoModal();*/
 }
 
 //填充材质
 void CMD_SunacFilling()
 {
-	CAcModuleResourceOverride resOverride;
+	/*CAcModuleResourceOverride resOverride;
 
 	CFillingDlg dlg;
-	dlg.DoModal();
+	dlg.DoModal();*/
 }
 
 //空调
@@ -359,18 +329,12 @@ void CMD_SunacAirconditioner()
 	CAcModuleResourceOverride resOverride;
 
 	//Memory freed on PostNcDestroy(call delete this;) or cancel function.
-	if (g_airconditionerDlg == NULL)
+	if (acDocManager->documentCount() == 0)
 	{
-		//预览控件必须在当前文档下加载
-		if (acDocManager->documentCount() == 0)
-		{
-			AfxMessageBox(L"没有可以操作的文档");
-			return;
-		}
-		g_airconditionerDlg = new CAirconditionerDlg(acedGetAcadFrame());
-		g_airconditionerDlg->Create(IDD_DIALOG_AIRCONDITIONER);
+		AfxMessageBox(L"没有可以操作的文档");
+		return;
 	}
-	g_airconditionerDlg->ShowWindow(SW_SHOW);
+	OpenAirconditionerDlg();
 }
 
 void CMD_SunacAirconditionerStatistic()
@@ -387,19 +351,19 @@ void CMD_SunacAirconditionerStatistic()
 //标准立面
 void CMD_SunacFacade()
 {
-	CAcModuleResourceOverride resOverride;
+	/*CAcModuleResourceOverride resOverride;
 
 	CFacadeDlg dlg;
-	dlg.DoModal();
+	dlg.DoModal();*/
 }
 
 //防水构造
 void CMD_SunacWaterproof()
 {
-	CAcModuleResourceOverride resOverride;
+	/*CAcModuleResourceOverride resOverride;
 
 	CWaterproofDlg dlg;
-	dlg.DoModal();
+	dlg.DoModal();*/
 }
 
 //统计算量

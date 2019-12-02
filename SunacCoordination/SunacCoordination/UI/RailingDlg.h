@@ -50,4 +50,5 @@ public:
 };
 
 extern CRailingDlg* g_railingDlg;
+void OpenRailingDlg(AcDbBlockReference* pCurEdit = NULL);
 BOOL CloseRailingDlg();

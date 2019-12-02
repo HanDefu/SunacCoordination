@@ -392,6 +392,16 @@ void CWindowAdvanceDlg::InitAuxiliaryFrameSeries()
 
 CWindowAdvanceDlg* g_windowAdvanceDlg = NULL;
 
+void OpenWindowAdvanceDlg()
+{
+	if (g_windowAdvanceDlg == NULL)
+	{
+		g_windowAdvanceDlg = new CWindowAdvanceDlg(acedGetAcadFrame());
+		g_windowAdvanceDlg->Create(IDD_DIALOG_WINDOW_ADVANCE);
+	}
+	g_windowAdvanceDlg->ShowWindow(SW_SHOW);
+}
+
 BOOL CloseWindowAdvanceDlg()
 {
 	if (g_windowAdvanceDlg == NULL)

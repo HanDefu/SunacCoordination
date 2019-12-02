@@ -236,8 +236,6 @@
     <ClCompile Include="UI\DlgLeftBar.cpp" />
     <ClCompile Include="UI\DlgLogin.cpp" />
     <ClCompile Include="UI\DlgWindowAirCalc.cpp" />
-    <ClCompile Include="UI\FacadeDlg.cpp" />
-    <ClCompile Include="UI\FillingDlg.cpp" />
     <ClCompile Include="UI\GridCellForPreview.cpp" />
     <ClCompile Include="UI\GridCellWithPicture.cpp" />
     <ClCompile Include="UI\GridCtrlEx.cpp" />
@@ -257,7 +255,6 @@
     <ClCompile Include="UI\GridCtrl_src\TitleTip.cpp" />
     <ClCompile Include="UI\GsPreviewCtrl.cpp" />
     <ClCompile Include="UI\KitchenDlg.cpp" />
-    <ClCompile Include="UI\MoldingsDlg.cpp" />
     <ClCompile Include="UI\MyPalette.cpp" />
     <ClCompile Include="UI\MyPaletteSet.cpp" />
     <ClCompile Include="UI\NewDirDlg.cpp" />
@@ -265,7 +262,6 @@
     <ClCompile Include="UI\ProjectManagementDlg.cpp" />
     <ClCompile Include="UI\RailingDlg.cpp" />
     <ClCompile Include="UI\TreeCtrlEx.cpp" />
-    <ClCompile Include="UI\WaterproofDlg.cpp" />
     <ClCompile Include="UI\WindowAdvanceDlg.cpp" />
     <ClCompile Include="UI\WindowDlg.cpp" />
     <ClCompile Include="WebIO\AirConditionLocalData.cpp" />
@@ -383,8 +379,6 @@
     <ClInclude Include="UI\DlgLeftBar.h" />
     <ClInclude Include="UI\DlgLogin.h" />
     <ClInclude Include="UI\DlgWindowAirCalc.h" />
-    <ClInclude Include="UI\FacadeDlg.h" />
-    <ClInclude Include="UI\FillingDlg.h" />
     <ClInclude Include="UI\GridCellForPreview.h" />
     <ClInclude Include="UI\GridCellWithPicture.h" />
     <ClInclude Include="UI\GridCtrlEx.h" />
@@ -414,7 +408,6 @@
     <ClInclude Include="UI\Menu\CAcadPopupMenuItem.h" />
     <ClInclude Include="UI\Menu\CAcadPopupMenus.h" />
     <ClInclude Include="UI\Menu\Menu_Def.h" />
-    <ClInclude Include="UI\MoldingsDlg.h" />
     <ClInclude Include="UI\MyPalette.h" />
     <ClInclude Include="UI\MyPaletteSet.h" />
     <ClInclude Include="UI\NewDirDlg.h" />
@@ -422,7 +415,6 @@
     <ClInclude Include="UI\ProjectManagementDlg.h" />
     <ClInclude Include="UI\RailingDlg.h" />
     <ClInclude Include="UI\TreeCtrlEx.h" />
-    <ClInclude Include="UI\WaterproofDlg.h" />
     <ClInclude Include="UI\WindowAdvanceDlg.h" />
     <ClInclude Include="UI\WindowDlg.h" />
     <ClInclude Include="WebIO\AirConditionLocalData.h" />

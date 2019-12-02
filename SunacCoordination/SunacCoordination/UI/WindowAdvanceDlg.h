@@ -58,4 +58,5 @@ public:
 };
 
 extern CWindowAdvanceDlg* g_windowAdvanceDlg;
+void OpenWindowAdvanceDlg();
 BOOL CloseWindowAdvanceDlg();

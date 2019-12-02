@@ -76,4 +76,5 @@ public:
 };
 
 extern CBathroomDlg* g_bathroomDlg;
+void OpenBathroomDlg(AcDbBlockReference* pCurEdit = NULL);
 BOOL CloseBathroomDlg();

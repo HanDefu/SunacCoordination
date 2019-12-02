@@ -55,18 +55,6 @@
     <ClCompile Include="UI\AirconditionerDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
-    <ClCompile Include="UI\FacadeDlg.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\FillingDlg.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\MoldingsDlg.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI\WaterproofDlg.cpp">
-      <Filter>UI</Filter>
-    </ClCompile>
     <ClCompile Include="Object\RCBlock.cpp">
       <Filter>Object</Filter>
     </ClCompile>
@@ -478,18 +466,6 @@
       <Filter>UI\GridCtrl\NewCellTypes</Filter>
     </ClInclude>
     <ClInclude Include="UI\AirconditionerDlg.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\FacadeDlg.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\FillingDlg.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\MoldingsDlg.h">
-      <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\WaterproofDlg.h">
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="Object\RCBlock.h">

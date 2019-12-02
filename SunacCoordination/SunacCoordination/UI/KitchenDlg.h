@@ -82,4 +82,5 @@ public:
 };
 
 extern CKitchenDlg* g_kitchenDlg;
+void OpenKitchenDlg(AcDbBlockReference* pCurEdit = NULL);
 BOOL CloseKitchenDlg();
