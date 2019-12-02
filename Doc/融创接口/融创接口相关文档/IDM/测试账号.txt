@@ -1,1 +1,12 @@
 zhoudihao/Asdf1234
+
+生产环境地址
+http://192.168.2.219:8002/WP_SUNAC/APP_IDM_SERVICES/Proxy_Services/TA_EOP/IDM_SUNAC_392_validatePwd_PS?wsdl
+
+测试环境地址
+http://192.168.2.219:8001/WP_SUNAC/APP_IDM_SERVICES/Proxy_Services/TA_EOP/IDM_SUNAC_392_validatePwd_PS
+
+
+账号密码
+idmadmin 
+idmpass
