@@ -69,9 +69,9 @@ void CDoubleClickBlockReference::startEdit( AcDbEntity *pEnt, AcGePoint3d pt )
 				{
 					g_windowDlg = new CWindowDlg(acedGetAcadFrame());
 					g_windowDlg->Create(IDD_DIALOG_WINDOW);
-					g_windowDlg->SetEditMode(pBlockReference);
-					g_windowDlg->ShowWindow(SW_SHOW);
 				}
+				g_windowDlg->SetEditMode(pBlockReference);
+				g_windowDlg->ShowWindow(SW_SHOW);
 				break;
 			}
 			

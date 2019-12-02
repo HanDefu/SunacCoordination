@@ -117,6 +117,7 @@ void CMD_SunacWindow()
 		g_windowDlg = new CWindowDlg(acedGetAcadFrame());
 		g_windowDlg->Create(IDD_DIALOG_WINDOW);
 	}
+	g_windowDlg->SetEditMode(NULL);
 	g_windowDlg->ShowWindow(SW_SHOW);
 }
 
