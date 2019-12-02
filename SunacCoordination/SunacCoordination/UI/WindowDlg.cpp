@@ -24,7 +24,6 @@ CWindowDlg::CWindowDlg(CWnd* pParent /*=NULL*/)
 	, m_nWidth(0)
 	, m_nHeight(0)
 {
-	m_isMoldless = true;
 	m_pCurEdit = NULL;
 	m_nWidth = 0;
 	m_nHeight = 0;
@@ -39,39 +38,9 @@ CWindowDlg::~CWindowDlg()
 {
 }
 
-INT_PTR CWindowDlg::DoModal()
-{
-	m_isMoldless = false;
-	return CAcUiDialog::DoModal();
-}
-
 LRESULT CWindowDlg::onAcadKeepFocus(WPARAM, LPARAM)
 {
 	return TRUE;
-}
-
-void CWindowDlg::OnOK()
-{
-	CAcUiDialog::OnOK();
-	if (m_isMoldless)
-		DestroyWindow();
-}
-
-void CWindowDlg::OnCancel()
-{
-	CAcUiDialog::OnCancel();
-	if (m_isMoldless)
-	    DestroyWindow();
-}
-
-void CWindowDlg::PostNcDestroy()
-{
-	CAcUiDialog::PostNcDestroy();
-	if (m_isMoldless)
-	{
-		delete this;
-		g_windowDlg = NULL;
-	}
 }
 
 BOOL CWindowDlg::PreTranslateMessage(MSG *pMsg)
@@ -875,6 +844,9 @@ BOOL CloseWindowDlg()
 		return TRUE;
 	BOOL ret = g_windowDlg->DestroyWindow();
 	if (ret)
+	{
+		delete g_windowDlg;
 		g_windowDlg = NULL;
+	}
 	return ret;
 }

@@ -24,17 +24,10 @@ CWindowAdvanceDlg::CWindowAdvanceDlg(CWnd* pParent /*=NULL*/)
 	, m_bFuKuang(FALSE)
 	, m_fJieNeng(0)
 {
-	m_isMoldless = true;
 }
 
 CWindowAdvanceDlg::~CWindowAdvanceDlg()
 {
-}
-
-INT_PTR CWindowAdvanceDlg::DoModal()
-{
-	m_isMoldless = false;
-	return CAcUiDialog::DoModal();
 }
 
 void CWindowAdvanceDlg::OnOK()
@@ -109,25 +102,6 @@ void CWindowAdvanceDlg::OnOK()
 	//}
 
 	CAcUiDialog::OnOK();
-	if (m_isMoldless)
-		DestroyWindow();
-}
-
-void CWindowAdvanceDlg::OnCancel()
-{
-	CAcUiDialog::OnCancel();
-	if (m_isMoldless)
-		DestroyWindow();
-}
-
-void CWindowAdvanceDlg::PostNcDestroy()
-{
-	CAcUiDialog::PostNcDestroy();
-	if (m_isMoldless)
-	{
-		delete this;
-		g_windowAdvanceDlg = NULL;
-	}
 }
 
 BOOL CWindowAdvanceDlg::PreTranslateMessage(MSG *pMsg)
@@ -424,7 +398,10 @@ BOOL CloseWindowAdvanceDlg()
 		return TRUE;
 	BOOL ret = g_windowAdvanceDlg->DestroyWindow();
 	if (ret)
+	{
+		delete g_windowAdvanceDlg;
 		g_windowAdvanceDlg = NULL;
+	}
 	return ret;
 }
 

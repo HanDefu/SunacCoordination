@@ -17,7 +17,10 @@ BOOL CloseBathroomDlg()
 		return TRUE;
 	BOOL ret = g_bathroomDlg->DestroyWindow();
 	if (ret)
+	{
+		delete g_bathroomDlg;
 		g_bathroomDlg = NULL;
+	}
 	return ret;
 }
 
@@ -102,25 +105,6 @@ BOOL CBathroomDlg::OnInitDialog()
 	EnableSetProperty(false);
 
 	return TRUE;
-}
-
-void CBathroomDlg::OnOK()
-{
-	CAcUiDialog::OnOK();
-	DestroyWindow();
-}
-
-void CBathroomDlg::OnCancel()
-{
-	CAcUiDialog::OnCancel();
-	DestroyWindow();
-}
-
-void CBathroomDlg::PostNcDestroy()
-{
-	CAcUiDialog::PostNcDestroy();
-	delete this;
-	g_bathroomDlg = NULL;
 }
 
 BOOL CBathroomDlg::PreTranslateMessage(MSG *pMsg)

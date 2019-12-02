@@ -14,8 +14,6 @@ public:
 	CRailingDlg(CWnd* pParent = NULL);   // 标准构造函数
 	virtual ~CRailingDlg();
 
-	virtual INT_PTR DoModal();
-
 // 对话框数据
 	enum { IDD = IDD_DIALOG_RAILING };
 
@@ -27,10 +25,6 @@ protected:
 
 	//非模态对话框相关函数
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);///---01
-	virtual void OnOK();
-	virtual void OnCancel();
-	virtual void PostNcDestroy(); //释放非模态对话框内存
-	bool m_isMoldless;//是否非模态对话框
 	virtual BOOL PreTranslateMessage(MSG *pMsg); //不响应回车
 
 public:

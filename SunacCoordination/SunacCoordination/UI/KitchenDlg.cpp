@@ -17,7 +17,10 @@ BOOL CloseKitchenDlg()
 		return TRUE;
 	BOOL ret = g_kitchenDlg->DestroyWindow();
 	if (ret)
+	{
+		delete g_kitchenDlg;
 		g_kitchenDlg = NULL;
+	}
 	return ret;
 }
 
@@ -48,25 +51,6 @@ CKitchenDlg::~CKitchenDlg()
 LRESULT CKitchenDlg::onAcadKeepFocus(WPARAM, LPARAM)
 {
 	return TRUE;
-}
-
-void CKitchenDlg::OnOK()
-{
-	CAcUiDialog::OnOK();
-	DestroyWindow();
-}
-
-void CKitchenDlg::OnCancel()
-{
-	CAcUiDialog::OnCancel();
-	DestroyWindow();
-}
-
-void CKitchenDlg::PostNcDestroy()
-{
-	CAcUiDialog::PostNcDestroy();
-	delete this;
-	g_kitchenDlg = NULL;
 }
 
 BOOL CKitchenDlg::PreTranslateMessage(MSG *pMsg)

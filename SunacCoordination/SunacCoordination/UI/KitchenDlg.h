@@ -24,9 +24,6 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	virtual BOOL OnInitDialog();
-	virtual void OnOK();
-	virtual void OnCancel();
-	virtual void PostNcDestroy(); //释放非模态对话框内存
 	virtual BOOL PreTranslateMessage(MSG *pMsg); //不响应回车
 
 	DECLARE_MESSAGE_MAP()

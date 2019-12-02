@@ -12,8 +12,6 @@ public:
 	CWindowAdvanceDlg(CWnd* pParent = NULL);   // 标准构造函数
 	virtual ~CWindowAdvanceDlg();
 
-	virtual INT_PTR DoModal();
-
 // 对话框数据
 	enum { IDD = IDD_DIALOG_WINDOW_ADVANCE };
 
@@ -24,8 +22,6 @@ protected:
 
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);
 	virtual void OnOK();
-	virtual void OnCancel();
-	virtual void PostNcDestroy(); //释放非模态对话框内存
 	virtual BOOL PreTranslateMessage(MSG *pMsg); //不响应回车
 
 	DECLARE_MESSAGE_MAP()
@@ -43,8 +39,6 @@ public:
 	void InitAuxiliaryFrameSeries();
 
 	void InitAllOption();//将传热系数到附框所有的初始化在此函数中调用
-
-	bool m_isMoldless;	//是否非模态对话框
 
 	vector<AttrWindow*> m_selAttrWindows;
 

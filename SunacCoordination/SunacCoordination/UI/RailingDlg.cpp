@@ -23,7 +23,10 @@ BOOL CloseRailingDlg()
 		return TRUE;
 	BOOL ret = g_railingDlg->DestroyWindow();
 	if (ret)
+	{
+		delete g_railingDlg;
 		g_railingDlg = NULL;
+	}
 	return ret;
 }
 
@@ -37,18 +40,11 @@ CRailingDlg::CRailingDlg(CWnd* pParent /*=NULL*/)
 	, m_bRailingAutoName(TRUE)
 	, m_sRailingId(_T(""))
 {
-	m_isMoldless = true;
 	m_pCurEdit = NULL;
 }
 
 CRailingDlg::~CRailingDlg()
 {
-}
-
-INT_PTR CRailingDlg::DoModal()
-{
-	m_isMoldless = false;
-	return CAcUiDialog::DoModal();
 }
 
 void CRailingDlg::DoDataExchange(CDataExchange* pDX)
@@ -220,29 +216,6 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 LRESULT CRailingDlg::onAcadKeepFocus(WPARAM, LPARAM)
 {
 	return TRUE;
-}
-void CRailingDlg::OnOK()
-{
-	CAcUiDialog::OnOK();
-	if (m_isMoldless)
-		DestroyWindow();
-}
-
-void CRailingDlg::OnCancel()
-{
-	CAcUiDialog::OnCancel();
-	if (m_isMoldless)
-		DestroyWindow();
-}
-
-void CRailingDlg::PostNcDestroy()
-{
-	CAcUiDialog::PostNcDestroy();
-	if (m_isMoldless)
-	{
-		delete this;
-		g_railingDlg = NULL;
-	}
 }
 
 BOOL CRailingDlg::PreTranslateMessage(MSG *pMsg)

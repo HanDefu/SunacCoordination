@@ -29,7 +29,10 @@ BOOL CloseAirconditionerDlg()
 		return TRUE;
 	BOOL ret = g_airconditionerDlg->DestroyWindow();
 	if (ret)
+	{
+		delete g_airconditionerDlg;
 		g_airconditionerDlg = NULL;
+	}
 	return ret;
 }
 
@@ -106,25 +109,6 @@ BOOL CAirconditionerDlg::OnInitDialog()
 	UpdatePreview();
 
 	return TRUE;
-}
-
-void CAirconditionerDlg::OnOK()
-{
-	CAcUiDialog::OnOK();
-	DestroyWindow();
-}
-
-void CAirconditionerDlg::OnCancel()
-{
-	CAcUiDialog::OnCancel();
-	DestroyWindow();
-}
-
-void CAirconditionerDlg::PostNcDestroy()
-{
-	CAcUiDialog::PostNcDestroy();
-	delete this;
-	g_airconditionerDlg = NULL;
 }
 
 BOOL CAirconditionerDlg::PreTranslateMessage(MSG *pMsg)
