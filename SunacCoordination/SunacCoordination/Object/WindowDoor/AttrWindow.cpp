@@ -1009,7 +1009,7 @@ AcDbObjectId  GenerateWindow(const AttrWindow& curWinAtt, const AcGePoint3d pos,
 	oneWindow.SetParameter(L"H", curWinAtt.GetH());
 	oneWindow.SetParameter(L"W", curWinAtt.GetW());
 	oneWindow.SetParameter(L"A", curWinAtt.GetA());
-	oneWindow.SetParameter(L"T", curWinAtt.GetD());
+	oneWindow.SetParameter(L"D", curWinAtt.GetD());
 
 	oneWindow.SetParameter(L"W1", curWinAtt.GetW1());
 	if (curWinAtt.HasValue(_T("W2")))

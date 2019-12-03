@@ -407,6 +407,9 @@
     <ClCompile Include="Object\WindowDoor\WindowTop2Front.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="Common\AES.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command\Command.h">
@@ -866,6 +869,9 @@
     </ClInclude>
     <ClInclude Include="Object\WindowDoor\WindowTop2Front.h">
       <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\AES.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
