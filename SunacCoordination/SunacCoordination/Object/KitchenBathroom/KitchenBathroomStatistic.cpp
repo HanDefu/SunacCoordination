@@ -139,6 +139,7 @@ AcDbObjectId CKitchenBathroomStatistic::InsertTableToCAD(AcGePoint3d insertPos)
 		for (int nColum = 0; nColum < columSize; nColum++)
 		{
 			pTable->setAlignment(nRow, nColum, AcDb::kMiddleCenter);
+			pTable->setTextHeight(nRow, nColum,2.5);
 		}
 	}
 

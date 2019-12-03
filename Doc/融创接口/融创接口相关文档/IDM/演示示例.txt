@@ -1,0 +1,23 @@
+        public static string Login(string username, string psw) //Resful接口 规范, 注意需要此函数需处理特殊字符
+        {
+            string url = "http://192.168.2.219:8002/WP_SUNAC/APP_RYG_SERVICES/Proxy_Services/TA_EOP/RYG_SUNAC_486_ValidatePwd_PS";
+            //string url = "http://192.168.2.219:8002/WP_SUNAC/APP_IDM_SERVICES/Proxy_Services/TA_EOP/IDM_SUNAC_392_validatePwd_PS";
+            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+            request.Method = "POST";
+            request.ContentType = "application/json";
+            string data = "{\n\"username\": " + username + ",\n\"password\": " + psw + "\n}";
+
+            byte[] byteData = UTF8Encoding.UTF8.GetBytes(data.ToString());
+            request.ContentLength = byteData.Length;
+
+            using (Stream postStream = request.GetRequestStream())
+            {
+                postStream.Write(byteData, 0, byteData.Length);
+            }
+
+            using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+            {
+                StreamReader reader = new StreamReader(response.GetResponseStream());
+                return reader.ReadToEnd();
+            }
+        }

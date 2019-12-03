@@ -110,24 +110,22 @@ void CGridCtrlWithPreview::OnPaint()
 	CCellID topLeftCell = GetTopleftNonFixedCell();
 	int stRow = topLeftCell.row;
 	int stCol = topLeftCell.col;
-	int edRow = GetRowCount() - stRow;
+	int edRow = min(GetRowCount(), stRow + m_nDisplayRows);
+	int edCol = min(GetColumnCount(), stCol + m_nDisplayCols);
 
-	if (edRow < m_nDisplayRows)
-	{
-		CRect clientRect;
-		CPoint cellOrigin;
-		GetClientRect(&clientRect);
-		GetCellOrigin(edRow, 0, &cellOrigin);
-		clientRect.top = cellOrigin.y;
-		dc.FillSolidRect(clientRect, GetBkColor());
-	}
+	CRect clientRect;
+	CPoint cellOrigin;
+	GetClientRect(&clientRect);
+	GetCellOrigin(edRow, 0, &cellOrigin);
+	clientRect.top = cellOrigin.y;
+	dc.FillSolidRect(clientRect, GetBkColor());
 	
 	for (int i = 0; i < GetRowCount(); i++)
 	{
 		for (int j = 0; j < GetColumnCount(); j++)
 		{
-			CRect cellRect;
-			if ((i >= stRow) && (i < stRow + m_nDisplayRows) && (j >= stCol) && (j < stCol + m_nDisplayCols))
+			CRect cellRect(0, 0, 0, 0);
+			if ((i >= stRow) && (i < edRow) && (j >= stCol) && (j < edCol))
 				GetCellRect(i, j, &cellRect);
 			CGridCellForPreview* pCell = GetPreviewCell(i, j);
 			if (pCell != NULL)
