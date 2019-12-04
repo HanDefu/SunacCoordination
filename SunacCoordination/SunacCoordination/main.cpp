@@ -904,8 +904,8 @@ static void initApp()
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
-		_T("SNOHIGHTLIGHT"),
-		_T("SNOHIGHTLIGHT"),
+		_T("SNOHIGHLIGHT"),
+		_T("SNOHIGHLIGHT"),
 		ACRX_CMD_MODAL,
 		CMD_SunacNoHighlight,
 		NULL,

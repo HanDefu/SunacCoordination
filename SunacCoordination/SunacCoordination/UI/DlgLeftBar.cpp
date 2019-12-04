@@ -127,8 +127,8 @@ LRESULT DlgLeftBar::OnClickedPopupMenu(WPARAM mID, LPARAM notUsed)
 	case ID_COMMAND_WINDOWDETAIL:	//门窗详图
 		SendCommandToCAD(_T("SWINDETAIL"));
 		break;
-	case ID_COMMAND_WINDOWNOHIGHTLIGHT:
-		SendCommandToCAD(_T("SNOHIGHTLIGHT")); //取消高亮
+	case ID_COMMAND_WINDOWNOHIGHLIGHT:
+		SendCommandToCAD(_T("SNOHIGHLIGHT")); //取消高亮
 		break;
 
 	case ID_COMMAND_KITCHEN:
