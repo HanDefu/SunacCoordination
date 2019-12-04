@@ -103,12 +103,10 @@ LRESULT DlgLeftBar::OnClickedPopupMenu(WPARAM mID, LPARAM notUsed)
 	{
 	case ID_COMMAND_WINDOW:
 		SendCommandToCAD(_T("SWINDESIGN"));
-		//CMD_SunacWindow();
 		break;
 
 	case ID_COMMAND_WINDOWADVANCE: //二次深化设计
 		SendCommandToCAD(_T("SWINADVANCE"));
-		//CMD_SunacWindowAdvanceDesign();
 		break;
 	case ID_COMMAND_WINDOW_FLOORSETTING: //楼层设置
 		SendCommandToCAD(_T("SWINFLOOR"));
@@ -122,24 +120,22 @@ LRESULT DlgLeftBar::OnClickedPopupMenu(WPARAM mID, LPARAM notUsed)
 
 	case ID_COMMAND_WINDOWQUANTITY://门窗算量
 		SendCommandToCAD(_T("SWINSTATISTICS"));
-		//CMD_SunacWindowsStatistics();
 		break;
 	case ID_COMMAND_WINDOWTABLE:
 		SendCommandToCAD(_T("SWINTABLE"));
-		//CMD_SunacWindowsTable();
 		break;
 	case ID_COMMAND_WINDOWDETAIL:	//门窗详图
 		SendCommandToCAD(_T("SWINDETAIL"));
-		//CMD_SunacWindowDetail();
+		break;
+	case ID_COMMAND_WINDOWNOHIGHLIGHT:
+		SendCommandToCAD(_T("SNOHIGHLIGHT")); //取消高亮
 		break;
 
 	case ID_COMMAND_KITCHEN:
 		SendCommandToCAD(_T("SKITCHEN"));
-		//CMD_SunacKitchen();
 		break;
 	case ID_COMMAND_BATHROOM:
 		SendCommandToCAD(_T("SBATHROOM"));
-		//CMD_SunacBathroom();
 		break;
 	case ID_COMMAND_KITCHENQUANTITY:
 		SendCommandToCAD(_T("SKBSTATISTIC"));
@@ -149,11 +145,12 @@ LRESULT DlgLeftBar::OnClickedPopupMenu(WPARAM mID, LPARAM notUsed)
 		break;
 	case ID_COMMAND_RAILING:
 		SendCommandToCAD(_T("SRAILING"));
-		//CMD_SunacRailing();
+		break;
+	case ID_COMMAND_RAILINGDETAIL:
+		SendCommandToCAD(_T("SRAILINGDETAIL"));
 		break;
 	case ID_COMMAND_AIRCONDITIONER:
 		SendCommandToCAD(_T("SAIRCONDITIONER"));
-		//CMD_SunacAirconditioner();
 		break;
 	case ID_COMMAND_AIRCONDITIONERQUANTITY:
 		SendCommandToCAD(_T("SAIRCONSTATISTIC"));
