@@ -656,7 +656,7 @@ size_t HexStringToBytes(CString input, byte* pOutput)
 			x = input[i] - 'A' + 10;
 		else
 			x = input[i] - '0';
-		pOutput[i/2] = (pOutput[i/2] << 4) + x;
+		pOutput[i / 2] = (pOutput[i / 2] << 4 & 0xFF) + x;
 	}
 	return input.GetLength() / 2;
 }
