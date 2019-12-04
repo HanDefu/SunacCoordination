@@ -904,6 +904,15 @@ static void initApp()
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SNOHIGHTLIGHT"),
+		_T("SNOHIGHTLIGHT"),
+		ACRX_CMD_MODAL,
+		CMD_SunacNoHighlight,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
 		_T("SKITCHEN"),
 		_T("SKITCHEN"),
 		ACRX_CMD_MODAL,
@@ -935,6 +944,14 @@ static void initApp()
 		_T("SRAILING"),
 		ACRX_CMD_MODAL,
 		CMD_SunacRailing,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SRAILINGDETAIL"),
+		_T("SRAILINGDETAIL"),
+		ACRX_CMD_MODAL,
+		CMD_SunacRailingDetail,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());

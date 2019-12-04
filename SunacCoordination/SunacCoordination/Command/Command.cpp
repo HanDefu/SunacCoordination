@@ -217,6 +217,13 @@ void CMD_SunacWindowFront2Top()//门窗立面到平面
 	//TODO
 }
 
+void CMD_SunacNoHighlight()
+{
+	//TODO zjy 取消高亮
+
+}
+
+
 //厨房
 void CMD_SunacKitchen()
 {
@@ -286,6 +293,19 @@ void CMD_SunacRailing()
 		return;
 	}
 	OpenRailingDlg();
+}
+
+//栏杆详图
+void CMD_SunacRailingDetail()
+{
+	if (WebIO::GetInstance()->IsLogin() == false)
+	{
+		acutPrintf(_T("请先登录\n"));
+		return;
+	}
+	
+	//TODO zjy 参照门窗详图生成栏杆详图
+
 }
 
 void CMD_SunacRailingStatistic()

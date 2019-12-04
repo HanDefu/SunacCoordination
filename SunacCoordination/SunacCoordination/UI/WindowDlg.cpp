@@ -236,7 +236,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	}
 
 	//////////////////////////////////////////////////////////////////////////
-	AcDbObjectId idOut = GenerateWindow(*pSelWinAttr, origin, viewDir, winDir, true, L"Sunac_Window");
+	AcDbObjectId idOut = GenerateWindow(*pSelWinAttr, origin, viewDir, winDir, false, L"Sunac_Window");
 	if (idOut==AcDbObjectId::kNull)
 	{
 		assert(false);

@@ -19,6 +19,7 @@ void CMD_SunacWindowsStatistics();//统计算量
 void CMD_SunacWindowFloorSetting();//门窗楼层设置
 void CMD_SunacWindowTop2Front();//门窗平面到立面
 void CMD_SunacWindowFront2Top();//门窗立面到平面
+void CMD_SunacNoHighlight();
 
 //厨房
 void CMD_SunacKitchen();
@@ -27,6 +28,7 @@ void CMD_SunacKitchenBathroomStatistic();
 
 //栏杆
 void CMD_SunacRailing();
+void CMD_SunacRailingDetail();
 void CMD_SunacRailingStatistic();
 
 //空调
