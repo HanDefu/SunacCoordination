@@ -300,6 +300,8 @@ bool DQ_SetDynamicAttribute(AcDbObjectId p_blockRefId, CString p_attributename, 
 	if (pDynBlkRef == NULL)
 		return false;
 
+	CDocLock docLock;
+
 	AcDbDynBlockReferencePropertyArray blkPropAry;
 	pDynBlkRef->getBlockProperties(blkPropAry);
 

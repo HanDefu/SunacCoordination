@@ -959,8 +959,7 @@ void CWindowCountArray::InitByWindowAtts(const vector<AttrWindow>& p_winAtts, co
 
 
 AcDbObjectId  GenerateWindow(const AttrWindow& curWinAtt, const AcGePoint3d pos, 
-	eViewDir p_view, E_DIRECTION p_winDir, 
-	bool p_bWithAttribut, CString p_sLayerName)
+	eViewDir p_view, E_DIRECTION p_winDir, bool p_bDetailWnd, CString p_sLayerName)
 {
 	AcGePoint3d insertPos = pos;
 	double rotateAngle = 0;
@@ -1026,7 +1025,15 @@ AcDbObjectId  GenerateWindow(const AttrWindow& curWinAtt, const AcGePoint3d pos,
 
 	oneWindow.RunParameters();
 	//////////////////////////////////////////////////////////////////////////
+	//处理可见性
+	if (p_view==E_VIEW_FRONT)
+	{
+		DQ_SetDynamicAttribute(id, _T("可见性1"), p_bDetailWnd ? _T("详图") : _T("立面"));
+	}
 
+
+	//////////////////////////////////////////////////////////////////////////
+	//处理镜像
 	bool bMirror = curWinAtt.m_isMirror;
 	if (p_view == E_VIEW_TOP)
 	{
@@ -1037,8 +1044,10 @@ AcDbObjectId  GenerateWindow(const AttrWindow& curWinAtt, const AcGePoint3d pos,
 		TYCOM_Mirror(oneWindow.m_id, mirrorBasePt, mirrorAxis);
 	}
 
+
+	//////////////////////////////////////////////////////////////////////////
 	//添加属性
-	if (p_bWithAttribut)
+	if (p_bDetailWnd==false) //门窗详图不需要添加属性
 	{
 		//把数据记录在图框的扩展字典中
 		AttrWindow * pWindow = new AttrWindow(curWinAtt);
