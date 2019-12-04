@@ -379,6 +379,9 @@
     <ClCompile Include="Common\AES.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="Src\DocumentData.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -846,6 +849,9 @@
     </ClInclude>
     <ClInclude Include="Common\AES.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\DocumentData.h">
+      <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

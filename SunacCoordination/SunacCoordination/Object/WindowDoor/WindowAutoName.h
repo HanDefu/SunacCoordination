@@ -24,6 +24,7 @@ public:
 
 	//将所有窗型重新自动命名
 	void AutoNameAllWindow();
+	void AutoNameWindows(const vector<AcDbObjectId>& p_ids);
 
 	//将指定窗型重命名
 	bool RenameWindow(const AttrWindow& p_att);

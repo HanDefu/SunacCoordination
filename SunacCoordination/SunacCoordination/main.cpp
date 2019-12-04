@@ -904,6 +904,15 @@ static void initApp()
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SWINAUTOID"),
+		_T("SWINAUTOID"),
+		ACRX_CMD_MODAL,
+		CMD_SunacWinAutoId,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
 		_T("SNOHIGHLIGHT"),
 		_T("SNOHIGHLIGHT"),
 		ACRX_CMD_MODAL,

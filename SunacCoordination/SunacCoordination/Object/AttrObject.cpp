@@ -21,6 +21,8 @@ AttrObject::AttrObject()
 	m_version = 0;
 	m_isJiTuan = true;
 	m_isDynamic = true;
+
+	m_instanceCodeId = AcDbObjectId::kNull;
 }
 
 AttrObject::~AttrObject()

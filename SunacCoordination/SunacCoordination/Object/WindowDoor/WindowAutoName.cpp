@@ -22,19 +22,23 @@ CString CWindowAutoName::GetWindowName(const AttrWindow& p_att) const
 	CString sWindowName;
 	//去除原型编号中的"Window_"前缀
 	CString prototype = p_att.GetMainPrototypeCode();
-	prototype.Replace(L"Window_", L"");
-	prototype.Replace(L"Door_", L"");
+	prototype.MakeUpper();
+	prototype.Trim();
+
+	prototype.Replace(L"WINDOW_", L"");
+	prototype.Replace(L"DOOR_", L"");
+
 	//根据"原型编号_尺寸编号"生成门窗编号
 	sWindowName.Format(L"%s_%02d%02d", prototype, (int)p_att.GetW() / 100, (int)p_att.GetH() / 100);
 
-	//镜像窗型增加"_m"后缀
+	//镜像窗型增加"M"后缀
 	CString sMirror;
 	if (!p_att.m_isMirrorWindow && p_att.m_isMirror)
-		sMirror = L"_m";
+		sMirror = L"M";
 
 	CString sWindowFullName = sWindowName + sMirror;
 
-	//查找已存在的窗型
+	//在示例库里查找与当前窗型相同且编号相同的，若找到则直接返回
 	for (UINT i = 0; i < m_allTypeWindows.size(); i++)
 	{
 		if (m_allTypeWindows[i].IsInstanceEqual(p_att))
@@ -82,6 +86,16 @@ void CWindowAutoName::AutoNameAllWindow()
 		temp[i].m_instanceCode = GetWindowName(temp[i]);
 		AddWindowType(temp[i]);
 	}
+
+
+	//TODO 遍历当前图上的所有门窗，对门窗进行重新编号
+
+
+}
+
+void CWindowAutoName::AutoNameWindows(const vector<AcDbObjectId>& p_ids)
+{
+	
 }
 
 bool CWindowAutoName::RenameWindow(const AttrWindow& p_att)

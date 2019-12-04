@@ -21,10 +21,10 @@ CString CBathroomAutoName::GetBathroomName(const AttrBathroom& p_att) const
 {
 	CString sBathroomName = p_att.GetPrototypeCode();
 
-	//镜像卫生间增加"_m"后缀
+	//镜像卫生间增加"m"后缀
 	CString sMirror;
 	if (p_att.m_isMirror)
-		sMirror = L"_m";
+		sMirror = L"M";
 
 	CString sBathroomFullName = sBathroomName + sMirror;
 

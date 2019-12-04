@@ -216,6 +216,11 @@ void CMD_SunacWindowFront2Top()//门窗立面到平面
 {
 	//TODO
 }
+void CMD_SunacWinAutoId()
+{
+	//TODO 自动编号
+
+}
 
 void CMD_SunacNoHighlight()
 {

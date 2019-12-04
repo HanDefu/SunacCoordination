@@ -189,6 +189,7 @@ public:
 	double m_heightUnderWindow; //窗下墙高度
 
 	CFloorInfo m_floorInfo; //楼层信息
+
 };
 
 typedef std::vector<AttrWindow> vAttrWindow;

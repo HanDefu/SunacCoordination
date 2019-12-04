@@ -21,10 +21,10 @@ CString CKitchenAutoName::GetKitchenName(const AttrKitchen& p_att) const
 {
 	CString sKitchenName = p_att.GetPrototypeCode();
 
-	//镜像厨房增加"_m"后缀
+	//镜像厨房增加"M"后缀
 	CString sMirror;
 	if (p_att.m_isMirror)
-		sMirror = L"_m";
+		sMirror = L"M";
 
 	CString sKitchenFullName = sKitchenName + sMirror;
 
