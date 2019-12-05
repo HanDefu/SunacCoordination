@@ -1,11 +1,12 @@
-
 #include "StdAfx.h"
 #include "dbproxy.h"
 #include "geassign.h"
 #include "acgi.h"
 #include "AttrRailing.h"
-
-
+#include "../../Common/ComFun_Sunac.h"
+#include "../../Common/ComFun_Math.h"
+#include "../../Common/TYFormula.h"
+#include "RCRailing.h"
 //{{AFX_ARX_MACRO
 ACRX_DXF_DEFINE_MEMBERS(AttrRailing, AcDbObject,
 						 AcDb::kDHL_CURRENT, AcDb::kMReleaseCurrent,
@@ -147,4 +148,53 @@ CString AttrRailing::AutoInstanceCode()
 	SetInstanceCode(sInstanceCode);
 
 	return sInstanceCode;
+}
+
+void CRailingCountArray::InitByRailingIds(const vAcDbObjectId& p_railingIds)
+{
+	vector<AttrRailing> railAttrs;
+	vector<AcDbObjectId>  railIds;
+	for (UINT i = 0; i < p_railingIds.size(); i++)
+	{
+		AcDbObject* pAttr = NULL;
+		TY_GetAttributeData(p_railingIds[i], pAttr);
+		AttrRailing* pAttrRailing = AttrRailing::cast(pAttr);
+		if (pAttrRailing != NULL)
+		{
+			AttrRailing attTemp(*pAttrRailing);
+			railAttrs.push_back(attTemp);
+			railIds.push_back(p_railingIds[i]);
+		}
+	}
+	InitByRailingAtts(railAttrs, railIds);
+}
+
+void CRailingCountArray::InitByRailingAtts(const vector<AttrRailing>& p_railingAtts, const vector<AcDbObjectId>& p_ids)
+{
+	assert(p_ids.size() == p_railingAtts.size());
+	bool bUseIds = p_ids.size() == p_railingAtts.size();
+	for (UINT i = 0; i < p_railingAtts.size(); i++)
+	{
+		CString sInstanceCode = p_railingAtts[i].GetInstanceCode(); //Ô­ÐÍ±àºÅ
+		bool bFind = false;
+		for (UINT n = 0; n < m_railCountArray.size(); n++)
+		{
+			if (m_railCountArray[n].railAtt.GetInstanceCode().CompareNoCase(sInstanceCode) == 0)
+			{
+				bFind = true;
+				m_railCountArray[n].nCount++;
+				m_railCountArray[n].objIds.append(p_ids[i]);
+				break;
+			}
+		}
+
+		if (bFind == false)
+		{
+			CRailingAndCount railNew;
+			railNew.railAtt = p_railingAtts[i];
+			railNew.nCount = 1;
+			railNew.objIds.append(p_ids[i]);
+			m_railCountArray.push_back(railNew);
+		}
+	}
 }
