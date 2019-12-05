@@ -1029,6 +1029,16 @@ static void initApp()
 		-1,
 		theArxDLL.ModuleResourceInstance());
 
+	//添加命令取消高亮
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("NOHIGHLIGHT"),
+		_T("NOHIGHLIGHT"),
+		ACRX_CMD_MODAL,
+		CMD_SunacNoHighlight,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
 
 
 	AttrObject::rxInit();

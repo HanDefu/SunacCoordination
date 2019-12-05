@@ -42,6 +42,7 @@
 #include "Command.h"
 #include "CommandWindowDetail.h"
 #include "../Object/Railing/RCRailing.h"
+#include "CommandHighlight.h"
 
 
 void SendCommandToCAD(CString cmd) //此函数尚未调通
@@ -226,7 +227,7 @@ void CMD_SunacWinAutoId()
 void CMD_SunacNoHighlight()
 {
 	//TODO zjy 取消高亮
-
+	CCommandHighlight::GetInstance()->WindowDoorNoHighlight();
 }
 
 
@@ -407,6 +408,8 @@ void CMD_SunacWindowsStatistics()
 	{
 		return;
 	}
+
+	CCommandHighlight::GetInstance()->WindowDoorHighlight(winIds);
 
 	vector<AcDbObjectId> idsNonAlserials; //未设置型材系列的门窗
 

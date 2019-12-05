@@ -14,6 +14,7 @@
 #include "../Common/ComFun_ACad.h"
 #include "dbtable.h"
 #include "Command.h"
+#include "../Command/CommandHighlight.h"
 
 //门窗表
 void CMD_SunacWindowsTable()
@@ -32,6 +33,9 @@ void CMD_SunacWindowsTable()
 	{
 		return;
 	}
+
+	//对选择的门窗高亮
+	CCommandHighlight::GetInstance()->WindowDoorHighlight(winIds);
 
 	//第二步  选择门窗表插入点
 	AcGePoint3d pnt;

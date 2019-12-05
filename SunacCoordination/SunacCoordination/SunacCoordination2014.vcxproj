@@ -161,6 +161,7 @@
   <ItemGroup>
     <ClCompile Include="AutoNameSerialize.cpp" />
     <ClCompile Include="Command\Command.cpp" />
+    <ClCompile Include="Command\CommandHighlight.cpp" />
     <ClCompile Include="Command\CommandWindowDetail.cpp" />
     <ClCompile Include="Command\CommandWindowTable.cpp" />
     <ClCompile Include="Common\AcessDatabase.cpp" />
@@ -293,6 +294,7 @@
   <ItemGroup>
     <ClInclude Include="AutoNameSerialize.h" />
     <ClInclude Include="Command\Command.h" />
+    <ClInclude Include="Command\CommandHighlight.h" />
     <ClInclude Include="Command\CommandWindowDetail.h" />
     <ClInclude Include="Command\CommandWindowTable.h" />
     <ClInclude Include="Common\AcessDatabase.h" />

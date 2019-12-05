@@ -382,6 +382,9 @@
     <ClCompile Include="Src\DocumentData.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Command\CommandHighlight.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -852,6 +855,9 @@
     </ClInclude>
     <ClInclude Include="Src\DocumentData.h">
       <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Command\CommandHighlight.h">
+      <Filter>Command</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
