@@ -226,7 +226,7 @@ void CAirconditionerDlg::OnBnClickedButtonInsertac()
 
 	RCAirCondition blockAirCon;
 	//将块插入图形空间
-	blockAirCon.Insert(m_fileName, pnt, 0, L"Sunac_Aircondition", 256);
+	AcDbObjectId id = blockAirCon.Insert(m_fileName, pnt, 0, L"Sunac_Aircondition", 256);
 
 	//上下镜像
 	if (m_upDownImage.GetCheck())
@@ -255,6 +255,14 @@ void CAirconditionerDlg::OnBnClickedButtonInsertac()
 	blockAirCon.AddAttribute(pAirCon);
 
 	pAirCon->close();
+
+	//针对USC坐标处理
+	AcGeMatrix3d mat;
+	Acad::ErrorStatus es = acedGetCurrentUCS(mat);
+	if (mat.isEqualTo(AcGeMatrix3d::kIdentity) == false)
+	{
+		TYCOM_Transform(id, mat);
+	}
 	  
 	ShowWindow(TRUE);
 }

@@ -1099,6 +1099,23 @@ int TYCOM_Move(AcDbObjectId entId, AcGeVector3d offset)
 	return 0;
 }
 
+int TYCOM_Transform(AcDbObjectId entId, const AcGeMatrix3d& mat)
+{
+	if (entId == AcDbObjectId::kNull)
+		return 0;
+
+	CDocLock docLock;
+
+	AcDbEntity *pEnt = NULL;
+	Acad::ErrorStatus es = acdbOpenObject(pEnt, entId, AcDb::kForWrite, false);
+	if (es == Acad::eOk)
+	{
+		es = pEnt->transformBy(mat);
+		pEnt->close();
+	}
+	return 0;
+}
+
 double GePlineLength(AcDbObjectId eId)
 {
 

@@ -122,6 +122,14 @@ int              MD2010_GetLinePoints(AcDbObjectId lineid, AcGePoint3d& start, A
 int              MD2010_GetCurrentMode();//1模型空间
 
 
+void getUcsToWcsMatrix(AcGeMatrix3d& m, AcDbDatabase* db);
+AcGePoint3d ucsToWcs(const AcGePoint3d& pt);
+void getUcsToWcsOriginMatrix(AcGeMatrix3d& m, const AcGePoint3d& wcsBasePt, AcDbDatabase* db);
+Acad::ErrorStatus cloneAndXformObjects(AcDbDatabase* db, AcDbObjectIdArray& entsToClone,
+	AcDbObjectId& ownerBlockId,
+	const AcGeMatrix3d& xformMat, bool debugSpeak);
+
+
 
 //块操作
 

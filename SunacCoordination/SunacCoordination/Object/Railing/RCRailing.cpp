@@ -108,6 +108,14 @@ int CRCRailing::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut)
 
 	MD2010_SetCurrentLayer(oldLayerName);
 
+	//针对USC坐标处理
+	AcGeMatrix3d mat;
+	Acad::ErrorStatus es = acedGetCurrentUCS(mat);
+	if (mat.isEqualTo(AcGeMatrix3d::kIdentity) == false)
+	{
+		TYCOM_Transform(p_railingIdOut, mat);
+	}
+
 	return 0;
 }
 

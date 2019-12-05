@@ -1620,8 +1620,7 @@ AcGePoint3d ucsToWcs(const AcGePoint3d& pt)
 **
 *************************************/
 
-void getUcsToWcsOriginMatrix(AcGeMatrix3d& m,
-                        const AcGePoint3d& wcsBasePt, AcDbDatabase* db)
+void getUcsToWcsOriginMatrix(AcGeMatrix3d& m, const AcGePoint3d& wcsBasePt, AcDbDatabase* db)
 {
 	ASSERT(db != NULL);
 
