@@ -45,14 +45,12 @@ public:
 	
 	virtual eRCType GetType(){return TYPENUM;}
 	virtual bool isEqualTo(AttrObject*other);//基础数据一致
-	
-	////得到从服务器下载到本地的一个文件（含路径），或者是本地本身就存在的一个文件路径，成功返回0 否则返回-1
-	//int GetFile(CString &filePathName);
 
 	CString GetFileName()const{ return m_file.fileName; }
 	void SetFileName(CString p_str){ m_file.fileName = p_str; }
 
-	void SetInstanceCode(CString  bianHao) { m_instanceCode = bianHao; }
+	void SetInstanceCode(CString  bianHao);
+	void SetInstanceCodeObjectId(AcDbObjectId p_id);
 	virtual CString GetInstanceCode()const { return m_instanceCode; }
 
 	
@@ -69,9 +67,7 @@ public:
 
 	//////////////////////////////////////////////////////////////////////////
 	//实例属性
-	CString m_instanceCode;		//实例编号
-
-
+	CString m_instanceCode;			//实例编号
 	AcDbObjectId m_instanceCodeId; //实例编号在图上显示的文字ID  201912
 };
 

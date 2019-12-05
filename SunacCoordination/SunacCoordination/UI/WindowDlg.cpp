@@ -200,8 +200,13 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		return;
 	}
 
-	pSelWinAttr->SetInstanceCode(sNumber);
-	CWindowAutoName::GetInstance()->RenameWindow(*pSelWinAttr);
+	CString sOldNumber = pSelWinAttr->GetInstanceCode();
+	if (sOldNumber.CompareNoCase(sNumber)!=0)
+	{
+		pSelWinAttr->SetInstanceCode(sNumber);
+		CWindowAutoName::GetInstance()->RenameWindow(sOldNumber, sNumber);
+	}
+
 
 	//////////////////////////////////////////////////////////////////////////
 	const eViewDir viewDir = (eViewDir)m_comboViewDir.GetCurSel();
@@ -244,7 +249,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		return;
 	}
 
-	CWindowAutoName::GetInstance()->AddWindowType(*pSelWinAttr);
+	CWindowAutoName::GetInstance()->AddWindowType(*pSelWinAttr, idOut);
 
 	ShowWindow(TRUE);
 
@@ -831,7 +836,7 @@ void CWindowDlg::InsertAllWindows_Test()
 			TYCOM_Mirror(oneWindow.m_id, basePt, AcGeVector3d(0, 1, 0));
 		}
 
-		CWindowAutoName::GetInstance()->AddWindowType(*pSelWinAttr);
+		CWindowAutoName::GetInstance()->AddWindowType(*pSelWinAttr, oneWindow.m_id);
 
 		//把UI的数据记录在图框的扩展字典中
 		AttrWindow * pWindow = new AttrWindow(*pSelWinAttr);
