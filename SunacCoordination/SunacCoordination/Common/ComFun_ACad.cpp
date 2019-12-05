@@ -380,25 +380,24 @@ AcDbRegion * JHCOM_CreateRegionFromCurve(AcDbCurve * ploy)
 AcDbObjectId JHCOM_PostToModelSpace(AcDbEntity* pEnt)
 {
 	AcDbBlockTable *pBlockTable;
-	if (acdbHostApplicationServices()->workingDatabase()
-		->getBlockTable(pBlockTable, AcDb::kForRead)!=Acad::eOk)
+	if (acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlockTable, AcDb::kForRead)!=Acad::eOk)
 	{
 		return AcDbObjectId::kNull;
 	}
-	//acdbHostApplicationServices()->workingDatabase()
-	//->getBlockTable(pBlockTable, AcDb::kForRead);
+
+	AcDbObjectId entId = AcDbObjectId::kNull;
+
+	//acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlockTable, AcDb::kForRead);
 	acDocManager->lockDocument(curDoc());
 	AcDbBlockTableRecord *pBlockTableRecord;
-	pBlockTable->getAt(ACDB_MODEL_SPACE, pBlockTableRecord,
-		AcDb::kForWrite);
+	Acad::ErrorStatus es = pBlockTable->getAt(ACDB_MODEL_SPACE, pBlockTableRecord, AcDb::kForWrite);
+	if (es==Acad::eOk)
+	{
+		es = pBlockTableRecord->appendAcDbEntity(entId, pEnt);
+		pBlockTableRecord->close();
+	}
 
-	AcDbObjectId entId;
-	if (pBlockTableRecord->appendAcDbEntity(entId, pEnt)!=Acad::eOk)
-		return AcDbObjectId::kNull;
-
-	//pBlockTableRecord->appendAcDbEntity(entId, pEnt);
 	pBlockTable->close();
-	pBlockTableRecord->close();
 	pEnt->close();
 	acDocManager->unlockDocument(curDoc());
 

@@ -47,10 +47,6 @@ RCBlock & RCBlock::operator=(const RCBlock &other)
 
 AcDbObjectId RCBlock::Insert(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color)
 {
-	//WCHAR blockname[256] = L"";
-	//CF_STR_get_file_name(fileName, blockname);
-	//CF_STR_get_file_name_2(blockname, blockname);
-	//m_blockRecordName = CString(blockname);
 	m_blockRecordName = FilePathToFileNameWithoutExtension(fileName);
 
 	acDocManager->lockDocument(curDoc());

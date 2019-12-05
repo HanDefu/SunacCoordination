@@ -1059,5 +1059,13 @@ AcDbObjectId  GenerateWindow(const AttrWindow& curWinAtt, const AcGePoint3d pos,
 		pWindow->close();
 	}
 
+	//针对USC坐标处理
+	AcGeMatrix3d mat; 
+	Acad::ErrorStatus es = acedGetCurrentUCS(mat);
+	if (mat.isEqualTo(AcGeMatrix3d::kIdentity)==false)
+	{
+		TYCOM_Transform(id, mat);
+	}
+	
 	return id;
 }
