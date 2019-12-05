@@ -223,6 +223,7 @@
     <ClCompile Include="ProjectorFileMrg\ProjectFile.cpp" />
     <ClCompile Include="ProjectorFileMrg\ProjectFileMrg.cpp" />
     <ClCompile Include="ProjectorFileMrg\ProjectInfo.cpp" />
+    <ClCompile Include="Src\DocumentData.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -357,6 +358,7 @@
     <ClInclude Include="ProjectorFileMrg\ProjectFileMrg.h" />
     <ClInclude Include="ProjectorFileMrg\ProjectInfo.h" />
     <ClInclude Include="res\resource.h" />
+    <ClInclude Include="Src\DocumentData.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="Sunac_def.h" />
     <ClInclude Include="Tool\DocLock.h" />

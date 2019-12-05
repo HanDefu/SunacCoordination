@@ -162,6 +162,9 @@ AttrWindow::AttrWindow()
 	m_isBayWindow = false;
 	m_wallDis = 0.0;
 	m_heightUnderWindow = 900;
+
+	//////////////////////////////////////////////////////////////////////////
+	m_fromHandle = AcDbObjectId::kNull;
 }
 
 AttrWindow::~AttrWindow()

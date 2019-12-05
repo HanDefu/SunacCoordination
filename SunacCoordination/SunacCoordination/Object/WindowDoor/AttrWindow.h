@@ -189,6 +189,11 @@ public:
 	double m_heightUnderWindow; //窗下墙高度
 
 	CFloorInfo m_floorInfo; //楼层信息
+
+	//////////////////////////////////////////////////////////////////////////
+	AcDbObjectId m_fromHandle;  // 1912
+	vector<AcDbObjectId> m_refHandles; //由当前门窗生成的其他门窗 // 1912
+
 };
 
 typedef std::vector<AttrWindow> vAttrWindow;

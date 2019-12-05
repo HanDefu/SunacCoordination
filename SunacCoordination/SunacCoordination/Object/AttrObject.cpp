@@ -21,6 +21,8 @@ AttrObject::AttrObject()
 	m_version = 0;
 	m_isJiTuan = true;
 	m_isDynamic = true;
+
+	m_instanceCodeId = AcDbObjectId::kNull;
 }
 
 AttrObject::~AttrObject()
@@ -171,18 +173,28 @@ bool AttrObject::isEqualTo(AttrObject*other)
 		);*/
 }
 
-//int AttrObject::GetFile(CString &filePathName)
-//{
-//	//首先本地搜索
-//	bool has = GSINST->GetLocalFile(m_file.fileName, filePathName);
-//	if (has)
-//		return 0;
-//	
-//	////如果本地不存在这个文件 去服务器下载一个文件到本地
-//	//int ret = WebIO::DownloadFile(m_prototypeCode, filePathName);
-//	//if (ret != 0)
-//	//	filePathName = L"";
-//
-//	return 0;
-//}
+void AttrObject::SetInstanceCode(CString  bianHao)
+{
+	m_instanceCode = bianHao;
 
+	//若存在文字，则同时更新文字
+	if (m_instanceCodeId!=AcDbObjectId::kNull)
+	{
+		AcDbEntity * pEnt = NULL;
+		if (Acad::eOk==acdbOpenObject(pEnt, m_instanceCodeId,  AcDb::kForWrite))
+		{
+			AcDbText* pTextEnt = AcDbText::cast(pEnt);
+			if (pTextEnt!=NULL)
+			{
+				pTextEnt->setTextString(m_instanceCode);
+			}
+
+			pEnt->close();
+		}		
+	}
+}
+
+void AttrObject::SetInstanceCodeObjectId(AcDbObjectId p_id)
+{
+	m_instanceCodeId = p_id;
+}
