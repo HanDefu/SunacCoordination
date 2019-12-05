@@ -45,3 +45,32 @@ public:
 	double m_length;	//¿∏∏À≥§
 	eRailingType m_railingType; //¿∏∏À¿‡–Õ
 };
+
+class CRailingAndCount
+{
+public:
+	CRailingAndCount(){}
+
+public:
+	AttrRailing railAtt;
+	int nCount;
+
+	AcDbObjectIdArray objIds;
+};
+
+class CRailingCountArray
+{
+public:
+	CRailingCountArray() {}
+
+	void InitByRailingIds(const vAcDbObjectId& p_railingIds);
+	void InitByRailingAtts(const vector<AttrRailing>& p_railingAtts, const vector<AcDbObjectId>& p_ids);
+
+	int GetCount()const { return (int)(m_railCountArray.size()); }
+
+	const CRailingAndCount& GetRailing(int p_index){ return m_railCountArray[p_index]; }
+
+private:
+	vector<CRailingAndCount> m_railCountArray;
+};
+

@@ -26,6 +26,7 @@ File description:
 #include "../../Tool/DocLock.h"
 #include "RCRailingTieyi.h"
 #include "RCRailingBoli.h"
+#include "../../Common/ComFun_Interactive.h"
  
 CRCRailing::CRCRailing(void)
 {
@@ -84,10 +85,16 @@ int CRCRailing::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut)
 		sRailingDefName.Format(_T("%s_%d_%d"), m_railingAtt.m_prototypeCode, (int)(m_railingAtt.m_length), (int)(m_railingAtt.m_height));
 	}
 
-
 	CString oldLayerName;
 	MD2010_GetCurrentLayer(oldLayerName);
 	CString sRalingLayerName = _T("Sunac_Railing");
+
+	if (!IsSampleDraw())
+	{
+		sRalingLayerName = _T("Sunac_Railing_Detail");
+		sRailingDefName.Format(_T("%s_%d_%d_%s"), m_railingAtt.m_prototypeCode, (int)(m_railingAtt.m_length), (int)(m_railingAtt.m_height), _T("Detail"));
+	}
+	
 	if (JHCOM_GetLayerID(sRalingLayerName)==AcDbObjectId::kNull)
 	{
 		JHCOM_CreateNewLayer(sRalingLayerName);
@@ -105,7 +112,6 @@ int CRCRailing::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut)
 	AttrRailing* pAttRailing = new AttrRailing(m_railingAtt);
 	TY_AddAttributeData(p_railingIdOut, pAttRailing);
 	pAttRailing->close();
-
 	MD2010_SetCurrentLayer(oldLayerName);
 
 	return 0;
@@ -188,5 +194,40 @@ CRCRailing* CreateRailing(const AttrRailing p_railingAtt)
 	}
 
 	return pRailing; 
+}
+
+//////////////////////////////////////////////////////////////////////////
+//栏杆详图
+void CRCRailing::DrawRailingDetail()
+{
+	CDocLock lockEnt;
+
+	//第一步：选择需要统计的栏杆
+	vAcDbObjectId RailingIds;
+	JHCOM_SelectEnts(RailingIds);
+	if (RailingIds.size() == 0)
+		return;
+
+	//第二步  选择栏杆详图插入点
+	AcGePoint3d pnt;
+	bool bSuc = TY_GetPoint(pnt, L"请选择栏杆详图插入点");
+	if (bSuc == false)
+		return;
+
+	//第三步：读取栏杆数据并且分类汇总
+	CRailingCountArray railCountArray;
+	railCountArray.InitByRailingIds(RailingIds);
+
+	////////////////////////////////////////////////////////////////////////////
+	for (int i = 0; i < railCountArray.GetCount(); i++)
+	{
+		const AttrRailing& railAtt = railCountArray.GetRailing(i).railAtt;
+		CRCRailing* pRailing = CreateRailing(railAtt);
+		pRailing->SetSimpleDraw(false);
+		pRailing->GenerateRailing(pnt, RailingIds[i]);
+		pnt.set(pnt.x, pnt.y+ 1800, 0);
+	}
+
+	return;
 }
 

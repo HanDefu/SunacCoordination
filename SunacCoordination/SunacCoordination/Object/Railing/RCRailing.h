@@ -49,7 +49,10 @@ public:
 
 	void SetSimpleDraw(bool p_bSimple){ m_bSimple = p_bSimple; }
 	bool IsSampleDraw()const { return m_bSimple; }
-
+	
+	//////////////////////////////////////////////////////////////////////////
+	//À¸¸ËÏêÍ¼
+	static void DrawRailingDetail();
 protected:
 	virtual AcDbObjectId CreateRailingBlockDefine(CString sRailingDefName)= 0;
 	CString GetPrototypeFilePath()const ;

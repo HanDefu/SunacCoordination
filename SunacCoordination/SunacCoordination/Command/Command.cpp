@@ -41,6 +41,7 @@
 #include "../WebIO/WebIO.h"
 #include "Command.h"
 #include "CommandWindowDetail.h"
+#include "../Object/Railing/RCRailing.h"
 
 
 void SendCommandToCAD(CString cmd) //此函数尚未调通
@@ -305,7 +306,7 @@ void CMD_SunacRailingDetail()
 	}
 	
 	//TODO zjy 参照门窗详图生成栏杆详图
-
+	CRCRailing::DrawRailingDetail();
 }
 
 void CMD_SunacRailingStatistic()
