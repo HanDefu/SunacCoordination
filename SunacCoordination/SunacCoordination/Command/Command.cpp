@@ -409,6 +409,7 @@ void CMD_SunacWindowsStatistics()
 		return;
 	}
 
+	//对选择的门窗高亮
 	CCommandHighlight::GetInstance()->WindowDoorHighlight(winIds);
 
 	vector<AcDbObjectId> idsNonAlserials; //未设置型材系列的门窗
@@ -437,10 +438,13 @@ void CMD_SunacWindowsStatistics()
 	{
 		AfxMessageBox(_T("部分窗户型材系列未设置"));
 
-		for (UINT i = 0; i < idsNonAlserials.size(); i++)
+		//对未设置型材系列的门窗高亮
+		CCommandHighlight::GetInstance()->WindowDoorHighlight(idsNonAlserials);
+
+		/*for (UINT i = 0; i < idsNonAlserials.size(); i++)
 		{
 			JHCOM_HilightObject(idsNonAlserials[i], true);
-		}
+		}*/
 		return;
 	}
 
