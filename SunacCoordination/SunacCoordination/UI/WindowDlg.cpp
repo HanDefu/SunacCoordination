@@ -251,6 +251,9 @@ void CWindowDlg::OnBnClickedButtonInsert()
 
 	CWindowAutoName::GetInstance()->AddWindowType(*pSelWinAttr, idOut);
 
+	//²åÈëÃÅ´°±àºÅ
+	CWindowAutoName::GetInstance()->InsertWindowDoorCode(m_nWidth, m_nHeight, origin, sNumber, viewDir);
+
 	ShowWindow(TRUE);
 
 	m_bHasInsert = true;

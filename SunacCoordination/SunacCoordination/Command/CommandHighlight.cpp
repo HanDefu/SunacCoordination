@@ -17,14 +17,8 @@ void CCommandHighlight::WindowDoorHighlight(vAcDbObjectId p_windoorIds)
 	WindowDoorNoHighlight();
 	for (UINT i = 0; i < p_windoorIds.size(); i++)
 	{
-		AcDbObject* pAttr = NULL;
-		TY_GetAttributeData(p_windoorIds[i], pAttr);
-		AttrWindow* pAttrWindow = AttrWindow::cast(pAttr);
-		if (pAttrWindow != NULL)
-		{
-			JHCOM_HilightObject(p_windoorIds[i], true);
-			m_winHighlights.push_back(p_windoorIds[i]);
-		}
+		JHCOM_HilightObject(p_windoorIds[i], true);
+		m_winHighlights.push_back(p_windoorIds[i]);
 	}
 }
 
@@ -34,4 +28,5 @@ void CCommandHighlight::WindowDoorNoHighlight()
 	{
 		JHCOM_HilightObject(m_winHighlights[i], false);
 	}
+	m_winHighlights.clear();
 }

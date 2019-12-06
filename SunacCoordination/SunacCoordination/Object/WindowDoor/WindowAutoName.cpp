@@ -1,6 +1,9 @@
 #include "StdAfx.h"
 #include "WindowAutoName.h"
 #include "..\..\Common\ComFun_Sunac.h"
+#include "..\..\Common\ComFun_ACad.h"
+#include "..\..\Common\ComFun_Layer.h"
+#include "..\..\Tool\DocLock.h"
 
 CWinClassify::CWinClassify()
 {
@@ -329,4 +332,56 @@ void CWindowAutoName::RemoveObject(AcDbObjectId p_id) //门窗参数变化时调用此函数
 			return;
 		}
 	}
+}
+
+//插入门窗编号
+void CWindowAutoName::InsertWindowDoorCode(int p_width, int p_height, AcGePoint3d p_origin, CString p_number, eViewDir p_viewDir)
+{
+	acDocManager->lockDocument(curDoc());
+
+	CString oldLayerName;
+	CString sWindowDoorLayerName = L"";
+	MD2010_GetCurrentLayer(oldLayerName);
+
+	if (p_viewDir == E_VIEW_TOP)
+	{
+		sWindowDoorLayerName = _T("Sunac_WinNumber_Pingmian");
+
+		if (JHCOM_GetLayerID(sWindowDoorLayerName) == AcDbObjectId::kNull)
+		{
+			JHCOM_CreateNewLayer(sWindowDoorLayerName);
+		}
+
+		MD2010_SetCurrentLayer(sWindowDoorLayerName);
+
+		//门窗编号插入点
+		AcDbObjectId WindowDoorCodeId = JHCOM_CreateText(AcGePoint3d(0, p_origin.y + 100, 0),
+			AcGeVector3d(0, 0, 1),
+			120, 0,
+			p_number);
+
+		AcDbEntity *pEnt;
+		acdbOpenAcDbEntity(pEnt, WindowDoorCodeId, AcDb::kForWrite);
+
+		AcDbExtents extents;
+		pEnt->getGeomExtents(extents);
+		double textLength = extents.maxPoint().x - extents.minPoint().x;
+		AcGeVector3d offsetXYZ = AcGeVector3d(p_origin.x + (p_width - textLength) / 2, 0, 0);
+
+		AcGeMatrix3d xform;
+		xform.setToTranslation(offsetXYZ);
+		pEnt->transformBy(xform);
+		pEnt->close();
+	}
+	else
+	{
+		sWindowDoorLayerName = _T("Sunac_WinNumber_Limian");
+
+		if (JHCOM_GetLayerID(sWindowDoorLayerName) == AcDbObjectId::kNull)
+		{
+			JHCOM_CreateNewLayer(sWindowDoorLayerName);
+		}
+	}
+
+	acDocManager->unlockDocument(curDoc());
 }

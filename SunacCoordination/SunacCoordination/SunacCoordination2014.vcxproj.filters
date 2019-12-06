@@ -103,9 +103,6 @@
     <ClCompile Include="Common\TYRect.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="Common\ComFun_Sunac.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="Object\RCDynamicBlock.cpp">
       <Filter>Object</Filter>
     </ClCompile>
@@ -385,6 +382,9 @@
     <ClCompile Include="Command\CommandHighlight.cpp">
       <Filter>Command</Filter>
     </ClCompile>
+    <ClCompile Include="Common\ComFun_Sunac.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -556,9 +556,6 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\TYRect.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\ComFun_Sunac.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Object\RCDynamicBlock.h">
@@ -858,6 +855,9 @@
     </ClInclude>
     <ClInclude Include="Command\CommandHighlight.h">
       <Filter>Command</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_Sunac.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

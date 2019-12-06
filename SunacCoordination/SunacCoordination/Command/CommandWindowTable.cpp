@@ -34,9 +34,6 @@ void CMD_SunacWindowsTable()
 		return;
 	}
 
-	//对选择的门窗高亮
-	CCommandHighlight::GetInstance()->WindowDoorHighlight(winIds);
-
 	//第二步  选择门窗表插入点
 	AcGePoint3d pnt;
 	bool bSuc = TY_GetPoint(pnt, L"请选择门窗表插入点");
@@ -256,6 +253,10 @@ void CMD_SunacWindowsTable()
 
 
 	AcDbObjectId tableId = JHCOM_PostToModelSpace(table);
+
+
+	//对选择的门窗高亮
+	CCommandHighlight::GetInstance()->WindowDoorHighlight(winIds);
 
 	return;
 }
