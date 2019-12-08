@@ -103,9 +103,6 @@
     <ClCompile Include="Common\TYRect.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="Common\ComFun_Sunac.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="Object\RCDynamicBlock.cpp">
       <Filter>Object</Filter>
     </ClCompile>
@@ -388,6 +385,9 @@
     <ClCompile Include="Object\WindowDoor\WindowGen.cpp">
       <Filter>Object\WindowDoor</Filter>
     </ClCompile>
+    <ClCompile Include="Common\ComFun_Sunac.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -559,9 +559,6 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Common\TYRect.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\ComFun_Sunac.h">
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Object\RCDynamicBlock.h">
@@ -864,6 +861,9 @@
     </ClInclude>
     <ClInclude Include="Object\WindowDoor\WindowGen.h">
       <Filter>Object\WindowDoor</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_Sunac.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

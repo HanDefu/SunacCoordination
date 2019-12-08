@@ -56,9 +56,6 @@ void CWindowDetail::DrawWindowDetail()
 	if (winIds.size() == 0)
 		return;
 
-	//对选择的门窗高亮
-	CCommandHighlight::GetInstance()->WindowDoorHighlight(winIds);
-
 	//第二步  选择门窗表插入点
 	AcGePoint3d pnt;
 	bool bSuc = TY_GetPoint(pnt, L"请选择门窗详图插入点");
@@ -88,6 +85,9 @@ void CWindowDetail::DrawWindowDetail()
 
 		CreateDetailDims(winAtt, idOut);
 	}
+
+	//对选择的门窗高亮
+	CCommandHighlight::GetInstance()->WindowDoorHighlight(winIds);
 
 	return;
 }

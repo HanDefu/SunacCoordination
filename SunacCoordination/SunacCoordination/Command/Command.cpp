@@ -226,7 +226,7 @@ void CMD_SunacWinAutoId()
 
 void CMD_SunacNoHighlight()
 {
-	//TODO zjy 取消高亮
+	//取消高亮
 	CCommandHighlight::GetInstance()->WindowDoorNoHighlight();
 }
 
@@ -311,7 +311,6 @@ void CMD_SunacRailingDetail()
 		return;
 	}
 	
-	//TODO zjy 参照门窗详图生成栏杆详图
 	CRCRailing::DrawRailingDetail();
 }
 
