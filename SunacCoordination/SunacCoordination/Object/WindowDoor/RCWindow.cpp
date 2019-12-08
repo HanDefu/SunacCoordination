@@ -143,7 +143,7 @@ int RCWindow::SetA(double newValue)
 
 AttrWindow * RCWindow::GetAttribute()
 {
-	if (m_pAttribute == 0)
+	if (m_pAttribute == NULL)
 	{
 		AcDbObject * pDataEnt = 0;
 		TY_GetAttributeData(m_id, pDataEnt);

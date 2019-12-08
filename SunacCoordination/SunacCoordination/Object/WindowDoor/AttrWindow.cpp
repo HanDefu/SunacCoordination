@@ -164,7 +164,7 @@ AttrWindow::AttrWindow()
 	m_heightUnderWindow = 900;
 
 	//////////////////////////////////////////////////////////////////////////
-	m_fromHandle = AcDbObjectId::kNull;
+	m_fromWinId = AcDbObjectId::kNull;
 }
 
 AttrWindow::~AttrWindow()
@@ -958,114 +958,4 @@ void CWindowCountArray::InitByWindowAtts(const vector<AttrWindow>& p_winAtts, co
 			m_winCountArray.push_back(winNew);
 		}
 	}
-}
-
-
-AcDbObjectId  GenerateWindow(const AttrWindow& curWinAtt, const AcGePoint3d pos, 
-	eViewDir p_view, E_DIRECTION p_winDir, bool p_bDetailWnd, CString p_sLayerName)
-{
-	AcGePoint3d insertPos = pos;
-	double rotateAngle = 0;
-	AcGePoint3d mirrorBasePt(pos.x + curWinAtt.GetW() / 2, 0, 0);
-	AcGeVector3d mirrorAxis = AcGeVector3d(0, 1, 0);
-
-	if (p_view == E_VIEW_TOP)
-	{
-		AcGeVector3d offsetXY(0, 0, 0);
-		switch (p_winDir)
-		{
-		case E_DIR_BOTTOM:
-			rotateAngle = PI;
-			offsetXY.x += curWinAtt.GetW();
-			break;
-		case E_DIR_RIGHT:
-			rotateAngle = -PI / 2;
-			offsetXY.y += curWinAtt.GetW();
-			mirrorBasePt = AcGePoint3d(0, pos.y + curWinAtt.GetW() / 2, 0);
-			mirrorAxis = AcGeVector3d(1, 0, 0);
-			break;
-		case E_DIR_TOP:
-			break;
-		case E_DIR_LEFT:
-			rotateAngle = PI / 2;
-			mirrorBasePt = AcGePoint3d(0, pos.y + curWinAtt.GetW() / 2, 0);
-			mirrorAxis = AcGeVector3d(1, 0, 0);
-			break;
-		case E_DIR_UNKNOWN:
-		default:
-			return AcDbObjectId::kNull;
-			break;
-		}
-
-		insertPos += offsetXY;
-	}
-
-	CString sBlockDwgFileName = curWinAtt.GetPrototypeDwgFilePath(p_view);
-	RCWindow oneWindow;
-	AcDbObjectId id = oneWindow.Insert(sBlockDwgFileName, insertPos, rotateAngle, p_sLayerName, 256);
-
-	//////////////////////////////////////////////////////////////////////////
-	//更新参数
-	oneWindow.InitParameters();
-
-	oneWindow.SetParameter(L"H", curWinAtt.GetH());
-	oneWindow.SetParameter(L"W", curWinAtt.GetW());
-	oneWindow.SetParameter(L"A", curWinAtt.GetA());
-	oneWindow.SetParameter(L"D", curWinAtt.GetD());
-
-	oneWindow.SetParameter(L"W1", curWinAtt.GetW1());
-	if (curWinAtt.HasValue(_T("W2")))
-		oneWindow.SetParameter(L"W2", curWinAtt.GetW2());
-	if (curWinAtt.HasValue(_T("W3")))
-		oneWindow.SetParameter(L"W3", curWinAtt.GetW3());
-
-	if (curWinAtt.HasValue(_T("H1")))
-		oneWindow.SetParameter(L"H1", curWinAtt.GetH1());
-	if (curWinAtt.HasValue(_T("H2")))
-		oneWindow.SetParameter(L"H2", curWinAtt.GetH2());
-	if (curWinAtt.HasValue(_T("H3")))
-		oneWindow.SetParameter(L"H3", curWinAtt.GetH3());
-
-	oneWindow.RunParameters();
-	//////////////////////////////////////////////////////////////////////////
-	//处理可见性
-	if (p_view==E_VIEW_FRONT)
-	{
-		DQ_SetDynamicAttribute(id, _T("可见性1"), p_bDetailWnd ? _T("详图") : _T("立面"));
-	}
-
-
-	//////////////////////////////////////////////////////////////////////////
-	//处理镜像
-	bool bMirror = curWinAtt.m_isMirror;
-	if (p_view == E_VIEW_TOP)
-	{
-		bMirror = !bMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题
-	}
-	if (bMirror && (curWinAtt.m_isMirrorWindow == false))
-	{
-		TYCOM_Mirror(oneWindow.m_id, mirrorBasePt, mirrorAxis);
-	}
-
-
-	//////////////////////////////////////////////////////////////////////////
-	//添加属性
-	if (p_bDetailWnd==false) //门窗详图不需要添加属性
-	{
-		//把数据记录在图框的扩展字典中
-		AttrWindow * pWindow = new AttrWindow(curWinAtt);
-		pWindow->m_viewDir = p_view;
-		oneWindow.AddAttribute(pWindow);
-		pWindow->close();
-	}
-
-	//针对USC坐标处理
-	AcGeMatrix3d mat; 
-	Acad::ErrorStatus es = acedGetCurrentUCS(mat);
-	if (mat.isEqualTo(AcGeMatrix3d::kIdentity)==false)
-	{
-		TYCOM_Transform(id, mat);
-	}
-	
-	return id;
 }

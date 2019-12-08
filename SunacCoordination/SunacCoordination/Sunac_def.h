@@ -27,7 +27,7 @@ typedef enum eRCType
 }eRCType;
 
 
-typedef enum eViewDir
+enum eViewDir
 {
 	E_VIEW_FRONT,//立面图
 	E_VIEW_TOP,	//平面图
@@ -35,7 +35,9 @@ typedef enum eViewDir
 	E_VIEW_EXTEND,//展开图
 
 	E_VIEW_ALL = 0xff,
-}eViewDir;
+};
+
+CString ViewDir2String(const eViewDir p_viewDir);
 
 enum E_DIRECTION
 {

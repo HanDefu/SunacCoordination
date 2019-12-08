@@ -30,7 +30,7 @@ protected:
 public:
 	afx_msg void OnBnClickedButtonInsert();
 	afx_msg void OnBnClickedButtonSearchwindow();
-	afx_msg void OnBnClickedRadioDoor();
+	afx_msg void OnBnClickedRadioWindowDoor();
 	afx_msg void OnBnClickedCalculate();
 	afx_msg void OnBnClickedAutoIndex();
 	afx_msg void OnBnClickedSelOnDwg();
@@ -43,61 +43,66 @@ public:
 	afx_msg void OnSelChangedView();
 	afx_msg void OnBnClickedBayWindow();
 	afx_msg void OnSelChangedWallDis();
-	void UpdateEnable();
+
+	void ClearPrototypes();
+	void WindowDoorChange();
 	void UpdateInstanceCode();
-	void UpdateVent();
+	void UpdatePrototypeAirVolume(); //更新右侧的原型信息中的通风量
 	void UpdateDimDataToComboBox(CComboBox& comboBox, const AttrWindow& attrWindow, CString code);
 	void InitDimComboBoxInt(CComboBox& comboBox, vdouble options, double dimValue);
-	void LoadDefaultValue();
-	AttrWindow* GetSelWindow();
 
-	bool CheckValueModulo(CComboBox& comboBox, CString p_sType, int p_value, int moduloVale = 50); //检查数据是否是50的模数
+	void InitCombOptions();
+	AttrWindow* GetSelWindow();
 
 	void SetEditMode(AcDbBlockReference* pBlock);
 
+	double GetArea()const { return (double(m_nWidth*m_nHeight)) / 1e6; }
+	bool CheckValueModulo(CComboBox& comboBox, CString p_sType, int p_value, int moduloVale = 50); //检查数据是否是50的模数
+
+	void InitPreviewGridByWindowPrototypes();
+
 	//插入全部，测试用
 	void InsertAllWindows_Test();
-
-	double GetArea()const { return (double(m_nWidth*m_nHeight)) / 1e6; }
-
 protected:
 	CGridCtrlWithPreview m_preWindow;
 
+	int m_radioDoorWindow; //门窗单选项
+
 	int m_nWidth;
 	int m_nHeight;
-	int m_nThickness;
+	int m_nThickness;	//墙厚
 
+	int m_radioBayWindow; //是否凸窗
+
+	//筛选部分
 	CComboBox m_comboAreaType; //功能区类型
 	CComboBox m_comboOpenType; //开启类型
 	CComboBox m_comboOpenAmount; //开启扇数量
 	CEdit m_editVentilation; //通风量
-
-	//CEdit m_area; //面积
-	//CComboBox m_rate; //比值
-
-	CEdit m_number; //门窗编号
+	
+	BOOL m_bAutoNumber; //是否自动门窗编号
+	CEdit m_editWinNumber; //门窗编号
 	CComboBox m_comboW1; //开启扇宽度
 	CComboBox m_comboH2; //下固定值
 	CComboBox m_comboW3;	//转角宽度
 	CComboBox m_comboH3; //窗下墙高
-	CComboBox m_comboOutWallDistance; //距外墙距离
-	
-	int m_radioDoor; //门窗单选
-	int m_radioYes; //是否凸窗
+	CComboBox m_comboOutWallDistance; //距外墙距离	
 
-	BOOL m_autoIndex;
 	CComboBox m_comboViewDir;
 	CComboBox m_comboInsertDir;
 	CButton m_isMirror;
 
-	vector<AttrWindow> m_allWindows;
 
-	AcDbBlockReference* m_pCurEdit;
-
+	//////////////////////////////////////////////////////////////////////////
 	TYRect m_selectRect;
+	vector<AttrWindow> m_winPrototypes;  //搜索到符合条件的门窗原型
 
-	bool m_bHasInsert; //执行过插入操作
-public:
+	bool m_bEditMode;
+	AttrWindow m_attBeforeEdit; //编辑前的门窗属性
+	AcDbBlockReference* m_pCurEditWinRef;
+
+
+	bool m_bHasInsert; //是否已执行过插入操作
 };
 
 extern CWindowDlg* g_windowDlg;

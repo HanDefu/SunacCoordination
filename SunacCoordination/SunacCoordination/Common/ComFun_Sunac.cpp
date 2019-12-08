@@ -1046,7 +1046,6 @@ int TYCOM_Mirror(AcDbObjectId entId, AcGePoint3d first, AcGeVector3d dir)
 {
 	CDocLock docLock;
 	AcDbEntity *pEntity = 0;
-	// 打开图形数据库中的对象
 	Acad::ErrorStatus  es = acdbOpenObject(pEntity, entId, AcDb::kForWrite);
 	if (pEntity == 0)
 		return es;

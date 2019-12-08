@@ -4,6 +4,24 @@
 #include "Common/ComFun_String.h"
 
 
+CString ViewDir2String(const eViewDir p_viewDir)
+{
+	switch (p_viewDir)
+	{
+	case E_VIEW_FRONT://立面图
+		return _T("立面");
+	case E_VIEW_TOP:	//平面图
+		return _T("平面");
+	case E_VIEW_LEFT://侧视图
+		return _T("侧面");
+	case E_VIEW_EXTEND://展开图
+		return _T("展开");
+	default:
+		return _T("");
+		break;
+	}
+}
+
 E_DIRECTION String2Direction(CString p_sDir)
 {
 	if (p_sDir.Find(_T("下"))>=0 || p_sDir.Find(_T("南"))>=0 || p_sDir.CompareNoCase(_T("S"))==0)

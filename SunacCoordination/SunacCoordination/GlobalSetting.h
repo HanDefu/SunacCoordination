@@ -11,6 +11,9 @@ const int cPasswordBufferSize = (cPasswordMaxlength*sizeof(wchar_t)/16+1)*16;
 //门窗设置
 struct CWinSetting
 {
+public:
+	CWinSetting();
+
 	CString m_sWinLayer; //门窗结构图层
 	CString m_sWinWallLayer; //门窗外的墙的图层
 	CString m_sWinHardwareLayer; //门窗五金件图层
@@ -19,6 +22,8 @@ struct CWinSetting
 	CString m_sWinNumberLayerPingmian; //门窗立面图编号图层
 
 	int m_winNumberTextSize; //门窗编号字体
+
+	bool m_bOuputLimianWinNumber; //是否显示立面图的门窗编号
 };
 
 class GlobalSetting

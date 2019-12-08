@@ -12,6 +12,7 @@
 #include "dbtable.h"
 #include "../Object/RCBlock.h"
 #include "../Object/WindowDoor/RCWindow.h"
+#include "../Object/WindowDoor/WindowGen.h"
 #include "../Common/ComFun_ACad.h"
 #include "../Common/ComFun_Str.h"
 #include "../Common/ComFun_Sunac.h"
@@ -72,7 +73,8 @@ void CWindowDetail::DrawWindowDetail()
 	//////////////////////////////////////////////////////////////////////////
 	for (int i = 0; i < winCountArray.GetCount(); i++)
 	{
-		const AttrWindow& winAtt = winCountArray.GetWindow(i).winAtt;
+		AttrWindow winAtt = winCountArray.GetWindow(i).winAtt;
+		winAtt.m_viewDir = E_VIEW_EXTEND;
 
 		//4.1首先插入门窗表模板
 		CWindowDetailTemplate winDetailTemplate;
@@ -80,7 +82,7 @@ void CWindowDetail::DrawWindowDetail()
 
 		AcGePoint3d winPnt = winDetailTemplate.GetInsertPntWindow(winAtt.GetW(), winAtt.GetH());
 
-		AcDbObjectId idOut = GenerateWindow(winAtt, winPnt, E_VIEW_FRONT, E_DIR_BOTTOM, true, L"Sunac_Window");
+		AcDbObjectId idOut = CWindowGen::GenerateWindow(winAtt, winPnt, E_DIR_BOTTOM, true, AcDbObjectId::kNull, "Sunac_Window");
 
 		CreateDataText(winAtt, winDetailTemplate);
 

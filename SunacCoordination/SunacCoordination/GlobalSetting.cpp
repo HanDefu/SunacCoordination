@@ -10,8 +10,15 @@
 #include "Common/AES.h"
 #include "Common/ComFun_Convert.h"
 
+CWinSetting::CWinSetting()
+{
+	m_winNumberTextSize = 50;
+
+	m_bOuputLimianWinNumber = false;
+}
 
 
+//////////////////////////////////////////////////////////////////////////
 GlobalSetting::GlobalSetting()
 {
 	m_bTestMode = false;

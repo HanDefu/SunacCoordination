@@ -385,6 +385,9 @@
     <ClCompile Include="Command\CommandHighlight.cpp">
       <Filter>Command</Filter>
     </ClCompile>
+    <ClCompile Include="Object\WindowDoor\WindowGen.cpp">
+      <Filter>Object\WindowDoor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -858,6 +861,9 @@
     </ClInclude>
     <ClInclude Include="Command\CommandHighlight.h">
       <Filter>Command</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\WindowGen.h">
+      <Filter>Object\WindowDoor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

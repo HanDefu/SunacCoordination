@@ -191,8 +191,8 @@ public:
 	CFloorInfo m_floorInfo; //楼层信息
 
 	//////////////////////////////////////////////////////////////////////////
-	AcDbObjectId m_fromHandle;  // 1912
-	vector<AcDbObjectId> m_refHandles; //由当前门窗生成的其他门窗 // 1912
+	AcDbObjectId m_fromWinId;  // 1912
+	AcDbObjectIdArray m_relatedWinIds; //由当前门窗生成的其他门窗 // 1912
 
 };
 
@@ -224,6 +224,4 @@ public:
 private:
 	vector<CWindowAndCount> m_winCountArray;
 };
-
-AcDbObjectId  GenerateWindow(const AttrWindow& curWinAtt, const AcGePoint3d pos, eViewDir p_view, E_DIRECTION p_winDir, bool p_bDetailWnd, CString p_sLayerName);
 

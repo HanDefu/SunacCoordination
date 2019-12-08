@@ -5,6 +5,7 @@
 #include "WindowTop2Front.h"
 #include "AttrWindow.h"
 #include "RCWindow.h"
+#include "WindowGen.h"
 
 
 bool CWindowTop2Front::GenFrontFromTop()
@@ -29,7 +30,7 @@ bool CWindowTop2Front::GenFrontFromTop()
 
 	//////////////////////////////////////////////////////////////////////////
 	AcDbObjectIdArray idsNoFloorInfo; //没有设置楼层的窗户
-	vector<AttrWindow>  winAtts;
+	vector<AttrWindow*>  winAtts;
 	vector<AcGePoint3d> allPos; //插入点
 	vector<AcDbExtents> allExtents; //插入点
 	for (UINT i = 0; i < winIds.size(); i++)
@@ -46,10 +47,8 @@ bool CWindowTop2Front::GenFrontFromTop()
 				idsNoFloorInfo.append(winIds[i]);
 			}
 
-			AttrWindow attTemp(*pAtt);
-			attTemp.m_viewDir = E_VIEW_FRONT;  //新生成的为立面图
-			winAtts.push_back(attTemp);
-			pAtt->close();
+			winAtts.push_back(pAtt);
+			//pAtt->close();
 
 			allPos.push_back(oneWindow.m_blockInsertPos);
 			allExtents.push_back(oneWindow.m_blockExtent);
@@ -84,10 +83,11 @@ bool CWindowTop2Front::GenFrontFromTop()
 
 
 	//////////////////////////////////////////////////////////////////////////
-	AcDbObjectIdArray oneFloorIds;
+	AcDbObjectIdArray idsOut;
 	for (UINT i = 0; i < winAtts.size(); i++)
 	{
-		const AttrWindow& curWinAtt = winAtts[i];
+		AttrWindow curWinAtt = *(winAtts[i]);
+		curWinAtt.m_viewDir = E_VIEW_FRONT;  //新生成的为立面图
 
 		//当前列的插入点
 		AcGePoint3d posColum = insertPos;
@@ -107,63 +107,148 @@ bool CWindowTop2Front::GenFrontFromTop()
 		//	pos.y += curWinAtt.GetHeightUnderWindow();
 		//}
 
-		AcDbObjectId idOut = GenerateWindow(curWinAtt, pos, E_VIEW_FRONT, E_DIR_BOTTOM, false, L"Sunac_Window");
-		oneFloorIds.append(idOut);
+		AcDbObjectId idOut = CWindowGen::GenerateWindow(curWinAtt, pos, E_DIR_BOTTOM, false, winIds[i], L"Sunac_Window");
+
+		//其他楼层复制方式
+		AcDbObjectIdArray windowObjIds = CopyAllFloorByOneFloor(idOut, winAtts[i]);
+		winAtts[i]->m_relatedWinIds = windowObjIds;
+
+		idsOut.append(windowObjIds);
 	}
 
-	AcDbObjectIdArray windowObjIds = CopyAllFloorByOneFloor(oneFloorIds, winAtts);
 
 	return true;
 }
 
-AcDbObjectIdArray CWindowTop2Front::CopyAllFloorByOneFloor(const AcDbObjectIdArray& oneFloorIds, const vector<AttrWindow> &winAtts)
+AcDbObjectIdArray CWindowTop2Front::CopyAllFloorByOneFloor(const AcDbObjectId& oneFloorId, const AttrWindow* pWinAtt)
 {
 	AcDbObjectIdArray windowObjIds;
-	windowObjIds.append(oneFloorIds);
-
+	windowObjIds.append(oneFloorId);
 
 	Acad::ErrorStatus es;
+
 	//其他楼层采用复制方式
-	for (UINT i = 0; i < winAtts.size(); i++)
+
+	AcDbEntity* pEnt = NULL;
+	es = acdbOpenObject(pEnt, oneFloorId, AcDb::kForRead);
+	if (es != Acad::eOk)
+		return windowObjIds;
+
+	const CFloorInfo floorInfo = pWinAtt->GetFloorInfo();
+	const vector<int>  allFloos = floorInfo.GetAllFloor();
+	if (allFloos.size() == 0)
+		return windowObjIds;
+
+	const int firstFloor = allFloos[0];
+	for (UINT n = 1; n < allFloos.size(); n++)
 	{
-		const AttrWindow& curWinAtt = winAtts[i];
+		AcGeMatrix3d xform;
+		xform.setTranslation(AcGeVector3d(0, (allFloos[n] - firstFloor)*floorInfo.GetFloorHeight(), 0));
 
-		AcDbEntity* pEnt = NULL;
-		es = acdbOpenObject(pEnt, oneFloorIds[i], AcDb::kForRead);
-		if (es != Acad::eOk)
-			continue;
-
-		const CFloorInfo floorInfo = curWinAtt.GetFloorInfo();
-		const vector<int>  allFloos = floorInfo.GetAllFloor();
-		if (allFloos.size() == 0)
-			continue;
-
-		const int firstFloor = allFloos[0];
-		for (UINT n = 1; n < allFloos.size(); n++)
+		AcDbEntity*  pCopyEntity = NULL;
+		es = pEnt->getTransformedCopy(xform, pCopyEntity);
+		if (pCopyEntity != NULL)
 		{
-			AcGeMatrix3d xform;
-			xform.setTranslation(AcGeVector3d(0, (allFloos[n] - firstFloor)*floorInfo.GetFloorHeight(), 0));
+			AcDbObjectId idOut = JHCOM_PostToModelSpace(pCopyEntity);
+			pCopyEntity->close();
 
-			AcDbEntity*  pCopyEntity = NULL;
-			es = pEnt->getTransformedCopy(xform, pCopyEntity);
-			if (pCopyEntity!=NULL)
-			{
-				AcDbObjectId idOut = JHCOM_PostToModelSpace(pCopyEntity);
-				pCopyEntity->close();
+			AttrWindow * pWindowAtt = new AttrWindow(*pWinAtt);
+			TY_AddAttributeData(idOut, pWindowAtt);
+			pWindowAtt->close();
 
-				AttrWindow * pWindowAtt = new AttrWindow(curWinAtt);
-				TY_AddAttributeData(idOut, pWindowAtt);
-				pWindowAtt->close();
-
-				windowObjIds.append(idOut);
-			}
+			windowObjIds.append(idOut);
 		}
-
-		pEnt->close();
 	}
+
+	pEnt->close();
 
 	return windowObjIds;
 }
+
+//
+//AcDbObjectIdArray CWindowTop2Front::CopyAllFloorByOneFloor(const AcDbObjectIdArray& oneFloorIds, const vector<AttrWindow> &winAtts)
+//{
+//	AcDbObjectIdArray windowObjIds;
+//	windowObjIds.append(oneFloorIds);
+//	
+//	Acad::ErrorStatus es;
+//
+//	//其他楼层采用复制方式
+//	for (UINT i = 0; i < winAtts.size(); i++)
+//	{
+//		const AttrWindow& curWinAtt = winAtts[i];
+//
+//		AcDbEntity* pEnt = NULL;
+//		es = acdbOpenObject(pEnt, oneFloorIds[i], AcDb::kForRead);
+//		if (es != Acad::eOk)
+//			continue;
+//
+//		const CFloorInfo floorInfo = curWinAtt.GetFloorInfo();
+//		const vector<int>  allFloos = floorInfo.GetAllFloor();
+//		if (allFloos.size() == 0)
+//			continue;
+//
+//		const int firstFloor = allFloos[0];
+//		for (UINT n = 1; n < allFloos.size(); n++)
+//		{
+//			AcGeMatrix3d xform;
+//			xform.setTranslation(AcGeVector3d(0, (allFloos[n] - firstFloor)*floorInfo.GetFloorHeight(), 0));
+//
+//			//AcDbObjectId ownerId = pEnt->ownerId();
+//			//AcDbObject* pOwner = NULL;
+//			//acdbOpenObject(pOwner, ownerId, AcDb::kForWrite);
+//
+//			//AcDbObject*  pCopyObj = NULL;
+//			//AcDbIdMapping idMap;
+//			//es = pEnt->deepClone(pOwner, pCopyObj, idMap, true);
+//			//if (pOwner != NULL)
+//			//{
+//			//	pOwner->close();
+//			//}
+//
+//			//AcDbEntity*  pCopyEntity = AcDbEntity::cast(pCopyObj);
+//			//if (pCopyEntity != NULL)
+//			//{
+//			//	assert(pCopyEntity->database() == pEnt->database());
+//			//	pCopyEntity->transformBy(xform);
+//			//	AcDbObjectId idCopy = pCopyObj->objectId();
+//			//	//AcDbObjectId idOut = JHCOM_PostToModelSpace(pCopyEntity);
+//			//	windowObjIds.append(idCopy);
+//			//	pCopyEntity->close();
+//			//}
+//
+//			////AcRxObject* pObj = pEnt->clone();
+//			////AcDbEntity*  pCopyEntity = AcDbEntity::cast(pObj);
+//			////if (pCopyEntity)
+//			////{
+//			////	AcDbObjectId idOut = JHCOM_PostToModelSpace(pCopyEntity);
+//			////	//pCopyEntity->transformBy(xform);
+//			////	windowObjIds.append(idOut);
+//			////	pCopyEntity->close();
+//			////}
+//
+//
+//
+//			AcDbEntity*  pCopyEntity = NULL;
+//			es = pEnt->getTransformedCopy(xform, pCopyEntity);
+//			if (pCopyEntity!=NULL)
+//			{
+//				AcDbObjectId idOut = JHCOM_PostToModelSpace(pCopyEntity);
+//				pCopyEntity->close();
+//
+//				AttrWindow * pWindowAtt = new AttrWindow(curWinAtt);
+//				TY_AddAttributeData(idOut, pWindowAtt);
+//				pWindowAtt->close();
+//
+//				windowObjIds.append(idOut);
+//			}
+//		}
+//
+//		pEnt->close();
+//	}
+//
+//	return windowObjIds;
+//}
 
 bool CWindowTop2Front::GetTopViewWindowDirection(E_DIRECTION &windowDir) //得到平面窗户的方位，上、下左右
 {
