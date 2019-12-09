@@ -307,7 +307,7 @@ AcDbObjectId CWindowGen::UpdateWindow(const AcDbObjectId p_id, AttrWindow newWin
 	AttrWindow *pOldWinAtt = GetWinAtt(p_id);
 	if (pOldWinAtt==NULL)
 	{
-		JHCOM_DeleteCadObject(p_id);
+		DeleteWindowObj(p_id);
 
 		AcDbObjectId newId = GenerateWindow(newWinAtt, insertPara.leftBottomPos, insertPara.insertDir, insertPara.bDetailWnd, AcDbObjectId::kNull, insertPara.sLayerName);
 		return newId;
@@ -352,7 +352,7 @@ AcDbObjectId CWindowGen::UpdateWindow(const AcDbObjectId p_id, AttrWindow newWin
 			AcDbObjectId newMainId = AcDbObjectId::kNull;
 			{
 				const CWinInsertPara newInsertPara = GetWindowInsertPara(fromWinId);
-				JHCOM_DeleteCadObject(fromWinId);
+				DeleteWindowObj(fromWinId);
 
 				newMainId = GenerateWindow(newWinAtt, newInsertPara.leftBottomPos, newInsertPara.insertDir, newInsertPara.bDetailWnd, AcDbObjectId::kNull, newInsertPara.sLayerName);
 				if (p_id==fromWinId)
@@ -363,7 +363,7 @@ AcDbObjectId CWindowGen::UpdateWindow(const AcDbObjectId p_id, AttrWindow newWin
 			for (int i = 0; i < relatedWinIds.length(); i++)
 			{
 				const CWinInsertPara newInsertPara = GetWindowInsertPara(relatedWinIds[i]);
-				JHCOM_DeleteCadObject(relatedWinIds[i]);
+				DeleteWindowObj(relatedWinIds[i]);
 
 				AcDbObjectId newId = GenerateWindow(newWinAtt, newInsertPara.leftBottomPos, newInsertPara.insertDir, newInsertPara.bDetailWnd, AcDbObjectId::kNull, newInsertPara.sLayerName);
 				newRelatedIds.append(newId);
@@ -378,7 +378,7 @@ AcDbObjectId CWindowGen::UpdateWindow(const AcDbObjectId p_id, AttrWindow newWin
 		}
 		else
 		{
-			JHCOM_DeleteCadObject(p_id);
+			DeleteWindowObj(p_id);
 			outId = GenerateWindow(newWinAtt, insertPara.leftBottomPos, insertPara.insertDir, insertPara.bDetailWnd, AcDbObjectId::kNull, insertPara.sLayerName);
 		}		
 	}	
@@ -386,6 +386,18 @@ AcDbObjectId CWindowGen::UpdateWindow(const AcDbObjectId p_id, AttrWindow newWin
 	return outId;
 }
 
+bool CWindowGen::DeleteWindowObj(const AcDbObjectId p_id)
+{
+	AttrWindow *pWinAtt = GetWinAtt(p_id);
+	if (pWinAtt!=NULL &&pWinAtt->m_instanceCodeId!=AcDbObjectId::kNull)
+	{
+		JHCOM_DeleteCadObject(pWinAtt->m_instanceCodeId);
+		pWinAtt->close();
+	}
+
+	JHCOM_DeleteCadObject(p_id);
+	return true;
+}
 bool CWindowGen::SetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId p_fromWinId, AcDbObjectIdArray p_relatedIds)
 {
 	AttrWindow *pWinAtt = GetWinAtt(p_id);
