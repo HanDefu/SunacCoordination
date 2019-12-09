@@ -39,39 +39,66 @@ bool CWindowGen::MirrorObjectByCenter(const AcDbObjectId p_id, E_DIRECTION p_win
 	return true;
 }
 
-CWinTranslationPara CWindowGen::InitTransPara(const AttrWindow& curWinAtt, const AcGePoint3d pos, eViewDir p_view, E_DIRECTION p_winDir)
+double CWindowGen::GetBlockRotateAngle(const AttrWindow& curWinAtt, eViewDir p_view, E_DIRECTION p_winDir)
 {
-	CWinTranslationPara insertPara;
-	insertPara.insertPos = pos;
-	insertPara.rotateAngle = 0;
+	double rotateAngle = 0;
+	if (p_view == E_VIEW_TOP)
+	{
+		switch (p_winDir)
+		{
+		case E_DIR_BOTTOM:
+			rotateAngle = PI;
+			break;
+		case E_DIR_RIGHT:
+			rotateAngle = -PI / 2;
+			break;
+		case E_DIR_TOP:
+			break;
+		case E_DIR_LEFT:
+			rotateAngle = PI / 2;
+			break;
+		case E_DIR_UNKNOWN:
+		default:
+			break;
+		}
+	}
 
+	return rotateAngle;
+}
+
+AcGePoint3d CWindowGen::GetBlockInsertPos(const AcDbObjectId p_id, const AttrWindow& curWinAtt, const AcGePoint3d pos, eViewDir p_view, E_DIRECTION p_winDir)
+{
+	double W = curWinAtt.GetW();
+
+	AcGePoint3d minPt, maxPt;
+	JHCOM_GetObjectMinMaxPoint(p_id, minPt, maxPt); //TODO 处理ucs坐标下的情况
+	W = (maxPt.x - minPt.x);
+
+
+	AcGePoint3d insertPos = pos;
 	if (p_view == E_VIEW_TOP)
 	{
 		AcGeVector3d offsetXY(0, 0, 0);
 		switch (p_winDir)
 		{
 		case E_DIR_BOTTOM:
-			insertPara.rotateAngle = PI;
-			offsetXY.x += curWinAtt.GetW();
+			offsetXY.x += W;
 			break;
 		case E_DIR_RIGHT:
-			insertPara.rotateAngle = -PI / 2;
-			offsetXY.y += curWinAtt.GetW();
+			offsetXY.y += W;
 			break;
 		case E_DIR_TOP:
 			break;
 		case E_DIR_LEFT:
-			insertPara.rotateAngle = PI / 2;
 			break;
-		case E_DIR_UNKNOWN:
 		default:
 			break;
 		}
 
-		insertPara.insertPos += offsetXY;
+		insertPos += offsetXY;
 	}
 
-	return insertPara;
+	return insertPos;
 }
 
 	//更新参数
@@ -135,12 +162,22 @@ void CWindowGen::UpdateWinAtt(const AcDbObjectId p_id, AttrWindow p_winAtt)
 AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d pos,
 	E_DIRECTION p_winDir, bool p_bDetailWnd, const AcDbObjectId p_fromWinId, CString p_sLayerName)
 {
-	eViewDir p_view = curWinAtt.m_viewDir;
-	const CWinTranslationPara transPara = InitTransPara(curWinAtt, pos, p_view, p_winDir);
+	const eViewDir p_view = curWinAtt.m_viewDir;
+	const double rotateAngle = GetBlockRotateAngle(curWinAtt, p_view, p_winDir);
 
 	CString sBlockDwgFileName = curWinAtt.GetPrototypeDwgFilePath(p_view);
 	RCWindow oneWindow;
-	AcDbObjectId id = oneWindow.Insert(sBlockDwgFileName, transPara.insertPos, transPara.rotateAngle, p_sLayerName, 256);
+	AcDbObjectId id = oneWindow.Insert(sBlockDwgFileName, AcGePoint3d::kOrigin, rotateAngle, p_sLayerName, 256); //先插入原点，再移动
+
+	//门窗编号生成
+	curWinAtt.m_instanceCodeId = InsertWindowDoorCode(curWinAtt.GetW(), curWinAtt.GetH(), pos, curWinAtt.GetInstanceCode(), p_view);
+
+	//////////////////////////////////////////////////////////////////////////
+	UpdateRcWindowPara(id, curWinAtt, p_view, p_bDetailWnd);
+	AddWinAtt(id, curWinAtt);
+
+	AcGePoint3d insertPos = GetBlockInsertPos(id, curWinAtt, pos, p_view, p_winDir);
+	TYCOM_Move(id, insertPos.asVector());
 
 	//处理镜像
 	if (curWinAtt.IsInstanceNeedMirror())
@@ -157,11 +194,6 @@ AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d
 		TYCOM_Transform(id, mat);
 	}
 
-	curWinAtt.m_instanceCodeId = InsertWindowDoorCode(curWinAtt.GetW(), curWinAtt.GetH(), pos, curWinAtt.GetInstanceCode(), p_view);
-
-	//////////////////////////////////////////////////////////////////////////
-	UpdateRcWindowPara(id, curWinAtt, p_view, p_bDetailWnd);
-	AddWinAtt(id, curWinAtt);
 	
 	return id;
 }
@@ -290,10 +322,8 @@ void CWindowGen::ModifyOneWindow(const AcDbObjectId p_id, AttrWindow newWinAtt)
 	{
 		MirrorObjectByCenter(p_id, GetWindowInsertDir(p_id));
 	}
+
 	//更新位置
-
-	const CWinTranslationPara transPara = InitTransPara(newWinAtt, oldInsertPara.insertPos, oldInsertPara.viewDir, oldInsertPara.insertDir);
-
 	AcGePoint3d newLeftBottomPos = GetWindowLeftBottomPos(p_id);
 	AcGeVector3d offset = oldInsertPara.leftBottomPos - newLeftBottomPos;
 	TYCOM_Move(p_id, offset);
