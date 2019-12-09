@@ -867,6 +867,23 @@ CString AttrWindow::GetPrototypeDwgFilePath(eViewDir p_view)const
 	return TY_GetPrototypeFilePath() + sFileName;
 }
 
+bool AttrWindow::IsInstanceNeedMirror()const
+{
+	bool bMirror = m_isMirror;
+	if (m_viewDir == E_VIEW_TOP)
+	{
+		bMirror = !bMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题
+	}
+	if (bMirror && (m_isMirrorWindow == false))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 //////////////////////////////////////////////////////////////////////////
 CWindowAndCount::CWindowAndCount()
 {

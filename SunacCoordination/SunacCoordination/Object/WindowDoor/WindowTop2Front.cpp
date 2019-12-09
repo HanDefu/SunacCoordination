@@ -88,6 +88,8 @@ bool CWindowTop2Front::GenFrontFromTop()
 	{
 		AttrWindow curWinAtt = *(winAtts[i]);
 		curWinAtt.m_viewDir = E_VIEW_FRONT;  //新生成的为立面图
+		curWinAtt.m_relatedWinIds.removeAll();
+		curWinAtt.m_fromWinId = winIds[i];
 
 		//当前列的插入点
 		AcGePoint3d posColum = insertPos;

@@ -155,6 +155,9 @@ public:
 
 	CString GetPrototypeDwgFilePath(eViewDir p_view)const;
 
+	bool IsRelatedGen()const { return m_fromWinId != AcDbObjectId::kNull; } //是否是通过其他的门窗关联生成
+	bool IsInstanceNeedMirror()const;
+
 protected:
 	CWindowsDimData* GetDimDataByCode(CString p_sCode);
 	vector<CWindowsDimData> m_dimData; //存储W/W1/W2/W3   H/H1/H2/H3 R的尺寸数据
@@ -191,8 +194,8 @@ public:
 	CFloorInfo m_floorInfo; //楼层信息
 
 	//////////////////////////////////////////////////////////////////////////
-	AcDbObjectId m_fromWinId;  // 1912
-	AcDbObjectIdArray m_relatedWinIds; //由当前门窗生成的其他门窗 // 1912
+	AcDbObjectId m_fromWinId;  // 1912 表示此门窗是源自fromWinId生成(如平面到立面生成），用户操作生成的fromWinId为空
+	AcDbObjectIdArray m_relatedWinIds; //由当前门窗生成的其他门窗 // 1912  (如平面到立面生成）
 
 };
 

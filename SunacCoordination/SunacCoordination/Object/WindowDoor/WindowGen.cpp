@@ -9,11 +9,12 @@
 //////////////////////////////////////////////////////////////////////////
 
 
-CWindowInsertPara CWindowGen::InitInsertPara(const AttrWindow& curWinAtt, const AcGePoint3d pos, eViewDir p_view, E_DIRECTION p_winDir)
+CWinTranslationPara CWindowGen::InitTransPara(const AttrWindow& curWinAtt, const AcGePoint3d pos, eViewDir p_view, E_DIRECTION p_winDir)
 {
-	CWindowInsertPara insertPara;
+	CWinTranslationPara insertPara;
 	insertPara.insertPos = pos;
 	insertPara.rotateAngle = 0;
+	insertPara.bNeedMirror = curWinAtt.IsInstanceNeedMirror();;
 	insertPara.mirrorBasePt = AcGePoint3d(pos.x + curWinAtt.GetW() / 2, 0, 0);
 	insertPara.mirrorAxis = AcGeVector3d(0, 1, 0);
 
@@ -50,9 +51,11 @@ CWindowInsertPara CWindowGen::InitInsertPara(const AttrWindow& curWinAtt, const 
 	return insertPara;
 }
 
-void CWindowGen::UpdateRcWindowPara(RCWindow &oneWindow, const AttrWindow& curWinAtt, eViewDir p_view, bool p_bDetailWnd)
-{
 	//更新参数
+void CWindowGen::UpdateRcWindowPara(const AcDbObjectId p_id, const AttrWindow& curWinAtt, eViewDir p_view, bool p_bDetailWnd)
+{
+	RCWindow oneWindow;
+	oneWindow.m_id = p_id;
 	oneWindow.InitParameters();
 
 	oneWindow.SetParameter(L"H", curWinAtt.GetH());
@@ -80,45 +83,41 @@ void CWindowGen::UpdateRcWindowPara(RCWindow &oneWindow, const AttrWindow& curWi
 	{
 		DQ_SetDynamicAttribute(oneWindow.m_id, _T("可见性1"), p_bDetailWnd ? _T("详图") : _T("立面"));
 	}
+}
 
-	//添加属性
-	if (p_bDetailWnd == false) //门窗详图不需要添加属性
+void CWindowGen::AddWinAtt(const AcDbObjectId p_id, AttrWindow p_winAtt)
+{
+	//把数据记录在图框的扩展字典中
+	AttrWindow * pWinAtt = new AttrWindow(p_winAtt);
+	TY_AddAttributeData(p_id, pWinAtt);
+	pWinAtt->close();
+}
+void CWindowGen::UpdateWinAtt(const AcDbObjectId p_id, AttrWindow p_winAtt)
+{
+	//把数据记录在图框的扩展字典中
+	AttrWindow * pWinAtt = GetWinAtt(p_id);
+	if (pWinAtt!=NULL)
 	{
-		AttrWindow * pWindow = oneWindow.GetAttribute();
-		if (pWindow == NULL)
-		{
-			//把数据记录在图框的扩展字典中
-			pWindow = new AttrWindow(curWinAtt);
-			pWindow->m_viewDir = p_view;
-			oneWindow.AddAttribute(pWindow);
-			pWindow->close();
-		}
-		else
-		{
-			*pWindow = curWinAtt;
-			pWindow->close();
-		}
+		*pWinAtt = p_winAtt;
+		pWinAtt->close();
 	}
 }
+
 
 AcDbObjectId  CWindowGen::GenerateWindow(const AttrWindow& curWinAtt, const AcGePoint3d pos,
 	E_DIRECTION p_winDir, bool p_bDetailWnd, const AcDbObjectId p_fromWinId, CString p_sLayerName)
 {
 	eViewDir p_view = curWinAtt.m_viewDir;
-	const CWindowInsertPara insertPara = InitInsertPara(curWinAtt, pos, p_view, p_winDir);
+	const CWinTranslationPara transPara = InitTransPara(curWinAtt, pos, p_view, p_winDir);
 
 	CString sBlockDwgFileName = curWinAtt.GetPrototypeDwgFilePath(p_view);
 	RCWindow oneWindow;
-	AcDbObjectId id = oneWindow.Insert(sBlockDwgFileName, insertPara.insertPos, insertPara.rotateAngle, p_sLayerName, 256);
+	AcDbObjectId id = oneWindow.Insert(sBlockDwgFileName, transPara.insertPos, transPara.rotateAngle, p_sLayerName, 256);
+
 	//处理镜像
-	bool bMirror = curWinAtt.m_isMirror;
-	if (p_view == E_VIEW_TOP)
+	if (transPara.bNeedMirror)
 	{
-		bMirror = !bMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题
-	}
-	if (bMirror && (curWinAtt.m_isMirrorWindow == false))
-	{
-		TYCOM_Mirror(oneWindow.m_id, insertPara.mirrorBasePt, insertPara.mirrorAxis);
+		TYCOM_Mirror(oneWindow.m_id, transPara.mirrorBasePt, transPara.mirrorAxis);
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -132,100 +131,227 @@ AcDbObjectId  CWindowGen::GenerateWindow(const AttrWindow& curWinAtt, const AcGe
 
 
 	//////////////////////////////////////////////////////////////////////////
-	UpdateRcWindowPara(oneWindow, curWinAtt, p_view, p_bDetailWnd);
+	UpdateRcWindowPara(id, curWinAtt, p_view, p_bDetailWnd);
+	AddWinAtt(id, curWinAtt);
 	
 
 	return id;
 }
 
-AcDbObjectId CWindowGen::UpdateWindow(const AcDbObjectId p_id, AttrWindow newWinAtt, const bool bUpdateRelatedWin, const AcDbObjectId p_originalId)
+AcGePoint3d CWindowGen::GetWindowLeftBottomPos(AcDbObjectId p_id)
 {
-	if (p_id == AcDbObjectId::kNull)
+	AcGePoint3d minPt, maxPt;
+	JHCOM_GetObjectMinMaxPoint(p_id, minPt, maxPt); //TODO 处理ucs坐标下的情况
+	return minPt;
+}
+
+AcGePoint3d CWindowGen::GetWindowInsertPos(AcDbObjectId p_id)
+{
+	AcDbEntity* pEnt = NULL;
+	Acad::ErrorStatus es = acdbOpenObject(pEnt, p_id, AcDb::kForRead);
+	if (es!=Acad::eOk )
 	{
-		return p_id;
+	}
+	
+	AcDbBlockReference *pBlockReference = AcDbBlockReference::cast(pEnt);
+	if (pBlockReference==NULL)
+	{
+		return AcGePoint3d::kOrigin;
 	}
 
-	const CString p_sLayerName = JHCOM_GetEntityLayer(p_id);
+	AcGePoint3d pos = pBlockReference->position();
+	pBlockReference->close();
+	return pos;
+}
 
-	E_DIRECTION p_winDir = E_DIR_TOP; //TODO 自动分析视图方向
-	bool p_bDetailWnd = false;
-	CString sOldPrototypeCode;
-	AcDbObjectId fromWinId = AcDbObjectId::kNull; //表示此门窗是源自fromWinId生成
+E_DIRECTION CWindowGen::GetWindowInsertDir(AcDbObjectId p_id)
+{
+	E_DIRECTION winDir = E_DIR_TOP; //TODO 自动分析视图方向
 
-	AcDbObject* pOldObj = NULL;
-	TY_GetAttributeData(p_id, pOldObj);
-	const AttrWindow *pOldWinAtt = dynamic_cast<AttrWindow *>(pOldObj);
+	return winDir;
+}
+
+CWinInsertPara CWindowGen::GetWindowInsertPara(AcDbObjectId p_id) //根据已插入的门窗获取其插入的信息
+{
+	CWinInsertPara insertPara;
+	insertPara.insertPos = GetWindowInsertPos(p_id);
+	insertPara.leftBottomPos = GetWindowLeftBottomPos(p_id);
+
+	insertPara.sLayerName = JHCOM_GetEntityLayer(p_id);
+	insertPara.insertDir = GetWindowInsertDir(p_id);
+
+	AttrWindow *pWinAtt = GetWinAtt(p_id);
+	if (pWinAtt!=NULL)
+	{
+		insertPara.viewDir = pWinAtt->m_viewDir;
+		insertPara.bDetailWnd = false;
+		insertPara.fromWinId = pWinAtt->m_fromWinId;
+		insertPara.relatedWinIds = pWinAtt->m_relatedWinIds;
+	}
+	else
+	{
+		insertPara.bDetailWnd = true;
+		insertPara.viewDir = E_VIEW_EXTEND;
+		insertPara.fromWinId = AcDbObjectId::kNull;
+	}
+	return insertPara;
+}
+
+bool CWindowGen::IsWindowMirror(AcDbObjectId p_id) 
+{
+	return false; //TODO,根据门窗实例判断当前门窗在图上是否镜像
+}
+AttrWindow* CWindowGen::GetWinAtt(AcDbObjectId p_id)
+{
+	AcDbObject* pObj = NULL;
+	TY_GetAttributeData(p_id, pObj);
+	AttrWindow *pWinAtt = dynamic_cast<AttrWindow *>(pObj);
+
+	return pWinAtt;
+}
+bool CWindowGen::IsPrototypeCodeSame(const AcDbObjectId p_id, const AttrWindow& newWinAtt)
+{
+	AttrWindow *pOldWinAtt = GetWinAtt(p_id);
 	if (pOldWinAtt != NULL)
 	{
-		sOldPrototypeCode = pOldWinAtt->m_prototypeCode;
-		fromWinId = pOldWinAtt->m_fromWinId;
+		pOldWinAtt->close();
+		return pOldWinAtt->m_prototypeCode.CompareNoCase(newWinAtt.m_prototypeCode) == 0;
 	}
 	else
 	{
-		p_bDetailWnd = true;
-
+		return true;
 	}
+}
 
-	AcGePoint3d insertPos;
+//只修改尺寸等数据信息，不调整
+void CWindowGen::ModifyOneWindow(const AcDbObjectId p_id, AttrWindow newWinAtt)
+{
+	const CWinInsertPara insertPara = GetWindowInsertPara(p_id);
+	//以下信息保持和原来的不变
+	newWinAtt.m_viewDir = insertPara.viewDir; 
+	newWinAtt.m_fromWinId = insertPara.fromWinId;
+	newWinAtt.m_relatedWinIds = insertPara.relatedWinIds;
+	
+	//更新尺寸信息
+	UpdateRcWindowPara(p_id, newWinAtt, insertPara.viewDir, insertPara.bDetailWnd);
+	UpdateWinAtt(p_id, newWinAtt);
+
+	//更新位置
+	const CWinTranslationPara transPara = InitTransPara(newWinAtt, insertPara.insertPos, insertPara.viewDir, insertPara.insertDir);
+	AcGeVector3d offset = transPara.insertPos - insertPara.insertPos;
+	TYCOM_Move(p_id, offset);
+
+}
+AcDbObjectId CWindowGen::UpdateWindow(const AcDbObjectId p_id, AttrWindow newWinAtt, const bool bUpdateRelatedWin)
+{
+	if (p_id == AcDbObjectId::kNull)
+		return p_id;
+
+	const CWinInsertPara insertPara = GetWindowInsertPara(p_id);
+	AttrWindow *pOldWinAtt = GetWinAtt(p_id);
+	if (pOldWinAtt==NULL)
 	{
-		AcGePoint3d minPt, maxPt;
-		JHCOM_GetObjectMinMaxPoint(p_id, minPt, maxPt);
-		insertPos = minPt;
-	}
-
-
-	AcDbObjectId newId = AcDbObjectId::kNull;
-	//若原型和之前的原型为同一个原型，则只更新参数，不重新生成
-	if (sOldPrototypeCode.IsEmpty()==false && sOldPrototypeCode.CompareNoCase(newWinAtt.m_prototypeCode) == 0)
-	{
-		const CWindowInsertPara insertPara = InitInsertPara(newWinAtt, insertPos, newWinAtt.m_viewDir, p_winDir);
-		//处理镜像
-		bool bMirror = newWinAtt.m_isMirror;
-		if (newWinAtt.m_viewDir == E_VIEW_TOP)
-		{
-			bMirror = !bMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题
-		}
-		if (bMirror && (newWinAtt.m_isMirrorWindow == false))
-		{
-			TYCOM_Mirror(p_id, insertPara.mirrorBasePt, insertPara.mirrorAxis);
-		}
-
-		//////////////////////////////////////////////////////////////////////////
-		RCWindow oneWindow;
-		oneWindow.m_id = p_id;
-		oneWindow.InitParameters();
-
-		UpdateRcWindowPara(oneWindow, newWinAtt, newWinAtt.m_viewDir, p_bDetailWnd);
-
-		newId = p_id;
-	}
-	else
-	{
-		//删除原来的id
 		JHCOM_DeleteCadObject(p_id);
-		newId = GenerateWindow(newWinAtt, insertPos, p_winDir, p_bDetailWnd, fromWinId, p_sLayerName);
+
+		AcDbObjectId newId = GenerateWindow(newWinAtt, insertPara.leftBottomPos, insertPara.insertDir, insertPara.bDetailWnd, AcDbObjectId::kNull, insertPara.sLayerName);
+		return newId;
+	}
+	
+	AcDbObjectId fromWinId = AcDbObjectId::kNull;
+	AcDbObjectIdArray relatedWinIds;
+	if (pOldWinAtt->m_fromWinId ==AcDbObjectId::kNull) //自身是父节点门窗
+	{
+		fromWinId = p_id;
+		relatedWinIds = pOldWinAtt->m_relatedWinIds;
+	}
+	else  //自身是关联生成的门窗
+	{
+		GetWinRelationIDs(pOldWinAtt->m_fromWinId, fromWinId, relatedWinIds);
 	}
 
-
-	//更新原来关联的门窗
-	if (pOldWinAtt!=NULL && bUpdateRelatedWin)
+	//若原型没有改变，则只需更新尺寸数据
+	AcDbObjectId outId = p_id;
+	const bool bProtoTypeSame = pOldWinAtt->m_prototypeCode.CompareNoCase(newWinAtt.m_prototypeCode) == 0;
+	if (bProtoTypeSame)
 	{
-		if (p_originalId==p_id && pOldWinAtt->m_fromWinId != NULL) //只有在发起的门窗，才更新其源门窗
+		if (bUpdateRelatedWin)
 		{
-			UpdateWindow(pOldWinAtt->m_fromWinId, newWinAtt, true, p_originalId);
-		}
-		else if (pOldWinAtt->m_relatedWinIds.length() > 0)
-		{
-			for (int i = 0; i < pOldWinAtt->m_relatedWinIds.length(); i++)
+			ModifyOneWindow(fromWinId, newWinAtt);
+			for (int i = 0; i < relatedWinIds.length(); i++)
 			{
-				if (pOldWinAtt->m_relatedWinIds[i]== p_originalId) //若关联门窗为发起修改的门窗，则直接跳过
-				{
-					continue;
-				}
-				UpdateWindow(pOldWinAtt->m_relatedWinIds[i], newWinAtt, true, p_originalId);
+				ModifyOneWindow(relatedWinIds[i], newWinAtt);
 			}
 		}
+		else
+		{
+			ModifyOneWindow(p_id, newWinAtt);
+		}
 	}
+	else //若原型改变，则需要全部删除和重新生成
+	{
+		if (bUpdateRelatedWin)
+		{
+			AcDbObjectId newMainId = AcDbObjectId::kNull;
+			{
+				const CWinInsertPara newInsertPara = GetWindowInsertPara(fromWinId);
+				JHCOM_DeleteCadObject(fromWinId);
 
-	return newId;
+				newMainId = GenerateWindow(newWinAtt, newInsertPara.leftBottomPos, newInsertPara.insertDir, newInsertPara.bDetailWnd, AcDbObjectId::kNull, newInsertPara.sLayerName);
+				if (p_id==fromWinId)
+					outId = newMainId;
+			}
+
+			AcDbObjectIdArray newRelatedIds;
+			for (int i = 0; i < relatedWinIds.length(); i++)
+			{
+				const CWinInsertPara newInsertPara = GetWindowInsertPara(relatedWinIds[i]);
+				JHCOM_DeleteCadObject(relatedWinIds[i]);
+
+				AcDbObjectId newId = GenerateWindow(newWinAtt, newInsertPara.leftBottomPos, newInsertPara.insertDir, newInsertPara.bDetailWnd, AcDbObjectId::kNull, newInsertPara.sLayerName);
+				newRelatedIds.append(newId);
+				if (p_id == relatedWinIds[i])
+					outId = newId;
+
+				AcDbObjectIdArray relatedIds;
+				SetWinRelationIDs(newId, newMainId, relatedIds);
+			}
+
+			SetWinRelationIDs(newMainId, AcDbObjectId::kNull, newRelatedIds);
+		}
+		else
+		{
+			JHCOM_DeleteCadObject(p_id);
+			outId = GenerateWindow(newWinAtt, insertPara.leftBottomPos, insertPara.insertDir, insertPara.bDetailWnd, AcDbObjectId::kNull, insertPara.sLayerName);
+		}		
+	}	
+
+	return outId;
+}
+
+bool CWindowGen::SetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId p_fromWinId, AcDbObjectIdArray p_relatedIds)
+{
+	AttrWindow *pWinAtt = GetWinAtt(p_id);
+	if (pWinAtt==NULL)
+		return false;
+
+	pWinAtt->m_fromWinId = p_fromWinId;
+	pWinAtt->m_relatedWinIds = p_relatedIds;
+
+	pWinAtt->close();
+
+	return true;
+}
+
+bool CWindowGen::GetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId& p_fromWinId, AcDbObjectIdArray& p_relatedIds)
+{
+	AttrWindow *pWinAtt = GetWinAtt(p_id);
+	if (pWinAtt == NULL)
+		return false;
+
+	p_fromWinId = pWinAtt->m_fromWinId;
+	p_relatedIds = pWinAtt->m_relatedWinIds;
+
+	pWinAtt->close();
+	return true;
+
 }

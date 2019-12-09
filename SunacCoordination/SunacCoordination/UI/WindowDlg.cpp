@@ -234,6 +234,9 @@ void CWindowDlg::OnBnClickedButtonInsert()
 			return;
 		}
 
+		pSelWinAttr->m_relatedWinIds.removeAll();
+		pSelWinAttr->m_fromWinId = AcDbObjectId::kNull;
+
 		AcDbObjectId idOut = CWindowGen::GenerateWindow(*pSelWinAttr, origin, winDir, false, AcDbObjectId::kNull, L"Sunac_Window");
 		assert(idOut != AcDbObjectId::kNull);
 		if (idOut != AcDbObjectId::kNull)
@@ -247,7 +250,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	}
 	else
 	{		
-		AcDbObjectId idOut = CWindowGen::UpdateWindow(m_pCurEditWinRef->objectId(), *pSelWinAttr, false, m_pCurEditWinRef->objectId());
+		AcDbObjectId idOut = CWindowGen::UpdateWindow(m_pCurEditWinRef->objectId(), *pSelWinAttr, false);
 		assert(idOut != AcDbObjectId::kNull);
 		if (idOut != AcDbObjectId::kNull)
 		{
