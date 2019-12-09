@@ -157,7 +157,10 @@ AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d
 		TYCOM_Transform(id, mat);
 	}
 
-	curWinAtt.m_instanceCodeId = InsertWindowDoorCode(curWinAtt.GetW(), curWinAtt.GetH(), pos, curWinAtt.GetInstanceCode(), p_view);
+	if (!p_bDetailWnd)
+	{
+		curWinAtt.m_instanceCodeId = InsertWindowDoorCode(curWinAtt.GetW(), curWinAtt.GetH(), pos, curWinAtt.GetInstanceCode(), p_view);
+	}
 
 	//////////////////////////////////////////////////////////////////////////
 	UpdateRcWindowPara(id, curWinAtt, p_view, p_bDetailWnd);
