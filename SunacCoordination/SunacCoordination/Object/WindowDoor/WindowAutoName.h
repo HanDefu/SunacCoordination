@@ -66,9 +66,6 @@ public:
 	Acad::ErrorStatus ReadFromDwg(AcDbDwgFiler* pFiler);
 	Acad::ErrorStatus WriteToDwg(AcDbDwgFiler* pFiler);
 
-	//≤Â»Î√≈¥∞±‡∫≈
-	void InsertWindowDoorCode(int p_width, int p_height, AcGePoint3d p_origin, CString p_number, eViewDir p_viewDir);
-	int Move(AcDbObjectId entId, AcGeVector3d offset);
 protected:
 	CWinClassify* FindWinClassifyByAtt(const AttrWindow& p_att);
 	CWinClassify* FindWinClassifyByInstantCode(const CString p_sCode);

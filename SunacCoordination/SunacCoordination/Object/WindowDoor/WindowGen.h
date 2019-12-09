@@ -32,7 +32,7 @@ class CWindowGen
 {
 public:
 	//生成新的门窗
-	static AcDbObjectId  GenerateWindow(const AttrWindow& curWinAtt, const AcGePoint3d pos, E_DIRECTION p_winDir, bool p_bDetailWnd, const AcDbObjectId p_fromWinId, CString p_sLayerName);
+	static AcDbObjectId  GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d pos, E_DIRECTION p_winDir, bool p_bDetailWnd, const AcDbObjectId p_fromWinId, CString p_sLayerName);
 
 	//更新门窗参数, bUpdateRelatedWin为true则同步更新关联的门窗，p_originalId为最开启发起修改更新的门窗，以便在后续关联修改时不重复修改
 	static AcDbObjectId UpdateWindow(const AcDbObjectId p_id, AttrWindow newWinAtt, const bool bUpdateRelatedWin);//
@@ -56,8 +56,8 @@ protected:
 	static bool SetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId p_fromWinId, AcDbObjectIdArray p_relatedIds);
 	static bool GetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId& p_fromWinId, AcDbObjectIdArray& p_relatedIds);
 
-
-
+	//插入门窗编号
+	static AcDbObjectId InsertWindowDoorCode(double p_width, double p_height, AcGePoint3d p_origin, CString p_number, eViewDir p_viewDir);
 };
 
 
