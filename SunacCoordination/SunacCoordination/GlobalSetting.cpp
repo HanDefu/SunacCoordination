@@ -12,9 +12,9 @@
 
 CWinSetting::CWinSetting()
 {
-	m_winNumberTextSize = 50;
-
-	m_bOuputLimianWinNumber = false;
+	m_numberTextSize = 50;
+	m_bShowLimianNumber = false;
+	m_bUseAinLimian = false;
 }
 
 
