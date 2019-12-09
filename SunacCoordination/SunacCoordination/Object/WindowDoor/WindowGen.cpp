@@ -226,6 +226,19 @@ bool CWindowGen::IsPrototypeCodeSame(const AcDbObjectId p_id, const AttrWindow& 
 //只修改尺寸等数据信息，不调整
 void CWindowGen::ModifyOneWindow(const AcDbObjectId p_id, AttrWindow newWinAtt)
 {
+	if (p_id==AcDbObjectId::kNull)
+	{
+		assert(false);
+		return;
+	}
+	AcDbEntity *pEnt = NULL;
+	Acad::ErrorStatus es = acdbOpenObject(pEnt, p_id, AcDb::kForRead);
+	if (es!=Acad::eOk || pEnt==NULL)
+	{
+		return;
+	}
+	pEnt->close();
+
 	const CWinInsertPara insertPara = GetWindowInsertPara(p_id);
 	//以下信息保持和原来的不变
 	newWinAtt.m_viewDir = insertPara.viewDir; 
@@ -266,7 +279,9 @@ AcDbObjectId CWindowGen::UpdateWindow(const AcDbObjectId p_id, AttrWindow newWin
 	}
 	else  //自身是关联生成的门窗
 	{
-		GetWinRelationIDs(pOldWinAtt->m_fromWinId, fromWinId, relatedWinIds);
+		fromWinId = pOldWinAtt->m_fromWinId;
+		AcDbObjectId tempId;
+		GetWinRelationIDs(fromWinId, tempId, relatedWinIds);
 	}
 
 	//若原型没有改变，则只需更新尺寸数据

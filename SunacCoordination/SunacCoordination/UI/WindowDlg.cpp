@@ -250,7 +250,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	}
 	else
 	{		
-		AcDbObjectId idOut = CWindowGen::UpdateWindow(m_pCurEditWinRef->objectId(), *pSelWinAttr, false);
+		AcDbObjectId idOut = CWindowGen::UpdateWindow(m_pCurEditWinRef->objectId(), *pSelWinAttr, true);
 		assert(idOut != AcDbObjectId::kNull);
 		if (idOut != AcDbObjectId::kNull)
 		{
