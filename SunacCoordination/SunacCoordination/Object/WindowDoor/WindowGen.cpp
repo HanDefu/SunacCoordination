@@ -208,23 +208,28 @@ AcGePoint3d CWindowGen::GetWindowLeftBottomPos(AcDbObjectId p_id)
 	return minPt;
 }
 
-AcGePoint3d CWindowGen::GetWindowInsertPos(AcDbObjectId p_id)
+bool CWindowGen::GetWindowInsertPos(AcDbObjectId p_id, AcGePoint3d &p_insertPos, double& p_angle)
 {
+	p_insertPos = AcGePoint3d::kOrigin;
+	p_angle = 0;
+
 	AcDbEntity* pEnt = NULL;
 	Acad::ErrorStatus es = acdbOpenObject(pEnt, p_id, AcDb::kForRead);
 	if (es!=Acad::eOk )
 	{
+		return false;
 	}
 	
 	AcDbBlockReference *pBlockReference = AcDbBlockReference::cast(pEnt);
 	if (pBlockReference==NULL)
 	{
-		return AcGePoint3d::kOrigin;
+		return false;
 	}
 
-	AcGePoint3d pos = pBlockReference->position();
+	p_insertPos = pBlockReference->position();
+	p_angle = pBlockReference->rotation();
 	pBlockReference->close();
-	return pos;
+	return true;
 }
 
 E_DIRECTION CWindowGen::GetWindowInsertDir(AcDbObjectId p_id)
@@ -237,7 +242,9 @@ E_DIRECTION CWindowGen::GetWindowInsertDir(AcDbObjectId p_id)
 CWinInsertPara CWindowGen::GetWindowInsertPara(AcDbObjectId p_id) //根据已插入的门窗获取其插入的信息
 {
 	CWinInsertPara insertPara;
-	insertPara.insertPos = GetWindowInsertPos(p_id);
+
+	double angle;
+	GetWindowInsertPos(p_id, insertPara.insertPos, angle);
 	insertPara.leftBottomPos = GetWindowLeftBottomPos(p_id);
 
 	insertPara.sLayerName = JHCOM_GetEntityLayer(p_id);
@@ -266,7 +273,13 @@ bool CWindowGen::IsWindowMirror(AcDbObjectId p_id)
 	AcGePoint3d minPt, maxPt;
 	JHCOM_GetObjectMinMaxPoint(p_id, minPt, maxPt); //TODO 处理ucs坐标下的情况
 
-	AcGePoint3d insertPos = GetWindowInsertPos(p_id);
+	AcGePoint3d insertPos;
+	double angle;
+	GetWindowInsertPos(p_id, insertPos, angle);
+
+	//通过矩阵判断
+
+	//正常情况插入点在左下角，根据
 	
 
 	return false; //TODO,根据门窗实例判断当前门窗在图上是否镜像
