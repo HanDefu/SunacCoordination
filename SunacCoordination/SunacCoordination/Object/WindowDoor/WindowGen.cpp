@@ -170,7 +170,10 @@ AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d
 	AcDbObjectId id = oneWindow.Insert(sBlockDwgFileName, AcGePoint3d::kOrigin, rotateAngle, p_sLayerName, 256); //先插入原点，再移动
 
 	//门窗编号生成
-	curWinAtt.m_instanceCodeId = InsertWindowDoorCode(curWinAtt.GetW(), curWinAtt.GetH(), pos, curWinAtt.GetInstanceCode(), p_view);
+	if (p_bDetailWnd==false)
+	{
+		curWinAtt.m_instanceCodeId = InsertWindowDoorCode(curWinAtt.GetW(), curWinAtt.GetH(), pos, curWinAtt.GetInstanceCode(), p_view);
+	}
 
 	//////////////////////////////////////////////////////////////////////////
 	UpdateRcWindowPara(id, curWinAtt, p_view, p_bDetailWnd);
