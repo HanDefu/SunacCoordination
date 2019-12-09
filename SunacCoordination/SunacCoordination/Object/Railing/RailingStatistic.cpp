@@ -43,8 +43,8 @@ void CRailingStatistic::InsertRailing(AttrRailing* pAttr)
 
 AcDbObjectId CRailingStatistic::InsertTableToCAD(AcGePoint3d insertPos)
 {
-	const double c_tableCellWidth[] = {20, 80, 30, 20, 50};
-	const double c_tableCellHeight = 6;
+	const double c_tableCellWidth[] = {500, 2500, 1000, 1000, 1500};
+	const double c_tableCellHeight = 400;
 
 	sort(m_allRailings.begin(), m_allRailings.end(), RailingCmp);
 
@@ -84,7 +84,7 @@ AcDbObjectId CRailingStatistic::InsertTableToCAD(AcGePoint3d insertPos)
 		for (int nColum = 0; nColum < columSize; nColum++)
 		{
 			pTable->setAlignment(nRow, nColum, AcDb::kMiddleCenter);
-			pTable->setTextHeight(nRow, nColum,2.5);
+			pTable->setTextHeight(nRow, nColum, 120);
 		}
 	}
 
