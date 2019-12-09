@@ -376,24 +376,36 @@ AcDbObjectId CWindowGen::InsertWindowDoorCode(double p_width, double p_height, A
 
 	AcDbObjectId sWindowDoorTextId;
 	CString oldLayerName;
-	CString sWindowDoorLayerName = L"";
+	CString sWindowDoorLayerName = GlobalSetting::GetInstance()->m_winSetting.m_sWinNumberLayerPingmian;
+
 	MD2010_GetCurrentLayer(oldLayerName);
 
 	if (p_viewDir == E_VIEW_TOP)
 	{
-		sWindowDoorLayerName = _T("Sunac_WinNumber_Pingmian");
-
-		if (JHCOM_GetLayerID(sWindowDoorLayerName) == AcDbObjectId::kNull)
+		if (sWindowDoorLayerName.GetLength() && JHCOM_GetLayerID(sWindowDoorLayerName) == AcDbObjectId::kNull)
 		{
 			JHCOM_CreateNewLayer(sWindowDoorLayerName);
 		}
+	}
+	else
+	{
+		sWindowDoorLayerName = GlobalSetting::GetInstance()->m_winSetting.m_sWinNumberLayerLimian;
 
-		MD2010_SetCurrentLayer(sWindowDoorLayerName);
+		if (sWindowDoorLayerName.GetLength() && JHCOM_GetLayerID(sWindowDoorLayerName) == AcDbObjectId::kNull)
+		{
+			JHCOM_CreateNewLayer(sWindowDoorLayerName);
+		}
+	}
 
-		//门窗编号插入点
+	MD2010_SetCurrentLayer(sWindowDoorLayerName);
+
+	//门窗编号插入点
+
+	if (GlobalSetting::GetInstance()->m_winSetting.m_bShowLimianNumber || p_viewDir == E_VIEW_TOP)
+	{
 		sWindowDoorTextId = JHCOM_CreateText(AcGePoint3d(0, p_origin.y + 100, 0),
 			AcGeVector3d(0, 0, 1),
-			120, 0,
+			GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize, 0,
 			p_number);
 
 		AcDbEntity *pEnt;
@@ -409,16 +421,7 @@ AcDbObjectId CWindowGen::InsertWindowDoorCode(double p_width, double p_height, A
 		pEnt->transformBy(xform);
 		pEnt->close();
 	}
-	else
-	{
-		sWindowDoorLayerName = _T("Sunac_WinNumber_Limian");
-
-		if (JHCOM_GetLayerID(sWindowDoorLayerName) == AcDbObjectId::kNull)
-		{
-			JHCOM_CreateNewLayer(sWindowDoorLayerName);
-		}
-	}
-
+	
 	acDocManager->unlockDocument(curDoc());
 
 	return sWindowDoorTextId;
