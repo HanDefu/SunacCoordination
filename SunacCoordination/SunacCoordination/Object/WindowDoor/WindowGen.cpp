@@ -9,15 +9,42 @@
 
 //////////////////////////////////////////////////////////////////////////
 
+bool CWindowGen::MirrorObjectByCenter(const AcDbObjectId p_id, E_DIRECTION p_winDir)
+{
+	AcGePoint3d minPt, maxPt;
+	JHCOM_GetObjectMinMaxPoint(p_id, minPt, maxPt); //TODO 处理ucs坐标下的情况
+
+	AcGePoint3d mirrorBasePt;
+	AcGeVector3d mirrorAxis;
+
+	AcGeVector3d offsetXY(0, 0, 0);
+	switch (p_winDir)
+	{
+	case E_DIR_BOTTOM:
+	case E_DIR_TOP:
+		mirrorBasePt = AcGePoint3d((minPt.x + maxPt.x) / 2, 0, 0);
+		mirrorAxis = AcGeVector3d(0, 1, 0);
+		break;
+	case E_DIR_RIGHT:
+	case E_DIR_LEFT:
+		mirrorBasePt = AcGePoint3d(0, (minPt.y + maxPt.y) / 2, 0);
+		mirrorAxis = AcGeVector3d(1, 0, 0);
+		break;
+	default:
+		return false;
+		break;
+	}
+
+	TYCOM_Mirror(p_id, mirrorBasePt, mirrorAxis);
+
+	return true;
+}
 
 CWinTranslationPara CWindowGen::InitTransPara(const AttrWindow& curWinAtt, const AcGePoint3d pos, eViewDir p_view, E_DIRECTION p_winDir)
 {
 	CWinTranslationPara insertPara;
 	insertPara.insertPos = pos;
 	insertPara.rotateAngle = 0;
-	insertPara.bNeedMirror = curWinAtt.IsInstanceNeedMirror();;
-	insertPara.mirrorBasePt = AcGePoint3d(pos.x + curWinAtt.GetW() / 2, 0, 0);
-	insertPara.mirrorAxis = AcGeVector3d(0, 1, 0);
 
 	if (p_view == E_VIEW_TOP)
 	{
@@ -31,15 +58,11 @@ CWinTranslationPara CWindowGen::InitTransPara(const AttrWindow& curWinAtt, const
 		case E_DIR_RIGHT:
 			insertPara.rotateAngle = -PI / 2;
 			offsetXY.y += curWinAtt.GetW();
-			insertPara.mirrorBasePt = AcGePoint3d(0, pos.y + curWinAtt.GetW() / 2, 0);
-			insertPara.mirrorAxis = AcGeVector3d(1, 0, 0);
 			break;
 		case E_DIR_TOP:
 			break;
 		case E_DIR_LEFT:
 			insertPara.rotateAngle = PI / 2;
-			insertPara.mirrorBasePt = AcGePoint3d(0, pos.y + curWinAtt.GetW() / 2, 0);
-			insertPara.mirrorAxis = AcGeVector3d(1, 0, 0);
 			break;
 		case E_DIR_UNKNOWN:
 		default:
@@ -121,9 +144,9 @@ AcDbObjectId  CWindowGen::GenerateWindow(const AttrWindow& curWinAtt, const AcGe
 	AcDbObjectId id = oneWindow.Insert(sBlockDwgFileName, transPara.insertPos, transPara.rotateAngle, p_sLayerName, 256);
 
 	//处理镜像
-	if (transPara.bNeedMirror)
+	if (curWinAtt.IsInstanceNeedMirror())
 	{
-		TYCOM_Mirror(oneWindow.m_id, transPara.mirrorBasePt, transPara.mirrorAxis);
+		MirrorObjectByCenter(oneWindow.m_id, p_winDir);
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -205,6 +228,13 @@ CWinInsertPara CWindowGen::GetWindowInsertPara(AcDbObjectId p_id) //根据已插入的
 
 bool CWindowGen::IsWindowMirror(AcDbObjectId p_id) 
 {
+	//定义点在左下角点
+	AcGePoint3d minPt, maxPt;
+	JHCOM_GetObjectMinMaxPoint(p_id, minPt, maxPt); //TODO 处理ucs坐标下的情况
+
+	AcGePoint3d insertPos = GetWindowInsertPos(p_id);
+	
+
 	return false; //TODO,根据门窗实例判断当前门窗在图上是否镜像
 }
 AttrWindow* CWindowGen::GetWinAtt(AcDbObjectId p_id)
@@ -245,21 +275,29 @@ void CWindowGen::ModifyOneWindow(const AcDbObjectId p_id, AttrWindow newWinAtt)
 	}
 	pEnt->close();
 
-	const CWinInsertPara insertPara = GetWindowInsertPara(p_id);
+	const CWinInsertPara oldInsertPara = GetWindowInsertPara(p_id);
 	//以下信息保持和原来的不变
-	newWinAtt.m_viewDir = insertPara.viewDir; 
-	newWinAtt.m_fromWinId = insertPara.fromWinId;
-	newWinAtt.m_relatedWinIds = insertPara.relatedWinIds;
+	newWinAtt.m_viewDir = oldInsertPara.viewDir; 
+	newWinAtt.m_fromWinId = oldInsertPara.fromWinId;
+	newWinAtt.m_relatedWinIds = oldInsertPara.relatedWinIds;
 	
 	//更新尺寸信息
-	UpdateRcWindowPara(p_id, newWinAtt, insertPara.viewDir, insertPara.bDetailWnd);
+	UpdateRcWindowPara(p_id, newWinAtt, oldInsertPara.viewDir, oldInsertPara.bDetailWnd);
 	UpdateWinAtt(p_id, newWinAtt);
 
+	//处理镜像
+	if (newWinAtt.IsInstanceNeedMirror() && IsWindowMirror(p_id)==false ||
+		newWinAtt.IsInstanceNeedMirror()==false && IsWindowMirror(p_id))
+	{
+		MirrorObjectByCenter(p_id, GetWindowInsertDir(p_id));
+	}
 	//更新位置
-	const CWinTranslationPara transPara = InitTransPara(newWinAtt, insertPara.insertPos, insertPara.viewDir, insertPara.insertDir);
-	AcGeVector3d offset = transPara.insertPos - insertPara.insertPos;
-	TYCOM_Move(p_id, offset);
 
+	const CWinTranslationPara transPara = InitTransPara(newWinAtt, oldInsertPara.insertPos, oldInsertPara.viewDir, oldInsertPara.insertDir);
+
+	AcGePoint3d newLeftBottomPos = GetWindowLeftBottomPos(p_id);
+	AcGeVector3d offset = oldInsertPara.leftBottomPos - newLeftBottomPos;
+	TYCOM_Move(p_id, offset);
 }
 AcDbObjectId CWindowGen::UpdateWindow(const AcDbObjectId p_id, AttrWindow newWinAtt, const bool bUpdateRelatedWin)
 {

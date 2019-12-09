@@ -8,9 +8,6 @@ struct CWinTranslationPara
 {
 	AcGePoint3d insertPos;
 	double rotateAngle;
-	bool bNeedMirror;
-	AcGePoint3d mirrorBasePt;
-	AcGeVector3d mirrorAxis;
 };
 
 struct CWinInsertPara
@@ -55,6 +52,8 @@ protected:
 	static bool IsPrototypeCodeSame(const AcDbObjectId p_id, const AttrWindow& newWinAtt); //新的原型编号是否和之前的不同
 	static bool SetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId p_fromWinId, AcDbObjectIdArray p_relatedIds);
 	static bool GetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId& p_fromWinId, AcDbObjectIdArray& p_relatedIds);
+
+	static bool MirrorObjectByCenter(const AcDbObjectId p_id, E_DIRECTION p_winDir);
 
 
 

@@ -781,7 +781,6 @@ void CWindowDlg::SetEditMode(AcDbBlockReference* pBlock)
 
 		str = ViewDir2String(pWindow->m_viewDir);
 		TYUI_SetText(m_comboViewDir, str);
-		//CComboBox m_comboInsertDir; // TODO ²åÈë·½Ïò
 		m_isMirror.SetCheck(pWindow->m_isMirror ? TRUE :FALSE);
 
 
