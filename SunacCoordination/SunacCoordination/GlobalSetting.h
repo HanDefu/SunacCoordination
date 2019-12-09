@@ -19,7 +19,7 @@ public:
 	CString m_sWinHardwareLayer; //门窗五金件图层
 	CString m_sWinOpenLayer; //门窗开启部分图层
 	CString m_sWinNumberLayerLimian; //门窗立面图编号图层
-	CString m_sWinNumberLayerPingmian; //门窗立面图编号图层
+	CString m_sWinNumberLayerPingmian; //门窗平面图编号图层
 
 	bool m_bUseAinLimian;  //立面图是否使用塞缝尺寸
 

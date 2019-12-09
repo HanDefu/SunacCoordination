@@ -12,7 +12,7 @@
 
 CWinSetting::CWinSetting()
 {
-	m_numberTextSize = 50;
+	m_numberTextSize = 120;
 	m_bShowLimianNumber = false;
 	m_bUseAinLimian = false;
 }
