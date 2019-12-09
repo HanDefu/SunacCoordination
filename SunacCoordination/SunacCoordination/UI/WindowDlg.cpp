@@ -735,12 +735,16 @@ void CWindowDlg::SetEditMode(AcDbBlockReference* pBlock)
 		TYUI_SetText(*GetDlgItem(IDC_BUTTON_INSERTWINDOW), L"插入");
 		TYUI_Enable(m_comboViewDir);
 		TYUI_Enable(m_comboInsertDir);
+		TYUI_Enable(*GetDlgItem(IDC_RADIO_DOOR));
+		TYUI_Enable(*GetDlgItem(IDC_RADIO_WINDOW));
 		return;
 	}
 	else
 	{
 		TYUI_Disable(m_comboViewDir); //修改模式下不可修改视图
 		TYUI_Disable(m_comboInsertDir); //修改模式下不可修改视图
+		TYUI_Disable(*GetDlgItem(IDC_RADIO_DOOR));
+		TYUI_Disable(*GetDlgItem(IDC_RADIO_WINDOW));
 
 		AcDbObject* pAtt = NULL;
 		TY_GetAttributeData(pBlock->objectId(), pAtt);
