@@ -61,6 +61,7 @@ void CWindowGen::UpdateRcWindowPara(const AcDbObjectId p_id, const AttrWindow& c
 
 	oneWindow.SetParameter(L"H", curWinAtt.GetH());
 	oneWindow.SetParameter(L"W", curWinAtt.GetW());
+
 	if (p_bDetailWnd || GlobalSetting::GetInstance()->m_winSetting.m_bUseAinLimian)
 	{
 		oneWindow.SetParameter(L"A", curWinAtt.GetA());
