@@ -3,6 +3,7 @@
 #include "..\..\Common\ComFun_ACad.h"
 #include "..\..\Common\ComFun_Layer.h"
 #include "WindowGen.h"
+#include "..\..\GlobalSetting.h"
 
 
 
@@ -60,7 +61,11 @@ void CWindowGen::UpdateRcWindowPara(const AcDbObjectId p_id, const AttrWindow& c
 
 	oneWindow.SetParameter(L"H", curWinAtt.GetH());
 	oneWindow.SetParameter(L"W", curWinAtt.GetW());
-	oneWindow.SetParameter(L"A", curWinAtt.GetA());
+	if (p_bDetailWnd || GlobalSetting::GetInstance()->m_winSetting.m_bUseAinLimian)
+	{
+		oneWindow.SetParameter(L"A", curWinAtt.GetA());
+	}
+
 	oneWindow.SetParameter(L"D", curWinAtt.GetD());
 
 	oneWindow.SetParameter(L"W1", curWinAtt.GetW1());

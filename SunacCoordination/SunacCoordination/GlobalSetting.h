@@ -21,9 +21,11 @@ public:
 	CString m_sWinNumberLayerLimian; //门窗立面图编号图层
 	CString m_sWinNumberLayerPingmian; //门窗立面图编号图层
 
-	int m_winNumberTextSize; //门窗编号字体
+	bool m_bUseAinLimian;  //立面图是否使用塞缝尺寸
 
-	bool m_bOuputLimianWinNumber; //是否显示立面图的门窗编号
+	int m_numberTextSize; //门窗编号字体
+
+	bool m_bShowLimianNumber; //是否显示立面图的门窗编号
 };
 
 class GlobalSetting
