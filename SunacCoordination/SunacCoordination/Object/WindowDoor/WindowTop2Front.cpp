@@ -131,126 +131,31 @@ AcDbObjectIdArray CWindowTop2Front::CopyAllFloorByOneFloor(const AcDbObjectId& o
 
 	//其他楼层采用复制方式
 
-	AcDbEntity* pEnt = NULL;
-	es = acdbOpenObject(pEnt, oneFloorId, AcDb::kForRead);
-	if (es != Acad::eOk)
-		return windowObjIds;
-
 	const CFloorInfo floorInfo = pWinAtt->GetFloorInfo();
 	const vector<int>  allFloos = floorInfo.GetAllFloor();
 	if (allFloos.size() == 0)
 		return windowObjIds;
 
+	AcDbObjectIdArray objList;
+	objList.append(oneFloorId);
 	const int firstFloor = allFloos[0];
 	for (UINT n = 1; n < allFloos.size(); n++)
 	{
-		AcGeMatrix3d xform;
-		xform.setTranslation(AcGeVector3d(0, (allFloos[n] - firstFloor)*floorInfo.GetFloorHeight(), 0));
+		AcGeVector3d vOffset =AcGeVector3d(0, (allFloos[n] - firstFloor)*floorInfo.GetFloorHeight(), 0);
 
-		AcDbEntity*  pCopyEntity = NULL;
-		es = pEnt->getTransformedCopy(xform, pCopyEntity);
-		if (pCopyEntity != NULL)
+		AcDbObjectIdArray objListCloned;
+		bool bSuc = CloneObjects(objList, objListCloned);
+		if (bSuc && objListCloned.length()>0)
 		{
-			AcDbObjectId idOut = JHCOM_PostToModelSpace(pCopyEntity);
-			pCopyEntity->close();
+			TYCOM_Move(objListCloned[0], vOffset);
 
-			AttrWindow * pWindowAtt = new AttrWindow(*pWinAtt);
-			TY_AddAttributeData(idOut, pWindowAtt);
-			pWindowAtt->close();
-
-			windowObjIds.append(idOut);
+			windowObjIds.append(objListCloned);
 		}
 	}
-
-	pEnt->close();
 
 	return windowObjIds;
 }
 
-//
-//AcDbObjectIdArray CWindowTop2Front::CopyAllFloorByOneFloor(const AcDbObjectIdArray& oneFloorIds, const vector<AttrWindow> &winAtts)
-//{
-//	AcDbObjectIdArray windowObjIds;
-//	windowObjIds.append(oneFloorIds);
-//	
-//	Acad::ErrorStatus es;
-//
-//	//其他楼层采用复制方式
-//	for (UINT i = 0; i < winAtts.size(); i++)
-//	{
-//		const AttrWindow& curWinAtt = winAtts[i];
-//
-//		AcDbEntity* pEnt = NULL;
-//		es = acdbOpenObject(pEnt, oneFloorIds[i], AcDb::kForRead);
-//		if (es != Acad::eOk)
-//			continue;
-//
-//		const CFloorInfo floorInfo = curWinAtt.GetFloorInfo();
-//		const vector<int>  allFloos = floorInfo.GetAllFloor();
-//		if (allFloos.size() == 0)
-//			continue;
-//
-//		const int firstFloor = allFloos[0];
-//		for (UINT n = 1; n < allFloos.size(); n++)
-//		{
-//			AcGeMatrix3d xform;
-//			xform.setTranslation(AcGeVector3d(0, (allFloos[n] - firstFloor)*floorInfo.GetFloorHeight(), 0));
-//
-//			//AcDbObjectId ownerId = pEnt->ownerId();
-//			//AcDbObject* pOwner = NULL;
-//			//acdbOpenObject(pOwner, ownerId, AcDb::kForWrite);
-//
-//			//AcDbObject*  pCopyObj = NULL;
-//			//AcDbIdMapping idMap;
-//			//es = pEnt->deepClone(pOwner, pCopyObj, idMap, true);
-//			//if (pOwner != NULL)
-//			//{
-//			//	pOwner->close();
-//			//}
-//
-//			//AcDbEntity*  pCopyEntity = AcDbEntity::cast(pCopyObj);
-//			//if (pCopyEntity != NULL)
-//			//{
-//			//	assert(pCopyEntity->database() == pEnt->database());
-//			//	pCopyEntity->transformBy(xform);
-//			//	AcDbObjectId idCopy = pCopyObj->objectId();
-//			//	//AcDbObjectId idOut = JHCOM_PostToModelSpace(pCopyEntity);
-//			//	windowObjIds.append(idCopy);
-//			//	pCopyEntity->close();
-//			//}
-//
-//			////AcRxObject* pObj = pEnt->clone();
-//			////AcDbEntity*  pCopyEntity = AcDbEntity::cast(pObj);
-//			////if (pCopyEntity)
-//			////{
-//			////	AcDbObjectId idOut = JHCOM_PostToModelSpace(pCopyEntity);
-//			////	//pCopyEntity->transformBy(xform);
-//			////	windowObjIds.append(idOut);
-//			////	pCopyEntity->close();
-//			////}
-//
-//
-//
-//			AcDbEntity*  pCopyEntity = NULL;
-//			es = pEnt->getTransformedCopy(xform, pCopyEntity);
-//			if (pCopyEntity!=NULL)
-//			{
-//				AcDbObjectId idOut = JHCOM_PostToModelSpace(pCopyEntity);
-//				pCopyEntity->close();
-//
-//				AttrWindow * pWindowAtt = new AttrWindow(curWinAtt);
-//				TY_AddAttributeData(idOut, pWindowAtt);
-//				pWindowAtt->close();
-//
-//				windowObjIds.append(idOut);
-//			}
-//		}
-//
-//		pEnt->close();
-//	}
-//
-//	return windowObjIds;
-//}
 
 bool CWindowTop2Front::GetTopViewWindowDirection(E_DIRECTION &windowDir) //得到平面窗户的方位，上、下左右
 {

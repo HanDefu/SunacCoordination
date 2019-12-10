@@ -111,6 +111,8 @@ int TY_HideBlockReferencesInBlockReference(AcDbObjectId blkRefId, vCString &hide
 AcDbObjectId CopyBlockDefFromDwg(const TCHAR* fileName, const TCHAR* blkDefName);
 AcDbObjectId CopyBlockDefFromDatabase(AcDbDatabase* pSourceDb, AcDbDatabase* pDestDb, const TCHAR* blkDefName);
 
+bool CloneObjects(AcDbObjectIdArray objList, AcDbObjectIdArray &objListOut);
+
 AcDbObjectId InsertBlockRefFromDwg(const TCHAR* fileName, const TCHAR* blkDefName, const WCHAR *layoutname, AcGePoint3d origin);
 
 bool SelectViewDir(eViewDir& p_viewDir);

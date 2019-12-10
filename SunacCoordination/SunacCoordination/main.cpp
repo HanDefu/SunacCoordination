@@ -20,25 +20,35 @@
 #include <rxmfcapi.h>
 #include <dbgroup.h>
 #include <geassign.h>
+#include <dbidmap.h>
+#include <string>
 #include "main.h"
 #include "AcExtensionModule.h"
 #include "accmd.h"
+#include "Common/ComFun_Sunac.h"
+#include "Common\ComFun_Str.h"
+#include "Command\CommandWindowTable.h"
+#include "command\CommandWindowDetail.h"
+#include "Command\Command.h"
 #include "UI\menu\Menu_Def.h"
 #include "object\WindowDoor\AttrWindow.h"
+#include "object\WindowDoor\WindowGen.h"
 #include "object\AirCondition\AttrAirCon.h"
 #include "object\Kitchen\AttrKitchen.h"
 #include "object\Bathroom\AttrBathroom.h"
 #include "object\Railing\AttrRailing.h"
-#include "Command\CommandWindowTable.h"
-#include "Command\Command.h"
+#include "Object/WindowStatistic/WindowMaterialUsage.h"
+#include "Object/WindowStatistic/WindowFormula.h"
+#include "Object/WindowStatistic/AluminumSeries.h"
+#include "Object/WindowStatistic/DeductedSize.h"
+#include "Object/WindowStatistic/WindowStatictic.h"
 #include "GlobalSetting.h"
-#include "command\CommandWindowDetail.h"
-#include "Common/ComFun_Sunac.h"
+#include "AutoNameSerialize.h"
+#include "Tool\DoubleClickBlockReference.h"
+#include "Tool\MarkupXml\Markup.h"
+#include "WebIO\WebIO.h"
 #include "webIO\WindowLocalData.h"
 #include "WebIO\ConfigDictionary.h"
-#include "Tool\DoubleClickBlockReference.h"
-#include "Common\ComFun_Str.h"
-#include "WebIO\WebIO.h"
 #include "WebIO\KitchenBathroomWebData.h"
 #include "WebIO\RailingWebData.h"
 #include "WebIO\AirconditionWebData.h"
@@ -47,18 +57,8 @@
 #include "webIO\WindowLocalDataFromDB.h"
 #include "webIO\WebProjectFile.h"
 #include "WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.h"
-#include "Common\ComFun_Str.h"
-#include "Tool\MarkupXml\Markup.h"
-#include <string>
-#include "WebIO/WebIO.h"
-#include "Object/WindowStatistic/WindowMaterialUsage.h"
-#include "Object/WindowStatistic/WindowFormula.h"
-#include "Object/WindowStatistic/AluminumSeries.h"
-#include "Object/WindowStatistic/DeductedSize.h"
 #include "ProjectorFileMrg/ProjectFileMrg.h"
 #include "ProjectorFileMrg/FileUploadDownload.h"
-#include "Object/WindowStatistic/WindowStatictic.h"
-#include "AutoNameSerialize.h"
 
 
 #ifdef _DEBUG
@@ -77,6 +77,61 @@ AC_IMPLEMENT_EXTENSION_MODULE(theArxDLL);
 
 
 void CMD_YTest()
+{
+	vector<AttrWindow> winPrototypes = WebIO::GetInstance()->GetWindows(1500, 1700, _T("不限"), 0, _T("不限"));
+	if (winPrototypes.size() == 0)
+	{
+		return;
+	}
+
+	AttrWindow winAtt = winPrototypes[0];
+	winAtt.SetW(1500);
+	winAtt.SetH(1700);
+
+	AcGePoint3d pos;
+	bool bSuc = TY_GetPoint(pos);
+	if (bSuc == false)
+		return;
+
+	AcDbObjectId idOut = CWindowGen::GenerateWindow(winAtt, pos, E_DIR_BOTTOM, false, AcDbObjectId::kNull, L"Sunac_Window");
+	
+	//AcGeMatrix3d xform;
+	//xform.setTranslation(AcGeVector3d(2500, 0, 0));
+
+	//////////////////////////////////////////////////////////////////////////
+	AcDbBlockTable *pBlockTable;
+	acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pBlockTable, AcDb::kForRead);
+	AcDbObjectId  modelSpaceId = AcDbObjectId::kNull;
+	pBlockTable->getAt(ACDB_MODEL_SPACE, modelSpaceId);
+	pBlockTable->close();
+
+	AcDbObjectIdArray  objList;
+	objList.append(idOut);
+
+	AcDbIdMapping idMap;
+	// Step 5: Call deepCloneObjects().
+	acdbHostApplicationServices()->workingDatabase()->deepCloneObjects(objList, modelSpaceId, idMap);
+	// Now we can go through the ID map and do whatever we'd like to the original and/or clone objects.
+
+	AcDbObjectIdArray  objListCloned;
+	AcDbIdMappingIter iter(idMap);
+	for (iter.start(); !iter.done(); iter.next()) 
+	{
+		AcDbIdPair idPair;
+		iter.getMap(idPair);
+		if (!idPair.isCloned())
+			continue;
+
+		objListCloned.append(idPair.value());
+
+		TYCOM_Move(idPair.value(), AcGeVector3d(2500, 0, 0));
+		//acutPrintf("\nObjectId is: %Ld",idPair.value().asOldId());
+	}
+	
+	return;
+}
+
+void CMD_YTest2()
 {
 	AttrWindow attrwindow;
 

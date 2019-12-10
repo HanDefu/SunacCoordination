@@ -8,6 +8,7 @@
 #include <dbmline.h>
 #include <dbhatch.h>
 #include <acedads.h>
+#include <dbidmap.h>
 #include "../Common/TYRect.h"
 #include "../Object\WindowDoor\AttrWindow.h"
 #include "../Object\AirCondition\AttrAirCon.h"
@@ -1263,6 +1264,38 @@ AcDbObjectId CopyBlockDefFromDwg(const TCHAR* fileName, const TCHAR* blkDefName)
 	pSourceDwg = NULL;
 
 	return blockRefId;
+}
+
+bool CloneObjects(AcDbObjectIdArray objList, AcDbObjectIdArray &objListCloned)
+{
+	Acad::ErrorStatus es;
+	objListCloned.removeAll();
+
+	AcDbBlockTable *pBlockTable;
+	es = acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pBlockTable, AcDb::kForRead);
+	AcDbObjectId  modelSpaceId = AcDbObjectId::kNull;
+	pBlockTable->getAt(ACDB_MODEL_SPACE, modelSpaceId);
+	pBlockTable->close();
+	
+	AcDbIdMapping idMap;
+	es = acdbHostApplicationServices()->workingDatabase()->deepCloneObjects(objList, modelSpaceId, idMap);
+	if (es!=Acad::eOk)
+	{
+		return false;
+	}
+	
+	AcDbIdMappingIter iter(idMap);
+	for (iter.start(); !iter.done(); iter.next())
+	{
+		AcDbIdPair idPair;
+		iter.getMap(idPair);
+		if (idPair.isCloned() && idPair.isPrimary())
+		{
+			objListCloned.append(idPair.value());
+		}
+	}
+
+	return true;
 }
 
 AcDbObjectId InsertBlockRefFromDwg(const TCHAR* fileName, const TCHAR* blkDefName, const WCHAR *layoutname, AcGePoint3d origin)
