@@ -35,7 +35,7 @@ public:
 	AcGePoint3d m_lb;//左下角点 pt1
 	AcGePoint3d m_rt;//右上角点 pt2
 
-	AcGePoint3d m_lt;//右上 pt3
+	AcGePoint3d m_lt;//左上 pt3
 	AcGePoint3d m_rb;//右下 pt4
 
 	bool m_ucs;

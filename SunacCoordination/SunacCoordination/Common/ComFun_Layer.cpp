@@ -348,7 +348,7 @@ int JHCOM_SetLayerColor(CString layerName,AcCmColor newcolor)
 }
 
 //设置图层打印状态
-int JHCOM_SetLayerPrint(CString layerName)
+int JHCOM_SetLayerPrint(CString layerName, bool isPrint)
 {
 	AcDbLayerTable *pLayerTbl;
 	acdbHostApplicationServices()->workingDatabase()->getLayerTable(pLayerTbl, AcDb::kForRead);
@@ -363,14 +363,8 @@ int JHCOM_SetLayerPrint(CString layerName)
 	// 获得指定层表记录的指针
 	AcDbLayerTableRecord *pLayerTblRcd;
 	pLayerTbl->getAt(layerName, pLayerTblRcd, AcDb::kForWrite);
-
-	bool isPrint = pLayerTblRcd->isPlottable();
 	
-	if (isPrint == true)
-	{
-		isPrint = false;
-		Acad::ErrorStatus es = pLayerTblRcd->setIsPlottable(isPrint);
-	}
+	Acad::ErrorStatus es = pLayerTblRcd->setIsPlottable(isPrint);
 
 	pLayerTblRcd->close();
 	pLayerTbl->close();

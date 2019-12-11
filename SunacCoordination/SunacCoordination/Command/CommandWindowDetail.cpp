@@ -176,7 +176,7 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 	AcGePoint3d  end = rightBottomPt;
 	AcGePoint3d  mid = rightBottomPt;
 
-	int colorIndex = 2;
+	int colorIndex = 7;
 	int textHeight = 80;
 	CString layer = L"0"; //TODO
 

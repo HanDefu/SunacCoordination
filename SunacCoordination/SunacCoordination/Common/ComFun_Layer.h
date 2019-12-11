@@ -141,4 +141,4 @@ AcDbObjectId      JHCOM_GetCurrentLayer(CString &name);
 --------------------------------------------------------------------------*/
 int               JHCOM_SetLayerColor(CString layerName,AcCmColor newcolor);
 
-int               JHCOM_SetLayerPrint(CString layerName);
+int               JHCOM_SetLayerPrint(CString layerName, bool isPrint = false);
