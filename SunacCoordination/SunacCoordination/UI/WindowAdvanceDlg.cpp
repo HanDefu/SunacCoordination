@@ -46,9 +46,9 @@ void CWindowAdvanceDlg::OnOK()
 	}
 
 	//型材
-	if (m_xingCai.GetCurSel() >= 0)
+	if (m_comboXingcai.GetCurSel() >= 0)
 	{
-		CString sAlSerial = TYUI_GetComboBoxText(m_xingCai);
+		CString sAlSerial = TYUI_GetComboBoxText(m_comboXingcai);
 		for (UINT i = 0; i < m_selAttrWindows.size(); i++)
 		{
 			m_selAttrWindows[i]->m_material.sAluminumSerial = sAlSerial;
@@ -56,9 +56,9 @@ void CWindowAdvanceDlg::OnOK()
 	}
 
 	//玻璃
-	if (m_boLi.GetCurSel() >= 0)
+	if (m_comboBoli.GetCurSel() >= 0)
 	{
-		CString sGlass = TYUI_GetComboBoxText(m_boLi);
+		CString sGlass = TYUI_GetComboBoxText(m_comboBoli);
 		for (UINT i = 0; i < m_selAttrWindows.size(); i++)
 		{
 			m_selAttrWindows[i]->m_material.sGlassSerial = sGlass;
@@ -67,9 +67,9 @@ void CWindowAdvanceDlg::OnOK()
 
 	
 		//塞缝尺寸
-	if (m_saiFeng.GetCurSel() >= 0)
+	if (m_comboSaifeng.GetCurSel() >= 0)
 	{
-		double aValue = TYUI_GetDouble(m_saiFeng);
+		double aValue = TYUI_GetDouble(m_comboSaifeng);
 		for (UINT i = 0; i < m_selAttrWindows.size(); i++)
 		{
 			m_selAttrWindows[i]->SetA(aValue);
@@ -89,19 +89,15 @@ void CWindowAdvanceDlg::OnOK()
 			}
 			else
 			{
-				if ((m_fuKuangType.GetCurSel() >= 0))
-					m_selAttrWindows[i]->m_material.sAuxiliaryFrame = TYUI_GetComboBoxText(m_fuKuangType);
+				if ((m_comboFuKuangType.GetCurSel() >= 0))
+					m_selAttrWindows[i]->m_material.sAuxiliaryFrame = TYUI_GetComboBoxText(m_comboFuKuangType);
 			}
 		}
 	}
 
-	////标记为已修改状态 //TODO
-	//for (UINT i = 0; i < m_selAttrWindows.size(); i++)
-	//{
-	//	m_selAttrWindows[i]
-	//}
-
 	CAcUiDialog::OnOK();
+
+	DestroyWindow(); //插入后也调用DestroyWindow销毁窗口
 }
 
 BOOL CWindowAdvanceDlg::PreTranslateMessage(MSG *pMsg)
@@ -115,14 +111,14 @@ void CWindowAdvanceDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CAcUiDialog::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_EDIT_CODE, m_sCode);
-	DDX_Control(pDX, IDC_COMBO_CAIZHI, m_caiZhi);
-	DDX_Control(pDX, IDC_COMBO_XINGCAI, m_xingCai);
-	DDX_Control(pDX, IDC_COMBO_BOLI, m_boLi);
-	DDX_Check(pDX, IDC_CHECK_FUKUANG, m_bFuKuang);
-	DDX_Control(pDX, IDC_COMBO_FUKUANG, m_fuKuangType);
-	DDX_Control(pDX, IDC_COMBO_SAIFENG, m_saiFeng);
+	DDX_Control(pDX, IDC_COMBO_CAIZHI, m_comboCaizhi);
+	DDX_Control(pDX, IDC_COMBO_XINGCAI, m_comboXingcai);
+	DDX_Control(pDX, IDC_COMBO_BOLI, m_comboBoli);
+	DDX_Control(pDX, IDC_COMBO_FUKUANG, m_comboFuKuangType);
+	DDX_Control(pDX, IDC_COMBO_SAIFENG, m_comboSaifeng);
 	DDX_Text(pDX, IDC_EDIT_JIENENG, m_fJieNeng);
 	DDX_Control(pDX, IDC_EDIT_JIENENG, m_eidtJieneng);
+	DDX_Control(pDX, IDC_CHECK_FUKUANG, m_checkFukuang);
 }
 
 BOOL CWindowAdvanceDlg::OnInitDialog()
@@ -134,6 +130,24 @@ BOOL CWindowAdvanceDlg::OnInitDialog()
 	return TRUE;
 }
 
+void CWindowAdvanceDlg::PostNcDestroy()  //非模特对话框若需要关闭时销毁，需在OnClose和OnOK中调用DestroyWindow()销毁窗口
+{
+	CAcUiDialog::PostNcDestroy();
+
+	// 关闭时销毁并释放非模态对话框
+	delete this;
+	if (g_windowAdvanceDlg != NULL)
+	{
+		g_windowAdvanceDlg = NULL;
+	}
+}
+void CWindowAdvanceDlg::OnClose()
+{
+	CAcUiDialog::OnClose();
+
+	// 销毁对话框
+	DestroyWindow();
+}
 LRESULT CWindowAdvanceDlg::onAcadKeepFocus(WPARAM, LPARAM)
 {
 	return TRUE;
@@ -141,6 +155,7 @@ LRESULT CWindowAdvanceDlg::onAcadKeepFocus(WPARAM, LPARAM)
 
 BEGIN_MESSAGE_MAP(CWindowAdvanceDlg, CAcUiDialog)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
+	ON_WM_CLOSE()
 	ON_BN_CLICKED(IDC_BUTTON_SELECT, &CWindowAdvanceDlg::OnBnClickedSelectOnDwg)
 	ON_BN_CLICKED(IDC_CHECK_FUKUANG, &CWindowAdvanceDlg::OnBnClickedAuxiliaryFrame)
 END_MESSAGE_MAP()
@@ -196,24 +211,23 @@ void CWindowAdvanceDlg::OnBnClickedAuxiliaryFrame()
 	m_bFuKuang = !m_bFuKuang;
 	if (m_bFuKuang == FALSE)
 	{
-		TYUI_Disable(m_fuKuangType);
-		m_fuKuangType.SetWindowText(_T(""));
+		TYUI_Disable(m_comboFuKuangType);
+		m_comboFuKuangType.SetWindowText(_T(""));
 	}
 	else
 	{
-		TYUI_Enable(m_fuKuangType);
+		TYUI_Enable(m_comboFuKuangType);
 	}
 
 	//是否有附框会影响塞缝尺寸选项
 	InitPlugSlotSize();
-	UpdateData(FALSE);
 }
 
 void CWindowAdvanceDlg::InitGlassSeries()
 {
 	if (m_selAttrWindows.empty())
 	{
-		m_boLi.ResetContent();
+		m_comboBoli.ResetContent();
 		return;
 	}
 
@@ -223,13 +237,13 @@ void CWindowAdvanceDlg::InitGlassSeries()
 	{
 		if (m_selAttrWindows[i]->m_material.sGlassSerial != m_selAttrWindows[0]->m_material.sGlassSerial)
 		{
-			TYUI_InitComboBox(m_boLi, glassOptions, L"");
-			TYUI_SetText(m_boLi, L"多种");
+			TYUI_InitComboBox(m_comboBoli, glassOptions, L"");
+			TYUI_SetText(m_comboBoli, L"多种");
 			return;
 		}
 	}
 	defValue = m_selAttrWindows[0]->m_material.sGlassSerial;
-	TYUI_InitComboBox(m_boLi, glassOptions, defValue);
+	TYUI_InitComboBox(m_comboBoli, glassOptions, defValue);
 }
 void CWindowAdvanceDlg::InitHeatCoeffCtrl() //初始化传热系数
 {
@@ -256,7 +270,7 @@ void CWindowAdvanceDlg::InitAluminumSeries()
 {
 	if (m_selAttrWindows.empty())
 	{
-		m_xingCai.ResetContent();
+		m_comboXingcai.ResetContent();
 		return;
 	}
 
@@ -281,38 +295,38 @@ void CWindowAdvanceDlg::InitAluminumSeries()
 	{
 		if (m_selAttrWindows[i]->m_material.sAluminumSerial != m_selAttrWindows[0]->m_material.sAluminumSerial)
 		{
-			TYUI_InitComboBox(m_xingCai, options, L"");
-			TYUI_SetText(m_xingCai, L"多种");
+			TYUI_InitComboBox(m_comboXingcai, options, L"");
+			TYUI_SetText(m_comboXingcai, L"多种");
 			return;
 		}
 	}
 	defValue = m_selAttrWindows[0]->m_material.sAluminumSerial;
-	TYUI_InitComboBox(m_xingCai, options, defValue);
+	TYUI_InitComboBox(m_comboXingcai, options, defValue);
 }
 
 void CWindowAdvanceDlg::InitMaterialType()
 {
 	if (m_selAttrWindows.empty())
 	{
-		m_caiZhi.ResetContent();
+		m_comboCaizhi.ResetContent();
 		return;
 	}
 
-	TYUI_InitComboBox(m_caiZhi, L"铝型材", L"铝型材");
+	TYUI_InitComboBox(m_comboCaizhi, L"铝型材", L"铝型材");
 }
 
 void CWindowAdvanceDlg::InitPlugSlotSize()
 {
 	if (m_selAttrWindows.empty())
 	{
-		m_saiFeng.ResetContent();
+		m_comboSaifeng.ResetContent();
 		return;
 	}
 
 	if (m_bFuKuang == 2)
 	{
-		m_saiFeng.ResetContent(); //有/无附框时的选项无交集
-		TYUI_SetText(m_saiFeng, L"多种");
+		m_comboSaifeng.ResetContent(); //有/无附框时的选项无交集
+		TYUI_SetText(m_comboSaifeng, L"多种");
 		return;
 	}
 
@@ -325,7 +339,7 @@ void CWindowAdvanceDlg::InitPlugSlotSize()
 	{
 		if (m_selAttrWindows[i]->m_material.bHasAuxiliaryFrame != (m_bFuKuang != FALSE))
 		{
-			TYUI_InitComboBox(m_saiFeng, options, options.empty() ? -1 : options[0]);
+			TYUI_InitComboBox(m_comboSaifeng, options, options.empty() ? -1 : options[0]);
 			return;
 		}
 	}
@@ -334,14 +348,14 @@ void CWindowAdvanceDlg::InitPlugSlotSize()
 	{
 		if (m_selAttrWindows[i]->GetA() != m_selAttrWindows[0]->GetA())
 		{
-			TYUI_InitComboBox(m_saiFeng, options, -1);
-			TYUI_SetText(m_saiFeng, L"多种");
+			TYUI_InitComboBox(m_comboSaifeng, options, -1);
+			TYUI_SetText(m_comboSaifeng, L"多种");
 			return;
 		}
 	}
 
 	int defValue = (int)m_selAttrWindows[0]->GetA();
-	TYUI_InitComboBox(m_saiFeng, options, defValue);
+	TYUI_InitComboBox(m_comboSaifeng, options, defValue);
 }
 
 void CWindowAdvanceDlg::InitAuxiliaryFrame()
@@ -360,10 +374,15 @@ void CWindowAdvanceDlg::InitAuxiliaryFrame()
 		}
 	}
 
-	if (m_bFuKuang == FALSE)
-		TYUI_Disable(m_fuKuangType);
+	m_checkFukuang.SetCheck(m_bFuKuang ? TRUE : FALSE);
+	if (0==m_bFuKuang)
+	{
+		TYUI_Disable(m_comboFuKuangType);
+	}
 	else
-		TYUI_Enable(m_fuKuangType);
+	{
+		TYUI_Enable(m_comboFuKuangType);
+	}
 
 	UpdateData(FALSE);
 }
@@ -372,7 +391,7 @@ void CWindowAdvanceDlg::InitAuxiliaryFrameSeries()
 {
 	if (m_selAttrWindows.empty())
 	{
-		m_fuKuangType.ResetContent();
+		m_comboFuKuangType.ResetContent();
 		return;
 	}
 
@@ -381,13 +400,13 @@ void CWindowAdvanceDlg::InitAuxiliaryFrameSeries()
 	{
 		if (m_selAttrWindows[i]->m_material.sAuxiliaryFrame != m_selAttrWindows[0]->m_material.sAuxiliaryFrame)
 		{
-			TYUI_InitComboBox(m_fuKuangType, options, L"");
-			TYUI_SetText(m_fuKuangType, L"多种");
+			TYUI_InitComboBox(m_comboFuKuangType, options, L"");
+			TYUI_SetText(m_comboFuKuangType, L"多种");
 			return;
 		}
 	}
 	CString defValue = m_selAttrWindows[0]->m_material.sAuxiliaryFrame;
-	TYUI_InitComboBox(m_fuKuangType, options, defValue);
+	TYUI_InitComboBox(m_comboFuKuangType, options, defValue);
 }
 
 CWindowAdvanceDlg* g_windowAdvanceDlg = NULL;
@@ -396,6 +415,7 @@ void OpenWindowAdvanceDlg()
 {
 	if (g_windowAdvanceDlg == NULL)
 	{
+		CAcModuleResourceOverride resOverride;
 		g_windowAdvanceDlg = new CWindowAdvanceDlg(acedGetAcadFrame());
 		g_windowAdvanceDlg->Create(IDD_DIALOG_WINDOW_ADVANCE);
 	}

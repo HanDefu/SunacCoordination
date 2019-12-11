@@ -24,7 +24,10 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 	//非模态对话框相关函数
+	virtual void PostNcDestroy();
+	afx_msg void OnClose();
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);///---01
+
 	virtual BOOL PreTranslateMessage(MSG *pMsg); //不响应回车
 
 public:

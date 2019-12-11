@@ -75,6 +75,7 @@ void CRailingDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CRailingDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDC_BUTTON_INSERTRAILING, &CRailingDlg::OnBnClickedInsertToCAD)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
+	ON_WM_CLOSE()
 	ON_BN_CLICKED(IDC_BUTTON_SELECTLINE, &CRailingDlg::OnBnClickedButtonSelectline)
 	ON_CBN_SELCHANGE(IDC_COMBO_RAILINGTYPE, &CRailingDlg::OnCbnSelchangeComboRailingtype)
 	ON_BN_CLICKED(IDC_CHECK_AUTOINDEX, &CRailingDlg::OnBnClickedCheckAutoindex)
@@ -223,7 +224,24 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 	//ShowWindow(TRUE);
 	OnOK();
 }
+void CRailingDlg::PostNcDestroy()
+{
+	CAcUiDialog::PostNcDestroy();
 
+	//// 释放非模态对话框的内存
+	//delete this;
+	//if (g_connectorDlg != NULL)
+	//{
+	//	g_connectorDlg = NULL;
+	//}
+}
+void CRailingDlg::OnClose()
+{
+	CAcUiDialog::OnClose();
+
+	// 销毁对话框
+	//DestroyWindow();
+}
 LRESULT CRailingDlg::onAcadKeepFocus(WPARAM, LPARAM)
 {
 	return TRUE;

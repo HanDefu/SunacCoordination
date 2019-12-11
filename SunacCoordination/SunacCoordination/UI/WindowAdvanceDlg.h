@@ -20,7 +20,11 @@ protected:
 
 	virtual BOOL OnInitDialog();
 
+
+	virtual void PostNcDestroy();
+	afx_msg void OnClose();
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);
+
 	virtual void OnOK();
 	virtual BOOL PreTranslateMessage(MSG *pMsg); //不响应回车
 
@@ -48,13 +52,14 @@ public:
 	CEdit m_eidtJieneng;
 	double m_fJieNeng;// 节能系数
 
-	CComboBox m_caiZhi;
-	CComboBox m_xingCai;
-	CComboBox m_boLi;
+	CComboBox m_comboCaizhi;
+	CComboBox m_comboXingcai;
+	CComboBox m_comboBoli;
 
 	int m_bFuKuang;
-	CComboBox m_fuKuangType;
-	CComboBox m_saiFeng; //塞缝尺寸
+	CComboBox m_comboFuKuangType;
+	CComboBox m_comboSaifeng; //塞缝尺寸
+	CButton m_checkFukuang;
 };
 
 extern CWindowAdvanceDlg* g_windowAdvanceDlg;

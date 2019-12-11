@@ -82,6 +82,7 @@ void CBathroomDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CBathroomDlg, CAcUiDialog)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
+	ON_WM_CLOSE()
 	ON_BN_CLICKED(IDC_BUTTON_RANGE, &CBathroomDlg::OnBnClickedButtonRange)
 	ON_BN_CLICKED(IDC_BUTTON_DOORDIR, &CBathroomDlg::OnBnClickedButtonDoorDir)
 	ON_BN_CLICKED(IDC_BUTTON_WINDOWDIR, &CBathroomDlg::OnBnClickedButtonWindowDir)
@@ -304,7 +305,25 @@ void CBathroomDlg::ClearPreviews()
 	m_preBathroom.ClearAllPreviews();
 	EnableSetProperty(false);
 }
+void CBathroomDlg::PostNcDestroy()
+{
+	CAcUiDialog::PostNcDestroy();
 
+	//// 释放非模态对话框的内存
+	//delete this;
+	//if (g_connectorDlg != NULL)
+	//{
+	//	g_connectorDlg = NULL;
+	//}
+}
+
+void CBathroomDlg::OnClose()
+{
+	CAcUiDialog::OnClose();
+
+	// 销毁对话框
+	//DestroyWindow();
+}
 LRESULT CBathroomDlg::onAcadKeepFocus(WPARAM, LPARAM)
 {
 	return TRUE;

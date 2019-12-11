@@ -48,6 +48,9 @@ public:
 	afx_msg void OnCbnSelchangeComboLntubepos();
 	afx_msg void OnCbnSelchangeComboRaintubepos();
 	afx_msg void OnBnClickedButtonInsertac();
+
+	virtual void PostNcDestroy();
+	afx_msg void OnClose();
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);
 
 	CString m_fileName;

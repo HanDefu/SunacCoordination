@@ -60,6 +60,24 @@ CKitchenDlg::~CKitchenDlg()
 	}
 }
 
+void CKitchenDlg::PostNcDestroy()
+{
+	CAcUiDialog::PostNcDestroy();
+
+	//// 释放非模态对话框的内存
+	//delete this;
+	//if (g_connectorDlg != NULL)
+	//{
+	//	g_connectorDlg = NULL;
+	//}
+}
+void CKitchenDlg::OnClose()
+{
+	CAcUiDialog::OnClose();
+
+	// 销毁对话框
+	//DestroyWindow();
+}
 LRESULT CKitchenDlg::onAcadKeepFocus(WPARAM, LPARAM)
 {
 	return TRUE;
@@ -95,6 +113,7 @@ void CKitchenDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CKitchenDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDOK, &CKitchenDlg::OnBnClickedOk)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
+	ON_WM_CLOSE()
 	ON_BN_CLICKED(IDC_BUTTON_INSERTKITCHEN, &CKitchenDlg::OnBnClickedButtonInsert)
 	ON_BN_CLICKED(IDC_BUTTON_RANGE, &CKitchenDlg::OnBnClickedButtonRange)
 	ON_BN_CLICKED(IDC_BUTTON_DOORDIR, &CKitchenDlg::OnBnClickedButtonDoorDir)
