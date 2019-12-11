@@ -104,28 +104,29 @@ bool GlobalSetting::LoadFromXml()
 			aes.InvCipher(bOutput, cPasswordBufferSize);
 			m_password = (const wchar_t*) bOutput;
 		}
-
-		CWinSetting winSetting;
-		if (xml.FindElem(_T("WinLayer")))
-			winSetting.m_sWinLayer = xml.GetData();
-		if (xml.FindElem(_T("WinWallLayer")))
-			winSetting.m_sWinWallLayer = xml.GetData();
-		if (xml.FindElem(_T("WinHardwareLayer")))
-			winSetting.m_sWinHardwareLayer = xml.GetData();
-		if (xml.FindElem(_T("WinOpenLayer")))
-			winSetting.m_sWinOpenLayer = xml.GetData();
-		if (xml.FindElem(_T("WinNumberLayerLimian")))
-			winSetting.m_sWinNumberLayerLimian = xml.GetData();
-		if (xml.FindElem(_T("WinNumberLayerPingmian")))
-			winSetting.m_sWinNumberLayerPingmian = xml.GetData();
-		if (xml.FindElem(_T("UseAinLimian")))
-			winSetting.m_bUseAinLimian = xml.GetData() == _T("TRUE") ? true : false;
-		if (xml.FindElem(_T("ShowLimianNumber")))
-			winSetting.m_bShowLimianNumber = xml.GetData() == _T("TRUE") ? true : false;
-
+		if (xml.FindElem(_T("WindowSetting")));
+		{
+			xml.IntoElem();
+			if (xml.FindElem(_T("WinLayer")))
+				m_winSetting.m_sWinLayer = xml.GetData();
+			if (xml.FindElem(_T("WinWallLayer")))
+				m_winSetting.m_sWinWallLayer = xml.GetData();
+			if (xml.FindElem(_T("WinHardwareLayer")))
+				m_winSetting.m_sWinHardwareLayer = xml.GetData();
+			if (xml.FindElem(_T("WinOpenLayer")))
+				m_winSetting.m_sWinOpenLayer = xml.GetData();
+			if (xml.FindElem(_T("WinNumberLayerLimian")))
+				m_winSetting.m_sWinNumberLayerLimian = xml.GetData();
+			if (xml.FindElem(_T("WinNumberLayerPingmian")))
+				m_winSetting.m_sWinNumberLayerPingmian = xml.GetData();
+			if (xml.FindElem(_T("UseAinLimian")))
+				m_winSetting.m_bUseAinLimian = xml.GetData() == _T("TRUE") ? true : false;
+			if (xml.FindElem(_T("ShowLimianNumber")))
+				m_winSetting.m_bShowLimianNumber = xml.GetData() == _T("TRUE") ? true : false;
+			xml.OutOfElem();
+		}
 		xml.OutOfElem();
 	}
-
 	return true;
 }
 
@@ -160,17 +161,18 @@ bool GlobalSetting::SaveToXml()
 			CString hexString = BytesToHexString(strBytes, cPasswordBufferSize);
 			xml.AddElem(_T("Password"), hexString);
 		}
-
 		//将图层信息保存到xml
-		CWinSetting winSetting;
-		xml.AddElem(_T("WinLayer"), winSetting.m_sWinLayer);
-		xml.AddElem(_T("WinWallLayer"), winSetting.m_sWinWallLayer);
-		xml.AddElem(_T("WinHardwareLayer"), winSetting.m_sWinHardwareLayer);
-		xml.AddElem(_T("WinOpenLayer"), winSetting.m_sWinOpenLayer);
-		xml.AddElem(_T("WinNumberLayerLimian"), winSetting.m_sWinNumberLayerLimian);
-		xml.AddElem(_T("WinNumberLayerPingmian"), winSetting.m_sWinNumberLayerPingmian);
-		xml.AddElem(_T("UseAinLimian"), winSetting.m_bUseAinLimian ? _T("TRUE") : _T("FALSE"));
-		xml.AddElem(_T("ShowLimianNumber"), winSetting.m_bShowLimianNumber ? _T("TRUE") : _T("FALSE"));
+		xml.AddElem(_T("WindowSetting"));
+		xml.IntoElem();
+		xml.AddElem(_T("WinLayer"), m_winSetting.m_sWinLayer);
+		xml.AddElem(_T("WinWallLayer"), m_winSetting.m_sWinWallLayer);
+		xml.AddElem(_T("WinHardwareLayer"), m_winSetting.m_sWinHardwareLayer);
+		xml.AddElem(_T("WinOpenLayer"), m_winSetting.m_sWinOpenLayer);
+		xml.AddElem(_T("WinNumberLayerLimian"), m_winSetting.m_sWinNumberLayerLimian);
+		xml.AddElem(_T("WinNumberLayerPingmian"), m_winSetting.m_sWinNumberLayerPingmian);
+		xml.AddElem(_T("UseAinLimian"), m_winSetting.m_bUseAinLimian ? _T("TRUE") : _T("FALSE"));
+		xml.AddElem(_T("ShowLimianNumber"), m_winSetting.m_bShowLimianNumber ? _T("TRUE") : _T("FALSE"));
+		xml.OutOfElem();
 	}
 	xml.OutOfElem();
 	xml.Save(sFile);

@@ -54,14 +54,14 @@ protected:
 	static bool SetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId p_fromWinId, AcDbObjectIdArray p_relatedIds);
 	static bool GetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId& p_fromWinId, AcDbObjectIdArray& p_relatedIds);
 
-	//≤Â»Î√≈¥∞±‡∫≈
-	static AcDbObjectId InsertWindowDoorCode(double p_width, double p_height, AcGePoint3d p_origin, CString p_number, eViewDir p_viewDir);
-
 	static bool MirrorObjectByCenter(const AcDbObjectId p_id, E_DIRECTION p_winDir);
 	static bool DeleteWindowObj(const AcDbObjectId p_id);
 
-
-
+	//≤Â»Î√≈¥∞±‡∫≈
+	static AcDbObjectId InsertWindowDoorCode(eViewDir p_viewDir, CString p_number);
+	static void MoveWindowDoorCode(AcDbObjectId p_id, double p_winWidth, double p_winHeight, AcGePoint3d p_origin, eViewDir p_viewDir, E_DIRECTION p_winDir);
+	static double GetWinWidth(AcDbObjectId p_id);
+	static double GetWinHeight(AcDbObjectId p_id);
 };
 
 
