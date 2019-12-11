@@ -273,7 +273,7 @@ AcDbObjectId MD2010_AddAlignedDimension(AcGePoint3d start,AcGePoint3d end, AcGeP
 	return dimID;
 }
 
-AcDbObjectId MD2010_AddAlignedDimension2(AcGePoint3d start,AcGePoint3d end, AcGePoint3d dimlinpnt, const ACHAR* newLayer, int colorIndex, double textHeight)
+AcDbObjectId MD2010_AddAlignedDimension2(AcGePoint3d start, AcGePoint3d end, AcGePoint3d dimlinpnt, const ACHAR* newLayer, int colorIndex, double textHeight, double lineTextSpace)
 {
 	//AcGePoint3d aas =AcGePoint3d(0,0,0);
 	if (JHCOM_PointDistance(start, end) <= TOL*10000)//小于1的不标注
@@ -286,6 +286,8 @@ AcDbObjectId MD2010_AddAlignedDimension2(AcGePoint3d start,AcGePoint3d end, AcGe
 	pDim->setLayer(newLayer);
 	pDim->setColorIndex(colorIndex);
 	pDim->setDimtxt(textHeight);//设置文字高度
+	pDim->setDimgap(lineTextSpace);
+
 	pDim->close();
 	return dimID;
 }
