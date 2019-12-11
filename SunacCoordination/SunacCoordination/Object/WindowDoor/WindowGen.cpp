@@ -74,7 +74,6 @@ AcGePoint3d CWindowGen::GetBlockInsertPos(const AcDbObjectId p_id, const AttrWin
 	JHCOM_GetObjectMinMaxPoint(p_id, minPt, maxPt); //TODO 处理ucs坐标下的情况
 	W = (maxPt.x - minPt.x);
 
-
 	AcGePoint3d insertPos = pos;
 	if (p_view == E_VIEW_TOP)
 	{
@@ -85,6 +84,7 @@ AcGePoint3d CWindowGen::GetBlockInsertPos(const AcDbObjectId p_id, const AttrWin
 			offsetXY.x += W;
 			break;
 		case E_DIR_RIGHT:
+			W = (maxPt.y - minPt.y);
 			offsetXY.y += W;
 			break;
 		case E_DIR_TOP:
@@ -170,15 +170,30 @@ AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d
 	AcDbObjectId id = oneWindow.Insert(sBlockDwgFileName, AcGePoint3d::kOrigin, rotateAngle, p_sLayerName, 256); //先插入原点，再移动
 
 	//门窗编号生成
-	if (p_bDetailWnd==false)
+	if (p_bDetailWnd == false)
 	{
-		curWinAtt.m_instanceCodeId = InsertWindowDoorCode(curWinAtt.GetW(), curWinAtt.GetH(), pos, curWinAtt.GetInstanceCode(), p_view);
+		if (GlobalSetting::GetInstance()->m_winSetting.m_bShowLimianNumber || p_view == E_VIEW_TOP)
+		{
+			curWinAtt.m_instanceCodeId = InsertWindowDoorCode(p_view, curWinAtt.GetInstanceCode());
+		}
 	}
 
 	//////////////////////////////////////////////////////////////////////////
 	UpdateRcWindowPara(id, curWinAtt, p_view, p_bDetailWnd);
 	AddWinAtt(id, curWinAtt);
 
+	//移动编号
+	if (p_bDetailWnd == false)
+	{
+		if (GlobalSetting::GetInstance()->m_winSetting.m_bShowLimianNumber || p_view == E_VIEW_TOP)
+		{
+			double winWidth = GetWinWidth(id);
+			double winHeight = GetWinHeight(id);
+			MoveWindowDoorCode(curWinAtt.m_instanceCodeId, winWidth, winHeight, pos, p_view, p_winDir);
+		}
+	}
+
+	//移动窗型
 	AcGePoint3d insertPos = GetBlockInsertPos(id, curWinAtt, pos, p_view, p_winDir);
 	TYCOM_Move(id, insertPos.asVector());
 
@@ -197,7 +212,6 @@ AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d
 		TYCOM_Transform(id, mat);
 	}
 
-	
 	return id;
 }
 
@@ -460,7 +474,7 @@ bool CWindowGen::GetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId& p_fromWinId,
 }
 
 //插入门窗编号
-AcDbObjectId CWindowGen::InsertWindowDoorCode(double p_width, double p_height, AcGePoint3d p_origin, CString p_number, eViewDir p_viewDir)
+AcDbObjectId CWindowGen::InsertWindowDoorCode(eViewDir p_viewDir, CString p_number)
 {
 	acDocManager->lockDocument(curDoc());
 
@@ -484,35 +498,84 @@ AcDbObjectId CWindowGen::InsertWindowDoorCode(double p_width, double p_height, A
 		if (sWindowDoorLayerName.GetLength() && JHCOM_GetLayerID(sWindowDoorLayerName) == AcDbObjectId::kNull)
 		{
 			JHCOM_CreateNewLayer(sWindowDoorLayerName);
+			JHCOM_SetLayerPrint(sWindowDoorLayerName);
 		}
 	}
 
 	MD2010_SetCurrentLayer(sWindowDoorLayerName);
 
 	//门窗编号插入点
+	sWindowDoorTextId = JHCOM_CreateText(AcGePoint3d(0, 0, 0),
+		AcGeVector3d(0, 0, 1),
+		GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize, 0,
+		p_number);
 
-	if (GlobalSetting::GetInstance()->m_winSetting.m_bShowLimianNumber || p_viewDir == E_VIEW_TOP)
-	{
-		sWindowDoorTextId = JHCOM_CreateText(AcGePoint3d(0, p_origin.y + 100, 0),
-			AcGeVector3d(0, 0, 1),
-			GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize, 0,
-			p_number);
+	MD2010_SetCurrentLayer(oldLayerName);
 
-		AcDbEntity *pEnt;
-		acdbOpenAcDbEntity(pEnt, sWindowDoorTextId, AcDb::kForWrite);
-
-		AcDbExtents extents;
-		pEnt->getGeomExtents(extents);
-		double textLength = extents.maxPoint().x - extents.minPoint().x;
-		AcGeVector3d offsetXYZ = AcGeVector3d(p_origin.x + (p_width - textLength) / 2, 0, 0);
-
-		AcGeMatrix3d xform;
-		xform.setToTranslation(offsetXYZ);
-		pEnt->transformBy(xform);
-		pEnt->close();
-	}
-	
 	acDocManager->unlockDocument(curDoc());
 
 	return sWindowDoorTextId;
+}
+
+void CWindowGen::MoveWindowDoorCode(AcDbObjectId p_id, double p_winWidth, double p_winHeight, AcGePoint3d p_origin, eViewDir p_viewDir, E_DIRECTION p_winDir)
+{
+	AcGePoint3d minWinTextPt, maxWinTextPt;
+
+	JHCOM_GetObjectMinMaxPoint(p_id, minWinTextPt, maxWinTextPt);
+	double textWidth = maxWinTextPt.x - minWinTextPt.x;
+	double textHeight = maxWinTextPt.y - minWinTextPt.y;
+
+	if (p_viewDir == E_VIEW_TOP)
+	{
+		double rotateAngle = 0;
+		AcGeVector3d offsetXYZ = AcGeVector3d(p_origin.x + (p_winWidth - textWidth) / 2, p_origin.y + 100, 0);
+		AcGeVector3d offsetLeftRightXYZ = AcGeVector3d(0, 0, 0);
+
+		switch (p_winDir)
+		{
+		case E_DIR_BOTTOM:
+			offsetXYZ = AcGeVector3d(p_origin.x + (p_winWidth - textWidth) / 2, p_origin.y - textHeight - 100, 0);
+			break;
+		case E_DIR_TOP:
+			offsetXYZ = AcGeVector3d(p_origin.x + (p_winWidth - textWidth) / 2, p_origin.y + 100, 0);
+			break;
+		case E_DIR_RIGHT:
+			rotateAngle = PI / 2;
+			offsetXYZ = AcGeVector3d(p_origin.x, p_origin.y, 0);
+			offsetLeftRightXYZ = AcGeVector3d(100 + textHeight, (p_winHeight - textWidth) / 2, 0);
+			break;
+		case E_DIR_LEFT:
+			rotateAngle = PI / 2;
+			offsetXYZ = AcGeVector3d(p_origin.x, p_origin.y, 0);
+			offsetLeftRightXYZ = AcGeVector3d(- 100, (p_winHeight - textWidth) / 2, 0);
+			break;
+		case E_DIR_UNKNOWN:
+			break;
+		default:
+			break;
+		}
+
+		TYCOM_Move(p_id, offsetXYZ);
+		TYCOM_Rotate(p_id, p_origin, rotateAngle);
+		TYCOM_Move(p_id, offsetLeftRightXYZ);
+	}
+	else
+	{
+		AcGeVector3d offsetXYZ = AcGeVector3d(p_origin.x + (p_winWidth - textWidth) / 2, p_origin.y - textHeight - 100, 0);
+		TYCOM_Move(p_id, offsetXYZ);
+	}
+}
+
+double CWindowGen::GetWinWidth(AcDbObjectId p_id)
+{
+	AcGePoint3d minWindowPt, maxWindowPt;
+	JHCOM_GetObjectMinMaxPoint(p_id, minWindowPt, maxWindowPt);
+	return maxWindowPt.x - minWindowPt.x;
+}
+
+double CWindowGen::GetWinHeight(AcDbObjectId p_id)
+{
+	AcGePoint3d minWindowPt, maxWindowPt;
+	JHCOM_GetObjectMinMaxPoint(p_id, minWindowPt, maxWindowPt);
+	return maxWindowPt.y - minWindowPt.y;
 }

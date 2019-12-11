@@ -140,3 +140,5 @@ AcDbObjectId      JHCOM_GetCurrentLayer(CString &name);
 * Return          : Error number.
 --------------------------------------------------------------------------*/
 int               JHCOM_SetLayerColor(CString layerName,AcCmColor newcolor);
+
+int               JHCOM_SetLayerPrint(CString layerName);

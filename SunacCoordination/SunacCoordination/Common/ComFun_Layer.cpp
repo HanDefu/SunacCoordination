@@ -346,3 +346,34 @@ int JHCOM_SetLayerColor(CString layerName,AcCmColor newcolor)
 
 	return 0;
 }
+
+//设置图层打印状态
+int JHCOM_SetLayerPrint(CString layerName)
+{
+	AcDbLayerTable *pLayerTbl;
+	acdbHostApplicationServices()->workingDatabase()->getLayerTable(pLayerTbl, AcDb::kForRead);
+
+	// 判断是否包含指定名称的层表记录
+	if (!pLayerTbl->has(layerName))
+	{
+		pLayerTbl->close();
+		return 0;
+	}
+
+	// 获得指定层表记录的指针
+	AcDbLayerTableRecord *pLayerTblRcd;
+	pLayerTbl->getAt(layerName, pLayerTblRcd, AcDb::kForWrite);
+
+	bool isPrint = pLayerTblRcd->isPlottable();
+	
+	if (isPrint == true)
+	{
+		isPrint = false;
+		Acad::ErrorStatus es = pLayerTblRcd->setIsPlottable(isPrint);
+	}
+
+	pLayerTblRcd->close();
+	pLayerTbl->close();
+
+	return 0;
+}
