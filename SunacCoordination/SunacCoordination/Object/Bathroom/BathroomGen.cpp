@@ -5,6 +5,7 @@
 #include "..\..\Common/ComFun_DynamicBlock.h"
 #include "..\..\Common/ComFun_Sunac.h"
 #include "BathroomAutoName.h"
+#include "..\..\Src\DocumentData.h"
 
 
 CBathroomGen::CBathroomGen(AttrBathroom* p_att)
@@ -105,7 +106,7 @@ void CBathroomGen::InitBathroomByDefault()
 		guanxiqu = 0;
 	else if (guanxiqu == 0)
 		guanxiqu = _ttof(GetGuanxiquDefault());
-	GetBathroomAtt()->m_instanceCode = CBathroomAutoName::GetInstance()->GetBathroomName(*GetBathroomAtt());
+	GetBathroomAtt()->m_instanceCode = GetBathroomAutoName()->GetBathroomName(*GetBathroomAtt());
 }
 
 bool CBathroomGen::CheckParameter(CString& errMsg)

@@ -6,6 +6,7 @@
 #include "../WebIO/WebIO.h"
 #include "../Object/Kitchen/KitchenAutoName.h"
 #include "../Common/ComFun_ACad.h"
+#include "..\Src\DocumentData.h"
 
 // CKitchenDlg 对话框
 
@@ -157,7 +158,7 @@ void CKitchenDlg::OnBnClickedButtonInsert()
 
 
 	CString newInstanceCode = TYUI_GetText(m_number);
-	if (!CKitchenAutoName::GetInstance()->IsNameValid(*m_pKitchGen->GetKitchenAtt(), newInstanceCode))
+	if (!GetKitchenAutoName()->IsNameValid(*m_pKitchGen->GetKitchenAtt(), newInstanceCode))
 	{
 		AfxMessageBox(L"此编号已被占用");
 		return;
@@ -175,7 +176,7 @@ void CKitchenDlg::OnBnClickedButtonInsert()
 	if (!m_bAutoIndex)
 	{
 		m_pKitchGen->GetKitchenAtt()->SetInstanceCode(newInstanceCode);
-		CKitchenAutoName::GetInstance()->RenameKitchen(*m_pKitchGen->GetKitchenAtt());
+		GetKitchenAutoName()->RenameKitchen(*m_pKitchGen->GetKitchenAtt());
 	}
 
 	AcGePoint3d origin = m_rect.GetLB();
@@ -187,7 +188,7 @@ void CKitchenDlg::OnBnClickedButtonInsert()
 		m_pCurEdit = NULL;
 	}
 	m_pKitchGen->GenKitchen(origin, m_angle);
-	CKitchenAutoName::GetInstance()->AddKitchenType(*m_pKitchGen->GetKitchenAtt());
+	GetKitchenAutoName()->AddKitchenType(*m_pKitchGen->GetKitchenAtt());
 
 	//ShowWindow(TRUE);
 	OnOK();
@@ -581,7 +582,7 @@ void CKitchenDlg::UpdateAttribute()
 
 	if (m_bAutoIndex)
 	{
-		pAtt->m_instanceCode = CKitchenAutoName::GetInstance()->GetKitchenName(*pAtt);
+		pAtt->m_instanceCode = GetKitchenAutoName()->GetKitchenName(*pAtt);
 		TYUI_SetText(m_number, pAtt->m_instanceCode);
 	}
 }

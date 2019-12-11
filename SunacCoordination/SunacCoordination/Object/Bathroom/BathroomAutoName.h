@@ -5,13 +5,13 @@
 using namespace std;
 
 
+class CDocumentData;
 class CBathroomAutoName
 {
+	friend CDocumentData;
 	CBathroomAutoName();
 public:
 	~CBathroomAutoName();
-
-	static CBathroomAutoName* GetInstance();
 
 	//自动获取名字
 	CString GetBathroomName(const AttrBathroom& p_att) const;

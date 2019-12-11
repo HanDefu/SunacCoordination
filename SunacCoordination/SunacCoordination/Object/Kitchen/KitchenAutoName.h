@@ -5,13 +5,15 @@
 using namespace std;
 
 
+class CDocumentData;
+
 class CKitchenAutoName
 {
+	friend CDocumentData;
 	CKitchenAutoName();
 public:
 	~CKitchenAutoName();
 
-	static CKitchenAutoName* GetInstance();
 
 	//自动获取名字
 	CString GetKitchenName(const AttrKitchen& p_att) const;

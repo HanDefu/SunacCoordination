@@ -125,11 +125,6 @@ CWindowAutoName::~CWindowAutoName()
 {
 }
 
-CWindowAutoName* CWindowAutoName::GetInstance()
-{
-	static CWindowAutoName instance;
-	return &instance;
-}
 
 CString CWindowAutoName::GetWindowName(const AttrWindow& p_att)
 {

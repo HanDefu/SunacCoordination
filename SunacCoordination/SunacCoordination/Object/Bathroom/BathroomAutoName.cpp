@@ -11,12 +11,6 @@ CBathroomAutoName::~CBathroomAutoName()
 {
 }
 
-CBathroomAutoName* CBathroomAutoName::GetInstance()
-{
-	static CBathroomAutoName instance;
-	return &instance;
-}
-
 CString CBathroomAutoName::GetBathroomName(const AttrBathroom& p_att) const
 {
 	CString sBathroomName = p_att.GetPrototypeCode();

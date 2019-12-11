@@ -6,6 +6,7 @@
 #include "../WebIO/WebIO.h"
 #include "../Object/Bathroom/BathroomAutoName.h"
 #include "../Common/ComFun_ACad.h"
+#include "..\Src\DocumentData.h"
 
 // CBathroomDlg 对话框
 
@@ -256,7 +257,7 @@ void CBathroomDlg::UpdateAttribute()
 
 	if (m_autoIndex.GetCheck())
 	{
-		pAtt->m_instanceCode = CBathroomAutoName::GetInstance()->GetBathroomName(*pAtt);
+		pAtt->m_instanceCode = GetBathroomAutoName()->GetBathroomName(*pAtt);
 		TYUI_SetText(m_number, pAtt->m_instanceCode);
 	}
 }
@@ -372,7 +373,7 @@ void CBathroomDlg::OnBnClickedButtonInsert()
 	}
 
 	CString newInstanceCode = TYUI_GetText(m_number);
-	if (!CBathroomAutoName::GetInstance()->IsNameValid(*m_pBathroomGen->GetBathroomAtt(), newInstanceCode))
+	if (!GetBathroomAutoName()->IsNameValid(*m_pBathroomGen->GetBathroomAtt(), newInstanceCode))
 	{
 		AfxMessageBox(L"此编号已被占用");
 		return;
@@ -390,7 +391,7 @@ void CBathroomDlg::OnBnClickedButtonInsert()
 	if (!m_autoIndex.GetCheck())
 	{
 		m_pBathroomGen->GetBathroomAtt()->SetInstanceCode(newInstanceCode);
-		CBathroomAutoName::GetInstance()->RenameBathroom(*m_pBathroomGen->GetBathroomAtt());
+		GetBathroomAutoName()->RenameBathroom(*m_pBathroomGen->GetBathroomAtt());
 	}
 
 	AcGePoint3d origin = m_rect.GetLB();
@@ -402,7 +403,7 @@ void CBathroomDlg::OnBnClickedButtonInsert()
 		m_pCurEdit = NULL;
 	}
 	m_pBathroomGen->GenBathroom(origin, m_angle);
-	CBathroomAutoName::GetInstance()->AddBathroomType(*m_pBathroomGen->GetBathroomAtt());
+	GetBathroomAutoName()->AddBathroomType(*m_pBathroomGen->GetBathroomAtt());
 
 	OnOK();
 	//ShowWindow(TRUE);
