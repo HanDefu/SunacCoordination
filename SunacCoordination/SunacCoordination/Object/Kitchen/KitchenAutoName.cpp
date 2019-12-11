@@ -11,11 +11,6 @@ CKitchenAutoName::~CKitchenAutoName()
 {
 }
 
-CKitchenAutoName* CKitchenAutoName::GetInstance()
-{
-	static CKitchenAutoName instance;
-	return &instance;
-}
 
 CString CKitchenAutoName::GetKitchenName(const AttrKitchen& p_att) const
 {

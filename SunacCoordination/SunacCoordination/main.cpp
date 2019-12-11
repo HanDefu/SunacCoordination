@@ -59,6 +59,7 @@
 #include "WebIO\SunacCadWeb\soapArgumentSettingServiceSoapProxy.h"
 #include "ProjectorFileMrg/ProjectFileMrg.h"
 #include "ProjectorFileMrg/FileUploadDownload.h"
+#include "Src/DocumentData.h"
 
 
 #ifdef _DEBUG
@@ -1216,9 +1217,11 @@ extern "C" AcRx::AppRetCode acrxEntryPoint( AcRx::AppMsgCode msg, void* appId)
 		CFileUpDownLoadFtp::Instance()->SetAppQuit();
 		break;
 	case  AcRx::kLoadDwgMsg:
+		CDocumentFactory::Instance().AddDocument(::acDocManager->curDocument());
 		break;
 	case  AcRx::kUnloadDwgMsg:
 		CloseModelessDialogs(); //预览控件依赖于当前文档，关闭文档时退出对话框以防止崩溃
+		CDocumentFactory::Instance().RemoveCurDoc();
 		break;
 	case  AcRx::kSaveMsg:
 		InitSerialize();

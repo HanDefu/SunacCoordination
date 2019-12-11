@@ -51,7 +51,24 @@ void CProjectManagementDlg::DoDataExchange(CDataExchange* pDX)
 	//DDX_Control(pDX, IDC_STATIC_ROOTNAME, m_StcRootName);
 }
 
+void CProjectManagementDlg::PostNcDestroy()
+{
+	CAcUiDialog::PostNcDestroy();
 
+	//// 释放非模态对话框的内存
+	//delete this;
+	//if (g_connectorDlg != NULL)
+	//{
+	//	g_connectorDlg = NULL;
+	//}
+}
+void CProjectManagementDlg::OnClose()
+{
+	CAcUiDialog::OnClose();
+
+	// 销毁对话框
+	//DestroyWindow();
+}
 LRESULT CProjectManagementDlg::onAcadKeepFocus(WPARAM, LPARAM)
 {
 	return TRUE;
@@ -66,6 +83,7 @@ BEGIN_MESSAGE_MAP(CProjectManagementDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDC_BUTTON_DOWNLOADALL, &CProjectManagementDlg::OnBnClickedButtonDownloadall)
 	ON_BN_CLICKED(IDC_BUTTON_DELETEALL, &CProjectManagementDlg::OnBnClickedButtonDeleteall)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
+	ON_WM_CLOSE()
 	ON_MESSAGE(WM_FILE_STATE_CHANGE, OnUpdateFileState)
 	ON_NOTIFY(NM_CUSTOMDRAW, IDC_TREE_PRJDIR, &CProjectManagementDlg::OnCustomdraw)
 END_MESSAGE_MAP()

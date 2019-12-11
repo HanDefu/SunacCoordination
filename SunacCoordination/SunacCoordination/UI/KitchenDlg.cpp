@@ -6,6 +6,7 @@
 #include "../WebIO/WebIO.h"
 #include "../Object/Kitchen/KitchenAutoName.h"
 #include "../Common/ComFun_ACad.h"
+#include "..\Src\DocumentData.h"
 
 // CKitchenDlg 对话框
 
@@ -59,6 +60,24 @@ CKitchenDlg::~CKitchenDlg()
 	}
 }
 
+void CKitchenDlg::PostNcDestroy()
+{
+	CAcUiDialog::PostNcDestroy();
+
+	//// 释放非模态对话框的内存
+	//delete this;
+	//if (g_connectorDlg != NULL)
+	//{
+	//	g_connectorDlg = NULL;
+	//}
+}
+void CKitchenDlg::OnClose()
+{
+	CAcUiDialog::OnClose();
+
+	// 销毁对话框
+	//DestroyWindow();
+}
 LRESULT CKitchenDlg::onAcadKeepFocus(WPARAM, LPARAM)
 {
 	return TRUE;
@@ -94,6 +113,7 @@ void CKitchenDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CKitchenDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDOK, &CKitchenDlg::OnBnClickedOk)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
+	ON_WM_CLOSE()
 	ON_BN_CLICKED(IDC_BUTTON_INSERTKITCHEN, &CKitchenDlg::OnBnClickedButtonInsert)
 	ON_BN_CLICKED(IDC_BUTTON_RANGE, &CKitchenDlg::OnBnClickedButtonRange)
 	ON_BN_CLICKED(IDC_BUTTON_DOORDIR, &CKitchenDlg::OnBnClickedButtonDoorDir)
@@ -157,7 +177,7 @@ void CKitchenDlg::OnBnClickedButtonInsert()
 
 
 	CString newInstanceCode = TYUI_GetText(m_number);
-	if (!CKitchenAutoName::GetInstance()->IsNameValid(*m_pKitchGen->GetKitchenAtt(), newInstanceCode))
+	if (!GetKitchenAutoName()->IsNameValid(*m_pKitchGen->GetKitchenAtt(), newInstanceCode))
 	{
 		AfxMessageBox(L"此编号已被占用");
 		return;
@@ -175,7 +195,7 @@ void CKitchenDlg::OnBnClickedButtonInsert()
 	if (!m_bAutoIndex)
 	{
 		m_pKitchGen->GetKitchenAtt()->SetInstanceCode(newInstanceCode);
-		CKitchenAutoName::GetInstance()->RenameKitchen(*m_pKitchGen->GetKitchenAtt());
+		GetKitchenAutoName()->RenameKitchen(*m_pKitchGen->GetKitchenAtt());
 	}
 
 	AcGePoint3d origin = m_rect.GetLB();
@@ -187,7 +207,7 @@ void CKitchenDlg::OnBnClickedButtonInsert()
 		m_pCurEdit = NULL;
 	}
 	m_pKitchGen->GenKitchen(origin, m_angle);
-	CKitchenAutoName::GetInstance()->AddKitchenType(*m_pKitchGen->GetKitchenAtt());
+	GetKitchenAutoName()->AddKitchenType(*m_pKitchGen->GetKitchenAtt());
 
 	//ShowWindow(TRUE);
 	OnOK();
@@ -581,7 +601,7 @@ void CKitchenDlg::UpdateAttribute()
 
 	if (m_bAutoIndex)
 	{
-		pAtt->m_instanceCode = CKitchenAutoName::GetInstance()->GetKitchenName(*pAtt);
+		pAtt->m_instanceCode = GetKitchenAutoName()->GetKitchenName(*pAtt);
 		TYUI_SetText(m_number, pAtt->m_instanceCode);
 	}
 }

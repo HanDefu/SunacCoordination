@@ -30,16 +30,16 @@ public:
 	vector<AcDbObjectId> m_winsInCad; //在图上的CAD 1912
 };
 
-
+class CDocumentData;
 //////////////////////////////////////////////////////////////////////////
 //所有涉及门窗编号及编号修改的都通过CWindowAutoName类处理
 class CWindowAutoName
 {
+	friend CDocumentData;
 	CWindowAutoName();
 public:
 	~CWindowAutoName();
 
-	static CWindowAutoName* GetInstance();
 
 	//自动获取名字, 注意获取并没有添加到分类库中
 	CString GetWindowName(const AttrWindow& p_att);

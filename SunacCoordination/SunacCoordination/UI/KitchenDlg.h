@@ -59,7 +59,11 @@ public:
 	AcDbBlockReference* m_pCurEdit; //Ë«»÷±à¼­Ê±Ê¹ÓÃ
 
 	afx_msg void OnBnClickedOk();
+
+	virtual void PostNcDestroy();
+	afx_msg void OnClose();
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);///---01
+
 	afx_msg void OnBnClickedButtonInsert();
 	afx_msg void OnBnClickedButtonRange();
 	afx_msg void OnBnClickedButtonDoorDir();

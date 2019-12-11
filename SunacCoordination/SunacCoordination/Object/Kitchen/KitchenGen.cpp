@@ -5,6 +5,7 @@
 #include "..\..\Common/ComFun_Sunac.h"
 #include "..\..\Common/ComFun_DynamicBlock.h"
 #include "KitchenAutoName.h"
+#include "..\..\Src\DocumentData.h"
 
 
 CKitchGen::CKitchGen(AttrKitchen* p_att)
@@ -175,7 +176,7 @@ void CKitchGen::InitKitchenByDefault()
 	if (TYCOM_vFind(zaotai, zaotaiOptions) == -1)
 		zaotai = GetZhaotaiDefault();
 
-	GetKitchenAtt()->m_instanceCode = CKitchenAutoName::GetInstance()->GetKitchenName(*GetKitchenAtt());
+	GetKitchenAtt()->m_instanceCode = GetKitchenAutoName()->GetKitchenName(*GetKitchenAtt());
 }
 
 AcDbObjectId CKitchGen::GenKitchen(const AcGePoint3d p_pos, int p_angle)

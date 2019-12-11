@@ -22,7 +22,12 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	virtual BOOL OnInitDialog();
+
+
+	virtual void PostNcDestroy();
+	afx_msg void OnClose();
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);///---01
+
 	virtual BOOL PreTranslateMessage(MSG *pMsg); //不响应回车
 
 	DECLARE_MESSAGE_MAP()

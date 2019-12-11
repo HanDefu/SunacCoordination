@@ -6,6 +6,7 @@
 #include "../WebIO/WebIO.h"
 #include "../Object/Bathroom/BathroomAutoName.h"
 #include "../Common/ComFun_ACad.h"
+#include "..\Src\DocumentData.h"
 
 // CBathroomDlg 对话框
 
@@ -81,6 +82,7 @@ void CBathroomDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CBathroomDlg, CAcUiDialog)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
+	ON_WM_CLOSE()
 	ON_BN_CLICKED(IDC_BUTTON_RANGE, &CBathroomDlg::OnBnClickedButtonRange)
 	ON_BN_CLICKED(IDC_BUTTON_DOORDIR, &CBathroomDlg::OnBnClickedButtonDoorDir)
 	ON_BN_CLICKED(IDC_BUTTON_WINDOWDIR, &CBathroomDlg::OnBnClickedButtonWindowDir)
@@ -256,7 +258,7 @@ void CBathroomDlg::UpdateAttribute()
 
 	if (m_autoIndex.GetCheck())
 	{
-		pAtt->m_instanceCode = CBathroomAutoName::GetInstance()->GetBathroomName(*pAtt);
+		pAtt->m_instanceCode = GetBathroomAutoName()->GetBathroomName(*pAtt);
 		TYUI_SetText(m_number, pAtt->m_instanceCode);
 	}
 }
@@ -303,7 +305,25 @@ void CBathroomDlg::ClearPreviews()
 	m_preBathroom.ClearAllPreviews();
 	EnableSetProperty(false);
 }
+void CBathroomDlg::PostNcDestroy()
+{
+	CAcUiDialog::PostNcDestroy();
 
+	//// 释放非模态对话框的内存
+	//delete this;
+	//if (g_connectorDlg != NULL)
+	//{
+	//	g_connectorDlg = NULL;
+	//}
+}
+
+void CBathroomDlg::OnClose()
+{
+	CAcUiDialog::OnClose();
+
+	// 销毁对话框
+	//DestroyWindow();
+}
 LRESULT CBathroomDlg::onAcadKeepFocus(WPARAM, LPARAM)
 {
 	return TRUE;
@@ -372,7 +392,7 @@ void CBathroomDlg::OnBnClickedButtonInsert()
 	}
 
 	CString newInstanceCode = TYUI_GetText(m_number);
-	if (!CBathroomAutoName::GetInstance()->IsNameValid(*m_pBathroomGen->GetBathroomAtt(), newInstanceCode))
+	if (!GetBathroomAutoName()->IsNameValid(*m_pBathroomGen->GetBathroomAtt(), newInstanceCode))
 	{
 		AfxMessageBox(L"此编号已被占用");
 		return;
@@ -390,7 +410,7 @@ void CBathroomDlg::OnBnClickedButtonInsert()
 	if (!m_autoIndex.GetCheck())
 	{
 		m_pBathroomGen->GetBathroomAtt()->SetInstanceCode(newInstanceCode);
-		CBathroomAutoName::GetInstance()->RenameBathroom(*m_pBathroomGen->GetBathroomAtt());
+		GetBathroomAutoName()->RenameBathroom(*m_pBathroomGen->GetBathroomAtt());
 	}
 
 	AcGePoint3d origin = m_rect.GetLB();
@@ -402,7 +422,7 @@ void CBathroomDlg::OnBnClickedButtonInsert()
 		m_pCurEdit = NULL;
 	}
 	m_pBathroomGen->GenBathroom(origin, m_angle);
-	CBathroomAutoName::GetInstance()->AddBathroomType(*m_pBathroomGen->GetBathroomAtt());
+	GetBathroomAutoName()->AddBathroomType(*m_pBathroomGen->GetBathroomAtt());
 
 	OnOK();
 	//ShowWindow(TRUE);

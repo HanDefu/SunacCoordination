@@ -62,6 +62,24 @@ CAirconditionerDlg::~CAirconditionerDlg()
 {
 }
 
+void CAirconditionerDlg::PostNcDestroy()
+{
+	CAcUiDialog::PostNcDestroy();
+
+	//// 释放非模态对话框的内存
+	//delete this;
+	//if (g_connectorDlg != NULL)
+	//{
+	//	g_connectorDlg = NULL;
+	//}
+}
+void CAirconditionerDlg::OnClose()
+{
+	CAcUiDialog::OnClose();
+
+	// 销毁对话框
+	//DestroyWindow();
+}
 LRESULT CAirconditionerDlg::onAcadKeepFocus(WPARAM, LPARAM)
 {
 	//return FALSE;
@@ -93,6 +111,7 @@ BEGIN_MESSAGE_MAP(CAirconditionerDlg, CAcUiDialog)
 	ON_CBN_SELCHANGE(IDC_COMBO_RAINTUBEPOS, &CAirconditionerDlg::OnCbnSelchangeComboRaintubepos)
 	ON_BN_CLICKED(IDC_BUTTON_INSERTAC, &CAirconditionerDlg::OnBnClickedButtonInsertac)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
+	ON_WM_CLOSE()
 	ON_BN_CLICKED(IDC_BUTTON_CALCULATE, &CAirconditionerDlg::OnBnClickedButtonCalculate)
 	ON_BN_CLICKED(IDC_BUTTON_CALCULATE2, &CAirconditionerDlg::OnBnClickedButtonCalculate2)
 END_MESSAGE_MAP()

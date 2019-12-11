@@ -12,6 +12,7 @@
 #include "../Object/WindowDoor/WindowAutoName.h"
 #include "../Common/ComFun_ACad.h"
 #include "DlgWindowAirCalc.h"
+#include "..\Src\DocumentData.h"
 
 // CWindowDlg 对话框
 
@@ -36,6 +37,26 @@ CWindowDlg::CWindowDlg(CWnd* pParent /*=NULL*/)
 
 CWindowDlg::~CWindowDlg()
 {
+}
+
+void CWindowDlg::PostNcDestroy()
+{
+	CAcUiDialog::PostNcDestroy();
+
+	//// 释放非模态对话框的内存
+	//delete this;
+	//if (g_connectorDlg != NULL)
+	//{
+	//	g_connectorDlg = NULL;
+	//}
+}
+
+void CWindowDlg::OnClose()
+{
+	CAcUiDialog::OnClose();
+
+	// 销毁对话框
+	//DestroyWindow();
 }
 
 LRESULT CWindowDlg::onAcadKeepFocus(WPARAM, LPARAM)
@@ -96,6 +117,7 @@ void CWindowDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CWindowDlg, CAcUiDialog)
 	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
+	ON_WM_CLOSE()
 	ON_BN_CLICKED(IDC_BUTTON_INSERTWINDOW, &CWindowDlg::OnBnClickedButtonInsert)
 	ON_BN_CLICKED(IDC_BUTTON_SEARCHWINDOW, &CWindowDlg::OnBnClickedButtonSearchwindow)
 	ON_BN_CLICKED(IDC_RADIO_DOOR, &CWindowDlg::OnBnClickedRadioWindowDoor)
@@ -196,7 +218,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	UpdateInstanceCode();
 
 	CString sNumber = TYUI_GetText(m_editWinNumber);
-	if (!m_bAutoNumber && !CWindowAutoName::GetInstance()->IsNameValid(*pSelWinAttr,sNumber))
+	if (!m_bAutoNumber && !GetWindowAutoName()->IsNameValid(*pSelWinAttr,sNumber))
 	{
 		AfxMessageBox(L"此编号已被占用,请重新输入编号");
 		return;
@@ -206,7 +228,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	if (sOldNumber.CompareNoCase(sNumber)!=0)
 	{
 		pSelWinAttr->SetInstanceCode(sNumber);
-		CWindowAutoName::GetInstance()->RenameWindow(sOldNumber, sNumber);
+		GetWindowAutoName()->RenameWindow(sOldNumber, sNumber);
 	}
 
 
@@ -241,7 +263,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		assert(idOut != AcDbObjectId::kNull);
 		if (idOut != AcDbObjectId::kNull)
 		{
-			CWindowAutoName::GetInstance()->AddWindowType(*pSelWinAttr, idOut);
+			GetWindowAutoName()->AddWindowType(*pSelWinAttr, idOut);
 			m_bHasInsert = true;
 		}
 
@@ -254,7 +276,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		assert(idOut != AcDbObjectId::kNull);
 		if (idOut != AcDbObjectId::kNull)
 		{
-			CWindowAutoName::GetInstance()->AddWindowType(*pSelWinAttr, idOut);
+			GetWindowAutoName()->AddWindowType(*pSelWinAttr, idOut);
 		}
 
 		m_pCurEditWinRef = NULL;
@@ -358,7 +380,7 @@ void CWindowDlg::OnBnClickedAutoIndex()
 	if (m_bAutoNumber)
 	{
 		m_editWinNumber.SetReadOnly(TRUE);
-		CString newName = CWindowAutoName::GetInstance()->GetWindowName(*pSelWinAttr);
+		CString newName = GetWindowAutoName()->GetWindowName(*pSelWinAttr);
 		TYUI_SetText(m_editWinNumber, newName);
 	}
 	else
@@ -443,7 +465,7 @@ void CWindowDlg::OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult)
 		TYUI_Disable(m_isMirror);
 	}
 
-	pSelWinAttr->m_instanceCode = CWindowAutoName::GetInstance()->GetWindowName(*pSelWinAttr);
+	pSelWinAttr->m_instanceCode = GetWindowAutoName()->GetWindowName(*pSelWinAttr);
 	TYUI_SetText(m_editWinNumber, pSelWinAttr->m_instanceCode);
 	m_radioBayWindow = (pSelWinAttr->m_isBayWindow ? 0 : 1);
 	TYUI_SetInt(m_comboOutWallDistance, int(pSelWinAttr->m_wallDis));
@@ -602,7 +624,7 @@ void CWindowDlg::UpdateInstanceCode()
 			return;
 
 		UpdateData(TRUE);
-		pSelWinAttr->m_instanceCode = CWindowAutoName::GetInstance()->GetWindowName(*pSelWinAttr);
+		pSelWinAttr->m_instanceCode = GetWindowAutoName()->GetWindowName(*pSelWinAttr);
 		TYUI_SetText(m_editWinNumber, pSelWinAttr->m_instanceCode);
 		UpdateData(FALSE);
 	}
@@ -859,7 +881,7 @@ void CWindowDlg::InsertAllWindows_Test()
 			TYCOM_Mirror(oneWindow.m_id, basePt, AcGeVector3d(0, 1, 0));
 		}
 
-		CWindowAutoName::GetInstance()->AddWindowType(*pSelWinAttr, oneWindow.m_id);
+		GetWindowAutoName()->AddWindowType(*pSelWinAttr, oneWindow.m_id);
 
 		//把UI的数据记录在图框的扩展字典中
 		AttrWindow * pWindow = new AttrWindow(*pSelWinAttr);

@@ -3,6 +3,7 @@
 #include "Object/WindowDoor/WindowAutoName.h"
 #include "Object/Kitchen/KitchenAutoName.h"
 #include "Object/Bathroom/BathroomAutoName.h"
+#include "Src/DocumentData.h"
 
 static const Adesk::UInt32  c_nAutoNameVersion = 1; //测试用，每次修改序列化内容+1，若版本号不一致，则不读取
 
@@ -47,9 +48,9 @@ Acad::ErrorStatus CAutoNameSerialize::dwgInFields(AcDbDwgFiler* pFiler)
 	pFiler->readItem(&m_version);
 	
 	//3. 读取数据
-	CWindowAutoName::GetInstance()->ReadFromDwg(pFiler);
-	CKitchenAutoName::GetInstance()->ReadFromDwg(pFiler);
-	CBathroomAutoName::GetInstance()->ReadFromDwg(pFiler);
+	GetWindowAutoName()->ReadFromDwg(pFiler);
+	GetKitchenAutoName()->ReadFromDwg(pFiler);
+	GetBathroomAutoName()->ReadFromDwg(pFiler);
 	
 	//4. 结束
 	return pFiler->filerStatus();
@@ -68,9 +69,9 @@ Acad::ErrorStatus CAutoNameSerialize::dwgOutFields(AcDbDwgFiler* pFiler)const
 	pFiler->writeItem(nVersion);
 
 	//3. 写入数据
-	CWindowAutoName::GetInstance()->WriteToDwg(pFiler);
-	CKitchenAutoName::GetInstance()->WriteToDwg(pFiler);
-	CBathroomAutoName::GetInstance()->WriteToDwg(pFiler);
+	GetWindowAutoName()->WriteToDwg(pFiler);
+	GetKitchenAutoName()->WriteToDwg(pFiler);
+	GetBathroomAutoName()->WriteToDwg(pFiler);
 	
 	//4. 结束
 	return pFiler->filerStatus();
