@@ -43,7 +43,7 @@ protected:
 
 	static void ModifyOneWindow(const AcDbObjectId p_id, AttrWindow newWinAtt);
 
-	static AcGePoint3d GetWindowInsertPos(AcDbObjectId p_id);
+	static bool GetWindowInsertPos(AcDbObjectId p_id, AcGePoint3d &p_insertPos, double& p_angle);
 	static AcGePoint3d GetWindowLeftBottomPos(AcDbObjectId p_id);
 	static E_DIRECTION GetWindowInsertDir(AcDbObjectId p_id);
 	static CWinInsertPara GetWindowInsertPara(AcDbObjectId p_id); //根据已插入的门窗获取其插入的信息
