@@ -1,0 +1,15 @@
+
+
+
+  融创示范区对接BPM系统已开发测试完毕，现通知BPM同步上线正式环境，具体事项如下：
+ 1.上线时间:
+      2019年11月25日 18点-24点之间
+2.上线接口范围：
+    计划创建、计划修改、计划节点反馈、计划节点延期、评优参选 5个BPM流程。
+3.示范区BPM回写Webservice服务生产接口地址：
+ a.发起回写：http://10.4.0.61:8091/DemonstrationBPMCreateResult.asmx?wsdl
+ b.审批回写：http://10.4.0.61:8091/DemonstrationBPMAuditResult.asmx?wsdl
+ c.审批结束：http://10.4.0.61:8091/DemonstrationBPMApproveCloseResult.asmx?wsdl
+ d.退回回写 http://10.4.0.61:8091/DemonstrationBPMReworkResult.asmx?wsdl
+ e.表单更新：http://10.4.0.61:8091/DemonstrationBPMUpdateDataResult.asmx?wsdl
+

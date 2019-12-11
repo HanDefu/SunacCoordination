@@ -1,0 +1,10 @@
+Window_NZC4_0    http://192.168.2.110/Workflow/MTStart2.aspx?BSID=vsheji&BTID=P11&BOID=196
+DOOR_TLM1_test	http://192.168.2.110/Workflow/MTStart2.aspx?BSID=vsheji&BTID=P21&BOID=213
+Railing_B5               http://192.168.2.110/Workflow/MTStart2.aspx?BSID=vsheji&BTID=P51&BOID=102
+KUQ_CHUI	http://192.168.2.110/Workflow/MTStart2.aspx?BSID=vsheji&BTID=P31&BOID=223
+TI3_G		http://192.168.2.110/Workflow/MTStart2.aspx?BSID=vsheji&BTID=P41&BOID=134
+AIRCON_3.0P_HY1   http://192.168.2.110/Workflow/MTStart2.aspx?BSID=vsheji&BTID=P61&BOID=241
+Window_jingtai	http://192.168.2.110/Workflow/MTStart2.aspx?BSID=vsheji&BTID=P12&BOID=254
+Door_jingtai	http://192.168.2.110/Workflow/MTStart2.aspx?BSID=vsheji&BTID=P22&BOID=255
+Kjingtai		http://192.168.2.110/Workflow/MTStart2.aspx?BSID=vsheji&BTID=P32&BOID=256
+Tjingtai		http://192.168.2.110/Workflow/MTStart2.aspx?BSID=vsheji&BTID=P42&BOID=257

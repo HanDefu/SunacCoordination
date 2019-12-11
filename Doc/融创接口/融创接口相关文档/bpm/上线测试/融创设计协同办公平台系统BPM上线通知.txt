@@ -1,0 +1,13 @@
+
+融创设计协同办公平台系统对接BPM系统已开发测试完毕，现通知BPM同步上线正式环境，具体事项如下：
+ 1.上线时间:
+      2019年11月26日 18点-24点之间
+	  
+2.上线接口范围：
+动态外窗原型审批、静态外窗原型审批、动态门原型审批、静态门原型审批、动态厨房原型审批、静态厨房原型审批、动态卫生间原型审批、静态卫生间原型审批、空调原型审批、栏杆原型审批10个BPM流程。
+	
+3.融创设计协同办公平台系统回写Webservice服务生产接口地址：
+BPM流程审批结束(通过、拒绝、作废)：http://ades.sunac.com.cn/BMPService.asmx?op=ApproveClose?
+BMP流程审批(通过)：http://ades.sunac.com.cn/BMPService.asmx?op=Audit
+BMP提交成功：http://ades.sunac.com.cn/BMPService.asmx?op=CreateResult
+BPM流程审批(退回、发起人取消）：http://ades.sunac.com.cn/BMPService.asmx?op=Rework
