@@ -29,6 +29,7 @@
 #include <acdb.h>
 #include <dbObjectContextInterface.h>
 #include "ComFun_ACad.h"
+#include "../Common/ComFun_Convert.h"
 
 AcDbObjectId MD2010_PostModalToBlockTable(const ACHAR* entryName, AcDbEntity *pent)
 {
@@ -291,6 +292,29 @@ AcDbObjectId MD2010_AddAlignedDimension2(AcGePoint3d start, AcGePoint3d end, AcG
 	pDim->close();
 	return dimID;
 }
+
+AcDbObjectId MD2010_AddAlignedDimensionAndStyle(AcGePoint3d start, AcGePoint3d end, AcGePoint3d dimlinpnt, double size, const ACHAR* newLayer)
+{
+	//AcGePoint3d aas =AcGePoint3d(0,0,0);
+	AcDbObjectId dimStyleId = MD2010_GetDimstylerID(_T("_TCH_ARCH&&50"));
+	//MD2010_SetCurrentDimStyler(dimStyleId);
+
+	if (JHCOM_PointDistance(start, end) <= TOL * 10000)//小于1的不标注
+		return 0;
+
+	ACHAR* entryName = DoubleToACHAR(size);
+	AcDbAlignedDimension  *pDim = new AcDbAlignedDimension(start, end, dimlinpnt, entryName, dimStyleId);
+
+	//pDim->setColorIndex(color);extend
+	AcDbObjectId dimID = MD2010_PostModalToBlockTable(ACDB_MODEL_SPACE, pDim);
+
+	pDim->setLayer(newLayer);
+
+
+	pDim->close();
+	return dimID;
+}
+
 
 int MD2010_SetTransparency(AcDbObjectId objID,AcCmTransparency trans)
 {

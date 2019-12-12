@@ -45,6 +45,8 @@ void CWindowDetail::DrawWindowDetail()
 {
 	CDocLock lockEnt;
 
+	CCommandHighlight::GetInstance()->WindowDoorNoHighlight();
+
 	//第一步：选择需要统计的门窗
 	eViewDir viewDir = E_VIEW_FRONT;
 	bool bSuc1 = SelectViewDir(viewDir);
@@ -164,7 +166,8 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 	rect.m_rt.z = 0;
 
 	//JHCOM_GetObjectMinMaxPoint(m_id, rect.m_lb, rect.m_rt);
-	double offset = 150;
+	//double offset = 150;
+	double offset = 250;
 
 	//----------------先标注竖向的--------------------//
 	const double h2 = winAtt.GetH2();
@@ -176,8 +179,8 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 	AcGePoint3d  end = rightBottomPt;
 	AcGePoint3d  mid = rightBottomPt;
 
-	int colorIndex = 7;
-	int textHeight = 80;
+	//int colorIndex = 7;
+	//int textHeight = 80;
 	CString layer = L"0"; //TODO
 
 	if (A > TOL)//如果A值存在 先标注两端的A
@@ -185,12 +188,14 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 		start = rightBottomPt;
 		end = AcGePoint3d(start.x, start.y + A, 0);
 		mid = AcGePoint3d(start.x + offset, (start.y + end.y) / 2, 0);
-		MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+		//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+		MD2010_AddAlignedDimensionAndStyle(start, end, mid, A, layer);
 
 		start = rightTopPt;
 		end = AcGePoint3d(start.x, start.y - A, 0);
 		mid = AcGePoint3d(start.x + offset, (start.y + end.y) / 2, 0);
-		MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+		//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+		MD2010_AddAlignedDimensionAndStyle(start, end, mid, A, layer);
 	}
 
 	if (h2 > TOL)
@@ -198,20 +203,23 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 		start = AcGePoint3d(rightBottomPt.x, rightBottomPt.y + A, 0);
 		end = AcGePoint3d(start.x, start.y + h2, 0);
 		mid = AcGePoint3d(start.x + offset, start.y + h2 / 2, 0);
-		MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+		//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+		MD2010_AddAlignedDimensionAndStyle(start, end, mid, h2, layer);
 	}
 
 	//H1一定有
 	start = AcGePoint3d(rightBottomPt.x, rightBottomPt.y + A + h2, 0);
 	end = AcGePoint3d(start.x, start.y + h1, 0);
 	mid = AcGePoint3d(start.x + offset, start.y + h1 / 2, 0);
-	MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+	//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+	MD2010_AddAlignedDimensionAndStyle(start, end, mid, h1, layer);
 
 	//总高度一定有
 	start = rightBottomPt;
 	end = rightTopPt;
 	mid = AcGePoint3d(start.x + offset * 2, (start.y + end.y) / 2, 0);
-	MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+	//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+	MD2010_AddAlignedDimensionAndStyle(start, end, mid, H, layer);
 
 	//////////////////////////////////////////////////////////////////////////
 	//----------------标注横向的--------------------//
@@ -228,7 +236,8 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 		end.x += A;
 		mid.x += A / 2;
 		mid.y += offset;
-		MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+		//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+		MD2010_AddAlignedDimensionAndStyle(start, end, mid, A, layer);
 
 		AcGePoint3d start1 = rect.GetRT();
 		AcGePoint3d end1 = start1;
@@ -236,7 +245,8 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 		end1.x -= A;
 		mid1.x -= A / 2;
 		mid1.y += offset;
-		MD2010_AddAlignedDimension2(start1, end1, mid1, layer, colorIndex, textHeight);
+		//MD2010_AddAlignedDimension2(start1, end1, mid1, layer, colorIndex, textHeight);
+		MD2010_AddAlignedDimensionAndStyle(start, end, mid, A, layer);
 	}
 
 	//W1 都会存在
@@ -245,7 +255,8 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 	end.x += W1;
 	mid.x += W1 / 2;
 	mid.y += offset;
-	MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+	//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+	MD2010_AddAlignedDimensionAndStyle(start, end, mid, W1, layer);
 
 	//标注W2
 	if (W2 > TOL)
@@ -255,7 +266,8 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 		end.x += W2;
 		mid.x += W2 / 2;
 		mid.y += offset;
-		MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+		//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+		MD2010_AddAlignedDimensionAndStyle(start, end, mid, W2, layer);
 	}
 
 	//最后可能还有一个W1
@@ -266,7 +278,8 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 		end.x += W1;
 		mid.x += W1 / 2;
 		mid.y += offset;
-		MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+		//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+		MD2010_AddAlignedDimensionAndStyle(start, end, mid, W1, layer);
 	}
 
 	//标注总的宽度
@@ -276,7 +289,8 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 	end.x += W;
 	mid.x += W / 2;
 	mid.y += offset * 2;
-	MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+	//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+	MD2010_AddAlignedDimensionAndStyle(start, end, mid, W, layer);
 
 	return 0;
 }

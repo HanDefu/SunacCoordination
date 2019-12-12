@@ -21,6 +21,8 @@ void CMD_SunacWindowsTable()
 {
 	CString info, str;
 
+	CCommandHighlight::GetInstance()->WindowDoorNoHighlight();
+
 	//第一步：选择需要统计的门窗
 	eViewDir viewDir = E_VIEW_FRONT;
 	bool bSuc1 = SelectViewDir(viewDir);

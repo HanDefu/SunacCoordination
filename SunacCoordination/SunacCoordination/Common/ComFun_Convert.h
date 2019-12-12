@@ -185,3 +185,5 @@ CString FileSizeToString(long long p_size);
 CString BytesToHexString(const byte* input, size_t length);//字节转化成16进制字符
 
 size_t HexStringToBytes(CString input, byte* pOutput);//16进制字符转化成字节
+
+ACHAR* DoubleToACHAR(long double len);//将double转成const ACHAR*
