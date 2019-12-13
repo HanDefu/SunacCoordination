@@ -60,7 +60,10 @@ AcDb::LineWeight MD2010_GetLineWeight(AcDbObjectId objID);
 AcDbObjectId MD2010_AddAlignedDimension(AcGePoint3d start,AcGePoint3d end, AcGePoint3d dimlinpnt, const WCHAR * entryname = ACDB_MODEL_SPACE,
 										const ACHAR* newLayer = L"0");
 //门窗详图
-AcDbObjectId MD2010_AddAlignedDimension2(AcGePoint3d start, AcGePoint3d end, AcGePoint3d dimlinpnt, const ACHAR* newLayer = L"0", int colorIndex = 2, double textHeight = 120, double lineTextSpace = 20);
+AcDbObjectId MD2010_AddAlignedDimension2(AcGePoint3d start, AcGePoint3d end, AcGePoint3d dimlinpnt, const ACHAR* newLayer = L"0", 
+	int colorIndex = 2, double textHeight = 120, double lineTextSpace = 20);
+
+AcDbObjectId MD2010_AddAlignedDimensionAndStyle(AcGePoint3d start, AcGePoint3d end, AcGePoint3d dimlinpnt, double size, const ACHAR* newLayer = L"0");
 
 
 //布局操作

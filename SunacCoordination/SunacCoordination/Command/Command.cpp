@@ -395,6 +395,8 @@ void CMD_SunacWaterproof()
 //统计算量
 void CMD_SunacWindowsStatistics()
 {
+	CCommandHighlight::GetInstance()->WindowDoorNoHighlight();
+
 	//第一步：选择需要统计的门窗
 	eViewDir viewDir = E_VIEW_FRONT;
 	bool bSuc1 = SelectViewDir(viewDir);

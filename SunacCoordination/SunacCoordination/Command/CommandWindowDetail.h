@@ -62,7 +62,7 @@ public:
 	AcGePoint3d GetInsertPntWindow(double winwid, double winHei)
 	{
 		return AcGePoint3d(pnt.x + (width - winwid - biaoZhuWid) / 2,//宽度两边平分
-			pnt.y + 4500 - 900 - winHei,//高度顶端一致
+			pnt.y + 4500 - 1000 - winHei,//高度顶端一致
 			0);
 	}
 };
