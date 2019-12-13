@@ -224,14 +224,6 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		return;
 	}
 
-	CString sOldNumber = pSelWinAttr->GetInstanceCode();
-	if (sOldNumber.CompareNoCase(sNumber)!=0)
-	{
-		pSelWinAttr->SetInstanceCode(sNumber);
-		GetWindowAutoName()->RenameWindow(sOldNumber, sNumber);
-	}
-
-
 	//////////////////////////////////////////////////////////////////////////
 	const eViewDir viewDir = (eViewDir)m_comboViewDir.GetCurSel();
 	pSelWinAttr->m_viewDir = viewDir;
@@ -261,23 +253,18 @@ void CWindowDlg::OnBnClickedButtonInsert()
 
 		AcDbObjectId idOut = CWindowGen::GenerateWindow(*pSelWinAttr, origin, winDir, false, AcDbObjectId::kNull, L"Sunac_Window");
 		assert(idOut != AcDbObjectId::kNull);
-		if (idOut != AcDbObjectId::kNull)
-		{
-			GetWindowAutoName()->AddWindowType(*pSelWinAttr, idOut);
-			m_bHasInsert = true;
-		}
+
+		m_bHasInsert = true;
 
 		ShowWindow(TRUE);
 		//OnOK();
 	}
 	else
-	{		
-		AcDbObjectId idOut = CWindowGen::UpdateWindow(m_pCurEditWinRef->objectId(), *pSelWinAttr, true);
+	{
+		bool bUpdateAll = (IDYES == AfxMessageBox(_T("是否对相同编号的都按此门窗修改？"), MB_YESNO));
+
+		AcDbObjectId idOut = CWindowGen::UpdateWindow(m_pCurEditWinRef->objectId(), *pSelWinAttr, true, bUpdateAll);
 		assert(idOut != AcDbObjectId::kNull);
-		if (idOut != AcDbObjectId::kNull)
-		{
-			GetWindowAutoName()->AddWindowType(*pSelWinAttr, idOut);
-		}
 
 		m_pCurEditWinRef = NULL;
 
@@ -770,46 +757,46 @@ void CWindowDlg::SetEditMode(AcDbBlockReference* pBlock)
 
 		AcDbObject* pAtt = NULL;
 		TY_GetAttributeData(pBlock->objectId(), pAtt);
-		const AttrWindow *pWindow = dynamic_cast<AttrWindow *>(pAtt);
-		if (pWindow == NULL)
+		const AttrWindow *pWinAtt = dynamic_cast<AttrWindow *>(pAtt);
+		if (pWinAtt == NULL)
 		{
 			assert(false);
 			return;
 		}
 
-		m_attBeforeEdit = *pWindow;
+		m_attBeforeEdit = *pWinAtt;
 
 		//////////////////////////////////////////////////////////////////////////
 		//初始门窗属性数据
-		m_radioDoorWindow = (pWindow->GetType() == DOOR) ? 0 : 1;
+		m_radioDoorWindow = (pWinAtt->GetType() == DOOR) ? 0 : 1;
 		WindowDoorChange();
-		m_nWidth = (int)pWindow->GetW();
-		m_nHeight = (int)pWindow->GetH();
-		m_radioBayWindow = pWindow->m_isBayWindow ? 0 : 1;
+		m_nWidth = (int)pWinAtt->GetW();
+		m_nHeight = (int)pWinAtt->GetH();
+		m_radioBayWindow = pWinAtt->m_isBayWindow ? 0 : 1;
 		m_bAutoNumber = TRUE;
 		UpdateData(FALSE);
 
-		TYUI_SetText(m_editWinNumber, pWindow->GetInstanceCode());
+		TYUI_SetText(m_editWinNumber, pWinAtt->GetInstanceCode());
 
-		UpdateDimDataToComboBox(m_comboW1, *pWindow, L"W1");
-		UpdateDimDataToComboBox(m_comboH2, *pWindow, L"H2");
-		UpdateDimDataToComboBox(m_comboW3, *pWindow, L"W3");
+		UpdateDimDataToComboBox(m_comboW1, *pWinAtt, L"W1");
+		UpdateDimDataToComboBox(m_comboH2, *pWinAtt, L"H2");
+		UpdateDimDataToComboBox(m_comboW3, *pWinAtt, L"W3");
 
 		CString str; 
-		str.Format(_T("%d"), (int)pWindow->m_heightUnderWindow);
+		str.Format(_T("%d"), (int)pWinAtt->m_heightUnderWindow);
 		TYUI_SetText(m_comboH3, str);
-		str.Format(_T("%d"), (int)pWindow->m_wallDis);//距外墙距离	
+		str.Format(_T("%d"), (int)pWinAtt->m_wallDis);//距外墙距离	
 		TYUI_SetText(m_comboOutWallDistance, str);
 
-		str = ViewDir2String(pWindow->m_viewDir);
+		str = ViewDir2String(pWinAtt->m_viewDir);
 		TYUI_SetText(m_comboViewDir, str);
-		m_isMirror.SetCheck(pWindow->m_isMirror ? TRUE :FALSE);
+		m_isMirror.SetCheck(pWinAtt->m_isMirror ? TRUE :FALSE);
 
 
 		//////////////////////////////////////////////////////////////////////////
 		//设置原型列表为当前原型
 		m_winPrototypes.clear();
-		m_winPrototypes.push_back(*pWindow);
+		m_winPrototypes.push_back(*pWinAtt);
 
 		//////////////////////////////////////////////////////////////////////////
 		//3. 显示原型信息
@@ -884,9 +871,9 @@ void CWindowDlg::InsertAllWindows_Test()
 		GetWindowAutoName()->AddWindowType(*pSelWinAttr, oneWindow.m_id);
 
 		//把UI的数据记录在图框的扩展字典中
-		AttrWindow * pWindow = new AttrWindow(*pSelWinAttr);
-		oneWindow.AddAttribute(pWindow);
-		pWindow->close();
+		AttrWindow * pWinAtt = new AttrWindow(*pSelWinAttr);
+		oneWindow.AddAttribute(pWinAtt);
+		pWinAtt->close();
 	}
 	ShowWindow(SW_SHOW);
 }

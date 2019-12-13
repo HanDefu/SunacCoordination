@@ -172,6 +172,17 @@ AttrWindow::~AttrWindow()
 
 }
 
+
+AttrWindow* AttrWindow::GetWinAtt(AcDbObjectId p_id)
+{
+	AcDbObject* pObj = NULL;
+	TY_GetAttributeData(p_id, pObj);
+
+	AttrWindow *pWinAtt = dynamic_cast<AttrWindow *>(pObj);
+
+	return pWinAtt;
+}
+
 //AttrWindow::AttrWindow(const AttrWindow &other) : AttrObject(other)
 //{
 //	*this = other;

@@ -6,6 +6,7 @@
 #include "AttrWindow.h"
 #include "RCWindow.h"
 #include "WindowGen.h"
+#include "..\..\Src\DocumentData.h"
 
 
 bool CWindowTop2Front::GenFrontFromTop()
@@ -126,11 +127,8 @@ AcDbObjectIdArray CWindowTop2Front::CopyAllFloorByOneFloor(const AcDbObjectId& o
 {
 	AcDbObjectIdArray windowObjIds;
 	windowObjIds.append(oneFloorId);
-
-	Acad::ErrorStatus es;
-
+	
 	//其他楼层采用复制方式
-
 	const CFloorInfo floorInfo = pWinAtt->GetFloorInfo();
 	const vector<int>  allFloos = floorInfo.GetAllFloor();
 	if (allFloos.size() == 0)
@@ -150,6 +148,9 @@ AcDbObjectIdArray CWindowTop2Front::CopyAllFloorByOneFloor(const AcDbObjectId& o
 			TYCOM_Move(objListCloned[0], vOffset);
 
 			windowObjIds.append(objListCloned);
+
+			//复制后的也加到名称库中
+			GetWindowAutoName()->AddWindowType(pWinAtt->GetInstanceCode(),  objListCloned[0]);
 		}
 	}
 

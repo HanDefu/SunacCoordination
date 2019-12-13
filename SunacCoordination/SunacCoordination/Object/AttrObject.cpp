@@ -175,6 +175,10 @@ bool AttrObject::isEqualTo(AttrObject*other)
 
 void AttrObject::SetInstanceCode(CString  bianHao)
 {
+	if (bianHao.CompareNoCase(m_instanceCode)==0)
+	{
+		return;
+	}
 	m_instanceCode = bianHao;
 
 	//若存在文字，则同时更新文字
