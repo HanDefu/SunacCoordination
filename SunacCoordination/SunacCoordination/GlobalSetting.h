@@ -14,7 +14,8 @@ struct CWinSetting
 public:
 	CWinSetting();
 
-	CString m_sWinLayer; //门窗结构图层
+	CString m_sWinLayer; //门窗块图层
+	CString m_sWinFrameLayer; //门窗型材结构框图层
 	CString m_sWinWallLayer; //门窗外的墙的图层
 	CString m_sWinHardwareLayer; //门窗五金件图层
 	CString m_sWinOpenLayer; //门窗开启部分图层
@@ -40,6 +41,8 @@ public:
 
 	CString GetFtpIp()const;
 	const char*  GetCADServiceUrl()const;
+
+	static CString GetWindowBlockLayer() { return GetInstance()->m_winSetting.m_sWinLayer; }
 
 private:
 	GlobalSetting();

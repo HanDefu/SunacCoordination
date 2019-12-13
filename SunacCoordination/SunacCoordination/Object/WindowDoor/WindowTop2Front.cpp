@@ -7,6 +7,7 @@
 #include "RCWindow.h"
 #include "WindowGen.h"
 #include "..\..\Src\DocumentData.h"
+#include "..\..\GlobalSetting.h"
 
 
 bool CWindowTop2Front::GenFrontFromTop()
@@ -110,7 +111,7 @@ bool CWindowTop2Front::GenFrontFromTop()
 		//	pos.y += curWinAtt.GetHeightUnderWindow();
 		//}
 
-		AcDbObjectId idOut = CWindowGen::GenerateWindow(curWinAtt, pos, E_DIR_BOTTOM, false, winIds[i], L"Sunac_Window");
+		AcDbObjectId idOut = CWindowGen::GenerateWindow(curWinAtt, pos, E_DIR_BOTTOM, false, winIds[i], GlobalSetting::GetWindowBlockLayer());
 
 		//其他楼层复制方式
 		AcDbObjectIdArray windowObjIds = CopyAllFloorByOneFloor(idOut, winAtts[i]);
