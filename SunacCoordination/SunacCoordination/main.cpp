@@ -94,7 +94,7 @@ void CMD_YTest()
 	if (bSuc == false)
 		return;
 
-	AcDbObjectId idOut = CWindowGen::GenerateWindow(winAtt, pos, E_DIR_BOTTOM, false, AcDbObjectId::kNull, L"Sunac_Window");
+	AcDbObjectId idOut = CWindowGen::GenerateWindow(winAtt, pos, E_DIR_BOTTOM, false, AcDbObjectId::kNull, GlobalSetting::GetWindowBlockLayer());
 	
 	//AcGeMatrix3d xform;
 	//xform.setTranslation(AcGeVector3d(2500, 0, 0));

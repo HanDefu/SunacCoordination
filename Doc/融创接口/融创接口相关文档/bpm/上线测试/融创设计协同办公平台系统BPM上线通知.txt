@@ -11,3 +11,8 @@ BPM流程审批结束(通过、拒绝、作废)：http://ades.sunac.com.cn/BMPService.asmx?op=A
 BMP流程审批(通过)：http://ades.sunac.com.cn/BMPService.asmx?op=Audit
 BMP提交成功：http://ades.sunac.com.cn/BMPService.asmx?op=CreateResult
 BPM流程审批(退回、发起人取消）：http://ades.sunac.com.cn/BMPService.asmx?op=Rework
+
+4. 融创设计协同办公平台系统bpm系统Webservice服务生产接口地址：
+表单数据写入BPM的接口：http://bpm.sunac.com.cn:8020/BPMServiceCenterNew/BS_ServiceForESB_New.asmx?wsdl
+流程作废接口：http://bpm.sunac.com.cn:8020/BPMServiceCenterNew/BS_ServiceForESB_New.asmx?wsdl
+查询流程实例状态接口：http://bpm.sunac.com.cn:8020/BPMServiceCenterNew/BS_ServiceForESB_New.asmx?wsdl

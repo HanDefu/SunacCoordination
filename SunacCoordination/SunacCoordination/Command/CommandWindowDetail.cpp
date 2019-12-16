@@ -19,6 +19,7 @@
 #include "../Tool/DocLock.h"
 #include "CommandWindowDetail.h"
 #include "../Command/CommandHighlight.h"
+#include "..\GlobalSetting.h"
 
 
 CWindowDetailTemplate::CWindowDetailTemplate()
@@ -83,7 +84,7 @@ void CWindowDetail::DrawWindowDetail()
 
 		AcGePoint3d winPnt = winDetailTemplate.GetInsertPntWindow(winAtt.GetW(), winAtt.GetH());
 
-		AcDbObjectId idOut = CWindowGen::GenerateWindow(winAtt, winPnt, E_DIR_BOTTOM, true, AcDbObjectId::kNull, "Sunac_Window");
+		AcDbObjectId idOut = CWindowGen::GenerateWindow(winAtt, winPnt, E_DIR_BOTTOM, true, AcDbObjectId::kNull, GlobalSetting::GetWindowBlockLayer());
 
 		CreateDataText(winAtt, winDetailTemplate);
 

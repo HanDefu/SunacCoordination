@@ -1,0 +1,21 @@
+
+提交的地址：
+http://192.168.2.219:8001/WP_SUNAC/APP_CAD_SERVICES/Proxy_Services/TA_BPM/CAD_SUNAC_564_WriteSAPXmlToBPM_PS
+
+重新发起的地址 http://192.168.2.219:8001/WP_SUNAC/APP_CAD_SERVICES/Proxy_Services/TA_BPM/CAD_SUNAC_565_UpdateAndApproveFlow_PS
+
+
+
+
+
+
+
+大米:
+这是 BPM的内部逻辑。
+未发起的单据， 不返回状态值。
+
+宋建龙:
+这个发起了你退回的是查询不到是吗
+
+大米:
+  (目前只有（审批中），（通过），（通过），（退回修改），（撤回待发起），（作废）时，才会返回流程状态。 其他均返回空。

@@ -31,15 +31,21 @@ public:
 	//生成新的门窗
 	static AcDbObjectId  GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d pos, E_DIRECTION p_winDir, bool p_bDetailWnd, const AcDbObjectId p_fromWinId, CString p_sLayerName);
 
-	//更新门窗参数, bUpdateRelatedWin为true则同步更新关联的门窗，p_originalId为最开启发起修改更新的门窗，以便在后续关联修改时不重复修改
-	static AcDbObjectId UpdateWindow(const AcDbObjectId p_id, AttrWindow newWinAtt, const bool bUpdateRelatedWin);//
+	//更新门窗参数, bUpdateRelatedWin为true则同步更新关联的门窗，p_originalId为最开启发起修改更新的门窗，以便在后续关联修改时不重复修改, bUpdateSameInstanceCode为是否更新同编号的门窗实例
+	static AcDbObjectId UpdateWindow(const AcDbObjectId p_id, AttrWindow newWinAtt, const bool bUpdateRelatedWin, bool bUpdateSameInstanceCode);//
+	
+	static bool RenameWindow(const AcDbObjectId p_id, CString p_sNewName, const bool bUpdateRelatedWin); //只是重命名，不更改其他
+
+	static void AutoNameAllWindow();
 
 protected:
+	static AcDbObjectId UpdateOneWindow(const AcDbObjectId p_id, AttrWindow newWinAtt, const bool bUpdateRelatedWin);//
+
 	static double GetBlockRotateAngle(const AttrWindow& curWinAtt, eViewDir p_view, E_DIRECTION p_winDir);
 	static AcGePoint3d GetBlockInsertPos(const AcDbObjectId p_id, const AttrWindow& curWinAtt, const AcGePoint3d pos, eViewDir p_view, E_DIRECTION p_winDir);
 	static void UpdateRcWindowPara(const AcDbObjectId p_id, const AttrWindow& curWinAtt, eViewDir p_view, bool p_bDetailWnd);
-	static void AddWinAtt(const AcDbObjectId p_id, AttrWindow p_winAtt);
-	static void UpdateWinAtt(const AcDbObjectId p_id, AttrWindow p_winAtt);
+	static void AddWinAtt(const AcDbObjectId p_id, const AttrWindow&  p_winAtt);
+	static void UpdateWindowsAttribute(const AcDbObjectId p_id, const AttrWindow&  p_winAtt);
 
 	static void ModifyOneWindow(const AcDbObjectId p_id, AttrWindow newWinAtt);
 
@@ -48,7 +54,6 @@ protected:
 	static E_DIRECTION GetWindowInsertDir(AcDbObjectId p_id);
 	static CWinInsertPara GetWindowInsertPara(AcDbObjectId p_id); //根据已插入的门窗获取其插入的信息
 	static bool IsWindowMirror(AcDbObjectId p_id);
-	static AttrWindow* GetWinAtt(AcDbObjectId p_id);
 
 	static bool IsPrototypeCodeSame(const AcDbObjectId p_id, const AttrWindow& newWinAtt); //新的原型编号是否和之前的不同
 	static bool SetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId p_fromWinId, AcDbObjectIdArray p_relatedIds);

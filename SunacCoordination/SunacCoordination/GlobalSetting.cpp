@@ -15,7 +15,8 @@ CWinSetting::CWinSetting()
 	m_numberTextSize = 120;
 	m_bShowLimianNumber = false;
 	m_bUseAinLimian = false;
-	m_sWinLayer = L"Sunac_Gridline_Glass";
+	m_sWinLayer = L"Sunac_Window";
+	m_sWinFrameLayer = L"Sunac_Gridline_Glass";
 	m_sWinWallLayer = L"Sunnc_Wall";
 	m_sWinHardwareLayer = L"Sunac_HardWare";
 	m_sWinOpenLayer = L"Sunac_Gridline_Glass_Open";
@@ -109,6 +110,8 @@ bool GlobalSetting::LoadFromXml()
 			xml.IntoElem();
 			if (xml.FindElem(_T("WinLayer")))
 				m_winSetting.m_sWinLayer = xml.GetData();
+			if (xml.FindElem(_T("WinFrameLayer")))
+				m_winSetting.m_sWinFrameLayer = xml.GetData();
 			if (xml.FindElem(_T("WinWallLayer")))
 				m_winSetting.m_sWinWallLayer = xml.GetData();
 			if (xml.FindElem(_T("WinHardwareLayer")))
@@ -165,6 +168,7 @@ bool GlobalSetting::SaveToXml()
 		xml.AddElem(_T("WindowSetting"));
 		xml.IntoElem();
 		xml.AddElem(_T("WinLayer"), m_winSetting.m_sWinLayer);
+		xml.AddElem(_T("WinFrameLayer"), m_winSetting.m_sWinFrameLayer);
 		xml.AddElem(_T("WinWallLayer"), m_winSetting.m_sWinWallLayer);
 		xml.AddElem(_T("WinHardwareLayer"), m_winSetting.m_sWinHardwareLayer);
 		xml.AddElem(_T("WinOpenLayer"), m_winSetting.m_sWinOpenLayer);

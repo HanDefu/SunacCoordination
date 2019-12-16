@@ -16,14 +16,10 @@ CWinClassify::~CWinClassify()
 void CWinClassify::AddObject(AcDbObjectId p_objId)
 {
 	if (p_objId == AcDbObjectId::kNull)
-	{
 		return;
-	}
 
 	if (IsObjectIn(p_objId))
-	{
 		return;
-	}
 
 	m_winsInCad.push_back(p_objId);
 }
@@ -48,7 +44,7 @@ bool CWinClassify::RemoveObject(AcDbObjectId p_objId)
 	return false;
 }
 
-void CWinClassify::CheckObjectValid() //¼ì²éAcDbObjectIdÊÇ·ñÓÐÐ§£¬Õë¶ÔÓÃ»§ÔÚCADÖÐÖ±½ÓÉ¾³ýÁËÃÅ´°µÄÇé¿ö
+void CWinClassify::CheckAndRemoveObjectNotBelong() //¼ì²éAcDbObjectIdÊÇ·ñÓÐÐ§£¬Õë¶ÔÓÃ»§ÔÚCADÖÐÖ±½ÓÉ¾³ýÁËÃÅ´°µÄÇé¿ö
 {
 	for (vector<AcDbObjectId>::iterator it = m_winsInCad.begin(); it < m_winsInCad.end(); )
 	{
@@ -65,17 +61,17 @@ void CWinClassify::CheckObjectValid() //¼ì²éAcDbObjectIdÊÇ·ñÓÐÐ§£¬Õë¶ÔÓÃ»§ÔÚCADÖ
 
 bool CWinClassify::IsObjectBelongThisClassify(AcDbObjectId p_id) //ÅÐ¶ÏÊÇ·ñºÍ´ËÃÅ´°·ÖÀàÏàÍ¬
 {
-	AcDbObject * pDataEnt = 0;
-	TY_GetAttributeData(p_id, pDataEnt);
-	if (pDataEnt==NULL)
-		return false;
-	
-	AttrWindow * pWindow = AttrWindow::cast(pDataEnt);
-	if (pWindow == NULL)
+	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(p_id);
+	if (pWinAtt == NULL)
 		return false;
 
-	bool bSuc = pWindow->IsInstanceEqual(m_winAtt);
-	pWindow->close();
+	bool bSuc = pWinAtt->IsInstanceEqual(m_winAtt);
+	pWinAtt->close();
+
+	if (bSuc)
+	{
+		assert(pWinAtt->IsInstanceEqual(m_winAtt));
+	}
 
 	return bSuc;
 }
@@ -99,22 +95,8 @@ bool CWinClassify::IsObjectIn(AcDbObjectId p_objId)const
 
 void CWinClassify::Rename(const CString p_newName)
 {
-	m_winAtt.SetInstanceCode(p_newName);
-
-	for (UINT i = 0; i < m_winsInCad.size(); i++)
-	{
-		AcDbObject * pDataEnt = 0;
-		TY_GetAttributeData(m_winsInCad[i], pDataEnt);
-		AttrWindow * pWindow = AttrWindow::cast(pDataEnt);
-		if (pWindow == NULL)
-			continue;
-
-		pWindow->SetInstanceCode(p_newName);
-
-		pDataEnt->close();
-	}
+	m_winAtt.m_instanceCode = p_newName;
 }
-
 
 //////////////////////////////////////////////////////////////////////////
 CWindowAutoName::CWindowAutoName()
@@ -188,33 +170,65 @@ CWinClassify* CWindowAutoName::FindWinClassifyByInstantCode(const CString p_sCod
 	return NULL;
 }
 
-void CWindowAutoName::AddWindowType(const AttrWindow& p_att, AcDbObjectId p_objId)
+CWinClassify* CWindowAutoName::FindWinClassifyByObjectId(const AcDbObjectId& p_id)
 {
+	for (UINT i = 0; i < m_allTypeWindows.size(); i++)
+	{
+		if (m_allTypeWindows[i].IsObjectIn(p_id))
+		{
+			return &(m_allTypeWindows[i]);
+		}
+	}
+
+	return NULL;
+}
+
+bool CWindowAutoName::AddWindowType(const CString p_sInstanceCode, AcDbObjectId p_objId)
+{
+	if (p_objId == AcDbObjectId::kNull || p_sInstanceCode.IsEmpty())
+		return false;
+
+	CWinClassify* pWinClassify = FindWinClassifyByInstantCode(p_sInstanceCode);
+	if (pWinClassify == NULL)
+		return false;
+	
+	pWinClassify->AddObject(p_objId);
+
+	return true;
+}
+bool CWindowAutoName::AddWindowType(const AttrWindow& p_att, AcDbObjectId p_objId)
+{
+	if (p_objId == AcDbObjectId::kNull)
+		return false;
+
 	CWinClassify* pWinClassify = FindWinClassifyByAtt(p_att);
 	if (pWinClassify != NULL)
 	{
+		assert(pWinClassify->m_winAtt.GetInstanceCode().CompareNoCase(p_att.GetInstanceCode()) == 0);
 		pWinClassify->AddObject(p_objId);
-		return;
+		return true;
 	}
 
 	CWinClassify newClassify;
 	newClassify.m_winAtt = p_att;
 	newClassify.AddObject(p_objId);
 	m_allTypeWindows.push_back(newClassify);
+	return true;
 }
-void CWindowAutoName::AddWindowType(const AttrWindow& p_att, vector<AcDbObjectId> p_objIds)
+bool CWindowAutoName::AddWindowType(const AttrWindow& p_att, vector<AcDbObjectId> p_objIds)
 {
 	CWinClassify* pWinClassify = FindWinClassifyByAtt(p_att);
 	if (pWinClassify != NULL)
 	{
 		pWinClassify->AddObject(p_objIds);
-		return;
+		return true;
 	}
 
 	CWinClassify newClassify;
 	newClassify.m_winAtt = p_att;
 	newClassify.AddObject(p_objIds);
 	m_allTypeWindows.push_back(newClassify);
+	return true;
 }
 
 bool CWindowAutoName::IsNameValid(const AttrWindow& p_att, CString p_sName) 
@@ -233,27 +247,7 @@ bool CWindowAutoName::IsNameValid(const AttrWindow& p_att, CString p_sName)
 	}
 }
 
-void CWindowAutoName::AutoNameAllWindow()
-{
-	//TODO ¾¡Á¿±£³ÖÔ­À´µÄ±àºÅ£¬Ö»ÓÐÔÚ±àºÅ²»ºÏÀíµÄÇé¿öÏÂ²ÅÖØÐÂ±àºÅ 
-	//vector<CWinClassify> temp = m_allTypeWindows;
-	//m_allTypeWindows.clear();
-	//for (UINT i = 0; i < temp.size(); i++)
-	//{
-	//	temp[i].m_winAtt.m_instanceCode = GetWindowName(temp[i].m_winAtt);
-	//	AddWindowType(temp[i].m_winAtt);
-	//}
-
-
-	//TODO ±éÀúµ±Ç°Í¼ÉÏµÄËùÓÐÃÅ´°£¬¶ÔÃÅ´°½øÐÐÖØÐÂ±àºÅ
-}
-
-void CWindowAutoName::AutoNameWindows(const vector<AcDbObjectId>& p_ids)
-{
-	//TODO
-}
-
-bool CWindowAutoName::RenameWindow(const CString p_preName, const CString p_newName)
+bool CWindowAutoName::RenameWindows(const CString p_preName, const CString p_newName)
 {
 	CWinClassify* pWinClassify = FindWinClassifyByInstantCode(p_preName);
 	if (pWinClassify == NULL)
@@ -270,6 +264,7 @@ bool CWindowAutoName::RenameWindow(const CString p_preName, const CString p_newN
 	pWinClassify->Rename(p_newName);
 	return true;
 }
+
 
 Acad::ErrorStatus CWindowAutoName::ReadFromDwg(AcDbDwgFiler* pFiler)
 {
@@ -321,14 +316,49 @@ vector<AcDbObjectId> CWindowAutoName::GetAllIdsByInstantCode(CString p_code)
 	return pWinClassify->m_winsInCad;
 }
 
-void CWindowAutoName::CheckObjectValid() //¶ÔÏÖÓÐµÄ¼ì²éÓÐÐ§ÐÔ£¬ÓÃÓÚÒÆ³ý±ä»¯ºóµÄÊµÌå
+vector<AcDbObjectId> CWindowAutoName::GetAllIds()
+{
+	vector<AcDbObjectId> allIds;
+	for (UINT i = 0; i < m_allTypeWindows.size(); i++)
+	{
+		vector<AcDbObjectId> ids = m_allTypeWindows[i].GetObjects();
+		allIds.insert(allIds.end(), ids.begin(), ids.end());
+	}
+	return allIds;
+}
+
+void CWindowAutoName::CheckAndRemoveObjectNotBelong() //¶ÔÏÖÓÐµÄ¼ì²éÓÐÐ§ÐÔ£¬ÓÃÓÚÒÆ³ý±ä»¯ºóµÄÊµÌå
 {
 	for (UINT i = 0; i < m_allTypeWindows.size(); i++)
 	{
-		m_allTypeWindows[i].CheckObjectValid();
+		m_allTypeWindows[i].CheckAndRemoveObjectNotBelong();
+	}
+
+	//ÒÆ³ýÎª¿ÕµÄ·ÖÀà
+	RemoveEmptyClassify();
+}
+void CWindowAutoName::RemoveAllObjects()//ÒÆ³ýËùÓÐµÄobject£¬µ«ÊÇ±£ÁôÔ­À´µÄÃû³Æ¿â
+{
+	for (UINT i = 0; i < m_allTypeWindows.size(); i++)
+	{
+		m_allTypeWindows[i].ClearObjsects();
 	}
 }
+bool CWindowAutoName::AddObject(AcDbObjectId p_id)
+{
+	CWinClassify* pWinClassify = FindWinClassifyByObjectId(p_id);
+	if (pWinClassify != NULL)
+		return true; //ÒÑ´æÔÚ
+	
+	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(p_id);
+	if (pWinAtt == NULL)
+		return false;
+	
+	AddWindowType(*pWinAtt, p_id);
 
+	pWinAtt->close();
+	return true;
+}
 void CWindowAutoName::RemoveObject(AcDbObjectId p_id) //ÃÅ´°²ÎÊý±ä»¯Ê±µ÷ÓÃ´Ëº¯Êý¸üÐÂ
 {
 	for (vector<CWinClassify>::iterator it = m_allTypeWindows.begin(); it < m_allTypeWindows.end(); it++)
@@ -342,4 +372,52 @@ void CWindowAutoName::RemoveObject(AcDbObjectId p_id) //ÃÅ´°²ÎÊý±ä»¯Ê±µ÷ÓÃ´Ëº¯Êý
 			return;
 		}
 	}
+}
+void CWindowAutoName::RemoveEmptyClassify()
+{
+	for (vector<CWinClassify>::iterator it = m_allTypeWindows.begin(); it < m_allTypeWindows.end(); it++)
+	{
+		if (it->IsEmpty())
+		{
+			it = m_allTypeWindows.erase(it);
+		}
+		else
+		{
+			it++;
+		}
+	}
+}
+bool CWindowAutoName::UpdateObject(AcDbObjectId p_id)//ÃÅ´°²ÎÊý±ä»¯Ê±µ÷ÓÃ´Ëº¯Êý¸üÐÂ£¬°üÀ¨Ãû³Æ±ä»¯£¬ÊôÐÔ±ä»¯
+{
+	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(p_id);
+	if (pWinAtt == NULL)
+		return false;
+
+	RemoveObject(p_id);
+
+	AddWindowType(*pWinAtt, p_id);
+	pWinAtt->close();
+
+	return true;
+}
+bool CWindowAutoName::UpdateObject(const AttrWindow& p_oldAtt, const AttrWindow& p_newAtt) //Ä³¸öÀàÐÍµÄÃÅ´°È«²¿µ÷ÕûÎªÐÂµÄÀàÐÍ
+{
+	CWinClassify* pOldClassify = FindWinClassifyByAtt(p_oldAtt);
+	if (pOldClassify == NULL)
+		return false;
+
+	CWinClassify* pNewClassify = FindWinClassifyByAtt(p_newAtt);
+	if (pNewClassify) //Èç¹ûÐÂµÄÓÐ£¬ÔÚÔ­ÀíµÄ¾ÍµÄid¶¼¼Óµ½ÐÂµÄÖÐ
+	{
+		pNewClassify->AddObject(pOldClassify->GetObjects());
+		pOldClassify->ClearObjsects();
+
+		RemoveEmptyClassify();
+	}
+	else
+	{
+		pOldClassify->m_winAtt = p_newAtt;
+	}	
+
+	return true;
 }
