@@ -451,6 +451,7 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 		return es;
 
 	AcString tempStr;
+	AcDbHandle tempHandle;
 	
 	Adesk::UInt32 size;
 	filer->readItem(&size);
@@ -529,6 +530,25 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 		filer->readItem(&m_material.bHasAuxiliaryFrame);
 		filer->readString(tempStr);
 		m_material.sAuxiliaryFrame = tempStr.kACharPtr();
+	}
+
+	if (m_version >= 4)
+	{
+		filer->readItem(&tempHandle);
+		acdbHostApplicationServices()->workingDatabase()->getAcDbObjectId(m_fromWinId, false, tempHandle);
+		filer->readItem(&size);
+		for (UINT i = 0; i < size; i++)
+		{
+			filer->readItem(&tempHandle);
+			AcDbObjectId tempId;
+			es = acdbHostApplicationServices()->workingDatabase()->getAcDbObjectId(tempId, false, tempHandle);
+			if (es != Acad::eOk)
+			{
+				assert(false);
+				continue;
+			}
+			m_relatedWinIds.append(tempId);
+		}
 	}
 
 	return filer->filerStatus();
@@ -626,6 +646,14 @@ Acad::ErrorStatus AttrWindow::dwgOutFields(AcDbDwgFiler* filer) const
 	filer->writeItem(m_material.sGlassSerial);
 	filer->writeItem(m_material.bHasAuxiliaryFrame);
 	filer->writeItem(m_material.sAuxiliaryFrame);
+
+	//FILE_VERSION 4 ÐÂÔö
+	filer->writeItem(m_fromWinId.handle());
+	filer->writeItem((Adesk::UInt32)m_relatedWinIds.length());
+	for (UINT i = 0; i < m_relatedWinIds.length(); i++)
+	{
+		filer->writeItem(m_relatedWinIds[i].handle());
+	}
 
 	return filer->filerStatus();
 }

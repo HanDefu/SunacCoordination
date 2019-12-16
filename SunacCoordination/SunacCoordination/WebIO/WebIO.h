@@ -61,6 +61,9 @@ public:
 
 	//从web下载原型文件， ok返回0 否则返回-1
 	bool DownloadFile(const int fileId, CString type, CString filePathName);
+	bool DownloadJPGFile(const int fileId);
+	bool DownloadDWGFile(const int fileId);
+	bool DownloadFile(CString &strFileURLInServer, CString &strFileLocalFullPath)const;//通过URL下载文件到指定目录中
 
 	//获得从Web端下载文件的文件名（包含扩展名）
 	CString GetFileName(const WCHAR *fullname);

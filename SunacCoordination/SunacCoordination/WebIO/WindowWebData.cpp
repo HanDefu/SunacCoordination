@@ -70,24 +70,25 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 						xml.IntoElem();
 						{
 							CString sFileType, tempString, sFileName, sFileID, sImgFileName;
+							CString sDWGUrl, sJPGUrl;
 							if (xml.FindElem(_T("Id")))
 							{
 								sFileID = xml.GetData();
 							}
 							if (xml.FindElem(_T("ImgPath")))
 							{
-								tempString = xml.GetData();
-								if (tempString != "")
+								sJPGUrl = xml.GetData();
+								if (sJPGUrl != "")
 								{
-									sImgFileName = WEBINST->GetFileName(tempString);//获得带扩展名的文件名
+									sImgFileName = WEBINST->GetFileName(sJPGUrl);//获得带扩展名的文件名
 								}
 							}
 							if (xml.FindElem(_T("CADPath")))
 							{
-								tempString = xml.GetData();
-								if (tempString != "")
+								sDWGUrl = xml.GetData();
+								if (sDWGUrl != "")
 								{
-									sFileName = WEBINST->GetFileName(tempString);//获得带扩展名的文件名
+									sFileName = WEBINST->GetFileName(sDWGUrl);//获得带扩展名的文件名
 								}
 							}
 							if (xml.FindElem(_T("CADType")))
@@ -119,12 +120,14 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 							CString sImgFilePath = TY_GetPrototypeImagePath_Web() + sImgFileName;
 							if (!JHCom_FileExist(sDWGFilePath))
 							{
-								WEBINST->DownloadFile(_ttoi(sFileID), "CAD", sDWGFilePath);
+								//WEBINST->DownloadFile(_ttoi(sFileID), "CAD", sDWGFilePath);
+								WEBINST->DownloadFile(sDWGUrl, sDWGFilePath);
 							}
 
 							if (!JHCom_FileExist(sImgFilePath))
 							{
-								WEBINST->DownloadFile(_ttoi(sFileID), "Img", sImgFilePath);
+								//WEBINST->DownloadFile(_ttoi(sFileID), "Img", sImgFilePath);
+								WEBINST->DownloadFile(sJPGUrl, sImgFilePath);
 							}
 						}
 						xml.OutOfElem();
@@ -341,25 +344,25 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 					{
 						xml.IntoElem();
 						{
-							CString sFileType, tempString, sFileName, sFileID, sImgFileName;
+							CString sFileType, tempString, sFileName, sFileID, sImgFileName, sJPGUrl, sDWGUrl;
 							if (xml.FindElem(_T("Id")))
 							{
 								sFileID = xml.GetData();
 							}
 							if (xml.FindElem(_T("ImgPath")))
 							{
-								tempString = xml.GetData();
-								if (tempString != "")
+								sJPGUrl = xml.GetData();
+								if (sJPGUrl != "")
 								{
-									sImgFileName = WEBINST->GetFileName(tempString);//获得带扩展名的文件名
+									sImgFileName = WEBINST->GetFileName(sJPGUrl);//获得带扩展名的文件名
 								}
 							}
 							if (xml.FindElem(_T("CADPath")))
 							{
-								tempString = xml.GetData();
-								if (tempString != "")
+								sDWGUrl = xml.GetData();
+								if (sDWGUrl != "")
 								{
-									sFileName = WEBINST->GetFileName(tempString);//获得带扩展名的文件名
+									sFileName = WEBINST->GetFileName(sDWGUrl);//获得带扩展名的文件名
 								}
 							}
 							if (xml.FindElem(_T("CADType")))
@@ -387,12 +390,14 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 							CString sImgFilePath = TY_GetPrototypeImagePath() + sImgFileName;
 							if (!JHCom_FileExist(sDWGFilePath))
 							{
-								WEBINST->DownloadFile(_ttoi(sFileID), "CAD", sDWGFilePath);
+								//WEBINST->DownloadFile(_ttoi(sFileID), "CAD", sDWGFilePath);
+								WEBINST->DownloadFile(sDWGUrl, sDWGFilePath);
 							}
 
 							if (!JHCom_FileExist(sImgFilePath))
 							{
-								WEBINST->DownloadFile(_ttoi(sFileID), "Img", sImgFilePath);
+								//WEBINST->DownloadFile(_ttoi(sFileID), "Img", sImgFilePath);
+								WEBINST->DownloadFile(sJPGUrl, sImgFilePath);
 							}
 						}
 						xml.OutOfElem();					

@@ -11,6 +11,11 @@
 #include "..\Tool\MarkupXml\Markup.h"
 #include "..\Common\ComFun_String.h"
 #include "..\Common\ComFun_Convert.h"
+#include "StdAfx.h"
+#include < afxinet.h>
+#include "..\Common\ComFun_String.h"
+#include "..\ProjectorFileMrg\FileUploadDownload.h"
+#include "..\GlobalSetting.h"
 //#include "..\WebIO\WebIO.h"
 
 

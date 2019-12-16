@@ -337,9 +337,13 @@ void CWindowDlg::InitPreviewGridByWindowPrototypes()
 
 		CString dwgPath = TY_GetPrototypeFilePath() + m_winPrototypes[i].GetFileName();
 		CString pngPath = TY_GetPrototypeImagePath_Local() + m_winPrototypes[i].GetFileName(); //门窗原型优先使用内部的图片
+		CString jpgPath = TY_GetPrototypeImagePath_Web() + m_winPrototypes[i].GetFileName(); //门窗原型优先使用内部的图片
 		pngPath.Replace(L".dwg", L".png");
+		jpgPath.Replace(L".dwg", L".jpg");
 		if (PathFileExists(pngPath))
 			m_preWindow.AddPreview(i, 0, pngPath, str);
+		else if (PathFileExists(jpgPath))
+			m_preWindow.AddPreview(i, 0, jpgPath, str);
 		else
 			m_preWindow.AddPreview(i, 0, dwgPath, str);
 	}

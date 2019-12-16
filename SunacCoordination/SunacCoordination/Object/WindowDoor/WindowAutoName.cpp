@@ -279,6 +279,16 @@ Acad::ErrorStatus CWindowAutoName::ReadFromDwg(AcDbDwgFiler* pFiler)
 	for (UINT i = 0; i < m_allTypeWindows.size(); i++)
 	{
 		m_allTypeWindows[i].m_winAtt.dwgInFields(pFiler);
+		if (m_allTypeWindows[i].m_winAtt.m_version >= 4)//°æ±¾4
+		{
+			pFiler->readItem(&size);
+			for (UINT j = 0; j < size; j++)
+			{
+				AcDbHandle tempHandle;
+				pFiler->readItem(&tempHandle);
+				acdbHostApplicationServices()->workingDatabase()->getAcDbObjectId(m_allTypeWindows[i].m_winsInCad[j], false, tempHandle);
+			}
+		}
 	}
 	return Acad::eOk;
 }
@@ -289,6 +299,11 @@ Acad::ErrorStatus CWindowAutoName::WriteToDwg(AcDbDwgFiler* pFiler)
 	for (UINT i = 0; i < m_allTypeWindows.size(); i++)
 	{
 		m_allTypeWindows[i].m_winAtt.dwgOutFields(pFiler);
+		pFiler->writeItem((Adesk::UInt32)m_allTypeWindows[i].m_winsInCad.size());
+		for (UINT j = 0; j < m_allTypeWindows[i].m_winsInCad.size(); j++)
+		{
+			pFiler->writeItem(m_allTypeWindows[i].m_winsInCad[j].handle());
+		}
 	}
 	return Acad::eOk;
 }
