@@ -462,7 +462,6 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 		return es;
 
 	AcString tempStr;
-	AcDbHandle tempHandle;
 	
 	Adesk::UInt32 size;
 	filer->readItem(&size);
@@ -545,6 +544,7 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 
 	if (m_version >= 4)
 	{
+		AcDbHandle tempHandle;
 		filer->readItem(&tempHandle);
 		acdbHostApplicationServices()->workingDatabase()->getAcDbObjectId(m_fromWinId, false, tempHandle);
 		filer->readItem(&size);

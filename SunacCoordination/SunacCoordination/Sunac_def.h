@@ -9,9 +9,9 @@ using namespace std;
 #define  FILE_VERSION ((Adesk::Int32)4)
 //版本2，门窗增加深化设计材质属性保存
 //20191113 版本3，门窗增加窗下墙高度属性
-//20191213 版本4：门窗增加句柄
+//20191213 版本4：门窗增加关联门窗和被关联门窗的句柄
 
-//#define  WORK_LOCAL//是否本地工作模式
+#define  WORK_LOCAL//是否本地工作模式
 #define	 CHECK_USE//是否检测权限
 
 //模块类型
