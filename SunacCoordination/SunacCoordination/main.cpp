@@ -1221,9 +1221,9 @@ extern "C" AcRx::AppRetCode acrxEntryPoint( AcRx::AppMsgCode msg, void* appId)
 		CFileUpDownLoadWeb::Instance()->SetAppQuit();
 		CFileUpDownLoadFtp::Instance()->SetAppQuit();
 		break;
-	case  AcRx::kLoadDwgMsg:
+	case  AcRx::kLoadDwgMsg: //加载完成后才进入此消息
 		CDocumentFactory::Instance().AddDocument(::acDocManager->curDocument());
-		CDocumentDataSerialize::InitSerialize();
+		CDocumentDataSerialize::InitSerialize();  //YUAN DocSerialize
 		break;
 	case  AcRx::kUnloadDwgMsg:
 		CloseModelessDialogs(); //预览控件依赖于当前文档，关闭文档时退出对话框以防止崩溃

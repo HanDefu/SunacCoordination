@@ -661,13 +661,13 @@ double CWindowGen::GetWinHeight(AcDbObjectId p_id)
 
 void CWindowGen::AutoNameAllWindow()
 {
-	//1. 得到所有的门窗objectid 
-	vector<AcDbObjectId> allIds = GetWindowAutoName()->GetAllIds();
-	// TODO 改为从CAD界面上获取所有的门窗
+	//vector<AcDbObjectId> allIds = GetWindowAutoName()->GetAllIds();
+	//1.  从CAD界面上获取所有的门窗
+	vector<AcDbObjectId> allIds = SelectAllWindows();
 
 
 	//2. 对原来的门窗分类有效性进行检查，移除不匹配和已删除的项
-	GetWindowAutoName()->RemoveAllObjects();
+	GetWindowAutoName()->CheckAndRemoveObjectNotBelong();
 
 	//3. 将门窗加入到类型库
 	for (UINT i = 0; i < allIds.size(); i++)

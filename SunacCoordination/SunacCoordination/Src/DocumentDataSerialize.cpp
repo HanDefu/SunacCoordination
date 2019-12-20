@@ -26,7 +26,7 @@ void CDocumentDataSerialize::InitSerialize()
 		CDocumentData* pCurDocData = CDocumentFactory::Instance().GetCurDocData();
 		if (pCurDocData!=NULL)
 		{
-			pCurDocData->m_bLoad = true; //新添加的也标记数据为
+			pCurDocData->m_bLoad = true; //新添加的也标记数据为已加载初始化  //YUAN DocSerialize
 		}
 	}
 

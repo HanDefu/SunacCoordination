@@ -1386,3 +1386,33 @@ vAcDbObjectId SelectWindows(eViewDir p_view)
 	}
 	return vIds;
 }
+
+
+vAcDbObjectId SelectAllWindows(eViewDir p_view)
+{
+	//TODO 利用acedSSGet 参数进行过滤
+	vAcDbObjectId outIds;
+
+	AcDbObjectId id;
+	ads_name ssname;
+	ads_name ent;
+	int rt = acedSSGet(_T("A"), NULL, NULL, NULL, ssname); // 提示用户选择对象
+	if (rt == RTNORM)
+	{
+		long length;
+		acedSSLength(ssname, &length);
+		for (int i = 0; i < length; i++)
+		{
+			acedSSName(ssname, i, ent);
+			acdbGetObjectId(id, ent);
+			
+			if (id != AcDbObjectId::kNull && TY_IsWindow(id, p_view))//检查是否是门窗
+			{
+				outIds.push_back(id);
+			}
+		}
+		acedSSFree(ssname);
+	}
+
+	return outIds;
+}

@@ -116,7 +116,8 @@ bool CloneObjects(AcDbObjectIdArray objList, AcDbObjectIdArray &objListOut);
 AcDbObjectId InsertBlockRefFromDwg(const TCHAR* fileName, const TCHAR* blkDefName, const WCHAR *layoutname, AcGePoint3d origin);
 
 bool SelectViewDir(eViewDir& p_viewDir);
-vAcDbObjectId SelectWindows(eViewDir p_view);
+vAcDbObjectId SelectWindows(eViewDir p_view); //p_view==E_VIEW_ALL表示不限视图方向
+vAcDbObjectId SelectAllWindows(eViewDir p_view);
 
 
 
