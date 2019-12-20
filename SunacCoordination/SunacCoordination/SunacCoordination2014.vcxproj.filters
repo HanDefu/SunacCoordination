@@ -349,9 +349,6 @@
     <ClCompile Include="Object\Railing\RailingStatistic.cpp">
       <Filter>Object\Railing</Filter>
     </ClCompile>
-    <ClCompile Include="AutoNameSerialize.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="Common\ThreadUtil.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -387,6 +384,9 @@
     </ClCompile>
     <ClCompile Include="Common\ComFun_Sunac.cpp">
       <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\DocumentDataSerialize.cpp">
+      <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -829,9 +829,6 @@
     <ClInclude Include="Object\Railing\RailingStatistic.h">
       <Filter>Object\Railing</Filter>
     </ClInclude>
-    <ClInclude Include="AutoNameSerialize.h">
-      <Filter>Source</Filter>
-    </ClInclude>
     <ClInclude Include="Common\ThreadUtil.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -864,6 +861,9 @@
     </ClInclude>
     <ClInclude Include="Common\ComFun_Sunac.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\DocumentDataSerialize.h">
+      <Filter>Source</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -43,7 +43,6 @@
 #include "Object/WindowStatistic/DeductedSize.h"
 #include "Object/WindowStatistic/WindowStatictic.h"
 #include "GlobalSetting.h"
-#include "AutoNameSerialize.h"
 #include "Tool\DoubleClickBlockReference.h"
 #include "Tool\MarkupXml\Markup.h"
 #include "WebIO\WebIO.h"
@@ -60,6 +59,7 @@
 #include "ProjectorFileMrg/ProjectFileMrg.h"
 #include "ProjectorFileMrg/FileUploadDownload.h"
 #include "Src/DocumentData.h"
+#include "Src/DocumentDataSerialize.h"
 
 
 #ifdef _DEBUG
@@ -1126,9 +1126,9 @@ static void initApp()
 	acrxBuildClassHierarchy();
 	acrxRegisterService(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_RAILING));
 
-	CAutoNameSerialize::rxInit();
+	CDocumentDataSerialize::rxInit();
 	acrxBuildClassHierarchy();
-	acrxRegisterService(AutoNameSerialize_DBXSERVICE);
+	acrxRegisterService(cDocmentDataSerialize_DBXSERVICE);
 
 	// 为AcDbCircle类添加协议扩展
 	CDoubleClickBlockReference *pCircleEdit = new CDoubleClickBlockReference;
@@ -1145,8 +1145,8 @@ static void unloadApp()
 	// Do other cleanup tasks here  
 	acedRegCmds->removeGroup(_T("SUNAC"));  
 
-	deleteAcRxClass(CAutoNameSerialize::desc());
-	delete acrxServiceDictionary->remove(AutoNameSerialize_DBXSERVICE);
+	deleteAcRxClass(CDocumentDataSerialize::desc());
+	delete acrxServiceDictionary->remove(cDocmentDataSerialize_DBXSERVICE);
 
 	deleteAcRxClass(AttrWindow::desc());
 	delete acrxServiceDictionary->remove(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_WINDOW));
@@ -1223,13 +1223,13 @@ extern "C" AcRx::AppRetCode acrxEntryPoint( AcRx::AppMsgCode msg, void* appId)
 		break;
 	case  AcRx::kLoadDwgMsg:
 		CDocumentFactory::Instance().AddDocument(::acDocManager->curDocument());
+		CDocumentDataSerialize::InitSerialize();
 		break;
 	case  AcRx::kUnloadDwgMsg:
 		CloseModelessDialogs(); //预览控件依赖于当前文档，关闭文档时退出对话框以防止崩溃
 		CDocumentFactory::Instance().RemoveCurDoc();
 		break;
 	case  AcRx::kSaveMsg:
-		InitSerialize();
 		break;
 	case AcRx::kInitDialogMsg:
 		break;

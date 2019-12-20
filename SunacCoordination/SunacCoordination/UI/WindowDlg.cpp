@@ -827,57 +827,35 @@ void CWindowDlg::InsertAllWindows_Test()
 	for (UINT i = 0; i < m_winPrototypes.size(); i++)
 	{
 		AttrWindow* pSelWinAttr = &m_winPrototypes[i];
-		RCWindow oneWindow;
+
+		int W1 = TYUI_GetInt(m_comboW1);
+		int H2 = TYUI_GetInt(m_comboH2);
+		int W3 = TYUI_GetInt(m_comboW3);
+		int H3 = TYUI_GetInt(m_comboH3);
+		pSelWinAttr->SetW1(W1);
+		pSelWinAttr->SetH2(H2);
+		pSelWinAttr->SetW3(W3);
+		pSelWinAttr->SetH3(H3);
+		pSelWinAttr->SetD(m_nThickness);
+
+		pSelWinAttr->m_instanceCode = GetWindowAutoName()->GetWindowName(*pSelWinAttr);
+
+		//////////////////////////////////////////////////////////////////////////
+		const eViewDir viewDir = (eViewDir)m_comboViewDir.GetCurSel();
+		pSelWinAttr->m_viewDir = viewDir;
+		E_DIRECTION winDir = E_DIR_BOTTOM;
+		if (viewDir == E_VIEW_TOP)
+		{
+			CString sDir = TYUI_GetComboBoxText(m_comboInsertDir);
+			winDir = String2Direction(sDir);
+		}
 
 		AcGePoint3d insertPt;
-
 		insertPt.x = origin.x + (m_nWidth + 100) * (i % 5);
 		insertPt.y = origin.y + (m_nHeight + 100) * (i / 5);
 
-		int sel = m_comboViewDir.GetCurSel();
-		if (sel == 0)
-			oneWindow.Insert(TY_GetPrototypeFilePath() + pSelWinAttr->m_frontViewFile.fileName, insertPt, 0, GlobalSetting::GetWindowBlockLayer(), 256);
-		else if (sel == 1)
-		{
-			double rotateAngle = 0;
-			AcGeVector3d offsetXY(0, 0, 0);
-			CString sDir = TYUI_GetComboBoxText(m_comboInsertDir);
-			if (sDir == L"南")
-			{
-				rotateAngle = PI;
-				offsetXY.x += m_nWidth;
-			}
-			if (sDir == L"西")
-				rotateAngle = PI / 2;
-			if (sDir == L"东")
-			{
-				rotateAngle = -PI / 2;
-				offsetXY.y += m_nWidth;
-			}
-			oneWindow.Insert(TY_GetPrototypeFilePath() + pSelWinAttr->m_topViewFile.fileName, origin + offsetXY, rotateAngle, GlobalSetting::GetWindowBlockLayer(), 256);
-		}
-		else
-			oneWindow.Insert(TY_GetPrototypeFilePath() + pSelWinAttr->m_leftViewFile.fileName, insertPt, 0, GlobalSetting::GetWindowBlockLayer(), 256);
-
-		oneWindow.InitParameters();
-
-		oneWindow.SetParameter(L"H", m_nHeight);
-		oneWindow.SetParameter(L"W", m_nWidth);
-
-		oneWindow.RunParameters();
-
-		if (m_isMirror.GetCheck())
-		{
-			AcGePoint3d basePt(insertPt.x + m_nWidth / 2, 0, 0);
-			TYCOM_Mirror(oneWindow.m_id, basePt, AcGeVector3d(0, 1, 0));
-		}
-
-		GetWindowAutoName()->AddWindowType(*pSelWinAttr, oneWindow.m_id);
-
-		//把UI的数据记录在图框的扩展字典中
-		AttrWindow * pWinAtt = new AttrWindow(*pSelWinAttr);
-		oneWindow.AddAttribute(pWinAtt);
-		pWinAtt->close();
+		AcDbObjectId idOut = CWindowGen::GenerateWindow(*pSelWinAttr, origin, winDir, false, AcDbObjectId::kNull, GlobalSetting::GetWindowBlockLayer());
+		assert(idOut != AcDbObjectId::kNull);
 	}
 	ShowWindow(SW_SHOW);
 }

@@ -62,6 +62,7 @@ public:
 	bool AddWindowType(const AttrWindow& p_att, vector<AcDbObjectId> p_objIds);
 	bool AddObject(AcDbObjectId p_id);
 	void RemoveObject(AcDbObjectId p_id); //门窗移除时调用此函数更新
+	void RemoveObjectsByInstantCode(CString p_instanceCode);//移除某个门窗编号的对象
 	bool UpdateObject(AcDbObjectId p_id);//门窗参数变化时调用此函数更新，包括名称变化，属性变化
 	bool UpdateObject(const AttrWindow& p_oldAtt, const AttrWindow& p_newAtt); //某个类型的门窗全部调整为新的类型
 	bool RenameWindows(const CString p_preName, const CString p_newName);//将指定窗型重命名
@@ -73,7 +74,7 @@ public:
 	void CheckAndRemoveObjectNotBelong(); //检查所含的AcDbObjectId是否有效，并移除已删除或者和此类型属性不一致的实体
 	void RemoveAllObjects(); //移除所有的object，但是保留原来的名称库
 
-	Acad::ErrorStatus ReadFromDwg(AcDbDwgFiler* pFiler);
+	Acad::ErrorStatus ReadFromDwg(AcDbDwgFiler* pFiler, Adesk::Int32 p_version);
 	Acad::ErrorStatus WriteToDwg(AcDbDwgFiler* pFiler);
 
 protected:

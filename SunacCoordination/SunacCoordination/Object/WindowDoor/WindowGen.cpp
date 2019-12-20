@@ -372,20 +372,31 @@ AcDbObjectId CWindowGen::UpdateWindow(const AcDbObjectId p_id, AttrWindow newWin
 	}
 	else
 	{
-		AcDbObjectId idOut = UpdateOneWindow(p_id, newWinAtt, bUpdateRelatedWin);
-
-		AttrWindow *pOldWinAtt = AttrWindow::GetWinAtt(p_id);
-		if (pOldWinAtt!=NULL)
+		vector<AcDbObjectId> sameCodeWins;
+		const CString oldInstanceCode = AttrWindow::GetWinInstanceCode(p_id);
+		//const CString newInstanceCode = newWinAtt.GetInstanceCode();
+		if (oldInstanceCode.IsEmpty() == false)
 		{
-			vector<AcDbObjectId> sameCodeWins = GetWindowAutoName()->GetAllIdsByInstantCode(pOldWinAtt->GetInstanceCode());
-			for (UINT i = 0; i < sameCodeWins.size(); i++)
-			{
-				if (sameCodeWins[i]==p_id)
-					continue;
+			newWinAtt.SetInstanceCode(oldInstanceCode); //全部替换则还是使用原来的编号
+			sameCodeWins = GetWindowAutoName()->GetAllIdsByInstantCode(oldInstanceCode);
 
-				UpdateOneWindow(sameCodeWins[i], newWinAtt, false); //全部更新就不用关联更新了
-			}
+			GetWindowAutoName()->RemoveObjectsByInstantCode(oldInstanceCode);
 		}
+
+		vector<AcDbObjectId> newCodeWins;
+		AcDbObjectId idOut = UpdateOneWindow(p_id, newWinAtt, false); //全部更新不需要关联更新，会全部更新
+		newCodeWins.push_back(idOut);
+
+		for (UINT i = 0; i < sameCodeWins.size(); i++)
+		{
+			if (sameCodeWins[i]==p_id)
+				continue;
+
+			idOut = UpdateOneWindow(sameCodeWins[i], newWinAtt, false); //全部更新就不用关联更新了
+			newCodeWins.push_back(idOut);
+		}
+
+		GetWindowAutoName()->AddWindowType(newWinAtt, newCodeWins);
 
 		return idOut;
 	}

@@ -89,13 +89,16 @@ bool CBathroomAutoName::RenameBathroom(const AttrBathroom& p_att)
 	return false;
 }
 
-Acad::ErrorStatus CBathroomAutoName::ReadFromDwg(AcDbDwgFiler* pFiler)
+Acad::ErrorStatus CBathroomAutoName::ReadFromDwg(AcDbDwgFiler* pFiler, Adesk::Int32 p_version)
 {
 	Adesk::UInt32 size;
 	pFiler->readItem(&size);
+
 	m_allTypeBathrooms.resize(size);
 	for (UINT i = 0; i < m_allTypeBathrooms.size(); i++)
+	{
 		m_allTypeBathrooms[i].dwgInFields(pFiler);
+	}
 	return Acad::eOk;
 }
 

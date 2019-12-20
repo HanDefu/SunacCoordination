@@ -28,7 +28,7 @@ public:
 	//将指定卫生间重命名
 	bool RenameBathroom(const AttrBathroom& p_att);
 
-	Acad::ErrorStatus ReadFromDwg(AcDbDwgFiler* pFiler);
+	Acad::ErrorStatus ReadFromDwg(AcDbDwgFiler* pFiler, Adesk::Int32 p_version);
 	Acad::ErrorStatus WriteToDwg(AcDbDwgFiler* pFiler);
 
 protected:

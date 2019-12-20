@@ -11,10 +11,15 @@ public:
 	CDocumentData();
 	~CDocumentData();
 
+	Acad::ErrorStatus ReadFromDwg(AcDbDwgFiler* pFiler, Adesk::Int32 p_version);
+	Acad::ErrorStatus WriteToDwg(AcDbDwgFiler* pFiler);
+
 public:
 	CWindowAutoName m_winAutoName;
 	CKitchenAutoName m_kitchenAutoName;
 	CBathroomAutoName m_bathroomAutoName;
+
+	bool m_bLoad;
 };
 
 CWindowAutoName* GetWindowAutoName();

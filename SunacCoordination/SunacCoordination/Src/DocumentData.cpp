@@ -4,12 +4,31 @@
 
 CDocumentData::CDocumentData()
 {
+	m_bLoad = false;
 }
 
 CDocumentData::~CDocumentData()
 {
 }
 
+Acad::ErrorStatus CDocumentData::ReadFromDwg(AcDbDwgFiler* pFiler, Adesk::Int32 p_version)
+{
+	m_winAutoName.ReadFromDwg(pFiler, p_version);
+	m_kitchenAutoName.ReadFromDwg(pFiler, p_version);
+	m_bathroomAutoName.ReadFromDwg(pFiler, p_version);
+
+	m_bLoad = true;
+
+	return Acad::eOk;
+}
+Acad::ErrorStatus CDocumentData::WriteToDwg(AcDbDwgFiler* pFiler)
+{
+	m_winAutoName.WriteToDwg(pFiler);
+	m_kitchenAutoName.WriteToDwg(pFiler);
+	m_bathroomAutoName.WriteToDwg(pFiler);
+
+	return Acad::eOk;
+}
 CWindowAutoName* GetWindowAutoName()
 {
 	return &(CDocumentFactory::Instance().GetCurDocData()->m_winAutoName);
@@ -22,6 +41,8 @@ CBathroomAutoName* GetBathroomAutoName()
 {
 	return &(CDocumentFactory::Instance().GetCurDocData()->m_bathroomAutoName);
 }
+
+
 
 //////////////////////////////////////////////////////////////////////////
 CDocumentFactory& CDocumentFactory::Instance()
@@ -41,10 +62,17 @@ CDocumentFactory::~CDocumentFactory()
 
 CDocumentData* CDocumentFactory::AddDocument(AcApDocument *pDoc)
 {
-	CDocumentData* pNewElecMrg = new CDocumentData();
-	m_pElecMrgs[pDoc] = pNewElecMrg;
+	if (m_pElecMrgs.find(pDoc)!= m_pElecMrgs.end())
+	{
+		return m_pElecMrgs[pDoc];
+	}
+	else
+	{
+		CDocumentData* pNewElecMrg = new CDocumentData();
+		m_pElecMrgs[pDoc] = pNewElecMrg;
 
-	return pNewElecMrg;
+		return pNewElecMrg;
+	}
 }
 
 void CDocumentFactory::RemoveDocument(AcApDocument *pDoc)

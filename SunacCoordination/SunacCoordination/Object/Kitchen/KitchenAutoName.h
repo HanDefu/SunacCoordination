@@ -30,7 +30,7 @@ public:
 	//将指定厨房重命名
 	bool RenameKitchen(const AttrKitchen& p_att);
 
-	Acad::ErrorStatus ReadFromDwg(AcDbDwgFiler* pFiler);
+	Acad::ErrorStatus ReadFromDwg(AcDbDwgFiler* pFiler, Adesk::Int32 p_version);
 	Acad::ErrorStatus WriteToDwg(AcDbDwgFiler* pFiler);
 
 protected:

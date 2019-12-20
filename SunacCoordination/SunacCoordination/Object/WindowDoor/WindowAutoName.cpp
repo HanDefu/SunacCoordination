@@ -33,7 +33,7 @@ void CWinClassify::AddObject(vector<AcDbObjectId> p_objIds)
 
 bool CWinClassify::RemoveObject(AcDbObjectId p_objId)
 {
-	for (vector<AcDbObjectId>::iterator it = m_winsInCad.begin(); it < m_winsInCad.end(); )
+	for (vector<AcDbObjectId>::iterator it = m_winsInCad.begin(); it < m_winsInCad.end(); it++)
 	{
 		if ((*it) == p_objId)
 		{
@@ -190,7 +190,10 @@ bool CWindowAutoName::AddWindowType(const CString p_sInstanceCode, AcDbObjectId 
 
 	CWinClassify* pWinClassify = FindWinClassifyByInstantCode(p_sInstanceCode);
 	if (pWinClassify == NULL)
+	{
+		assert(false);
 		return false;
+	}
 	
 	pWinClassify->AddObject(p_objId);
 
@@ -266,15 +269,17 @@ bool CWindowAutoName::RenameWindows(const CString p_preName, const CString p_new
 }
 
 
-Acad::ErrorStatus CWindowAutoName::ReadFromDwg(AcDbDwgFiler* pFiler)
+Acad::ErrorStatus CWindowAutoName::ReadFromDwg(AcDbDwgFiler* pFiler, Adesk::Int32 p_version)
 {
 	Adesk::UInt32 size;
 	pFiler->readItem(&size);
-	m_allTypeWindows.resize(size);
-	for (UINT i = 0; i < m_allTypeWindows.size(); i++)
+
+	m_allTypeWindows.clear();
+	for (UINT i = 0; i < size; i++)
 	{
-		m_allTypeWindows[i].m_winAtt.dwgInFields(pFiler);
-		if (m_allTypeWindows[i].m_winAtt.m_version >= 4)//版本4
+		CWinClassify winClassify;
+		winClassify.m_winAtt.dwgInFields(pFiler);
+		if (p_version >= 4)//版本4
 		{
 			pFiler->readItem(&size);
 			for (UINT j = 0; j < size; j++)
@@ -284,9 +289,11 @@ Acad::ErrorStatus CWindowAutoName::ReadFromDwg(AcDbDwgFiler* pFiler)
 
 				AcDbObjectId retId = AcDbObjectId::kNull;
 				acdbHostApplicationServices()->workingDatabase()->getAcDbObjectId(retId, false, tempHandle);
-				m_allTypeWindows[i].m_winsInCad.push_back(retId);
+				winClassify.m_winsInCad.push_back(retId);
 			}
 		}
+
+		m_allTypeWindows.push_back(winClassify);
 	}
 	return Acad::eOk;
 }
@@ -374,6 +381,17 @@ void CWindowAutoName::RemoveObject(AcDbObjectId p_id) //门窗参数变化时调用此函数
 			{
 				m_allTypeWindows.erase(it);
 			}
+			return;
+		}
+	}
+}
+void CWindowAutoName::RemoveObjectsByInstantCode(CString p_instanceCode)//移除某个门窗编号的对象
+{
+	for (vector<CWinClassify>::iterator it = m_allTypeWindows.begin(); it < m_allTypeWindows.end(); it++)
+	{
+		if (it->m_winAtt.GetInstanceCode().CompareNoCase(p_instanceCode)==0)
+		{
+			m_allTypeWindows.erase(it);
 			return;
 		}
 	}

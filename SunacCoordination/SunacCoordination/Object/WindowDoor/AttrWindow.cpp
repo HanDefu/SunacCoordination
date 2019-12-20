@@ -182,6 +182,16 @@ AttrWindow* AttrWindow::GetWinAtt(AcDbObjectId p_id)
 
 	return pWinAtt;
 }
+CString AttrWindow::GetWinInstanceCode(AcDbObjectId p_id)
+{
+	CString sNumber;
+	AttrWindow* pWinAtt = GetWinAtt(p_id);
+	if (pWinAtt!=NULL)
+	{
+		sNumber = pWinAtt->GetInstanceCode();
+	}
+	return sNumber;
+}
 
 //AttrWindow::AttrWindow(const AttrWindow &other) : AttrObject(other)
 //{
@@ -661,7 +671,7 @@ Acad::ErrorStatus AttrWindow::dwgOutFields(AcDbDwgFiler* filer) const
 	//FILE_VERSION 4 ÐÂÔö
 	filer->writeItem(m_fromWinId.handle());
 	filer->writeItem((Adesk::UInt32)m_relatedWinIds.length());
-	for (UINT i = 0; i < m_relatedWinIds.length(); i++)
+	for (int i = 0; i < m_relatedWinIds.length(); i++)
 	{
 		filer->writeItem(m_relatedWinIds[i].handle());
 	}

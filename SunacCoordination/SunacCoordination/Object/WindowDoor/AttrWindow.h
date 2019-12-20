@@ -89,6 +89,7 @@ public:
 	virtual ~AttrWindow();
 
 	static AttrWindow* GetWinAtt(AcDbObjectId p_id);
+	static CString GetWinInstanceCode(AcDbObjectId p_id);
 
 	//AttrWindow(const AttrWindow &other);
 	//AttrWindow & operator=(const AttrWindow &rhs);
