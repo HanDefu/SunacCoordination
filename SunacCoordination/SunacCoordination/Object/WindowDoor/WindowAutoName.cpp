@@ -271,18 +271,19 @@ bool CWindowAutoName::RenameWindows(const CString p_preName, const CString p_new
 
 Acad::ErrorStatus CWindowAutoName::ReadFromDwg(AcDbDwgFiler* pFiler, Adesk::Int32 p_version)
 {
-	Adesk::UInt32 size;
-	pFiler->readItem(&size);
+	Adesk::UInt32 nTypeSize;
+	pFiler->readItem(&nTypeSize);
 
 	m_allTypeWindows.clear();
-	for (UINT i = 0; i < size; i++)
+	for (UINT i = 0; i < nTypeSize; i++)
 	{
 		CWinClassify winClassify;
 		winClassify.m_winAtt.dwgInFields(pFiler);
 		if (p_version >= 4)//°æ±¾4
 		{
-			pFiler->readItem(&size);
-			for (UINT j = 0; j < size; j++)
+			Adesk::UInt32 nIdSize;
+			pFiler->readItem(&nIdSize);
+			for (UINT j = 0; j < nIdSize; j++)
 			{
 				AcDbHandle tempHandle;
 				pFiler->readItem(&tempHandle);
