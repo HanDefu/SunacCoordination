@@ -263,6 +263,31 @@ CWindowsDimData* AttrWindow::GetDimDataByCode(CString p_sCode)
 	return NULL;
 }
 
+bool AttrWindow::GetWRange(double& p_min, double& p_max)
+{
+	CWindowsDimData* pWdata = GetDimDataByCode(_T("W"));
+	if (pWdata==NULL)
+	{
+		return false;
+	}
+
+	p_min = pWdata->minValue;
+	p_max = pWdata->maxValue;
+	return true;
+}
+bool AttrWindow::GetHRange(double& p_min, double& p_max)
+{
+	CWindowsDimData* pWdata = GetDimDataByCode(_T("H"));
+	if (pWdata == NULL)
+	{
+		return false;
+	}
+
+	p_min = pWdata->minValue;
+	p_max = pWdata->maxValue;
+	return true;
+}
+
 void AttrWindow::CheckAndComplementDimeData() //检查并补全Dim数据，W/H/a确保都有
 {
 	if (GetDimData(_T("W"))==NULL)

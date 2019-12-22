@@ -185,6 +185,18 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		return;
 	}
 
+	bool bWSuc = pSelWinAttr->SetW(m_nWidth);
+	if (bWSuc == false)
+	{
+		double minW = 0;
+		double maxW = 0;
+		pSelWinAttr->GetWRange(minW, maxW);
+		CString str; 
+		str.Format(_T("洞口宽度不在此原型尺寸范围内(%d - %d)"), (int)minW, (int)maxW);
+		AfxMessageBox(str);
+		return;
+	}
+
 	if (pSelWinAttr->GetTongFengQty(false) + TOL < TYUI_GetDouble(m_editVentilation))
 	{
 		AfxMessageBox(L"此原型不满足通风量要求");

@@ -146,6 +146,9 @@ public:
 	bool SetR(double newValue) { return SetValue(L"R", newValue); }
 	bool SetD(double newValue) { return SetValue(L"D", newValue); } //Ç½ºñ¶È
 
+	bool GetWRange(double& p_min, double& p_max);
+	bool GetHRange(double& p_min, double& p_max);
+
 	bool SetHeightUnderWindow(double newValue);
 	double GetHeightUnderWindow()const { return m_heightUnderWindow; }
 
