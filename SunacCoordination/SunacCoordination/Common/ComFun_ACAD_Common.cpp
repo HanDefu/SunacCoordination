@@ -302,7 +302,8 @@ AcDbObjectId MD2010_AddAlignedDimensionAndStyle(AcGePoint3d start, AcGePoint3d e
 	if (JHCOM_PointDistance(start, end) <= TOL * 10000)//小于1的不标注
 		return 0;
 
-	ACHAR* entryName = DoubleToACHAR(size);
+	CString entryName;
+	entryName.Format(_T("%lf"), size);
 	AcDbAlignedDimension  *pDim = new AcDbAlignedDimension(start, end, dimlinpnt, entryName, dimStyleId);
 
 	//pDim->setColorIndex(color);extend

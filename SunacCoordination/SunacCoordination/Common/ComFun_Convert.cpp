@@ -662,15 +662,17 @@ size_t HexStringToBytes(CString input, byte* pOutput)
 }
 
 //将double 转ACHAR*
-ACHAR* DoubleToACHAR(long double len)
-{
-	//double转string
-	string _str_Val = to_string(len);
-	//string转const char*
-	const char* ac = _str_Val.c_str();
-	//const char*转ACHAR*
-	_bstr_t AStr = ac;
-	LPWSTR AstrW = LPTSTR(AStr);
-	ACHAR* entryName = (ACHAR *)AstrW;
-	return entryName;
-}
+//ACHAR* DoubleToACHAR(long double len)
+//{
+//	//double转string
+//	stringstream ss;
+//	ss << len;
+//	string _str_Val = ss.str();
+//	//string转const char*
+//	const char* ac = _str_Val.c_str();
+//	//const char*转ACHAR*
+//	_bstr_t AStr = ac;
+//	LPWSTR AstrW = LPTSTR(AStr);
+//	ACHAR* entryName = (ACHAR *)AstrW;
+//	return entryName;
+//}

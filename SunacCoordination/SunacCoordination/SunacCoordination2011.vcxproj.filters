@@ -28,6 +28,9 @@
     <Filter Include="WebIO">
       <UniqueIdentifier>{92543de9-a939-473b-8f5a-583eadff30ad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src">
+      <UniqueIdentifier>{94fd8659-84ed-46c1-b7e1-32cda4b277a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Command\Command.cpp">
@@ -369,9 +372,6 @@
     <ClCompile Include="WebIO\cpp_base64\src\cencode.cpp">
       <Filter>WebIO</Filter>
     </ClCompile>
-    <ClCompile Include="GlobalSetting.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="StdAfx.cpp" />
     <ClCompile Include="ProjectorFileMrg\FileUploadDownload.cpp">
       <Filter>ProjectorFileMrg</Filter>
     </ClCompile>
@@ -384,7 +384,6 @@
     <ClCompile Include="WebIO\WindowLocalDataFromDB.cpp">
       <Filter>WebIO</Filter>
     </ClCompile>
-    <ClCompile Include="AutoNameSerialize.cpp" />
     <ClCompile Include="Object\AirCondition\AirConStatistic.cpp">
       <Filter>Object</Filter>
     </ClCompile>
@@ -394,7 +393,6 @@
     <ClCompile Include="Object\KitchenBathroom\KitchenBathroomStatistic.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="Sunac_def.cpp" />
     <ClCompile Include="UI\DlgWindowAirCalc.cpp">
       <Filter>UI</Filter>
     </ClCompile>
@@ -403,6 +401,30 @@
     </ClCompile>
     <ClCompile Include="Common\AES.cpp">
       <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalSetting.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Sunac_def.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Command\CommandHighlight.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\DocumentData.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\DocumentDataSerialize.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowDoor\WindowGen.cpp">
+      <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -832,10 +854,6 @@
     <ClInclude Include="WebIO\cpp_base64\src\cencode.h">
       <Filter>WebIO</Filter>
     </ClInclude>
-    <ClInclude Include="GlobalSetting.h" />
-    <ClInclude Include="main.h" />
-    <ClInclude Include="StdAfx.h" />
-    <ClInclude Include="Sunac_def.h" />
     <ClInclude Include="ProjectorFileMrg\FileUploadDownload.h">
       <Filter>ProjectorFileMrg</Filter>
     </ClInclude>
@@ -848,7 +866,6 @@
     <ClInclude Include="WebIO\WindowLocalDataFromDB.h">
       <Filter>WebIO</Filter>
     </ClInclude>
-    <ClInclude Include="AutoNameSerialize.h" />
     <ClInclude Include="Object\AirCondition\AirConStatistic.h">
       <Filter>Object</Filter>
     </ClInclude>
@@ -866,6 +883,30 @@
     </ClInclude>
     <ClInclude Include="Common\AES.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalSetting.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Sunac_def.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Command\CommandHighlight.h">
+      <Filter>Command</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\DocumentData.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\DocumentDataSerialize.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\WindowGen.h">
+      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

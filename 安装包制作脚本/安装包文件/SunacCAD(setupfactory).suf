@@ -4214,7 +4214,7 @@ g_HandleSystemReboot();
 <Script>result = Registry.GetValue(HKEY_LOCAL_MACHINE, "SOFTWARE\\SunacCAD", "PATH");
 
 if (String.Length(result) &gt; 0) then
-	File.Run(String.Concat(result, "uninstall.exe"), "/s /U:Uninstall/uninstall.xml", result, SW_NORMAL, true);
+	File.Run(String.Concat(result, "\\uninstall.exe"), "/s /U:Uninstall/uninstall.xml", result, SW_NORMAL, true);
 end</Script>
 <BookMarks count="0">
 </BookMarks>
