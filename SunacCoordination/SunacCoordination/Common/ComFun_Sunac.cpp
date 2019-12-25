@@ -1399,7 +1399,7 @@ vAcDbObjectId SelectAllWindows(eViewDir p_view)
 	int rt = acedSSGet(_T("A"), NULL, NULL, NULL, ssname); // 提示用户选择对象
 	if (rt == RTNORM)
 	{
-		long length;
+		Adesk::Int32 length;
 		acedSSLength(ssname, &length);
 		for (int i = 0; i < length; i++)
 		{

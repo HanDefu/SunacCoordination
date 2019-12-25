@@ -35,6 +35,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -145,7 +146,7 @@
       <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-x64;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\brep\inc;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN64;ARX_2014;_WIN64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>false</TreatWarningAsError>
-      <Optimization>Disabled</Optimization>
+      <Optimization>MaxSpeed</Optimization>
       <DisableSpecificWarnings>
       </DisableSpecificWarnings>
     </ClCompile>
@@ -454,7 +455,24 @@
     <ResourceCompile Include="res\SunacCoordination.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\Cancel.bmp" />
     <None Include="res\Document.ico" />
+    <None Include="res\doordir.bmp" />
+    <None Include="res\Insert.bmp" />
+    <None Include="res\kitchenrange.bmp" />
+    <None Include="res\lib.bmp" />
+    <None Include="res\mainicon.bmp" />
+    <None Include="res\Railing_T1.bmp" />
+    <None Include="res\Railing_T2.bmp" />
+    <None Include="res\Railing_T3.bmp" />
+    <None Include="res\Railing_T4.bmp" />
+    <None Include="res\Railing_T5.bmp" />
+    <None Include="res\Railing_T6.bmp" />
+    <None Include="res\Railing_T7.bmp" />
+    <None Include="res\search.bmp" />
+    <None Include="res\selOne.bmp" />
+    <None Include="res\SunacCoordination.aps" />
+    <None Include="res\windowdir.bmp" />
     <None Include="res\画图Folder.ico" />
     <None Include="WebIO\SunacCadWeb\ArgumentSettingServiceSoap.nsmap" />
   </ItemGroup>

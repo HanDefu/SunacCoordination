@@ -2,10 +2,10 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="StdAfx.cpp">
-      <Filter>Source</Filter>
+      <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Source</Filter>
+      <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="UI\WindowDlg.cpp">
       <Filter>UI</Filter>
@@ -140,7 +140,7 @@
       <Filter>Command</Filter>
     </ClCompile>
     <ClCompile Include="GlobalSetting.cpp">
-      <Filter>Source</Filter>
+      <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Tool\Regedit.cpp">
       <Filter>Tool</Filter>
@@ -365,7 +365,7 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="Sunac_def.cpp">
-      <Filter>Source</Filter>
+      <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Object\WindowDoor\WindowTop2Front.cpp">
       <Filter>Object\WindowDoor</Filter>
@@ -374,7 +374,7 @@
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="Src\DocumentData.cpp">
-      <Filter>Source</Filter>
+      <Filter>Src</Filter>
     </ClCompile>
     <ClCompile Include="Command\CommandHighlight.cpp">
       <Filter>Command</Filter>
@@ -386,12 +386,12 @@
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="Src\DocumentDataSerialize.cpp">
-      <Filter>Source</Filter>
+      <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
-      <Filter>Source</Filter>
+      <Filter>Src</Filter>
     </ClInclude>
     <ClInclude Include="UI\Menu\CAcadApplication.h">
       <Filter>UI\Menu</Filter>
@@ -418,10 +418,7 @@
       <Filter>UI\Menu</Filter>
     </ClInclude>
     <ClInclude Include="main.h">
-      <Filter>Source</Filter>
-    </ClInclude>
-    <ClInclude Include="res\resource.h">
-      <Filter>Source</Filter>
+      <Filter>Src</Filter>
     </ClInclude>
     <ClInclude Include="UI\WindowDlg.h">
       <Filter>UI</Filter>
@@ -598,10 +595,10 @@
       <Filter>Command</Filter>
     </ClInclude>
     <ClInclude Include="Sunac_def.h">
-      <Filter>Source</Filter>
+      <Filter>Src</Filter>
     </ClInclude>
     <ClInclude Include="GlobalSetting.h">
-      <Filter>Source</Filter>
+      <Filter>Src</Filter>
     </ClInclude>
     <ClInclude Include="Tool\Regedit.h">
       <Filter>Tool</Filter>
@@ -851,7 +848,7 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Src\DocumentData.h">
-      <Filter>Source</Filter>
+      <Filter>Src</Filter>
     </ClInclude>
     <ClInclude Include="Command\CommandHighlight.h">
       <Filter>Command</Filter>
@@ -863,13 +860,13 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="Src\DocumentDataSerialize.h">
-      <Filter>Source</Filter>
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="res\resource.h">
+      <Filter>res</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Source">
-      <UniqueIdentifier>{efe70b79-2d79-4a9b-a5a8-790775b65eab}</UniqueIdentifier>
-    </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{e183cb25-5c73-48fd-b49e-7315c7333170}</UniqueIdentifier>
     </Filter>
@@ -939,15 +936,78 @@
     <Filter Include="Object\KitchenBathroom">
       <UniqueIdentifier>{5d696d10-72d5-41c3-9da6-6136b5377588}</UniqueIdentifier>
     </Filter>
+    <Filter Include="res">
+      <UniqueIdentifier>{cb92c717-1923-4855-897d-fd0e9c5a19c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src">
+      <UniqueIdentifier>{efe70b79-2d79-4a9b-a5a8-790775b65eab}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\画图Folder.ico">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\Document.ico">
+      <Filter>res</Filter>
+    </None>
+    <None Include="WebIO\SunacCadWeb\ArgumentSettingServiceSoap.nsmap">
+      <Filter>WebIO</Filter>
+    </None>
+    <None Include="res\Cancel.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\doordir.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\Insert.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\kitchenrange.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\lib.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\mainicon.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\Railing_T1.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\Railing_T2.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\Railing_T3.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\Railing_T4.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\Railing_T5.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\Railing_T6.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\Railing_T7.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\search.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\selOne.bmp">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\SunacCoordination.aps">
+      <Filter>res</Filter>
+    </None>
+    <None Include="res\windowdir.bmp">
+      <Filter>res</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res\SunacCoordination.rc">
-      <Filter>Source</Filter>
+      <Filter>res</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="WebIO\SunacCadWeb\ArgumentSettingServiceSoap.nsmap" />
-    <None Include="res\画图Folder.ico" />
-    <None Include="res\Document.ico" />
   </ItemGroup>
 </Project>

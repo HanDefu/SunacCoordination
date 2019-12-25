@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AutoNameSerialize.cpp" />
     <ClCompile Include="Command\Command.cpp" />
+    <ClCompile Include="Command\CommandHighlight.cpp" />
     <ClCompile Include="Command\CommandWindowDetail.cpp" />
     <ClCompile Include="Command\CommandWindowTable.cpp" />
     <ClCompile Include="Common\AcessDatabase.cpp" />
@@ -71,6 +71,7 @@
     <ClCompile Include="Object\WindowDoor\AttrWindow.cpp" />
     <ClCompile Include="Object\WindowDoor\RCWindow.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowAutoName.cpp" />
+    <ClCompile Include="Object\WindowDoor\WindowGen.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowTop2Front.cpp" />
     <ClCompile Include="Object\WindowStatistic\AluminumSeries.cpp" />
     <ClCompile Include="Object\WindowStatistic\AuxiliaryFrameSeries.cpp" />
@@ -83,6 +84,8 @@
     <ClCompile Include="ProjectorFileMrg\ProjectFile.cpp" />
     <ClCompile Include="ProjectorFileMrg\ProjectFileMrg.cpp" />
     <ClCompile Include="ProjectorFileMrg\ProjectInfo.cpp" />
+    <ClCompile Include="Src\DocumentData.cpp" />
+    <ClCompile Include="Src\DocumentDataSerialize.cpp" />
     <ClCompile Include="StdAfx.cpp" />
     <ClCompile Include="Sunac_def.cpp" />
     <ClCompile Include="Tool\DoubleClickBlockReference.cpp" />
@@ -149,8 +152,8 @@
     <ClCompile Include="WebIO\WindowWebData.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AutoNameSerialize.h" />
     <ClInclude Include="Command\Command.h" />
+    <ClInclude Include="Command\CommandHighlight.h" />
     <ClInclude Include="Command\CommandWindowDetail.h" />
     <ClInclude Include="Command\CommandWindowTable.h" />
     <ClInclude Include="Common\AcessDatabase.h" />
@@ -203,6 +206,7 @@
     <ClInclude Include="Object\WindowDoor\AttrWindow.h" />
     <ClInclude Include="Object\WindowDoor\RCWindow.h" />
     <ClInclude Include="Object\WindowDoor\WindowAutoName.h" />
+    <ClInclude Include="Object\WindowDoor\WindowGen.h" />
     <ClInclude Include="Object\WindowDoor\WindowTop2Front.h" />
     <ClInclude Include="Object\WindowStatistic\AluminumSeries.h" />
     <ClInclude Include="Object\WindowStatistic\AuxiliaryFrameSeries.h" />
@@ -216,6 +220,8 @@
     <ClInclude Include="ProjectorFileMrg\ProjectFileMrg.h" />
     <ClInclude Include="ProjectorFileMrg\ProjectInfo.h" />
     <ClInclude Include="res\resource.h" />
+    <ClInclude Include="Src\DocumentData.h" />
+    <ClInclude Include="Src\DocumentDataSerialize.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="Sunac_def.h" />
     <ClInclude Include="Tool\DocLock.h" />
@@ -368,6 +374,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <PlatformToolset>v90</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
