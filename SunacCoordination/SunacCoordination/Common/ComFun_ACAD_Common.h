@@ -65,6 +65,8 @@ AcDbObjectId MD2010_AddAlignedDimension2(AcGePoint3d start, AcGePoint3d end, AcG
 
 AcDbObjectId MD2010_AddAlignedDimensionAndStyle(AcGePoint3d start, AcGePoint3d end, AcGePoint3d dimlinpnt, double size, const ACHAR* newLayer = L"0");
 
+//创建尺寸标注风格
+void MD2010_CreateDimensionStyle();
 
 //布局操作
 int              MD2010_SetModelSpaceCurrentLayout();
@@ -246,6 +248,9 @@ void MD2010_UpdateOneEntity(AcDbObjectId entId);
 AcDbObjectId MD2010_GetDimstylerID(CString dimname);
 int MD2010_SetCurrentDimStyler(CString name);
 int MD2010_SetCurrentDimStyler(AcDbObjectId id);
+
+//给一个文字样式的名字,得到ID
+AcDbObjectId MD2010_GetTextStylerID(CString dimname);
 
 //重新创建一组曲线
 int MD2010_GetHatchLines(AcDbObjectId Id, vSHatchLines &outs);
