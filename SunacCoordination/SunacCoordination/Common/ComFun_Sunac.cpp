@@ -1416,3 +1416,15 @@ vAcDbObjectId SelectAllWindows(eViewDir p_view)
 
 	return outIds;
 }
+bool IsObjectExsit(AcDbObjectId p_id)
+{
+	AcDbEntity *pEntity;
+	Acad::ErrorStatus es = acdbOpenObject(pEntity, p_id, AcDb::kForRead);
+	if (es!=Acad::eOk)
+	{
+		pEntity->close();
+		return true;
+	}
+
+	return false;
+}

@@ -316,6 +316,17 @@ Acad::ErrorStatus CWindowAutoName::WriteToDwg(AcDbDwgFiler* pFiler)
 	return Acad::eOk;
 }
 
+bool CWindowAutoName::IsInstanceCodeExist(CString p_code)
+{
+	CWinClassify* pWinClassify = FindWinClassifyByInstantCode(p_code);
+	if (pWinClassify == NULL)
+	{
+		return false;
+	}
+
+	return pWinClassify->m_winsInCad.size()>0;
+}
+
 
 vector<AcDbObjectId> CWindowAutoName::GetAllIdsByInstantCode(CString p_code)
 {

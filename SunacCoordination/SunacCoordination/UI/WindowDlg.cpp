@@ -202,9 +202,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		AfxMessageBox(L"此原型不满足通风量要求");
 		return;
 	}
-
-	//TODO 检查当前窗洞宽高在选择原型的宽高范围内
-
+	
 
 	int W1 = TYUI_GetInt(m_comboW1);
 	int H2 = TYUI_GetInt(m_comboH2);
@@ -365,6 +363,8 @@ void CWindowDlg::OnBnClickedRadioWindowDoor()
 void CWindowDlg::OnBnClickedCalculate()
 {
 	UpdateData(TRUE);
+
+	CAcModuleResourceOverride resOverride;
 	CDlgWindowAirCalc dlg;
 	if (dlg.DoModal()==IDOK)
 	{
