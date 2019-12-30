@@ -6,8 +6,7 @@
 #include "acgi.h"
 #include "AttrObject.h"
 #include "../Common/ComFun_Sunac.h"
-#include "../GlobalSetting.h"
-#include "../WebIO/WebIO.h"
+#include "../Tool/DocLock.h"
 
 
 //{{AFX_ARX_MACRO
@@ -34,19 +33,38 @@ AttrObject::AttrObject(const AttrObject &other)
 	*this = other;
 }
 
-AttrObject & AttrObject::operator=(const AttrObject &rhs)
+AttrObject& AttrObject::operator=(const AttrObject &rhs)
 {
 	m_version = rhs.m_version;
+
 	m_prototypeCode = rhs.m_prototypeCode;
-	//m_name = rhs.m_name;
+	m_file = rhs.m_file;
+	m_isDynamic = rhs.m_isDynamic;
 	m_isJiTuan = rhs.m_isJiTuan;
 	m_quyuId = rhs.m_quyuId;
 	m_quyuName = rhs.m_quyuName;
-	//m_type = rhs.m_type;
-	m_isDynamic = rhs.m_isDynamic;
-	m_file = rhs.m_file;
+
 	m_instanceCode = rhs.m_instanceCode;
+	m_instanceCodeId = rhs.m_instanceCodeId;
+	//SetInstanceCode(rhs.m_instanceCode);//实例编号
 	return *this;
+}
+
+void AttrObject::Clone(const AttrObject& p_src) //克隆只克隆数据，不克隆关联关系，如m_instanceCodeId
+{
+	m_version = p_src.m_version;		//文件版本 序列化时使用
+										
+	//原型属性
+	m_prototypeCode = p_src.m_prototypeCode;//原型编号 //所有原型名称用原型编号
+	m_file = p_src.m_file;	//原型文件名,包含.dwg，但不包含路径
+	m_isDynamic = p_src.m_isDynamic;		//是否动态块
+	m_isJiTuan = p_src.m_isJiTuan;		//是否集团
+	m_quyuId = p_src.m_quyuId;			//区域ID
+	m_quyuName = p_src.m_quyuName;			//区域名称
+
+	//////////////////////////////////////////////////////////////////////////
+	//实例属性
+	SetInstanceCode(p_src.m_instanceCode);//实例编号
 }
 
 Acad::ErrorStatus AttrObject::dwgInFields(AcDbDwgFiler* filer)
@@ -184,6 +202,8 @@ void AttrObject::SetInstanceCode(CString  bianHao)
 	//若存在文字，则同时更新文字
 	if (m_instanceCodeId!=AcDbObjectId::kNull)
 	{
+		CDocLock dokLock;
+
 		AcDbEntity * pEnt = NULL;
 		if (Acad::eOk==acdbOpenObject(pEnt, m_instanceCodeId,  AcDb::kForWrite))
 		{
@@ -194,7 +214,7 @@ void AttrObject::SetInstanceCode(CString  bianHao)
 			}
 
 			pEnt->close();
-		}		
+		}
 	}
 }
 

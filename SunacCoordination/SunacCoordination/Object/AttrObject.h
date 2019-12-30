@@ -34,7 +34,8 @@ public:
 	virtual ~AttrObject();
 
 	AttrObject(const AttrObject &other);
-	virtual AttrObject & operator=(const AttrObject &rhs);
+	virtual AttrObject& operator=(const AttrObject &rhs);
+	void Clone(const AttrObject& p_src); //克隆只克隆数据，不克隆关联关系，如m_instanceCodeId
 
 	//{{AFX_ARX_METHODS(ZffDwgScale)
 	virtual Acad::ErrorStatus dwgOutFields(AcDbDwgFiler* pFiler) const;
@@ -51,7 +52,8 @@ public:
 
 	void SetInstanceCode(CString  bianHao);
 	void SetInstanceCodeObjectId(AcDbObjectId p_id);
-	virtual CString GetInstanceCode()const { return m_instanceCode; }
+	CString GetInstanceCode()const { return m_instanceCode; }
+	AcDbObjectId GetInstanceCodeObjectId()const { return m_instanceCodeId; }
 
 	
 public:

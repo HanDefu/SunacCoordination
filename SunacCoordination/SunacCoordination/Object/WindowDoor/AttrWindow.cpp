@@ -198,44 +198,90 @@ CString AttrWindow::GetWinInstanceCode(AcDbObjectId p_id)
 //	*this = other;
 //}
 //
-//AttrWindow & AttrWindow::operator=(const AttrWindow &other)
+//AttrWindow& AttrWindow::operator=(const AttrWindow &rhs)
 //{
-//	AttrObject::operator=(other);
+//	AttrObject::operator=(rhs);
 //
-//	m_openType = other.m_openType;
-//	m_openQty = other.m_openQty;
-//	m_isZhuanJiao = other.m_isZhuanJiao;
-//	m_minWid = other.m_minWid;
-//	m_maxWid = other.m_maxWid;
-//	m_tongFengFormula = other.m_tongFengFormula;
-//	m_tongFengQty = other.m_tongFengQty;
+//	m_dimData = rhs.m_dimData;
 //
-//	m_isMirror = other.m_isMirror;
-//	m_viewDir = other.m_viewDir;
-//	m_wallDis = other.m_wallDis;
+//	m_frontViewFile = rhs.m_frontViewFile;	//原型立面文件, 展开图用基类的m_fileName
+//	m_topViewFile = rhs.m_topViewFile;		//原型俯视图文件
+//	m_leftViewFile = rhs.m_leftViewFile;	//原型侧视图文件
 //
-//	////////////////////////////
-//	m_id = other.m_id;					//序号
-//	m_prototypeCode = other.m_prototypeCode;		//原型编号
-//	m_name = other.m_name;		//原型文件
-//	m_scopeOfApplication = other.m_scopeOfApplication;	//适用范围
-//	m_Dynamic = other.m_Dynamic;			//是否动态
-//	m_functionType = other.m_functionType;		//功能区类型
-//	m_openType = other.m_openType;			//开启类型
-//	m_openQty = other.m_openQty;			//开启数量
-//	//widthMin = other.widthMin;			//宽度最小值
-//	//widthMax = other.widthMax;			//宽度最大值
-//	m_tongFengFormula = other.m_tongFengFormula;	//通风量公式	
-//	m_width = other.m_width;		//静态宽度	
-//	m_height = other.m_height;		//静态高度	
-//	m_tongFengQty = other.m_tongFengQty;	//静态通风量	
-//	m_topViewFile = other.m_topViewFile;	//原型平面文件
-//	m_leftViewFile = other.m_leftViewFile;//原型俯视图文件
+//	m_tongFengFormula = rhs.m_tongFengFormula;//通风量计算公式,主要用于动态原型
+//	m_tongFengQty = rhs.m_tongFengQty;	//通风量
 //
-//	m_dimData = other.m_dimData;
+//	m_openType = rhs.m_openType;		//开启类型
+//	m_openQty = rhs.m_openQty;	//开启扇数量
+//	m_gongNengquType = rhs.m_gongNengquType;//功能区类型
+//
+//	m_isZhuanJiao = rhs.m_isZhuanJiao;		//是否转角窗
+//	m_isMirrorWindow = rhs.m_isMirrorWindow;	//是否对称窗型 
+//
+//	//////////////////////////////////////////////////////////////////////////
+//	//算量相关
+//	m_material = rhs.m_material;
+//
+//	//////////////////////////////////////////////////////////////////////////
+//	//以下属性为具体外窗插入时才设置,单个窗户实例的属性，非原型属性
+//	//视图属性
+//	m_isMirror = rhs.m_isMirror;//是否镜像
+//	m_viewDir = rhs.m_viewDir;//视图方向，平面图、立面图、侧视图
+//
+//	m_isBayWindow = rhs.m_isBayWindow;	 //是否凸窗
+//	m_wallDis = rhs.m_wallDis;		 //外墙距离
+//	m_heightUnderWindow = rhs.m_heightUnderWindow; //窗下墙高度
+//
+//	m_floorInfo = rhs.m_floorInfo; //楼层信息
+//
+//	//////////////////////////////////////////////////////////////////////////
+//	m_fromWinId = rhs.m_fromWinId;
+//	m_relatedWinIds = rhs.m_relatedWinIds;
 //
 //	return *this;
 //}
+
+void AttrWindow::Clone(const AttrWindow& rhs)
+{	
+	AttrObject::Clone(rhs);
+
+
+	m_dimData = rhs.m_dimData;
+
+	m_frontViewFile = rhs.m_frontViewFile;	//原型立面文件, 展开图用基类的m_fileName
+	m_topViewFile = rhs.m_topViewFile;		//原型俯视图文件
+	m_leftViewFile = rhs.m_leftViewFile;	//原型侧视图文件
+
+	m_tongFengFormula = rhs.m_tongFengFormula;//通风量计算公式,主要用于动态原型
+	m_tongFengQty = rhs.m_tongFengQty;	//通风量
+
+	m_openType = rhs.m_openType;		//开启类型
+	m_openQty = rhs.m_openQty;	//开启扇数量
+	m_gongNengquType = rhs.m_gongNengquType;//功能区类型
+
+	m_isZhuanJiao = rhs.m_isZhuanJiao;		//是否转角窗
+	m_isMirrorWindow = rhs.m_isMirrorWindow;	//是否对称窗型 
+
+	//////////////////////////////////////////////////////////////////////////
+	//算量相关
+	m_material = rhs.m_material;
+
+	//////////////////////////////////////////////////////////////////////////
+	//以下属性为具体外窗插入时才设置,单个窗户实例的属性，非原型属性
+	//视图属性
+	m_isMirror = rhs.m_isMirror;//是否镜像
+	m_viewDir = rhs.m_viewDir;//视图方向，平面图、立面图、侧视图
+
+	m_isBayWindow = rhs.m_isBayWindow;	 //是否凸窗
+	m_wallDis = rhs.m_wallDis;		 //外墙距离
+	m_heightUnderWindow = rhs.m_heightUnderWindow; //窗下墙高度
+
+	m_floorInfo = rhs.m_floorInfo; //楼层信息
+
+	//以下关联的实体关系保持原来的 
+	//m_fromWinId 
+	//m_relatedWinIds
+}
 
 const CWindowsDimData* AttrWindow::GetDimData(CString p_sCode)const
 {

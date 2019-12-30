@@ -67,6 +67,7 @@ public:
 	bool UpdateObject(const AttrWindow& p_oldAtt, const AttrWindow& p_newAtt); //某个类型的门窗全部调整为新的类型
 	bool RenameWindows(const CString p_preName, const CString p_newName);//将指定窗型重命名
 	
+	bool IsInstanceCodeExist(CString p_code);
 	vector<AcDbObjectId> GetAllIdsByInstantCode(CString p_code);
 	vector<AcDbObjectId> GetAllIds();
 
