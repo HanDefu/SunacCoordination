@@ -259,11 +259,8 @@ AcDb::LineWeight MD2010_GetLineWeight(AcDbObjectId objID)
 	return weight;
 }
 
-void MD2010_CreateDimensionStyle()
+void MD2010_CreateDimensionStyle(CString styleName)
 {
-	// 获得要创建的标注样式名称
-	CString styleName = L"Z50";
-
 	// 获得当前图形的标注样式表
 	AcDbDimStyleTable *pDimStyleTbl = NULL;
 	acdbHostApplicationServices()->workingDatabase()->getDimStyleTable(pDimStyleTbl, AcDb::kForWrite);
@@ -337,7 +334,9 @@ AcDbObjectId MD2010_AddAlignedDimension2(AcGePoint3d start, AcGePoint3d end, AcG
 
 AcDbObjectId MD2010_AddAlignedDimensionAndStyle(AcGePoint3d start, AcGePoint3d end, AcGePoint3d dimlinpnt, double size, const ACHAR* newLayer)
 {
-	MD2010_CreateDimensionStyle();
+	//创建一个标注尺寸(全局比例1:50)
+	MD2010_CreateDimensionStyle(_T("Z50"));
+	//获取所创建的标注尺寸的id
 	AcDbObjectId dimStyleId = MD2010_GetDimstylerID(_T("Z50"));
 
 	if (JHCOM_PointDistance(start, end) <= TOL * 10000)//小于1的不标注

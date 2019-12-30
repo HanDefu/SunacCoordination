@@ -156,5 +156,4 @@ CString MD2010_GetAppPath()
 		sunacCADPath = strFileName;
 		return sunacCADPath;
 	}
-
 }
