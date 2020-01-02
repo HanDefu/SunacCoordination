@@ -327,6 +327,9 @@ vCString CConfigDictionary::Window_GetRate()const
 		strs.push_back(L"1/6");
 		strs.push_back(L"1/8");
 		strs.push_back(L"1/10");
+		strs.push_back(L"1/16");
+		strs.push_back(L"1/20");
+		strs.push_back(L"1/30");
 		return strs;
 	}
 }
