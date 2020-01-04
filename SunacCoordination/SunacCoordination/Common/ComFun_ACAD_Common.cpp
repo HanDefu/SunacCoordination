@@ -30,6 +30,7 @@
 #include <dbObjectContextInterface.h>
 #include "ComFun_ACad.h"
 #include "../Common/ComFun_Convert.h"
+#include "../Common/ComFun_Sunac.h"
 
 AcDbObjectId MD2010_PostModalToBlockTable(const ACHAR* entryName, AcDbEntity *pent)
 {
