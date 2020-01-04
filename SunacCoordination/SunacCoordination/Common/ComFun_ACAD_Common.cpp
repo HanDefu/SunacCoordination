@@ -1940,7 +1940,7 @@ int MD2010_GetBlockReference_Record_name(AcDbObjectId id, ACHAR *&pName)
 {
 	AcDbObject *pEnt = NULL,*pEntR = NULL;
 	AcDbBlockReference *pbloref = NULL;
-	AcDbObjectId recordid;
+	AcDbObjectId recordid=0;
 	AcDbBlockTableRecord *precord = NULL;
 
 	acdbOpenAcDbObject(pEnt, id,AcDb::kForRead);
@@ -1951,12 +1951,21 @@ int MD2010_GetBlockReference_Record_name(AcDbObjectId id, ACHAR *&pName)
 		return -1;
 	}
 	recordid = pbloref->blockTableRecord();
+	if (recordid == 0)
+	{
+		pEnt->close();
+		return -1;
+	}
 
 	acdbOpenAcDbObject(pEntR, recordid,AcDb::kForRead);
 	precord = AcDbBlockTableRecord ::cast(pEntR);
 	if (precord == NULL)
 	{
-		pEntR->close();
+		if(pEntR)
+		    pEntR->close();
+
+		if (pEnt)
+			pEnt->close();
 		return -2;
 	}
 
@@ -1974,18 +1983,81 @@ int MD2010_CycleBlockEntites(const WCHAR * blockname, vAcDbObjectId &vids)
 	if(blkDefId == 0) return 0;
 
 	int count = 0;
-	AcDbBlockTableRecord *pBlkDefRcd;
+	AcDbBlockTableRecord *pBlkDefRcd = 0;
     acdbOpenObject(pBlkDefRcd, blkDefId, AcDb::kForRead);
+	if (pBlkDefRcd == 0)
+		return -1;
 
 	AcDbBlockTableRecordIterator *pItr;
 	pBlkDefRcd->newIterator(pItr);
-	AcDbEntity *pEnt;
+	AcDbEntity *pEnt = 0;
 	for (pItr->start(); !pItr->done(); pItr->step())
 	{
 		pItr->getEntity(pEnt, AcDb::kForRead);
 		vids.push_back(pEnt->objectId());
 		count++;
 		pEnt->close(); 
+	}
+	delete pItr;
+	pBlkDefRcd->close();
+	return count;
+}
+
+
+
+//bool 
+int TYCOM_DeepCycleBlockReferences(AcDbObjectId inputId, eViewDir viewDir, bool(*IsWindowFunction)(AcDbObjectId, eViewDir), vAcDbObjectId &outputIds)
+{
+	if (inputId && IsWindowFunction(inputId, viewDir))
+	{
+		outputIds.push_back(inputId);
+		return 1;
+	}
+
+	if (!DQ_IsBlockReference(inputId))
+		return 0;
+	else
+	{
+		ACHAR *brecname = L"";
+		vAcDbObjectId vidsToCheck;
+		int ret = MD2010_GetBlockReference_Record_name(inputId, brecname);
+		if (ret == 0)
+		{
+			MD2010_CycleBlockEntites(brecname, vidsToCheck);
+			for (int i = 0; i < vidsToCheck.size(); i++)
+			{
+				TYCOM_DeepCycleBlockReferences(vidsToCheck[i], viewDir, IsWindowFunction, outputIds);
+			}
+		}
+	}
+	return 0;
+}
+
+int MD2010_CycleBlockReferencesInBlockDef(const WCHAR * blockname, vAcDbObjectId &vids)
+{
+	AcDbObjectId blkDefId = MD2010_GetBlockDefID(blockname);
+	if (blkDefId == 0) return 0;
+
+	int count = 0;
+	AcDbBlockTableRecord *pBlkDefRcd;
+	acdbOpenObject(pBlkDefRcd, blkDefId, AcDb::kForRead);
+
+	AcDbBlockTableRecordIterator *pItr = 0;
+	pBlkDefRcd->newIterator(pItr);
+	AcDbEntity *pEnt = 0;
+	for (pItr->start(); !pItr->done(); pItr->step())
+	{
+		pItr->getEntity(pEnt, AcDb::kForRead);
+		if (pEnt)
+		{
+			AcDbBlockReference * pBR = AcDbBlockReference::cast(pEnt);
+			if (pBR)
+			{
+				vids.push_back(pEnt->objectId());
+				count++;
+			}
+			pEnt->close();	
+		}
 	}
 	delete pItr;
 

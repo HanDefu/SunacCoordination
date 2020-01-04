@@ -44,13 +44,14 @@ bool DQ_IsBlockReference(AcDbObjectId id)
 	{
 		return false;
 	}
-	AcDbEntity * pEnt;
+	AcDbEntity * pEnt = 0;
 	Acad::ErrorStatus es = acdbOpenObject(pEnt, id, AcDb::kForRead);
 	// Make sure its a block reference
 	AcDbBlockReference * pBR = AcDbBlockReference::cast(pEnt);
 	if (pBR == NULL)
 	{
-		pEnt->close();
+		if(pEnt)
+		    pEnt->close();
 		return false;
 	}
 	pEnt->close();
