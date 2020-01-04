@@ -60,7 +60,7 @@
 #include "ProjectorFileMrg/FileUploadDownload.h"
 #include "Src/DocumentData.h"
 #include "Src/DocumentDataSerialize.h"
-
+#include "Common/ComFun_RectArray.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -79,6 +79,7 @@ AC_IMPLEMENT_EXTENSION_MODULE(theArxDLL);
 
 void CMD_YTest()
 {
+
 	ads_name ename;
 	ads_point pt;
 	if (acedEntSel(L"\nSelect a dynamic block reference: ", ename, pt) != RTNORM)
@@ -89,7 +90,20 @@ void CMD_YTest()
 	AcDbObjectId eId;
 	acdbGetObjectId(eId, ename);
 
-	vAcDbObjectId allWindowIds;
+	vAcDbObjectId ids1,ids2,ids3,ids4;
+	AcDbObjectId actionID = TYCOM_GetActionId(eId);
+	TYCOM_GetArrayObjects(actionID,ids1);//得到4个对象 每个对象都是一个块 不是arrayid
+
+	TYCOM_CycleBlockReferenceEntites(ids1[0],ids2);//通过这个方法 得到这一个块内部的 arrayid
+
+	TYCOM_IsArray(ids2[0]);
+	actionID = TYCOM_GetActionId(ids2[0]);
+	TYCOM_GetArrayObjects(actionID,ids3);
+
+	TYCOM_CycleBlockReferenceEntites(ids3[0],ids4);
+	TY_IsWindow(ids4[0],eViewDir::E_VIEW_ALL);
+
+	/*vAcDbObjectId allWindowIds;
 	TYCOM_DeepCycleBlockReferences(eId, E_VIEW_FRONT, TY_IsWindow, allWindowIds);
 
 	vector<AttrWindow> winPrototypes = WebIO::GetInstance()->GetWindows(1500, 1700, _T("不限"), 0, _T("不限"));
@@ -123,7 +137,16 @@ void CMD_YTest()
 	objList.append(idOut);
 
 	AcDbIdMapping idMap;
-	// Step 5: Call deepCloneObjects().
+	// Step 5: Call deepCloneObj
+
+	AcDbEntity * pEnt = 0;
+	Acad::ErrorStatus es = acdbOpenObject(pEnt, eId, AcDb::kForRead);
+
+	//这个函数是判断一个实体是不是关联对象的一个好方法  
+	bool isarray = AcDbAssocArrayActionBody::isAssociativeArray(pEnt);
+
+	AcDbObjectId actionid = AcDbAssocArrayActionBody::getControllingActionBody(pEnt);
+	pEnt->close();ects().
 	acdbHostApplicationServices()->workingDatabase()->deepCloneObjects(objList, modelSpaceId, idMap);
 	// Now we can go through the ID map and do whatever we'd like to the original and/or clone objects.
 
@@ -141,7 +164,7 @@ void CMD_YTest()
 		TYCOM_Move(idPair.value(), AcGeVector3d(2500, 0, 0));
 		//acutPrintf("\nObjectId is: %Ld",idPair.value().asOldId());
 	}
-	
+	*/
 	return;
 }
 

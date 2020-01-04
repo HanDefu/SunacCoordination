@@ -2004,7 +2004,17 @@ int MD2010_CycleBlockEntites(const WCHAR * blockname, vAcDbObjectId &vids)
 	return count;
 }
 
-
+int TYCOM_CycleBlockReferenceEntites(AcDbObjectId blockReferenceId,vAcDbObjectId &ids)
+{
+	ACHAR *brecname = L"";
+	vAcDbObjectId vidsToCheck;
+	int ret = MD2010_GetBlockReference_Record_name(blockReferenceId, brecname);
+	if (ret == 0)
+	{
+		MD2010_CycleBlockEntites(brecname, ids);
+	}
+	return 0;
+}
 
 //bool 
 int TYCOM_DeepCycleBlockReferences(AcDbObjectId inputId, eViewDir viewDir, bool(*IsWindowFunction)(AcDbObjectId, eViewDir), vAcDbObjectId &outputIds)

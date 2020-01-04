@@ -153,8 +153,9 @@ int              MD2010_CreateBlockDefine_ExistEnts(const WCHAR* blockname, AcDb
 bool             MD2010_CheckBlockDefExist(const WCHAR * blockname);
 AcDbObjectId     MD2010_GetBlockDefID(const WCHAR * blockname);
 int              MD2010_InsertBlockReference_ModelSpace(const WCHAR * blockname, AcDbObjectId &id, AcGePoint3d origin = AcGePoint3d(0,0,0), double angle = 0, AcGeScale3d scale = AcGeScale3d(1,1,1));
-int              MD2010_CycleBlockEntites(const WCHAR * blockname, vAcDbObjectId &vids);
+int              MD2010_CycleBlockEntites(const WCHAR * blockrecordname, vAcDbObjectId &vids);
 int              TYCOM_DeepCycleBlockReferences(AcDbObjectId inputId, eViewDir viewDir, bool(*IsWindowFunction)(AcDbObjectId, eViewDir), vAcDbObjectId &outputIds);
+int              TYCOM_CycleBlockReferenceEntites(AcDbObjectId blockReferenceId,vAcDbObjectId &ids);
 int              MD2010_CycleBlockReferencesInBlockDef(const WCHAR * blockname, vAcDbObjectId &vids);
 HBITMAP          MD2010_BlockIconToBMP(const AcDbObjectId &blkId, HDC hdc);
 int              MD2010_CycleAllBlockDefs(vAcDbObjectId &vids, vCString &vstr);
