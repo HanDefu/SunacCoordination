@@ -391,6 +391,9 @@
     <ClCompile Include="Common\ComFun_RectArray.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="Object\WindowDoor\WindowSelect.cpp">
+      <Filter>Object\WindowDoor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -870,6 +873,9 @@
     </ClInclude>
     <ClInclude Include="Common\ComFun_RectArray.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\WindowSelect.h">
+      <Filter>Object\WindowDoor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

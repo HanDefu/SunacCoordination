@@ -2027,18 +2027,16 @@ int TYCOM_DeepCycleBlockReferences(AcDbObjectId inputId, eViewDir viewDir, bool(
 
 	if (!DQ_IsBlockReference(inputId))
 		return 0;
-	else
+
+	ACHAR *brecname = L"";
+	vAcDbObjectId vidsToCheck;
+	int ret = MD2010_GetBlockReference_Record_name(inputId, brecname);
+	if (ret == 0)
 	{
-		ACHAR *brecname = L"";
-		vAcDbObjectId vidsToCheck;
-		int ret = MD2010_GetBlockReference_Record_name(inputId, brecname);
-		if (ret == 0)
+		MD2010_CycleBlockEntites(brecname, vidsToCheck);
+		for (int i = 0; i < vidsToCheck.size(); i++)
 		{
-			MD2010_CycleBlockEntites(brecname, vidsToCheck);
-			for (int i = 0; i < vidsToCheck.size(); i++)
-			{
-				TYCOM_DeepCycleBlockReferences(vidsToCheck[i], viewDir, IsWindowFunction, outputIds);
-			}
+			TYCOM_DeepCycleBlockReferences(vidsToCheck[i], viewDir, IsWindowFunction, outputIds);
 		}
 	}
 	return 0;

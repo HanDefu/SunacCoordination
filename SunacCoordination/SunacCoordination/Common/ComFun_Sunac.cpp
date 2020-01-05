@@ -1348,16 +1348,23 @@ bool SelectViewDir(eViewDir& p_viewDir)
 	return bSuc;
 }
 
-vAcDbObjectId SelectWindows(eViewDir p_view)
+vAcDbObjectId SelectWindows(eViewDir p_view, bool p_bAllWindow)
 {
+	Acad::ErrorStatus es;
 	vAcDbObjectId vIds;//当前选择的ids
 
 	acutPrintf(L"\n请选择门窗");
 
-	//TODO 选择全部和自动过滤
-
 	ads_name sset;
-	acedSSGet(NULL, NULL, NULL, NULL, sset);
+	//if (p_bAllWindow)
+	//{
+	//	//TODO 选择全部和自动过滤
+	//}
+	//else
+	{
+		acedSSGet(NULL, NULL, NULL, NULL, sset);
+	}
+
 
 	Adesk::Int32 length = 0;
 	acedSSLength(sset, &length);
@@ -1367,11 +1374,25 @@ vAcDbObjectId SelectWindows(eViewDir p_view)
 		acedSSName(sset, i, ent);
 
 		AcDbObjectId objId = 0;
-		acdbGetObjectId(objId, ent);
-		if (objId != 0 && TY_IsWindow(objId, p_view ))
+		es = acdbGetObjectId(objId, ent);
+		if (es!=Acad::eOk || objId==AcDbObjectId::kNull)
+		{
+			continue;
+		}
+
+#if 1
+		vAcDbObjectId allWindowIds;
+		TYCOM_DeepCycleBlockReferences(objId, p_view, TY_IsWindow, allWindowIds);
+		if (allWindowIds.size() > 0)
+		{
+			vIds.insert(vIds.end(), allWindowIds.begin(), allWindowIds.end());
+		}
+#else
+		if (objId != 0 && TY_IsWindow(objId, p_view))
 		{
 			vIds.push_back(objId);
 		}
+#endif
 	}
 	acedSSFree(sset);
 
@@ -1388,35 +1409,6 @@ vAcDbObjectId SelectWindows(eViewDir p_view)
 	return vIds;
 }
 
-
-vAcDbObjectId SelectAllWindows(eViewDir p_view)
-{
-	//TODO 利用acedSSGet 参数进行过滤
-	vAcDbObjectId outIds;
-
-	AcDbObjectId id;
-	ads_name ssname;
-	ads_name ent;
-	int rt = acedSSGet(_T("A"), NULL, NULL, NULL, ssname); // 提示用户选择对象
-	if (rt == RTNORM)
-	{
-		Adesk::Int32 length;
-		acedSSLength(ssname, &length);
-		for (int i = 0; i < length; i++)
-		{
-			acedSSName(ssname, i, ent);
-			acdbGetObjectId(id, ent);
-			
-			if (id != AcDbObjectId::kNull && TY_IsWindow(id, p_view))//检查是否是门窗
-			{
-				outIds.push_back(id);
-			}
-		}
-		acedSSFree(ssname);
-	}
-
-	return outIds;
-}
 bool IsObjectExsit(AcDbObjectId p_id)
 {
 	AcDbEntity *pEntity;

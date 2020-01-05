@@ -679,7 +679,7 @@ void CWindowGen::AutoNameAllWindow()
 {
 	//vector<AcDbObjectId> allIds = GetWindowAutoName()->GetAllIds();
 	//1.  从CAD界面上获取所有的门窗
-	vector<AcDbObjectId> allIds = SelectAllWindows(E_VIEW_ALL);
+	vector<AcDbObjectId> allIds = SelectWindows(E_VIEW_ALL, true);
 
 
 	//2. 对原来的门窗分类有效性进行检查，移除不匹配和已删除的项

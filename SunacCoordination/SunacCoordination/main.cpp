@@ -33,6 +33,7 @@
 #include "UI\menu\Menu_Def.h"
 #include "object\WindowDoor\AttrWindow.h"
 #include "object\WindowDoor\WindowGen.h"
+#include "object\WindowDoor\WindowSelect.h"
 #include "object\AirCondition\AttrAirCon.h"
 #include "object\Kitchen\AttrKitchen.h"
 #include "object\Bathroom\AttrBathroom.h"
@@ -79,6 +80,18 @@ AC_IMPLEMENT_EXTENSION_MODULE(theArxDLL);
 
 void CMD_YTest()
 {
+	int n = 0;
+	vector<CWinInCad> winsSelected = CWindowSelect::SelectWindows(E_VIEW_ALL, false);
+	for (UINT i = 0; i < winsSelected.size(); i++)
+	{
+		if (winsSelected[i].m_bMirror)
+		{
+			n++;
+		}		
+	}
+
+	return;
+
 
 	ads_name ename;
 	ads_point pt;
@@ -101,7 +114,7 @@ void CMD_YTest()
 	TYCOM_GetArrayObjects(actionID,ids3);
 
 	TYCOM_CycleBlockReferenceEntites(ids3[0],ids4);
-	TY_IsWindow(ids4[0],eViewDir::E_VIEW_ALL);
+	TY_IsWindow(ids4[0],E_VIEW_ALL);
 
 	/*vAcDbObjectId allWindowIds;
 	TYCOM_DeepCycleBlockReferences(eId, E_VIEW_FRONT, TY_IsWindow, allWindowIds);
