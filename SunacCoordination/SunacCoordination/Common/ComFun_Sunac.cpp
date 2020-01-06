@@ -1348,7 +1348,7 @@ bool SelectViewDir(eViewDir& p_viewDir)
 	return bSuc;
 }
 
-vAcDbObjectId SelectWindows(eViewDir p_view, bool p_bAllWindow)
+vAcDbObjectId SelectWindows_old(eViewDir p_view, bool p_bAllWindow)
 {
 	Acad::ErrorStatus es;
 	vAcDbObjectId vIds;//当前选择的ids
@@ -1356,11 +1356,11 @@ vAcDbObjectId SelectWindows(eViewDir p_view, bool p_bAllWindow)
 	acutPrintf(L"\n请选择门窗");
 
 	ads_name sset;
-	//if (p_bAllWindow)
-	//{
-	//	//TODO 选择全部和自动过滤
-	//}
-	//else
+	if (p_bAllWindow)
+	{
+		acedSSGet(_T("A"), NULL, NULL, NULL, sset);
+	}
+	else
 	{
 		acedSSGet(NULL, NULL, NULL, NULL, sset);
 	}

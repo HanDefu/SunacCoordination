@@ -31,11 +31,11 @@ vector<CWinInCad> CWindowSelect::SelectWindows(eViewDir p_view, bool p_bAllWindo
 	acutPrintf(L"\n请选择门窗");
 
 	ads_name sset;
-	//if (p_bAllWindow)
-	//{
-	//	//TODO 选择全部和自动过滤
-	//}
-	//else
+	if (p_bAllWindow)
+	{
+		int rt = acedSSGet(_T("A"), NULL, NULL, NULL, sset); // 提示用户选择对象
+	}
+	else
 	{
 		acedSSGet(NULL, NULL, NULL, NULL, sset);
 	}
@@ -102,6 +102,7 @@ int CWindowSelect::FindWindowsDeep(const AcDbObjectId inputId, const eViewDir vi
 	{
 		FindWindowInBlock(inputId, viewDir, p_parentMx, outputIds);
 	}
+	//TODO group情况
 	 
 
 	return 0;
@@ -175,15 +176,6 @@ int CWindowSelect::FindWindowInArray(const AcDbObjectId inputId, const eViewDir 
 	vAcDbObjectId ids2;
 	for (int i = 0; i < ids.size(); i++)
 	{
-		//TYCOM_CycleBlockReferenceEntites(ids[0], ids2);//通过这个方法 得到这一个块内部的 arrayid
-
-		//TYCOM_IsArray(ids2[0]);
-		//actionID = TYCOM_GetActionId(ids2[0]);
-		//TYCOM_GetArrayObjects(actionID, ids3);//这个是12个内部的图块 还不是window
-
-		//TYCOM_CycleBlockReferenceEntites(ids3[0], ids4);//通过图块得到对应的window
-		//TY_IsWindow(ids4[0], eViewDir::E_VIEW_ALL);
-
 		FindWindowsDeep(ids[i], viewDir, curMx, outputIds);
 	}
 

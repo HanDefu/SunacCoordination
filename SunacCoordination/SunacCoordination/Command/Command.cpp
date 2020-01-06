@@ -37,6 +37,7 @@
 #include "../Object/Railing/RailingStatistic.h"
 #include "../Object/AirCondition/AirConStatistic.h"
 #include "../Object/WindowDoor/WindowTop2Front.h"
+#include "../Object/WindowDoor/WindowSelect.h"
 #include "../UI/ProjectManagementDlg.h"
 #include "../WebIO/WebIO.h"
 #include "Command.h"
@@ -148,11 +149,9 @@ void CMD_SunacWindowFloorSetting()//门窗楼层设置
 	}
 
 	//1.选择需要设置楼层的门窗
-	vAcDbObjectId winIds = SelectWindows(E_VIEW_TOP);
-	if (winIds.size() == 0)
-	{
+	const vector<CWinInCad> wins = CWindowSelect::SelectWindows(E_VIEW_TOP);
+	if (wins.size() == 0)
 		return;
-	}
 
 	CFloorInfo floorInfo;
 
@@ -185,10 +184,10 @@ void CMD_SunacWindowFloorSetting()//门窗楼层设置
 
 	//////////////////////////////////////////////////////////////////////////
 	//设置到选中的门窗中
-	for (UINT i = 0; i < winIds.size(); i++)
+	for (UINT i = 0; i < wins.size(); i++)
 	{
 		RCWindow oneWindow;
-		oneWindow.m_id = winIds[i];
+		oneWindow.m_id = wins[i].m_winId;
 		oneWindow.InitParameters();
 
 		AttrWindow* pAtt = oneWindow.GetAttribute();
@@ -401,14 +400,16 @@ void CMD_SunacWindowsStatistics()
 	eViewDir viewDir = E_VIEW_FRONT;
 	bool bSuc1 = SelectViewDir(viewDir);
 	if (bSuc1 == false)
-	{
 		return;
-	}
-	vAcDbObjectId winIds = SelectWindows(viewDir);
-	if (winIds.size() == 0)
+
+	const vector<CWinInCad> wins = CWindowSelect::SelectWindows(viewDir);
+	vAcDbObjectId winIds;
+	for (UINT i = 0; i < wins.size(); i++)
 	{
-		return;
+		winIds.push_back(wins[i].m_winId);
 	}
+	if (wins.size() == 0)
+		return;
 
 	//对选择的门窗高亮
 	CCommandHighlight::GetInstance()->WindowDoorHighlight(winIds);

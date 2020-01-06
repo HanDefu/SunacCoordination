@@ -6,6 +6,7 @@
 #include "AttrWindow.h"
 #include "RCWindow.h"
 #include "WindowGen.h"
+#include "WindowSelect.h"
 #include "..\..\Src\DocumentData.h"
 #include "..\..\GlobalSetting.h"
 
@@ -13,11 +14,15 @@
 bool CWindowTop2Front::GenFrontFromTop()
 {
 	//1.选择需要设置楼层的门窗
-	vAcDbObjectId winIds = SelectWindows(E_VIEW_TOP);
-	if (winIds.size() == 0)
+	//vAcDbObjectId winIds = SelectWindows(E_VIEW_TOP);
+	const vector<CWinInCad> wins = CWindowSelect::SelectWindows(E_VIEW_TOP);
+	vAcDbObjectId winIds;
+	for (UINT i = 0; i < wins.size(); i++)
 	{
-		return false;
+		winIds.push_back(wins[i].m_winId);
 	}
+	if (winIds.size() == 0)
+		return false;
 
 
 	E_DIRECTION windowDir = E_DIR_BOTTOM;

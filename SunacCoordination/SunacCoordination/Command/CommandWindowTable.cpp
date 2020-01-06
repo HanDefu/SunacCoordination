@@ -9,12 +9,13 @@
 #include <dbgroup.h>
 #include <geassign.h>
 #include "accmd.h"
-#include "../Common/ComFun_Sunac.h"
-#include "../Object/WindowDoor/RCWindow.h"
-#include "../Common/ComFun_ACad.h"
 #include "dbtable.h"
 #include "Command.h"
 #include "../Command/CommandHighlight.h"
+#include "../Common/ComFun_Sunac.h"
+#include "../Common/ComFun_ACad.h"
+#include "../Object/WindowDoor/RCWindow.h"
+#include "../Object/WindowDoor/WindowSelect.h"
 
 //门窗表
 void CMD_SunacWindowsTable()
@@ -27,13 +28,16 @@ void CMD_SunacWindowsTable()
 	eViewDir viewDir = E_VIEW_FRONT;
 	bool bSuc1 = SelectViewDir(viewDir);
 	if (bSuc1 == false)
-	{
 		return;
-	}
-	vAcDbObjectId winIds = SelectWindows(viewDir);
-	if (winIds.size() == 0)
-	{
+
+	const vector<CWinInCad> wins = CWindowSelect::SelectWindows(viewDir);
+	if (wins.size() == 0)
 		return;
+
+	vAcDbObjectId winIds;
+	for (UINT i = 0; i < wins.size(); i++)
+	{
+		winIds.push_back(wins[i].m_winId);
 	}
 
 	//第二步  选择门窗表插入点

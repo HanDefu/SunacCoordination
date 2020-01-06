@@ -5,6 +5,7 @@
 #include "..\..\GlobalSetting.h"
 #include "WindowGen.h"
 #include "WindowAutoName.h"
+#include "WindowSelect.h"
 #include "..\..\Src\DocumentData.h"
 
 
@@ -677,19 +678,21 @@ double CWindowGen::GetWinHeight(AcDbObjectId p_id)
 
 void CWindowGen::AutoNameAllWindow()
 {
-	//vector<AcDbObjectId> allIds = GetWindowAutoName()->GetAllIds();
 	//1.  从CAD界面上获取所有的门窗
-	vector<AcDbObjectId> allIds = SelectWindows(E_VIEW_ALL, true);
+	//vector<AcDbObjectId> allIds = SelectWindows(E_VIEW_ALL, true);
+	const vector<CWinInCad> wins = CWindowSelect::SelectWindows(E_VIEW_ALL, true);
+	if (wins.size() == 0)
+		return;
 
 
 	//2. 对原来的门窗分类有效性进行检查，移除不匹配和已删除的项
 	GetWindowAutoName()->CheckAndRemoveObjectNotBelong();
 
 	//3. 将门窗加入到类型库
-	for (UINT i = 0; i < allIds.size(); i++)
+	for (UINT i = 0; i < wins.size(); i++)
 	{
 		//3.1 对所有的门窗获取名称
-		AttrWindow* pWinAtt = AttrWindow::GetWinAtt(allIds[i]);
+		AttrWindow* pWinAtt = AttrWindow::GetWinAtt(wins[i].m_winId);
 		if (pWinAtt==NULL)
 			continue;
 		
@@ -697,6 +700,6 @@ void CWindowGen::AutoNameAllWindow()
 		pWinAtt->SetInstanceCode(sInstanceCode);		
 
 		//3.1 对所有的门窗添加到名称库中
-		GetWindowAutoName()->AddWindowType(sInstanceCode, allIds[i]);
+		GetWindowAutoName()->AddWindowType(sInstanceCode, wins[i].m_winId);
 	}
 }

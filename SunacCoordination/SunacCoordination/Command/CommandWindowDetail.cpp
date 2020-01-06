@@ -13,6 +13,7 @@
 #include "../Object/RCBlock.h"
 #include "../Object/WindowDoor/RCWindow.h"
 #include "../Object/WindowDoor/WindowGen.h"
+#include "../Object/WindowDoor/WindowSelect.h"
 #include "../Common/ComFun_ACad.h"
 #include "../Common/ComFun_Str.h"
 #include "../Common/ComFun_Sunac.h"
@@ -55,8 +56,14 @@ void CWindowDetail::DrawWindowDetail()
 	{
 		return;
 	}
-	vAcDbObjectId winIds = SelectWindows(viewDir);
-	if (winIds.size() == 0)
+
+	const vector<CWinInCad> wins = CWindowSelect::SelectWindows(viewDir);
+	vAcDbObjectId winIds;
+	for (UINT i = 0; i < wins.size(); i++)
+	{
+		winIds.push_back(wins[i].m_winId);
+	}
+	if (wins.size() == 0)
 		return;
 
 	//第二步  选择门窗表插入点
