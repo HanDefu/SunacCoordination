@@ -33,6 +33,7 @@
     <ClCompile Include="Common\ComFun_Interactive.cpp" />
     <ClCompile Include="Common\ComFun_Layer.cpp" />
     <ClCompile Include="Common\ComFun_Math.cpp" />
+    <ClCompile Include="Common\ComFun_RectArray.cpp" />
     <ClCompile Include="Common\ComFun_Str.cpp" />
     <ClCompile Include="Common\ComFun_String.cpp" />
     <ClCompile Include="Common\ComFun_Sunac.cpp" />
@@ -72,6 +73,7 @@
     <ClCompile Include="Object\WindowDoor\RCWindow.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowAutoName.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowGen.cpp" />
+    <ClCompile Include="Object\WindowDoor\WindowSelect.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowTop2Front.cpp" />
     <ClCompile Include="Object\WindowStatistic\AluminumSeries.cpp" />
     <ClCompile Include="Object\WindowStatistic\AuxiliaryFrameSeries.cpp" />
@@ -167,6 +169,7 @@
     <ClInclude Include="Common\ComFun_Interactive.h" />
     <ClInclude Include="Common\ComFun_Layer.h" />
     <ClInclude Include="Common\ComFun_Math.h" />
+    <ClInclude Include="Common\ComFun_RectArray.h" />
     <ClInclude Include="Common\ComFun_Str.h" />
     <ClInclude Include="Common\ComFun_String.h" />
     <ClInclude Include="Common\ComFun_Sunac.h" />
@@ -207,6 +210,7 @@
     <ClInclude Include="Object\WindowDoor\RCWindow.h" />
     <ClInclude Include="Object\WindowDoor\WindowAutoName.h" />
     <ClInclude Include="Object\WindowDoor\WindowGen.h" />
+    <ClInclude Include="Object\WindowDoor\WindowSelect.h" />
     <ClInclude Include="Object\WindowDoor\WindowTop2Front.h" />
     <ClInclude Include="Object\WindowStatistic\AluminumSeries.h" />
     <ClInclude Include="Object\WindowStatistic\AuxiliaryFrameSeries.h" />
