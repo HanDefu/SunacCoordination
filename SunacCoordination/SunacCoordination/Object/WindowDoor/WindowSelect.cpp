@@ -109,7 +109,7 @@ int CWindowSelect::FindWindowsDeep(const AcDbObjectId inputId, const eViewDir vi
 	{
 		FindWindowInBlock(inputId, viewDir, p_parentMx, outputIds);
 	}
-	//TODO group情况
+	//group情况 不用特定处理，在选择的时候还是多个单独的实体，只是一起选择
 	 
 
 	return 0;
