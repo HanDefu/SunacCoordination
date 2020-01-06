@@ -459,6 +459,34 @@ bool CWindowAutoName::UpdateObject(const AttrWindow& p_oldAtt, const AttrWindow&
 	return true;
 }
 
+CString CWindowAutoName::GetMirrorInstanceCode(CString p_name)
+{
+	if (p_name.ReverseFind(L'M')==p_name.GetLength()-1)
+	{
+		return p_name.Left(p_name.GetLength() - 1);
+	}
+	else
+	{
+		return p_name + _T("M");
+	}
+}
+bool CWindowAutoName::IsSamePrototypeAndSize(CString p_instanceCode1, CString p_instanceCode2)
+{
+	int nPos1 = p_instanceCode1.Find(L"_");
+	if (nPos1 <= 0 && p_instanceCode1.GetLength() < nPos1 + 5)
+		return false;
+
+	int nPos2 = p_instanceCode1.Find(L"_");
+	if (nPos2 <= 0 && p_instanceCode1.GetLength() < nPos2 + 5)
+		return false;
+
+	CString sCode1 = p_instanceCode1.Left(nPos1 + 5);
+	CString sCode2 = p_instanceCode2.Left(nPos2 + 5);
+	return sCode1.CompareNoCase(sCode2)==0;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 CProtypeInstanceCodeMrg::CProtypeInstanceCodeMrg()
 {
 

@@ -370,32 +370,31 @@ void CWindowGen::ModifyOneWindow(const AcDbObjectId p_id, AttrWindow newWinAtt)
 
 AcDbObjectId CWindowGen::UpdateWindow(const AcDbObjectId p_id, AttrWindow newWinAtt, const bool bUpdateRelatedWin, bool bUpdateSameInstanceCode)
 {
-	if (bUpdateSameInstanceCode==false)
+	const CString oldInstanceCode = AttrWindow::GetWinInstanceCode(p_id);
+	if (bUpdateSameInstanceCode==false || oldInstanceCode.IsEmpty())
 	{
 		return UpdateOneWindow(p_id, newWinAtt, bUpdateRelatedWin);
 	}
 	else
 	{
-		vector<AcDbObjectId> sameCodeWins;
-		const CString oldInstanceCode = AttrWindow::GetWinInstanceCode(p_id);
-		//const CString newInstanceCode = newWinAtt.GetInstanceCode();
-		if (oldInstanceCode.IsEmpty() == false)
+		//如果修改的属性已经存在对应的编号，则用新编号，否则还是使用原来的编号
+		if (CWindowAutoName::IsSamePrototypeAndSize(oldInstanceCode, newWinAtt.GetInstanceCode()) &&
+			GetWindowAutoName()->IsInstanceCodeExist(newWinAtt.GetInstanceCode())==false)
 		{
-			//如果修改的属性已经存在对应的编号，则用新编号，否则还是使用原来的编号
-			if (GetWindowAutoName()->IsInstanceCodeExist(newWinAtt.GetInstanceCode())==false)
-			{
-				newWinAtt.SetInstanceCode(oldInstanceCode); 
-			}
-
-			sameCodeWins = GetWindowAutoName()->GetAllIdsByInstantCode(oldInstanceCode);
-
-			GetWindowAutoName()->RemoveObjectsByInstantCode(oldInstanceCode);
+			newWinAtt.SetInstanceCode(oldInstanceCode); 
 		}
 
+		//1 找到和当前编号一样的门窗
+		vector<AcDbObjectId> sameCodeWins = GetWindowAutoName()->GetAllIdsByInstantCode(oldInstanceCode);
+		//2 移除当前编号的门窗
+		GetWindowAutoName()->RemoveObjectsByInstantCode(oldInstanceCode);
+
+		//3. 更新当前门窗
 		vector<AcDbObjectId> newCodeWins;
 		AcDbObjectId idOut = UpdateOneWindow(p_id, newWinAtt, false); //全部更新不需要关联更新，会全部更新
 		newCodeWins.push_back(idOut);
 
+		//4. 更新其他和当前编号一致的门窗
 		for (UINT i = 0; i < sameCodeWins.size(); i++)
 		{
 			if (sameCodeWins[i]==p_id)
@@ -408,7 +407,38 @@ AcDbObjectId CWindowGen::UpdateWindow(const AcDbObjectId p_id, AttrWindow newWin
 			}
 		}
 
+		//5. 更新后的门窗加入到门窗命名库中
 		GetWindowAutoName()->AddWindowType(newWinAtt, newCodeWins);
+
+
+		//若不是镜像原型，则对镜像的门窗配套修改
+		if (false==newWinAtt.m_isMirrorWindow) 
+		{
+			CString oldInstanceCodeMirror = CWindowAutoName::GetMirrorInstanceCode(oldInstanceCode);
+			CString newInstanceCoceMirror = CWindowAutoName::GetMirrorInstanceCode(newWinAtt.GetInstanceCode());
+			AttrWindow newWinAttMirror = newWinAtt;
+			newWinAttMirror.SetInstanceCode(newInstanceCoceMirror);
+
+			//1 找到和当前编号一样的门窗
+			vector<AcDbObjectId> sameCodeWinsMirror = GetWindowAutoName()->GetAllIdsByInstantCode(oldInstanceCodeMirror);
+
+			//2 移除当前编号的门窗
+			GetWindowAutoName()->RemoveObjectsByInstantCode(oldInstanceCodeMirror);
+
+			//3. 更新其他和当前编号一致的门窗
+			vector<AcDbObjectId> newCodeWinsMirror;
+			for (UINT i = 0; i < sameCodeWinsMirror.size(); i++)
+			{
+				idOut = UpdateOneWindow(sameCodeWinsMirror[i], newWinAttMirror, false); //全部更新就不用关联更新了
+				if (idOut != AcDbObjectId::kNull)
+				{
+					newCodeWinsMirror.push_back(idOut);
+				}
+			}
+
+			//4. 更新后的门窗加入到门窗命名库中
+			GetWindowAutoName()->AddWindowType(newWinAttMirror, newCodeWinsMirror);
+		}
 
 		return idOut;
 	}

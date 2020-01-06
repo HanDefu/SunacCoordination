@@ -79,6 +79,9 @@ public:
 	Acad::ErrorStatus ReadFromDwg(AcDbDwgFiler* pFiler, Adesk::Int32 p_version);
 	Acad::ErrorStatus WriteToDwg(AcDbDwgFiler* pFiler);
 
+
+	static CString GetMirrorInstanceCode(CString p_name);
+	static bool IsSamePrototypeAndSize(CString p_instanceCode1, CString p_instanceCode2); //两个编号是否为相同的门窗原型和尺寸
 protected:
 	CWinClassify* FindWinClassifyByAtt(const AttrWindow& p_att);
 	CWinClassify* FindWinClassifyByInstantCode(const CString p_sCode);
