@@ -116,7 +116,7 @@ bool CWindowTop2Front::GenFrontFromTop()
 		//	pos.y += curWinAtt.GetHeightUnderWindow();
 		//}
 
-		AcDbObjectId idOut = CWindowGen::GenerateWindow(curWinAtt, pos, E_DIR_BOTTOM, false, winIds[i], GlobalSetting::GetWindowBlockLayer());
+		AcDbObjectId idOut = CWindowGen::GenerateWindow(curWinAtt, pos, E_DIR_BOTTOM, false, winIds[i]);
 
 		//其他楼层复制方式
 		AcDbObjectIdArray windowObjIds = CopyAllFloorByOneFloor(idOut, winAtts[i]);

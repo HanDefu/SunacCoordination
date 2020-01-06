@@ -769,7 +769,7 @@ bool AttrWindow::isEqualTo(AttrObject*other)
 		m_isZhuanJiao == pRealObj->m_isZhuanJiao &&
 		m_tongFengFormula == pRealObj->m_tongFengFormula &&
 		m_tongFengQty == pRealObj->m_tongFengQty &&
-		m_isMirror == pRealObj->m_isMirror &&
+		m_isMirror == pRealObj->m_isMirror &&  ////由于用户会通过CAD镜像，m_isMirror只用于创建时，不用于是否镜像的判断
 		m_viewDir == pRealObj->m_viewDir &&
 		m_wallDis == pRealObj->m_wallDis
 		);
@@ -848,11 +848,11 @@ bool AttrWindow::IsPrototypeEqual_test(const AttrWindow& p_att)
 		assert(FALSE);
 		return false;
 	}*/
-	else if (p_att.m_isMirror != m_isMirror)
-	{
-		assert(FALSE);
-		return false;
-	}
+	//else if (p_att.m_isMirror != m_isMirror)
+	//{
+	//	assert(FALSE);
+	//	return false;
+	//}
 	else if (p_att.m_isMirrorWindow != m_isMirrorWindow)
 	{
 		assert(FALSE);
@@ -939,7 +939,7 @@ bool AttrWindow::IsInstanceEqual(const AttrWindow& p_att) const
 			return false;
 	}
 
-	if (!m_isMirrorWindow && m_isMirror != p_att.m_isMirror)
+	if (!m_isMirrorWindow && m_isMirror != p_att.m_isMirror) 
 		return false;
 
 	return true;
@@ -1004,95 +1004,3 @@ bool AttrWindow::IsInstanceNeedMirror()const
 	}
 }
 
-//////////////////////////////////////////////////////////////////////////
-CWindowAndCount::CWindowAndCount()
-{
-	nCount = 0;
-}
-
-void CWindowCountArray::InitByWindowIds(const vAcDbObjectId& p_winIds)
-{
-	vector<AttrWindow>  winAtts;
-	vector<AcDbObjectId>  winIds;
-	for (UINT i = 0; i < p_winIds.size(); i++)
-	{
-		RCWindow oneWindow;
-		oneWindow.m_id = p_winIds[i];
-		oneWindow.InitParameters();
-
-		AttrWindow* pAtt = oneWindow.GetAttribute();
-		if (pAtt != NULL)
-		{
-			AttrWindow attTemp(*pAtt);
-			winAtts.push_back(attTemp);
-
-			winIds.push_back(p_winIds[i]);
-		}
-	}
-
-	InitByWindowAtts(winAtts, winIds);
-}
-
-//vRCWindow allWindowsTypes;
-//for (UINT i = 0; i < winIds.size(); i++)
-//{
-//	RCWindow oneWindow;
-//	oneWindow.m_id = winIds[i];
-//	oneWindow.InitParameters();
-//	oneWindow.GetAttribute();
-//	int index = vFind(oneWindow, allWindowsTypes);
-//	if (index == -1)
-//	{
-//		oneWindow.m_sameTypeIds.push_back(oneWindow.m_id);
-//		allWindowsTypes.push_back(oneWindow);
-//	}
-//	else
-//	{
-//		allWindowsTypes[index].m_sameTypeIds.push_back(oneWindow.m_id);
-//	}
-//}
-
-void CWindowCountArray::InitByWindowAtts(const vector<AttrWindow>& p_winAtts, const vector<AcDbObjectId>& p_ids)
-{
-	assert(p_ids.size() == p_winAtts.size());
-	bool bUseIds = p_ids.size() == p_winAtts.size();
-	for (UINT i = 0; i < p_winAtts.size(); i++)
-	{
-		CString sInstanceCode = p_winAtts[i].GetInstanceCode(); //原型编号
-		bool bFind = false;
-		for (UINT n = 0; n < m_winCountArray.size(); n++)
-		{
-			if (m_winCountArray[n].winAtt.GetInstanceCode().CompareNoCase(sInstanceCode) == 0)
-			{
-				bFind = true;
-				if (p_winAtts[i].m_viewDir == E_VIEW_TOP) //平面图
-				{
-					m_winCountArray[n].nCount += p_winAtts[i].m_floorInfo.GetFloorCount();
-				}
-				else
-				{
-					m_winCountArray[n].nCount++;
-				}
-
-				m_winCountArray[n].objIds.append(p_ids[i]);
-				break;
-			}
-		}
-
-		if (bFind == false)
-		{
-			CWindowAndCount winNew;
-			winNew.winAtt = p_winAtts[i];
-			if (p_winAtts[i].m_viewDir == E_VIEW_TOP) //平面图
-			{
-				winNew.nCount = p_winAtts[i].m_floorInfo.GetFloorCount();
-			}
-			else
-			{
-				winNew.nCount = 1;
-			}
-			winNew.objIds.append(p_ids[i]);
-			m_winCountArray.push_back(winNew);
-		}
-	}
-}

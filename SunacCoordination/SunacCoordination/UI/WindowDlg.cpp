@@ -104,7 +104,7 @@ void CWindowDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Radio(pDX, IDC_RADIO_RAYWINDOW, m_radioBayWindow);
 	DDX_Check(pDX, IDC_CHECK_AUTOINDEX, m_bAutoNumber);
 	DDX_Control(pDX, IDC_COMBO_VIEWDIR, m_comboViewDir);
-	DDX_Control(pDX, IDC_CHECK_IMAGE, m_isMirror);
+	DDX_Control(pDX, IDC_CHECK_IMAGE, m_btnMirror);
 	DDX_Control(pDX, IDC_COMBO_W3, m_comboW3);
 	DDX_Control(pDX, IDC_COMBO_H3, m_comboH3);
 	DDX_Control(pDX, IDC_COMBO_DIR, m_comboInsertDir);
@@ -246,6 +246,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 
 	ShowWindow(FALSE);
 
+	pSelWinAttr->m_isMirror = (m_btnMirror.GetCheck() != FALSE);
 	if (m_bEditMode == false)
 	{
 		//选择插入点
@@ -261,7 +262,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		pSelWinAttr->m_relatedWinIds.removeAll();
 		pSelWinAttr->m_fromWinId = AcDbObjectId::kNull;
 
-		AcDbObjectId idOut = CWindowGen::GenerateWindow(*pSelWinAttr, origin, winDir, false, AcDbObjectId::kNull, GlobalSetting::GetWindowBlockLayer());
+		AcDbObjectId idOut = CWindowGen::GenerateWindow(*pSelWinAttr, origin, winDir, false, AcDbObjectId::kNull);
 		assert(idOut != AcDbObjectId::kNull);
 
 		m_bHasInsert = true;
@@ -383,11 +384,15 @@ void CWindowDlg::OnBnClickedAutoIndex()
 	if (m_bAutoNumber)
 	{
 		m_editWinNumber.SetReadOnly(TRUE);
+
+		pSelWinAttr->m_isMirror = (m_btnMirror.GetCheck() != FALSE);
 		CString newName = GetWindowAutoName()->GetWindowName(*pSelWinAttr);
 		TYUI_SetText(m_editWinNumber, newName);
 	}
 	else
+	{
 		m_editWinNumber.SetReadOnly(FALSE);
+	}
 }
 
 void CWindowDlg::OnBnClickedSelOnDwg()
@@ -438,7 +443,7 @@ void CWindowDlg::OnBnClickedMirror()
 	AttrWindow* pSelWinAttr = GetSelWindow();
 	if (pSelWinAttr == NULL)
 		return;
-	pSelWinAttr->m_isMirror = (m_isMirror.GetCheck() != FALSE);
+	pSelWinAttr->m_isMirror = (m_btnMirror.GetCheck() != FALSE);
 	UpdateInstanceCode();
 }
 
@@ -458,15 +463,8 @@ void CWindowDlg::OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult)
 	nH3Optins.push_back(900);
 	TYUI_InitComboBox(m_comboH3, nH3Optins, (int)(pSelWinAttr->GetHeightUnderWindow()));
 
-	if (pSelWinAttr->m_isDynamic)
-	{
-		TYUI_Enable(m_isMirror);
-		m_isMirror.SetCheck(pSelWinAttr->m_isMirror);
-	}
-	else
-	{
-		TYUI_Disable(m_isMirror);
-	}
+	//保持当前选中的镜像关系
+	pSelWinAttr->m_isMirror = (m_btnMirror.GetCheck() != FALSE);
 
 	pSelWinAttr->m_instanceCode = GetWindowAutoName()->GetWindowName(*pSelWinAttr);
 	TYUI_SetText(m_editWinNumber, pSelWinAttr->m_instanceCode);
@@ -780,6 +778,8 @@ void CWindowDlg::SetEditMode(AcDbBlockReference* pBlock)
 			return;
 		}
 
+		//TODO YUAN 属性更新镜像关系
+
 		m_attBeforeEdit = *pWinAtt;
 
 		//////////////////////////////////////////////////////////////////////////
@@ -806,7 +806,7 @@ void CWindowDlg::SetEditMode(AcDbBlockReference* pBlock)
 
 		str = ViewDir2String(pWinAtt->m_viewDir);
 		TYUI_SetText(m_comboViewDir, str);
-		m_isMirror.SetCheck(pWinAtt->m_isMirror ? TRUE :FALSE);
+		m_btnMirror.SetCheck(pWinAtt->m_isMirror ? TRUE :FALSE);
 
 
 		//////////////////////////////////////////////////////////////////////////
@@ -866,7 +866,7 @@ void CWindowDlg::InsertAllWindows_Test()
 		insertPt.x = origin.x + (m_nWidth + 100) * (i % 5);
 		insertPt.y = origin.y + (m_nHeight + 100) * (i / 5);
 
-		AcDbObjectId idOut = CWindowGen::GenerateWindow(*pSelWinAttr, origin, winDir, false, AcDbObjectId::kNull, GlobalSetting::GetWindowBlockLayer());
+		AcDbObjectId idOut = CWindowGen::GenerateWindow(*pSelWinAttr, origin, winDir, false, AcDbObjectId::kNull);
 		assert(idOut != AcDbObjectId::kNull);
 	}
 	ShowWindow(SW_SHOW);

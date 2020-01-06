@@ -196,7 +196,7 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 	//以下属性为具体外窗插入时才设置,单个窗户实例的属性，非原型属性
 	//视图属性
-	bool m_isMirror;//是否镜像
+	bool m_isMirror;//由于用户会通过CAD镜像，m_isMirror在使用时不一定准确，需要在使用前根据图形更新数据
 	eViewDir m_viewDir;//视图方向，平面图、立面图、侧视图
 
 	bool   m_isBayWindow;	 //是否凸窗
@@ -213,29 +213,5 @@ public:
 typedef std::vector<AttrWindow> vAttrWindow;
 
 
-class CWindowAndCount
-{
-public:
-	CWindowAndCount();
 
-public:
-	AttrWindow winAtt;
-	int nCount;
-
-	AcDbObjectIdArray objIds;
-};
-
-class CWindowCountArray
-{
-public:
-	void InitByWindowIds(const vAcDbObjectId& p_winIds);
-	void InitByWindowAtts(const vector<AttrWindow>& p_winAtts, const vector<AcDbObjectId>& p_ids);
-
-	int GetCount()const { return (int)(m_winCountArray.size()); }
-
-	const CWindowAndCount& GetWindow(int p_index){ return m_winCountArray[p_index]; }
-
-private:
-	vector<CWindowAndCount> m_winCountArray;
-};
 

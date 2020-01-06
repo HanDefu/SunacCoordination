@@ -15,8 +15,9 @@ CWinClassify::~CWinClassify()
 
 void CWinClassify::AddObject(AcDbObjectId p_objId)
 {
-	if (p_objId == AcDbObjectId::kNull)
-		return;
+	//20200106注释，允许空id占位
+	//if (p_objId == AcDbObjectId::kNull)
+	//	return;
 
 	if (IsObjectIn(p_objId))
 		return;
@@ -201,8 +202,9 @@ bool CWindowAutoName::AddWindowType(const CString p_sInstanceCode, AcDbObjectId 
 }
 bool CWindowAutoName::AddWindowType(const AttrWindow& p_att, AcDbObjectId p_objId)
 {
-	if (p_objId == AcDbObjectId::kNull)
-		return false;
+	//20200106注释，允许空id占位
+	//if (p_objId == AcDbObjectId::kNull)
+	//	return false;
 
 	CWinClassify* pWinClassify = FindWinClassifyByAtt(p_att);
 	if (pWinClassify != NULL)
@@ -455,4 +457,88 @@ bool CWindowAutoName::UpdateObject(const AttrWindow& p_oldAtt, const AttrWindow&
 	}	
 
 	return true;
+}
+
+CProtypeInstanceCodeMrg::CProtypeInstanceCodeMrg()
+{
+
+}
+CProtypeInstanceCodeMrg::~CProtypeInstanceCodeMrg()
+{
+
+}
+vector<AcDbObjectId> CProtypeInstanceCodeMrg::FindTextIds(AcDbObjectId p_keyId)
+{
+	std::map<AcDbObjectId, vector<AcDbObjectId>>::iterator iter = m_instanceMap.find(p_keyId);
+	if (iter != m_instanceMap.end())
+	{
+		return iter->second;
+	}
+	else
+	{
+		return vector<AcDbObjectId> ();
+	}
+}
+void CProtypeInstanceCodeMrg::AddInstanceCode(AcDbObjectId p_id, AcDbObjectId p_textId)
+{
+	std::map<AcDbObjectId, vector<AcDbObjectId>>::iterator iter = m_instanceMap.find(p_id);
+	if (iter != m_instanceMap.end())
+	{
+		iter->second.push_back(p_textId);
+	}
+	else
+	{
+		vector<AcDbObjectId> textIds;
+		textIds.push_back(p_textId);
+
+		m_instanceMap[p_id] = textIds;
+	}
+}
+void CProtypeInstanceCodeMrg::RemoveInstanceCode(AcDbObjectId p_id)
+{
+	std::map<AcDbObjectId, vector<AcDbObjectId>>::iterator iter = m_instanceMap.find(p_id);
+	if (iter != m_instanceMap.end())
+	{
+		vector<AcDbObjectId> textIds = iter->second;
+		for (UINT i = 0; i < textIds.size(); i++)
+		{
+			JHCOM_DeleteCadObject(textIds[i]);
+		}
+
+		m_instanceMap.erase(iter);
+	}
+}
+
+void CProtypeInstanceCodeMrg::RemoveInvalidInstanceCode()
+{
+	for (std::map<AcDbObjectId, vector<AcDbObjectId>>::iterator it = m_instanceMap.begin(); it != m_instanceMap.end(); )
+	{
+		if (IsObjectExsit(it->first))
+		{
+			vector<AcDbObjectId> textIds = it->second;
+			for (UINT i = 0; i < textIds.size(); i++)
+			{
+				JHCOM_DeleteCadObject(textIds[i]);
+			}
+
+			it = m_instanceMap.erase(it);
+		}
+		else
+		{
+			it++;
+		}
+	}
+}
+void CProtypeInstanceCodeMrg::RemoveAll()
+{
+	for (std::map<AcDbObjectId, vector<AcDbObjectId>>::iterator it = m_instanceMap.begin(); it != m_instanceMap.end(); it++)
+	{
+		vector<AcDbObjectId> textIds = it->second;
+		for (UINT i = 0; i < textIds.size(); i++)
+		{
+			JHCOM_DeleteCadObject(textIds[i]);
+		}
+	}
+
+	m_instanceMap.clear();
 }

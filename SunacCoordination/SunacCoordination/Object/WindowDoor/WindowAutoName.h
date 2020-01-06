@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <map>
 #include "AttrWindow.h"
 
 using namespace std;
@@ -87,4 +88,22 @@ protected:
 
 protected:
 	vector<CWinClassify> m_allTypeWindows; //所有窗型
+};
+
+class CProtypeInstanceCodeMrg
+{
+	friend CDocumentData;
+	CProtypeInstanceCodeMrg();
+public:
+	~CProtypeInstanceCodeMrg();
+
+	void AddInstanceCode(AcDbObjectId p_id, AcDbObjectId p_textId);
+	void RemoveInstanceCode(AcDbObjectId p_id);
+	void RemoveInvalidInstanceCode();
+	void RemoveAll();
+
+	vector<AcDbObjectId> FindTextIds(AcDbObjectId p_keyId);
+
+protected:
+	map<AcDbObjectId, vector<AcDbObjectId>> m_instanceMap; //key是门窗的id，若为多门窗构成的块，则取最上层的块引用的id，此应用下可能存在多个门窗编号
 };

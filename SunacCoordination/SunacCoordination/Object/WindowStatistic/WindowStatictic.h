@@ -25,7 +25,7 @@ class CWindowStatictic
 public:
 	CWindowStatictic();
 	virtual ~CWindowStatictic();
-	
+		
 	void Statictic(const vector<AttrWindow>& p_winAtts, CString p_sReportFile); //统计并生成统计报表文件
 
 protected:
@@ -47,4 +47,5 @@ protected:
 protected:
 	vector<CWindowUsage> m_windows;
 };
+
 

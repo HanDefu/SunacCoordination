@@ -38,6 +38,7 @@
 #include "../Object/AirCondition/AirConStatistic.h"
 #include "../Object/WindowDoor/WindowTop2Front.h"
 #include "../Object/WindowDoor/WindowSelect.h"
+#include "../Object/WindowDoor/WindowGen.h"
 #include "../UI/ProjectManagementDlg.h"
 #include "../WebIO/WebIO.h"
 #include "Command.h"
@@ -219,8 +220,7 @@ void CMD_SunacWindowFront2Top()//门窗立面到平面
 }
 void CMD_SunacWinAutoId()
 {
-	//TODO 自动编号
-
+	CWindowGen::AutoNameAllWindow();
 }
 
 void CMD_SunacNoHighlight()
@@ -403,50 +403,31 @@ void CMD_SunacWindowsStatistics()
 		return;
 
 	const vector<CWinInCad> wins = CWindowSelect::SelectWindows(viewDir);
-	vAcDbObjectId winIds;
-	for (UINT i = 0; i < wins.size(); i++)
-	{
-		winIds.push_back(wins[i].m_winId);
-	}
 	if (wins.size() == 0)
-		return;
+		return;	
 
-	//对选择的门窗高亮
-	CCommandHighlight::GetInstance()->WindowDoorHighlight(winIds);
-
-	vector<AcDbObjectId> idsNonAlserials; //未设置型材系列的门窗
+	CWindowCountArray winCountArray;
+	winCountArray.InitByWindowIds(wins);
 
 	vector<AttrWindow>  winAtts;
-	for (UINT i = 0; i < winIds.size(); i++)
+	vector<AcDbObjectId> idsNonAlserials; //未设置型材系列的门窗
+	for (int i = 0; i < winCountArray.GetCount(); i++)
 	{
-		RCWindow oneWindow;
-		oneWindow.m_id = winIds[i];
-		oneWindow.InitParameters();
+		const AttrWindow& curWinAtt = winCountArray.GetWindow(i).winAtt;
+		winAtts.push_back(curWinAtt);
 
-		AttrWindow* pAtt= oneWindow.GetAttribute();
-		if (pAtt!=NULL)
+		if (curWinAtt.m_material.sAluminumSerial.IsEmpty())
 		{
-			AttrWindow attTemp(*pAtt);
-			winAtts.push_back(attTemp);
-
-			if (attTemp.m_material.sAluminumSerial.IsEmpty())
-			{
-				idsNonAlserials.push_back(winIds[i]);
-			}
+			idsNonAlserials.push_back(wins[i].m_winId);
 		}
 	}
-
+	
 	if (idsNonAlserials.size()>0)
 	{
 		AfxMessageBox(_T("部分窗户型材系列未设置"));
 
 		//对未设置型材系列的门窗高亮
 		CCommandHighlight::GetInstance()->WindowDoorHighlight(idsNonAlserials);
-
-		/*for (UINT i = 0; i < idsNonAlserials.size(); i++)
-		{
-			JHCOM_HilightObject(idsNonAlserials[i], true);
-		}*/
 		return;
 	}
 
@@ -461,6 +442,14 @@ void CMD_SunacWindowsStatistics()
 
 		AfxMessageBox(_T("输出完成"));
 	}
+
+	//对选择的门窗高亮
+	vAcDbObjectId winIds;
+	for (UINT i = 0; i < wins.size(); i++)
+	{
+		winIds.push_back(wins[i].m_winId);
+	}
+	CCommandHighlight::GetInstance()->WindowDoorHighlight(winIds);
 }
 
 void CADPalette_AddP()

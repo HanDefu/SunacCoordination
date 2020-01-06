@@ -220,5 +220,5 @@ void AttrObject::SetInstanceCode(CString  bianHao)
 
 void AttrObject::SetInstanceCodeObjectId(AcDbObjectId p_id)
 {
-	m_instanceCodeId = p_id;
+	//m_instanceCodeId = p_id; //20200106 块中块的情况，编号可能会出现镜像情况，因此编号的文字id不再和属性绑定
 }

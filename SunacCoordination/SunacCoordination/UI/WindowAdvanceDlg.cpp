@@ -9,6 +9,7 @@
 #include "../Object/WindowStatistic/AluminumSeries.h"
 #include "../Object/WindowStatistic/GlassSeries.h"
 #include "../Object/WindowStatistic/AuxiliaryFrameSeries.h"
+#include "../Object/WindowDoor/WindowSelect.h"
 #include "ComFun_MFC.h"
 #include "algorithm"
 #include "iterator"
@@ -181,13 +182,14 @@ void CWindowAdvanceDlg::OnBnClickedSelectOnDwg()
 
 	ShowWindow(SW_HIDE);
 
-	vAcDbObjectId ids;
-	JHCOM_SelectEnts(ids);
+	//vAcDbObjectId ids;
+	//JHCOM_SelectEnts(ids);
+	vector<CWinInCad> wins = CWindowSelect::SelectWindows(E_VIEW_ALL);
 
-	for (UINT i = 0; i < ids.size(); i++)
+	for (UINT i = 0; i < wins.size(); i++)
 	{
 		AcDbObject* pAttr = NULL;
-		TY_GetAttributeData(ids[i], pAttr);
+		TY_GetAttributeData(wins[i].m_winId, pAttr);
 		AttrWindow* pAttrWindow = AttrWindow::cast(pAttr);
 		if (pAttrWindow == NULL)
 			continue;

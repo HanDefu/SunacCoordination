@@ -95,7 +95,7 @@ protected:
 
 	CComboBox m_comboViewDir;
 	CComboBox m_comboInsertDir;
-	CButton m_isMirror;
+	CButton m_btnMirror;
 
 
 	//////////////////////////////////////////////////////////////////////////

@@ -42,6 +42,11 @@ CBathroomAutoName* GetBathroomAutoName()
 	return &(CDocumentFactory::Instance().GetCurDocData()->m_bathroomAutoName);
 }
 
+CProtypeInstanceCodeMrg* GetInstanceCodeMrg()
+{
+	return &(CDocumentFactory::Instance().GetCurDocData()->m_instanceCodeMrg);
+}
+
 
 
 //////////////////////////////////////////////////////////////////////////

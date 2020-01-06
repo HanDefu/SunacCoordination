@@ -298,3 +298,4 @@ bool CWindowStatictic::GenerateReport(Excel::CExcelUtil& xls)
 
 	return true;
 }
+

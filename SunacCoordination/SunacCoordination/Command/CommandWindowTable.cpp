@@ -34,12 +34,6 @@ void CMD_SunacWindowsTable()
 	if (wins.size() == 0)
 		return;
 
-	vAcDbObjectId winIds;
-	for (UINT i = 0; i < wins.size(); i++)
-	{
-		winIds.push_back(wins[i].m_winId);
-	}
-
 	//第二步  选择门窗表插入点
 	AcGePoint3d pnt;
 	bool bSuc = TY_GetPoint(pnt, L"请选择门窗表插入点");
@@ -49,7 +43,7 @@ void CMD_SunacWindowsTable()
 	//第三步：读取门窗数据并且分类汇总
 
 	CWindowCountArray winCountArray;
-	winCountArray.InitByWindowIds(winIds);
+	winCountArray.InitByWindowIds(wins);
 
 	//第四步 开始输出数据
 	int numWindow = (int)winCountArray.GetCount();
@@ -262,6 +256,11 @@ void CMD_SunacWindowsTable()
 
 
 	//对选择的门窗高亮
+	vAcDbObjectId winIds;
+	for (UINT i = 0; i < wins.size(); i++)
+	{
+		winIds.push_back(wins[i].m_winId);
+	}
 	CCommandHighlight::GetInstance()->WindowDoorHighlight(winIds);
 
 	return;

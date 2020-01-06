@@ -29,7 +29,7 @@ class CWindowGen
 {
 public:
 	//生成新的门窗
-	static AcDbObjectId  GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d pos, E_DIRECTION p_winDir, bool p_bDetailWnd, const AcDbObjectId p_fromWinId, CString p_sLayerName);
+	static AcDbObjectId  GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d pos, E_DIRECTION p_winDir, bool p_bDetailWnd, const AcDbObjectId p_fromWinId);
 
 	//更新门窗参数, bUpdateRelatedWin为true则同步更新关联的门窗，p_originalId为最开启发起修改更新的门窗，以便在后续关联修改时不重复修改, bUpdateSameInstanceCode为是否更新同编号的门窗实例
 	static AcDbObjectId UpdateWindow(const AcDbObjectId p_id, AttrWindow newWinAtt, const bool bUpdateRelatedWin, bool bUpdateSameInstanceCode);//
@@ -63,7 +63,7 @@ protected:
 	static bool DeleteWindowObj(const AcDbObjectId p_id);
 
 	//插入门窗编号
-	static AcDbObjectId InsertWindowDoorCode(eViewDir p_viewDir, CString p_number);
+	static AcDbObjectId InsertWindowDoorCode(eViewDir p_viewDir, CString p_number, AcGePoint3d p_pos);
 	static void MoveWindowDoorCode(AcDbObjectId p_id, double p_winWidth, double p_winHeight, AcGePoint3d p_origin, eViewDir p_viewDir, E_DIRECTION p_winDir);
 	static double GetWinWidth(AcDbObjectId p_id);
 	static double GetWinHeight(AcDbObjectId p_id);

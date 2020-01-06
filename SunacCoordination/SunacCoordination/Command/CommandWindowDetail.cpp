@@ -58,11 +58,6 @@ void CWindowDetail::DrawWindowDetail()
 	}
 
 	const vector<CWinInCad> wins = CWindowSelect::SelectWindows(viewDir);
-	vAcDbObjectId winIds;
-	for (UINT i = 0; i < wins.size(); i++)
-	{
-		winIds.push_back(wins[i].m_winId);
-	}
 	if (wins.size() == 0)
 		return;
 
@@ -74,7 +69,7 @@ void CWindowDetail::DrawWindowDetail()
 
 	//第三步：读取门窗数据并且分类汇总
 	CWindowCountArray winCountArray;
-	winCountArray.InitByWindowIds(winIds);
+	winCountArray.InitByWindowIds(wins);
 
 
 	//////////////////////////////////////////////////////////////////////////
@@ -91,7 +86,7 @@ void CWindowDetail::DrawWindowDetail()
 
 		AcGePoint3d winPnt = winDetailTemplate.GetInsertPntWindow(winAtt.GetW(), winAtt.GetH());
 
-		AcDbObjectId idOut = CWindowGen::GenerateWindow(winAtt, winPnt, E_DIR_BOTTOM, true, AcDbObjectId::kNull, GlobalSetting::GetWindowBlockLayer());
+		AcDbObjectId idOut = CWindowGen::GenerateWindow(winAtt, winPnt, E_DIR_BOTTOM, true, AcDbObjectId::kNull);
 
 		CreateDataText(winAtt, winDetailTemplate);
 
@@ -99,6 +94,11 @@ void CWindowDetail::DrawWindowDetail()
 	}
 
 	//对选择的门窗高亮
+	vAcDbObjectId winIds;
+	for (UINT i = 0; i < wins.size(); i++)
+	{
+		winIds.push_back(wins[i].m_winId);
+	}
 	CCommandHighlight::GetInstance()->WindowDoorHighlight(winIds);
 
 	return;
