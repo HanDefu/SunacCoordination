@@ -426,6 +426,12 @@
     <ClCompile Include="Object\WindowDoor\WindowGen.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="Object\WindowDoor\WindowSelect.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ComFun_RectArray.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command\Command.h">
@@ -906,6 +912,12 @@
       <Filter>Command</Filter>
     </ClInclude>
     <ClInclude Include="Object\WindowDoor\WindowGen.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\WindowSelect.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ComFun_RectArray.h">
       <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
