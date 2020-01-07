@@ -2,6 +2,7 @@
 #include <vector>
 #include <map>
 #include "AttrWindow.h"
+#include "..\..\Common\TYRect.h"
 
 using namespace std;
 
@@ -106,6 +107,10 @@ public:
 	void RemoveAll();
 
 	vector<AcDbObjectId> FindTextIds(AcDbObjectId p_keyId);
+
+	//得到当前图纸范围内的所有的门窗编号文字的id
+	static vector<AcDbObjectId> GetAllInstanceCodeIds();
+	static vector<AcDbObjectId> GetInstanceCodeIdsInRect(const TYRect p_rect);
 
 protected:
 	map<AcDbObjectId, vector<AcDbObjectId>> m_instanceMap; //key是门窗的id，若为多门窗构成的块，则取最上层的块引用的id，此应用下可能存在多个门窗编号

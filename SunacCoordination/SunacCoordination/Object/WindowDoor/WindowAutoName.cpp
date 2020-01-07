@@ -570,3 +570,18 @@ void CProtypeInstanceCodeMrg::RemoveAll()
 
 	m_instanceMap.clear();
 }
+
+
+//得到当前图纸范围内的所有的门窗编号文字的id
+vector<AcDbObjectId> CProtypeInstanceCodeMrg::GetAllInstanceCodeIds()
+{
+	vector<AcDbObjectId> ids;
+	//TODO 叶明远 
+	return ids;
+}
+vector<AcDbObjectId> CProtypeInstanceCodeMrg::GetInstanceCodeIdsInRect(const TYRect p_rect)
+{
+	vector<AcDbObjectId> ids;
+	//TODO 叶明远 
+	return ids;
+}

@@ -140,6 +140,7 @@ void CWindowGen::UpdateRcWindowPara(const AcDbObjectId p_id, const AttrWindow& c
 	if (p_view == E_VIEW_FRONT || p_view == E_VIEW_EXTEND)
 	{
 		DQ_SetDynamicAttribute(oneWindow.m_id, _T("可见性1"), p_bDetailWnd ? _T("详图") : _T("立面"));
+		// TODO 叶明远 设置门把手高度
 	}
 }
 
@@ -603,6 +604,7 @@ bool CWindowGen::GetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId& p_fromWinId,
 //插入门窗编号
 AcDbObjectId CWindowGen::InsertWindowDoorCode(eViewDir p_viewDir, CString p_number, AcGePoint3d p_pos)
 {
+	//TODO 朱建业 调整门窗编号文字为水平居中显示
 	acDocManager->lockDocument(curDoc());
 
 	AcDbObjectId sWindowDoorTextId;
