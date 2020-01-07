@@ -755,8 +755,6 @@ void CWindowGen::AutoNameAllWindow()
 
 			AcDbObjectId textId = InsertWindowDoorCode(winAtt.m_viewDir, sInstanceCode2, textPos);
 			GetInstanceCodeMrg()->AddInstanceCode(wins[i].m_rootId, textId);
-
-
 		}
 	}
 }
