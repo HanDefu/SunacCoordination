@@ -3,6 +3,7 @@
 #include "..\..\Common\ComFun_ACad.h"
 #include "..\..\Common\ComFun_Layer.h"
 #include "..\..\GlobalSetting.h"
+#include "..\..\Tool\DocLock.h"
 #include "WindowGen.h"
 #include "WindowAutoName.h"
 #include "WindowSelect.h"
@@ -15,7 +16,7 @@ bool CWindowGen::MirrorObjectByCenter(const AcDbObjectId p_id, E_DIRECTION p_win
 {
 	AcGePoint3d minPt, maxPt;
 	JHCOM_GetObjectMinMaxPoint(p_id, minPt, maxPt); //TODO 处理ucs坐标下的情况
-
+	
 	AcGePoint3d mirrorBasePt;
 	AcGeVector3d mirrorAxis;
 
@@ -37,7 +38,39 @@ bool CWindowGen::MirrorObjectByCenter(const AcDbObjectId p_id, E_DIRECTION p_win
 		break;
 	}
 
+
+	//////////////////////////////////////////////////////////////////////////
+#if 1 
+	//通过设置块引用的缩放因子镜像，此方法和CAD自带的镜像操作相同
+	AcDbEntity * pEnt = 0;
+	CDocLock docLock; //锁定文档
+	Acad::ErrorStatus es = acdbOpenObject(pEnt, p_id, AcDb::kForWrite);
+	if (es != Acad::eOk || pEnt == NULL)
+	{
+		assert(false);
+		return false;
+	}
+
+	AcDbBlockReference * pBRef = AcDbBlockReference::cast(pEnt);
+	if (pBRef!=NULL)
+	{
+		AcGeScale3d  scale = pBRef->scaleFactors();
+		bool bPreMirror = scale.sx < 0;
+		scale.sx = -scale.sx;
+		pBRef->setScaleFactors(scale);
+	}
+	pEnt->close();
+
+	//镜像后需要移动到原来的位置
+	AcGePoint3d minPt2, maxPt2;
+	JHCOM_GetObjectMinMaxPoint(p_id, minPt2, maxPt2);
+
+	AcGeVector3d offset = minPt - minPt2;
+	TYCOM_Move(p_id, offset);
+
+#else
 	TYCOM_Mirror(p_id, mirrorBasePt, mirrorAxis);
+#endif
 
 	return true;
 }
