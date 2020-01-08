@@ -218,7 +218,7 @@ CWindowAndCount::CWindowAndCount()
 {
 	nCount = 0;
 }
-void CWindowCountArray::InitByWindowIds(const vector<CWinInCad>& p_winIds)
+bool CWindowCountArray::InitByWindowIds(const vector<CWinInCad>& p_winIds)
 {
 	vector<AttrWindow>  winAtts;
 	vector<AcDbObjectId>  winIds;
@@ -241,10 +241,10 @@ void CWindowCountArray::InitByWindowIds(const vector<CWinInCad>& p_winIds)
 		}
 	}
 
-	InitByWindowAtts(winAtts, winIds);
+	return InitByWindowAtts(winAtts, winIds);
 }
 
-void CWindowCountArray::InitByWindowIds(const vAcDbObjectId& p_winIds)
+bool CWindowCountArray::InitByWindowIds(const vAcDbObjectId& p_winIds)
 {
 	vector<AttrWindow>  winAtts;
 	vector<AcDbObjectId>  winIds;
@@ -264,7 +264,7 @@ void CWindowCountArray::InitByWindowIds(const vAcDbObjectId& p_winIds)
 		}
 	}
 
-	InitByWindowAtts(winAtts, winIds);
+	return InitByWindowAtts(winAtts, winIds);
 }
 
 //vRCWindow allWindowsTypes;
@@ -286,8 +286,9 @@ void CWindowCountArray::InitByWindowIds(const vAcDbObjectId& p_winIds)
 //	}
 //}
 
-void CWindowCountArray::InitByWindowAtts(const vector<AttrWindow>& p_winAtts, const vector<AcDbObjectId>& p_ids)
+bool CWindowCountArray::InitByWindowAtts(const vector<AttrWindow>& p_winAtts, const vector<AcDbObjectId>& p_ids)
 {
+	bool bSuc = true;
 	assert(p_ids.size() == p_winAtts.size());
 	bool bUseIds = p_ids.size() == p_winAtts.size();
 	for (UINT i = 0; i < p_winAtts.size(); i++)
@@ -301,6 +302,11 @@ void CWindowCountArray::InitByWindowAtts(const vector<AttrWindow>& p_winAtts, co
 				bFind = true;
 				if (p_winAtts[i].m_viewDir == E_VIEW_TOP) //平面图
 				{
+					if (0 == p_winAtts[i].m_floorInfo.GetFloorCount()) //若有未设置层数的情况，则返回false
+					{
+						bSuc = false;
+					}
+
 					m_winCountArray[n].nCount += p_winAtts[i].m_floorInfo.GetFloorCount();
 				}
 				else
@@ -329,4 +335,6 @@ void CWindowCountArray::InitByWindowAtts(const vector<AttrWindow>& p_winAtts, co
 			m_winCountArray.push_back(winNew);
 		}
 	}
+
+	return bSuc;
 }

@@ -41,9 +41,15 @@ void CMD_SunacWindowsTable()
 		return;
 
 	//第三步：读取门窗数据并且分类汇总
-
 	CWindowCountArray winCountArray;
-	winCountArray.InitByWindowIds(wins);
+	bSuc = winCountArray.InitByWindowIds(wins);
+	if (bSuc==false)
+	{
+		AfxMessageBox(_T("统计失败，请给平面图门窗设置楼层信息"));
+		return;
+	}
+
+
 
 	//第四步 开始输出数据
 	int numWindow = (int)winCountArray.GetCount();

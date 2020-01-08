@@ -48,10 +48,10 @@ public:
 
 class CWindowCountArray
 {
-	void InitByWindowIds(const vAcDbObjectId& p_winIds);
+	bool InitByWindowIds(const vAcDbObjectId& p_winIds);
 public:
-	void InitByWindowIds(const vector<CWinInCad>& p_winIds);
-	void InitByWindowAtts(const vector<AttrWindow>& p_winAtts, const vector<AcDbObjectId>& p_ids);
+	bool InitByWindowIds(const vector<CWinInCad>& p_winIds);
+	bool InitByWindowAtts(const vector<AttrWindow>& p_winAtts, const vector<AcDbObjectId>& p_ids);
 
 	int GetCount()const { return (int)(m_winCountArray.size()); }
 

@@ -464,7 +464,17 @@ void CWindowDlg::OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult)
 	TYUI_InitComboBox(m_comboH3, nH3Optins, (int)(pSelWinAttr->GetHeightUnderWindow()));
 
 	//保持当前选中的镜像关系
-	pSelWinAttr->m_isMirror = (m_btnMirror.GetCheck() != FALSE);
+	if (pSelWinAttr->m_isMirrorWindow) //如果是对称的窗型，则不能设置镜像
+	{
+		m_btnMirror.SetCheck(FALSE);
+		TYUI_Disable(m_btnMirror);
+		pSelWinAttr->m_isMirror = false;
+	}
+	else
+	{
+		TYUI_Enable(m_btnMirror);
+		pSelWinAttr->m_isMirror = (m_btnMirror.GetCheck() != FALSE);
+	}
 
 	pSelWinAttr->m_instanceCode = GetWindowAutoName()->GetWindowName(*pSelWinAttr);
 	TYUI_SetText(m_editWinNumber, pSelWinAttr->m_instanceCode);

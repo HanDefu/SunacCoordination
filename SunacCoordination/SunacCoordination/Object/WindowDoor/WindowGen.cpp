@@ -401,10 +401,10 @@ AcDbObjectId CWindowGen::UpdateWindow(const AcDbObjectId p_id, AttrWindow newWin
 			if (sameCodeWins[i]==p_id)
 				continue;
 
-			idOut = UpdateOneWindow(sameCodeWins[i], newWinAtt, false); //全部更新就不用关联更新了
-			if (idOut!=AcDbObjectId::kNull)
+			AcDbObjectId idOutTemp = UpdateOneWindow(sameCodeWins[i], newWinAtt, false); //全部更新就不用关联更新了
+			if (idOutTemp !=AcDbObjectId::kNull)
 			{
-				newCodeWins.push_back(idOut);
+				newCodeWins.push_back(idOutTemp);
 			}
 		}
 
@@ -430,10 +430,10 @@ AcDbObjectId CWindowGen::UpdateWindow(const AcDbObjectId p_id, AttrWindow newWin
 			vector<AcDbObjectId> newCodeWinsMirror;
 			for (UINT i = 0; i < sameCodeWinsMirror.size(); i++)
 			{
-				idOut = UpdateOneWindow(sameCodeWinsMirror[i], newWinAttMirror, false); //全部更新就不用关联更新了
-				if (idOut != AcDbObjectId::kNull)
+				AcDbObjectId idOutTemp = UpdateOneWindow(sameCodeWinsMirror[i], newWinAttMirror, false); //全部更新就不用关联更新了
+				if (idOutTemp != AcDbObjectId::kNull)
 				{
-					newCodeWinsMirror.push_back(idOut);
+					newCodeWinsMirror.push_back(idOutTemp);
 				}
 			}
 
