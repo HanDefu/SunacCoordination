@@ -344,7 +344,7 @@ AcDbObjectId MD2010_AddAlignedDimensionAndStyle(AcGePoint3d start, AcGePoint3d e
 		return 0;
 
 	CString entryName;
-	entryName.Format(_T("%lf"), size);
+	entryName.Format(_T("%d"), (int)size);
 	AcDbAlignedDimension  *pDim = new AcDbAlignedDimension(start, end, dimlinpnt, entryName, dimStyleId);
 
 	AcDbObjectId dimID = MD2010_PostModalToBlockTable(ACDB_MODEL_SPACE, pDim);
