@@ -51,7 +51,7 @@ protected:
 
 	static bool GetWindowInsertPos(AcDbObjectId p_id, AcGePoint3d &p_insertPos, double& p_angle);
 	static AcGePoint3d GetWindowLeftBottomPos(AcDbObjectId p_id);
-	static E_DIRECTION GetWindowInsertDir(AcDbObjectId p_id);
+	static bool GetWindowInsertDir(AcDbObjectId p_id, E_DIRECTION & p_dirOut);
 	static CWinInsertPara GetWindowInsertPara(AcDbObjectId p_id); //根据已插入的门窗获取其插入的信息
 	static bool IsWindowMirror(AcDbObjectId p_id);
 

@@ -22,6 +22,7 @@ CWinInCad::CWinInCad()
 	m_winId = AcDbObjectId::kNull;
 	m_rootId = AcDbObjectId::kNull;
 	m_bMirror = false;
+	m_rotateAngle = 0;
 	m_mx = AcGeMatrix3d::kIdentity;
 }
 
@@ -137,6 +138,22 @@ int CWindowSelect::FindWindowInBlock(const AcDbObjectId inputId, const eViewDir 
 		winInCad.m_rootId = inputId;
 		winInCad.m_bMirror = IsMxMirror(curMx);
 		winInCad.m_mx = curMx;
+
+		AcDbBlockReference * pBRef = AcDbBlockReference::cast(pEnt);
+		if (pBRef!=NULL)
+		{
+			winInCad.m_rotateAngle = pBRef->rotation();
+		}
+
+		//平面图时，由于原型文件和立面图方向有矛盾，平面图的镜像关系是相反的，参见IsInstanceNeedMirror  yuan 1124 
+		AcDbObject * pDataEnt = 0;
+		TY_GetAttributeData(inputId, pDataEnt);
+		AttrWindow * pWindow = dynamic_cast<AttrWindow *>(pDataEnt);
+		if (pWindow->m_viewDir==E_VIEW_TOP)
+		{
+			winInCad.m_bMirror = !winInCad.m_bMirror;
+		}
+
 		outputIds.push_back(winInCad);
 		return 1;
 	}

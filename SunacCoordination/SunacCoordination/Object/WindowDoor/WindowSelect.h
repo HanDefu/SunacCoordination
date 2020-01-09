@@ -11,7 +11,8 @@ public:
 public:
 	AcDbObjectId m_winId;
 	AcDbObjectId m_rootId; //针对块中块的根节点
-	bool m_bMirror;
+	bool m_bMirror;			//门窗块是否镜像
+	double m_rotateAngle;  //门窗块的旋转角度
 	AcGeMatrix3d m_mx;
 };
 //////////////////////////////////////////////////////////////////////////

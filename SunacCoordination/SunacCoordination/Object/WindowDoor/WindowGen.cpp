@@ -17,29 +17,7 @@ bool CWindowGen::MirrorObjectByCenter(const AcDbObjectId p_id, E_DIRECTION p_win
 	AcGePoint3d minPt, maxPt;
 	JHCOM_GetObjectMinMaxPoint(p_id, minPt, maxPt); //TODO 处理ucs坐标下的情况
 	
-	AcGePoint3d mirrorBasePt;
-	AcGeVector3d mirrorAxis;
 
-	AcGeVector3d offsetXY(0, 0, 0);
-	switch (p_winDir)
-	{
-	case E_DIR_BOTTOM:
-	case E_DIR_TOP:
-		mirrorBasePt = AcGePoint3d((minPt.x + maxPt.x) / 2, 0, 0);
-		mirrorAxis = AcGeVector3d(0, 1, 0);
-		break;
-	case E_DIR_RIGHT:
-	case E_DIR_LEFT:
-		mirrorBasePt = AcGePoint3d(0, (minPt.y + maxPt.y) / 2, 0);
-		mirrorAxis = AcGeVector3d(1, 0, 0);
-		break;
-	default:
-		return false;
-		break;
-	}
-
-
-	//////////////////////////////////////////////////////////////////////////
 #if 1 
 	//通过设置块引用的缩放因子镜像，此方法和CAD自带的镜像操作相同
 	AcDbEntity * pEnt = 0;
@@ -69,6 +47,26 @@ bool CWindowGen::MirrorObjectByCenter(const AcDbObjectId p_id, E_DIRECTION p_win
 	TYCOM_Move(p_id, offset);
 
 #else
+	AcGePoint3d mirrorBasePt;
+	AcGeVector3d mirrorAxis;
+
+	AcGeVector3d offsetXY(0, 0, 0);
+	switch (p_winDir)
+	{
+	case E_DIR_BOTTOM:
+	case E_DIR_TOP:
+		mirrorBasePt = AcGePoint3d((minPt.x + maxPt.x) / 2, 0, 0);
+		mirrorAxis = AcGeVector3d(0, 1, 0);
+		break;
+	case E_DIR_RIGHT:
+	case E_DIR_LEFT:
+		mirrorBasePt = AcGePoint3d(0, (minPt.y + maxPt.y) / 2, 0);
+		mirrorAxis = AcGeVector3d(1, 0, 0);
+		break;
+	default:
+		return false;
+		break;
+	}
 	TYCOM_Mirror(p_id, mirrorBasePt, mirrorAxis);
 #endif
 
@@ -292,11 +290,39 @@ bool CWindowGen::GetWindowInsertPos(AcDbObjectId p_id, AcGePoint3d &p_insertPos,
 	return true;
 }
 
-E_DIRECTION CWindowGen::GetWindowInsertDir(AcDbObjectId p_id)
+bool CWindowGen::GetWindowInsertDir(AcDbObjectId p_id, E_DIRECTION & p_dirOut)
 {
-	E_DIRECTION winDir = E_DIR_TOP; //TODO 自动分析视图方向
+	p_dirOut = E_DIR_TOP; 
 
-	return winDir;
+	AcDbEntity * pEnt = 0;
+	Acad::ErrorStatus es = acdbOpenObject(pEnt, p_id, AcDb::kForRead);
+	if (es != Acad::eOk || pEnt == NULL)
+	{
+		assert(false);
+		return false;
+	}
+
+	AcDbBlockReference * pBRef = AcDbBlockReference::cast(pEnt);
+	if (pBRef == NULL)
+	{
+		pEnt->close();
+		return false;
+	}
+	
+	double rotateAngle = pBRef->rotation();
+
+	if ((rotateAngle > -0.25*PI / 4 && rotateAngle < 0.25*PI) || rotateAngle>1.75*PI)
+		p_dirOut = E_DIR_TOP;
+	else if (rotateAngle > 0.25*PI &&rotateAngle < 0.75*PI)
+		p_dirOut = E_DIR_LEFT;
+	else if (rotateAngle > 0.75*PI &&rotateAngle < 1.25*PI)
+		p_dirOut = E_DIR_BOTTOM;
+	else if (rotateAngle > 1.25*PI &&rotateAngle < 1.75*PI)
+		p_dirOut = E_DIR_RIGHT;
+
+	pEnt->close();
+
+	return true;
 }
 
 CWinInsertPara CWindowGen::GetWindowInsertPara(AcDbObjectId p_id) //根据已插入的门窗获取其插入的信息
@@ -308,7 +334,7 @@ CWinInsertPara CWindowGen::GetWindowInsertPara(AcDbObjectId p_id) //根据已插入的
 	insertPara.leftBottomPos = GetWindowLeftBottomPos(p_id);
 
 	insertPara.sLayerName = JHCOM_GetEntityLayer(p_id);
-	insertPara.insertDir = GetWindowInsertDir(p_id);
+	GetWindowInsertDir(p_id, insertPara.insertDir);
 
 	const AttrWindow *pWinAtt = AttrWindow::GetWinAtt(p_id);
 	if (pWinAtt!=NULL)
@@ -389,7 +415,9 @@ void CWindowGen::ModifyOneWindow(const AcDbObjectId p_id, AttrWindow newWinAtt)
 	if (newWinAtt.IsInstanceNeedMirror() && IsWindowMirror(p_id)==false ||
 		newWinAtt.IsInstanceNeedMirror()==false && IsWindowMirror(p_id))
 	{
-		MirrorObjectByCenter(p_id, GetWindowInsertDir(p_id));
+		E_DIRECTION dirOut = E_DIR_TOP;
+		GetWindowInsertDir(p_id,  dirOut);
+		MirrorObjectByCenter(p_id, dirOut);
 	}
 
 	//更新位置
