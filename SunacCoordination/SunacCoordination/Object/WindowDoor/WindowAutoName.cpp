@@ -4,6 +4,7 @@
 #include "..\..\Common\ComFun_ACad.h"
 #include "..\..\Common\ComFun_Layer.h"
 #include "..\..\Tool\DocLock.h"
+#include "..\..\GlobalSetting.h"
 
 CWinClassify::CWinClassify()
 {
@@ -576,12 +577,59 @@ void CProtypeInstanceCodeMrg::RemoveAll()
 vector<AcDbObjectId> CProtypeInstanceCodeMrg::GetAllInstanceCodeIds()
 {
 	vector<AcDbObjectId> ids;
-	//TODO 叶明远 
+	struct resbuf *rb;
+	ads_name ssname;
+	CString LayerName = GlobalSetting::GetInstance()->m_winSetting.m_sWinNumberLayerPingmian;
+	char* cLayerName = CT2A(LayerName);
+	rb = acutBuildList(RTDXF0, TEXT("TEXT"), 8, LayerName, RTNONE);//获取实体类型为文字，图层名为LayerName的结果缓冲区链表
+
+	acedSSGet(TEXT("X"), NULL, NULL, rb, ssname);
+
+	long length;
+	acedSSLength(ssname, &length);
+	for (int i = 0; i< length; i++)
+	{
+		ads_name ent;
+		acedSSName(ssname, i, ent);
+		AcDbObjectId objId;
+		acdbGetObjectId(objId, ent);
+		ids.push_back(objId);
+	}
+
+	acutRelRb(rb);
+	acedSSFree(ssname);
 	return ids;
 }
 vector<AcDbObjectId> CProtypeInstanceCodeMrg::GetInstanceCodeIdsInRect(const TYRect p_rect)
 {
 	vector<AcDbObjectId> ids;
-	//TODO 叶明远 
+	struct resbuf *rb;
+	ads_name ssname;
+	CString LayerName = GlobalSetting::GetInstance()->m_winSetting.m_sWinNumberLayerPingmian;
+	char* cLayerName = CT2A(LayerName);
+	rb = acutBuildList(RTDXF0, TEXT("TEXT"), 8, LayerName, RTNONE);
+
+	ads_point pt1,pt2;
+	pt1[X] = p_rect.m_lt.x;
+	pt1[Y] = p_rect.m_lt.y;
+	pt1[Z] = p_rect.m_lt.z;
+	pt2[X] = p_rect.m_rb.x;
+	pt2[Y] = p_rect.m_rb.y;
+	pt2[Z] = p_rect.m_rb.z;
+	acedSSGet(TEXT("W"), pt1, pt2, rb, ssname);//筛选在rect范围内的结果
+
+	long length;
+	acedSSLength(ssname, &length);
+	for (int i = 0; i< length; i++)
+	{
+		ads_name ent;
+		acedSSName(ssname, i, ent);
+		AcDbObjectId objId;
+		acdbGetObjectId(objId, ent);
+		ids.push_back(objId);
+	}
+
+	acutRelRb(rb);
+	acedSSFree(ssname);
 	return ids;
 }

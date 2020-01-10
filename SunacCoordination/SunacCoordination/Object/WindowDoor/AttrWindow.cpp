@@ -161,7 +161,7 @@ AttrWindow::AttrWindow()
 	m_viewDir = E_VIEW_FRONT;
 	m_isBayWindow = false;
 	m_wallDis = 0.0;
-	m_heightUnderWindow = 900;
+	m_heightUnderWindow = 0;
 
 	//////////////////////////////////////////////////////////////////////////
 	m_fromWinId = AcDbObjectId::kNull;

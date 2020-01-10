@@ -62,6 +62,7 @@
 #include "Src/DocumentData.h"
 #include "Src/DocumentDataSerialize.h"
 #include "Common/ComFun_RectArray.h"
+#include "Object/WindowDoor/WindowAutoName.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -875,11 +876,26 @@ void CMD_TEST2()
 	vAlSeries = CAluminumSeries::Instance()->GetAluminumSerialsByWindowType(E_WindowAluminum_NC);*/
 	//CFileUpDownLoad::UploadFile(L"D:\\Drawing1.dwg", L"1234567778.dwg", _T("20191030"));
 	//CFileUpDownLoad::DownloadFile(L"http://fastsoft.onlinedown.net/down/idm_ald.exe", L"F:\\FTPServer\\Test.exe");
-	if(CWebProjectFile::Instance()->GetAllProjectInfo())
+	/*if(CWebProjectFile::Instance()->GetAllProjectInfo())
 	{
 		vector<CProjectData *> vProjects;
 		vProjects.swap(CProjectFileMrg::Instance()->m_projects);
-	}
+	}*/
+
+	CProtypeInstanceCodeMrg Ref;
+	Ref.GetAllInstanceCodeIds();
+	ads_name ename;
+	ads_point pt1, pt2;
+	acedGetPoint(NULL, L"\nSelect a point: ", pt1);
+	acedGetPoint(NULL, L"\nSelect a point: ", pt2);
+	TYRect rect;
+	rect.m_lt.x = pt1[X];
+	rect.m_lt.y = pt1[Y];
+	rect.m_lt.z = pt1[Z];
+	rect.m_rb.x = pt2[X];
+	rect.m_rb.y = pt2[Y];
+	rect.m_rb.z = pt2[Z];
+	Ref.GetInstanceCodeIdsInRect(rect);
 }
 
 static void initApp()

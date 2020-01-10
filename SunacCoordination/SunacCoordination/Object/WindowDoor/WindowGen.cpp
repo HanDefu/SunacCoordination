@@ -165,13 +165,55 @@ void CWindowGen::UpdateRcWindowPara(const AcDbObjectId p_id, const AttrWindow& c
 	if (curWinAtt.HasValue(_T("H3")))
 		oneWindow.SetParameter(L"H3", curWinAtt.GetH3());
 
-	oneWindow.RunParameters();
+	//oneWindow.RunParameters();
 	//////////////////////////////////////////////////////////////////////////
 	//处理可见性
 	if (p_view == E_VIEW_FRONT || p_view == E_VIEW_EXTEND)
 	{
-		DQ_SetDynamicAttribute(oneWindow.m_id, _T("可见性1"), p_bDetailWnd ? _T("详图") : _T("立面"));
 		// TODO 叶明远 设置门把手高度
+		double B = -100; //设为无效值
+		
+		if (curWinAtt.GetType() == DOOR)
+		{
+			B = 1100;
+		}
+		if (curWinAtt.m_heightUnderWindow != 0)
+		{
+			if (curWinAtt.m_openType == L"外开" || curWinAtt.m_openType == L"推拉")
+			{
+				B = 1650 - curWinAtt.m_heightUnderWindow;
+			}
+			else if(curWinAtt.m_openType == L"内开")
+			{
+				if (curWinAtt.m_isBayWindow == true)
+				{
+					if (abs(curWinAtt.m_heightUnderWindow - 600) < TOL)//不等于600
+					{
+						B = 1950 - curWinAtt.m_heightUnderWindow;
+					}
+					else if (curWinAtt.m_heightUnderWindow > TOL)//不等于0
+					{
+						B = 1800 - curWinAtt.m_heightUnderWindow;
+					}
+				}
+				else B = 1650 - curWinAtt.m_heightUnderWindow;
+
+				if (B > 0) 
+				{
+					if (B < curWinAtt.GetH() - 200)//若门把手过高，则不设置门把手高度
+					{
+						oneWindow.SetParameter(L"B", B);
+					}
+				}
+
+			}			
+		}
+		
+	}
+	oneWindow.RunParameters();
+	if (p_view == E_VIEW_FRONT || p_view == E_VIEW_EXTEND)
+	{
+		DQ_SetDynamicAttribute(oneWindow.m_id, _T("可见性1"), p_bDetailWnd ? _T("详图") : _T("立面"));
 	}
 }
 
