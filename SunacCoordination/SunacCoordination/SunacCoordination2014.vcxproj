@@ -250,6 +250,7 @@
     <ClCompile Include="UI\ComFun_MFC.cpp" />
     <ClCompile Include="UI\DlgLeftBar.cpp" />
     <ClCompile Include="UI\DlgLogin.cpp" />
+    <ClCompile Include="UI\DlgSetUp.cpp" />
     <ClCompile Include="UI\DlgWindowAirCalc.cpp" />
     <ClCompile Include="UI\GridCellForPreview.cpp" />
     <ClCompile Include="UI\GridCellWithPicture.cpp" />
@@ -398,6 +399,7 @@
     <ClInclude Include="UI\ComFun_MFC.h" />
     <ClInclude Include="UI\DlgLeftBar.h" />
     <ClInclude Include="UI\DlgLogin.h" />
+    <ClInclude Include="UI\DlgSetUp.h" />
     <ClInclude Include="UI\DlgWindowAirCalc.h" />
     <ClInclude Include="UI\GridCellForPreview.h" />
     <ClInclude Include="UI\GridCellWithPicture.h" />

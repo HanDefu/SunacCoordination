@@ -294,6 +294,11 @@ void AddSubMenu(CAcadPopupMenu&IPopUpMenu, UINT MenuStartIndex)
 	V_VT(&index) = VT_I4;
 	V_I4(&index) = MenuStartIndex++;
 	IPopUpMenu.AddMenuItem(index, _T("产品标准"), _T("_SPALETTE "));
+
+	VariantInit(&index);
+	V_VT(&index) = VT_I4;
+	V_I4(&index) = MenuStartIndex++;
+	IPopUpMenu.AddMenuItem(index, _T("设置"), _T("_SSETUP "));
 }
 
 void InitMenu()
@@ -937,6 +942,15 @@ static void initApp()
 		_T("SPALETTE"),
 		ACRX_CMD_MODAL,
 		CMD_ShowCADPalette,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SSETUP"),
+		_T("SSETUP"),
+		ACRX_CMD_MODAL,
+		CMD_SetUp,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());

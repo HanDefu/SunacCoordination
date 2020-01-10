@@ -462,7 +462,6 @@ AcDbObjectId CWindowGen::UpdateWindow(const AcDbObjectId p_id, AttrWindow newWin
 		//5. 更新后的门窗加入到门窗命名库中
 		GetWindowAutoName()->AddWindowType(newWinAtt, newCodeWins);
 
-
 		//若不是镜像原型，则对镜像的门窗配套修改
 		if (false==newWinAtt.m_isMirrorWindow) 
 		{
@@ -477,7 +476,7 @@ AcDbObjectId CWindowGen::UpdateWindow(const AcDbObjectId p_id, AttrWindow newWin
 			//2 移除当前编号的门窗
 			GetWindowAutoName()->RemoveObjectsByInstantCode(oldInstanceCodeMirror);
 
-			//3. 更新其他和当前编号一致的门窗
+			//3 更新其他和当前编号一致的门窗
 			vector<AcDbObjectId> newCodeWinsMirror;
 			for (UINT i = 0; i < sameCodeWinsMirror.size(); i++)
 			{
@@ -750,7 +749,7 @@ void CWindowGen::MoveWindowDoorCode(eViewDir p_viewDir, CWinInCad p_win, CString
 		}
 		else
 		{
-			offsetXYZ = AcGeVector3d(0, -GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize - 120, 0);
+			offsetXYZ = AcGeVector3d(0, -2*GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize - 20, 0);
 		}
 		pText->setHorizontalMode(AcDb::kTextMid);
 		pText->setAlignmentPoint(textPos);
