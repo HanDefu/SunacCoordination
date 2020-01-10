@@ -11,7 +11,8 @@ public:
 public:
 	AcDbObjectId m_winId;
 	AcDbObjectId m_rootId; //针对块中块的根节点
-	bool m_bMirror;
+	bool m_bMirror;			//门窗块是否镜像
+	double m_rotateAngle;  //门窗块的旋转角度
 	AcGeMatrix3d m_mx;
 };
 //////////////////////////////////////////////////////////////////////////
@@ -48,10 +49,10 @@ public:
 
 class CWindowCountArray
 {
-	void InitByWindowIds(const vAcDbObjectId& p_winIds);
+	bool InitByWindowIds(const vAcDbObjectId& p_winIds);
 public:
-	void InitByWindowIds(const vector<CWinInCad>& p_winIds);
-	void InitByWindowAtts(const vector<AttrWindow>& p_winAtts, const vector<AcDbObjectId>& p_ids);
+	bool InitByWindowIds(const vector<CWinInCad>& p_winIds);
+	bool InitByWindowAtts(const vector<AttrWindow>& p_winAtts, const vector<AcDbObjectId>& p_ids);
 
 	int GetCount()const { return (int)(m_winCountArray.size()); }
 

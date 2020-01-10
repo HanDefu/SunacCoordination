@@ -2,6 +2,7 @@
 
 #include "AttrWindow.h"
 #include "RCWindow.h"
+#include "WindowSelect.h"
 
 
 struct CWinTranslationPara
@@ -51,7 +52,7 @@ protected:
 
 	static bool GetWindowInsertPos(AcDbObjectId p_id, AcGePoint3d &p_insertPos, double& p_angle);
 	static AcGePoint3d GetWindowLeftBottomPos(AcDbObjectId p_id);
-	static E_DIRECTION GetWindowInsertDir(AcDbObjectId p_id);
+	static bool GetWindowInsertDir(AcDbObjectId p_id, E_DIRECTION & p_dirOut);
 	static CWinInsertPara GetWindowInsertPara(AcDbObjectId p_id); //根据已插入的门窗获取其插入的信息
 	static bool IsWindowMirror(AcDbObjectId p_id);
 
@@ -64,9 +65,11 @@ protected:
 
 	//插入门窗编号
 	static AcDbObjectId InsertWindowDoorCode(eViewDir p_viewDir, CString p_number, AcGePoint3d p_pos);
-	static void MoveWindowDoorCode(AcDbObjectId p_id, double p_winWidth, double p_winHeight, AcGePoint3d p_origin, eViewDir p_viewDir, E_DIRECTION p_winDir);
+	//static void MoveWindowDoorCode(AcDbObjectId p_id, double p_winWidth, double p_winHeight, AcGePoint3d p_origin, eViewDir p_viewDir, E_DIRECTION p_winDir);
+	static void MoveWindowDoorCode(eViewDir p_viewDir, CWinInCad p_win, CString p_Code);
 	static double GetWinWidth(AcDbObjectId p_id);
 	static double GetWinHeight(AcDbObjectId p_id);
+	static double GetWinLength(double p_winWidth, double p_winHeight); //长和高比较大小，取大的
 };
 
 

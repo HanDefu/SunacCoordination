@@ -12,7 +12,7 @@
 
 CWinSetting::CWinSetting()
 {
-	m_numberTextSize = 120;
+	m_numberTextSize = 100;
 	m_bShowLimianNumber = false;
 	m_bUseAinLimian = false;
 	m_sWinLayer = L"Sunac_Window";
