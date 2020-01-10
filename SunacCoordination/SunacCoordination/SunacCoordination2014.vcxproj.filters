@@ -394,6 +394,9 @@
     <ClCompile Include="Object\WindowDoor\WindowSelect.cpp">
       <Filter>Object\WindowDoor</Filter>
     </ClCompile>
+    <ClCompile Include="UI\DlgSetUp.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -876,6 +879,9 @@
     </ClInclude>
     <ClInclude Include="Object\WindowDoor\WindowSelect.h">
       <Filter>Object\WindowDoor</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DlgSetUp.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

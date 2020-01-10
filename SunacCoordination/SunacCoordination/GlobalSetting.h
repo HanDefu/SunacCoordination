@@ -44,6 +44,8 @@ public:
 
 	static CString GetWindowBlockLayer() { return GetInstance()->m_winSetting.m_sWinLayer; }
 
+	bool UpdateToXml();
+
 private:
 	GlobalSetting();
 
