@@ -295,6 +295,11 @@ void AddSubMenu(CAcadPopupMenu&IPopUpMenu, UINT MenuStartIndex)
 	V_VT(&index) = VT_I4;
 	V_I4(&index) = MenuStartIndex++;
 	IPopUpMenu.AddMenuItem(index, _T("产品标准"), _T("_SPALETTE "));
+
+	VariantInit(&index);
+	V_VT(&index) = VT_I4;
+	V_I4(&index) = MenuStartIndex++;
+	IPopUpMenu.AddMenuItem(index, _T("设置"), _T("_SSETUP "));
 }
 
 void InitMenu()
@@ -882,8 +887,9 @@ void CMD_TEST2()
 		vProjects.swap(CProjectFileMrg::Instance()->m_projects);
 	}*/
 
-	CProtypeInstanceCodeMrg Ref;
-	Ref.GetAllInstanceCodeIds();
+	//CProtypeInstanceCodeMrg Ref;
+	//Ref.GetAllInstanceCodeIds();
+	CProtypeInstanceCodeMrg::GetAllInstanceCodeIds();
 	ads_name ename;
 	ads_point pt1, pt2;
 	acedGetPoint(NULL, L"\nSelect a point: ", pt1);
@@ -895,7 +901,8 @@ void CMD_TEST2()
 	rect.m_rb.x = pt2[X];
 	rect.m_rb.y = pt2[Y];
 	rect.m_rb.z = pt2[Z];
-	Ref.GetInstanceCodeIdsInRect(rect);
+	CProtypeInstanceCodeMrg::GetInstanceCodeIdsInRect(rect);
+	//Ref.GetInstanceCodeIdsInRect(rect);
 }
 
 static void initApp()
@@ -953,6 +960,15 @@ static void initApp()
 		_T("SPALETTE"),
 		ACRX_CMD_MODAL,
 		CMD_ShowCADPalette,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SSETUP"),
+		_T("SSETUP"),
+		ACRX_CMD_MODAL,
+		CMD_SetUp,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());

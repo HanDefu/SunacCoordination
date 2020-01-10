@@ -184,3 +184,77 @@ bool GlobalSetting::SaveToXml()
 	return true;
 }
 
+bool GlobalSetting::UpdateToXml()
+{
+	CString sFile = GetXmlFilePath();
+
+	CMarkup xml;
+
+	if (xml.Load(sFile) == false)
+		return false;
+
+	//xml.ResetMainPos();
+	//xml.FindElem();
+	//xml.IntoElem();
+
+	if (xml.FindElem(_T("Settings")))
+	{
+		xml.IntoElem();
+
+		if (xml.FindElem(_T("WindowSetting")))
+		{
+			xml.IntoElem();
+
+			if (xml.FindElem(_T("WinLayer")))
+			{
+				xml.SetData(m_winSetting.m_sWinLayer);
+			}
+
+			if (xml.FindElem(_T("WinFrameLayer")))
+			{
+				xml.SetData(m_winSetting.m_sWinFrameLayer);
+			}
+
+			if (xml.FindElem(_T("WinWallLayer")))
+			{
+				xml.SetData(m_winSetting.m_sWinWallLayer);
+			}
+
+			if (xml.FindElem(_T("WinHardwareLayer")))
+			{
+				xml.SetData(m_winSetting.m_sWinHardwareLayer);
+			}
+
+			if (xml.FindElem(_T("WinOpenLayer")))
+			{
+				xml.SetData(m_winSetting.m_sWinOpenLayer);
+			}
+
+			if (xml.FindElem(_T("WinNumberLayerLimian")))
+			{
+				xml.SetData(m_winSetting.m_sWinNumberLayerLimian);
+			}
+
+			if (xml.FindElem(_T("WinNumberLayerPingmian")))
+			{
+				xml.SetData(m_winSetting.m_sWinNumberLayerPingmian);
+			}
+
+			if (xml.FindElem(_T("UseAinLimian")))
+			{
+				xml.SetData(m_winSetting.m_bUseAinLimian);
+			}
+
+			if (xml.FindElem(_T("ShowLimianNumber")))
+			{
+				xml.SetData(m_winSetting.m_bShowLimianNumber);
+			}
+		}
+		xml.OutOfElem();
+	}
+	xml.OutOfElem();
+	xml.Save(sFile);
+
+	return true;
+}
+
