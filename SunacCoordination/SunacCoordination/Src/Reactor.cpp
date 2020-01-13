@@ -59,11 +59,10 @@ void CMyDbReactor::objectAppended(const AcDbDatabase* dwg, const AcDbObject* dbO
 		if ((sLayerName != sPMLayerName) && (sLayerName != sLMLayerName)) //只处理门窗文字所在的图层
 			return;
 
-		Acad::ErrorStatus es = pEnt->upgradeOpen(); //提升为写权限
-		if (es == Acad::eOk)
+		if (pEnt->isKindOf(AcDbText::desc()) || pEnt->isKindOf(AcDbMText::desc()))
 		{
-			if (pEnt->isKindOf(AcDbText::desc()) || pEnt->isKindOf(AcDbMText::desc()))
-				pEnt->erase();
+			pEnt->upgradeOpen(); //提升为写权限
+			pEnt->erase();
 		}
 	}
 }
