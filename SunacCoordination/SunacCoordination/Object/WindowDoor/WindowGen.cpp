@@ -862,7 +862,7 @@ void CWindowGen::AutoNameAllWindow()
 		winAtt.SetInstanceCode(sInstanceCode2);
 
 		//ÃÅ´°±àºÅÉú³É
-		if (winAtt.m_viewDir == E_VIEW_TOP || GlobalSetting::GetInstance()->m_winSetting.m_bShowLimianNumber)
+		if (winAtt.m_viewDir == E_VIEW_TOP || GlobalSetting::GetInstance()->m_winSetting.m_bShowLimianNumber && winAtt.m_viewDir != E_VIEW_EXTEND)
 		{
 			MoveWindowDoorCode(winAtt.m_viewDir, wins[i], sInstanceCode2);
 		}
