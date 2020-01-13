@@ -396,6 +396,8 @@
     </ClCompile>
     <ClCompile Include="UI\DlgSetUp.cpp">
       <Filter>UI</Filter>
+    <ClCompile Include="Src\Reactor.cpp">
+      <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -882,6 +884,8 @@
     </ClInclude>
     <ClInclude Include="UI\DlgSetUp.h">
       <Filter>UI</Filter>
+    <ClInclude Include="Src\Reactor.h">
+      <Filter>Src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
