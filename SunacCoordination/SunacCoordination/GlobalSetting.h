@@ -14,13 +14,13 @@ struct CWinSetting
 public:
 	CWinSetting();
 
-	CString m_sWinLayer; //门窗块图层
-	CString m_sWinFrameLayer; //门窗型材结构框图层
-	CString m_sWinWallLayer; //门窗外的墙的图层
+	CString m_sWinLayer;		//门窗块图层
+	CString m_sWinFrameLayer;	//门窗框图层
+	CString m_sWinWallLayer;	//窗洞土建图层
 	CString m_sWinHardwareLayer; //门窗五金件图层
 	CString m_sWinOpenLayer; //门窗开启部分图层
-	CString m_sWinNumberLayerLimian; //门窗立面图编号图层
-	CString m_sWinNumberLayerPingmian; //门窗平面图编号图层
+	CString m_sWinNumberLayerLimian;	//门窗立面图编号图层
+	CString m_sWinNumberLayerPingmian;	//门窗平面图编号图层
 
 	bool m_bUseAinLimian;  //立面图是否使用塞缝尺寸
 

@@ -825,10 +825,11 @@ double CWindowGen::GetWinLength(double p_winWidth, double p_winHeight)
 
 void CWindowGen::AutoNameAllWindow()
 {
+	//TODO 根据选择的范围内的门窗进行进行编号
+
 	GetInstanceCodeMrg()->RemoveAll();
 
 	//1.  从CAD界面上获取所有的门窗
-	//vector<AcDbObjectId> allIds = SelectWindows(E_VIEW_ALL, true);
 	const vector<CWinInCad> wins = CWindowSelect::SelectWindows(E_VIEW_ALL, true);
 	if (wins.size() == 0)
 		return;
@@ -867,4 +868,6 @@ void CWindowGen::AutoNameAllWindow()
 			MoveWindowDoorCode(winAtt.m_viewDir, wins[i], sInstanceCode2);
 		}
 	}
+
+	acutPrintf(L"\n门窗自动编号完成\n");
 }
