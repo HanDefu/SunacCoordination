@@ -157,6 +157,8 @@ bool CWindowDetail::CreateDataText(const AttrWindow& winAtt, CWindowDetailTempla
 	return true;
 }
 
+
+
 int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 {
 	CDocLock lockEnt;
@@ -231,6 +233,7 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 
 	//////////////////////////////////////////////////////////////////////////
 	//----------------标注横向的--------------------//
+	bool m_isHasW3 = false;
 
 	double W1 = winAtt.GetW1();
 	double W2 = winAtt.GetW2();
@@ -239,6 +242,9 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 	start = rect.GetLT();
 	end = start;
 	mid = start;
+
+	AcGePoint3d start1 = rect.GetRT();
+
 	if (A > TOL)//如果A值存在 先标注两端的A
 	{
 		end.x += A;
@@ -247,14 +253,39 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 		//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
 		MD2010_AddAlignedDimensionAndStyle(start, end, mid, A, layer);
 
-		AcGePoint3d start1 = rect.GetRT();
 		AcGePoint3d end1 = start1;
 		AcGePoint3d mid1 = start1;
 		end1.x -= A;
 		mid1.x -= A / 2;
 		mid1.y += offset;
 		//MD2010_AddAlignedDimension2(start1, end1, mid1, layer, colorIndex, textHeight);
-		MD2010_AddAlignedDimensionAndStyle(start, end, mid, A, layer);
+		MD2010_AddAlignedDimensionAndStyle(start1, end1, mid1, A, layer);
+	}
+
+	//先标注右侧的转角窗
+	if (W3 > TOL)
+	{
+		AcGePoint3d start2 = AcGePoint3d(start1.x - A, start1.y, 0);
+		AcGePoint3d mid2 = start2;
+		AcGePoint3d end2 = start2;
+		end2.x -= W3;
+		mid2.x -= W3 / 2;
+		mid2.y += offset;
+		//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+		MD2010_AddAlignedDimensionAndStyle(start2, end2, mid2, W3, layer);
+	}
+
+	//若左侧也有转角窗，再标注左侧转角窗
+	if (((W - W1 - W2 - W3 - A * 2 > W1) && (W - W1 - W2 - W3 - A * 2 > W3)) || (W - W1 - W2 - W3 - A * 2 == 500))
+	{
+		m_isHasW3 = true;
+		start = end;
+		mid = end;
+		end.x += W3;
+		mid.x += W3 / 2;
+		mid.y += offset;
+		//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+		MD2010_AddAlignedDimensionAndStyle(start, end, mid, W3, layer);
 	}
 
 	//W1 都会存在
@@ -279,15 +310,31 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 	}
 
 	//最后可能还有一个W1
-	if (W - W1 - W2 - A * 2 > TOL)
+	if (m_isHasW3 == false)
 	{
-		start = end;
-		mid = end;
-		end.x += W1;
-		mid.x += W1 / 2;
-		mid.y += offset;
-		//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
-		MD2010_AddAlignedDimensionAndStyle(start, end, mid, W1, layer);
+		if (W - W1 - W2 - W3 - A * 2 > TOL)
+		{
+			start = end;
+			mid = end;
+			end.x += W1;
+			mid.x += W1 / 2;
+			mid.y += offset;
+			//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+			MD2010_AddAlignedDimensionAndStyle(start, end, mid, W1, layer);
+		}
+	}
+	else
+	{
+		if (W - W1 - W2 - W3 * 2 - A * 2 > TOL)
+		{
+			start = end;
+			mid = end;
+			end.x += W1;
+			mid.x += W1 / 2;
+			mid.y += offset;
+			//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+			MD2010_AddAlignedDimensionAndStyle(start, end, mid, W1, layer);
+		}
 	}
 
 	//标注总的宽度

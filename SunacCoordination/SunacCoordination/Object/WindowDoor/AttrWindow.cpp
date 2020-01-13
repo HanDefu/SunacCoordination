@@ -994,6 +994,10 @@ bool AttrWindow::IsInstanceNeedMirror()const
 	{
 		bMirror = !bMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题
 	}
+	if (m_viewDir == E_VIEW_EXTEND) //若是展开图，直接返回false，门窗详图不用镜像
+	{
+		return false;
+	}
 	if (bMirror && (m_isMirrorWindow == false))
 	{
 		return true;
