@@ -161,7 +161,7 @@ AttrWindow::AttrWindow()
 	m_viewDir = E_VIEW_FRONT;
 	m_isBayWindow = false;
 	m_wallDis = 0.0;
-	m_heightUnderWindow = 900;
+	m_heightUnderWindow = 0;
 
 	//////////////////////////////////////////////////////////////////////////
 	m_fromWinId = AcDbObjectId::kNull;
@@ -993,6 +993,10 @@ bool AttrWindow::IsInstanceNeedMirror()const
 	if (m_viewDir == E_VIEW_TOP)
 	{
 		bMirror = !bMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题
+	}
+	if (m_viewDir == E_VIEW_EXTEND) //若是展开图，直接返回false，门窗详图不用镜像
+	{
+		return false;
 	}
 	if (bMirror && (m_isMirrorWindow == false))
 	{

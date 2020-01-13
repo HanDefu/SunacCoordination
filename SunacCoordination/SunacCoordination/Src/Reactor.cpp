@@ -54,8 +54,9 @@ void CMyDbReactor::objectAppended(const AcDbDatabase* dwg, const AcDbObject* dbO
 	if ((g_editorReactor != NULL) && g_editorReactor->IsInCommandMirror())
 	{
 		CString sLayerName = pEnt->layer();
-		CString sWindowDoorLayerName = GlobalSetting::GetInstance()->m_winSetting.m_sWinNumberLayerPingmian;
-		if (sLayerName != sWindowDoorLayerName) //只处理门窗文字所在的图层
+		CString sPMLayerName = GlobalSetting::GetInstance()->m_winSetting.m_sWinNumberLayerPingmian;
+		CString sLMLayerName = GlobalSetting::GetInstance()->m_winSetting.m_sWinNumberLayerLimian;
+		if ((sLayerName != sPMLayerName) && (sLayerName != sLMLayerName)) //只处理门窗文字所在的图层
 			return;
 
 		Acad::ErrorStatus es = pEnt->upgradeOpen(); //提升为写权限

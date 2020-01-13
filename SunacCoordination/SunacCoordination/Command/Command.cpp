@@ -29,6 +29,7 @@
 #include "../UI/MyPalette.h"
 #include "../UI/MyPaletteSet.h"
 #include "../UI/DlgLogin.h"
+#include "../UI/DlgSetUp.h"
 #include "../UI/WindowAdvanceDlg.h"
 #include "../Common/ComFun_Math.h"
 #include "../Common/ComFun_ACad.h"
@@ -98,6 +99,24 @@ void CMD_ShowCADPalette()
 		AfxMessageBox(_T("请先登录"));
 	}
 }
+
+//设置
+void CMD_SetUp()
+{
+	CAcModuleResourceOverride resOverride;
+	
+	CDlgSetUp dlg;
+
+	if (WebIO::GetInstance()->IsLogin())
+	{
+		dlg.DoModal();
+	}
+	else
+	{
+		AfxMessageBox(_T("请先登录"));
+	}
+}
+
 //窗
 void CMD_SunacWindow()
 {

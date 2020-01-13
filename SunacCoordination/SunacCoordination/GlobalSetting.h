@@ -14,13 +14,13 @@ struct CWinSetting
 public:
 	CWinSetting();
 
-	CString m_sWinLayer; //ÃÅ´°¿éÍ¼²ã
-	CString m_sWinFrameLayer; //ÃÅ´°ÐÍ²Ä½á¹¹¿òÍ¼²ã
-	CString m_sWinWallLayer; //ÃÅ´°ÍâµÄÇ½µÄÍ¼²ã
+	CString m_sWinLayer;		//ÃÅ´°¿éÍ¼²ã
+	CString m_sWinFrameLayer;	//ÃÅ´°¿òÍ¼²ã
+	CString m_sWinWallLayer;	//´°¶´ÍÁ½¨Í¼²ã
 	CString m_sWinHardwareLayer; //ÃÅ´°Îå½ð¼þÍ¼²ã
 	CString m_sWinOpenLayer; //ÃÅ´°¿ªÆô²¿·ÖÍ¼²ã
-	CString m_sWinNumberLayerLimian; //ÃÅ´°Á¢ÃæÍ¼±àºÅÍ¼²ã
-	CString m_sWinNumberLayerPingmian; //ÃÅ´°Æ½ÃæÍ¼±àºÅÍ¼²ã
+	CString m_sWinNumberLayerLimian;	//ÃÅ´°Á¢ÃæÍ¼±àºÅÍ¼²ã
+	CString m_sWinNumberLayerPingmian;	//ÃÅ´°Æ½ÃæÍ¼±àºÅÍ¼²ã
 
 	bool m_bUseAinLimian;  //Á¢ÃæÍ¼ÊÇ·ñÊ¹ÓÃÈû·ì³ß´ç
 
@@ -43,6 +43,8 @@ public:
 	const char*  GetCADServiceUrl()const;
 
 	static CString GetWindowBlockLayer() { return GetInstance()->m_winSetting.m_sWinLayer; }
+
+	bool UpdateToXml();
 
 private:
 	GlobalSetting();

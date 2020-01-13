@@ -281,11 +281,11 @@ void MD2010_CreateDimensionStyle(CString styleName)
 	pDimStyleTblRcd->setDimasz(1); // 箭头大小
 	pDimStyleTblRcd->setDimexo(3); //尺寸界线偏移
 	pDimStyleTblRcd->setDimdli(0); //尺寸线间距
-	pDimStyleTblRcd->setDimexe(2.5); //超出尺寸线的距离
-	pDimStyleTblRcd->setDimzin(0); //消零
-	pDimStyleTblRcd->setDimtzin(2); //角度消零
+	pDimStyleTblRcd->setDimexe(1); //超出尺寸线的距离
+	//pDimStyleTblRcd->setDimzin(0); //消零
+	//pDimStyleTblRcd->setDimtzin(2); //角度消零
 	pDimStyleTblRcd->setDimtad(1); // 文字位于标注线的上方
-	pDimStyleTblRcd->setDimtxt(3); // 标注文字的高度
+	pDimStyleTblRcd->setDimtxt(2); // 标注文字的高度
 	pDimStyleTblRcd->setDimgap(1.25); //设置标注文字周围的距离
 	pDimStyleTblRcd->setDimtmove(2);  //设置标注文字的移动规则
 	pDimStyleTblRcd->setDimtih(false); //文字方向

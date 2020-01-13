@@ -165,13 +165,55 @@ void CWindowGen::UpdateRcWindowPara(const AcDbObjectId p_id, const AttrWindow& c
 	if (curWinAtt.HasValue(_T("H3")))
 		oneWindow.SetParameter(L"H3", curWinAtt.GetH3());
 
-	oneWindow.RunParameters();
+	//oneWindow.RunParameters();
 	//////////////////////////////////////////////////////////////////////////
 	//处理可见性
 	if (p_view == E_VIEW_FRONT || p_view == E_VIEW_EXTEND)
 	{
-		DQ_SetDynamicAttribute(oneWindow.m_id, _T("可见性1"), p_bDetailWnd ? _T("详图") : _T("立面"));
 		// TODO 叶明远 设置门把手高度
+		double B = -100; //设为无效值
+		
+		if (curWinAtt.GetType() == DOOR)
+		{
+			B = 1100;
+		}
+		if (curWinAtt.m_heightUnderWindow != 0)
+		{
+			if (curWinAtt.m_openType == L"外开" || curWinAtt.m_openType == L"推拉")
+			{
+				B = 1650 - curWinAtt.m_heightUnderWindow;
+			}
+			else if(curWinAtt.m_openType == L"内开")
+			{
+				if (curWinAtt.m_isBayWindow == true)
+				{
+					if (abs(curWinAtt.m_heightUnderWindow - 600) < TOL)//不等于600
+					{
+						B = 1950 - curWinAtt.m_heightUnderWindow;
+					}
+					else if (curWinAtt.m_heightUnderWindow > TOL)//不等于0
+					{
+						B = 1800 - curWinAtt.m_heightUnderWindow;
+					}
+				}
+				else B = 1650 - curWinAtt.m_heightUnderWindow;
+
+				if (B > 0) 
+				{
+					if (B < curWinAtt.GetH() - 200)//若门把手过高，则不设置门把手高度
+					{
+						oneWindow.SetParameter(L"B", B);
+					}
+				}
+
+			}			
+		}
+		
+	}
+	oneWindow.RunParameters();
+	if (p_view == E_VIEW_FRONT || p_view == E_VIEW_EXTEND)
+	{
+		DQ_SetDynamicAttribute(oneWindow.m_id, _T("可见性1"), p_bDetailWnd ? _T("详图") : _T("立面"));
 	}
 }
 
@@ -462,7 +504,6 @@ AcDbObjectId CWindowGen::UpdateWindow(const AcDbObjectId p_id, AttrWindow newWin
 		//5. 更新后的门窗加入到门窗命名库中
 		GetWindowAutoName()->AddWindowType(newWinAtt, newCodeWins);
 
-
 		//若不是镜像原型，则对镜像的门窗配套修改
 		if (false==newWinAtt.m_isMirrorWindow) 
 		{
@@ -477,7 +518,7 @@ AcDbObjectId CWindowGen::UpdateWindow(const AcDbObjectId p_id, AttrWindow newWin
 			//2 移除当前编号的门窗
 			GetWindowAutoName()->RemoveObjectsByInstantCode(oldInstanceCodeMirror);
 
-			//3. 更新其他和当前编号一致的门窗
+			//3 更新其他和当前编号一致的门窗
 			vector<AcDbObjectId> newCodeWinsMirror;
 			for (UINT i = 0; i < sameCodeWinsMirror.size(); i++)
 			{
@@ -750,7 +791,7 @@ void CWindowGen::MoveWindowDoorCode(eViewDir p_viewDir, CWinInCad p_win, CString
 		}
 		else
 		{
-			offsetXYZ = AcGeVector3d(0, -GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize - 120, 0);
+			offsetXYZ = AcGeVector3d(0, -2*GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize - 20, 0);
 		}
 		pText->setHorizontalMode(AcDb::kTextMid);
 		pText->setAlignmentPoint(textPos);
@@ -784,10 +825,11 @@ double CWindowGen::GetWinLength(double p_winWidth, double p_winHeight)
 
 void CWindowGen::AutoNameAllWindow()
 {
+	//TODO 根据选择的范围内的门窗进行进行编号
+
 	GetInstanceCodeMrg()->RemoveAll();
 
 	//1.  从CAD界面上获取所有的门窗
-	//vector<AcDbObjectId> allIds = SelectWindows(E_VIEW_ALL, true);
 	const vector<CWinInCad> wins = CWindowSelect::SelectWindows(E_VIEW_ALL, true);
 	if (wins.size() == 0)
 		return;
@@ -821,9 +863,11 @@ void CWindowGen::AutoNameAllWindow()
 		winAtt.SetInstanceCode(sInstanceCode2);
 
 		//门窗编号生成
-		if (winAtt.m_viewDir == E_VIEW_TOP || GlobalSetting::GetInstance()->m_winSetting.m_bShowLimianNumber)
+		if (winAtt.m_viewDir == E_VIEW_TOP || GlobalSetting::GetInstance()->m_winSetting.m_bShowLimianNumber && winAtt.m_viewDir != E_VIEW_EXTEND)
 		{
 			MoveWindowDoorCode(winAtt.m_viewDir, wins[i], sInstanceCode2);
 		}
 	}
+
+	acutPrintf(L"\n门窗自动编号完成\n");
 }

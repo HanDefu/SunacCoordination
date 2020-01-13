@@ -223,6 +223,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	pSelWinAttr->SetW3(W3);
 	pSelWinAttr->SetH3(H3);
 	pSelWinAttr->SetD(m_nThickness);
+	pSelWinAttr->m_heightUnderWindow = TYUI_GetDouble(m_comboH3);//窗下墙高度
 
 	//自动编号下更新原型编号
 	UpdateInstanceCode();
