@@ -19,6 +19,10 @@ File description:
 #include <algorithm>
 #include "../../Common/ComFun_Sunac.h"
 #include "../../Common/ComFun_ACad.h"
+#include "../../Common/ComFun_Str.h"
+#include "../../Common/ComFun_ACAD_Common.h"
+#include "../../Common/ComFun_String.h"
+#include "../../Common/ComFun_Layer.h"
 #include "../../Tool/DocLock.h"
 
 //Constructor
@@ -192,4 +196,34 @@ void RCWindow::SetInstanceCode(CString str)
 CString RCWindow::GetInstanceCode()
 {
 	return GetAttribute()->GetInstanceCode();
+}
+
+AcDbObjectId RCWindow::Insert(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color)
+{
+	m_blockRecordName = FilePathToFileNameWithoutExtension(fileName);
+
+	acDocManager->lockDocument(curDoc());
+	//检查图层是否存在，不存在则创建
+	AcDbObjectId layerId = JHCOM_GetLayerID(layerName);
+	if (layerId == AcDbObjectId::kNull)
+	{
+		JHCOM_CreateNewLayer(layerName);
+	}
+
+	AcDbObjectId idOut = AcDbObjectId::kNull;
+	
+	CString preLayerName;
+	MD2010_GetCurrentLayer(preLayerName);
+	MD2010_SetCurrentLayer(layerName);
+	AcDbObjectId blockDefId = MD2010_InsertBlockDefineFromPathName(fileName, m_blockRecordName);
+
+	//TODO 叶明远 添加图层判断
+
+	MD2010_InsertBlockReference_Layout(ACDB_MODEL_SPACE, m_blockRecordName, idOut, origin, angle, AcGeScale3d(1), color);
+	MD2010_SetCurrentLayer(preLayerName);
+
+
+
+	acDocManager->unlockDocument(curDoc());
+	return idOut;
 }
