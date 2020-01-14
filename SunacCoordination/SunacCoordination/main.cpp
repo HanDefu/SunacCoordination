@@ -63,6 +63,7 @@
 #include "Src/DocumentDataSerialize.h"
 #include "Common/ComFun_RectArray.h"
 #include "Object/WindowDoor/WindowAutoName.h"
+#include "Src/Reactor.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -1217,6 +1218,19 @@ static void initApp()
 
 	LoadManagedDll(MD2010_GetAppPath() + L"\\Sunac2019\\External_DLL\\rcdc.dll");
 
+	//添加反应器
+	g_editorReactor = new CMyEditReactor;
+	acedEditor->addReactor(g_editorReactor);
+	g_docReactor = new CMyDocReactor;
+	acDocManager->addReactor(g_docReactor);
+	g_dbReactor = new CMyDbReactor;
+	AcApDocumentIterator* it = acDocManager->newAcApDocumentIterator();
+	for (; !it->done(); it->step())
+	{
+		it->document()->database()->addReactor(g_dbReactor);
+	}
+	delete it;
+
 	//WEBINST;
 }
 
@@ -1248,6 +1262,19 @@ static void unloadApp()
 	delete acrxServiceDictionary->remove(_T(ZFFCUSTOMOBJECTDB_DBXSERVICE_OBJECT));
 
 	AcDbBlockReference::desc()->delX(AcDbDoubleClickEdit::desc());
+
+	//删除反应器
+	AcApDocumentIterator* it = acDocManager->newAcApDocumentIterator();
+	for (; !it->done(); it->step())
+	{
+		it->document()->database()->removeReactor(g_dbReactor);
+	}
+	delete it;
+	delete g_dbReactor;
+	acDocManager->removeReactor(g_docReactor);
+	delete g_docReactor;
+	acedEditor->removeReactor(g_editorReactor);
+	delete g_editorReactor;
 
 	//WaitForSingleObject(mThreadHandle, 1000);
 	//TerminateThread(mThreadHandle,0);
