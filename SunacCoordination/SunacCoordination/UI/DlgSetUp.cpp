@@ -18,7 +18,7 @@ CDlgSetUp::CDlgSetUp(CWnd* pParent /*=NULL*/)
 	, m_showLimianNumber(TRUE)
 	, m_useAinLimian(TRUE)
 {
-
+	
 }
 
 CDlgSetUp::~CDlgSetUp()
@@ -28,7 +28,6 @@ CDlgSetUp::~CDlgSetUp()
 void CDlgSetUp::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Control(pDX, IDC_NUMBERTEXTSIZE, m_numberTextSize);
 	DDX_Control(pDX, IDC_WINFRAMELAYER, m_winFrameLayer);
 	DDX_Control(pDX, IDC_WINHARDWARELAYER, m_winHardwareLayer);
 	DDX_Control(pDX, IDC_WINLAYER, m_winLayer);
@@ -38,6 +37,7 @@ void CDlgSetUp::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_WINWALLLAYER, m_winWallLayer);
 	DDX_Radio(pDX, IDC_SHOWLIMIANNUMBER, m_showLimianNumber);
 	DDX_Radio(pDX, IDC_USEAINLIMIAN, m_useAinLimian);
+	DDX_Control(pDX, IDC_WINNUMTEXTSIZE, m_winNumberTextSize);
 }
 
 
@@ -79,9 +79,9 @@ void CDlgSetUp::OnBnClickedOk()
 	WinSetUp(GlobalSetting::GetInstance()->m_winSetting.m_sWinNumberLayerLimian, TYUI_GetText(m_winNumberLayerLimian));
 	WinSetUp(GlobalSetting::GetInstance()->m_winSetting.m_sWinNumberLayerPingmian, TYUI_GetText(m_winNumberLayerPingmian));
 	//门窗编号字体设置
-	if (TYUI_GetText(m_numberTextSize).GetLength() > 0)
+	if (TYUI_GetText(m_winNumberTextSize).GetLength() > 0)
 	{
-		GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize = TYUI_GetInt(m_numberTextSize);
+		GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize = TYUI_GetInt(m_winNumberTextSize);
 	}
 	//其他
 	GlobalSetting::GetInstance()->m_winSetting.m_bUseAinLimian = m_useAinLimian ? false : true;
@@ -128,9 +128,31 @@ void CDlgSetUp::LoadDefaultValue()
 	m_winNumberLayerLimian.SetWindowText(GlobalSetting::GetInstance()->m_winSetting.m_sWinNumberLayerLimian);
 	m_winNumberLayerPingmian.SetWindowText(GlobalSetting::GetInstance()->m_winSetting.m_sWinNumberLayerPingmian);
 
-	CString str;
-	str.Format(L"%d", GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize);
-	m_numberTextSize.SetWindowText(str);
-	m_winLayer.SetWindowText(GlobalSetting::GetInstance()->m_winSetting.m_sWinLayer);
+	((CComboBox*)GetDlgItem(IDC_WINNUMTEXTSIZE))->SetCurSel(3);//设置门窗字体编号默认显示100
 }
 
+CDlgSetUp* g_winSetupDlg = NULL;
+
+void OpenWindowSetUpDlg()
+{
+	if (g_winSetupDlg == NULL)
+	{
+		CAcModuleResourceOverride resOverride;
+		g_winSetupDlg = new CDlgSetUp(acedGetAcadFrame());
+		g_winSetupDlg->Create(IDD_DIALOG_SETUP);
+	}
+	g_winSetupDlg->ShowWindow(SW_SHOW);
+}
+
+BOOL CloseWindowSetUpDlg()
+{
+	if (g_winSetupDlg == NULL)
+		return TRUE;
+	BOOL ret = g_winSetupDlg->DestroyWindow();
+	if (ret)
+	{
+		delete g_winSetupDlg;
+		g_winSetupDlg = NULL;
+	}
+	return ret;
+}
