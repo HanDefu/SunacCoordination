@@ -63,11 +63,6 @@ AcDbObjectId MD2010_AddAlignedDimension(AcGePoint3d start,AcGePoint3d end, AcGeP
 AcDbObjectId MD2010_AddAlignedDimension2(AcGePoint3d start, AcGePoint3d end, AcGePoint3d dimlinpnt, const ACHAR* newLayer = L"0", 
 	int colorIndex = 2, double textHeight = 120, double lineTextSpace = 20);
 
-AcDbObjectId MD2010_AddAlignedDimensionAndStyle(AcGePoint3d start, AcGePoint3d end, AcGePoint3d dimlinpnt, double size, const ACHAR* newLayer = L"0");
-
-//创建尺寸标注风格
-void MD2010_CreateDimensionStyle(CString styleName);
-
 //布局操作
 int              MD2010_SetModelSpaceCurrentLayout();
 int              MD2010_SetCurrentLayout(const ACHAR * layoutname);

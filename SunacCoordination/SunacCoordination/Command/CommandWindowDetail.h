@@ -75,6 +75,10 @@ class CWindowDetail
 public:
 	static void DrawWindowDetail();
 
+	//创建尺寸标注风格
+	static void CreateDimensionStyle(CString styleName);
+
+	static AcDbObjectId AddAlignedDimensionAndStyle(AcGePoint3d start, AcGePoint3d end, AcGePoint3d dimlinpnt, double size, const ACHAR* newLayer = L"0");
 protected:
 	static bool CreateDataText(const AttrWindow& winAtt, CWindowDetailTemplate winDetailTemplate);
 

@@ -66,6 +66,8 @@ BOOL CDlgSetUp::OnInitDialog()
 // CDlgSetUp 消息处理程序
 void CDlgSetUp::OnBnClickedOk()
 {
+	UpdateData(TRUE);
+
 	m_winSetUpLayer.clear();
 
 	//门窗图层设置
@@ -82,9 +84,9 @@ void CDlgSetUp::OnBnClickedOk()
 		GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize = TYUI_GetInt(m_numberTextSize);
 	}
 	//其他
-	GlobalSetting::GetInstance()->m_winSetting.m_bUseAinLimian = m_useAinLimian ? true : false;
-	GlobalSetting::GetInstance()->m_winSetting.m_bShowLimianNumber = m_showLimianNumber ? true : false;
-
+	GlobalSetting::GetInstance()->m_winSetting.m_bUseAinLimian = m_useAinLimian ? false : true;
+	GlobalSetting::GetInstance()->m_winSetting.m_bShowLimianNumber = m_showLimianNumber ? false : true;
+	
 	//排序
 	std::sort(m_winSetUpLayer.begin(), m_winSetUpLayer.end(), CompareWinSetUpLayer);
 
@@ -107,12 +109,8 @@ void CDlgSetUp::WinSetUp(CString &p_winSetting, CString p_winSetUp)
 	if (p_winSetUp.GetLength() > 0)
 	{
 		p_winSetting = p_winSetUp;
-		m_winSetUpLayer.push_back(p_winSetUp);
 	}
-	else
-	{
-		m_winSetUpLayer.push_back(p_winSetting);
-	}
+	m_winSetUpLayer.push_back(p_winSetting);
 }
 
 void CDlgSetUp::OnBnClickedCancel()
