@@ -39,6 +39,8 @@ public:
 	int m_numberTextSize; //门窗编号字体
 
 	bool m_bShowLimianNumber; //是否显示立面图的门窗编号
+
+	int m_bWinDetailDimRate; //门窗详图标注比例
 };
 
 class GlobalSetting

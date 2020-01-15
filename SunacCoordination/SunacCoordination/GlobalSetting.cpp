@@ -12,6 +12,7 @@
 
 CWinSetting::CWinSetting()
 {
+	m_bWinDetailDimRate = 50;
 	m_numberTextSize = 100;
 	m_bShowLimianNumber = false;
 	m_bUseAinLimian = false;

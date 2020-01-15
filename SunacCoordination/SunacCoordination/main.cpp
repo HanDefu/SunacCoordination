@@ -891,16 +891,11 @@ void CMD_TEST2()
 	//CProtypeInstanceCodeMrg Ref;
 	//Ref.GetAllInstanceCodeIds();
 	CProtypeInstanceCodeMrg::GetAllInstanceCodeIds();
-	ads_point pt1, pt2;
-	acedGetPoint(NULL, L"\nSelect a point: ", pt1);
-	acedGetPoint(NULL, L"\nSelect a point: ", pt2);
+
+
 	TYRect rect;
-	rect.m_lt.x = pt1[X];
-	rect.m_lt.y = pt1[Y];
-	rect.m_lt.z = pt1[Z];
-	rect.m_rb.x = pt2[X];
-	rect.m_rb.y = pt2[Y];
-	rect.m_rb.z = pt2[Z];
+	bool bSuc = TY_GetOneRect(rect);
+
 	CProtypeInstanceCodeMrg::GetInstanceCodeIdsInRect(rect);
 	//Ref.GetInstanceCodeIdsInRect(rect);
 }
