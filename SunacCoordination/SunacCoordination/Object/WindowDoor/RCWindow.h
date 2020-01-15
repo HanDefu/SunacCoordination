@@ -65,6 +65,8 @@ public:
 
 	virtual bool isEqualTo(RCObject*other = 0);//基础数据一致
 
+	virtual AcDbObjectId Insert(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color);
+
 protected: 
 	AttrWindow *m_pAttribute;
 };

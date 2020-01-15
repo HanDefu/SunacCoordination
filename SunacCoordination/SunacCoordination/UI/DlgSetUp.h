@@ -4,7 +4,6 @@
 #include "ComFun_MFC.h"
 #include "GridCtrlWithPreview.h"
 
-
 // CDlgSetUp ¶Ô»°¿ò
 
 class CDlgSetUp : public CDialogEx
@@ -49,7 +48,6 @@ private:
 
 public:
 	virtual BOOL OnInitDialog();
-	CComboBox m_winDetailDimRate;
 };
 
 extern CDlgSetUp* g_winSetupDlg;

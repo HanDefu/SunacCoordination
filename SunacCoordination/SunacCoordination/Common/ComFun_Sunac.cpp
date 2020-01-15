@@ -603,12 +603,11 @@ bool GetRealInput(const TCHAR* prompt, double defaultVal, int precision, double 
 
 bool GetStringInput(CString prompt, CString &strOut)
 {
-	int rcc = 0;
 	ACHAR num[256] = L"\0";
-	rcc = acedGetString(0, prompt, num);
+	int rcc = acedGetString(0, prompt, num);
 	if (rcc == RTCAN)
 		return false;
-	else if (rcc != RTCAN&&rcc != RTNORM)
+	else if (rcc != RTNORM)
 		return false;
 
 	strOut = CString(num);
