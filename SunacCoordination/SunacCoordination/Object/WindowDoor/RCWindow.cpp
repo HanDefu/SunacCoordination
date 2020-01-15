@@ -200,24 +200,8 @@ CString RCWindow::GetInstanceCode()
 	return GetAttribute()->GetInstanceCode();
 }
 
-AcDbObjectId RCWindow::Insert(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color)
+void RCWindow::ModifyLayerName(AcDbObjectId BlockDefineId)
 {
-	m_blockRecordName = FilePathToFileNameWithoutExtension(fileName);
-
-	acDocManager->lockDocument(curDoc());
-	//检查图层是否存在，不存在则创建
-	AcDbObjectId layerId = JHCOM_GetLayerID(layerName);
-	if (layerId==AcDbObjectId::kNull)
-	{
-		JHCOM_CreateNewLayer(layerName);
-	}
-
-	CString name;
-	MD2010_GetCurrentLayer(name);
-	MD2010_SetCurrentLayer(layerName);
-	AcDbObjectId BlockDefineId = MD2010_InsertBlockDefineFromPathName(fileName,m_blockRecordName);
-
-	//TODO 叶明远
 	AcDbBlockTable *pBlkTbl = NULL;
 	acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForWrite);
 	AcDbBlockTableRecord *pBlkDefine = NULL;
@@ -272,11 +256,31 @@ AcDbObjectId RCWindow::Insert(CString fileName, AcGePoint3d origin, double angle
 				JHCOM_CreateNewLayer(GSINST->m_winSetting.m_sWinWallLayer);
 				Entity->setLayer(GSINST->m_winSetting.m_sWinWallLayer);
 			}
-			
+
 		}
 		pBlkDefine->close();
 	}
+}
 
+AcDbObjectId RCWindow::Insert(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color)
+{
+	m_blockRecordName = FilePathToFileNameWithoutExtension(fileName);
+
+	acDocManager->lockDocument(curDoc());
+	//检查图层是否存在，不存在则创建
+	AcDbObjectId layerId = JHCOM_GetLayerID(layerName);
+	if (layerId==AcDbObjectId::kNull)
+	{
+		JHCOM_CreateNewLayer(layerName);
+	}
+
+	CString name;
+	MD2010_GetCurrentLayer(name);
+	MD2010_SetCurrentLayer(layerName);
+	AcDbObjectId BlockDefineId = MD2010_InsertBlockDefineFromPathName(fileName,m_blockRecordName);
+
+	//TODO 叶明远
+	ModifyLayerName(BlockDefineId);
 
 	MD2010_InsertBlockReference_Layout(ACDB_MODEL_SPACE, m_blockRecordName, m_id, origin, angle, AcGeScale3d(1), color);
 	MD2010_SetCurrentLayer(name);

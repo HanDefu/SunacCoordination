@@ -51,6 +51,8 @@ public:
 		return &instance;
 	}
 
+	static CWinSetting* GetWinSetting(){return &(GetInstance()->m_winSetting);}
+
 	CString GetFtpIp()const;
 	const char*  GetCADServiceUrl()const;
 

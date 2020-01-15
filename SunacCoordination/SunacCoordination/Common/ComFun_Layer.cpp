@@ -373,7 +373,7 @@ int JHCOM_SetLayerPrint(CString layerName, bool isPrint)
 }
 
 
-vector<AcDbObjectId> GetAllEntityId(CString layername)
+vector<AcDbObjectId> GetAllEntityIdFromBlkTbl(CString layername, CString BlkTbl)
 {
 	vector<AcDbObjectId> entIds;
 	bool bFilterlayer = false;
@@ -396,11 +396,11 @@ vector<AcDbObjectId> GetAllEntityId(CString layername)
 
 	//获得块表
 	AcDbBlockTable *pBlkTbl = NULL;
-	acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pBlkTbl, AcDb::kForRead);
+	acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForRead);
 
 	//块表记录
 	AcDbBlockTableRecord *pBlkTblRcd = NULL;
-	pBlkTbl->getAt(ACDB_MODEL_SPACE, pBlkTblRcd, AcDb::kForRead);
+	pBlkTbl->getAt(BlkTbl, pBlkTblRcd, AcDb::kForRead);
 	pBlkTbl->close();
 
 	//创建遍历器，依次访问模型空间中的每一个实体
@@ -425,4 +425,46 @@ vector<AcDbObjectId> GetAllEntityId(CString layername)
 	delete it;
 	pBlkTblRcd->close();
 	return entIds;
+}
+
+bool ChangeLayer(CString OldLayerName, CString NewLayerName)
+{
+	if (OldLayerName.CompareNoCase(NewLayerName)==0)
+	{
+		return true;
+	}
+
+	//Lock
+	if (JHCOM_GetLayerID(NewLayerName) == AcDbObjectId::kNull)
+	{
+		return false;
+	}
+
+
+	AcDbBlockTable *pBlkTbl = NULL;
+	AcDbBlockTableIterator *BlkTblIt = NULL;
+	acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForWrite);
+	pBlkTbl->newIterator(BlkTblIt);
+
+	for (;BlkTblIt->done(); BlkTblIt->step())
+	{
+		AcDbBlockTableRecord *pBlkDefine = NULL;
+		BlkTblIt->getRecord(pBlkDefine, AcDb::kForWrite);
+		AcDbBlockTableRecordIterator *BlkDefineIt;
+		pBlkDefine->newIterator(BlkDefineIt);
+		for (;!BlkDefineIt->done(); BlkDefineIt->step())
+		{
+			AcDbEntity *Entity;
+			BlkDefineIt->getEntity(Entity, AcDb::kForWrite);
+			CString LayerName = Entity->layer();
+			if (LayerName == OldLayerName)
+			{
+				Entity->setLayer(NewLayerName);
+			}
+			pBlkDefine->close();
+		}
+		delete BlkDefineIt;
+	}
+	delete BlkTblIt;
+	return true;
 }

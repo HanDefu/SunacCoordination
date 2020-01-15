@@ -33,6 +33,7 @@ public:
 
 	virtual RCTYPE GetType()const{return T_WINDOW;}
 	virtual AcDbObjectId Insert(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color);
+	void ModifyLayerName(AcDbObjectId BlockDefineId);//ÐÞ¸ÄÍ¼²ã
 
 	double GetH();
 	double GetH1();
