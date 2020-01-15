@@ -142,3 +142,7 @@ AcDbObjectId      JHCOM_GetCurrentLayer(CString &name);
 int               JHCOM_SetLayerColor(CString layerName,AcCmColor newcolor);
 
 int               JHCOM_SetLayerPrint(CString layerName, bool isPrint = false);
+
+vector<AcDbObjectId> GetAllEntityIdFromBlkTbl(CString layername, CString BlkTbl = ACDB_MODEL_SPACE);//获得指定块表指定图层下的所有实体的id
+
+bool			  ChangeLayer(CString OldLayerName, CString NewLayerName);

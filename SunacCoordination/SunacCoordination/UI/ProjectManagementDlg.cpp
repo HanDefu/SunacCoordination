@@ -11,6 +11,7 @@
 #include "..\ProjectorFileMrg\FileUploadDownload.h"
 #include "..\ProjectorFileMrg\ProjectFile.h"
 #include "../Common/ComFun_String.h"
+#include "../GlobalSetting.h"
 
 #define WM_FILE_STATE_CHANGE (WM_USER + 100)  
 
@@ -447,6 +448,7 @@ void CProjectManagementDlg::OnGridClick(NMHDR *pNMHDR, LRESULT *pResult)
 	m_nClkRow = pItem->iRow;
 	m_nClkCol = pItem->iColumn;
 	CString sSelectedFileName = m_PjtManagementGridCtrl.GetItemText(m_nClkRow, 1);
+	CString sUserName = GlobalSetting::GetInstance()->m_userName;
 	if (m_selectedDir == NULL)
 	{
 		return;
@@ -492,8 +494,12 @@ void CProjectManagementDlg::OnGridClick(NMHDR *pNMHDR, LRESULT *pResult)
 	{
 		if (IDYES == AfxMessageBox(L"确定删除?", MB_YESNO))
 		{
-			m_pPrjData->DeleteFile(sSelectedFileName,sSelectedFileParentPath);
-			FillPjtGridCtrl(m_selectedDir);
+			if (SelectedFile.m_sCreator == sUserName)//只有创建者才能删除该文件
+			{
+				m_pPrjData->DeleteFile(sSelectedFileName,sSelectedFileParentPath);
+				FillPjtGridCtrl(m_selectedDir);
+			}
+			else AfxMessageBox(L"该文件并非你创建，所以无法删除！");
 		}
 	}
 }
@@ -584,6 +590,11 @@ void CProjectManagementDlg::OnBnClickedButtonDownloadall()
 void CProjectManagementDlg::OnBnClickedButtonDeleteall()
 {
 	bool flag = false;
+	CString sSelectedFileName = m_PjtManagementGridCtrl.GetItemText(m_nClkRow, 1);
+	CProjectFile SelectedFile;
+	m_selectedDir->FindFile(sSelectedFileName, SelectedFile);
+	CString sUserName = GlobalSetting::GetInstance()->m_userName;
+
 	for(int i = 1; i < m_PjtManagementGridCtrl.GetRowCount(); i++)
 	{
 		CGridCellBase* pCell = m_PjtManagementGridCtrl.GetCell(i, 0);
@@ -608,8 +619,12 @@ void CProjectManagementDlg::OnBnClickedButtonDeleteall()
 			if(((CGridCellCheck* )pCell)->GetCheck())
 			{
 				CString sCheckedFileName = m_PjtManagementGridCtrl.GetItemText(i, 1);
-				CString sCheckedParentPath = m_pPrjData->GetDirString(L"", m_selectedDir);
-				m_pPrjData->DeleteFile(sCheckedFileName, sCheckedParentPath);
+				CString sCheckedParentPath = m_pPrjData->GetDirString(L"", m_selectedDir);		
+				if (SelectedFile.m_sCreator == sUserName)//只有创建者才能删除该文件
+				{
+					m_pPrjData->DeleteFile(sCheckedFileName, sCheckedParentPath);
+				}
+				else AfxMessageBox(L"该文件并非你创建，所以无法删除！");
 			}
 		}
 		FillPjtGridCtrl(m_selectedDir);

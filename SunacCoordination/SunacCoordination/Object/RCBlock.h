@@ -27,7 +27,7 @@ public:
 
 	virtual AcDbObjectId Insert(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color);
 
-	virtual AcDbObjectId RCBlock::Insert(CString layoutname, CString blockDefineName, AcGePoint3d origin, double angle, CString layerName, int color);
+	virtual AcDbObjectId Insert(CString layoutname, CString blockDefineName, AcGePoint3d origin, double angle, CString layerName, int color);
 	
 
 	CString GetBlockRecordName(){return m_blockRecordName;}

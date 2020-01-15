@@ -32,6 +32,8 @@ public:
 	RCWindow & operator=(const RCWindow &rhs);
 
 	virtual RCTYPE GetType()const{return T_WINDOW;}
+	virtual AcDbObjectId Insert(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color);
+	void ModifyLayerName(AcDbObjectId BlockDefineId);//修改图层
 
 	double GetH();
 	double GetH1();
@@ -64,8 +66,6 @@ public:
 	virtual void Draw();
 
 	virtual bool isEqualTo(RCObject*other = 0);//基础数据一致
-
-	virtual AcDbObjectId Insert(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color);
 
 protected: 
 	AttrWindow *m_pAttribute;

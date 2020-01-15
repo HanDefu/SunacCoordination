@@ -371,3 +371,100 @@ int JHCOM_SetLayerPrint(CString layerName, bool isPrint)
 
 	return 0;
 }
+
+
+vector<AcDbObjectId> GetAllEntityIdFromBlkTbl(CString layername, CString BlkTbl)
+{
+	vector<AcDbObjectId> entIds;
+	bool bFilterlayer = false;
+	AcDbObjectId layerId;
+
+	//获取指定图层对象ID
+	if (layername != L"")
+	{
+		AcDbLayerTable *pLayerTbl = NULL;
+		acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pLayerTbl, AcDb::kForRead);
+		if (!pLayerTbl->has(layername))
+		{
+			pLayerTbl->close();
+			return entIds;
+		}
+		pLayerTbl->getAt(layername, layerId);
+		pLayerTbl->close();
+		bFilterlayer = true;
+	}
+
+	//获得块表
+	AcDbBlockTable *pBlkTbl = NULL;
+	acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForRead);
+
+	//块表记录
+	AcDbBlockTableRecord *pBlkTblRcd = NULL;
+	pBlkTbl->getAt(BlkTbl, pBlkTblRcd, AcDb::kForRead);
+	pBlkTbl->close();
+
+	//创建遍历器，依次访问模型空间中的每一个实体
+	AcDbBlockTableRecordIterator *it = NULL;
+	pBlkTblRcd->newIterator(it);
+	for (it->start(); !it->done(); it->step())
+	{
+		AcDbEntity *pEnt = NULL;
+		Acad::ErrorStatus es = it->getEntity(pEnt, AcDb::kForRead);
+		if (es == Acad::eOk)
+		{
+			if (bFilterlayer)//过滤图层
+			{
+				if (pEnt->layerId() == layerId)
+				{
+					entIds.push_back(pEnt->objectId());
+				}
+			}
+		}
+		pEnt->close();
+	}
+	delete it;
+	pBlkTblRcd->close();
+	return entIds;
+}
+
+bool ChangeLayer(CString OldLayerName, CString NewLayerName)
+{
+	if (OldLayerName.CompareNoCase(NewLayerName)==0)
+	{
+		return true;
+	}
+
+	//Lock
+	if (JHCOM_GetLayerID(NewLayerName) == AcDbObjectId::kNull)
+	{
+		return false;
+	}
+
+
+	AcDbBlockTable *pBlkTbl = NULL;
+	AcDbBlockTableIterator *BlkTblIt = NULL;
+	acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForWrite);
+	pBlkTbl->newIterator(BlkTblIt);
+
+	for (;BlkTblIt->done(); BlkTblIt->step())
+	{
+		AcDbBlockTableRecord *pBlkDefine = NULL;
+		BlkTblIt->getRecord(pBlkDefine, AcDb::kForWrite);
+		AcDbBlockTableRecordIterator *BlkDefineIt;
+		pBlkDefine->newIterator(BlkDefineIt);
+		for (;!BlkDefineIt->done(); BlkDefineIt->step())
+		{
+			AcDbEntity *Entity;
+			BlkDefineIt->getEntity(Entity, AcDb::kForWrite);
+			CString LayerName = Entity->layer();
+			if (LayerName == OldLayerName)
+			{
+				Entity->setLayer(NewLayerName);
+			}
+			pBlkDefine->close();
+		}
+		delete BlkDefineIt;
+	}
+	delete BlkTblIt;
+	return true;
+}

@@ -139,7 +139,7 @@ bool CProjectData::AddFile(CString p_sFilePath, CString  p_sDirPathInProject, Fi
 
 	CTime nowtime = CTime::GetCurrentTime();
 	CString sCreateTime;
-	sCreateTime.Format(_T("%d/%02d/%02d %02d:%02d:%02d"), nowtime.GetYear(), nowtime.GetMonth(), nowtime.GetDay(), nowtime.GetHour(), nowtime.GetMinute(), nowtime.GetSecond());
+	sCreateTime.Format(_T("%d-%02d-%02d %02d:%02d:%02d"), nowtime.GetYear(), nowtime.GetMonth(), nowtime.GetDay(), nowtime.GetHour(), nowtime.GetMinute(), nowtime.GetSecond());
 
 	CProjectFile prjfile;
 	prjfile.m_sCreator = WebIO::GetInstance()->GetUserName();

@@ -3,6 +3,7 @@
 #include "afxwin.h"
 #include "ComFun_MFC.h"
 #include "GridCtrlWithPreview.h"
+#include "../GlobalSetting.h"
 
 // CDlgSetUp 对话框
 
@@ -35,6 +36,11 @@ public:
 	CComboBox m_winNumberTextSize;//门窗编号字体
 	CComboBox m_winDetailDimRate;//门窗编号字体
 
+	CString m_sFrameLayerDlg;
+
+	CWinSetting m_originalWinSetting;
+
+
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedCancel();
 
@@ -42,7 +48,9 @@ public:
 	//判断设置是否为空，不为空才将设置对话框中的值赋给GlobalSetting,为空则使用默认值
 	void WinSetUp(CString& p_winSetting, CString p_winSetUp);
 
-	void LoadDefaultValue();
+	void InitWinSetting();
+
+	void UpdateLayer();//更新图层
 
 private:
 	vector<CString> m_winSetUpLayer;

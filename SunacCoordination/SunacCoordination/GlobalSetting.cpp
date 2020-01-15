@@ -18,7 +18,7 @@ CWinSetting::CWinSetting()
 	m_bUseAinLimian = false;
 	m_sWinLayer = L"Sunac_Window";
 	m_sWinFrameLayer = L"Sunac_Gridline_Glass";
-	m_sWinWallLayer = L"Sunnc_Wall";
+	m_sWinWallLayer = L"Sunac_Wall";
 	m_sWinHardwareLayer = L"Sunac_HardWare";
 	m_sWinOpenLayer = L"Sunac_Gridline_Glass_Open";
 	m_sWinNumberLayerLimian = L"Sunac_WinNumber_Limian";

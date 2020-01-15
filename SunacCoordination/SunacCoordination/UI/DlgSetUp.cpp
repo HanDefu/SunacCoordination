@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <vector>
 #include "../UI/GridCtrl_src/GridCtrl.h"
+#include "../Common/ComFun_Layer.h"
 
 // CDlgSetUp 对话框
 
@@ -17,6 +18,7 @@ CDlgSetUp::CDlgSetUp(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CDlgSetUp::IDD, pParent)
 	, m_showLimianNumber(TRUE)
 	, m_useAinLimian(TRUE)
+	, m_sFrameLayerDlg(_T(""))
 {
 	
 }
@@ -39,6 +41,7 @@ void CDlgSetUp::DoDataExchange(CDataExchange* pDX)
 	DDX_Radio(pDX, IDC_USEAINLIMIAN, m_useAinLimian);
 	DDX_Control(pDX, IDC_WINNUMTEXTSIZE, m_winNumberTextSize);
 	DDX_Control(pDX, IDC_WINDETAILDIMRATE, m_winDetailDimRate);
+	DDX_Text(pDX, IDC_WINFRAMELAYER, m_sFrameLayerDlg);
 }
 
 
@@ -59,15 +62,48 @@ BOOL CDlgSetUp::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
 
-	LoadDefaultValue();
+	InitWinSetting();
 	
 	return TRUE; 
+}
+
+void CDlgSetUp::InitWinSetting()
+{
+	m_originalWinSetting = GlobalSetting::GetInstance()->m_winSetting;
+
+	m_winLayer.SetWindowText(GlobalSetting::GetInstance()->m_winSetting.m_sWinLayer);
+	m_winFrameLayer.SetWindowText(GlobalSetting::GetInstance()->m_winSetting.m_sWinFrameLayer);
+	m_winWallLayer.SetWindowText(GlobalSetting::GetInstance()->m_winSetting.m_sWinWallLayer);
+	m_winHardwareLayer.SetWindowText(GlobalSetting::GetInstance()->m_winSetting.m_sWinHardwareLayer);
+	m_winOpenLayer.SetWindowText(GlobalSetting::GetInstance()->m_winSetting.m_sWinOpenLayer);
+	m_winNumberLayerLimian.SetWindowText(GlobalSetting::GetInstance()->m_winSetting.m_sWinNumberLayerLimian);
+	m_winNumberLayerPingmian.SetWindowText(GlobalSetting::GetInstance()->m_winSetting.m_sWinNumberLayerPingmian);
+
+	((CComboBox*)GetDlgItem(IDC_WINNUMTEXTSIZE))->SetCurSel(3);//设置门窗字体编号默认显示100
 }
 
 // CDlgSetUp 消息处理程序
 void CDlgSetUp::OnBnClickedOk()
 {
 	UpdateData(TRUE);
+
+	if (m_sFrameLayerDlg.IsEmpty())// TODO||
+	{
+		AfxMessageBox(_T("图层不能为空"));
+		return;
+	}
+
+
+	//判断各个图层不能相同
+	vector<CString> sLayers;
+
+
+
+
+	//对当前文档图层转换图层
+
+
+	//保存到setting
 
 	m_winSetUpLayer.clear();
 
@@ -104,7 +140,7 @@ void CDlgSetUp::OnBnClickedOk()
 		if (m_winSetUpLayer[i].CompareNoCase(m_winSetUpLayer[i + 1]) == 0)
 		{
 			AfxMessageBox(L"图层名称不能相同");
-			OnBnClickedCancel();
+			return;
 		}
 	}
 
@@ -122,23 +158,50 @@ void CDlgSetUp::WinSetUp(CString &p_winSetting, CString p_winSetUp)
 	m_winSetUpLayer.push_back(p_winSetting);
 }
 
+void CDlgSetUp::UpdateLayer()
+{
+	//TODO 叶明远
+	UpdateData(TRUE);
+	if (m_originalWinSetting.m_sWinFrameLayer != m_sFrameLayerDlg)
+	{
+		ChangeLayer(m_originalWinSetting.m_sWinFrameLayer, m_sFrameLayerDlg);
+		ChangeLayer(GSINST->m_winSetting.GetWinFrameLayerDefault(), m_sFrameLayerDlg);
+	}
+	if (m_originalWinSetting.m_sWinHardwareLayer != TYUI_GetText(m_winHardwareLayer))
+	{
+		ChangeLayer(m_originalWinSetting.m_sWinHardwareLayer, TYUI_GetText(m_winHardwareLayer));
+		ChangeLayer(GSINST->m_winSetting.GetWinHardwareLayerDefault(), TYUI_GetText(m_winHardwareLayer));
+	}
+	if (m_originalWinSetting.m_sWinLayer != TYUI_GetText(m_winLayer))
+	{
+		ChangeLayer(m_originalWinSetting.m_sWinLayer, TYUI_GetText(m_winLayer));
+		ChangeLayer(GSINST->m_winSetting.GetWinLayerDefault(), TYUI_GetText(m_winLayer));
+	}
+	if (m_originalWinSetting.m_sWinNumberLayerLimian != TYUI_GetText(m_winNumberLayerLimian))
+	{
+		ChangeLayer(m_originalWinSetting.m_sWinNumberLayerLimian, TYUI_GetText(m_winNumberLayerLimian));
+		ChangeLayer(GSINST->m_winSetting.GetWinNumberLayerLimianDefault(), TYUI_GetText(m_winNumberLayerLimian));
+	}
+	if (m_originalWinSetting.m_sWinNumberLayerPingmian != TYUI_GetText(m_winNumberLayerPingmian))
+	{
+		ChangeLayer(m_originalWinSetting.m_sWinNumberLayerPingmian, TYUI_GetText(m_winNumberLayerPingmian));
+		ChangeLayer(GSINST->m_winSetting.GetWinNumberLayerPingmianDefault(), TYUI_GetText(m_winNumberLayerPingmian));
+	}
+	if (m_originalWinSetting.m_sWinOpenLayer != TYUI_GetText(m_winOpenLayer))
+	{
+		ChangeLayer(m_originalWinSetting.m_sWinOpenLayer, TYUI_GetText(m_winOpenLayer));
+		ChangeLayer(GSINST->m_winSetting.GetWinOpenLayerDefault(), TYUI_GetText(m_winOpenLayer));
+	}
+	if (m_originalWinSetting.m_sWinWallLayer != TYUI_GetText(m_winWallLayer))
+	{
+		ChangeLayer(m_originalWinSetting.m_sWinWallLayer, TYUI_GetText(m_winWallLayer));
+		ChangeLayer(GSINST->m_winSetting.GetWallLayerDefault(), TYUI_GetText(m_winWallLayer));
+	}
+}
+
 void CDlgSetUp::OnBnClickedCancel()
 {
 	CDialogEx::OnCancel();
-}
-
-void CDlgSetUp::LoadDefaultValue()
-{
-	m_winLayer.SetWindowText(GlobalSetting::GetInstance()->m_winSetting.m_sWinLayer);
-	m_winFrameLayer.SetWindowText(GlobalSetting::GetInstance()->m_winSetting.m_sWinFrameLayer);
-	m_winWallLayer.SetWindowText(GlobalSetting::GetInstance()->m_winSetting.m_sWinWallLayer);
-	m_winHardwareLayer.SetWindowText(GlobalSetting::GetInstance()->m_winSetting.m_sWinHardwareLayer);
-	m_winOpenLayer.SetWindowText(GlobalSetting::GetInstance()->m_winSetting.m_sWinOpenLayer);
-	m_winNumberLayerLimian.SetWindowText(GlobalSetting::GetInstance()->m_winSetting.m_sWinNumberLayerLimian);
-	m_winNumberLayerPingmian.SetWindowText(GlobalSetting::GetInstance()->m_winSetting.m_sWinNumberLayerPingmian);
-
-	((CComboBox*)GetDlgItem(IDC_WINNUMTEXTSIZE))->SetCurSel(3);//设置门窗字体编号默认显示100
-	((CComboBox*)GetDlgItem(IDC_WINDETAILDIMRATE))->SetCurSel(1);//设置门窗详图标注比例默认显示50
 }
 
 CDlgSetUp* g_winSetupDlg = NULL;

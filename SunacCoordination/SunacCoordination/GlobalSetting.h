@@ -13,6 +13,13 @@ struct CWinSetting
 {
 public:
 	CWinSetting();
+	CString GetWinLayerDefault() { return L"Sunac_Window"; }
+	CString GetWinFrameLayerDefault() { return L"Sunac_Gridline_Glass"; }
+	CString GetWinWallLayerDefault() { return L"Sunac_Wall"; }
+	CString GetWinHardwareLayerDefault() { return L"Sunac_HardWare"; }
+	CString GetWinOpenLayerDefault() { return L"Sunac_Gridline_Glass_Open"; }
+	CString GetWinNumberLayerLimianDefault() { return L"Sunac_WinNumber_Limian";}
+	CString GetWinNumberLayerPingmianDefault() { return L"Sunac_WinNumber_Pingmian"; }
 
 	CString GetWallLayerDefault() const { return L"Sunnc_Wall";	}
 
@@ -45,6 +52,8 @@ public:
 		static GlobalSetting instance;
 		return &instance;
 	}
+
+	static CWinSetting* GetWinSetting(){return &(GetInstance()->m_winSetting);}
 
 	CString GetFtpIp()const;
 	const char*  GetCADServiceUrl()const;
