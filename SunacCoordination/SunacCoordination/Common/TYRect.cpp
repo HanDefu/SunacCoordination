@@ -20,17 +20,7 @@ TYRect::TYRect(AcGePoint3d lb, AcGePoint3d rt)
 	m_ucs = false;
 }
 
-TYRect::TYRect(AcGePoint3d pt1, //左下
-			   AcGePoint3d pt2,//左上
-			   AcGePoint3d pt3,//右上
-			   AcGePoint3d pt4)//右下
-{
-	m_lb = pt1;
-	m_lt = pt2;
-	m_rt = pt3;
-	m_rb = pt4;
-	m_ucs = true;
-}
+
 
 TYRect::~TYRect()
 {
@@ -126,10 +116,10 @@ void TYRect::Draw(double offset, CString layout)
 {
 	acDocManager->lockDocument(acDocManager->curDocument(), AcAp::kWrite, NULL, NULL, true);
 
-	AcGePoint3d 
-		lb = m_lb,
-		rt = m_rt,
-		lt = m_lt,rb = m_rb;
+	AcGePoint3d lb = m_lb;
+	AcGePoint3d rt = m_rt;
+	AcGePoint3d lt = GetLT();
+	AcGePoint3d rb = GetRB();
 
 	if (!m_ucs)
 	{
@@ -167,9 +157,7 @@ bool TYRect::IsSame(TYRect &other, double tol)
 	{
 		bool eq1 = JHCOM_isPoint3dEqual(m_lb, other.m_lb,tol);
 		bool eq2 = JHCOM_isPoint3dEqual(m_rt, other.m_rt,tol);
-		bool eq3 = JHCOM_isPoint3dEqual(m_lt, other.m_lt,tol);
-		bool eq4 = JHCOM_isPoint3dEqual(m_rb, other.m_rb,tol);
-		if(eq1 && eq2 && eq3 && eq4)
+		if(eq1 && eq2 )
 		{
 			return true;
 		}

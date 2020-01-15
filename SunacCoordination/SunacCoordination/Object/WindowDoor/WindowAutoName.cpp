@@ -626,12 +626,12 @@ vector<AcDbObjectId> CProtypeInstanceCodeMrg::GetInstanceCodeIdsInRect(const TYR
 	rb = acutBuildList(RTDXF0, TEXT("TEXT"), 8, LayerName, RTNONE);
 
 	ads_point pt1,pt2;
-	pt1[X] = p_rect.m_lt.x;
-	pt1[Y] = p_rect.m_lt.y;
-	pt1[Z] = p_rect.m_lt.z;
-	pt2[X] = p_rect.m_rb.x;
-	pt2[Y] = p_rect.m_rb.y;
-	pt2[Z] = p_rect.m_rb.z;
+	pt1[X] = p_rect.GetLT().x;
+	pt1[Y] = p_rect.GetLT().y;
+	pt1[Z] = p_rect.GetLT().z;
+	pt2[X] = p_rect.GetRB().x;
+	pt2[Y] = p_rect.GetRB().y;
+	pt2[Z] = p_rect.GetRB().z;
 	acedSSGet(TEXT("W"), pt1, pt2, rb, ssname);//筛选在rect范围内的结果
 
 	long length;
