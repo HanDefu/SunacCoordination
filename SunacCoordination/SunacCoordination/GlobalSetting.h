@@ -21,11 +21,16 @@ public:
 	CString GetWinNumberLayerLimianDefault() { return L"Sunac_WinNumber_Limian";}
 	CString GetWinNumberLayerPingmianDefault() { return L"Sunac_WinNumber_Pingmian"; }
 
+	CString GetWallLayerDefault() const { return L"Sunnc_Wall";	}
+
+
 	CString m_sWinLayer;		//门窗块图层
+
 	CString m_sWinFrameLayer;	//门窗框图层
 	CString m_sWinWallLayer;	//窗洞土建图层
 	CString m_sWinHardwareLayer; //门窗五金件图层
 	CString m_sWinOpenLayer; //门窗开启部分图层
+
 	CString m_sWinNumberLayerLimian;	//门窗立面图编号图层
 	CString m_sWinNumberLayerPingmian;	//门窗平面图编号图层
 
