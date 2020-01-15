@@ -174,7 +174,7 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 	MD2010_GetCurrentLayer(oldLayerName);
 
 	CString sWindowDoorLayerName = L"Sunac_dim";
-	if (sWindowDoorLayerName.GetLength() && JHCOM_GetLayerID(sWindowDoorLayerName) == AcDbObjectId::kNull)
+	if (JHCOM_GetLayerID(sWindowDoorLayerName) == AcDbObjectId::kNull)
 	{
 		JHCOM_CreateNewLayer(sWindowDoorLayerName);
 	}
