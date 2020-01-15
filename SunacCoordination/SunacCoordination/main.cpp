@@ -891,7 +891,6 @@ void CMD_TEST2()
 	//CProtypeInstanceCodeMrg Ref;
 	//Ref.GetAllInstanceCodeIds();
 	CProtypeInstanceCodeMrg::GetAllInstanceCodeIds();
-	ads_name ename;
 	ads_point pt1, pt2;
 	acedGetPoint(NULL, L"\nSelect a point: ", pt1);
 	acedGetPoint(NULL, L"\nSelect a point: ", pt2);

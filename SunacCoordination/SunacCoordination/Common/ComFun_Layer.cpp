@@ -371,3 +371,58 @@ int JHCOM_SetLayerPrint(CString layerName, bool isPrint)
 
 	return 0;
 }
+
+
+vector<AcDbObjectId> GetAllEntityId(CString layername)
+{
+	vector<AcDbObjectId> entIds;
+	bool bFilterlayer = false;
+	AcDbObjectId layerId;
+
+	//获取指定图层对象ID
+	if (layername != L"")
+	{
+		AcDbLayerTable *pLayerTbl = NULL;
+		acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pLayerTbl, AcDb::kForRead);
+		if (!pLayerTbl->has(layername))
+		{
+			pLayerTbl->close();
+			return entIds;
+		}
+		pLayerTbl->getAt(layername, layerId);
+		pLayerTbl->close();
+		bFilterlayer = true;
+	}
+
+	//获得块表
+	AcDbBlockTable *pBlkTbl = NULL;
+	acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pBlkTbl, AcDb::kForRead);
+
+	//块表记录
+	AcDbBlockTableRecord *pBlkTblRcd = NULL;
+	pBlkTbl->getAt(ACDB_MODEL_SPACE, pBlkTblRcd, AcDb::kForRead);
+	pBlkTbl->close();
+
+	//创建遍历器，依次访问模型空间中的每一个实体
+	AcDbBlockTableRecordIterator *it = NULL;
+	pBlkTblRcd->newIterator(it);
+	for (it->start(); !it->done(); it->step())
+	{
+		AcDbEntity *pEnt = NULL;
+		Acad::ErrorStatus es = it->getEntity(pEnt, AcDb::kForRead);
+		if (es == Acad::eOk)
+		{
+			if (bFilterlayer)//过滤图层
+			{
+				if (pEnt->layerId() == layerId)
+				{
+					entIds.push_back(pEnt->objectId());
+				}
+			}
+		}
+		pEnt->close();
+	}
+	delete it;
+	pBlkTblRcd->close();
+	return entIds;
+}

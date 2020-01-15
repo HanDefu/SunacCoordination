@@ -32,6 +32,7 @@ public:
 	RCWindow & operator=(const RCWindow &rhs);
 
 	virtual RCTYPE GetType()const{return T_WINDOW;}
+	virtual AcDbObjectId Insert(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color);
 
 	double GetH();
 	double GetH1();

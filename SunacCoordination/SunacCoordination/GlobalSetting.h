@@ -13,6 +13,13 @@ struct CWinSetting
 {
 public:
 	CWinSetting();
+	CString GetWinLayerDefault() { return L"Sunac_Window"; }
+	CString GetWinFrameLayerDefault() { return L"Sunac_Gridline_Glass"; }
+	CString GetWinWallLayerDefault() { return L"Sunac_Wall"; }
+	CString GetWinHardwareLayerDefault() { return L"Sunac_HardWare"; }
+	CString GetWinOpenLayerDefault() { return L"Sunac_Gridline_Glass_Open"; }
+	CString GetWinNumberLayerLimianDefault() { return L"Sunac_WinNumber_Limian";}
+	CString GetWinNumberLayerPingmianDefault() { return L"Sunac_WinNumber_Pingmian"; }
 
 	CString m_sWinLayer;		//ÃÅ´°¿éÍ¼²ã
 	CString m_sWinFrameLayer;	//ÃÅ´°¿òÍ¼²ã

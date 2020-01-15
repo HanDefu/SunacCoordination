@@ -170,7 +170,6 @@ void CWindowGen::UpdateRcWindowPara(const AcDbObjectId p_id, const AttrWindow& c
 	//处理可见性
 	if (p_view == E_VIEW_FRONT || p_view == E_VIEW_EXTEND)
 	{
-		// TODO 叶明远 设置门把手高度
 		double B = -100; //设为无效值
 		
 		if (curWinAtt.GetType() == DOOR)
