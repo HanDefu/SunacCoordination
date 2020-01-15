@@ -242,12 +242,12 @@ bool GlobalSetting::UpdateToXml()
 
 			if (xml.FindElem(_T("UseAinLimian")))
 			{
-				xml.SetData(m_winSetting.m_bUseAinLimian);
+				xml.SetData(m_winSetting.m_bUseAinLimian ? L"TRUE" : L"FALSE");
 			}
 
 			if (xml.FindElem(_T("ShowLimianNumber")))
 			{
-				xml.SetData(m_winSetting.m_bShowLimianNumber);
+				xml.SetData(m_winSetting.m_bShowLimianNumber ? L"TRUE" : L"FALSE");
 			}
 		}
 		xml.OutOfElem();

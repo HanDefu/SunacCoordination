@@ -260,45 +260,6 @@ AcDb::LineWeight MD2010_GetLineWeight(AcDbObjectId objID)
 	return weight;
 }
 
-void MD2010_CreateDimensionStyle(CString styleName)
-{
-	// 获得当前图形的标注样式表
-	AcDbDimStyleTable *pDimStyleTbl = NULL;
-	acdbHostApplicationServices()->workingDatabase()->getDimStyleTable(pDimStyleTbl, AcDb::kForWrite);
-	if (pDimStyleTbl->has(styleName))
-	{
-		pDimStyleTbl->close();//已经存在
-		return;
-	}
-
-	// 创建新的标注样式表记录
-	AcDbDimStyleTableRecord *pDimStyleTblRcd = NULL;
-	pDimStyleTblRcd = new AcDbDimStyleTableRecord();
-
-	// 设置标注样式的特性
-	pDimStyleTblRcd->setName(styleName); // 样式名称
-	pDimStyleTblRcd->setDimscale(50); //全局比例
-	pDimStyleTblRcd->setDimasz(1); // 箭头大小
-	pDimStyleTblRcd->setDimexo(3); //尺寸界线偏移
-	pDimStyleTblRcd->setDimdli(0); //尺寸线间距
-	pDimStyleTblRcd->setDimexe(1); //超出尺寸线的距离
-	//pDimStyleTblRcd->setDimzin(0); //消零
-	//pDimStyleTblRcd->setDimtzin(2); //角度消零
-	pDimStyleTblRcd->setDimtad(1); // 文字位于标注线的上方
-	pDimStyleTblRcd->setDimtxt(2); // 标注文字的高度
-	pDimStyleTblRcd->setDimgap(1.25); //设置标注文字周围的距离
-	pDimStyleTblRcd->setDimtmove(2);  //设置标注文字的移动规则
-	pDimStyleTblRcd->setDimtih(false); //文字方向
-	pDimStyleTblRcd->setDimtix(true); //文字方向
-	pDimStyleTblRcd->setDimblk(L"_ARCHTICK");//设置箭头的形状为建筑标记,设置尺寸线末尾的阴影部分显示
-	pDimStyleTblRcd->setDimtxsty(MD2010_GetTextStylerID(L"_TCH_DIM_T3")); //文字样式
-
-	// 将标注样式表记录添加到标注样式表中
-	pDimStyleTbl->add(pDimStyleTblRcd);
-	pDimStyleTblRcd->close();
-	pDimStyleTbl->close();
-}
-
 AcDbObjectId MD2010_AddAlignedDimension(AcGePoint3d start,AcGePoint3d end, AcGePoint3d dimlinpnt, const WCHAR * entryname,const ACHAR* newLayer)
 {
 	//AcGePoint3d aas =AcGePoint3d(0,0,0);
@@ -332,31 +293,6 @@ AcDbObjectId MD2010_AddAlignedDimension2(AcGePoint3d start, AcGePoint3d end, AcG
 	pDim->close();
 	return dimID;
 }
-
-AcDbObjectId MD2010_AddAlignedDimensionAndStyle(AcGePoint3d start, AcGePoint3d end, AcGePoint3d dimlinpnt, double size, const ACHAR* newLayer)
-{
-	//创建一个标注尺寸(全局比例1:50)
-	MD2010_CreateDimensionStyle(_T("Z50"));
-	//获取所创建的标注尺寸的id
-	AcDbObjectId dimStyleId = MD2010_GetDimstylerID(_T("Z50"));
-
-	if (JHCOM_PointDistance(start, end) <= TOL * 10000)//小于1的不标注
-		return 0;
-
-	CString entryName;
-	entryName.Format(_T("%d"), (int)size);
-	AcDbAlignedDimension  *pDim = new AcDbAlignedDimension(start, end, dimlinpnt, entryName, dimStyleId);
-
-	AcDbObjectId dimID = MD2010_PostModalToBlockTable(ACDB_MODEL_SPACE, pDim);
-
-	pDim->setLayer(newLayer);
-	pDim->close();
-
-	return dimID;
-}
-
-
-
 
 int MD2010_SetTransparency(AcDbObjectId objID,AcCmTransparency trans)
 {
