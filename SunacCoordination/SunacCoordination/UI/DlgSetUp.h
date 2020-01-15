@@ -3,6 +3,7 @@
 #include "afxwin.h"
 #include "ComFun_MFC.h"
 #include "GridCtrlWithPreview.h"
+#include "../GlobalSetting.h"
 
 // CDlgSetUp 对话框
 
@@ -33,6 +34,7 @@ public:
 	BOOL m_showLimianNumber;	//是否显示立面图的门窗编号
 	BOOL m_useAinLimian;		//立面图是否使用塞缝尺寸
 	CComboBox m_winNumberTextSize;//门窗编号字体
+	CComboBox m_winDetailDimRate;//门窗编号字体
 
 	CString m_sFrameLayerDlg;
 
@@ -41,7 +43,7 @@ public:
 
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedCancel();
-
+	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);///---01
 
 	//判断设置是否为空，不为空才将设置对话框中的值赋给GlobalSetting,为空则使用默认值
 	void WinSetUp(CString& p_winSetting, CString p_winSetUp);

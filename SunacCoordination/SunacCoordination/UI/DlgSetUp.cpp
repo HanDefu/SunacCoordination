@@ -40,6 +40,7 @@ void CDlgSetUp::DoDataExchange(CDataExchange* pDX)
 	DDX_Radio(pDX, IDC_SHOWLIMIANNUMBER, m_showLimianNumber);
 	DDX_Radio(pDX, IDC_USEAINLIMIAN, m_useAinLimian);
 	DDX_Control(pDX, IDC_WINNUMTEXTSIZE, m_winNumberTextSize);
+	DDX_Control(pDX, IDC_WINDETAILDIMRATE, m_winDetailDimRate);
 	DDX_Text(pDX, IDC_WINFRAMELAYER, m_sFrameLayerDlg);
 }
 
@@ -47,8 +48,13 @@ void CDlgSetUp::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CDlgSetUp, CDialogEx)
 	ON_BN_CLICKED(IDOK, &CDlgSetUp::OnBnClickedOk)
 	ON_BN_CLICKED(IDCANCEL, &CDlgSetUp::OnBnClickedCancel)
+	ON_MESSAGE(WM_ACAD_KEEPFOCUS, onAcadKeepFocus)
 END_MESSAGE_MAP()
 
+LRESULT CDlgSetUp::onAcadKeepFocus(WPARAM, LPARAM)
+{
+	return TRUE;
+}
 
 bool CompareWinSetUpLayer(CString& a, CString& b)
 {
@@ -86,7 +92,7 @@ void CDlgSetUp::OnBnClickedOk()
 {
 	UpdateData(TRUE);
 
-	if (m_sFrameLayerDlg.IsEmpty() ||)
+	if (m_sFrameLayerDlg.IsEmpty())// TODO||
 	{
 		AfxMessageBox(_T("图层不能为空"));
 		return;
@@ -114,14 +120,22 @@ void CDlgSetUp::OnBnClickedOk()
 	WinSetUp(GlobalSetting::GetInstance()->m_winSetting.m_sWinOpenLayer, TYUI_GetText(m_winOpenLayer));
 	WinSetUp(GlobalSetting::GetInstance()->m_winSetting.m_sWinNumberLayerLimian, TYUI_GetText(m_winNumberLayerLimian));
 	WinSetUp(GlobalSetting::GetInstance()->m_winSetting.m_sWinNumberLayerPingmian, TYUI_GetText(m_winNumberLayerPingmian));
+
 	//门窗编号字体设置
 	if (TYUI_GetText(m_winNumberTextSize).GetLength() > 0)
 	{
 		GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize = TYUI_GetInt(m_winNumberTextSize);
 	}
+
+	//门窗编号字体设置
+	if (TYUI_GetText(m_winDetailDimRate).GetLength() > 0)
+	{
+		GlobalSetting::GetInstance()->m_winSetting.m_bWinDetailDimRate = TYUI_GetInt(m_winDetailDimRate);
+	}
+
 	//其他
-	GlobalSetting::GetInstance()->m_winSetting.m_bUseAinLimian = m_useAinLimian ? false : true;
-	GlobalSetting::GetInstance()->m_winSetting.m_bShowLimianNumber = m_showLimianNumber ? false : true;
+	GlobalSetting::GetInstance()->m_winSetting.m_bUseAinLimian = m_useAinLimian ? true : false;
+	GlobalSetting::GetInstance()->m_winSetting.m_bShowLimianNumber = m_showLimianNumber ? true : false;
 	
 	//排序
 	std::sort(m_winSetUpLayer.begin(), m_winSetUpLayer.end(), CompareWinSetUpLayer);
@@ -151,61 +165,49 @@ void CDlgSetUp::WinSetUp(CString &p_winSetting, CString p_winSetUp)
 
 void CDlgSetUp::UpdateLayer()
 {
-	UpdateData();
-
-	if (m_originalWinSetting.m_sWinFrameLayer!=m_sFrameLayerDlg)
+	//TODO 叶明远
+	UpdateData(TRUE);
+	if (m_originalWinSetting.m_sWinFrameLayer != m_sFrameLayerDlg)
 	{
 		ChangeLayer(m_originalWinSetting.m_sWinFrameLayer, m_sFrameLayerDlg);
-
-		ChangeLayer(GSINST->m_winSetting.GetWinFrameLayerDefault(), );
+		ChangeLayer(GSINST->m_winSetting.GetWinFrameLayerDefault(), m_sFrameLayerDlg);
 	}
-
-
-
-
-			//if (LayerName == GSINST->m_winSetting.GetWinFrameLayerDefault())
-			//{
-			//	JHCOM_CreateNewLayer(TYUI_GetText(m_winFrameLayer));
-			//	Entity->setLayer(TYUI_GetText(m_winFrameLayer));
-			//}
-			//else if (LayerName == GSINST->m_winSetting.GetWinHardwareLayerDefault())
-			//{
-			//	JHCOM_CreateNewLayer(TYUI_GetText(m_winHardwareLayer));
-			//	Entity->setLayer(TYUI_GetText(m_winHardwareLayer));
-			//}
-			//else if (LayerName == GSINST->m_winSetting.GetWinLayerDefault())
-			//{
-			//	JHCOM_CreateNewLayer(TYUI_GetText(m_winLayer));
-			//	Entity->setLayer(TYUI_GetText(m_winLayer));
-			//}
-			//else if (LayerName == GSINST->m_winSetting.GetWinNumberLayerLimianDefault())
-			//{
-			//	JHCOM_CreateNewLayer(TYUI_GetText(m_winNumberLayerLimian));
-			//	Entity->setLayer(TYUI_GetText(m_winNumberLayerLimian));
-			//}
-			//else if (LayerName == GSINST->m_winSetting.GetWinNumberLayerPingmianDefault())
-			//{
-			//	JHCOM_CreateNewLayer(TYUI_GetText(m_winNumberLayerPingmian));
-			//	Entity->setLayer(TYUI_GetText(m_winNumberLayerPingmian));
-			//}
-			//else if (LayerName == GSINST->m_winSetting.GetWinOpenLayerDefault())
-			//{
-			//	JHCOM_CreateNewLayer(TYUI_GetText(m_winOpenLayer));
-			//	Entity->setLayer(TYUI_GetText(m_winOpenLayer));
-			//}
-			//else if (LayerName == GSINST->m_winSetting.GetWinWallLayerDefault())
-			//{
-			//	JHCOM_CreateNewLayer(TYUI_GetText(m_winWallLayer));
-			//	Entity->setLayer(TYUI_GetText(m_winWallLayer));
-			//}
+	if (m_originalWinSetting.m_sWinHardwareLayer != TYUI_GetText(m_winHardwareLayer))
+	{
+		ChangeLayer(m_originalWinSetting.m_sWinHardwareLayer, TYUI_GetText(m_winHardwareLayer));
+		ChangeLayer(GSINST->m_winSetting.GetWinHardwareLayerDefault(), TYUI_GetText(m_winHardwareLayer));
+	}
+	if (m_originalWinSetting.m_sWinLayer != TYUI_GetText(m_winLayer))
+	{
+		ChangeLayer(m_originalWinSetting.m_sWinLayer, TYUI_GetText(m_winLayer));
+		ChangeLayer(GSINST->m_winSetting.GetWinLayerDefault(), TYUI_GetText(m_winLayer));
+	}
+	if (m_originalWinSetting.m_sWinNumberLayerLimian != TYUI_GetText(m_winNumberLayerLimian))
+	{
+		ChangeLayer(m_originalWinSetting.m_sWinNumberLayerLimian, TYUI_GetText(m_winNumberLayerLimian));
+		ChangeLayer(GSINST->m_winSetting.GetWinNumberLayerLimianDefault(), TYUI_GetText(m_winNumberLayerLimian));
+	}
+	if (m_originalWinSetting.m_sWinNumberLayerPingmian != TYUI_GetText(m_winNumberLayerPingmian))
+	{
+		ChangeLayer(m_originalWinSetting.m_sWinNumberLayerPingmian, TYUI_GetText(m_winNumberLayerPingmian));
+		ChangeLayer(GSINST->m_winSetting.GetWinNumberLayerPingmianDefault(), TYUI_GetText(m_winNumberLayerPingmian));
+	}
+	if (m_originalWinSetting.m_sWinOpenLayer != TYUI_GetText(m_winOpenLayer))
+	{
+		ChangeLayer(m_originalWinSetting.m_sWinOpenLayer, TYUI_GetText(m_winOpenLayer));
+		ChangeLayer(GSINST->m_winSetting.GetWinOpenLayerDefault(), TYUI_GetText(m_winOpenLayer));
+	}
+	if (m_originalWinSetting.m_sWinWallLayer != TYUI_GetText(m_winWallLayer))
+	{
+		ChangeLayer(m_originalWinSetting.m_sWinWallLayer, TYUI_GetText(m_winWallLayer));
+		ChangeLayer(GSINST->m_winSetting.GetWallLayerDefault(), TYUI_GetText(m_winWallLayer));
+	}
 }
 
 void CDlgSetUp::OnBnClickedCancel()
 {
 	CDialogEx::OnCancel();
 }
-
-
 
 CDlgSetUp* g_winSetupDlg = NULL;
 

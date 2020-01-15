@@ -280,7 +280,7 @@ AcDbObjectId RCWindow::Insert(CString fileName, AcGePoint3d origin, double angle
 	AcDbObjectId BlockDefineId = MD2010_InsertBlockDefineFromPathName(fileName,m_blockRecordName);
 
 	//TODO Ò¶Ã÷Ô¶
-	ModifyLayerName(BlockDefineId);
+	//ModifyLayerName(BlockDefineId);
 
 	MD2010_InsertBlockReference_Layout(ACDB_MODEL_SPACE, m_blockRecordName, m_id, origin, angle, AcGeScale3d(1), color);
 	MD2010_SetCurrentLayer(name);
