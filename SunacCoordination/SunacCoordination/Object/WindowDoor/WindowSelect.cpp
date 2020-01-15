@@ -30,7 +30,6 @@ CWinInCad::CWinInCad()
 vector<CWinInCad> CWindowSelect::SelectWindows(eViewDir p_view, bool p_bAllWindow)
 {
 	Acad::ErrorStatus es;
-	vector<CWinInCad> winsOut;//当前选择的ids
 
 	acutPrintf(L"\n请选择门窗");
 
@@ -47,6 +46,7 @@ vector<CWinInCad> CWindowSelect::SelectWindows(eViewDir p_view, bool p_bAllWindo
 
 	Adesk::Int32 length = 0;
 	acedSSLength(sset, &length);
+	vector<AcDbObjectId> ids;
 	for (int i = 0; i < length; i++)
 	{
 		ads_name ent;
@@ -58,6 +58,34 @@ vector<CWinInCad> CWindowSelect::SelectWindows(eViewDir p_view, bool p_bAllWindo
 		{
 			continue;
 		}
+
+		ids.push_back(objId);
+	}
+	acedSSFree(sset);
+	//////////////////////////////////////////////////////////////////////////
+
+	vector<CWinInCad> winsOut = GetWinsInObjectIds(ids ,p_view);//当前选择的ids
+
+	if (winsOut.size() == 0)
+	{
+		acutPrintf(L"\n未选择到门窗\n");
+	}
+	else
+	{
+		CString info;
+		info.Format(L"\n共选择了%d个门窗\n", winsOut.size());
+		acutPrintf(info);
+	}
+	return winsOut;
+}
+
+
+vector<CWinInCad> CWindowSelect::GetWinsInObjectIds(const vector<AcDbObjectId>& p_ids, eViewDir p_view)
+{
+	vector<CWinInCad> winsOut;
+	for (UINT i = 0; i < p_ids.size(); i++)
+	{
+		AcDbObjectId objId = p_ids[i];
 
 		vector<CWinInCad> winsTemp;
 		AcGeMatrix3d mxTemp = AcGeMatrix3d::kIdentity;
@@ -71,7 +99,48 @@ vector<CWinInCad> CWindowSelect::SelectWindows(eViewDir p_view, bool p_bAllWindo
 			winsOut.insert(winsOut.end(), winsTemp.begin(), winsTemp.end());
 		}
 	}
+
+	return winsOut;
+}
+
+vector<CWinInCad> CWindowSelect::SelectWindowsByRect(eViewDir p_view, TYRect p_rect)
+{
+	ads_point pt1, pt2;
+	pt1[X] = p_rect.m_lt.x;
+	pt1[Y] = p_rect.m_lt.y;
+	pt1[Z] = p_rect.m_lt.z;
+	pt2[X] = p_rect.m_rb.x;
+	pt2[Y] = p_rect.m_rb.y;
+	pt2[Z] = p_rect.m_rb.z;
+
+	Acad::ErrorStatus es;
+
+	acutPrintf(L"\n请选择门窗");
+
+	ads_name sset;
+	acedSSGet(TEXT("W"), pt1, pt2, NULL, sset);//筛选在rect范围内的结果
+
+	Adesk::Int32 length = 0;
+	acedSSLength(sset, &length);
+	vector<AcDbObjectId> ids;
+	for (int i = 0; i < length; i++)
+	{
+		ads_name ent;
+		acedSSName(sset, i, ent);
+
+		AcDbObjectId objId = 0;
+		es = acdbGetObjectId(objId, ent);
+		if (es != Acad::eOk || objId == AcDbObjectId::kNull)
+		{
+			continue;
+		}
+
+		ids.push_back(objId);
+	}
 	acedSSFree(sset);
+	//////////////////////////////////////////////////////////////////////////
+
+	vector<CWinInCad> winsOut = GetWinsInObjectIds(ids, p_view);//当前选择的ids
 
 	if (winsOut.size() == 0)
 	{

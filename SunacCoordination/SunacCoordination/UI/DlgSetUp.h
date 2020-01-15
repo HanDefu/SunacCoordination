@@ -3,7 +3,6 @@
 #include "afxwin.h"
 #include "ComFun_MFC.h"
 #include "GridCtrlWithPreview.h"
-#include "D:\vs2010\VC\atlmfc\include\afxwin.h"
 
 // CDlgSetUp ¶Ô»°¿ò
 

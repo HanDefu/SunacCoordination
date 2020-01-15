@@ -210,7 +210,6 @@ AcDbObjectId RCWindow::Insert(CString fileName, AcGePoint3d origin, double angle
 		JHCOM_CreateNewLayer(layerName);
 	}
 
-	AcDbObjectId idOut = AcDbObjectId::kNull;
 	
 	CString preLayerName;
 	MD2010_GetCurrentLayer(preLayerName);
@@ -219,11 +218,10 @@ AcDbObjectId RCWindow::Insert(CString fileName, AcGePoint3d origin, double angle
 
 	//TODO Ò¶Ã÷Ô¶ Ìí¼ÓÍ¼²ãÅÐ¶Ï
 
-	MD2010_InsertBlockReference_Layout(ACDB_MODEL_SPACE, m_blockRecordName, idOut, origin, angle, AcGeScale3d(1), color);
+	MD2010_InsertBlockReference_Layout(ACDB_MODEL_SPACE, m_blockRecordName, m_id, origin, angle, AcGeScale3d(1), color);
+
 	MD2010_SetCurrentLayer(preLayerName);
 
-
-
 	acDocManager->unlockDocument(curDoc());
-	return idOut;
+	return m_id;
 }

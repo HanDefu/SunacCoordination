@@ -523,9 +523,9 @@ void CProtypeInstanceCodeMrg::AddInstanceCode(AcDbObjectId p_id, AcDbObjectId p_
 		m_instanceMap[p_id] = textIds;
 	}
 }
-void CProtypeInstanceCodeMrg::RemoveInstanceCode(AcDbObjectId p_id)
+void CProtypeInstanceCodeMrg::RemoveInstanceCode(AcDbObjectId p_winId)
 {
-	std::map<AcDbObjectId, vector<AcDbObjectId>>::iterator iter = m_instanceMap.find(p_id);
+	std::map<AcDbObjectId, vector<AcDbObjectId>>::iterator iter = m_instanceMap.find(p_winId);
 	if (iter != m_instanceMap.end())
 	{
 		vector<AcDbObjectId> textIds = iter->second;
@@ -535,6 +535,21 @@ void CProtypeInstanceCodeMrg::RemoveInstanceCode(AcDbObjectId p_id)
 		}
 
 		m_instanceMap.erase(iter);
+	}
+}
+void CProtypeInstanceCodeMrg::RemoveInstanceCodeText(AcDbObjectId p_textId)
+{
+	for (std::map<AcDbObjectId, vector<AcDbObjectId>>::iterator it = m_instanceMap.begin(); it != m_instanceMap.end(); it++)
+	{
+		vector<AcDbObjectId>& textIds = it->second;
+		for (vector<AcDbObjectId>::iterator itFind = textIds.begin(); itFind < textIds.end(); itFind++)
+		{
+			if ((*itFind) == p_textId)
+			{
+				textIds.erase(itFind);
+				return;
+			}
+		}
 	}
 }
 
@@ -571,6 +586,7 @@ void CProtypeInstanceCodeMrg::RemoveAll()
 
 	m_instanceMap.clear();
 }
+
 
 
 //得到当前图纸范围内的所有的门窗编号文字的id
