@@ -742,6 +742,10 @@ void CWindowGen::MoveWindowDoorCode(eViewDir p_viewDir, CWinInCad p_win, CString
 {
 	//根据窗户的位置转换门窗编号位置
 	double winWidth = GetWinLength(GetWinWidth(p_win.m_winId), GetWinHeight(p_win.m_winId));
+	if (p_viewDir != E_VIEW_TOP)
+	{
+		winWidth = GetWinWidth(p_win.m_winId);
+	}
 
 	AcGePoint3d textPos(winWidth / 2, GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize, 0);
 	textPos.transformBy(p_win.m_mx);
@@ -769,19 +773,19 @@ void CWindowGen::MoveWindowDoorCode(eViewDir p_viewDir, CWinInCad p_win, CString
 			{
 			case E_DIR_BOTTOM:
 				pText->setRotation(p_win.m_rotateAngle - PI);
-				offsetXYZ = AcGeVector3d(0, -20, 0);
+				offsetXYZ = AcGeVector3d(0, -100, 0);
 				break;
 			case E_DIR_TOP:
 				pText->setRotation(p_win.m_rotateAngle);
-				offsetXYZ = AcGeVector3d(0, 20, 0);
+				offsetXYZ = AcGeVector3d(0, 100, 0);
 				break;
 			case E_DIR_RIGHT:
 				pText->setRotation(p_win.m_rotateAngle - PI);
-				offsetXYZ = AcGeVector3d(20, 0, 0);
+				offsetXYZ = AcGeVector3d(100, 0, 0);
 				break;
 			case E_DIR_LEFT:
 				pText->setRotation(p_win.m_rotateAngle);
-				offsetXYZ = AcGeVector3d(-20, 0, 0);
+				offsetXYZ = AcGeVector3d(-100, 0, 0);
 				break;
 			case E_DIR_UNKNOWN:
 				break;
