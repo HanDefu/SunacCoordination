@@ -3,7 +3,7 @@
 #include "afxwin.h"
 #include "ComFun_MFC.h"
 #include "GridCtrlWithPreview.h"
-#include "D:\vs2010\VC\atlmfc\include\afxwin.h"
+
 
 // CDlgSetUp ¶Ô»°¿ò
 
@@ -49,6 +49,7 @@ private:
 
 public:
 	virtual BOOL OnInitDialog();
+	CComboBox m_winDetailDimRate;
 };
 
 extern CDlgSetUp* g_winSetupDlg;

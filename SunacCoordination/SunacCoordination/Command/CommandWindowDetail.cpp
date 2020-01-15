@@ -22,6 +22,8 @@
 #include "../Command/CommandHighlight.h"
 #include "..\GlobalSetting.h"
 #include "../Common/ComFun_Math.h"
+#include "../Common/ComFun_Layer.h"
+#include "../GlobalSetting.h"
 
 
 CWindowDetailTemplate::CWindowDetailTemplate()
@@ -163,8 +165,21 @@ bool CWindowDetail::CreateDataText(const AttrWindow& winAtt, CWindowDetailTempla
 int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 {
 	CDocLock lockEnt;
+
 	if (m_id == 0)
 		return -1;
+
+	CString oldLayerName;
+
+	MD2010_GetCurrentLayer(oldLayerName);
+
+	CString sWindowDoorLayerName = L"Sunac_dim";
+	if (sWindowDoorLayerName.GetLength() && JHCOM_GetLayerID(sWindowDoorLayerName) == AcDbObjectId::kNull)
+	{
+		JHCOM_CreateNewLayer(sWindowDoorLayerName);
+	}
+	
+	MD2010_SetCurrentLayer(sWindowDoorLayerName);
 
 	const double W = winAtt.GetW();
 	const double H = winAtt.GetH();
@@ -192,7 +207,7 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 
 	//int colorIndex = 7;
 	//int textHeight = 80;
-	CString layer = L"0"; //TODO
+	//CString layer = L"0"; //TODO
 
 	if (A > TOL)//如果A值存在 先标注两端的A
 	{
@@ -200,13 +215,13 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 		end = AcGePoint3d(start.x, start.y + A, 0);
 		mid = AcGePoint3d(start.x + offset, (start.y + end.y) / 2, 0);
 		//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
-		AddAlignedDimensionAndStyle(start, end, mid, A, layer);
+		AddAlignedDimensionAndStyle(start, end, mid, A);
 
 		start = rightTopPt;
 		end = AcGePoint3d(start.x, start.y - A, 0);
 		mid = AcGePoint3d(start.x + offset, (start.y + end.y) / 2, 0);
 		//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
-		AddAlignedDimensionAndStyle(start, end, mid, A, layer);
+		AddAlignedDimensionAndStyle(start, end, mid, A);
 	}
 
 	if (h2 > TOL)
@@ -215,7 +230,7 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 		end = AcGePoint3d(start.x, start.y + h2, 0);
 		mid = AcGePoint3d(start.x + offset, start.y + h2 / 2, 0);
 		//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
-		AddAlignedDimensionAndStyle(start, end, mid, h2, layer);
+		AddAlignedDimensionAndStyle(start, end, mid, h2);
 	}
 
 	//H1一定有
@@ -223,14 +238,14 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 	end = AcGePoint3d(start.x, start.y + h1, 0);
 	mid = AcGePoint3d(start.x + offset, start.y + h1 / 2, 0);
 	//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
-	AddAlignedDimensionAndStyle(start, end, mid, h1, layer);
+	AddAlignedDimensionAndStyle(start, end, mid, h1);
 
 	//总高度一定有
 	start = rightBottomPt;
 	end = rightTopPt;
 	mid = AcGePoint3d(start.x + offset * 2, (start.y + end.y) / 2, 0);
 	//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
-	AddAlignedDimensionAndStyle(start, end, mid, H, layer);
+	AddAlignedDimensionAndStyle(start, end, mid, H);
 
 	//////////////////////////////////////////////////////////////////////////
 	//----------------标注横向的--------------------//
@@ -252,7 +267,7 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 		mid.x += A / 2;
 		mid.y += offset;
 		//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
-		AddAlignedDimensionAndStyle(start, end, mid, A, layer);
+		AddAlignedDimensionAndStyle(start, end, mid, A);
 
 		AcGePoint3d end1 = start1;
 		AcGePoint3d mid1 = start1;
@@ -260,7 +275,7 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 		mid1.x -= A / 2;
 		mid1.y += offset;
 		//MD2010_AddAlignedDimension2(start1, end1, mid1, layer, colorIndex, textHeight);
-		AddAlignedDimensionAndStyle(start1, end1, mid1, A, layer);
+		AddAlignedDimensionAndStyle(start1, end1, mid1, A);
 	}
 
 	//先标注右侧的转角窗
@@ -273,7 +288,7 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 		mid2.x -= W3 / 2;
 		mid2.y += offset;
 		//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
-		AddAlignedDimensionAndStyle(start2, end2, mid2, W3, layer);
+		AddAlignedDimensionAndStyle(start2, end2, mid2, W3);
 	}
 
 	//若左侧也有转角窗，再标注左侧转角窗
@@ -286,7 +301,7 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 		mid.x += W3 / 2;
 		mid.y += offset;
 		//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
-		AddAlignedDimensionAndStyle(start, end, mid, W3, layer);
+		AddAlignedDimensionAndStyle(start, end, mid, W3);
 	}
 
 	//W1 都会存在
@@ -296,7 +311,7 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 	mid.x += W1 / 2;
 	mid.y += offset;
 	//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
-	AddAlignedDimensionAndStyle(start, end, mid, W1, layer);
+	AddAlignedDimensionAndStyle(start, end, mid, W1);
 
 	//标注W2
 	if (W2 > TOL)
@@ -307,7 +322,7 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 		mid.x += W2 / 2;
 		mid.y += offset;
 		//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
-		AddAlignedDimensionAndStyle(start, end, mid, W2, layer);
+		AddAlignedDimensionAndStyle(start, end, mid, W2);
 	}
 
 	//最后可能还有一个W1
@@ -321,7 +336,7 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 			mid.x += W1 / 2;
 			mid.y += offset;
 			//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
-			AddAlignedDimensionAndStyle(start, end, mid, W1, layer);
+			AddAlignedDimensionAndStyle(start, end, mid, W1);
 		}
 	}
 	else
@@ -334,7 +349,7 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 			mid.x += W1 / 2;
 			mid.y += offset;
 			//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
-			AddAlignedDimensionAndStyle(start, end, mid, W1, layer);
+			AddAlignedDimensionAndStyle(start, end, mid, W1);
 		}
 	}
 
@@ -346,57 +361,21 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 	mid.x += W / 2;
 	mid.y += offset * 2;
 	//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
-	AddAlignedDimensionAndStyle(start, end, mid, W, layer);
+	AddAlignedDimensionAndStyle(start, end, mid, W);
+
+	MD2010_SetCurrentLayer(oldLayerName);
 
 	return 0;
 }
 
-
-void CWindowDetail::CreateDimensionStyle(CString styleName)
+AcDbObjectId CWindowDetail::AddAlignedDimensionAndStyle(AcGePoint3d start, AcGePoint3d end, AcGePoint3d dimlinpnt, double size)
 {
-	// 获得当前图形的标注样式表
-	AcDbDimStyleTable *pDimStyleTbl = NULL;
-	acdbHostApplicationServices()->workingDatabase()->getDimStyleTable(pDimStyleTbl, AcDb::kForWrite);
-	if (pDimStyleTbl->has(styleName))
-	{
-		pDimStyleTbl->close();//已经存在
-		return;
-	}
+	SetDetailTextStyle(L"_TCH_DIM_T3");
 
-	// 创建新的标注样式表记录
-	AcDbDimStyleTableRecord *pDimStyleTblRcd = NULL;
-	pDimStyleTblRcd = new AcDbDimStyleTableRecord();
-
-	// 设置标注样式的特性
-	pDimStyleTblRcd->setName(styleName); //样式名称
-	pDimStyleTblRcd->setDimscale(50); //全局比例
-	pDimStyleTblRcd->setDimasz(1); // 箭头大小
-	pDimStyleTblRcd->setDimexo(3); //尺寸界线偏移
-	pDimStyleTblRcd->setDimdli(0); //尺寸线间距
-	pDimStyleTblRcd->setDimexe(1); //超出尺寸线的距离
-	//pDimStyleTblRcd->setDimzin(0); //消零
-	//pDimStyleTblRcd->setDimtzin(2); //角度消零
-	pDimStyleTblRcd->setDimtad(1); // 文字位于标注线的上方
-	pDimStyleTblRcd->setDimtxt(2); // 标注文字的高度
-	pDimStyleTblRcd->setDimgap(1.25); //设置标注文字周围的距离
-	pDimStyleTblRcd->setDimtmove(2);  //设置标注文字的移动规则
-	pDimStyleTblRcd->setDimtih(false); //文字方向
-	pDimStyleTblRcd->setDimtix(true); //文字方向
-	pDimStyleTblRcd->setDimblk(L"_ARCHTICK");//设置箭头的形状为建筑标记,设置尺寸线末尾的阴影部分显示
-	pDimStyleTblRcd->setDimtxsty(MD2010_GetTextStylerID(L"_TCH_DIM_T3")); //文字样式
-
-	// 将标注样式表记录添加到标注样式表中
-	pDimStyleTbl->add(pDimStyleTblRcd);
-	pDimStyleTblRcd->close();
-	pDimStyleTbl->close();
-}
-
-AcDbObjectId CWindowDetail::AddAlignedDimensionAndStyle(AcGePoint3d start, AcGePoint3d end, AcGePoint3d dimlinpnt, double size, const ACHAR* newLayer)
-{
-	//创建一个标注尺寸(全局比例1:50)
-	CreateDimensionStyle(_T("Z50"));
+	//获取门窗详图模板中的标注尺寸名称
+	CString sDimStyle = GetDimensionStyle();
 	//获取所创建的标注尺寸的id
-	AcDbObjectId dimStyleId = MD2010_GetDimstylerID(_T("Z50"));
+	AcDbObjectId dimStyleId = MD2010_GetDimstylerID(sDimStyle);
 
 	if (JHCOM_PointDistance(start, end) <= TOL * 10000)//小于1的不标注
 		return 0;
@@ -407,10 +386,87 @@ AcDbObjectId CWindowDetail::AddAlignedDimensionAndStyle(AcGePoint3d start, AcGeP
 
 	AcDbObjectId dimID = MD2010_PostModalToBlockTable(ACDB_MODEL_SPACE, pDim);
 
-	pDim->setLayer(newLayer);
 	pDim->close();
 
 	return dimID;
 }
 
+CString CWindowDetail::GetDimensionStyle()
+{
+	CString dimStyle;
+
+	if (GlobalSetting::GetInstance()->m_winSetting.m_bWinDetailDimRate == 20)
+	{
+		dimStyle = L"_TCH_ARCH&&20";
+	}
+	else if (GlobalSetting::GetInstance()->m_winSetting.m_bWinDetailDimRate == 50)
+	{
+		dimStyle = L"_TCH_ARCH&&50";
+	}
+	else if (GlobalSetting::GetInstance()->m_winSetting.m_bWinDetailDimRate == 80)
+	{
+		dimStyle = L"_TCH_ARCH&&80";
+	}
+	else if (GlobalSetting::GetInstance()->m_winSetting.m_bWinDetailDimRate == 100)
+	{
+		dimStyle = L"_TCH_ARCH&&100";
+	}
+	else
+	{
+		dimStyle = L"_TCH_ARCH&&120";
+	}
+
+	return dimStyle;
+}
+
+int CWindowDetail::SetDetailTextStyle(CString dimname)
+{
+	AcDbTextStyleTable *pTextStylTbl = NULL;
+	acdbHostApplicationServices()->workingDatabase()->getTextStyleTable(pTextStylTbl, AcDb::kForRead);
+
+	// 判断是否包含指定名称的层表记录
+	if (!pTextStylTbl->has(dimname))
+	{
+		CreateDetailTextStyle(dimname);
+
+		return 1;
+	}
+
+	// 获得指定层表记录的指针
+	AcDbTextStyleTableRecord *pTextStylerTblRcd = NULL;
+	pTextStylTbl->getAt(dimname, pTextStylerTblRcd, AcDb::kForWrite);
+
+	pTextStylerTblRcd->setFileName(L"simplex.shx");
+	pTextStylerTblRcd->setBigFontFileName(L"gbcbig.shx");
+	pTextStylerTblRcd->setXScale(0.5647);
+	
+	pTextStylerTblRcd->close();
+	pTextStylTbl->close();
+
+	return 1;
+}
+
+void CWindowDetail::CreateDetailTextStyle(CString dimname)
+{
+	// 获得字体样式表
+	AcDbTextStyleTable *pTextStyleTbl = NULL;
+	acdbHostApplicationServices()->workingDatabase()->getTextStyleTable(pTextStyleTbl, AcDb::kForWrite);
+
+	// 创建新的字体样式表记录
+	AcDbTextStyleTableRecord *pTextStyleTblRcd = NULL;
+	pTextStyleTblRcd = new AcDbTextStyleTableRecord();
+
+	// 设置字体样式表记录的名称
+	pTextStyleTblRcd->setName(dimname);
+	// 设置字体文件名称
+	pTextStyleTblRcd->setFileName(L"simplex.shx");
+	pTextStyleTblRcd->setBigFontFileName(L"gbcbig.shx");
+	// 设置高宽比例
+	pTextStyleTblRcd->setXScale(0.5647);
+
+	// 将新的记录添加到字体样式表
+	pTextStyleTbl->add(pTextStyleTblRcd);
+	pTextStyleTblRcd->close();
+	pTextStyleTbl->close();
+}
 

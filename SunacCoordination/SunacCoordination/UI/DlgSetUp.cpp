@@ -38,6 +38,7 @@ void CDlgSetUp::DoDataExchange(CDataExchange* pDX)
 	DDX_Radio(pDX, IDC_SHOWLIMIANNUMBER, m_showLimianNumber);
 	DDX_Radio(pDX, IDC_USEAINLIMIAN, m_useAinLimian);
 	DDX_Control(pDX, IDC_WINNUMTEXTSIZE, m_winNumberTextSize);
+	DDX_Control(pDX, IDC_WINDETAILDIMRATE, m_winDetailDimRate);
 }
 
 
@@ -78,14 +79,22 @@ void CDlgSetUp::OnBnClickedOk()
 	WinSetUp(GlobalSetting::GetInstance()->m_winSetting.m_sWinOpenLayer, TYUI_GetText(m_winOpenLayer));
 	WinSetUp(GlobalSetting::GetInstance()->m_winSetting.m_sWinNumberLayerLimian, TYUI_GetText(m_winNumberLayerLimian));
 	WinSetUp(GlobalSetting::GetInstance()->m_winSetting.m_sWinNumberLayerPingmian, TYUI_GetText(m_winNumberLayerPingmian));
+
 	//门窗编号字体设置
 	if (TYUI_GetText(m_winNumberTextSize).GetLength() > 0)
 	{
 		GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize = TYUI_GetInt(m_winNumberTextSize);
 	}
+
+	//门窗编号字体设置
+	if (TYUI_GetText(m_winDetailDimRate).GetLength() > 0)
+	{
+		GlobalSetting::GetInstance()->m_winSetting.m_bWinDetailDimRate = TYUI_GetInt(m_winDetailDimRate);
+	}
+
 	//其他
-	GlobalSetting::GetInstance()->m_winSetting.m_bUseAinLimian = m_useAinLimian ? false : true;
-	GlobalSetting::GetInstance()->m_winSetting.m_bShowLimianNumber = m_showLimianNumber ? false : true;
+	GlobalSetting::GetInstance()->m_winSetting.m_bUseAinLimian = m_useAinLimian ? true : false;
+	GlobalSetting::GetInstance()->m_winSetting.m_bShowLimianNumber = m_showLimianNumber ? true : false;
 	
 	//排序
 	std::sort(m_winSetUpLayer.begin(), m_winSetUpLayer.end(), CompareWinSetUpLayer);
@@ -129,6 +138,7 @@ void CDlgSetUp::LoadDefaultValue()
 	m_winNumberLayerPingmian.SetWindowText(GlobalSetting::GetInstance()->m_winSetting.m_sWinNumberLayerPingmian);
 
 	((CComboBox*)GetDlgItem(IDC_WINNUMTEXTSIZE))->SetCurSel(3);//设置门窗字体编号默认显示100
+	((CComboBox*)GetDlgItem(IDC_WINDETAILDIMRATE))->SetCurSel(1);//设置门窗详图标注比例默认显示50
 }
 
 CDlgSetUp* g_winSetupDlg = NULL;
