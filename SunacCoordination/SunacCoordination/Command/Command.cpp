@@ -105,7 +105,7 @@ void CMD_SetUp()
 {
 	if (WebIO::GetInstance()->IsLogin() == false)
 	{
-		acutPrintf(_T("请先登录\n"));
+		AfxMessageBox(_T("请先登录"));
 		return;
 	}
 
