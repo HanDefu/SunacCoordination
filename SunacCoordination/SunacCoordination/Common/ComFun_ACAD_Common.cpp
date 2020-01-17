@@ -1797,7 +1797,7 @@ int MD2010_InsertBlockReference_Layout(const WCHAR * layoutname, const WCHAR * b
 		}
 	}		
 
-	acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForRead);
+	Acad::ErrorStatus es1 = acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForRead);
 	if (!pBlkTbl->has(blockname))
 	{
 		acutPrintf(L"no blockdef %s\n", blockname);

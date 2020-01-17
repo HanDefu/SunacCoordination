@@ -24,19 +24,19 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 public:
-	CEdit m_winFrameLayer;		//门窗型材结构框图层
-	CEdit m_winHardwareLayer;	//门窗五金件图层
-	CEdit m_winLayer;			 //门窗块图层
-	CEdit m_winNumberLayerLimian;//门窗立面图编号图层
-	CEdit m_winNumberLayerPingmian;//门窗平面图编号图层
-	CEdit m_winOpenLayer;		//门窗开启部分图层
-	CEdit m_winWallLayer;		//门窗外墙的图层
-	BOOL m_showLimianNumber;	//是否显示立面图的门窗编号
-	BOOL m_useAinLimian;		//立面图是否使用塞缝尺寸
-	CComboBox m_winNumberTextSize;//门窗编号字体
-	CComboBox m_winDetailDimRate;//门窗编号字体
+	BOOL m_showLimianNumberDlg;	//是否显示立面图的门窗编号
+	BOOL m_useAinLimianDlg;		//立面图是否使用塞缝尺寸
 
-	CString m_sFrameLayerDlg;
+	CComboBox m_winNumberTextSizeDlg;//门窗编号字体
+	CComboBox m_winDetailDimRateDlg;//门窗编号字体
+
+	CString m_sFrameLayerDlg;	//门窗型材结构框图层
+	CString m_sHardWareLayerDlg;	//门窗五金件图层
+	CString m_sLayerDlg;			//门窗块图层
+	CString m_sNumberLayerLimianDlg;//门窗立面图编号图层
+	CString m_sNumberLayerPingmianDlg;//门窗平面图编号图层
+	CString m_sOpenLayerDlg;			//门窗开启部分图层
+	CString m_sWallLayerDlg;			//门窗外墙的图层
 
 	CWinSetting m_originalWinSetting;
 
@@ -45,15 +45,11 @@ public:
 	afx_msg void OnBnClickedCancel();
 	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);///---01
 
-	//判断设置是否为空，不为空才将设置对话框中的值赋给GlobalSetting,为空则使用默认值
-	void WinSetUp(CString& p_winSetting, CString p_winSetUp);
-
 	void InitWinSetting();
 
 	void UpdateLayer();//更新图层
 
-private:
-	vector<CString> m_winSetUpLayer;
+	void SetDigPos();
 
 public:
 	virtual BOOL OnInitDialog();
