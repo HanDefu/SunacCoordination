@@ -103,15 +103,21 @@ void CMD_ShowCADPalette()
 //设置
 void CMD_SetUp()
 {
+	CAcModuleResourceOverride resOverride;
+
 	if (WebIO::GetInstance()->IsLogin() == false)
 	{
 		AfxMessageBox(_T("请先登录"));
-		return;
 	}
-
-	CAcModuleResourceOverride resOverride;
-
-	OpenWindowSetUpDlg();
+	else
+	{
+		CDlgSetUp dlg;
+		if (IDOK == dlg.DoModal())
+		{
+			CADPalette_RemoveP();
+			CADPalette_AddP();
+		}
+	}
 }
 
 //窗
@@ -522,5 +528,4 @@ void CloseModelessDialogs()
 	CloseAirconditionerDlg();
 	CloseWindowAdvanceDlg();
 	CloseProjectManagementDlg();
-	CloseWindowSetUpDlg();
 }

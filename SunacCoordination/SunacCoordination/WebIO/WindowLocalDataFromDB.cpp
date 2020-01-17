@@ -116,7 +116,6 @@ int CWindowLocalDataFromDB::OutputWindowData(void *NotUsed, int nCol, char **val
 		{
 			if (UTF8ToGBK(value[i]) == L"È«²¿")
 			{
-
 				oneWinAtt.m_isJiTuan = true;
 			}
 			else oneWinAtt.m_isJiTuan = false;
@@ -148,6 +147,10 @@ int CWindowLocalDataFromDB::OutputWindowData(void *NotUsed, int nCol, char **val
 		else if (strcmp(ColName[i],"Ventilation") == 0)
 		{
 			oneWinAtt.m_tongFengQty = atoi(value[i]);
+		}
+		else if (strcmp(ColName[i], "IsSymmetrical") == 0)
+		{
+			oneWinAtt.m_isMirrorWindow = atoi(value[i]) ? true : false;
 		}
 	}
 

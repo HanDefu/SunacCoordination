@@ -54,7 +54,3 @@ public:
 public:
 	virtual BOOL OnInitDialog();
 };
-
-extern CDlgSetUp* g_winSetupDlg;
-void OpenWindowSetUpDlg();
-BOOL CloseWindowSetUpDlg();
