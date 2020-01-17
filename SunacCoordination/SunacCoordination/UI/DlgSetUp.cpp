@@ -165,43 +165,63 @@ void CDlgSetUp::OnBnClickedOk()
 
 void CDlgSetUp::UpdateLayer()
 {
-	//TODO Ò¶Ã÷Ô¶
 	CDocLock cLock;
 	UpdateData(TRUE);
 	if (m_originalWinSetting.m_sWinFrameLayer != m_sFrameLayerDlg)
 	{
 		ChangeLayer(m_originalWinSetting.m_sWinFrameLayer, m_sFrameLayerDlg);
-		ChangeLayer(GSINST->m_winSetting.GetWinFrameLayerDefault(), m_sFrameLayerDlg);
+		if (m_originalWinSetting.m_sWinFrameLayer!= GSINST->m_winSetting.GetWinFrameLayerDefault())
+		{
+			ChangeLayer(GSINST->m_winSetting.GetWinFrameLayerDefault(), m_sFrameLayerDlg);
+		}
 	}
 	if (m_originalWinSetting.m_sWinHardwareLayer != m_sHardWareLayerDlg)
 	{
 		ChangeLayer(m_originalWinSetting.m_sWinHardwareLayer, m_sHardWareLayerDlg);
-		ChangeLayer(GSINST->m_winSetting.GetWinHardwareLayerDefault(), m_sHardWareLayerDlg);
+		if (m_originalWinSetting.m_sWinHardwareLayer != GSINST->m_winSetting.GetWinHardwareLayerDefault())
+		{
+			ChangeLayer(GSINST->m_winSetting.GetWinHardwareLayerDefault(), m_sHardWareLayerDlg);
+		}
 	}
 	if (m_originalWinSetting.m_sWinLayer != m_sLayerDlg)
 	{
 		ChangeLayer(m_originalWinSetting.m_sWinLayer, m_sLayerDlg);
-		ChangeLayer(GSINST->m_winSetting.GetWinLayerDefault(), m_sLayerDlg);
+		if (m_originalWinSetting.m_sWinLayer!=GSINST->m_winSetting.GetWinLayerDefault())
+		{
+			ChangeLayer(GSINST->m_winSetting.GetWinLayerDefault(), m_sLayerDlg);
+		}
 	}
 	if (m_originalWinSetting.m_sWinNumberLayerLimian != m_sNumberLayerLimianDlg)
 	{
 		ChangeLayer(m_originalWinSetting.m_sWinNumberLayerLimian, m_sNumberLayerLimianDlg);
-		ChangeLayer(GSINST->m_winSetting.GetWinNumberLayerLimianDefault(), m_sNumberLayerLimianDlg);
+		if (m_originalWinSetting.m_sWinNumberLayerLimian!=GSINST->m_winSetting.GetWinNumberLayerLimianDefault())
+		{
+			ChangeLayer(GSINST->m_winSetting.GetWinNumberLayerLimianDefault(), m_sNumberLayerLimianDlg);
+		}
 	}
 	if (m_originalWinSetting.m_sWinNumberLayerPingmian != m_sNumberLayerPingmianDlg)
 	{
 		ChangeLayer(m_originalWinSetting.m_sWinNumberLayerPingmian, m_sNumberLayerPingmianDlg);
-		ChangeLayer(GSINST->m_winSetting.GetWinNumberLayerPingmianDefault(), m_sNumberLayerPingmianDlg);
+		if (m_originalWinSetting.m_sWinNumberLayerPingmian != GSINST->m_winSetting.GetWinNumberLayerPingmianDefault())
+		{
+			ChangeLayer(GSINST->m_winSetting.GetWinNumberLayerPingmianDefault(), m_sNumberLayerPingmianDlg);
+		}
 	}
 	if (m_originalWinSetting.m_sWinOpenLayer != m_sOpenLayerDlg)
 	{
 		ChangeLayer(m_originalWinSetting.m_sWinOpenLayer, m_sOpenLayerDlg);
-		ChangeLayer(GSINST->m_winSetting.GetWinOpenLayerDefault(), m_sOpenLayerDlg);
+		if (m_originalWinSetting.m_sWinOpenLayer!= GSINST->m_winSetting.GetWinOpenLayerDefault())
+		{
+			ChangeLayer(GSINST->m_winSetting.GetWinOpenLayerDefault(), m_sOpenLayerDlg);
+		}
 	}
 	if (m_originalWinSetting.m_sWinWallLayer != m_sWallLayerDlg)
 	{
 		ChangeLayer(m_originalWinSetting.m_sWinWallLayer, m_sWallLayerDlg);
-		ChangeLayer(GSINST->m_winSetting.GetWallLayerDefault(), m_sWallLayerDlg);
+		if (m_originalWinSetting.m_sWinWallLayer!=GSINST->m_winSetting.GetWinWallLayerDefault())
+		{
+			ChangeLayer(GSINST->m_winSetting.GetWinWallLayerDefault(), m_sWallLayerDlg);
+		}
 	}
 }
 

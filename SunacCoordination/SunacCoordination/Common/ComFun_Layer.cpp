@@ -442,17 +442,24 @@ bool ChangeLayer(CString OldLayerName, CString NewLayerName)
 
 
 	AcDbBlockTable *pBlkTbl = NULL;
+	Acad::ErrorStatus es = acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForRead);
+	if (es != Acad::eOk)
+	{
+		assert(false);
+		return false;
+	}
+
 	AcDbBlockTableIterator *BlkTblIt = NULL;
-	acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForWrite);
 	pBlkTbl->newIterator(BlkTblIt);
 
-	for (;BlkTblIt->done(); BlkTblIt->step())
+	for (BlkTblIt->start(); !BlkTblIt->done(); BlkTblIt->step())
 	{
 		AcDbBlockTableRecord *pBlkDefine = NULL;
 		BlkTblIt->getRecord(pBlkDefine, AcDb::kForWrite);
+
 		AcDbBlockTableRecordIterator *BlkDefineIt;
 		pBlkDefine->newIterator(BlkDefineIt);
-		for (;!BlkDefineIt->done(); BlkDefineIt->step())
+		for (BlkDefineIt->start(); !BlkDefineIt->done(); BlkDefineIt->step())
 		{
 			AcDbEntity *Entity;
 			BlkDefineIt->getEntity(Entity, AcDb::kForWrite);
@@ -461,10 +468,15 @@ bool ChangeLayer(CString OldLayerName, CString NewLayerName)
 			{
 				Entity->setLayer(NewLayerName);
 			}
-			pBlkDefine->close();
+			Entity->close();
 		}
 		delete BlkDefineIt;
+
+		pBlkDefine->close();
 	}
 	delete BlkTblIt;
+
+	pBlkTbl->close();
+
 	return true;
 }

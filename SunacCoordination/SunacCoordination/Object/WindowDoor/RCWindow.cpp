@@ -202,65 +202,64 @@ CString RCWindow::GetInstanceCode()
 
 void RCWindow::ModifyLayerName(AcDbObjectId BlockDefineId)
 {
-	AcDbBlockTable *pBlkTbl = NULL;
-	acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForWrite);
 	AcDbBlockTableRecord *pBlkDefine = NULL;
-	acdbOpenObject(pBlkDefine, BlockDefineId, AcDb::kForWrite);
-	AcDbBlockTableRecordIterator *BlkDefineIt;
-	pBlkDefine->newIterator(BlkDefineIt);
-	for (;!BlkDefineIt->done(); BlkDefineIt->step())
+	Acad::ErrorStatus es = acdbOpenObject(pBlkDefine, BlockDefineId, AcDb::kForWrite);
+	if (es!=Acad::eOk)
 	{
-		AcDbEntity *Entity;
-		BlkDefineIt->getEntity(Entity, AcDb::kForWrite);
-		CString LayerName = Entity->layer();
-		if (GSINST->m_winSetting.m_sWinFrameLayer != GSINST->m_winSetting.GetWinFrameLayerDefault() ||\
-			GSINST->m_winSetting.m_sWinHardwareLayer != GSINST->m_winSetting.GetWinHardwareLayerDefault() ||\
-			GSINST->m_winSetting.m_sWinLayer != GSINST->m_winSetting.GetWinLayerDefault() ||\
-			GSINST->m_winSetting.m_sWinNumberLayerLimian != GSINST->m_winSetting.GetWinNumberLayerLimianDefault() ||\
-			GSINST->m_winSetting.m_sWinNumberLayerPingmian != GSINST->m_winSetting.GetWinNumberLayerPingmianDefault() ||\
-			GSINST->m_winSetting.m_sWinOpenLayer != GSINST->m_winSetting.GetWinOpenLayerDefault() ||\
-			GSINST->m_winSetting.m_sWinWallLayer != GSINST->m_winSetting.GetWinWallLayerDefault())
+		return;
+	}
+
+	AcDbBlockTableRecordIterator *BlkDefineIt = NULL;
+	pBlkDefine->newIterator(BlkDefineIt);
+	for ( ;!BlkDefineIt->done(); BlkDefineIt->step())
+	{
+		AcDbEntity *pEntity=NULL;
+		es = BlkDefineIt->getEntity(pEntity, AcDb::kForWrite);
+		if (es!=Acad::eOk || pEntity==NULL)
 		{
-			if (LayerName == GSINST->m_winSetting.GetWinFrameLayerDefault())
+			assert(false);
+			continue;
+		}
+
+		CString LayerName = pEntity->layer();
+
+		if (LayerName == GSINST->m_winSetting.GetWinFrameLayerDefault())
+		{
+			if (GSINST->m_winSetting.m_sWinFrameLayer != GSINST->m_winSetting.GetWinFrameLayerDefault())
 			{
 				JHCOM_CreateNewLayer(GSINST->m_winSetting.m_sWinFrameLayer);
-				Entity->setLayer(GSINST->m_winSetting.m_sWinFrameLayer);
+				pEntity->setLayer(GSINST->m_winSetting.m_sWinFrameLayer);
 			}
-			else if (LayerName == GSINST->m_winSetting.GetWinHardwareLayerDefault())
+		}
+		else if (LayerName == GSINST->m_winSetting.GetWinHardwareLayerDefault())
+		{
+			if (GSINST->m_winSetting.m_sWinHardwareLayer != GSINST->m_winSetting.GetWinHardwareLayerDefault())
 			{
 				JHCOM_CreateNewLayer(GSINST->m_winSetting.m_sWinHardwareLayer);
-				Entity->setLayer(GSINST->m_winSetting.m_sWinHardwareLayer);
+				pEntity->setLayer(GSINST->m_winSetting.m_sWinHardwareLayer);
 			}
-			else if (LayerName == GSINST->m_winSetting.GetWinLayerDefault())
-			{
-				JHCOM_CreateNewLayer(GSINST->m_winSetting.m_sWinLayer);
-				Entity->setLayer(GSINST->m_winSetting.m_sWinLayer);
-			}
-			else if (LayerName == GSINST->m_winSetting.GetWinNumberLayerLimianDefault())
-			{
-				JHCOM_CreateNewLayer(GSINST->m_winSetting.m_sWinNumberLayerLimian);
-				Entity->setLayer(GSINST->m_winSetting.m_sWinNumberLayerLimian);
-			}
-			else if (LayerName == GSINST->m_winSetting.GetWinNumberLayerPingmianDefault())
-			{
-				JHCOM_CreateNewLayer(GSINST->m_winSetting.m_sWinNumberLayerPingmian);
-				Entity->setLayer(GSINST->m_winSetting.m_sWinNumberLayerPingmian);
-			}
-			else if (LayerName == GSINST->m_winSetting.GetWinOpenLayerDefault())
+		}
+		else if (LayerName == GSINST->m_winSetting.GetWinOpenLayerDefault())
+		{
+			if (GSINST->m_winSetting.m_sWinOpenLayer != GSINST->m_winSetting.GetWinOpenLayerDefault())
 			{
 				JHCOM_CreateNewLayer(GSINST->m_winSetting.m_sWinOpenLayer);
-				Entity->setLayer(GSINST->m_winSetting.m_sWinOpenLayer);
+				pEntity->setLayer(GSINST->m_winSetting.m_sWinOpenLayer);
 			}
-			else if (LayerName == GSINST->m_winSetting.GetWinWallLayerDefault())
+		}
+		else if (LayerName == GSINST->m_winSetting.GetWinWallLayerDefault())
+		{
+			if (GSINST->m_winSetting.m_sWinWallLayer != GSINST->m_winSetting.GetWinWallLayerDefault())
 			{
 				JHCOM_CreateNewLayer(GSINST->m_winSetting.m_sWinWallLayer);
-				Entity->setLayer(GSINST->m_winSetting.m_sWinWallLayer);
+				pEntity->setLayer(GSINST->m_winSetting.m_sWinWallLayer);
 			}
-
 		}
-		pBlkDefine->close();
+
+		pEntity->close();
 	}
-	pBlkTbl->close();
+
+	pBlkDefine->close();
 }
 
 AcDbObjectId RCWindow::Insert(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color)
