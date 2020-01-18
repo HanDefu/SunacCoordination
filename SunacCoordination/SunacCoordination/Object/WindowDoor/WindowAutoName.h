@@ -94,12 +94,13 @@ protected:
 	vector<CWinClassify> m_allTypeWindows; //所有窗型
 };
 
-class CProtypeInstanceCodeMrg
+//门窗编号等管理类
+class CInstanceCodeTextMrg
 {
 	friend CDocumentData;
-	CProtypeInstanceCodeMrg();
+	CInstanceCodeTextMrg();
 public:
-	~CProtypeInstanceCodeMrg();
+	~CInstanceCodeTextMrg();
 
 	void AddInstanceCode(AcDbObjectId p_id, AcDbObjectId p_textId);
 	void RemoveInstanceCode(AcDbObjectId p_winId); //p_id是门窗块引用或者块多层级块的id

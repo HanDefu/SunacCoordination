@@ -19,7 +19,7 @@ public:
 	CKitchenAutoName m_kitchenAutoName;
 	CBathroomAutoName m_bathroomAutoName;
 
-	CProtypeInstanceCodeMrg m_instanceCodeMrg;
+	CInstanceCodeTextMrg m_instanceCodeMrg;
 
 	bool m_bLoad;
 };
@@ -27,7 +27,7 @@ public:
 CWindowAutoName* GetWindowAutoName();
 CKitchenAutoName* GetKitchenAutoName();
 CBathroomAutoName* GetBathroomAutoName();
-CProtypeInstanceCodeMrg* GetInstanceCodeMrg();
+CInstanceCodeTextMrg* GetInstanceCodeMrg();
 
 
 //////////////////////////////////////////////////////////////////////////

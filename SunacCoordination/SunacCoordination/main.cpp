@@ -888,15 +888,15 @@ void CMD_TEST2()
 		vProjects.swap(CProjectFileMrg::Instance()->m_projects);
 	}*/
 
-	//CProtypeInstanceCodeMrg Ref;
+	//CInstanceCodeTextMrg Ref;
 	//Ref.GetAllInstanceCodeIds();
-	CProtypeInstanceCodeMrg::GetAllInstanceCodeIds();
+	CInstanceCodeTextMrg::GetAllInstanceCodeIds();
 
 
 	TYRect rect;
 	bool bSuc = TY_GetOneRect(rect);
 
-	CProtypeInstanceCodeMrg::GetInstanceCodeIdsInRect(rect);
+	CInstanceCodeTextMrg::GetInstanceCodeIdsInRect(rect);
 	//Ref.GetInstanceCodeIdsInRect(rect);
 }
 

@@ -488,15 +488,15 @@ bool CWindowAutoName::IsSamePrototypeAndSize(CString p_instanceCode1, CString p_
 
 //////////////////////////////////////////////////////////////////////////
 
-CProtypeInstanceCodeMrg::CProtypeInstanceCodeMrg()
+CInstanceCodeTextMrg::CInstanceCodeTextMrg()
 {
 
 }
-CProtypeInstanceCodeMrg::~CProtypeInstanceCodeMrg()
+CInstanceCodeTextMrg::~CInstanceCodeTextMrg()
 {
 
 }
-vector<AcDbObjectId> CProtypeInstanceCodeMrg::FindTextIds(AcDbObjectId p_keyId)
+vector<AcDbObjectId> CInstanceCodeTextMrg::FindTextIds(AcDbObjectId p_keyId)
 {
 	std::map<AcDbObjectId, vector<AcDbObjectId>>::iterator iter = m_instanceMap.find(p_keyId);
 	if (iter != m_instanceMap.end())
@@ -508,7 +508,7 @@ vector<AcDbObjectId> CProtypeInstanceCodeMrg::FindTextIds(AcDbObjectId p_keyId)
 		return vector<AcDbObjectId> ();
 	}
 }
-void CProtypeInstanceCodeMrg::AddInstanceCode(AcDbObjectId p_id, AcDbObjectId p_textId)
+void CInstanceCodeTextMrg::AddInstanceCode(AcDbObjectId p_id, AcDbObjectId p_textId)
 {
 	std::map<AcDbObjectId, vector<AcDbObjectId>>::iterator iter = m_instanceMap.find(p_id);
 	if (iter != m_instanceMap.end())
@@ -523,7 +523,7 @@ void CProtypeInstanceCodeMrg::AddInstanceCode(AcDbObjectId p_id, AcDbObjectId p_
 		m_instanceMap[p_id] = textIds;
 	}
 }
-void CProtypeInstanceCodeMrg::RemoveInstanceCode(AcDbObjectId p_winId)
+void CInstanceCodeTextMrg::RemoveInstanceCode(AcDbObjectId p_winId)
 {
 	std::map<AcDbObjectId, vector<AcDbObjectId>>::iterator iter = m_instanceMap.find(p_winId);
 	if (iter != m_instanceMap.end())
@@ -537,7 +537,7 @@ void CProtypeInstanceCodeMrg::RemoveInstanceCode(AcDbObjectId p_winId)
 		m_instanceMap.erase(iter);
 	}
 }
-void CProtypeInstanceCodeMrg::RemoveInstanceCodeText(AcDbObjectId p_textId)
+void CInstanceCodeTextMrg::RemoveInstanceCodeText(AcDbObjectId p_textId)
 {
 	for (std::map<AcDbObjectId, vector<AcDbObjectId>>::iterator it = m_instanceMap.begin(); it != m_instanceMap.end(); it++)
 	{
@@ -553,7 +553,7 @@ void CProtypeInstanceCodeMrg::RemoveInstanceCodeText(AcDbObjectId p_textId)
 	}
 }
 
-void CProtypeInstanceCodeMrg::RemoveInvalidInstanceCode()
+void CInstanceCodeTextMrg::RemoveInvalidInstanceCode()
 {
 	for (std::map<AcDbObjectId, vector<AcDbObjectId>>::iterator it = m_instanceMap.begin(); it != m_instanceMap.end(); )
 	{
@@ -573,7 +573,7 @@ void CProtypeInstanceCodeMrg::RemoveInvalidInstanceCode()
 		}
 	}
 }
-void CProtypeInstanceCodeMrg::RemoveAll()
+void CInstanceCodeTextMrg::RemoveAll()
 {
 	for (std::map<AcDbObjectId, vector<AcDbObjectId>>::iterator it = m_instanceMap.begin(); it != m_instanceMap.end(); it++)
 	{
@@ -590,7 +590,7 @@ void CProtypeInstanceCodeMrg::RemoveAll()
 
 
 //得到当前图纸范围内的所有的门窗编号文字的id
-vector<AcDbObjectId> CProtypeInstanceCodeMrg::GetAllInstanceCodeIds()
+vector<AcDbObjectId> CInstanceCodeTextMrg::GetAllInstanceCodeIds()
 {
 	vector<AcDbObjectId> ids;
 	struct resbuf *rb;
@@ -616,7 +616,7 @@ vector<AcDbObjectId> CProtypeInstanceCodeMrg::GetAllInstanceCodeIds()
 	acedSSFree(ssname);
 	return ids;
 }
-vector<AcDbObjectId> CProtypeInstanceCodeMrg::GetInstanceCodeIdsInRect(const TYRect p_rect)
+vector<AcDbObjectId> CInstanceCodeTextMrg::GetInstanceCodeIdsInRect(const TYRect p_rect)
 {
 	vector<AcDbObjectId> ids;
 	struct resbuf *rb;

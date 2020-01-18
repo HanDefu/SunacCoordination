@@ -870,7 +870,7 @@ bool CWindowGen::SelectWindows(vector<CWinInCad>& p_winsOut, vector<AcDbObjectId
 	if (p_bAllOut)
 	{
 		p_winsOut = CWindowSelect::SelectWindows(E_VIEW_ALL, true);
-		p_textIdsOut = CProtypeInstanceCodeMrg::GetAllInstanceCodeIds();
+		p_textIdsOut = CInstanceCodeTextMrg::GetAllInstanceCodeIds();
 	}
 	else
 	{
@@ -882,7 +882,7 @@ bool CWindowGen::SelectWindows(vector<CWinInCad>& p_winsOut, vector<AcDbObjectId
 		//////////////////////////////////////////////////////////////////////////
 		p_winsOut = CWindowSelect::SelectWindowsByRect(E_VIEW_ALL, rect);
 
-		p_textIdsOut = CProtypeInstanceCodeMrg::GetInstanceCodeIdsInRect(rect);
+		p_textIdsOut = CInstanceCodeTextMrg::GetInstanceCodeIdsInRect(rect);
 	}
 
 	return true;
