@@ -165,7 +165,12 @@ public:
 	CString GetPrototypeDwgFilePath(eViewDir p_view)const;
 
 	bool IsRelatedGen()const { return m_fromWinId != AcDbObjectId::kNull; } //是否是通过其他的门窗关联生成
-	bool IsInstanceNeedMirror()const;
+
+
+	bool IsMxMirror()const; //实际的矩阵是否镜像
+	void SetMxMirror(bool p_bMirror);
+	bool IsMirror()const; 
+	void SetMirror(bool p_bMirror);
 
 	AcDbObjectId GetFromWinId()const { return m_fromWinId; }
 	AcDbObjectIdArray  GetRelatedWinIds()const { return m_relatedWinIds; }

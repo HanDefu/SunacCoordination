@@ -249,12 +249,12 @@ AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d
 	UpdateRcWindowPara(id, curWinAtt, p_view, p_bDetailWnd);
 	AddWinAtt(id, curWinAtt);
 
-	//移动窗型
+	//移动窗型到插入点
 	AcGePoint3d insertPos = GetBlockInsertPos(id, curWinAtt, pos, p_view, p_winDir);
 	TYCOM_Move(id, insertPos.asVector());
 
 	//处理镜像
-	if (curWinAtt.IsInstanceNeedMirror())
+	if (curWinAtt.IsMxMirror())
 	{
 		MirrorObjectByCenter(oneWindow.m_id, p_winDir);
 	}
@@ -267,7 +267,7 @@ AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d
 			CWinInCad winInCad;
 			winInCad.m_winId = id;
 			winInCad.m_rootId = id;
-			winInCad.m_bMirror = curWinAtt.IsInstanceNeedMirror();
+			winInCad.m_bMxMirror = curWinAtt.IsMxMirror();
 
 			AcDbEntity * pEnt = 0;
 			Acad::ErrorStatus es = acdbOpenObject(pEnt, id, AcDb::kForRead);
@@ -374,20 +374,19 @@ CWinInsertPara CWindowGen::GetWindowInsertPara(AcDbObjectId p_id) //根据已插入的
 {
 	CWinInsertPara insertPara;
 
-	double angle;
-	GetWindowInsertPos(p_id, insertPara.insertPos, angle);
-	insertPara.leftBottomPos = GetWindowLeftBottomPos(p_id);
+	JHCOM_GetObjectMinMaxPoint(p_id, insertPara.leftBottomPos, insertPara.rightTopPos);
 
 	insertPara.sLayerName = JHCOM_GetEntityLayer(p_id);
 	GetWindowInsertDir(p_id, insertPara.insertDir);
 
-	const AttrWindow *pWinAtt = AttrWindow::GetWinAtt(p_id);
+	AttrWindow *pWinAtt = AttrWindow::GetWinAtt(p_id);
 	if (pWinAtt!=NULL)
 	{
 		insertPara.viewDir = pWinAtt->m_viewDir;
 		insertPara.bDetailWnd = false;
 		insertPara.fromWinId = pWinAtt->GetFromWinId();
 		insertPara.relatedWinIds = pWinAtt->GetRelatedWinIds();
+		pWinAtt->close();
 	}
 	else
 	{
@@ -395,6 +394,33 @@ CWinInsertPara CWindowGen::GetWindowInsertPara(AcDbObjectId p_id) //根据已插入的
 		insertPara.viewDir = E_VIEW_EXTEND;
 		insertPara.fromWinId = AcDbObjectId::kNull;
 	}
+
+	//////////////////////////////////////////////////////////////////////////
+	//根据方位，重新得到插入点： 窗户外墙左侧点
+	if (insertPara.viewDir==E_VIEW_TOP)
+	{
+		switch (insertPara.insertDir)
+		{
+		case E_DIR_BOTTOM:	//下侧、南方
+		case E_DIR_LEFT:	//左侧、西方
+			insertPara.insertPos = insertPara.leftBottomPos;
+			break;
+		case E_DIR_RIGHT:	//右侧、东方
+			insertPara.insertPos = AcGePoint3d(insertPara.rightTopPos.x, insertPara.leftBottomPos.y, 0);
+			break;
+		case E_DIR_TOP:		//上侧、北方
+			insertPara.insertPos = AcGePoint3d(insertPara.leftBottomPos.x, insertPara.rightTopPos.y, 0);
+			break;
+		default:
+			break;
+		}
+	}
+	else
+	{
+		double angle;
+		GetWindowInsertPos(p_id, insertPara.insertPos, angle);
+	}
+
 	return insertPara;
 }
 
@@ -457,8 +483,8 @@ void CWindowGen::ModifyOneWindow(const AcDbObjectId p_id, AttrWindow newWinAtt)
 	UpdateWindowsAttribute(p_id, newWinAtt);
 
 	//处理镜像
-	if (newWinAtt.IsInstanceNeedMirror() && IsWindowMirror(p_id)==false ||
-		newWinAtt.IsInstanceNeedMirror()==false && IsWindowMirror(p_id))
+	bool bPreMxMirror = CWindowSelect::IsReferenctMirror(p_id);
+	if (newWinAtt.IsMxMirror()!= bPreMxMirror)
 	{
 		E_DIRECTION dirOut = E_DIR_TOP;
 		GetWindowInsertDir(p_id,  dirOut);
@@ -493,6 +519,7 @@ AcDbObjectId CWindowGen::UpdateWindow(const AcDbObjectId p_id, AttrWindow newWin
 
 		//1 找到和当前编号一样的门窗
 		vector<AcDbObjectId> sameCodeWins = GetWindowAutoName()->GetAllIdsByInstantCode(oldInstanceCode);
+
 		//2 移除当前编号的门窗
 		GetWindowAutoName()->RemoveObjectsByInstantCode(oldInstanceCode);
 
@@ -565,7 +592,7 @@ AcDbObjectId CWindowGen::UpdateOneWindow(const AcDbObjectId p_id, AttrWindow new
 	{
 		DeleteWindowObj(p_id);
 
-		AcDbObjectId newId = GenerateWindow(newWinAtt, insertPara.leftBottomPos, insertPara.insertDir, insertPara.bDetailWnd, AcDbObjectId::kNull);
+		AcDbObjectId newId = GenerateWindow(newWinAtt, insertPara.insertPos, insertPara.insertDir, insertPara.bDetailWnd, AcDbObjectId::kNull);
 		return newId;
 	}
 
@@ -589,7 +616,7 @@ AcDbObjectId CWindowGen::UpdateOneWindow(const AcDbObjectId p_id, AttrWindow new
 	//若原型没有改变，则只需更新尺寸数据
 	AcDbObjectId outId = p_id;
 	const bool bProtoTypeSame = oldWinAtt.m_prototypeCode.CompareNoCase(newWinAtt.m_prototypeCode) == 0;
-	if (bProtoTypeSame)
+	if (bProtoTypeSame) //任然是原来的原型，只是修改了参数
 	{
 		if (bUpdateRelatedWin)
 		{
@@ -606,14 +633,14 @@ AcDbObjectId CWindowGen::UpdateOneWindow(const AcDbObjectId p_id, AttrWindow new
 	}
 	else //若原型改变，则需要全部删除和重新生成
 	{
-		if (bUpdateRelatedWin)
+		if (bUpdateRelatedWin) //同时更新关联的门窗
 		{
 			AcDbObjectId newMainId = AcDbObjectId::kNull;
 			{
 				const CWinInsertPara newInsertPara = GetWindowInsertPara(fromWinId);
 				DeleteWindowObj(fromWinId);
 
-				newMainId = GenerateWindow(newWinAtt, newInsertPara.leftBottomPos, newInsertPara.insertDir, newInsertPara.bDetailWnd, AcDbObjectId::kNull);
+				newMainId = GenerateWindow(newWinAtt, newInsertPara.insertPos, newInsertPara.insertDir, newInsertPara.bDetailWnd, AcDbObjectId::kNull);
 				if (p_id==fromWinId)
 					outId = newMainId;
 			}
@@ -621,10 +648,15 @@ AcDbObjectId CWindowGen::UpdateOneWindow(const AcDbObjectId p_id, AttrWindow new
 			AcDbObjectIdArray newRelatedIds;
 			for (int i = 0; i < relatedWinIds.length(); i++)
 			{
+				if (IsObjectExsit(relatedWinIds[i])==false)
+				{
+					continue;
+				}
+
 				const CWinInsertPara newInsertPara = GetWindowInsertPara(relatedWinIds[i]);
 				DeleteWindowObj(relatedWinIds[i]);
 
-				AcDbObjectId newId = GenerateWindow(newWinAtt, newInsertPara.leftBottomPos, newInsertPara.insertDir, newInsertPara.bDetailWnd, AcDbObjectId::kNull);
+				AcDbObjectId newId = GenerateWindow(newWinAtt, newInsertPara.insertPos, newInsertPara.insertDir, newInsertPara.bDetailWnd, AcDbObjectId::kNull);
 				newRelatedIds.append(newId);
 				if (p_id == relatedWinIds[i])
 					outId = newId;
@@ -638,7 +670,7 @@ AcDbObjectId CWindowGen::UpdateOneWindow(const AcDbObjectId p_id, AttrWindow new
 		else
 		{
 			DeleteWindowObj(p_id);
-			outId = GenerateWindow(newWinAtt, insertPara.leftBottomPos, insertPara.insertDir, insertPara.bDetailWnd, AcDbObjectId::kNull);
+			outId = GenerateWindow(newWinAtt, insertPara.insertPos, insertPara.insertDir, insertPara.bDetailWnd, AcDbObjectId::kNull);
 		}		
 	}	
 
@@ -676,6 +708,7 @@ bool CWindowGen::DeleteWindowObj(const AcDbObjectId p_id)
 	JHCOM_DeleteCadObject(p_id);
 
 	GetWindowAutoName()->RemoveObject(p_id);
+	GetInstanceCodeMrg()->RemoveInstanceCode(p_id);
 	return true;
 }
 bool CWindowGen::SetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId p_fromWinId, AcDbObjectIdArray p_relatedIds)
@@ -891,8 +924,7 @@ void CWindowGen::AutoNameAllWindow()
 			continue;
 
 		//3.2 判断最终的门窗引用是否镜像
-		bool bMirror = CWindowSelect::IsReferenctMirror(wins[i].m_winId);
-		pWinAtt->m_isMirror = wins[i].m_bMirror;
+		pWinAtt->SetMxMirror(wins[i].m_bMxMirror);
 		CString sInstanceCode = GetWindowAutoName()->GetWindowName(*pWinAtt);
 		pWinAtt->SetInstanceCode(sInstanceCode);
 
@@ -903,7 +935,7 @@ void CWindowGen::AutoNameAllWindow()
 		//////////////////////////////////////////////////////////////////////////
 		//4 对门窗文字编号更新， 实际的门窗可能是块中块，需要用最终的镜像结果
 		AttrWindow winAtt = *pWinAtt;
-		winAtt.m_isMirror = wins[i].m_bMirror;
+		winAtt.SetMxMirror(wins[i].m_bMxMirror);
 		CString sInstanceCode2 = GetWindowAutoName()->GetWindowName(winAtt);
 		winAtt.SetInstanceCode(sInstanceCode2);
 

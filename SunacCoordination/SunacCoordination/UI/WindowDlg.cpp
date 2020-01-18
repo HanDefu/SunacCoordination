@@ -28,7 +28,7 @@ CWindowDlg::CWindowDlg(CWnd* pParent /*=NULL*/)
 	, m_nThickness(200)
 {
 	m_bEditMode = false;
-	m_pCurEditWinRef = NULL;
+	m_curEditWinId = AcDbObjectId::kNull;
 	
 	m_selectRect = TYRect(AcGePoint3d::kOrigin, AcGePoint3d::kOrigin);
 
@@ -247,7 +247,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 
 	ShowWindow(FALSE);
 
-	pSelWinAttr->m_isMirror = (m_btnMirror.GetCheck() != FALSE);
+	pSelWinAttr->SetMirror(m_btnMirror.GetCheck() != FALSE);
 	if (m_bEditMode == false)
 	{
 		//选择插入点
@@ -275,11 +275,9 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	{
 		bool bUpdateAll = (IDYES == AfxMessageBox(_T("是否对相同编号的都按此门窗修改？"), MB_YESNO));
 
-		AcDbObjectId idOut = CWindowGen::UpdateWindow(m_pCurEditWinRef->objectId(), *pSelWinAttr, true, bUpdateAll);
-		assert(idOut != AcDbObjectId::kNull);
-
-		m_pCurEditWinRef = NULL;
-
+		m_curEditWinId = CWindowGen::UpdateWindow(m_curEditWinId, *pSelWinAttr, true, bUpdateAll);
+		assert(m_curEditWinId != AcDbObjectId::kNull);
+		
 		OnOK(); //修改模式直接关闭窗口
 	}
 }
@@ -308,6 +306,13 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 
 		m_winPrototypes[i].SetW(m_nWidth);
 		m_winPrototypes[i].SetH(m_nHeight);
+
+		//若是编辑模式，保持原来的镜像关系
+		if (m_bEditMode)
+		{
+			m_winPrototypes[i].m_viewDir = m_attBeforeEdit.m_viewDir;
+			m_winPrototypes[i].SetMirror( m_attBeforeEdit.m_isMirror);
+		}
 	}
 
 	InitPreviewGridByWindowPrototypes();
@@ -386,7 +391,7 @@ void CWindowDlg::OnBnClickedAutoIndex()
 	{
 		m_editWinNumber.SetReadOnly(TRUE);
 
-		pSelWinAttr->m_isMirror = (m_btnMirror.GetCheck() != FALSE);
+		pSelWinAttr->SetMirror(m_btnMirror.GetCheck() != FALSE);
 		CString newName = GetWindowAutoName()->GetWindowName(*pSelWinAttr);
 		TYUI_SetText(m_editWinNumber, newName);
 	}
@@ -444,7 +449,7 @@ void CWindowDlg::OnBnClickedMirror()
 	AttrWindow* pSelWinAttr = GetSelWindow();
 	if (pSelWinAttr == NULL)
 		return;
-	pSelWinAttr->m_isMirror = (m_btnMirror.GetCheck() != FALSE);
+	pSelWinAttr->SetMirror(m_btnMirror.GetCheck() != FALSE);
 	UpdateInstanceCode();
 }
 
@@ -469,12 +474,12 @@ void CWindowDlg::OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult)
 	{
 		m_btnMirror.SetCheck(FALSE);
 		TYUI_Disable(m_btnMirror);
-		pSelWinAttr->m_isMirror = false;
+		pSelWinAttr->SetMirror(false);
 	}
 	else
 	{
 		TYUI_Enable(m_btnMirror);
-		pSelWinAttr->m_isMirror = (m_btnMirror.GetCheck() != FALSE);
+		pSelWinAttr->SetMirror(m_btnMirror.GetCheck() != FALSE);
 	}
 
 	pSelWinAttr->m_instanceCode = GetWindowAutoName()->GetWindowName(*pSelWinAttr);
@@ -760,10 +765,11 @@ AttrWindow* CWindowDlg::GetSelWindow()
 	return &m_winPrototypes[sels.GetMinRow()];
 }
 
-void CWindowDlg::SetEditMode(AcDbBlockReference* pBlock)
+void CWindowDlg::SetEditMode(AcDbObjectId editId)
 {
-	m_pCurEditWinRef = pBlock;
-	m_bEditMode = pBlock != NULL;
+	m_curEditWinId = editId;
+	m_bEditMode = editId != AcDbObjectId::kNull;
+
 	if (m_bEditMode==false)
 	{
 		TYUI_SetText(*GetDlgItem(IDC_BUTTON_INSERTWINDOW), L"插入");
@@ -781,7 +787,7 @@ void CWindowDlg::SetEditMode(AcDbBlockReference* pBlock)
 		TYUI_Disable(*GetDlgItem(IDC_RADIO_WINDOW));
 
 		AcDbObject* pAtt = NULL;
-		TY_GetAttributeData(pBlock->objectId(), pAtt);
+		TY_GetAttributeData(m_curEditWinId, pAtt);
 		const AttrWindow *pWinAtt = dynamic_cast<AttrWindow *>(pAtt);
 		if (pWinAtt == NULL)
 		{
@@ -789,41 +795,41 @@ void CWindowDlg::SetEditMode(AcDbBlockReference* pBlock)
 			return;
 		}
 
-		//TODO YUAN 属性更新镜像关系
-
+		//属性更新镜像关系
 		m_attBeforeEdit = *pWinAtt;
+		m_attBeforeEdit.SetMxMirror(CWindowSelect::IsReferenctMirror(m_curEditWinId));
 
 		//////////////////////////////////////////////////////////////////////////
 		//初始门窗属性数据
-		m_radioDoorWindow = (pWinAtt->GetType() == DOOR) ? 0 : 1;
+		m_radioDoorWindow = (m_attBeforeEdit.GetType() == DOOR) ? 0 : 1;
 		WindowDoorChange();
-		m_nWidth = (int)pWinAtt->GetW();
-		m_nHeight = (int)pWinAtt->GetH();
-		m_radioBayWindow = pWinAtt->m_isBayWindow ? 0 : 1;
+		m_nWidth = (int)m_attBeforeEdit.GetW();
+		m_nHeight = (int)m_attBeforeEdit.GetH();
+		m_radioBayWindow = m_attBeforeEdit.m_isBayWindow ? 0 : 1;
 		m_bAutoNumber = TRUE;
 		UpdateData(FALSE);
 
-		TYUI_SetText(m_editWinNumber, pWinAtt->GetInstanceCode());
+		TYUI_SetText(m_editWinNumber, m_attBeforeEdit.GetInstanceCode());
 
-		UpdateDimDataToComboBox(m_comboW1, *pWinAtt, L"W1");
-		UpdateDimDataToComboBox(m_comboH2, *pWinAtt, L"H2");
-		UpdateDimDataToComboBox(m_comboW3, *pWinAtt, L"W3");
+		UpdateDimDataToComboBox(m_comboW1, m_attBeforeEdit, L"W1");
+		UpdateDimDataToComboBox(m_comboH2, m_attBeforeEdit, L"H2");
+		UpdateDimDataToComboBox(m_comboW3, m_attBeforeEdit, L"W3");
 
 		CString str; 
-		str.Format(_T("%d"), (int)pWinAtt->m_heightUnderWindow);
+		str.Format(_T("%d"), (int)m_attBeforeEdit.m_heightUnderWindow);
 		TYUI_SetText(m_comboH3, str);
-		str.Format(_T("%d"), (int)pWinAtt->m_wallDis);//距外墙距离	
+		str.Format(_T("%d"), (int)m_attBeforeEdit.m_wallDis);//距外墙距离	
 		TYUI_SetText(m_comboOutWallDistance, str);
 
-		str = ViewDir2String(pWinAtt->m_viewDir);
+		str = ViewDir2String(m_attBeforeEdit.m_viewDir);
 		TYUI_SetText(m_comboViewDir, str);
-		m_btnMirror.SetCheck(pWinAtt->m_isMirror ? TRUE :FALSE);
+		m_btnMirror.SetCheck(m_attBeforeEdit.m_isMirror ? TRUE :FALSE);
 
 
 		//////////////////////////////////////////////////////////////////////////
 		//设置原型列表为当前原型
 		m_winPrototypes.clear();
-		m_winPrototypes.push_back(*pWinAtt);
+		m_winPrototypes.push_back(m_attBeforeEdit);
 
 		//////////////////////////////////////////////////////////////////////////
 		//3. 显示原型信息
@@ -886,14 +892,14 @@ void CWindowDlg::InsertAllWindows_Test()
 //////////////////////////////////////////////////////////////////////////
 CWindowDlg* g_windowDlg = NULL;
 
-void OpenWindowDlg(AcDbBlockReference* pCurEdit/* = NULL*/)
+void OpenWindowDlg(AcDbObjectId editId)
 {
 	if (g_windowDlg == NULL)
 	{
 		g_windowDlg = new CWindowDlg(acedGetAcadFrame());
 		g_windowDlg->Create(IDD_DIALOG_WINDOW);
 	}
-	g_windowDlg->SetEditMode(pCurEdit);
+	g_windowDlg->SetEditMode(editId);
 	g_windowDlg->ShowWindow(SW_SHOW);
 }
 

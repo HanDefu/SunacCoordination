@@ -86,7 +86,7 @@ void CMD_YTest()
 	vector<CWinInCad> winsSelected = CWindowSelect::SelectWindows(E_VIEW_ALL, false);
 	for (UINT i = 0; i < winsSelected.size(); i++)
 	{
-		if (winsSelected[i].m_bMirror)
+		if (winsSelected[i].m_bMxMirror)
 		{
 			n++;
 		}		

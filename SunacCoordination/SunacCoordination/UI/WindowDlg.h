@@ -59,7 +59,7 @@ public:
 	void InitCombOptions();
 	AttrWindow* GetSelWindow();
 
-	void SetEditMode(AcDbBlockReference* pBlock);
+	void SetEditMode(AcDbObjectId editId);
 
 	double GetArea()const { return (double(m_nWidth*m_nHeight)) / 1e6; }
 	bool CheckValueModulo(CComboBox& comboBox, CString p_sType, int p_value, int moduloVale = 50); //检查数据是否是50的模数
@@ -104,12 +104,12 @@ protected:
 
 	bool m_bEditMode;
 	AttrWindow m_attBeforeEdit; //编辑前的门窗属性
-	AcDbBlockReference* m_pCurEditWinRef;
+	AcDbObjectId m_curEditWinId;
 
 
 	bool m_bHasInsert; //是否已执行过插入操作
 };
 
 extern CWindowDlg* g_windowDlg;
-void OpenWindowDlg(AcDbBlockReference* pCurEdit = NULL);
+void OpenWindowDlg(AcDbObjectId editId = AcDbObjectId::kNull);
 BOOL CloseWindowDlg();

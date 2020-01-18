@@ -12,7 +12,7 @@ public:
 public:
 	AcDbObjectId m_winId;
 	AcDbObjectId m_rootId; //针对块中块的根节点
-	bool m_bMirror;			//门窗块是否镜像
+	bool m_bMxMirror;	   //门窗块的矩阵是否镜像
 	double m_rotateAngle;  //门窗块的旋转角度
 	AcGeMatrix3d m_mx;
 };
@@ -24,7 +24,9 @@ public:
 	static vector<CWinInCad> SelectWindows(eViewDir p_view, bool p_bAllWindow = false);
 	static vector<CWinInCad> SelectWindowsByRect(eViewDir p_view, TYRect p_rect);
 	
-	static bool IsReferenctMirror(const AcDbObjectId refId);	
+	static bool IsReferenctMirror(const AcDbObjectId refId);	//只判断块引用本身是否是镜像
+
+	static AcGeMatrix3d GetReferenctWorldMatrix(const AcDbObjectId refId); //得到实体的完整镜像
 
 protected:
 	static vector<CWinInCad> GetWinsInObjectIds(const vector<AcDbObjectId>& p_ids, eViewDir p_view);

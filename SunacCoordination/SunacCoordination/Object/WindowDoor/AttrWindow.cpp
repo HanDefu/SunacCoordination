@@ -987,24 +987,38 @@ CString AttrWindow::GetPrototypeDwgFilePath(eViewDir p_view)const
 	return TY_GetPrototypeFilePath() + sFileName;
 }
 
-bool AttrWindow::IsInstanceNeedMirror()const
+bool AttrWindow::IsMxMirror()const //实际的矩阵是否镜像
 {
 	bool bMirror = m_isMirror;
 	if (m_viewDir == E_VIEW_TOP)
 	{
-		bMirror = !bMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题
+		bMirror = !bMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题 Mirror
 	}
-	if (m_viewDir == E_VIEW_EXTEND) //若是展开图，直接返回false，门窗详图不用镜像
+
+	return (bMirror && (m_isMirrorWindow == false));
+}
+void AttrWindow::SetMxMirror(bool p_bMirror)
+{
+	if (m_viewDir == E_VIEW_TOP)
 	{
-		return false;
+		p_bMirror = !p_bMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题 Mirror
 	}
-	if (bMirror && (m_isMirrorWindow == false))
+
+	m_isMirror = p_bMirror;
+}
+
+bool AttrWindow::IsMirror()const//非对称窗型才有镜像
+{
+	return m_isMirror && (m_isMirrorWindow == false); 
+} 
+void AttrWindow::SetMirror(bool p_bMirror)
+{
+	if (m_isMirrorWindow)
 	{
-		return true;
+		m_isMirror = false;
+		return;
 	}
-	else
-	{
-		return false;
-	}
+
+	m_isMirror = p_bMirror;
 }
 

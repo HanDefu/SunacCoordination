@@ -133,7 +133,7 @@ CString CWindowAutoName::GetWindowName(const AttrWindow& p_att)
 
 	//镜像窗型增加"M"后缀
 	CString sMirror;
-	if (!p_att.m_isMirrorWindow && p_att.m_isMirror)
+	if (p_att.IsMirror())
 		sMirror = L"M";
 
 	//查找一个未被占用的门窗编号
