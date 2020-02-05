@@ -207,7 +207,7 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 
 	//int colorIndex = 7;
 	//int textHeight = 80;
-	//CString layer = L"0"; //TODO
+	//CString layer = L"0"; 
 
 	if (A > TOL)//如果A值存在 先标注两端的A
 	{

@@ -55,7 +55,6 @@ protected:
 	static AcGePoint3d GetWindowLeftBottomPos(AcDbObjectId p_id);
 	static bool GetWindowInsertDir(AcDbObjectId p_id, E_DIRECTION & p_dirOut);
 	static CWinInsertPara GetWindowInsertPara(AcDbObjectId p_id); //根据已插入的门窗获取其插入的信息
-	static bool IsWindowMirror(AcDbObjectId p_id);
 
 	static bool IsPrototypeCodeSame(const AcDbObjectId p_id, const AttrWindow& newWinAtt); //新的原型编号是否和之前的不同
 	static bool SetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId p_fromWinId, AcDbObjectIdArray p_relatedIds);

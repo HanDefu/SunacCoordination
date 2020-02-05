@@ -424,23 +424,6 @@ CWinInsertPara CWindowGen::GetWindowInsertPara(AcDbObjectId p_id) //根据已插入的
 	return insertPara;
 }
 
-bool CWindowGen::IsWindowMirror(AcDbObjectId p_id) 
-{
-	//定义点在左下角点
-	AcGePoint3d minPt, maxPt;
-	JHCOM_GetObjectMinMaxPoint(p_id, minPt, maxPt); //TODO 处理ucs坐标下的情况
-
-	AcGePoint3d insertPos;
-	double angle;
-	GetWindowInsertPos(p_id, insertPos, angle);
-
-	//通过矩阵判断
-
-	//正常情况插入点在左下角，根据
-	
-
-	return false; //TODO,根据门窗实例判断当前门窗在图上是否镜像
-}
 
 bool CWindowGen::IsPrototypeCodeSame(const AcDbObjectId p_id, const AttrWindow& newWinAtt)
 {
