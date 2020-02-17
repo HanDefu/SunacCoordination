@@ -2,6 +2,8 @@
 #include "ComFun_Def.h"
 using namespace std;
 
+#if (!defined ARX_2010) && (!defined ARX_2011)
+
 #include <dbeval.h>
 #include <AcValue.h>
 #include <AcDbAssocArrayRectangularParameters.h>
@@ -349,3 +351,5 @@ static AcDbEntity* createDemoEntity(int index)
 	}
 	return entity;
 }
+
+#endif

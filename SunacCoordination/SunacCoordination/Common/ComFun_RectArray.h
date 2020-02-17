@@ -5,6 +5,9 @@
 #include <brshell.h>
 #include <brcplx.h >
 
+//cad2011和之前的版本的阵列直接出来的就是若干个复制的对象，不是阵列对象
+#if (!defined ARX_2010) && (!defined ARX_2011)
+
 /*
     本文件主要涉及矩形阵列，路径阵列和环形阵列的一些操作，
 	任何一个阵列他是通过图块展示出来的，一般涉及两个id一个是选择或者遍历出来的arrayid，
@@ -67,3 +70,5 @@ for(int i = 0; i < ids1.size(); i++)
     TY_IsWindow(ids4[0],eViewDir::E_VIEW_ALL);
 }
 */
+
+#endif

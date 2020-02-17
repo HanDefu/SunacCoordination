@@ -601,7 +601,7 @@ vector<AcDbObjectId> CInstanceCodeTextMrg::GetAllInstanceCodeIds()
 
 	acedSSGet(TEXT("X"), NULL, NULL, rb, ssname);
 
-	long length;
+	Adesk::Int32 length;
 	acedSSLength(ssname, &length);
 	for (int i = 0; i< length; i++)
 	{
@@ -634,7 +634,7 @@ vector<AcDbObjectId> CInstanceCodeTextMrg::GetInstanceCodeIdsInRect(const TYRect
 	pt2[Z] = p_rect.GetRB().z;
 	acedSSGet(TEXT("W"), pt1, pt2, rb, ssname);//筛选在rect范围内的结果
 
-	long length;
+	Adesk::Int32 length;
 	acedSSLength(ssname, &length);
 	for (int i = 0; i< length; i++)
 	{

@@ -95,7 +95,7 @@ void CMD_YTest()
 	return;
 
 
-	ads_name ename;
+	/*ads_name ename;
 	ads_point pt;
 	if (acedEntSel(L"\nSelect a dynamic block reference: ", ename, pt) != RTNORM)
 	{
@@ -118,7 +118,7 @@ void CMD_YTest()
 	TYCOM_CycleBlockReferenceEntites(ids3[0],ids4);
 	TY_IsWindow(ids4[0],E_VIEW_ALL);
 
-	/*vAcDbObjectId allWindowIds;
+	vAcDbObjectId allWindowIds;
 	TYCOM_DeepCycleBlockReferences(eId, E_VIEW_FRONT, TY_IsWindow, allWindowIds);
 
 	vector<AttrWindow> winPrototypes = WebIO::GetInstance()->GetWindows(1500, 1700, _T("不限"), 0, _T("不限"));

@@ -1,13 +1,16 @@
 #include "StdAfx.h"
 #include <dbeval.h>
 #include <AcValue.h>
+
+#if (!defined ARX_2010) && (!defined ARX_2011)
 #include <AcDbAssocArrayRectangularParameters.h>
 #include <AcDbAssocArrayActionBody.h>
-#include <AcDbAssocManager.h>
-#include "dbobjptr2.h"
 #include <AcDbAssocArrayPathParameters.h>
 #include <AcDbAssocArrayPolarParameters.h>
+#endif
 
+#include <AcDbAssocManager.h>
+#include "dbobjptr2.h"
 #include "WindowSelect.h"
 #include "WindowAutoName.h"
 #include "..\..\Common\ComFun_Def.h"
@@ -166,9 +169,13 @@ int CWindowSelect::FindWindowsDeep(const AcDbObjectId inputId, const eViewDir vi
 		return 0;
 
 
+	bool bArray = false;
+
 	AcDbBlockReference * pBRef = AcDbBlockReference::cast(pEnt);
-	const bool bBlock = (pBRef != NULL);
-	const bool bArray = AcDbAssocArrayActionBody::isAssociativeArray(pEnt);
+    const bool bBlock = (pBRef != NULL);
+#if (!defined ARX_2010) && (!defined ARX_2011)
+    bArray  = AcDbAssocArrayActionBody::isAssociativeArray(pEnt);
+#endif
 	pEnt->close();
 
 	if (bArray) 
@@ -263,9 +270,14 @@ int CWindowSelect::FindWindowInArray(const AcDbObjectId inputId, const eViewDir 
 
 	const AcGeMatrix3d curMx = p_parentMx*curReferenceMx;
 
+
 	vAcDbObjectId ids;
+#if (defined ARX_2010) || (defined ARX_2011)
+	ids.push_back(inputId);
+#else
 	AcDbObjectId actionID = TYCOM_GetActionId(inputId);
 	TYCOM_GetArrayObjects(actionID, ids);
+#endif
 
 	vAcDbObjectId ids2;
 	for (int i = 0; i < ids.size(); i++)
