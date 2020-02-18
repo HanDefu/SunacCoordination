@@ -90,7 +90,7 @@ int CWindowLocalDataFromDB::OutputWindowData(void *NotUsed, int nCol, char **val
 {
 	AttrWindow oneWinAtt;
 		
-	for (int i = 0; i < 12; i++)
+	for (int i = 0; i < 14; i++)
 	{
 		if (strcmp(ColName[i], "PrototypeCode") == 0)
 		{
@@ -152,20 +152,20 @@ int CWindowLocalDataFromDB::OutputWindowData(void *NotUsed, int nCol, char **val
 		{
 			oneWinAtt.m_isMirrorWindow = atoi(value[i]) ? true : false;
 		}
-		else if (strcmp(ColName[i], "IsSymmetrical") == 0)
+		else if (strcmp(ColName[i], "IsFireproof") == 0)
 		{
 			oneWinAtt.m_isFireproofWindow = atoi(value[i]) ? true : false;
 		}
 	}
 
-	const CWindowsDimData TempDimDataW = GetWindowDimData(_T("W"), value, 12);
-	const CWindowsDimData TempDimDataH = GetWindowDimData(_T("H"), value, 18);
-	const CWindowsDimData TempDimDataW1 = GetWindowDimData(_T("W1"), value, 24);
-	const CWindowsDimData TempDimDataW2 = GetWindowDimData(_T("W2"), value, 30);
-	const CWindowsDimData TempDimDataW3 = GetWindowDimData(_T("W3"), value, 36);
-	const CWindowsDimData TempDimDataH1 = GetWindowDimData(_T("H1"), value, 42);
-	const CWindowsDimData TempDimDataH2 = GetWindowDimData(_T("H2"), value, 48);
-	const CWindowsDimData TempDimDataH3 = GetWindowDimData(_T("H3"), value, 54);
+	const CWindowsDimData TempDimDataW = GetWindowDimData(_T("W"), value, 14);
+	const CWindowsDimData TempDimDataH = GetWindowDimData(_T("H"), value, 20);
+	const CWindowsDimData TempDimDataW1 = GetWindowDimData(_T("W1"), value, 26);
+	const CWindowsDimData TempDimDataW2 = GetWindowDimData(_T("W2"), value, 32);
+	const CWindowsDimData TempDimDataW3 = GetWindowDimData(_T("W3"), value, 38);
+	const CWindowsDimData TempDimDataH1 = GetWindowDimData(_T("H1"), value, 44);
+	const CWindowsDimData TempDimDataH2 = GetWindowDimData(_T("H2"), value, 50);
+	const CWindowsDimData TempDimDataH3 = GetWindowDimData(_T("H3"), value, 56);
 	oneWinAtt.SetDimData(TempDimDataW);
 	oneWinAtt.SetDimData(TempDimDataW1);
 	oneWinAtt.SetDimData(TempDimDataW2);

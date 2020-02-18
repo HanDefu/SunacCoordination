@@ -458,9 +458,11 @@ void CWindowDetail::CreateDetailTextStyle(CString dimname)
 
 	// 设置字体样式表记录的名称
 	pTextStyleTblRcd->setName(dimname);
+
 	// 设置字体文件名称
 	pTextStyleTblRcd->setFileName(L"simplex.shx");
-	pTextStyleTblRcd->setBigFontFileName(L"gbcbig.shx");
+	pTextStyleTblRcd->setBigFontFileName(L"bigfont.shx");
+
 	// 设置高宽比例
 	pTextStyleTblRcd->setXScale(0.5647);
 
