@@ -193,6 +193,7 @@ public:
 
 	bool m_isZhuanJiao;		//是否转角窗
 	bool m_isMirrorWindow;	//是否对称窗型 
+	bool m_isFireproofWindow;//是否防火窗
 
 	//////////////////////////////////////////////////////////////////////////
 	//算量相关

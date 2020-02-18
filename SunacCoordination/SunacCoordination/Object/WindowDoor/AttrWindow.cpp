@@ -152,6 +152,7 @@ AttrWindow::AttrWindow()
 	m_openQty = 1;
 	m_isZhuanJiao = false;//是否转角窗
 	m_isMirrorWindow = false;
+	m_isFireproofWindow = false;
 
 	m_tongFengFormula = L"";//通风量计算公式
 	m_tongFengQty = 0.0;
@@ -261,6 +262,7 @@ void AttrWindow::Clone(const AttrWindow& rhs)
 
 	m_isZhuanJiao = rhs.m_isZhuanJiao;		//是否转角窗
 	m_isMirrorWindow = rhs.m_isMirrorWindow;	//是否对称窗型 
+	m_isFireproofWindow = rhs.m_isFireproofWindow; //是否防火窗型
 
 	//////////////////////////////////////////////////////////////////////////
 	//算量相关
@@ -590,6 +592,8 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 
 	filer->readItem(&m_isMirrorWindow);
 
+	filer->readItem(&m_isFireproofWindow);
+
 	filer->readItem(&m_isMirror);
 
 	filer->readItem((Adesk::UInt32*)&m_viewDir);
@@ -714,6 +718,8 @@ Acad::ErrorStatus AttrWindow::dwgOutFields(AcDbDwgFiler* filer) const
 	filer->writeItem(m_isZhuanJiao);
 
 	filer->writeItem(m_isMirrorWindow);
+
+	filer->writeItem(m_isFireproofWindow);
 
 	filer->writeItem(m_isMirror);
 

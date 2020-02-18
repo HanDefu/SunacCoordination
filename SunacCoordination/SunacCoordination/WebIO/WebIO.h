@@ -37,8 +37,8 @@ public:
 public:
 	//width宽度值，注意高度值不作为搜索条件 
 	//openType开启类型，openNum开启扇数量0表示不限， gongNengQu功能区， tongFengLiang通风量
-	std::vector<AttrWindow >  GetWindows(double width, double height, CString openType, int openNum, CString gongNengQu)const;
-	std::vector<AttrWindow >  GetDoors(double width, double height, CString openType, int openNum, CString gongNengQu)const;
+	std::vector<AttrWindow >  GetWindows(double width, double height, CString openType, int openNum, CString gongNengQu, BOOL isFireproof)const;
+	std::vector<AttrWindow >  GetDoors(double width, double height, CString openType, int openNum, CString gongNengQu, BOOL isFireproof)const;
 
 	std::vector<AttrWindow> GetAllWindows(); //获取所有窗户
 	std::vector<AttrWindow> GetAllDoors();  //获取所有门

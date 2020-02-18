@@ -84,6 +84,7 @@ protected:
 	CComboBox m_comboOpenType; //开启类型
 	CComboBox m_comboOpenAmount; //开启扇数量
 	CEdit m_editVentilation; //通风量
+	BOOL m_isFireproof; //是否防火窗
 	
 	BOOL m_bAutoNumber; //是否自动门窗编号
 	CEdit m_editWinNumber; //门窗编号
@@ -107,7 +108,7 @@ protected:
 	AcDbObjectId m_curEditWinId;
 
 
-	bool m_bHasInsert; //是否已执行过插入操作
+	bool m_bHasInsert; //是否已执行过插入操作	
 };
 
 extern CWindowDlg* g_windowDlg;

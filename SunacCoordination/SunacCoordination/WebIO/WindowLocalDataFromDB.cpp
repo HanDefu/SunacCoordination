@@ -152,6 +152,10 @@ int CWindowLocalDataFromDB::OutputWindowData(void *NotUsed, int nCol, char **val
 		{
 			oneWinAtt.m_isMirrorWindow = atoi(value[i]) ? true : false;
 		}
+		else if (strcmp(ColName[i], "IsSymmetrical") == 0)
+		{
+			oneWinAtt.m_isFireproofWindow = atoi(value[i]) ? true : false;
+		}
 	}
 
 	const CWindowsDimData TempDimDataW = GetWindowDimData(_T("W"), value, 12);
@@ -262,7 +266,7 @@ vector<AttrWindow> CWindowLocalDataFromDB::GetAllDoors()const  //获取所有门
 	return alldoor;
 }
 
-std::vector<AttrWindow >  CWindowLocalDataFromDB::GetWindows(double width, double height, CString openType, int openNum, CString gongNengQu)const
+std::vector<AttrWindow >  CWindowLocalDataFromDB::GetWindows(double width, double height, CString openType, int openNum, CString gongNengQu, BOOL isFireproof)const
 {
 	std::vector<AttrWindow> data;
 
@@ -312,6 +316,11 @@ std::vector<AttrWindow >  CWindowLocalDataFromDB::GetWindows(double width, doubl
 			}
 		}
 
+		if (isFireproof != (m_allWindowsData[i].m_isFireproofWindow ? FALSE : TRUE))
+		{
+			continue;
+		}
+
 		data.push_back(m_allWindowsData[i]);
 	}
 
@@ -319,7 +328,7 @@ std::vector<AttrWindow >  CWindowLocalDataFromDB::GetWindows(double width, doubl
 	return data;
 }
 
-std::vector<AttrWindow >  CWindowLocalDataFromDB::GetDoors(double width, double height, CString openType, int openNum, CString gongNengQu)const
+std::vector<AttrWindow >  CWindowLocalDataFromDB::GetDoors(double width, double height, CString openType, int openNum, CString gongNengQu, BOOL isFireproof)const
 {
 	std::vector<AttrWindow> data;
 
@@ -365,6 +374,12 @@ std::vector<AttrWindow >  CWindowLocalDataFromDB::GetDoors(double width, double 
 		{
 			continue;
 		}*/
+
+
+		if (isFireproof != (m_allWindowsData[i].m_isFireproofWindow ? FALSE : TRUE))
+		{
+			continue;
+		}
 
 		data.push_back(m_allWindowsData[i]);
 	}

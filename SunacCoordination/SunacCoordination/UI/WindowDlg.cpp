@@ -26,6 +26,7 @@ CWindowDlg::CWindowDlg(CWnd* pParent /*=NULL*/)
 	, m_nWidth(1500)
 	, m_nHeight(1700)
 	, m_nThickness(200)
+	, m_isFireproof(TRUE)
 {
 	m_bEditMode = false;
 	m_curEditWinId = AcDbObjectId::kNull;
@@ -112,6 +113,7 @@ void CWindowDlg::DoDataExchange(CDataExchange* pDX)
 	DDV_MinMaxInt(pDX, m_nWidth, 100, 20000);
 	DDX_Text(pDX, IDC_EDIT_HEIGHT, m_nHeight);
 	DDV_MinMaxInt(pDX, m_nHeight, 100, 5000);
+	DDX_Radio(pDX, IDC_ISFIREPROOF_RADIO, m_isFireproof);
 }
 
 
@@ -191,10 +193,13 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		double minW = 0;
 		double maxW = 0;
 		pSelWinAttr->GetWRange(minW, maxW);
-		CString str; 
-		str.Format(_T("洞口宽度不在此原型尺寸范围内(%d - %d)"), (int)minW, (int)maxW);
-		AfxMessageBox(str);
-		return;
+		if (m_nWidth > maxW || m_nWidth < minW)
+		{
+			CString str; 
+			str.Format(_T("洞口宽度不在此原型尺寸范围内(%d - %d)"), (int)minW, (int)maxW);
+			AfxMessageBox(str);
+			return;
+		}
 	}
 
 	if (pSelWinAttr->GetTongFengQty(false) + TOL < TYUI_GetDouble(m_editVentilation))
@@ -291,9 +296,9 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 	CString areaType = TYUI_GetComboBoxText(m_comboAreaType);
 
 	if (m_radioDoorWindow == 0)
-		m_winPrototypes = WebIO::GetInstance()->GetDoors(m_nWidth, m_nHeight, openType, openNum, areaType);
+		m_winPrototypes = WebIO::GetInstance()->GetDoors(m_nWidth, m_nHeight, openType, openNum, areaType, m_isFireproof);
 	else
-		m_winPrototypes = WebIO::GetInstance()->GetWindows(m_nWidth, m_nHeight, openType, openNum, areaType);
+		m_winPrototypes = WebIO::GetInstance()->GetWindows(m_nWidth, m_nHeight, openType, openNum, areaType, m_isFireproof);
 	
 	for (UINT i = 0; i < m_winPrototypes.size(); i++)
 	{
