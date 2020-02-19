@@ -90,5 +90,7 @@ protected:
 	static void CreateDetailTextStyle(CString dimname); //创建字体样式的字体
 
 	static AcDbObjectId AddAlignedDimensionAndStyle(AcGePoint3d start, AcGePoint3d end, AcGePoint3d dimlinpnt, double size);
+
+	static void CreateHeightUnderWindow(AcGePoint3d start, double heightUnderWindow, double offset, const ACHAR* entryName = ACDB_MODEL_SPACE);
 };
 

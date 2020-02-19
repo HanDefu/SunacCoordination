@@ -363,6 +363,15 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 	//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
 	AddAlignedDimensionAndStyle(start, end, mid, W);
 
+	//标注窗下墙高
+	double heightUnderWindow = winAtt.GetHeightUnderWindow();
+	start = rect.GetRB();
+
+	if (heightUnderWindow > 0 && winAtt.GetPrototypeCode().Find(_T("Window")) >= 0)
+	{
+		CreateHeightUnderWindow(start, heightUnderWindow, offset);
+	}
+
 	MD2010_SetCurrentLayer(oldLayerName);
 
 	return 0;
@@ -437,7 +446,7 @@ int CWindowDetail::SetDetailTextStyle(CString dimname)
 	pTextStylTbl->getAt(dimname, pTextStylerTblRcd, AcDb::kForWrite);
 
 	pTextStylerTblRcd->setFileName(L"simplex.shx");
-	pTextStylerTblRcd->setBigFontFileName(L"gbcbig.shx");
+	pTextStylerTblRcd->setBigFontFileName(L"bigfont.shx");
 	pTextStylerTblRcd->setXScale(0.5647);
 	
 	pTextStylerTblRcd->close();
@@ -471,4 +480,40 @@ void CWindowDetail::CreateDetailTextStyle(CString dimname)
 	pTextStyleTblRcd->close();
 	pTextStyleTbl->close();
 }
+
+void CWindowDetail::CreateHeightUnderWindow(AcGePoint3d start, double heightUnderWindow, double offset, const ACHAR* entryName)
+{
+	//画出倒三角下直线
+	AcGePoint3d ptStart1(start.x + offset * 2, start.y, start.z);
+	AcGePoint3d ptEnd1(ptStart1.x + 200, ptStart1.y, ptStart1.z);
+	//画出倒三角
+	AcGePoint3d pt1(ptStart1.x + 150, ptStart1.y, ptStart1.z);
+	AcGePoint3d pt2(ptStart1.x + 100, ptStart1.y + 50, ptStart1.z);
+	AcGePoint3d pt3(ptStart1.x + 200, ptStart1.y + 50, ptStart1.z);
+	//画出倒三角上直线
+	AcGePoint3d ptStart2(ptStart1.x + 200, ptStart1.y + 50, ptStart1.z);
+	AcGePoint3d ptEnd2(ptStart1.x + 300, ptStart1.y + 50, ptStart1.z);
+	
+	AcDbLine *pLine1 = new AcDbLine(ptStart1, ptEnd1);
+	AcDbLine *pLine2 = new AcDbLine(pt1, pt2);
+	AcDbLine *pLine3 = new AcDbLine(pt2, pt3);
+	AcDbLine *pLine4 = new AcDbLine(pt3, pt1);
+	AcDbLine *pLine5 = new AcDbLine(ptStart2, ptEnd2);
+
+	MD2010_PostModalToBlockTable(entryName, pLine1);
+	MD2010_PostModalToBlockTable(entryName, pLine2);
+	MD2010_PostModalToBlockTable(entryName, pLine3);
+	MD2010_PostModalToBlockTable(entryName, pLine4);
+	MD2010_PostModalToBlockTable(entryName, pLine5);
+
+	pLine1->close();
+	pLine2->close();
+	pLine3->close();
+	pLine4->close();
+	pLine5->close();
+
+	//创建窗下墙标注
+	AcDbObjectId heightUnderWindowDimID = AddAlignedDimensionAndStyle(ptStart2, ptEnd2, ptEnd2, heightUnderWindow);
+}
+
 
