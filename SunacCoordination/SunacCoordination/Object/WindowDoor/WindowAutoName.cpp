@@ -127,9 +127,17 @@ CString CWindowAutoName::GetWindowName(const AttrWindow& p_att)
 	prototype.Replace(L"WINDOW_", L"");
 	prototype.Replace(L"DOOR_", L"");
 
+	prototype=prototype.SpanExcluding(_T("0123456789")); //移除后面的数字  YUAN 20200222
+	if (p_att.m_isFireproofWindow)
+	{
+		prototype = _T("FC");//若是防火窗，则变为FC开头
+	}
+
 	//根据"原型编号_尺寸编号"生成门窗编号
 	CString sWindowName;
-	sWindowName.Format(L"%s_%02d%02d", prototype, (int)p_att.GetW() / 100, (int)p_att.GetH() / 100);
+	//sWindowName.Format(L"%s_%02d%02d", prototype, (int)p_att.GetW() / 100, (int)p_att.GetH() / 100);
+	sWindowName.Format(L"%s%02d%02d", prototype, (int)p_att.GetW() / 100, (int)p_att.GetH() / 100);//移除后面的数字  YUAN 20200222
+	
 
 	//镜像窗型增加"M"后缀
 	CString sMirror;
