@@ -58,7 +58,6 @@ CDocumentFactory& CDocumentFactory::Instance()
 
 CDocumentFactory::CDocumentFactory()
 {
-	m_bTempLoadDwg = false;
 }
 CDocumentFactory::~CDocumentFactory()
 {

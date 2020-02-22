@@ -114,16 +114,18 @@ AcGePoint3d CWindowGen::GetBlockInsertPos(const AcDbObjectId p_id, const AttrWin
 		AcGeVector3d offsetXY(0, 0, 0);
 		switch (p_winDir)
 		{
-		case E_DIR_BOTTOM:
+		case E_DIR_BOTTOM:	//南
 			offsetXY.x += W;
 			break;
-		case E_DIR_RIGHT:
+		case E_DIR_TOP:		//北
+			offsetXY.y += curWinAtt.GetD();
+			break;
+		case E_DIR_RIGHT:	//东
+			offsetXY.x += curWinAtt.GetD();
 			W = (maxPt.y - minPt.y);
 			offsetXY.y += W;
 			break;
-		case E_DIR_TOP:
-			break;
-		case E_DIR_LEFT:
+		case E_DIR_LEFT:	//西
 			break;
 		default:
 			break;

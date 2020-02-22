@@ -362,7 +362,7 @@ void AttrWindow::CheckAndComplementDimeData() //检查并补全Dim数据，W/H/a确保都有
 		dimData.SetDefaultValue(25);
 		SetDimData(dimData);
 	}
-	if (GetDimData(_T("d")) == NULL) //墙厚度
+	if (GetDimData(_T("D")) == NULL) //墙厚度
 	{
 		CWindowsDimData dimData;
 		dimData.sCodeName = _T("D");
