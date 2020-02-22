@@ -948,6 +948,24 @@ bool AttrWindow::IsInstanceEqual(const AttrWindow& p_att) const
 	if (!m_isMirrorWindow && m_isMirror != p_att.m_isMirror) 
 		return false;
 
+	//是否防火窗
+	if (m_isFireproofWindow!=p_att.m_isFireproofWindow)
+	{
+		return false;
+	}
+
+	//是否有附框， 附框尺寸通常是相同的，不进行比较
+	if (m_material.bHasAuxiliaryFrame!=p_att.m_material.bHasAuxiliaryFrame)
+	{
+		return false;
+	}
+
+	//型材
+	if (0!=m_material.sAluminumSerial.CompareNoCase( p_att.m_material.sAluminumSerial))
+	{
+		return false;
+	}
+
 	return true;
 }
 
