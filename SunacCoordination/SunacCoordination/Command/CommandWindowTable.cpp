@@ -8,6 +8,7 @@
 #include <rxmfcapi.h>
 #include <dbgroup.h>
 #include <geassign.h>
+#include <algorithm>
 #include "accmd.h"
 #include "dbtable.h"
 #include "Command.h"
@@ -48,8 +49,6 @@ void CMD_SunacWindowsTable()
 		AfxMessageBox(_T("统计失败，请给平面图门窗设置楼层信息"));
 		return;
 	}
-
-
 
 	//第四步 开始输出数据
 	int numWindow = (int)winCountArray.GetCount();
@@ -260,6 +259,297 @@ void CMD_SunacWindowsTable()
 
 	AcDbObjectId tableId = JHCOM_PostToModelSpace(table);
 
+
+	//对选择的门窗高亮
+	vAcDbObjectId winIds;
+	for (UINT i = 0; i < wins.size(); i++)
+	{
+		winIds.push_back(wins[i].m_winId);
+	}
+	CCommandHighlight::GetInstance()->WindowDoorHighlight(winIds);
+
+	return;
+}
+
+//p_dataStartRow为开始行号, p_numWindowDoor为一个门窗类型的数量
+void WriteDataToTable(AcDbTable *p_table, int p_dataStartRow, int p_numWindowDoor, const CWindowAndCount& p_winAndCount)
+{
+	const AttrWindow * pWinAtt = &(p_winAndCount.winAtt);
+	//设计编号
+	p_table->setTextString(p_dataStartRow, 2, pWinAtt->GetInstanceCode());
+
+	//洞口尺寸
+	CString W, H;
+	W.Format(L"%d", (int)(pWinAtt->GetW()));
+	H.Format(L"%d", (int)(pWinAtt->GetH()));
+	p_table->setTextString(p_dataStartRow, 3, W + L"*" + H);
+
+	//首层
+
+	//二层
+
+	//三～十五层
+
+	//十六层
+
+	//机房层
+
+	//合计
+
+	//图集名称
+
+	//备注
+
+}
+
+void CMD_SunacFloorWindowsTable()
+{
+	CString info, str;
+
+	CCommandHighlight::GetInstance()->WindowDoorNoHighlight();
+
+	//第一步：选择需要统计的门窗
+	eViewDir viewDir = E_VIEW_FRONT;
+	bool bSuc1 = SelectViewDir(viewDir);
+	if (bSuc1 == false)
+		return;
+
+	const vector<CWinInCad> wins = CWindowSelect::SelectWindows(viewDir);
+	if (wins.size() == 0)
+		return;
+
+	//第二步  选择门窗表插入点
+	AcGePoint3d pnt;
+	bool bSuc = TY_GetPoint(pnt, L"请选择门窗表插入点");
+	if (bSuc == false)
+		return;
+
+	//第三步：读取门窗数据并且分类汇总
+	CWindowCountArray winCountArray;
+	bSuc = winCountArray.InitByWindowIds(wins);
+	if (bSuc == false)
+	{
+		AfxMessageBox(_T("统计失败，请给平面图门窗设置楼层信息"));
+		return;
+	}
+
+	//第四步 开始输出数据
+	AcDbTable *table = new AcDbTable();
+
+	//t通用设置
+	table->setPosition(pnt);
+	table->setAlignment(AcDb::kMiddleCenter);
+
+	//1.设置行数列数, 说明：2 是标题栏
+	int numWindowDoor = (int)winCountArray.GetCount();
+	int allRowNum = 2 + numWindowDoor;
+	table->setNumRows(allRowNum);
+	table->setNumColumns(12);
+	table->setColumnWidth(1000);
+	table->setRowHeight(300);
+
+	//1.1 特殊列宽度设置
+	table->setColumnWidth(0, 700);
+	table->setColumnWidth(1, 2000);
+	table->setColumnWidth(6, 1500);
+	table->setColumnWidth(11, 2000);
+	table->setRowHeight(1, 500);
+
+	//----2.设置字体高度----//
+	table->setTextHeight(0, 0, 100);
+	//其他所有的设置100高
+	for (int i = 1; i < allRowNum; i++)
+	{
+		for (int j = 0; j < 17; j++)
+		{
+			table->setTextHeight(i, j, 100);
+			table->setAlignment(i, j, AcDb::kMiddleCenter);
+		}
+	}
+	
+	//------3.将数据写入表格-----//
+	// 3.1 合并Title 并将列名写入表格
+	table->mergeCells(0, 0, 0, 11);
+	table->mergeCells(1, 1, 0, 1);
+
+	Acad::ErrorStatus es;
+	es = table->setTextString(0, 0, L"门窗表");//0,0起头
+	table->setTextString(1, 0, L"类型");
+	table->setTextString(1, 2, L"设计编号");
+	table->setTextString(1, 3, L"洞口尺寸(mm)");
+	table->setTextString(1, 4, L"首层");
+	table->setTextString(1, 5, L"二层");
+	table->setTextString(1, 6, L"三～十五层(*13)");
+	table->setTextString(1, 7, L"十六层");
+	table->setTextString(1, 8, L"机房层");
+	table->setTextString(1, 9, L"合计");
+	table->setTextString(1, 10, L"图集名称");
+	table->setTextString(1, 11, L"备注");
+
+	//开始行号，结束行号
+	int dataStartRow = 2;
+	int dataEndRow = 1;
+
+	//3.2 确定门、窗的数量以便合并表格，将"门"写入表格
+	int numDoor = winCountArray.GetDoorsCount();
+	if (numDoor > 0)
+	{
+		dataEndRow = dataStartRow + numDoor - 1;
+		table->mergeCells(dataStartRow, dataEndRow, 0, 0);
+		table->setTextString(dataStartRow, 0, L"门");
+	}
+
+	int numWindow =  winCountArray.GetWindowsCount();
+	if (numWindow > 0)
+	{
+		dataStartRow = dataEndRow + 1;
+		dataEndRow = dataStartRow + numWindow - 1;
+		table->mergeCells(dataStartRow, dataEndRow, 0, 0);
+		table->setTextString(dataStartRow, 0, L"窗");
+	}
+
+	//3.3 对选择的门窗进行分类
+	CSplitWindowDoorArray splitWindowDoorArray;
+	splitWindowDoorArray.ClearSplitWindowDoor();
+	for (int i = 0; i < numWindowDoor; i++)
+	{
+		const CWindowAndCount& winAndCount = winCountArray.GetWindow(i);
+		splitWindowDoorArray.SplitWindowDoor(numWindowDoor, winAndCount);
+	}
+
+	//3.4 按照各个类型的门窗将数据写入表格
+	//将开始行号设为2，结束行号设为1
+	dataStartRow = 2;
+	dataEndRow = 1;
+
+	//3.4.1 外开门
+	int numDoorWM = splitWindowDoorArray.GetDoorWMCount();
+	if (numDoorWM > 0)
+	{
+		dataEndRow = dataStartRow + numDoorWM - 1;
+		table->mergeCells(dataStartRow, dataEndRow, 1, 1);
+		table->setTextString(dataStartRow, 1, L"铝型材外开门");
+		for (int i = 0; i < numDoorWM; i++)
+		{
+			dataStartRow += i;
+			const CWindowAndCount& winAndCount = splitWindowDoorArray.GetDoorWM(i);
+			WriteDataToTable(table, dataStartRow, numDoorWM, winAndCount);
+		}
+	}
+
+	//3.4.2 门连窗
+	int numDoorWLC = splitWindowDoorArray.GetDoorWLCCount();
+	if (numDoorWLC > 0)
+	{
+		dataStartRow = dataEndRow + 1;
+		dataEndRow = dataStartRow + numDoorWLC - 1;
+		table->mergeCells(dataStartRow, dataEndRow, 1, 1);
+		table->setTextString(dataStartRow, 1, L"铝型材门连窗");
+		for (int i = 0; i < numDoorWLC; i++)
+		{
+			dataStartRow += i;
+			const CWindowAndCount& winAndCount = splitWindowDoorArray.GetDoorWLC(i);
+			WriteDataToTable(table, dataStartRow, numDoorWLC, winAndCount);
+		}
+	}
+
+	//3.4.3 推拉门
+	int numDoorTLM = splitWindowDoorArray.GetDoorTLMCount();
+	if (numDoorTLM > 0)
+	{
+		dataStartRow = dataEndRow + 1;
+		dataEndRow = dataStartRow + numDoorTLM - 1;
+		table->mergeCells(dataStartRow, dataEndRow, 1, 1);
+		table->setTextString(dataStartRow, 1, L"铝型材推拉门");
+		for (int i = 0; i < numDoorTLM; i++)
+		{
+			dataStartRow += i;
+			const CWindowAndCount& winAndCount = splitWindowDoorArray.GetDoorTLM(i);
+			WriteDataToTable(table, dataStartRow, numDoorTLM, winAndCount);
+		}
+	}
+
+	//3.4.4 提升推拉门
+	int numDoorTSTLM = splitWindowDoorArray.GetDoorTSTLMCount();
+	if (numDoorTSTLM > 0)
+	{
+		dataStartRow = dataEndRow + 1;
+		dataEndRow = dataStartRow + numDoorTSTLM - 1;
+		table->mergeCells(dataStartRow, dataEndRow, 1, 1);
+		table->setTextString(dataStartRow, 1, L"铝型材提升推拉门");
+		for (int i = 0; i < numDoorTSTLM; i++)
+		{
+			dataStartRow += i;
+			const CWindowAndCount& winAndCount = splitWindowDoorArray.GetDoorTSTLM(i);
+			WriteDataToTable(table, dataStartRow, numDoorTSTLM, winAndCount);
+		}
+	}
+
+	//3.4.5 内开窗
+	int numWindowNC = splitWindowDoorArray.GetWindowNCCount();
+	if (numWindowNC > 0)
+	{
+		dataStartRow = dataEndRow + 1;
+		dataEndRow = dataStartRow + numWindowNC - 1;
+		table->mergeCells(dataStartRow, dataEndRow, 1, 1);
+		table->setTextString(dataStartRow, 1, L"铝型材内开窗");
+		for (int i = 0; i < numWindowNC; i++)
+		{
+			dataStartRow += i;
+			const CWindowAndCount& winAndCount = splitWindowDoorArray.GetWindowNC(i);
+			WriteDataToTable(table, dataStartRow, numWindowNC, winAndCount);
+		}
+	}
+
+	//3.4.6 内开内倒窗
+	int numWindowNDC = splitWindowDoorArray.GetWindowNDCCount();
+	if (numWindowNDC > 0)
+	{
+		dataStartRow = dataEndRow + 1;
+		dataEndRow = dataStartRow + numWindowNDC - 1;
+		table->mergeCells(dataStartRow, dataEndRow, 1, 1);
+		table->setTextString(dataStartRow, 1, L"铝型材内开内倒窗");
+		for (int i = 0; i < numWindowNDC; i++)
+		{
+			dataStartRow += i;
+			const CWindowAndCount& winAndCount = splitWindowDoorArray.GetWindowNDC(i);
+			WriteDataToTable(table, dataStartRow, numWindowNDC, winAndCount);
+		}
+	}
+
+	//3.4.7 推拉窗
+	int numWindowTC = splitWindowDoorArray.GetWindowTCCount();
+	if (numWindowTC > 0)
+	{
+		dataStartRow = dataEndRow + 1;
+		dataEndRow = dataStartRow + numWindowTC - 1;
+		table->mergeCells(dataStartRow, dataEndRow, 1, 1);
+		table->setTextString(dataStartRow, 1, L"铝型材推拉窗");
+		for (int i = 0; i < numWindowTC; i++)
+		{
+			dataStartRow += i;
+			const CWindowAndCount& winAndCount = splitWindowDoorArray.GetWindowTC(i);
+			WriteDataToTable(table, dataStartRow, numWindowTC, winAndCount);
+		}
+	}
+
+	//3.4.8 外开窗
+	int numWindowWC = splitWindowDoorArray.GetWindowWCCount();
+	if (numWindowWC > 0)
+	{
+		dataStartRow = dataEndRow + 1;
+		dataEndRow = dataStartRow + numWindowWC - 1;
+		table->mergeCells(dataStartRow, dataEndRow, 1, 1);
+		table->setTextString(dataStartRow, 1, L"铝型材外开窗");
+		for (int i = 0; i < numWindowWC; i++)
+		{
+			dataStartRow += i;
+			const CWindowAndCount& winAndCount = splitWindowDoorArray.GetWindowWC(i);
+			WriteDataToTable(table, dataStartRow, numWindowWC, winAndCount);
+		}
+	}
+
+	AcDbObjectId tableId = JHCOM_PostToModelSpace(table);
 
 	//对选择的门窗高亮
 	vAcDbObjectId winIds;

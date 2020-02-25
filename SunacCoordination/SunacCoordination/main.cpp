@@ -1026,7 +1026,7 @@ static void initApp()
 		_T("SWINTABLE"),
 		_T("SWINTABLE"),
 		ACRX_CMD_MODAL,
-		CMD_SunacWindowsTable,
+		CMD_SunacFloorWindowsTable,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());

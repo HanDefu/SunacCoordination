@@ -447,3 +447,80 @@ bool CWindowCountArray::InitByWindowAtts(const vector<AttrWindow>& p_winAtts, co
 
 	return bSuc;
 }
+
+int CWindowCountArray::GetDoorsCount()
+{
+	int count = 0;
+	for (int i = 0; i < GetCount(); i++)
+	{
+		if (m_winCountArray[i].winAtt.GetPrototypeCode().Find(L"Door") >= 0)
+		{
+			count++;
+		}
+	}
+
+	return count;
+}
+
+int CWindowCountArray::GetWindowsCount()
+{
+	int count = 0;
+	for (int i = 0; i < GetCount(); i++)
+	{
+		if (m_winCountArray[i].winAtt.GetPrototypeCode().Find(L"Window") >= 0)
+		{
+			count++;
+		}
+	}
+
+	return count;
+}
+
+void CSplitWindowDoorArray::SplitWindowDoor(int p_numWindowDoor, const CWindowAndCount& winAndCount)
+{
+	const AttrWindow * pWinAtt = &(winAndCount.winAtt);
+	if (pWinAtt->GetInstanceCode().Find(L"NC") >= 0 || pWinAtt->GetInstanceCode().Find(L"NZC") >= 0)
+	{
+		m_winNC.push_back(winAndCount);
+	}
+	else if (pWinAtt->GetInstanceCode().Find(L"NDC") >= 0 || pWinAtt->GetInstanceCode().Find(L"NDZC") >= 0)
+	{
+		m_winNDC.push_back(winAndCount);
+	}
+	else if (pWinAtt->GetInstanceCode().Find(L"WC") >= 0 || pWinAtt->GetInstanceCode().Find(L"WZC") >= 0)
+	{
+		m_winWC.push_back(winAndCount);
+	}
+	else if (pWinAtt->GetInstanceCode().Find(L"TC") >= 0)
+	{
+		m_winTC.push_back(winAndCount);
+	}
+	else if (pWinAtt->GetInstanceCode().Find(L"TLM") >= 0)
+	{
+		m_doorTLM.push_back(winAndCount);
+	}
+	else if (pWinAtt->GetInstanceCode().Find(L"TSTLM") >= 0)
+	{
+		m_doorTSTLM.push_back(winAndCount);
+	}
+	else if (pWinAtt->GetInstanceCode().Find(L"WM") >= 0)
+	{
+		m_doorWM.push_back(winAndCount);
+	}
+	else if (pWinAtt->GetInstanceCode().Find(L"WLC") >= 0)
+	{
+		m_doorWLC.push_back(winAndCount);
+	}
+}
+
+void CSplitWindowDoorArray::ClearSplitWindowDoor()
+{
+	m_winNC.clear();
+	m_winNDC.clear();
+	m_winWC.clear();
+	m_winTC.clear();
+	m_doorTLM.clear();
+	m_doorTSTLM.clear();
+	m_doorWM.clear();
+	m_doorWLC.clear();
+}

@@ -296,9 +296,9 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 	CString areaType = TYUI_GetComboBoxText(m_comboAreaType);
 
 	if (m_radioDoorWindow == 0)
-		m_winPrototypes = WebIO::GetInstance()->GetDoors(m_nWidth, m_nHeight, openType, openNum, areaType, m_isFireproof);
+		m_winPrototypes = WebIO::GetInstance()->GetDoors(m_nWidth, m_nHeight, openType, openNum, areaType);
 	else
-		m_winPrototypes = WebIO::GetInstance()->GetWindows(m_nWidth, m_nHeight, openType, openNum, areaType, m_isFireproof);
+		m_winPrototypes = WebIO::GetInstance()->GetWindows(m_nWidth, m_nHeight, openType, openNum, areaType);
 	
 	for (UINT i = 0; i < m_winPrototypes.size(); i++)
 	{

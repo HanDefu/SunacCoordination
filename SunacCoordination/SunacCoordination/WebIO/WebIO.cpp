@@ -120,17 +120,17 @@ bool WebIO::ParseLoginInfo(CMarkup xml)
 }
 
 //注意高度值不作为搜索条件 
-//width宽度值，openType开启类型, openNum开启扇数量  gongNengQu功能区, tongFengLiang通风量, isFireproof是否是防火窗
-std::vector<AttrWindow>  WebIO::GetWindows(double width, double height, CString openType, int openNum, CString gongNengQu, BOOL isFireproof)const
+//width宽度值，openType开启类型, openNum开启扇数量  gongNengQu功能区, tongFengLiang通风量
+std::vector<AttrWindow>  WebIO::GetWindows(double width, double height, CString openType, int openNum, CString gongNengQu)const
 {
 #ifdef WORK_LOCAL		//本地模式
-	vAttrWindow Local = CWindowLocalDataFromDB::Instance()->GetWindows(width, height, openType, openNum, gongNengQu, isFireproof);
+	vAttrWindow Local = CWindowLocalDataFromDB::Instance()->GetWindows(width, height, openType, openNum, gongNengQu);
 	return Local;
 #else
 	vAttrWindow Web = CWindowWebData::Instance()->GetWindows(width, height, openType, openNum, gongNengQu);
 
 #ifdef _WEB_TEST
-	vAttrWindow Local = CWindowLocalDataFromDB::Instance()->GetWindows(width, openType, openNum, gongNengQu, isFireproof);
+	vAttrWindow Local = CWindowLocalDataFromDB::Instance()->GetWindows(width, openType, openNum, gongNengQu);
 	for(int i = 0; i < Web.size(); i++ )
 	{
 		AttrWindow &curWebWin = Web[i];
@@ -159,10 +159,10 @@ std::vector<AttrWindow>  WebIO::GetWindows(double width, double height, CString 
 	return Web;
 #endif
 }
-std::vector<AttrWindow> WebIO::GetDoors(double width, double height, CString openType, int openNum, CString gongNengQu, BOOL isFireproof)const
+std::vector<AttrWindow> WebIO::GetDoors(double width, double height, CString openType, int openNum, CString gongNengQu)const
 {
 #ifdef WORK_LOCAL//本地模式
-	vAttrWindow Local = CWindowLocalDataFromDB::Instance()->GetDoors(width, height, openType, openNum, gongNengQu, isFireproof);
+	vAttrWindow Local = CWindowLocalDataFromDB::Instance()->GetDoors(width, height, openType, openNum, gongNengQu);
 	return Local;
 #else
 	vAttrWindow Web = CWindowWebData::Instance()->GetDoors(width, openType, openNum, gongNengQu);
