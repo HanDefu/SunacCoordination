@@ -495,7 +495,7 @@ void CSplitWindowDoorArray::SplitWindowDoor(int p_numWindowDoor, const CWindowAn
 	{
 		m_winTC.push_back(winAndCount);
 	}
-	else if (pWinAtt->GetInstanceCode().Find(L"TLM") >= 0)
+	else if (pWinAtt->GetInstanceCode().Find(L"TLM") >= 0 && pWinAtt->GetInstanceCode().Find(L"TS") < 0)
 	{
 		m_doorTLM.push_back(winAndCount);
 	}

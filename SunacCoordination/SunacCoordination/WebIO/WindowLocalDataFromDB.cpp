@@ -90,7 +90,7 @@ int CWindowLocalDataFromDB::OutputWindowData(void *NotUsed, int nCol, char **val
 {
 	AttrWindow oneWinAtt;
 		
-	for (int i = 0; i < 14; i++)
+	for (int i = 0; i < 13; i++)
 	{
 		if (strcmp(ColName[i], "PrototypeCode") == 0)
 		{
