@@ -39,11 +39,14 @@ public:
 
 	CString AutoInstanceCode(); //自动编号
 
+	void SetFloorInfo(CFloorInfo p_info){ m_floorInfo = p_info; }
+
 public:
     double m_height;		//栏杆高度
 	double m_fanKanHeight;	//反坎高度
 	double m_length;	//栏杆长
 	eRailingType m_railingType; //栏杆类型
+	CFloorInfo m_floorInfo; //楼层信息
 };
 
 class CRailingAndCount

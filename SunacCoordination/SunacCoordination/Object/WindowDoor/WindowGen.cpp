@@ -294,9 +294,7 @@ AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d
 	{
 		TYCOM_Transform(id, mat);
 	}
-
 	
-
 	//将生成的门窗加到门窗编号库中
 	if (id != AcDbObjectId::kNull && p_bDetailWnd==false)
 	{

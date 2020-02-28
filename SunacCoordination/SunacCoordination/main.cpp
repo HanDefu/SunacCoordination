@@ -1112,6 +1112,15 @@ static void initApp()
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SRAILINGFLOORSETTING"),
+		_T("SRAILINGFLOORSETTING"),
+		ACRX_CMD_MODAL | ACRX_CMD_USEPICKSET,
+		CMD_SunacRailingFloorSetting,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
 		_T("SAIRCONDITIONER"),
 		_T("SAIRCONDITIONER"),
 		ACRX_CMD_MODAL,

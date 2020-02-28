@@ -33,6 +33,7 @@ void CMD_SunacKitchenBathroomStatistic();
 void CMD_SunacRailing();
 void CMD_SunacRailingDetail();
 void CMD_SunacRailingStatistic();
+void CMD_SunacRailingFloorSetting();//À¸¸ËÂ¥²ãÉèÖÃ
 
 //¿Õµ÷
 void CMD_SunacAirconditioner();

@@ -3,6 +3,8 @@
 #include "ComFun_MFC.h"
 #include "GridCtrlWithPreview.h"
 #include "../Object/Railing/AttrRailing.h"
+#include "D:\vs2010\VC\atlmfc\include\afxwin.h"
+#include "D:\vs2010\VC\atlmfc\include\afxwin.h"
 
 // CRailingDlg 对话框
 
@@ -50,6 +52,9 @@ public:
 	BOOL m_bRailingAutoName;// 自动编号
 
 	AcDbBlockReference* m_pCurEdit;
+	CComboBox m_comboViewDir;
+
+	afx_msg void OnCbnSelchangeComboViewdir();
 };
 
 extern CRailingDlg* g_railingDlg;

@@ -346,6 +346,62 @@ void CMD_SunacRailingStatistic()
 	instance.InsertTableToCAD(insertPoint);
 }
 
+void CMD_SunacRailingFloorSetting() //栏杆楼层设置
+{
+	if (WebIO::GetInstance()->IsLogin() == false)
+	{
+		acutPrintf(_T("请先登录\n"));
+		return;
+	}
+
+	//1.选择需要设置楼层的栏杆
+	CRailingStatistic railingStatistic;
+	railingStatistic.SelectRailings();
+
+	if (railingStatistic.AllRailings().size() == 0)
+		return;
+
+	CFloorInfo floorInfo;
+
+	//2. 楼层区间
+	CString sFloors;
+	bool bSuc = GetStringInput(_T("请输入楼层区间逗号分隔,(示例 2-5,7,8):"), sFloors);
+	if (bSuc == false)
+		return;
+
+	while (floorInfo.SetFloors(sFloors) == false && bSuc)
+	{
+		bSuc = GetStringInput(_T("格式错误，请输入楼层区间逗号分隔,(示例 2-5,7,8):"), sFloors);
+	}
+	if (bSuc == false)
+		return;
+
+	//////////////////////////////////////////////////////////////////////////
+	//3.层高
+	double height = 2900;
+	bSuc = GetRealInput(_T("请输入楼层高度:"), 2900, 0, height);
+	if (bSuc == false)
+		return;
+	while (floorInfo.SetFloorHeight(height) == false && bSuc)
+	{
+		bSuc = GetRealInput(_T("楼层高度错误，请输入楼层高度:"), 2900, 0, height);
+	}
+	if (bSuc == false)
+		return;
+
+	//////////////////////////////////////////////////////////////////////////
+	//设置到选中的栏杆中
+	for (UINT i = 0; i <railingStatistic.AllRailings().size(); i++)
+	{
+		AttrRailing* pAtt = new AttrRailing;
+		pAtt->SetFloorInfo(floorInfo);
+		pAtt->close();
+	}
+
+	acutPrintf(_T("设置楼层信息成功\n"));
+}
+
+
 //线脚
 void CMD_SunacMoldings()
 {

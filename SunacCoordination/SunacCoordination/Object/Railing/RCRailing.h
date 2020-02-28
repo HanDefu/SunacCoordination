@@ -53,6 +53,12 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 	//栏杆详图
 	static void DrawRailingDetail();
+
+	AcDbObjectId GenerateRailingTop(CString p_blockName, AcGePoint3d p_pnt1, AcGePoint3d p_pnt2);
+	void CreateRailingTop(AcGePoint3d p_pnt1, AcGePoint3d p_pnt2);
+	bool GenerateInsertPt(AcGePoint3d& p_pnt1, AcGePoint3d& p_pnt2, int& p_width);//计算平面图插入点，使栏杆长为10的倍数
+	void GenerateRailingLength(int& p_width);
+
 protected:
 	virtual AcDbObjectId CreateRailingBlockDefine(CString sRailingDefName)= 0;
 	CString GetPrototypeFilePath()const ;
@@ -72,4 +78,5 @@ typedef std::vector<CRCRailing*> vpRCRailing;
 //////////////////////////////////////////////////////////////////////////
 
 CRCRailing* CreateRailing(const AttrRailing p_railingAtt);
+
 
