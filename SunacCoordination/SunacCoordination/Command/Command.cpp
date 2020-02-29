@@ -376,18 +376,18 @@ void CMD_SunacRailingFloorSetting() //栏杆楼层设置
 	if (bSuc == false)
 		return;
 
-	//////////////////////////////////////////////////////////////////////////
-	//3.层高
-	double height = 2900;
-	bSuc = GetRealInput(_T("请输入楼层高度:"), 2900, 0, height);
-	if (bSuc == false)
-		return;
-	while (floorInfo.SetFloorHeight(height) == false && bSuc)
-	{
-		bSuc = GetRealInput(_T("楼层高度错误，请输入楼层高度:"), 2900, 0, height);
-	}
-	if (bSuc == false)
-		return;
+	////////////////////////////////////////////////////////////////////////////
+	////3.层高
+	//double height = 2900;
+	//bSuc = GetRealInput(_T("请输入楼层高度:"), 2900, 0, height);
+	//if (bSuc == false)
+	//	return;
+	//while (floorInfo.SetFloorHeight(height) == false && bSuc)
+	//{
+	//	bSuc = GetRealInput(_T("楼层高度错误，请输入楼层高度:"), 2900, 0, height);
+	//}
+	//if (bSuc == false)
+	//	return;
 
 	//////////////////////////////////////////////////////////////////////////
 	//设置到选中的栏杆中

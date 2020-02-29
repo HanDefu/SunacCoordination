@@ -430,27 +430,27 @@ CString CWindowDetail::GetDimensionStyle()
 
 int CWindowDetail::SetDetailTextStyle(CString dimname)
 {
-	AcDbTextStyleTable *pTextStylTbl = NULL;
-	acdbHostApplicationServices()->workingDatabase()->getTextStyleTable(pTextStylTbl, AcDb::kForRead);
+	AcDbTextStyleTable *pTextStylerTbl = NULL;
+	acdbHostApplicationServices()->workingDatabase()->getTextStyleTable(pTextStylerTbl, AcDb::kForRead);
 
 	// 判断是否包含指定名称的层表记录
-	if (!pTextStylTbl->has(dimname))
+	if (!pTextStylerTbl->has(dimname))
 	{
+		pTextStylerTbl->close();
 		CreateDetailTextStyle(dimname);
-
-		return 1;
+		return 0;
 	}
 
 	// 获得指定层表记录的指针
 	AcDbTextStyleTableRecord *pTextStylerTblRcd = NULL;
-	pTextStylTbl->getAt(dimname, pTextStylerTblRcd, AcDb::kForWrite);
+	pTextStylerTbl->getAt(dimname, pTextStylerTblRcd, AcDb::kForWrite);
 
 	pTextStylerTblRcd->setFileName(L"simplex.shx");
 	pTextStylerTblRcd->setBigFontFileName(L"bigfont.shx");
 	pTextStylerTblRcd->setXScale(0.5647);
 	
 	pTextStylerTblRcd->close();
-	pTextStylTbl->close();
+	pTextStylerTbl->close();
 
 	return 1;
 }
