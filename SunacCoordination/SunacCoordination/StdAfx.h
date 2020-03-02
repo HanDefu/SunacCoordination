@@ -85,6 +85,7 @@
 #include <afxdlgs.h>
 #include <vector>
 #include <brcplx.h>
+#include "dbhatch.h"
 
 using std::vector;
 

@@ -376,17 +376,26 @@ void CRCRailing::DrawRailingDetail()
 	railCountArray.InitByRailingIds(RailingIds);
 
 	////////////////////////////////////////////////////////////////////////////
+	AcDbObjectIdArray hatchIds;
+
 	for (int i = 0; i < railCountArray.GetCount(); i++)
 	{
 		const AttrRailing& railAtt = railCountArray.GetRailing(i).railAtt;
 		CRCRailing* pRailing = CreateRailing(railAtt);
 		pRailing->SetSimpleDraw(false);
 		pRailing->GenerateRailing(pnt, RailingIds[i]);
-		pnt.set(pnt.x, pnt.y+ 2000, 0);
+		pnt.set(pnt.x, pnt.y+ 2200, 0);
 
 		DrawRailingWhiteWall(railAtt, RailingIds[i]);
-		DrawRailingFill(railAtt, RailingIds[i]);
+
+		AcDbObjectId concreteId = DrawRailingFill(railAtt, RailingIds[i]);//绘制外围墙壁多段线
+
+		hatchIds.append(concreteId);
+		CreateHatch(hatchIds, true);//创建填充
+		hatchIds.removeAll();
+
 		DrawRailingYellowWall(railAtt, RailingIds[i]);
+
 		CreateRailingDetailDim(railAtt, RailingIds[i], pRailing);
 	}
 
@@ -427,7 +436,7 @@ void CRCRailing::CreateRailingDetailDim(const AttrRailing& railAtt, AcDbObjectId
 	const AcGePoint3d  leftBottomPt = rect.GetLB();
 
 	//上下标注间距
-	int offset = 200;
+	int offset = 250;
 	double nDimLength = 0;
 
 	AcGePoint3d start = leftTopPt;
@@ -583,23 +592,20 @@ void CRCRailing::CreateRailingDetailDim(const AttrRailing& railAtt, AcDbObjectId
 		AcGeVector3d(0, 0, 1),
 		150, 0,
 		L"F.L");*/
-	 AcDbText *pText = new AcDbText(start, L"F.L", AcDbObjectId::kNull, 150, 0);
-	 pText->setNormal(AcGeVector3d(0, 0, 1));
-	 pText->setPosition(start);
-	 AcDbObjectId textId = MD2010_GetTextStylerID(L"_TCH_DIM_T3");
-	 pText->setTextStyle(textId);
+	AcDbText *pText = new AcDbText(start, L"F.L", AcDbObjectId::kNull, 150, 0);
+	pText->setNormal(AcGeVector3d(0, 0, 1));
+	pText->setPosition(start);
+	AcDbObjectId textId = MD2010_GetTextStylerID(L"_TCH_DIM_T3");
+	pText->setTextStyle(textId);
 	JHCOM_PostToModelSpace(pText);
 	pText->close();
 
 	MD2010_SetCurrentLayer(oldLayerName);
 }
 
-void CRCRailing::DrawRailingWhiteWall(const AttrRailing& railAtt, AcDbObjectId m_id)
+AcDbObjectId CRCRailing::DrawRailingWhiteWall(const AttrRailing& railAtt, AcDbObjectId m_id)
 {
 	CDocLock lockEnt;
-
-	if (m_id == 0)
-		return;
 
 	CString oldLayerName;
 
@@ -643,19 +649,18 @@ void CRCRailing::DrawRailingWhiteWall(const AttrRailing& railAtt, AcDbObjectId m
 	pPoly->setColorIndex(7);
 
 	// 将多段线添加到模型空间
-	MD2010_PostModalToBlockTable(ACDB_MODEL_SPACE, pPoly);
+	AcDbObjectId polyId = MD2010_PostModalToBlockTable(ACDB_MODEL_SPACE, pPoly);
 
 	pPoly->close();
 
 	MD2010_SetCurrentLayer(oldLayerName);
+
+	return polyId;
 }
 
-void CRCRailing::DrawRailingYellowWall(const AttrRailing& railAtt, AcDbObjectId m_id)
+AcDbObjectId CRCRailing::DrawRailingYellowWall(const AttrRailing& railAtt, AcDbObjectId m_id)
 {
 	CDocLock lockEnt;
-
-	if (m_id == 0)
-		return;
 
 	CString oldLayerName;
 
@@ -699,19 +704,17 @@ void CRCRailing::DrawRailingYellowWall(const AttrRailing& railAtt, AcDbObjectId 
 	pPoly->setColorIndex(2);
 
 	// 将多段线添加到模型空间
-	MD2010_PostModalToBlockTable(ACDB_MODEL_SPACE, pPoly);
+	AcDbObjectId polyId = MD2010_PostModalToBlockTable(ACDB_MODEL_SPACE, pPoly);
 
 	pPoly->close();
 
 	MD2010_SetCurrentLayer(oldLayerName);
+	return polyId;
 }
 
-void CRCRailing::DrawRailingFill(const AttrRailing& railAtt, AcDbObjectId m_id)
+AcDbObjectId CRCRailing::DrawRailingFill(const AttrRailing& railAtt, AcDbObjectId m_id)
 {
 	CDocLock lockEnt;
-
-	if (m_id == 0)
-		return;
 
 	CString oldLayerName;
 
@@ -761,14 +764,65 @@ void CRCRailing::DrawRailingFill(const AttrRailing& railAtt, AcDbObjectId m_id)
 	pPoly->addVertexAt(6, ptLeftBottom2, 0, 0.1, 0.);
 	pPoly->addVertexAt(7, ptLeftTop2, 0, 0.1, 0.1);
 	pPoly->setClosed(Adesk::kTrue);
-	pPoly->setColorIndex(5);
+	pPoly->setColorIndex(252);
 
 	// 将多段线添加到模型空间
-	MD2010_PostModalToBlockTable(ACDB_MODEL_SPACE, pPoly);
+	AcDbObjectId polyId = MD2010_PostModalToBlockTable(ACDB_MODEL_SPACE, pPoly);
 
 	pPoly->close();
 
 	MD2010_SetCurrentLayer(oldLayerName);
+
+	return polyId;
+}
+
+AcDbObjectId CRCRailing::CreateHatch(const AcDbObjectIdArray &loopIds, bool bAssociative)
+{
+	Acad::ErrorStatus es;
+	AcDbHatch *pHatch = new AcDbHatch();
+
+	//设置填充平面
+	AcGeVector3d normal(0, 0, 1);
+	pHatch->setNormal(normal); //设置填充平面的法向矢量
+	pHatch->setElevation(0);
+	pHatch->setPatternScale(20);//比例
+	pHatch->setColorIndex(252);
+	pHatch->setPatternSpace(20);
+
+	//设置关联性
+	pHatch->setAssociative(true);
+
+	//设置填充图案
+	pHatch->setPattern(AcDbHatch::kPreDefined, L"SACNCR");
+
+	//添加填充边界
+	es = pHatch->appendLoop(AcDbHatch::kExternal, loopIds);
+
+	//显示填充对象
+	es = pHatch->evaluateHatch();
+
+	//添加到模型空间
+	AcDbObjectId hatchId = MD2010_PostModalToBlockTable(ACDB_MODEL_SPACE, pHatch);
+
+	//如果是关联性的填充，将填充对象与边界绑定，使其能获得边界对象修改的通知
+	if (bAssociative)
+	{
+		AcDbObjectIdArray assocEntIds;
+		pHatch->getAssocObjIds(assocEntIds);
+		for (int i = 0; i < assocEntIds.length(); i++)
+		{
+			AcDbEntity *pEnt = NULL;
+			if (acdbOpenObject(pEnt, assocEntIds[i], AcDb::kForWrite) == Acad::eOk)
+			{
+				//添加一个永久反应器
+				pEnt->addPersistentReactor(hatchId);
+				pEnt->close();
+			}
+		}
+
+		pHatch->close();
+	}
+	return hatchId;
 }
 
 
@@ -823,13 +877,13 @@ void CRCRailing::CreateDimensionStyle()
 	//pDimStyleTblRcd->setDimscale(50); //全局比例
 	pDimStyleTblRcd->setDimasz(37.5); // 箭头大小
 	pDimStyleTblRcd->setDimexo(100); //尺寸界线偏移
-	pDimStyleTblRcd->setDimdli(0); //尺寸线间距
-	pDimStyleTblRcd->setDimexe(30); //超出尺寸线的距离
+	pDimStyleTblRcd->setDimdli(30); //尺寸线间距
+	pDimStyleTblRcd->setDimexe(50); //超出尺寸线的距离
 	pDimStyleTblRcd->setDimzin(0); //消零
 	pDimStyleTblRcd->setDimtzin(2); //角度消零
 	pDimStyleTblRcd->setDimtad(1); // 文字位于标注线的上方
 	pDimStyleTblRcd->setDimtxt(127.5); // 标注文字的高度
-	pDimStyleTblRcd->setDimgap(1.25); //设置标注文字周围的距离
+	pDimStyleTblRcd->setDimgap(62.5); //设置标注文字周围的距离
 	pDimStyleTblRcd->setDimtmove(2);  //设置标注文字的移动规则
 	pDimStyleTblRcd->setDimtih(false); //文字方向
 	pDimStyleTblRcd->setDimtix(true); //文字方向

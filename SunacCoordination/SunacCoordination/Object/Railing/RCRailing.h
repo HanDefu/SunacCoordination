@@ -55,15 +55,16 @@ public:
 	//栏杆详图
 	static void DrawRailingDetail();
 	static void CreateRailingDetailDim(const AttrRailing& railAtt, AcDbObjectId m_id, CRCRailing* pRailing);
-	static void DrawRailingWhiteWall(const AttrRailing& railAtt, AcDbObjectId m_id);
-	static void DrawRailingYellowWall(const AttrRailing& railAtt, AcDbObjectId m_id);
-	static void DrawRailingFill(const AttrRailing& railAtt, AcDbObjectId m_id);
+	static AcDbObjectId DrawRailingWhiteWall(const AttrRailing& railAtt, AcDbObjectId m_id);
+	static AcDbObjectId DrawRailingYellowWall(const AttrRailing& railAtt, AcDbObjectId m_id);
+	static AcDbObjectId DrawRailingFill(const AttrRailing& railAtt, AcDbObjectId m_id);
 
 	static AcDbObjectId CreateDimension(AcGePoint3d start, AcGePoint3d end, AcGePoint3d dimlinpnt, double size);
 	static AcDbObjectId GetDimstylerID(CString dimname);//通过标注样式名称获得标注样式id
 	static void CreateDimensionStyle();//创建标注样式
 	static void SetRailingDetailTextStyle(CString dimname); //设置字体样式的字体
 	static void CreateRailingDetailTextStyle(CString dimname); //创建字体样式的字体
+	static AcDbObjectId CreateHatch(const AcDbObjectIdArray &loopIds, bool bAssociative);
 
 	//栏杆平面图
 	AcDbObjectId GenerateRailingTop(CString p_blockName, AcGePoint3d p_pnt1, AcGePoint3d p_pnt2);
