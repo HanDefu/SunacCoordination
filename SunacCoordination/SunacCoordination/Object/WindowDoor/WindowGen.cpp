@@ -778,6 +778,17 @@ void CWindowGen::CreateWindowDoorCode(eViewDir p_viewDir, CWinInCad p_win, CStri
 		double h = GetWinHeight(p_win.m_winId);
 
 		winWidth = max(w, h);
+
+		if (winWidth < 1200)
+		{
+			winWidth = min(w, h);
+		}
+
+		if (winWidth < 500)
+		{
+			winWidth = max(w, h);
+		}
+		
 		heightOffset = 50;
 	}
 	else
