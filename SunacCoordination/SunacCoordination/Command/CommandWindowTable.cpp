@@ -287,10 +287,11 @@ void WriteDataToTable(AcDbTable *p_table, int p_dataStartRow, int p_floorColumnC
 	H.Format(L"%d", (int)(pWinAtt->GetH()));
 	p_table->setTextString(p_dataStartRow, 3, W + L"*" + H);
 
-	if (0 == pWinAtt->GetFloorInfo().GetFloorCount())
-	{
-		AfxMessageBox(_T("门窗未设置楼层信息"));
-	}
+	//if (0 == pWinAtt->GetFloorInfo().GetFloorCount())
+	//{
+	//	AfxMessageBox(_T("门窗未设置楼层信息"));
+	//	return;
+	//}
 
 	//楼层列
 	vector<int> nAllFloorCount; //用于合计
@@ -309,6 +310,7 @@ void WriteDataToTable(AcDbTable *p_table, int p_dataStartRow, int p_floorColumnC
 			if (nStart > nEnd || nStart == 0)
 			{
 				AfxMessageBox(_T("门窗楼层信息设置有误"));
+				return;
 			}
 
 			int nFloorCount = nEnd - nStart + 1;
@@ -321,10 +323,11 @@ void WriteDataToTable(AcDbTable *p_table, int p_dataStartRow, int p_floorColumnC
 		else
 		{
 			int nFloorCount = _ttoi(p_floorColumns[i]);
-			if (nFloorCount == 0)
+		/*	if (nFloorCount == 0)
 			{
 				AfxMessageBox(_T("门窗楼层信息设置有误"));
-			}
+				return;
+			}*/
 
 			nAllFloorCount.push_back(p_winAndCount.nCount / pWinAtt->GetFloorInfo().GetFloorCount());
 			str.Format(L"%d", nAllFloorCount[i]);
@@ -376,13 +379,25 @@ void CMD_SunacFloorWindowsTable()
 		AfxMessageBox(_T("统计失败，请给平面图门窗设置楼层信息"));
 		return;
 	}
+	else
+	{
+		for (int i = 0; i < winCountArray.GetCount(); i++)
+		{
+			if (0 == winCountArray.GetWindow(i).winAtt.GetFloorInfo().GetFloorCount())
+			{
+				AfxMessageBox(_T("请设置门窗楼层"));
+				return;
+			}
+		}
+	}
 
 	//第四步 判断平面图楼层信息是否一致
 	for (int i = 0; i < winCountArray.GetCount() - 1; i++)
 	{
 		if (winCountArray.GetWindow(i).winAtt.GetFloorInfo().GetAllFloor() != winCountArray.GetWindow(i+1).winAtt.GetFloorInfo().GetAllFloor())
 		{
-			AfxMessageBox(_T("平面图楼层信息设置错误，请重新设置"));
+			AfxMessageBox(_T("楼层信息设置错误，请重新设置"));
+			return;
 		}
 	}
 
