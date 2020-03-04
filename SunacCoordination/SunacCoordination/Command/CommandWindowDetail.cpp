@@ -93,7 +93,10 @@ void CWindowDetail::DrawWindowDetail()
 
 		CreateDataText(winAtt, winDetailTemplate);
 
-		CreateDetailDims(winAtt, idOut);
+		if (winAtt.m_isMirror == true)
+			CreateMirrorDetailDims(winAtt, idOut);
+		else
+			CreateDetailDims(winAtt, idOut);
 	}
 
 	//对选择的门窗高亮
@@ -212,6 +215,7 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 	if (A > TOL)//如果A值存在 先标注两端的A
 	{
 		start = rightBottomPt;
+		
 		end = AcGePoint3d(start.x, start.y + A, 0);
 		mid = AcGePoint3d(start.x + offset, (start.y + end.y) / 2, 0);
 		//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
@@ -377,6 +381,227 @@ int CWindowDetail::CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
 	return 0;
 }
 
+int CWindowDetail::CreateMirrorDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id)
+{
+	CDocLock lockEnt;
+
+	if (m_id == 0)
+		return -1;
+
+	CString oldLayerName;
+
+	MD2010_GetCurrentLayer(oldLayerName);
+
+	CString sWindowDoorLayerName = L"Sunac_dim";
+	if (JHCOM_GetLayerID(sWindowDoorLayerName) == AcDbObjectId::kNull)
+	{
+		JHCOM_CreateNewLayer(sWindowDoorLayerName);
+	}
+
+	MD2010_SetCurrentLayer(sWindowDoorLayerName);
+
+	const double W = winAtt.GetW();
+	const double H = winAtt.GetH();
+	const double A = winAtt.GetA();
+
+	TYRect rect;
+	DQ_GetBlockReferenceInsertPoint(m_id, rect.m_lb);
+	rect.m_lb.x -= W;
+	rect.m_rt.x = rect.m_lb.x + W;
+	rect.m_rt.y = rect.m_lb.y + H;
+	rect.m_rt.z = 0;
+
+	double offset = 250;
+
+	//----------------先标注竖向的--------------------//
+	const double h2 = winAtt.GetH2();
+	const double h1 = winAtt.GetH1();
+	const AcGePoint3d  rightBottomPt = rect.GetRB();
+	const AcGePoint3d  rightTopPt = rect.GetRT();
+
+	AcGePoint3d  start = rightBottomPt;
+	AcGePoint3d  end = rightBottomPt;
+	AcGePoint3d  mid = rightBottomPt;
+
+	if (A > TOL)//如果A值存在 先标注两端的A
+	{
+		start = rightBottomPt;
+		//start.x -= W;
+		end = AcGePoint3d(start.x, start.y + A, 0);
+		mid = AcGePoint3d(start.x + offset, (start.y + end.y) / 2, 0);
+		AddAlignedDimensionAndStyle(start, end, mid, A);
+
+		start = rightTopPt;
+		//start.x -= W;
+		end = AcGePoint3d(start.x, start.y - A, 0);
+		mid = AcGePoint3d(start.x + offset, (start.y + end.y) / 2, 0);
+		AddAlignedDimensionAndStyle(start, end, mid, A);
+	}
+
+	if (h2 > TOL)
+	{
+		start = AcGePoint3d(rightBottomPt.x, rightBottomPt.y + A, 0);
+		//start.x -= W;
+		end = AcGePoint3d(start.x, start.y + h2, 0);
+		mid = AcGePoint3d(start.x + offset, start.y + h2 / 2, 0);
+		AddAlignedDimensionAndStyle(start, end, mid, h2);
+	}
+
+	//H1一定有
+	start = AcGePoint3d(rightBottomPt.x, rightBottomPt.y + A + h2, 0);
+	//start.x -= W;
+	end = AcGePoint3d(start.x, start.y + h1, 0);
+	mid = AcGePoint3d(start.x + offset, start.y + h1 / 2, 0);
+	AddAlignedDimensionAndStyle(start, end, mid, h1);
+
+	//总高度一定有
+	start = rightBottomPt;
+	end = rightTopPt;
+	//start.x -= W;
+	//end.x -= W;
+	mid = AcGePoint3d(start.x + offset * 2, (start.y + end.y) / 2, 0);
+	AddAlignedDimensionAndStyle(start, end, mid, H);
+
+	//////////////////////////////////////////////////////////////////////////
+	//----------------标注横向的--------------------//
+	bool m_isHasW3 = false;
+
+	double W1 = winAtt.GetW1();
+	double W2 = winAtt.GetW2();
+	double W3 = winAtt.GetW3();
+
+	start = rect.GetRT();
+	end = start;
+	mid = start;
+
+	AcGePoint3d start1 = rect.GetLT();
+	AcGePoint3d end1 = start1;
+	AcGePoint3d mid1 = start1;
+
+	if (A > TOL)//如果A值存在 先标注两端的A
+	{
+		end1.x += A;
+		mid1.x += A / 2;
+		mid1.y += offset;
+		//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+		AddAlignedDimensionAndStyle(start1, end1, mid1, A);
+
+		end.x -= A;
+		mid.x -= A / 2;
+		mid.y += offset;
+		//MD2010_AddAlignedDimension2(start1, end1, mid1, layer, colorIndex, textHeight);
+		AddAlignedDimensionAndStyle(start, end, mid, A);
+	}
+
+	//先标注左侧的转角窗
+	if (W3 > TOL)
+	{
+		/*AcGePoint3d start2 = AcGePoint3d(start1.x - A, start1.y, 0);
+		AcGePoint3d mid2 = start2;
+		AcGePoint3d end2 = start2;
+		end2.x -= W3;
+		mid2.x -= W3 / 2;
+		mid2.y += offset;*/
+		start1 = end1;
+		mid1 = start1;
+		mid1.y += offset;
+		end1.x += W3;
+		//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+		AddAlignedDimensionAndStyle(start1, end1, mid1, W3);
+	}
+
+	//若右侧也有转角窗，再标注右侧转角窗
+	if (((W - W1 - W2 - W3 - A * 2 > W1) && (W - W1 - W2 - W3 - A * 2 > W3)) || (W - W1 - W2 - W3 - A * 2 == 500))
+	{
+		m_isHasW3 = true;
+		start = end;
+		mid = end;
+		end.x -= W3;
+		mid.x -= W3 / 2;
+		mid.y += offset;
+
+		//start = end;
+		//mid = end;
+		//end.x += W3;
+		//mid.x += W3 / 2;
+		//mid.y += offset;
+		////MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+		AddAlignedDimensionAndStyle(start, end, mid, W3);
+	}
+
+	//W1 都会存在
+	start = end;
+	mid = end;
+	end.x -= W1;
+	mid.x -= W1 / 2;
+	mid.y += offset;
+	//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+	AddAlignedDimensionAndStyle(start, end, mid, W1);
+
+	//标注W2
+	if (W2 > TOL)
+	{
+		start = end;
+		mid = end;
+		end.x -= W2;
+		mid.x -= W2 / 2;
+		mid.y += offset;
+		//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+		AddAlignedDimensionAndStyle(start, end, mid, W2);
+	}
+
+	//最后可能还有一个W1
+	if (m_isHasW3 == false)
+	{
+		if (W - W1 - W2 - W3 - A * 2 > TOL)
+		{
+			start = end;
+			mid = end;
+			end.x -= W1;
+			mid.x -= W1 / 2;
+			mid.y += offset;
+			//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+			AddAlignedDimensionAndStyle(start, end, mid, W1);
+		}
+	}
+	else
+	{
+		if (W - W1 - W2 - W3 * 2 - A * 2 > TOL)
+		{
+			start = end;
+			mid = end;
+			end.x -= W1;
+			mid.x -= W1 / 2;
+			mid.y += offset;
+			//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+			AddAlignedDimensionAndStyle(start, end, mid, W1);
+		}
+	}
+
+	//标注总的宽度
+	start = rect.GetLT();
+	mid = start;
+	end = start;
+	end.x += W;
+	mid.x += W / 2;
+	mid.y += offset * 2;
+	//MD2010_AddAlignedDimension2(start, end, mid, layer, colorIndex, textHeight);
+	AddAlignedDimensionAndStyle(start, end, mid, W);
+
+	//标注窗下墙高
+	double heightUnderWindow = winAtt.GetHeightUnderWindow();
+	start = rect.GetRB();
+
+	if (heightUnderWindow > 0 && winAtt.GetPrototypeCode().Find(_T("Window")) >= 0)
+	{
+		CreateHeightUnderWindow(start, heightUnderWindow, offset);
+	}
+
+	MD2010_SetCurrentLayer(oldLayerName);
+
+	return 0;
+}
+
 AcDbObjectId CWindowDetail::AddAlignedDimensionAndStyle(AcGePoint3d start, AcGePoint3d end, AcGePoint3d dimlinpnt, double size)
 {
 	SetDetailTextStyle(L"_TCH_DIM_T3");
@@ -492,7 +717,7 @@ void CWindowDetail::CreateHeightUnderWindow(AcGePoint3d start, double heightUnde
 	AcGePoint3d pt3(ptStart1.x + 200, ptStart1.y + 50, ptStart1.z);
 	//画出倒三角上直线
 	AcGePoint3d ptStart2(ptStart1.x + 200, ptStart1.y + 50, ptStart1.z);
-	AcGePoint3d ptEnd2(ptStart1.x + 300, ptStart1.y + 50, ptStart1.z);
+	AcGePoint3d ptEnd2(ptStart1.x + 450, ptStart1.y + 50, ptStart1.z);
 	
 	AcDbLine *pLine1 = new AcDbLine(ptStart1, ptEnd1);
 	AcDbLine *pLine2 = new AcDbLine(pt1, pt2);
@@ -513,7 +738,19 @@ void CWindowDetail::CreateHeightUnderWindow(AcGePoint3d start, double heightUnde
 	pLine5->close();
 
 	//创建窗下墙标注
-	AcDbObjectId heightUnderWindowDimID = AddAlignedDimensionAndStyle(ptStart2, ptEnd2, ptEnd2, heightUnderWindow);
+	//AcDbObjectId heightUnderWindowDimID = AddAlignedDimensionAndStyle(ptStart2, ptEnd2, ptEnd2, heightUnderWindow);
+	CString str;
+	str.Format(L"%d", (int)heightUnderWindow);
+	ptStart2.y += 50;
+	AcDbText *pText = new AcDbText(ptStart2, str, AcDbObjectId::kNull, 148.75, 0);
+	pText->setNormal(AcGeVector3d(0, 0, 1));
+	pText->setPosition(ptStart2);
+	AcDbObjectId textId = MD2010_GetTextStylerID(L"_TCH_DIM_T3");
+	pText->setTextStyle(textId);
+	pText->setWidthFactor(0.5647);
+	pText->setColorIndex(7);
+	JHCOM_PostToModelSpace(pText);
+	pText->close();
 }
 
 

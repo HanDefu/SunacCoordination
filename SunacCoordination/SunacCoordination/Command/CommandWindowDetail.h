@@ -83,6 +83,8 @@ protected:
 
 	static int CreateDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id);
 
+	static int CreateMirrorDetailDims(const AttrWindow& winAtt, AcDbObjectId m_id);//创建镜像原型标注
+
 	static CString GetDimensionStyle();
 
 	static int SetDetailTextStyle(CString dimname); //设置字体样式的字体

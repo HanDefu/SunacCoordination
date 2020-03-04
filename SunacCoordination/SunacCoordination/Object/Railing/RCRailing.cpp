@@ -597,6 +597,8 @@ void CRCRailing::CreateRailingDetailDim(const AttrRailing& railAtt, AcDbObjectId
 	pText->setPosition(start);
 	AcDbObjectId textId = MD2010_GetTextStylerID(L"_TCH_DIM_T3");
 	pText->setTextStyle(textId);
+	pText->setWidthFactor(0.5647);
+	pText->setColorIndex(7);
 	JHCOM_PostToModelSpace(pText);
 	pText->close();
 

@@ -312,6 +312,11 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 		m_winPrototypes[i].SetW(m_nWidth);
 		m_winPrototypes[i].SetH(m_nHeight);
 
+		if (((CButton *)GetDlgItem(IDC_ISFIREPROOF_RADIO))->GetCheck())
+			m_winPrototypes[i].m_isFireproofWindow = true;
+		else
+			m_winPrototypes[i].m_isFireproofWindow = false;
+
 		//若是编辑模式，保持原来的镜像关系
 		if (m_bEditMode)
 		{
