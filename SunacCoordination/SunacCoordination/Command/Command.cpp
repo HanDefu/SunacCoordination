@@ -532,6 +532,7 @@ void CMD_SunacWindowsStatistics()
 
 void CADPalette_AddP()
 {
+
 	if (g_pPaletteSet == NULL)
 	{
 		g_pPaletteSet = new CMyPaletteSet;
