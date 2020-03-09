@@ -109,13 +109,18 @@ public:
 	CFloorInfo();
 
 	bool SetFloors(CString p_sFloors);
+	bool AddFloors(CString p_sFloors); //在原来的基础上添加
 	CString GetFloors()const { return m_sFloors; }
 
 	int GetFloorCount()const{ return (int)(m_nAllFloors.size()); }
 	vector<int> GetAllFloor()const{ return m_nAllFloors; }
+	int GetFloorCountByFloor(CString p_sFloor)const;
 
 	bool SetFloorHeight(double p_height);
 	double GetFloorHeight()const { return m_floorHeight; }
+
+	static bool FloorLessCmp(CString p_sFloor1, CString p_sFloor2);
+	static vector<int> StringToIntVector(const CString p_sFloors);
 
 protected:
 	CString m_sFloors; //楼层范围，逗号分隔，多楼层用-分隔，示例： 2-5,7

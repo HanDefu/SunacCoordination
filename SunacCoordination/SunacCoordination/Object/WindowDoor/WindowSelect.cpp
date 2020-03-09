@@ -417,6 +417,8 @@ bool CWindowCountArray::InitByWindowAtts(const vector<AttrWindow>& p_winAtts, co
 					}
 
 					m_winCountArray[n].nCount += p_winAtts[i].m_floorInfo.GetFloorCount();
+					//楼层信息添加到原来的门窗属性中
+					m_winCountArray[n].winAtt.m_floorInfo.AddFloors(p_winAtts[i].m_floorInfo.GetFloors());
 				}
 				else
 				{
