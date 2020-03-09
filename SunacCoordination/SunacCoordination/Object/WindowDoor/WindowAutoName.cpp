@@ -112,14 +112,37 @@ CWindowAutoName::~CWindowAutoName()
 
 CString CWindowAutoName::GetWindowName(const AttrWindow& p_att)
 {
-	//在示例库里查找与当前窗型相同且编号相同的，若找到则直接返回
+	//1. 在编号库里查找与当前窗型相同且编号相同的，若找到则直接返回
 	CWinClassify* pWinClassify = FindWinClassifyByAtt(p_att);
 	if (pWinClassify!=NULL)
 	{
 		return pWinClassify->m_winAtt.GetInstanceCode();
 	}
 
+	if (p_att.m_isMirrorWindow==false)
+	{
+		//镜像的门窗若找到非镜像的门窗的编号，再反求当前镜像门窗编号
+		AttrWindow attMirror = p_att;
+		attMirror.m_isMirror = !(p_att.m_isMirror);
 
+		pWinClassify = FindWinClassifyByAtt(attMirror);
+		if (pWinClassify != NULL)
+		{
+			CString nameTemp = pWinClassify->m_winAtt.GetInstanceCode();
+			//取镜像相反的名字：若找到名字最后一个字母是M，则去除M；反之加上M
+			if (nameTemp.ReverseFind('M')==nameTemp.GetLength()-1)
+			{
+				return nameTemp.Left(nameTemp.GetLength() - 1);
+			}
+			else
+			{
+				return nameTemp + _T("M");
+			}
+		}
+	}
+
+
+	//2. 编号库中没找到编号，则根据编号规则
 	//去除原型编号中的"Window_"前缀
 	CString prototype = p_att.GetMainPrototypeCode();
 	prototype.MakeUpper();
@@ -138,17 +161,11 @@ CString CWindowAutoName::GetWindowName(const AttrWindow& p_att)
 	//sWindowName.Format(L"%s_%02d%02d", prototype, (int)p_att.GetW() / 100, (int)p_att.GetH() / 100);
 	sWindowName.Format(L"%s%02d%02d", prototype, (int)p_att.GetW() / 100, (int)p_att.GetH() / 100);//移除后面的数字  YUAN 20200222
 	
-
-	//镜像窗型增加"M"后缀
-	CString sMirror;
-	if (p_att.IsMirror())
-		sMirror = L"M";
-
 	//查找一个未被占用的门窗编号
-	CString sWindowFullName = sWindowName + sMirror;
+	CString sWindowFullName = sWindowName;
 	for (int i = 1; !IsNameValid(p_att, sWindowFullName); i++)
 	{
-		sWindowFullName.Format(L"%s_%d%s", sWindowName, i, sMirror);
+		sWindowFullName.Format(L"%s_%d", sWindowName, i);
 	}
 
 	return sWindowFullName;
