@@ -542,7 +542,7 @@ int CWindowDetail::CreateMirrorDetailDims(const AttrWindow& winAtt, AcDbObjectId
 			mid.y += offset;
 			AddAlignedDimensionAndStyle(start, end, mid, W1);
 		}
-		if (W - W1 * 2 - W2 - W3 - A * 2 >= TOL)
+		if (W - W1 * 2 - W2 - W3 - A * 2 > TOL)
 		{
 			start = end;
 			mid = end;
