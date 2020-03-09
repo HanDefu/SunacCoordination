@@ -3,8 +3,6 @@
 #include "ComFun_MFC.h"
 #include "GridCtrlWithPreview.h"
 #include "../Object/Railing/AttrRailing.h"
-#include "D:\vs2010\VC\atlmfc\include\afxwin.h"
-#include "D:\vs2010\VC\atlmfc\include\afxwin.h"
 
 // CRailingDlg ¶Ô»°¿ò
 
