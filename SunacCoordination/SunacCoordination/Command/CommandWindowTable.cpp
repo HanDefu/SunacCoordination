@@ -272,6 +272,7 @@ void CMD_SunacWindowsTable()
 	return;
 }
 
+
 //p_dataStartRow为开始行号, p_floorColumnCount为楼层列的数量，p_floorColumns为楼层信息(如：1,2-5,7,10-16)
 void WriteDataToTable(AcDbTable *p_table, int p_dataStartRow, int p_floorColumnCount, vector<CString> p_floorColumns, const CWindowAndCount& p_winAndCount)
 {
@@ -314,10 +315,16 @@ void WriteDataToTable(AcDbTable *p_table, int p_dataStartRow, int p_floorColumnC
 			}
 
 			int nFloorCount = nEnd - nStart + 1;
-			int numWindowDoor = p_winAndCount.nCount / pWinAtt->GetFloorInfo().GetFloorCount();
-			str.Format(L"%d", nFloorCount);
-			str1.Format(L"%d", numWindowDoor);
-			p_table->setTextString(p_dataStartRow, 4 + i, str1 + L"*" + str);
+
+			int nCount = pWinAtt->GetFloorInfo().GetFloorCountByFloor(p_floorColumns[i]);
+			if (nCount==0)
+			{
+				continue;
+			}
+
+			int numWindowDoor = nCount / nFloorCount;
+			str.Format(L"%d*%d", numWindowDoor, nFloorCount);
+			p_table->setTextString(p_dataStartRow, 4 + i, str);
 			nAllFloorCount.push_back(numWindowDoor * nFloorCount);
 		}
 		else
@@ -356,12 +363,12 @@ void CMD_SunacFloorWindowsTable()
 	CCommandHighlight::GetInstance()->WindowDoorNoHighlight();
 
 	//第一步：选择需要统计的门窗
-	eViewDir viewDir = E_VIEW_FRONT;
-	bool bSuc1 = SelectViewDir(viewDir);
-	if (bSuc1 == false)
-		return;
+	//eViewDir viewDir = E_VIEW_TOP;
+	//bool bSuc1 = SelectViewDir(viewDir);
+	//if (bSuc1 == false)
+	//	return;
 
-	const vector<CWinInCad> wins = CWindowSelect::SelectWindows(viewDir);
+	const vector<CWinInCad> wins = CWindowSelect::SelectWindows(E_VIEW_TOP);
 	if (wins.size() == 0)
 		return;
 
@@ -392,18 +399,42 @@ void CMD_SunacFloorWindowsTable()
 	}
 
 	//第四步 判断平面图楼层信息是否一致
-	for (int i = 0; i < winCountArray.GetCount() - 1; i++)
+	//for (int i = 0; i < winCountArray.GetCount() - 1; i++)
+	//{
+	//	if (winCountArray.GetWindow(i).winAtt.GetFloorInfo().GetAllFloor() != winCountArray.GetWindow(i+1).winAtt.GetFloorInfo().GetAllFloor())
+	//	{
+	//		AfxMessageBox(_T("楼层信息设置错误，请重新设置"));
+	//		return;
+	//	}
+	//}
+
+	//第五步拆分楼层信息，确定门窗表列数和标题栏
+	std::vector<CString> floorColumns;
+	for (int i = 0; i < winCountArray.GetCount(); i++)
 	{
-		if (winCountArray.GetWindow(i).winAtt.GetFloorInfo().GetAllFloor() != winCountArray.GetWindow(i+1).winAtt.GetFloorInfo().GetAllFloor())
+		std::vector<CString> floorsTemp = YT_SplitCString(winCountArray.GetWindow(i).winAtt.GetFloorInfo().GetFloors(), L',');
+		for (UINT j = 0; j < floorsTemp.size(); j++)
 		{
-			AfxMessageBox(_T("楼层信息设置错误，请重新设置"));
-			return;
+			bool bFind = false;
+			for (UINT n = 0; n < floorColumns.size(); n++)
+			{
+				if (floorColumns[n].CompareNoCase(floorsTemp[j]) == 0)
+				{
+					bFind = true;
+					break;
+				}
+			}
+
+			if (bFind == false)
+			{
+				floorColumns.push_back(floorsTemp[j]);
+			}
 		}
 	}
 
-	//第五步拆分楼层信息，确定门窗表列数和标题栏
-	std::vector<CString> floorColumns = YT_SplitCString(winCountArray.GetWindow(0).winAtt.GetFloorInfo().GetFloors(), L',');
-	int floorColumnCount = (int)floorColumns.size();
+	sort(floorColumns.begin(), floorColumns.end(), CFloorInfo::FloorLessCmp);
+
+	const int floorColumnCount = (int)floorColumns.size();
 
 	//第六步 开始输出数据
 	AcDbTable *table = new AcDbTable();
@@ -421,8 +452,8 @@ void CMD_SunacFloorWindowsTable()
 	table->setRowHeight(300);
 
 	//1.1 特殊列宽度设置
-	table->setColumnWidth(0, 700);
-	table->setColumnWidth(1, 2000);
+	table->setColumnWidth(0, 700);	//类型
+	table->setColumnWidth(1, 1200); //类型明细
 	table->setRowHeight(1, 500);
 
 	//----2.设置字体高度----//

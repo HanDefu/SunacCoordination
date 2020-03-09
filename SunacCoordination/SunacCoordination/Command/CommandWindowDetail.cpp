@@ -93,7 +93,7 @@ void CWindowDetail::DrawWindowDetail()
 
 		CreateDataText(winAtt, winDetailTemplate);
 
-		if (winAtt.m_isMirror == true)
+		if (winAtt.IsMirror() == true)
 			CreateMirrorDetailDims(winAtt, idOut);
 		else
 			CreateDetailDims(winAtt, idOut);

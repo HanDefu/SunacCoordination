@@ -80,13 +80,19 @@ bool CFloorInfo::SetFloorHeight(double p_height)
 	return false;
 }
 
-bool CFloorInfo::SetFloors(CString p_sFloors)
+bool CFloorInfo::FloorLessCmp(CString p_sFloor1, CString p_sFloor2)
 {
-	if (p_sFloors != p_sFloors.SpanIncluding(_T("0123456789, -")))
-	{
+	vector<int> floors1 = StringToIntVector(p_sFloor1);
+	vector<int> floors2 = StringToIntVector(p_sFloor2);
+	if (floors1.size() == 0)
+		return true;
+	else if (floors2.size() == 0)
 		return false;
-	}
-
+	
+	return floors1[0] < floors2[0];
+}
+vector<int> CFloorInfo::StringToIntVector(const CString p_sFloors)
+{
 	vector<int> floors;
 	std::vector<CString> strs = YT_SplitCString(p_sFloors, L',');
 	for (UINT i = 0; i < strs.size(); i++)
@@ -95,12 +101,12 @@ bool CFloorInfo::SetFloors(CString p_sFloors)
 		if (nPos >= 0) //区间
 		{
 			CString str1 = strs[i].Left(nPos);
-			CString str2 = strs[i].Mid(nPos+1);
+			CString str2 = strs[i].Mid(nPos + 1);
 			int nStart = _ttoi(str1);
 			int nEnd = _ttoi(str2);
-			if (nStart>nEnd || nStart==0)
+			if (nStart > nEnd || nStart == 0)
 			{
-				return false;
+				return floors;
 			}
 
 			for (int n = nStart; n <= nEnd; n++)
@@ -113,7 +119,7 @@ bool CFloorInfo::SetFloors(CString p_sFloors)
 			int nFloor = _ttoi(strs[i]);
 			if (nFloor == 0)
 			{
-				return false;
+				return floors;
 			}
 
 			floors.push_back(nFloor);
@@ -124,8 +130,71 @@ bool CFloorInfo::SetFloors(CString p_sFloors)
 	sort(floors.begin(), floors.end());
 	floors.erase(unique(floors.begin(), floors.end()), floors.end());
 
+	return floors;
+}
+bool CFloorInfo::SetFloors(CString p_sFloors)
+{
+	if (p_sFloors != p_sFloors.SpanIncluding(_T("0123456789, -")))
+	{
+		return false;
+	}
+
+	vector<int> floors = StringToIntVector(p_sFloors);
+	if (floors.size()==0)
+	{
+		return false;
+	}
+	
 	m_sFloors = p_sFloors;
 	m_nAllFloors = floors;
 
 	return true;
+}
+
+bool CFloorInfo::AddFloors(CString p_sFloors) //在原来的基础上添加
+{
+	vector<int> floors = StringToIntVector(p_sFloors);
+	if (floors.size() == 0)
+	{
+		return false;
+	}
+
+	if (m_sFloors.IsEmpty())
+	{
+		m_sFloors = p_sFloors;
+	}
+	else
+	{
+		if (m_sFloors.Find(p_sFloors)<0)
+		{
+			m_sFloors += _T(",") + p_sFloors;
+		}
+	}
+
+	m_nAllFloors.insert(m_nAllFloors.end(), floors.begin(), floors.end());
+
+	return true;
+}
+
+int CFloorInfo::GetFloorCountByFloor(CString p_sFloor)const
+{
+	vector<int> floors = StringToIntVector(p_sFloor);
+	if (floors.size() == 0)
+	{
+		return 0;
+	}
+
+	int nCount = 0;
+	for (UINT j = 0; j < m_nAllFloors.size(); j++)
+	{
+		for (UINT i = 0; i < floors.size(); i++)
+		{
+			if (m_nAllFloors[j]==floors[i])
+			{
+				nCount++;
+			}
+		}
+	}
+
+	return nCount;
 }
