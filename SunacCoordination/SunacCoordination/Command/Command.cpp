@@ -193,13 +193,13 @@ void CMD_SunacWindowFloorSetting()//门窗楼层设置
 
 	//////////////////////////////////////////////////////////////////////////
 	//3.层高
-	double height = 2900;
-	bSuc = GetRealInput(_T("请输入楼层高度:"), 2900, 0, height);
+	double height = 2950;
+	bSuc = GetRealInput(_T("请输入楼层高度:"), 2950, 0, height);
 	if (bSuc == false)
 		return;
 	while (floorInfo.SetFloorHeight(height) == false && bSuc)
 	{
-		bSuc = GetRealInput(_T("楼层高度错误，请输入楼层高度:"), 2900, 0, height);
+		bSuc = GetRealInput(_T("楼层高度错误，请输入楼层高度:"), 2950, 0, height);
 	}
 	if (bSuc == false)
 		return;
@@ -378,13 +378,13 @@ void CMD_SunacRailingFloorSetting() //栏杆楼层设置
 
 	////////////////////////////////////////////////////////////////////////////
 	////3.层高
-	//double height = 2900;
-	//bSuc = GetRealInput(_T("请输入楼层高度:"), 2900, 0, height);
+	//double height = 2950;
+	//bSuc = GetRealInput(_T("请输入楼层高度:"), 2950, 0, height);
 	//if (bSuc == false)
 	//	return;
 	//while (floorInfo.SetFloorHeight(height) == false && bSuc)
 	//{
-	//	bSuc = GetRealInput(_T("楼层高度错误，请输入楼层高度:"), 2900, 0, height);
+	//	bSuc = GetRealInput(_T("楼层高度错误，请输入楼层高度:"), 2950, 0, height);
 	//}
 	//if (bSuc == false)
 	//	return;

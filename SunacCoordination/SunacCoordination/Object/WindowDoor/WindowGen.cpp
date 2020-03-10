@@ -533,6 +533,7 @@ AcDbObjectId CWindowGen::UpdateWindow(const AcDbObjectId p_id, AttrWindow newWin
 			CString oldInstanceCodeMirror = CWindowAutoName::GetMirrorInstanceCode(oldInstanceCode);
 			CString newInstanceCoceMirror = CWindowAutoName::GetMirrorInstanceCode(newWinAtt.GetInstanceCode());
 			AttrWindow newWinAttMirror = newWinAtt;
+			newWinAttMirror.m_isMirror = !(newWinAtt.m_isMirror);
 			newWinAttMirror.SetInstanceCode(newInstanceCoceMirror);
 
 			//1 找到和当前编号一样的门窗
