@@ -927,6 +927,7 @@ bool AttrWindow::IsPrototypeEqual_test(const AttrWindow& p_att)
 	return true;
 }
 
+//主要用于自动编号区分
 bool AttrWindow::IsInstanceEqual(const AttrWindow& p_att) const
 {
 	if (GetMainPrototypeCode() != p_att.GetMainPrototypeCode())
@@ -945,7 +946,7 @@ bool AttrWindow::IsInstanceEqual(const AttrWindow& p_att) const
 			return false;
 	}
 
-	if (!m_isMirrorWindow && m_isMirror != p_att.m_isMirror) 
+	if (!m_isMirrorWindow && m_isMirror != p_att.m_isMirror)
 		return false;
 
 	//是否防火窗

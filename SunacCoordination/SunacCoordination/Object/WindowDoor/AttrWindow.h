@@ -105,7 +105,7 @@ public:
 	virtual eRCType GetType()const;
 	virtual bool isEqualTo(AttrObject*other);//窗型是否一致
 	bool IsPrototypeEqual_test(const AttrWindow& p_att);
-	bool IsInstanceEqual(const AttrWindow& p_att) const;
+	bool IsInstanceEqual(const AttrWindow& p_att) const;//主要用于自动编号区分
 
 	E_WindowAluminumType GetWindowDoorAluminumType()const;
 
@@ -193,7 +193,6 @@ public:
 
 	bool m_isZhuanJiao;		//是否转角窗
 	bool m_isMirrorWindow;	//是否对称窗型 
-	bool m_isFireproofWindow;//是否防火窗
 
 	//////////////////////////////////////////////////////////////////////////
 	//算量相关
@@ -206,6 +205,7 @@ public:
 	eViewDir m_viewDir;//视图方向，平面图、立面图、侧视图
 
 	bool   m_isBayWindow;	 //是否凸窗
+	bool m_isFireproofWindow;//是否防火窗
 	double m_wallDis;		 //外墙距离
 	double m_heightUnderWindow; //窗下墙高度
 
