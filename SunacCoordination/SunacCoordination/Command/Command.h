@@ -16,6 +16,7 @@ void CMD_SunacDoor();
 void CMD_SunacWindowAdvanceDesign();//门窗深化设计
 void CMD_SunacWindowDetail();//门窗详图
 void CMD_SunacWindowsTable();//门窗表
+void CMD_SunacFloorWindowsTable();//地面门窗表
 void CMD_SunacWindowsStatistics();//统计算量
 void CMD_SunacWindowFloorSetting();//门窗楼层设置
 void CMD_SunacWindowTop2Front();//门窗平面到立面
@@ -32,6 +33,7 @@ void CMD_SunacKitchenBathroomStatistic();
 void CMD_SunacRailing();
 void CMD_SunacRailingDetail();
 void CMD_SunacRailingStatistic();
+void CMD_SunacRailingFloorSetting();//栏杆楼层设置
 
 //空调
 void CMD_SunacAirconditioner();

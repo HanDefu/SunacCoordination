@@ -88,6 +88,7 @@
     <ClCompile Include="ProjectorFileMrg\ProjectInfo.cpp" />
     <ClCompile Include="Src\DocumentData.cpp" />
     <ClCompile Include="Src\DocumentDataSerialize.cpp" />
+    <ClCompile Include="Src\Reactor.cpp" />
     <ClCompile Include="StdAfx.cpp" />
     <ClCompile Include="Sunac_def.cpp" />
     <ClCompile Include="Tool\DoubleClickBlockReference.cpp" />
@@ -100,6 +101,7 @@
     <ClCompile Include="UI\ComFun_MFC.cpp" />
     <ClCompile Include="UI\DlgLeftBar.cpp" />
     <ClCompile Include="UI\DlgLogin.cpp" />
+    <ClCompile Include="UI\DlgSetUp.cpp" />
     <ClCompile Include="UI\DlgWindowAirCalc.cpp" />
     <ClCompile Include="UI\FacadeDlg.cpp" />
     <ClCompile Include="UI\FillingDlg.cpp" />
@@ -226,6 +228,7 @@
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="Src\DocumentData.h" />
     <ClInclude Include="Src\DocumentDataSerialize.h" />
+    <ClInclude Include="Src\Reactor.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="Sunac_def.h" />
     <ClInclude Include="Tool\DocLock.h" />
@@ -252,6 +255,7 @@
     <ClInclude Include="UI\ComFun_MFC.h" />
     <ClInclude Include="UI\DlgLeftBar.h" />
     <ClInclude Include="UI\DlgLogin.h" />
+    <ClInclude Include="UI\DlgSetUp.h" />
     <ClInclude Include="UI\DlgWindowAirCalc.h" />
     <ClInclude Include="UI\FacadeDlg.h" />
     <ClInclude Include="UI\FillingDlg.h" />

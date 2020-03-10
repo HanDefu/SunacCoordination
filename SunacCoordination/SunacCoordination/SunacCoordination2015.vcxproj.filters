@@ -438,6 +438,12 @@
     <ClCompile Include="Common\ComFun_RectArray.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="UI\DlgSetUp.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Reactor.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command\Command.h">
@@ -925,6 +931,12 @@
     </ClInclude>
     <ClInclude Include="Common\ComFun_RectArray.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\DlgSetUp.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Reactor.h">
+      <Filter>Src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

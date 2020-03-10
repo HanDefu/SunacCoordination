@@ -12,6 +12,7 @@
 #include "../GlobalSetting.h"
 #include "GridCellWithPicture.h"
 #include "../Common/ComFun_ACad.h"
+#include "../Common/ComFun_Layer.h"
 
 // CRailingDlg 对话框
 
@@ -70,6 +71,7 @@ void CRailingDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHECK_AUTOINDEX, m_bRailingAutoName);
 	DDX_Text(pDX, IDC_EDIT_RAILINGNUMBER, m_sRailingId);
 	DDX_Control(pDX, IDC_EDIT_RAILINGNUMBER, m_editRailingID);
+	DDX_Control(pDX, IDC_COMBO_VIEWDIR, m_comboViewDir);
 }
 
 BEGIN_MESSAGE_MAP(CRailingDlg, CAcUiDialog)
@@ -81,6 +83,7 @@ BEGIN_MESSAGE_MAP(CRailingDlg, CAcUiDialog)
 	ON_BN_CLICKED(IDC_CHECK_AUTOINDEX, &CRailingDlg::OnBnClickedCheckAutoindex)
 	ON_NOTIFY(GVN_SELCHANGED, IDC_PREVIEW_RAILING, &CRailingDlg::OnSelChangedPreview)
 	ON_WM_LBUTTONDOWN()
+	ON_CBN_SELCHANGE(IDC_COMBO_VIEWDIR, &CRailingDlg::OnCbnSelchangeComboViewdir)
 END_MESSAGE_MAP()
 
 
@@ -96,6 +99,7 @@ BOOL CRailingDlg::OnInitDialog()
 	m_comboRailingType.AddString(_T("铁艺栏杆"));
 	m_comboRailingType.AddString(_T("玻璃栏杆"));
 	m_comboRailingType.SetCurSel(0);
+	m_comboViewDir.SetCurSel(0);
 
 	UpdateRailingToGrid(E_RAILING_ALL);
 
@@ -164,6 +168,37 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 		railingAtt.SetInstanceCode(m_sRailingId);
 	}
 
+	//平面图的栏杆长度为选择的插入点的间距
+	const eViewDir viewDir = (eViewDir)m_comboViewDir.GetCurSel();
+	AcGePoint3d pnt1, pnt2;
+	if (viewDir == E_VIEW_TOP)
+	{
+		if (m_pCurEdit != NULL)
+		{
+			JHCOM_DeleteCadObject(m_pCurEdit->objectId());
+		}
+
+		ShowWindow(SW_HIDE);
+		bool bSuc = TY_GetTwoPoints(pnt1, pnt2);
+		if (bSuc == false)
+		{
+			ShowWindow(SW_SHOW);
+			return;
+		}
+
+		CRCRailing* pRailingTop = NULL;
+		int nRailingTopLength = 0;
+		bool bSucTop = pRailingTop->GenerateInsertPt(pnt1, pnt2, nRailingTopLength);
+		if (bSucTop == false)
+		{
+			ShowWindow(SW_SHOW);
+			return;
+		}
+
+		railingAtt.m_length = nRailingTopLength;
+		delete pRailingTop;
+	}
+
 	//生成
 	CRCRailing* pRailing = CreateRailing(railingAtt);
 
@@ -190,29 +225,39 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 		return;
 	}
 
-	//选择插入点
-	ShowWindow(SW_HIDE);
-	AcGePoint3d pnt;
-	if (m_pCurEdit == NULL)
+	//栏杆平面图生成
+	if (viewDir == E_VIEW_TOP)
 	{
-		bool bSuc = TY_GetPoint(pnt);
-		acedPostCommandPrompt();
-		if (bSuc == false)
-		{
-			ShowWindow(SW_SHOW);
-			return;
-		}
+		pRailing->CreateRailingTop(pnt1, pnt2);
+		ShowWindow(SW_SHOW);
+		return;
 	}
 	else
 	{
-		AcDbExtents ext;
-		m_pCurEdit->getGeomExtents(ext);
-		pnt = ext.minPoint();
-		JHCOM_DeleteCadObject(m_pCurEdit->objectId());
-	}
+		//选择插入点
+		ShowWindow(SW_HIDE);
+		AcGePoint3d pnt;
+		if (m_pCurEdit == NULL)
+		{
+			bool bSuc = TY_GetPoint(pnt);
+			acedPostCommandPrompt();
+			if (bSuc == false)
+			{
+				ShowWindow(SW_SHOW);
+				return;
+			}
+		}
+		else
+		{
+			AcDbExtents ext;
+			m_pCurEdit->getGeomExtents(ext);
+			pnt = ext.minPoint();
+			JHCOM_DeleteCadObject(m_pCurEdit->objectId());
+		}
 
-	AcDbObjectId railingId;
-	int nRet = pRailing->GenerateRailing(pnt, railingId);
+		AcDbObjectId railingId;
+		int nRet = pRailing->GenerateRailing(pnt, railingId);
+	}
 
 	/*if (Acad::eOk == acdbOpenObject(m_pCurEdit, railingId, AcDb::kForRead))
 	{
@@ -224,6 +269,7 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 	//ShowWindow(TRUE);
 	OnOK();
 }
+
 void CRailingDlg::PostNcDestroy()
 {
 	CAcUiDialog::PostNcDestroy();
@@ -235,6 +281,7 @@ void CRailingDlg::PostNcDestroy()
 	//	g_connectorDlg = NULL;
 	//}
 }
+
 void CRailingDlg::OnClose()
 {
 	CAcUiDialog::OnClose();
@@ -242,6 +289,7 @@ void CRailingDlg::OnClose()
 	// 销毁对话框
 	//DestroyWindow();
 }
+
 LRESULT CRailingDlg::onAcadKeepFocus(WPARAM, LPARAM)
 {
 	return TRUE;
@@ -269,7 +317,6 @@ void CRailingDlg::OnBnClickedButtonSelectline()
 	m_width = (int)(len+0.4); //四舍五入
 	UpdateData(FALSE);
 }
-
 
 void CRailingDlg::OnCbnSelchangeComboRailingtype()
 {
@@ -439,5 +486,21 @@ void CRailingDlg::OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult)
 
 		m_sRailingId =railingAtt.AutoInstanceCode();
 		UpdateData(FALSE);
+	}
+}
+
+//改变视图会调用此函数
+void CRailingDlg::OnCbnSelchangeComboViewdir()
+{
+	CString sView = TYUI_GetComboBoxText(m_comboViewDir);
+
+	if (sView == L"平面")
+	{
+		TYUI_Disable(*GetDlgItem(IDC_EDIT_HOLEWIDTH));
+		
+	}
+	else
+	{
+		TYUI_Enable(*GetDlgItem(IDC_EDIT_HOLEWIDTH));
 	}
 }

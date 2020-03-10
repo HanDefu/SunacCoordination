@@ -15,6 +15,7 @@ struct CWinInsertPara
 {
 	AcGePoint3d insertPos;  //实际的插入位置，由于旋转角度可能不是左下角点
 	AcGePoint3d leftBottomPos;
+	AcGePoint3d rightTopPos;
 	eViewDir viewDir;
 	E_DIRECTION insertDir;
 	bool bDetailWnd;
@@ -29,8 +30,8 @@ struct CWinInsertPara
 class CWindowGen
 {
 public:
-	//生成新的门窗
-	static AcDbObjectId  GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d pos, E_DIRECTION p_winDir, bool p_bDetailWnd, const AcDbObjectId p_fromWinId);
+	//生成新的门窗 pos为窗户左下角点
+	static AcDbObjectId  GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d pos, E_DIRECTION p_winDir, bool p_bDetailWnd, const AcDbObjectId p_fromWinId); 
 
 	//更新门窗参数, bUpdateRelatedWin为true则同步更新关联的门窗，p_originalId为最开启发起修改更新的门窗，以便在后续关联修改时不重复修改, bUpdateSameInstanceCode为是否更新同编号的门窗实例
 	static AcDbObjectId UpdateWindow(const AcDbObjectId p_id, AttrWindow newWinAtt, const bool bUpdateRelatedWin, bool bUpdateSameInstanceCode);//
@@ -54,7 +55,6 @@ protected:
 	static AcGePoint3d GetWindowLeftBottomPos(AcDbObjectId p_id);
 	static bool GetWindowInsertDir(AcDbObjectId p_id, E_DIRECTION & p_dirOut);
 	static CWinInsertPara GetWindowInsertPara(AcDbObjectId p_id); //根据已插入的门窗获取其插入的信息
-	static bool IsWindowMirror(AcDbObjectId p_id);
 
 	static bool IsPrototypeCodeSame(const AcDbObjectId p_id, const AttrWindow& newWinAtt); //新的原型编号是否和之前的不同
 	static bool SetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId p_fromWinId, AcDbObjectIdArray p_relatedIds);

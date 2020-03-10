@@ -86,7 +86,7 @@ void CMD_YTest()
 	vector<CWinInCad> winsSelected = CWindowSelect::SelectWindows(E_VIEW_ALL, false);
 	for (UINT i = 0; i < winsSelected.size(); i++)
 	{
-		if (winsSelected[i].m_bMirror)
+		if (winsSelected[i].m_bMxMirror)
 		{
 			n++;
 		}		
@@ -95,7 +95,7 @@ void CMD_YTest()
 	return;
 
 
-	ads_name ename;
+	/*ads_name ename;
 	ads_point pt;
 	if (acedEntSel(L"\nSelect a dynamic block reference: ", ename, pt) != RTNORM)
 	{
@@ -118,7 +118,7 @@ void CMD_YTest()
 	TYCOM_CycleBlockReferenceEntites(ids3[0],ids4);
 	TY_IsWindow(ids4[0],E_VIEW_ALL);
 
-	/*vAcDbObjectId allWindowIds;
+	vAcDbObjectId allWindowIds;
 	TYCOM_DeepCycleBlockReferences(eId, E_VIEW_FRONT, TY_IsWindow, allWindowIds);
 
 	vector<AttrWindow> winPrototypes = WebIO::GetInstance()->GetWindows(1500, 1700, _T("不限"), 0, _T("不限"));
@@ -888,15 +888,15 @@ void CMD_TEST2()
 		vProjects.swap(CProjectFileMrg::Instance()->m_projects);
 	}*/
 
-	//CProtypeInstanceCodeMrg Ref;
+	//CInstanceCodeTextMrg Ref;
 	//Ref.GetAllInstanceCodeIds();
-	CProtypeInstanceCodeMrg::GetAllInstanceCodeIds();
+	CInstanceCodeTextMrg::GetAllInstanceCodeIds();
 
 
 	TYRect rect;
 	bool bSuc = TY_GetOneRect(rect);
 
-	CProtypeInstanceCodeMrg::GetInstanceCodeIdsInRect(rect);
+	CInstanceCodeTextMrg::GetInstanceCodeIdsInRect(rect);
 	//Ref.GetInstanceCodeIdsInRect(rect);
 }
 
@@ -1026,7 +1026,7 @@ static void initApp()
 		_T("SWINTABLE"),
 		_T("SWINTABLE"),
 		ACRX_CMD_MODAL,
-		CMD_SunacWindowsTable,
+		CMD_SunacFloorWindowsTable,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());
@@ -1107,6 +1107,15 @@ static void initApp()
 		_T("SRAILINGSTATISTICS"),
 		ACRX_CMD_MODAL | ACRX_CMD_USEPICKSET,
 		CMD_SunacRailingStatistic,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SRAILINGFLOORSETTING"),
+		_T("SRAILINGFLOORSETTING"),
+		ACRX_CMD_MODAL | ACRX_CMD_USEPICKSET,
+		CMD_SunacRailingFloorSetting,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());

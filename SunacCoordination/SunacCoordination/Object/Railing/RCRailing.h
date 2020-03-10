@@ -40,6 +40,7 @@ public:
 	virtual double GetK()const { return m_K; }		//获取栏杆侧边留空间隙
 	virtual double GetB()const { return m_B; }		//获取标准栏杆尺寸
 	virtual int GetN()const { return m_N; }
+	virtual double GetPillarWidth()const { return 40; }	//立柱尺寸40
 
 	virtual double GetStandardRailingTotalLen()const = 0;
 	virtual double GetNonstandardLen()const = 0;	//获取非标段栏杆长度，含两侧立柱
@@ -53,6 +54,24 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 	//栏杆详图
 	static void DrawRailingDetail();
+	static void CreateRailingDetailDim(const AttrRailing& railAtt, AcDbObjectId m_id, CRCRailing* pRailing);
+	static AcDbObjectId DrawRailingWhiteWall(const AttrRailing& railAtt, AcDbObjectId m_id);
+	static AcDbObjectId DrawRailingYellowWall(const AttrRailing& railAtt, AcDbObjectId m_id);
+	static AcDbObjectId DrawRailingFill(const AttrRailing& railAtt, AcDbObjectId m_id);
+
+	static AcDbObjectId CreateDimension(AcGePoint3d start, AcGePoint3d end, AcGePoint3d dimlinpnt, double size);
+	static AcDbObjectId GetDimstylerID(CString dimname);//通过标注样式名称获得标注样式id
+	static void CreateDimensionStyle();//创建标注样式
+	static void SetRailingDetailTextStyle(CString dimname); //设置字体样式的字体
+	static void CreateRailingDetailTextStyle(CString dimname); //创建字体样式的字体
+	static AcDbObjectId CreateHatch(const AcDbObjectIdArray &loopIds, bool bAssociative);
+
+	//栏杆平面图
+	AcDbObjectId GenerateRailingTop(CString p_blockName, AcGePoint3d p_pnt1, AcGePoint3d p_pnt2);
+	void CreateRailingTop(AcGePoint3d p_pnt1, AcGePoint3d p_pnt2);
+	bool GenerateInsertPt(AcGePoint3d& p_pnt1, AcGePoint3d& p_pnt2, int& p_width);//计算平面图插入点，使栏杆长为10的倍数
+	void GenerateRailingLength(int& p_width);
+
 protected:
 	virtual AcDbObjectId CreateRailingBlockDefine(CString sRailingDefName)= 0;
 	CString GetPrototypeFilePath()const ;
@@ -72,4 +91,5 @@ typedef std::vector<CRCRailing*> vpRCRailing;
 //////////////////////////////////////////////////////////////////////////
 
 CRCRailing* CreateRailing(const AttrRailing p_railingAtt);
+
 

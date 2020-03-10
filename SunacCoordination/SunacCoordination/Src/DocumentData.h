@@ -19,7 +19,7 @@ public:
 	CKitchenAutoName m_kitchenAutoName;
 	CBathroomAutoName m_bathroomAutoName;
 
-	CProtypeInstanceCodeMrg m_instanceCodeMrg;
+	CInstanceCodeTextMrg m_instanceCodeMrg;
 
 	bool m_bLoad;
 };
@@ -27,7 +27,7 @@ public:
 CWindowAutoName* GetWindowAutoName();
 CKitchenAutoName* GetKitchenAutoName();
 CBathroomAutoName* GetBathroomAutoName();
-CProtypeInstanceCodeMrg* GetInstanceCodeMrg();
+CInstanceCodeTextMrg* GetInstanceCodeMrg();
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -50,15 +50,7 @@ public:
 	//在acrxEntryPoint函数kUnloadAppMsg消息时清除所有document
 	void RemoveAllDocment();
 
-
-	////是否为临时加载dwg，如预览其他dwg图、打开dwg作为块插入等情况，SetTempLoadDwg(true) SetTempLoadDwg(false) 配套使用
-	//bool IsTempLoadDwg() { return Instance().m_bTempLoadDwg; }
-	//void SetTempLoadDwg(bool bTemp){m_bTempLoadDwg = bTemp;}
-
 protected:
 	map<AcApDocument*, CDocumentData*> m_pElecMrgs;
-
-
-	bool m_bTempLoadDwg;
 };
 

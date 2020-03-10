@@ -50,6 +50,9 @@ public:
 	BOOL m_bRailingAutoName;// ×Ô¶¯±àºÅ
 
 	AcDbBlockReference* m_pCurEdit;
+	CComboBox m_comboViewDir;
+
+	afx_msg void OnCbnSelchangeComboViewdir();
 };
 
 extern CRailingDlg* g_railingDlg;

@@ -246,29 +246,3 @@ LRESULT CDlgSetUp::onAcadKeepFocus(WPARAM, LPARAM)
 {
 	return TRUE;
 }
-
-CDlgSetUp* g_winSetupDlg = NULL;
-
-void OpenWindowSetUpDlg()
-{
-	if (g_winSetupDlg == NULL)
-	{
-		CAcModuleResourceOverride resOverride;
-		g_winSetupDlg = new CDlgSetUp(acedGetAcadFrame());
-		g_winSetupDlg->Create(IDD_DIALOG_SETUP);
-	}
-	g_winSetupDlg->ShowWindow(SW_SHOW);
-}
-
-BOOL CloseWindowSetUpDlg()
-{
-	if (g_winSetupDlg == NULL)
-		return TRUE;
-	BOOL ret = g_winSetupDlg->DestroyWindow();
-	if (ret)
-	{
-		delete g_winSetupDlg;
-		g_winSetupDlg = NULL;
-	}
-	return ret;
-}

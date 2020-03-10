@@ -74,8 +74,14 @@ int JHCOM_SetEntityLayer(AcDbObjectId objID, AcDbObjectId layerID)
 --------------------------------------------------------------------------*/
 CString JHCOM_GetEntityLayer(AcDbObjectId objID)
 {
-	AcDbEntity *pent;
-	acdbOpenAcDbEntity(pent,objID,AcDb::kForRead);
+	AcDbEntity *pent = NULL;
+	Acad::ErrorStatus es= acdbOpenAcDbEntity(pent,objID,AcDb::kForRead);
+	if (es != Acad::eOk || pent==NULL)
+	{
+		//assert(false);
+		return _T("0");
+	}
+
 	ACHAR* layname = pent->layer();
 	CString strLayerName(layname);//use ACHAR directly! ACHAR-->cstring
 	pent->close();

@@ -203,7 +203,7 @@ std::vector<AttrWindow > CWindowWebData::ParseWindowsFromXML(CMarkup xml)const
 				dimDataW.minValue = minValue;
 				dimDataW.maxValue = maxValue;
 			}
-			//else //TODO 支持静态的数据
+			//else //TODO 叶明远 支持静态的数据
 			//{
 			//	dimDataW.type = SINGLE;
 			//	dimDataW.value = _ttof(xls.GetCellValue(i, 12)); //宽度
@@ -415,7 +415,7 @@ std::vector<AttrWindow> CWindowWebData::ParseDoorsFromXML(CMarkup xml)const
 				}
 				else Attrdoor.m_isJiTuan = FALSE;
 			}
-/*TODO
+/*	TODO
 			if (xml.FindElem(_T("Areaid")))
 			{
 				Attrdoor.m_quyuId = xml.GetData();

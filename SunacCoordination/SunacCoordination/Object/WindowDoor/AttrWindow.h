@@ -105,7 +105,7 @@ public:
 	virtual eRCType GetType()const;
 	virtual bool isEqualTo(AttrObject*other);//窗型是否一致
 	bool IsPrototypeEqual_test(const AttrWindow& p_att);
-	bool IsInstanceEqual(const AttrWindow& p_att) const;
+	bool IsInstanceEqual(const AttrWindow& p_att) const;//主要用于自动编号区分
 
 	E_WindowAluminumType GetWindowDoorAluminumType()const;
 
@@ -165,7 +165,12 @@ public:
 	CString GetPrototypeDwgFilePath(eViewDir p_view)const;
 
 	bool IsRelatedGen()const { return m_fromWinId != AcDbObjectId::kNull; } //是否是通过其他的门窗关联生成
-	bool IsInstanceNeedMirror()const;
+
+
+	bool IsMxMirror()const; //实际的矩阵是否镜像
+	void SetMxMirror(bool p_bMirror);
+	bool IsMirror()const; 
+	void SetMirror(bool p_bMirror);
 
 	AcDbObjectId GetFromWinId()const { return m_fromWinId; }
 	AcDbObjectIdArray  GetRelatedWinIds()const { return m_relatedWinIds; }
@@ -200,6 +205,7 @@ public:
 	eViewDir m_viewDir;//视图方向，平面图、立面图、侧视图
 
 	bool   m_isBayWindow;	 //是否凸窗
+	bool m_isFireproofWindow;//是否防火窗
 	double m_wallDis;		 //外墙距离
 	double m_heightUnderWindow; //窗下墙高度
 

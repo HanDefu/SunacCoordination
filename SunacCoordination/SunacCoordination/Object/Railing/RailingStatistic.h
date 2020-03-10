@@ -12,6 +12,8 @@ public:
 
 	AcDbObjectId InsertTableToCAD(AcGePoint3d insertPos);
 
+	vector<pair<AttrRailing, int>> AllRailings(){ return m_allRailings; }
+
 protected:
 	vector<pair<AttrRailing, int>> m_allRailings;
 };

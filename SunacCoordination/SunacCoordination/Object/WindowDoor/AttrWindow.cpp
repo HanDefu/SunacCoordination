@@ -152,6 +152,7 @@ AttrWindow::AttrWindow()
 	m_openQty = 1;
 	m_isZhuanJiao = false;//是否转角窗
 	m_isMirrorWindow = false;
+	m_isFireproofWindow = false;
 
 	m_tongFengFormula = L"";//通风量计算公式
 	m_tongFengQty = 0.0;
@@ -261,6 +262,7 @@ void AttrWindow::Clone(const AttrWindow& rhs)
 
 	m_isZhuanJiao = rhs.m_isZhuanJiao;		//是否转角窗
 	m_isMirrorWindow = rhs.m_isMirrorWindow;	//是否对称窗型 
+	m_isFireproofWindow = rhs.m_isFireproofWindow; //是否防火窗型
 
 	//////////////////////////////////////////////////////////////////////////
 	//算量相关
@@ -360,7 +362,7 @@ void AttrWindow::CheckAndComplementDimeData() //检查并补全Dim数据，W/H/a确保都有
 		dimData.SetDefaultValue(25);
 		SetDimData(dimData);
 	}
-	if (GetDimData(_T("d")) == NULL) //墙厚度
+	if (GetDimData(_T("D")) == NULL) //墙厚度
 	{
 		CWindowsDimData dimData;
 		dimData.sCodeName = _T("D");
@@ -590,6 +592,8 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 
 	filer->readItem(&m_isMirrorWindow);
 
+	filer->readItem(&m_isFireproofWindow);
+
 	filer->readItem(&m_isMirror);
 
 	filer->readItem((Adesk::UInt32*)&m_viewDir);
@@ -714,6 +718,8 @@ Acad::ErrorStatus AttrWindow::dwgOutFields(AcDbDwgFiler* filer) const
 	filer->writeItem(m_isZhuanJiao);
 
 	filer->writeItem(m_isMirrorWindow);
+
+	filer->writeItem(m_isFireproofWindow);
 
 	filer->writeItem(m_isMirror);
 
@@ -921,6 +927,7 @@ bool AttrWindow::IsPrototypeEqual_test(const AttrWindow& p_att)
 	return true;
 }
 
+//主要用于自动编号区分
 bool AttrWindow::IsInstanceEqual(const AttrWindow& p_att) const
 {
 	if (GetMainPrototypeCode() != p_att.GetMainPrototypeCode())
@@ -939,8 +946,26 @@ bool AttrWindow::IsInstanceEqual(const AttrWindow& p_att) const
 			return false;
 	}
 
-	if (!m_isMirrorWindow && m_isMirror != p_att.m_isMirror) 
+	if (!m_isMirrorWindow && m_isMirror != p_att.m_isMirror)
 		return false;
+
+	//是否防火窗
+	if (m_isFireproofWindow!=p_att.m_isFireproofWindow)
+	{
+		return false;
+	}
+
+	//是否有附框， 附框尺寸通常是相同的，不进行比较
+	if (m_material.bHasAuxiliaryFrame!=p_att.m_material.bHasAuxiliaryFrame)
+	{
+		return false;
+	}
+
+	//型材
+	if (0!=m_material.sAluminumSerial.CompareNoCase( p_att.m_material.sAluminumSerial))
+	{
+		return false;
+	}
 
 	return true;
 }
@@ -987,24 +1012,38 @@ CString AttrWindow::GetPrototypeDwgFilePath(eViewDir p_view)const
 	return TY_GetPrototypeFilePath() + sFileName;
 }
 
-bool AttrWindow::IsInstanceNeedMirror()const
+bool AttrWindow::IsMxMirror()const //实际的矩阵是否镜像
 {
 	bool bMirror = m_isMirror;
 	if (m_viewDir == E_VIEW_TOP)
 	{
-		bMirror = !bMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题
+		bMirror = !bMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题 Mirror
 	}
-	if (m_viewDir == E_VIEW_EXTEND) //若是展开图，直接返回false，门窗详图不用镜像
+
+	return (bMirror && (m_isMirrorWindow == false));
+}
+void AttrWindow::SetMxMirror(bool p_bMirror)
+{
+	if (m_viewDir == E_VIEW_TOP)
 	{
-		return false;
+		p_bMirror = !p_bMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题 Mirror
 	}
-	if (bMirror && (m_isMirrorWindow == false))
+
+	m_isMirror = p_bMirror;
+}
+
+bool AttrWindow::IsMirror()const//非对称窗型才有镜像
+{
+	return m_isMirror && (m_isMirrorWindow == false); 
+} 
+void AttrWindow::SetMirror(bool p_bMirror)
+{
+	if (m_isMirrorWindow)
 	{
-		return true;
+		m_isMirror = false;
+		return;
 	}
-	else
-	{
-		return false;
-	}
+
+	m_isMirror = p_bMirror;
 }
 
