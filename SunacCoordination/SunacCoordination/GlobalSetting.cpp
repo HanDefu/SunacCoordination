@@ -124,9 +124,9 @@ bool GlobalSetting::LoadFromXml()
 			if (xml.FindElem(_T("WinNumberLayerPingmian")))
 				m_winSetting.m_sWinNumberLayerPingmian = xml.GetData();
 			if (xml.FindElem(_T("UseAinLimian")))
-				m_winSetting.m_bUseAinLimian = xml.GetData() == _T("TRUE") ? true : false;
+				m_winSetting.m_bUseAinLimian = ((xml.GetData() == _T("TRUE")) ? true : false);
 			if (xml.FindElem(_T("ShowLimianNumber")))
-				m_winSetting.m_bShowLimianNumber = xml.GetData() == _T("TRUE") ? true : false;
+				m_winSetting.m_bShowLimianNumber = ((xml.GetData() == _T("TRUE")) ? true : false);
 			xml.OutOfElem();
 		}
 		xml.OutOfElem();
