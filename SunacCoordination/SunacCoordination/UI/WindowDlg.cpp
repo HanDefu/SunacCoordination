@@ -230,6 +230,12 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	pSelWinAttr->SetD(m_nThickness);
 	pSelWinAttr->m_heightUnderWindow = TYUI_GetDouble(m_comboH3);//窗下墙高度
 
+	//是否防火窗
+	if (((CButton *)GetDlgItem(IDC_ISFIREPROOF_RADIO))->GetCheck())
+		pSelWinAttr->SetIsFireproofWindow(true);
+	else
+		pSelWinAttr->SetIsFireproofWindow(false);
+
 	//自动编号下更新原型编号
 	UpdateInstanceCode();
 
@@ -311,11 +317,6 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 
 		m_winPrototypes[i].SetW(m_nWidth);
 		m_winPrototypes[i].SetH(m_nHeight);
-
-		if (((CButton *)GetDlgItem(IDC_ISFIREPROOF_RADIO))->GetCheck())
-			m_winPrototypes[i].m_isFireproofWindow = true;
-		else
-			m_winPrototypes[i].m_isFireproofWindow = false;
 
 		//若是编辑模式，保持原来的镜像关系
 		if (m_bEditMode)

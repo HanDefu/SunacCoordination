@@ -155,6 +155,9 @@ public:
 	bool SetHeightUnderWindow(double newValue);
 	double GetHeightUnderWindow()const { return m_heightUnderWindow; }
 
+	void SetIsFireproofWindow(bool p_isFireproofWindow){ m_isFireproofWindow = p_isFireproofWindow; }
+	bool GetIsFireproofWindow()const { return m_isFireproofWindow; }
+
 	CFloorInfo GetFloorInfo()const { return m_floorInfo; }
 	void SetFloorInfo(CFloorInfo p_info){ m_floorInfo = p_info; }
 
