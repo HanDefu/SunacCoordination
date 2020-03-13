@@ -795,7 +795,9 @@ void CWindowGen::CreateWindowDoorCode(eViewDir p_viewDir, CWinInCad p_win, CStri
 	else
 	{
 		winWidth = GetWinWidth(p_win.m_winId);
-		heightOffset = -100 - GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize;
+		double winHeight = GetWinHeight(p_win.m_winId);
+		//heightOffset = -100 - GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize;
+		heightOffset = winHeight / 2 - GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize;
 	}
 
 	AcGePoint3d textPos(winWidth / 2, GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize + heightOffset, 0);

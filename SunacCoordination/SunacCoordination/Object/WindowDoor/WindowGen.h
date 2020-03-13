@@ -65,7 +65,6 @@ protected:
 
 	//≤Â»Î√≈¥∞±‡∫≈
 	static AcDbObjectId InsertWindowDoorCode(eViewDir p_viewDir, CString p_number, AcGePoint3d p_pos);
-	//static void MoveWindowDoorCode(AcDbObjectId p_id, double p_winWidth, double p_winHeight, AcGePoint3d p_origin, eViewDir p_viewDir, E_DIRECTION p_winDir);
 	static void CreateWindowDoorCode(eViewDir p_viewDir, CWinInCad p_win, CString p_Code);
 	static double GetWinWidth(AcDbObjectId p_id);
 	static double GetWinHeight(AcDbObjectId p_id);
