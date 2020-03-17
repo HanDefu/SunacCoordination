@@ -592,13 +592,16 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 
 	filer->readItem(&m_isMirrorWindow);
 
-	filer->readItem(&m_isFireproofWindow);
-
 	filer->readItem(&m_isMirror);
 
 	filer->readItem((Adesk::UInt32*)&m_viewDir);
 
 	filer->readItem(&m_isBayWindow);
+
+	if (m_version >= 5)
+	{
+		filer->readItem(&m_isFireproofWindow);
+	}
 
 	filer->readItem(&m_wallDis);
 
@@ -719,13 +722,16 @@ Acad::ErrorStatus AttrWindow::dwgOutFields(AcDbDwgFiler* filer) const
 
 	filer->writeItem(m_isMirrorWindow);
 
-	filer->writeItem(m_isFireproofWindow);
-
 	filer->writeItem(m_isMirror);
 
 	filer->writeItem((Adesk::UInt32)m_viewDir);
 
 	filer->writeItem(m_isBayWindow);
+
+	//FILE_VERSION 5 ÐÂÔö
+	{
+		filer->writeItem(m_isFireproofWindow);
+	}
 
 	filer->writeItem(m_wallDis);
 

@@ -208,7 +208,7 @@ public:
 	eViewDir m_viewDir;//视图方向，平面图、立面图、侧视图
 
 	bool   m_isBayWindow;	 //是否凸窗
-	bool m_isFireproofWindow;//是否防火窗
+	bool   m_isFireproofWindow;//是否防火窗
 	double m_wallDis;		 //外墙距离
 	double m_heightUnderWindow; //窗下墙高度
 

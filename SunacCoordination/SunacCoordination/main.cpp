@@ -283,6 +283,11 @@ void CMD_YTest2()
 	}
 }
 
+void CMD_YTest3()
+{
+
+}
+
 void AddSubMenu(CAcadPopupMenu&IPopUpMenu, UINT MenuStartIndex)
 {
 	VARIANT index;
