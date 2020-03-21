@@ -1,0 +1,540 @@
+
+#pragma once
+#pragma pack(push, 8)
+
+#include <comdef.h>
+
+namespace COMKERNALLib {
+
+
+struct __declspec(uuid("1b20a587-2e7f-490b-b212-d5b91aecb7d8"))
+	/* dual interface */ IComOpening;
+
+
+struct /* coclass */ ComOpening;
+
+
+_COM_SMARTPTR_TYPEDEF(IComOpening, __uuidof(IComOpening));
+
+
+
+struct __declspec(uuid("1b20a587-2e7f-490b-b212-d5b91aecb7d8"))
+IComOpening : IAcadEntity
+{
+	//
+	// Property data
+	//
+
+	__declspec(property(get=GetWinSill,put=PutWinSill))
+		double WinSill;
+	__declspec(property(get=GetWidth,put=PutWidth))
+		double Width;
+	__declspec(property(get=GetGetKind))
+		_bstr_t GetKind;
+	__declspec(property(get=GetOutlineArea))
+		_bstr_t OutlineArea;
+	__declspec(property(get=GetOutlineLength))
+		double OutlineLength;
+	__declspec(property(get=GetDoorSill,put=PutDoorSill))
+		double DoorSill;
+	__declspec(property(get=GetSlot,put=PutSlot))
+		_bstr_t Slot;
+	__declspec(property(get=GetSlotExt,put=PutSlotExt))
+		double SlotExt;
+	__declspec(property(get=GetSlotWidth,put=PutSlotWidth))
+		double SlotWidth;
+	__declspec(property(get=GetHeight,put=PutHeight))
+		double Height;
+	__declspec(property(get=GetLabel,put=PutLabel))
+		_bstr_t Label;
+	__declspec(property(get=GetUpLevel,put=PutUpLevel))
+		_bstr_t UpLevel;
+	__declspec(property(get=GetTextHeight,put=PutTextHeight))
+		double TextHeight;
+	__declspec(property(get=GetDoorLine,put=PutDoorLine))
+		short DoorLine;
+	__declspec(property(get=GetHoleType,put=PutHoleType))
+		_bstr_t HoleType;
+	__declspec(property(get=GetStructure,put=PutStructure))
+		_bstr_t Structure;
+	__declspec(property(get=GetExtShading,put=PutExtShading))
+		_bstr_t ExtShading;
+	__declspec(property(get=GetAreaRatio))
+		double AreaRatio;
+	__declspec(property(get=GetTextStyle,put=PutTextStyle))
+		_bstr_t TextStyle;
+	__declspec(property(get=GetTextLayer,put=PutTextLayer))
+		ACAD_LAYER TextLayer;
+	__declspec(property(get=GetSlabThickness,put=PutSlabThickness))
+		double SlabThickness;
+	__declspec(property(get=GetGlassLayer,put=PutGlassLayer))
+		ACAD_LAYER GlassLayer;
+	__declspec(property(get=GetFrameLayer,put=PutFrameLayer))
+		ACAD_LAYER FrameLayer;
+	__declspec(property(get=GetSlabLayer,put=PutSlabLayer))
+		ACAD_LAYER SlabLayer;
+	__declspec(property(get=GetUFrame,put=PutUFrame))
+		double UFrame;
+	__declspec(property(get=GetVFrame,put=PutVFrame))
+		double VFrame;
+	__declspec(property(get=GetLayoutRotation,put=PutLayoutRotation))
+		double LayoutRotation;
+	__declspec(property(get=GetScale,put=PutScale))
+		double Scale;
+	__declspec(property(get=GetHideLabel,put=PutHideLabel))
+		_bstr_t HideLabel;
+	__declspec(property(get=GetSlotMaterial,put=PutSlotMaterial))
+		_bstr_t SlotMaterial;
+	__declspec(property(get=GetProStyle,put=PutProStyle))
+		_bstr_t ProStyle;
+	__declspec(property(get=GetLeftSlab,put=PutLeftSlab))
+		_bstr_t LeftSlab;
+	__declspec(property(get=GetRightSlab,put=PutRightSlab))
+		_bstr_t RightSlab;
+	__declspec(property(get=GetProWinSlabWidth,put=PutProWinSlabWidth))
+		double ProWinSlabWidth;
+	__declspec(property(get=GetSlotInsuThick,put=PutSlotInsuThick))
+		double SlotInsuThick;
+	__declspec(property(get=GetSlotInsuCap,put=PutSlotInsuCap))
+		_bstr_t SlotInsuCap;
+	__declspec(property(get=GetEvacuationType,put=PutEvacuationType))
+		_bstr_t EvacuationType;
+	__declspec(property(get=GetLineOffsetDist,put=PutLineOffsetDist))
+		double LineOffsetDist;
+	__declspec(property(get=GetProWinSlabInsuThick,put=PutProWinSlabInsuThick))
+		double ProWinSlabInsuThick;
+	__declspec(property(get=GetGetSubKind,put=PutGetSubKind))
+		_bstr_t GetSubKind;
+	__declspec(property(get=GetBayThick,put=PutBayThick))
+		double BayThick;
+	__declspec(property(get=GetHoleStyle,put=PutHoleStyle))
+		_bstr_t HoleStyle;
+	__declspec(property(get=GetConductivity))
+		double Conductivity;
+	__declspec(property(get=GetUsage,put=PutUsage))
+		_bstr_t Usage;
+	__declspec(property(get=GetShadowType,put=PutShadowType))
+		_bstr_t ShadowType;
+	__declspec(property(get=GetIsHigh,put=PutIsHigh))
+		_bstr_t IsHigh;
+	__declspec(property(get=GetStruWinSill,put=PutStruWinSill))
+		double StruWinSill;
+
+	//
+	// Wrapper methods for error-handling
+	//
+
+	double GetScale ( );
+	void PutScale (
+		double pVal );
+	double GetLayoutRotation ( );
+	void PutLayoutRotation (
+		double pVal );
+	_bstr_t GetHoleType ( );
+	void PutHoleType (
+		_bstr_t pVal );
+	double GetWinSill ( );
+	void PutWinSill (
+		double pVal );
+	double GetDoorSill ( );
+	void PutDoorSill (
+		double pVal );
+	double GetHeight ( );
+	void PutHeight (
+		double pVal );
+	double GetWidth ( );
+	void PutWidth (
+		double pVal );
+	double GetStruWinSill ( );
+	void PutStruWinSill (
+		double pVal );
+	double GetBayThick ( );
+	void PutBayThick (
+		double pVal );
+	double GetSlabThickness ( );
+	void PutSlabThickness (
+		double pVal );
+	double GetUFrame ( );
+	void PutUFrame (
+		double pVal );
+	double GetVFrame ( );
+	void PutVFrame (
+		double pVal );
+	_bstr_t GetOutlineArea ( );
+	double GetOutlineLength ( );
+	_bstr_t GetLabel ( );
+	void PutLabel (
+		_bstr_t pVal );
+	double GetTextHeight ( );
+	void PutTextHeight (
+		double pVal );
+	_bstr_t GetTextStyle ( );
+	void PutTextStyle (
+		_bstr_t pVal );
+	_bstr_t GetHideLabel ( );
+	void PutHideLabel (
+		_bstr_t pVal );
+	ACAD_LAYER GetTextLayer ( );
+	void PutTextLayer (
+		ACAD_LAYER pVal );
+	ACAD_LAYER GetGlassLayer ( );
+	void PutGlassLayer (
+		ACAD_LAYER pVal );
+	ACAD_LAYER GetFrameLayer ( );
+	void PutFrameLayer (
+		ACAD_LAYER pVal );
+	ACAD_LAYER GetSlabLayer ( );
+	void PutSlabLayer (
+		ACAD_LAYER pVal );
+	_bstr_t GetProStyle ( );
+	void PutProStyle (
+		_bstr_t pVal );
+	_bstr_t GetLeftSlab ( );
+	void PutLeftSlab (
+		_bstr_t pVal );
+	_bstr_t GetRightSlab ( );
+	void PutRightSlab (
+		_bstr_t pVal );
+	double GetProWinSlabWidth ( );
+	void PutProWinSlabWidth (
+		double pVal );
+	double GetProWinSlabInsuThick ( );
+	void PutProWinSlabInsuThick (
+		double pVal );
+	_bstr_t GetSlot ( );
+	void PutSlot (
+		_bstr_t pVal );
+	_bstr_t GetSlotMaterial ( );
+	void PutSlotMaterial (
+		_bstr_t pVal );
+	double GetSlotExt ( );
+	void PutSlotExt (
+		double pVal );
+	double GetSlotWidth ( );
+	void PutSlotWidth (
+		double pVal );
+	double GetSlotInsuThick ( );
+	void PutSlotInsuThick (
+		double pVal );
+	_bstr_t GetSlotInsuCap ( );
+	void PutSlotInsuCap (
+		_bstr_t pVal );
+	_bstr_t GetGetKind ( );
+	_bstr_t GetGetSubKind ( );
+	void PutGetSubKind (
+		_bstr_t pVal );
+	_bstr_t GetHoleStyle ( );
+	void PutHoleStyle (
+		_bstr_t pVal );
+	_bstr_t GetEvacuationType ( );
+	void PutEvacuationType (
+		_bstr_t pVal );
+	_bstr_t GetUpLevel ( );
+	void PutUpLevel (
+		_bstr_t pVal );
+	short GetDoorLine ( );
+	void PutDoorLine (
+		short pVal );
+	double GetLineOffsetDist ( );
+	void PutLineOffsetDist (
+		double pVal );
+	_bstr_t GetStructure ( );
+	void PutStructure (
+		_bstr_t pVal );
+	_bstr_t GetExtShading ( );
+	void PutExtShading (
+		_bstr_t pVal );
+	double GetAreaRatio ( );
+	double GetConductivity ( );
+	_bstr_t GetUsage ( );
+	void PutUsage (
+		_bstr_t pVal );
+	_bstr_t GetShadowType ( );
+	void PutShadowType (
+		_bstr_t pVal );
+	_bstr_t GetIsHigh ( );
+	void PutIsHigh (
+		_bstr_t pVal );
+
+	//
+	// Raw methods provided by interface
+	//
+
+	virtual HRESULT __stdcall get_Scale (
+		/*[out,retval]*/ double * pVal ) = 0;
+	virtual HRESULT __stdcall put_Scale (
+		/*[in]*/ double pVal ) = 0;
+	virtual HRESULT __stdcall get_LayoutRotation (
+		/*[out,retval]*/ double * pVal ) = 0;
+	virtual HRESULT __stdcall put_LayoutRotation (
+		/*[in]*/ double pVal ) = 0;
+	virtual HRESULT __stdcall get_HoleType (
+		/*[out,retval]*/ BSTR * pVal ) = 0;
+	virtual HRESULT __stdcall put_HoleType (
+		/*[in]*/ BSTR pVal ) = 0;
+	virtual HRESULT __stdcall get_WinSill (
+		/*[out,retval]*/ double * pVal ) = 0;
+	virtual HRESULT __stdcall put_WinSill (
+		/*[in]*/ double pVal ) = 0;
+	virtual HRESULT __stdcall get_DoorSill (
+		/*[out,retval]*/ double * pVal ) = 0;
+	virtual HRESULT __stdcall put_DoorSill (
+		/*[in]*/ double pVal ) = 0;
+	virtual HRESULT __stdcall get_Height (
+		/*[out,retval]*/ double * pVal ) = 0;
+	virtual HRESULT __stdcall put_Height (
+		/*[in]*/ double pVal ) = 0;
+	virtual HRESULT __stdcall get_Width (
+		/*[out,retval]*/ double * pVal ) = 0;
+	virtual HRESULT __stdcall put_Width (
+		/*[in]*/ double pVal ) = 0;
+	virtual HRESULT __stdcall get_StruWinSill (
+		/*[out,retval]*/ double * pVal ) = 0;
+	virtual HRESULT __stdcall put_StruWinSill (
+		/*[in]*/ double pVal ) = 0;
+	virtual HRESULT __stdcall get_BayThick (
+		/*[out,retval]*/ double * pVal ) = 0;
+	virtual HRESULT __stdcall put_BayThick (
+		/*[in]*/ double pVal ) = 0;
+	virtual HRESULT __stdcall get_SlabThickness (
+		/*[out,retval]*/ double * pVal ) = 0;
+	virtual HRESULT __stdcall put_SlabThickness (
+		/*[in]*/ double pVal ) = 0;
+	virtual HRESULT __stdcall get_UFrame (
+		/*[out,retval]*/ double * pVal ) = 0;
+	virtual HRESULT __stdcall put_UFrame (
+		/*[in]*/ double pVal ) = 0;
+	virtual HRESULT __stdcall get_VFrame (
+		/*[out,retval]*/ double * pVal ) = 0;
+	virtual HRESULT __stdcall put_VFrame (
+		/*[in]*/ double pVal ) = 0;
+	virtual HRESULT __stdcall get_OutlineArea (
+		/*[out,retval]*/ BSTR * pVal ) = 0;
+	virtual HRESULT __stdcall get_OutlineLength (
+		/*[out,retval]*/ double * pVal ) = 0;
+	virtual HRESULT __stdcall get_Label (
+		/*[out,retval]*/ BSTR * pVal ) = 0;
+	virtual HRESULT __stdcall put_Label (
+		/*[in]*/ BSTR pVal ) = 0;
+	virtual HRESULT __stdcall get_TextHeight (
+		/*[out,retval]*/ double * pVal ) = 0;
+	virtual HRESULT __stdcall put_TextHeight (
+		/*[in]*/ double pVal ) = 0;
+	virtual HRESULT __stdcall get_TextStyle (
+		/*[out,retval]*/ BSTR * pVal ) = 0;
+	virtual HRESULT __stdcall put_TextStyle (
+		/*[in]*/ BSTR pVal ) = 0;
+	virtual HRESULT __stdcall get_HideLabel (
+		/*[out,retval]*/ BSTR * pVal ) = 0;
+	virtual HRESULT __stdcall put_HideLabel (
+		/*[in]*/ BSTR pVal ) = 0;
+	virtual HRESULT __stdcall get_TextLayer (
+		/*[out,retval]*/ ACAD_LAYER * pVal ) = 0;
+	virtual HRESULT __stdcall put_TextLayer (
+		/*[in]*/ ACAD_LAYER pVal ) = 0;
+	virtual HRESULT __stdcall get_GlassLayer (
+		/*[out,retval]*/ ACAD_LAYER * pVal ) = 0;
+	virtual HRESULT __stdcall put_GlassLayer (
+		/*[in]*/ ACAD_LAYER pVal ) = 0;
+	virtual HRESULT __stdcall get_FrameLayer (
+		/*[out,retval]*/ ACAD_LAYER * pVal ) = 0;
+	virtual HRESULT __stdcall put_FrameLayer (
+		/*[in]*/ ACAD_LAYER pVal ) = 0;
+	virtual HRESULT __stdcall get_SlabLayer (
+		/*[out,retval]*/ ACAD_LAYER * pVal ) = 0;
+	virtual HRESULT __stdcall put_SlabLayer (
+		/*[in]*/ ACAD_LAYER pVal ) = 0;
+	virtual HRESULT __stdcall get_ProStyle (
+		/*[out,retval]*/ BSTR * pVal ) = 0;
+	virtual HRESULT __stdcall put_ProStyle (
+		/*[in]*/ BSTR pVal ) = 0;
+	virtual HRESULT __stdcall get_LeftSlab (
+		/*[out,retval]*/ BSTR * pVal ) = 0;
+	virtual HRESULT __stdcall put_LeftSlab (
+		/*[in]*/ BSTR pVal ) = 0;
+	virtual HRESULT __stdcall get_RightSlab (
+		/*[out,retval]*/ BSTR * pVal ) = 0;
+	virtual HRESULT __stdcall put_RightSlab (
+		/*[in]*/ BSTR pVal ) = 0;
+	virtual HRESULT __stdcall get_ProWinSlabWidth (
+		/*[out,retval]*/ double * pVal ) = 0;
+	virtual HRESULT __stdcall put_ProWinSlabWidth (
+		/*[in]*/ double pVal ) = 0;
+	virtual HRESULT __stdcall get_ProWinSlabInsuThick (
+		/*[out,retval]*/ double * pVal ) = 0;
+	virtual HRESULT __stdcall put_ProWinSlabInsuThick (
+		/*[in]*/ double pVal ) = 0;
+	virtual HRESULT __stdcall get_Slot (
+		/*[out,retval]*/ BSTR * pVal ) = 0;
+	virtual HRESULT __stdcall put_Slot (
+		/*[in]*/ BSTR pVal ) = 0;
+	virtual HRESULT __stdcall get_SlotMaterial (
+		/*[out,retval]*/ BSTR * pVal ) = 0;
+	virtual HRESULT __stdcall put_SlotMaterial (
+		/*[in]*/ BSTR pVal ) = 0;
+	virtual HRESULT __stdcall get_SlotExt (
+		/*[out,retval]*/ double * pVal ) = 0;
+	virtual HRESULT __stdcall put_SlotExt (
+		/*[in]*/ double pVal ) = 0;
+	virtual HRESULT __stdcall get_SlotWidth (
+		/*[out,retval]*/ double * pVal ) = 0;
+	virtual HRESULT __stdcall put_SlotWidth (
+		/*[in]*/ double pVal ) = 0;
+	virtual HRESULT __stdcall get_SlotInsuThick (
+		/*[out,retval]*/ double * pVal ) = 0;
+	virtual HRESULT __stdcall put_SlotInsuThick (
+		/*[in]*/ double pVal ) = 0;
+	virtual HRESULT __stdcall get_SlotInsuCap (
+		/*[out,retval]*/ BSTR * pVal ) = 0;
+	virtual HRESULT __stdcall put_SlotInsuCap (
+		/*[in]*/ BSTR pVal ) = 0;
+	virtual HRESULT __stdcall get_GetKind (
+		/*[out,retval]*/ BSTR * pVal ) = 0;
+	virtual HRESULT __stdcall get_GetSubKind (
+		/*[out,retval]*/ BSTR * pVal ) = 0;
+	virtual HRESULT __stdcall put_GetSubKind (
+		/*[in]*/ BSTR pVal ) = 0;
+	virtual HRESULT __stdcall get_HoleStyle (
+		/*[out,retval]*/ BSTR * pVal ) = 0;
+	virtual HRESULT __stdcall put_HoleStyle (
+		/*[in]*/ BSTR pVal ) = 0;
+	virtual HRESULT __stdcall get_EvacuationType (
+		/*[out,retval]*/ BSTR * pVal ) = 0;
+	virtual HRESULT __stdcall put_EvacuationType (
+		/*[in]*/ BSTR pVal ) = 0;
+	virtual HRESULT __stdcall get_UpLevel (
+		/*[out,retval]*/ BSTR * pVal ) = 0;
+	virtual HRESULT __stdcall put_UpLevel (
+		/*[in]*/ BSTR pVal ) = 0;
+	virtual HRESULT __stdcall get_DoorLine (
+		/*[out,retval]*/ short * pVal ) = 0;
+	virtual HRESULT __stdcall put_DoorLine (
+		/*[in]*/ short pVal ) = 0;
+	virtual HRESULT __stdcall get_LineOffsetDist (
+		/*[out,retval]*/ double * pVal ) = 0;
+	virtual HRESULT __stdcall put_LineOffsetDist (
+		/*[in]*/ double pVal ) = 0;
+	virtual HRESULT __stdcall get_Structure (
+		/*[out,retval]*/ BSTR * pVal ) = 0;
+	virtual HRESULT __stdcall put_Structure (
+		/*[in]*/ BSTR pVal ) = 0;
+	virtual HRESULT __stdcall get_ExtShading (
+		/*[out,retval]*/ BSTR * pVal ) = 0;
+	virtual HRESULT __stdcall put_ExtShading (
+		/*[in]*/ BSTR pVal ) = 0;
+	virtual HRESULT __stdcall get_AreaRatio (
+		/*[out,retval]*/ double * pVal ) = 0;
+	virtual HRESULT __stdcall get_Conductivity (
+		/*[out,retval]*/ double * pVal ) = 0;
+	virtual HRESULT __stdcall get_Usage (
+		/*[out,retval]*/ BSTR * pVal ) = 0;
+	virtual HRESULT __stdcall put_Usage (
+		/*[in]*/ BSTR pVal ) = 0;
+	virtual HRESULT __stdcall get_ShadowType (
+		/*[out,retval]*/ BSTR * pVal ) = 0;
+	virtual HRESULT __stdcall put_ShadowType (
+		/*[in]*/ BSTR pVal ) = 0;
+	virtual HRESULT __stdcall get_IsHigh (
+		/*[out,retval]*/ BSTR * pVal ) = 0;
+	virtual HRESULT __stdcall put_IsHigh (
+		/*[in]*/ BSTR pVal ) = 0;
+};
+
+
+struct __declspec(uuid("fea237f0-693c-49d6-9548-f21b9f326237"))
+	ComOpening;
+// [ default ] interface IComOpening
+// [ default, source ] interface IAcadObjectEvents
+
+
+__declspec(implementation_key(328)) double IComOpening::GetScale ( );
+__declspec(implementation_key(329)) void IComOpening::PutScale ( double pVal );
+__declspec(implementation_key(330)) double IComOpening::GetLayoutRotation ( );
+__declspec(implementation_key(331)) void IComOpening::PutLayoutRotation ( double pVal );
+__declspec(implementation_key(332)) _bstr_t IComOpening::GetHoleType ( );
+__declspec(implementation_key(333)) void IComOpening::PutHoleType ( _bstr_t pVal );
+__declspec(implementation_key(334)) double IComOpening::GetWinSill ( );
+__declspec(implementation_key(335)) void IComOpening::PutWinSill ( double pVal );
+__declspec(implementation_key(336)) double IComOpening::GetDoorSill ( );
+__declspec(implementation_key(337)) void IComOpening::PutDoorSill ( double pVal );
+__declspec(implementation_key(338)) double IComOpening::GetHeight ( );
+__declspec(implementation_key(339)) void IComOpening::PutHeight ( double pVal );
+__declspec(implementation_key(340)) double IComOpening::GetWidth ( );
+__declspec(implementation_key(341)) void IComOpening::PutWidth ( double pVal );
+__declspec(implementation_key(342)) double IComOpening::GetStruWinSill ( );
+__declspec(implementation_key(343)) void IComOpening::PutStruWinSill ( double pVal );
+__declspec(implementation_key(344)) double IComOpening::GetBayThick ( );
+__declspec(implementation_key(345)) void IComOpening::PutBayThick ( double pVal );
+__declspec(implementation_key(346)) double IComOpening::GetSlabThickness ( );
+__declspec(implementation_key(347)) void IComOpening::PutSlabThickness ( double pVal );
+__declspec(implementation_key(348)) double IComOpening::GetUFrame ( );
+__declspec(implementation_key(349)) void IComOpening::PutUFrame ( double pVal );
+__declspec(implementation_key(350)) double IComOpening::GetVFrame ( );
+__declspec(implementation_key(351)) void IComOpening::PutVFrame ( double pVal );
+__declspec(implementation_key(352)) _bstr_t IComOpening::GetOutlineArea ( );
+__declspec(implementation_key(353)) double IComOpening::GetOutlineLength ( );
+__declspec(implementation_key(354)) _bstr_t IComOpening::GetLabel ( );
+__declspec(implementation_key(355)) void IComOpening::PutLabel ( _bstr_t pVal );
+__declspec(implementation_key(356)) double IComOpening::GetTextHeight ( );
+__declspec(implementation_key(357)) void IComOpening::PutTextHeight ( double pVal );
+__declspec(implementation_key(358)) _bstr_t IComOpening::GetTextStyle ( );
+__declspec(implementation_key(359)) void IComOpening::PutTextStyle ( _bstr_t pVal );
+__declspec(implementation_key(360)) _bstr_t IComOpening::GetHideLabel ( );
+__declspec(implementation_key(361)) void IComOpening::PutHideLabel ( _bstr_t pVal );
+__declspec(implementation_key(362)) ACAD_LAYER IComOpening::GetTextLayer ( );
+__declspec(implementation_key(363)) void IComOpening::PutTextLayer ( ACAD_LAYER pVal );
+__declspec(implementation_key(364)) ACAD_LAYER IComOpening::GetGlassLayer ( );
+__declspec(implementation_key(365)) void IComOpening::PutGlassLayer ( ACAD_LAYER pVal );
+__declspec(implementation_key(366)) ACAD_LAYER IComOpening::GetFrameLayer ( );
+__declspec(implementation_key(367)) void IComOpening::PutFrameLayer ( ACAD_LAYER pVal );
+__declspec(implementation_key(368)) ACAD_LAYER IComOpening::GetSlabLayer ( );
+__declspec(implementation_key(369)) void IComOpening::PutSlabLayer ( ACAD_LAYER pVal );
+__declspec(implementation_key(370)) _bstr_t IComOpening::GetProStyle ( );
+__declspec(implementation_key(371)) void IComOpening::PutProStyle ( _bstr_t pVal );
+__declspec(implementation_key(372)) _bstr_t IComOpening::GetLeftSlab ( );
+__declspec(implementation_key(373)) void IComOpening::PutLeftSlab ( _bstr_t pVal );
+__declspec(implementation_key(374)) _bstr_t IComOpening::GetRightSlab ( );
+__declspec(implementation_key(375)) void IComOpening::PutRightSlab ( _bstr_t pVal );
+__declspec(implementation_key(376)) double IComOpening::GetProWinSlabWidth ( );
+__declspec(implementation_key(377)) void IComOpening::PutProWinSlabWidth ( double pVal );
+__declspec(implementation_key(378)) double IComOpening::GetProWinSlabInsuThick ( );
+__declspec(implementation_key(379)) void IComOpening::PutProWinSlabInsuThick ( double pVal );
+__declspec(implementation_key(380)) _bstr_t IComOpening::GetSlot ( );
+__declspec(implementation_key(381)) void IComOpening::PutSlot ( _bstr_t pVal );
+__declspec(implementation_key(382)) _bstr_t IComOpening::GetSlotMaterial ( );
+__declspec(implementation_key(383)) void IComOpening::PutSlotMaterial ( _bstr_t pVal );
+__declspec(implementation_key(384)) double IComOpening::GetSlotExt ( );
+__declspec(implementation_key(385)) void IComOpening::PutSlotExt ( double pVal );
+__declspec(implementation_key(386)) double IComOpening::GetSlotWidth ( );
+__declspec(implementation_key(387)) void IComOpening::PutSlotWidth ( double pVal );
+__declspec(implementation_key(388)) double IComOpening::GetSlotInsuThick ( );
+__declspec(implementation_key(389)) void IComOpening::PutSlotInsuThick ( double pVal );
+__declspec(implementation_key(390)) _bstr_t IComOpening::GetSlotInsuCap ( );
+__declspec(implementation_key(391)) void IComOpening::PutSlotInsuCap ( _bstr_t pVal );
+__declspec(implementation_key(392)) _bstr_t IComOpening::GetGetKind ( );
+__declspec(implementation_key(393)) _bstr_t IComOpening::GetGetSubKind ( );
+__declspec(implementation_key(394)) void IComOpening::PutGetSubKind ( _bstr_t pVal );
+__declspec(implementation_key(395)) _bstr_t IComOpening::GetHoleStyle ( );
+__declspec(implementation_key(396)) void IComOpening::PutHoleStyle ( _bstr_t pVal );
+__declspec(implementation_key(397)) _bstr_t IComOpening::GetEvacuationType ( );
+__declspec(implementation_key(398)) void IComOpening::PutEvacuationType ( _bstr_t pVal );
+__declspec(implementation_key(399)) _bstr_t IComOpening::GetUpLevel ( );
+__declspec(implementation_key(400)) void IComOpening::PutUpLevel ( _bstr_t pVal );
+__declspec(implementation_key(401)) short IComOpening::GetDoorLine ( );
+__declspec(implementation_key(402)) void IComOpening::PutDoorLine ( short pVal );
+__declspec(implementation_key(403)) double IComOpening::GetLineOffsetDist ( );
+__declspec(implementation_key(404)) void IComOpening::PutLineOffsetDist ( double pVal );
+__declspec(implementation_key(405)) _bstr_t IComOpening::GetStructure ( );
+__declspec(implementation_key(406)) void IComOpening::PutStructure ( _bstr_t pVal );
+__declspec(implementation_key(407)) _bstr_t IComOpening::GetExtShading ( );
+__declspec(implementation_key(408)) void IComOpening::PutExtShading ( _bstr_t pVal );
+__declspec(implementation_key(409)) double IComOpening::GetAreaRatio ( );
+__declspec(implementation_key(410)) double IComOpening::GetConductivity ( );
+__declspec(implementation_key(411)) _bstr_t IComOpening::GetUsage ( );
+__declspec(implementation_key(412)) void IComOpening::PutUsage ( _bstr_t pVal );
+__declspec(implementation_key(413)) _bstr_t IComOpening::GetShadowType ( );
+__declspec(implementation_key(414)) void IComOpening::PutShadowType ( _bstr_t pVal );
+__declspec(implementation_key(415)) _bstr_t IComOpening::GetIsHigh ( );
+__declspec(implementation_key(416)) void IComOpening::PutIsHigh ( _bstr_t pVal );
+
+}
