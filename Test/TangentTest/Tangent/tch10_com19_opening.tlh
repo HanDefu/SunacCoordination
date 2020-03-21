@@ -406,6 +406,13 @@ namespace COMKERNALLib
 		ComOpening;
 	// [ default ] interface IComOpening
 	// [ default, source ] interface IAcadObjectEvents
+
+
+
+	#include "tch10_com19_opening.tli"
+
+
+
 } // namespace COMKERNALLib
 
 #pragma pack(pop)
