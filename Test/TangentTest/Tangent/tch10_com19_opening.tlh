@@ -7,7 +7,6 @@
 //namespace COMKERNALLib
 namespace TCH10_COM9_T20V5X64
 {
-
 	struct __declspec(uuid("62d64041-adaa-4e25-b985-906354340c31"))
 		/* LIBID */ __COMKERNALLib;
 
