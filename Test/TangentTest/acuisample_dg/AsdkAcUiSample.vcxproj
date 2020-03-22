@@ -72,6 +72,7 @@
     <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\Temp\$(Platform)\$(Configuration)\</IntDir>
     <LibraryPath>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\Atil\Lib-x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\inc-x64;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\Atil\Inc;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\Atil\Inc\format_codecs;C:\Autodesk\Autodesk_ObjectARX_2014_Win_64_and_32Bit\utils\Atil\Inc\codec_properties;$(IncludePath)</IncludePath>

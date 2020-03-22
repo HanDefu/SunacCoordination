@@ -25,8 +25,6 @@
 #include <dbmline.h>
 #include <dbhatch.h>
 #include <gecomp3d.h>
-#include <brshell.h>
-#include <brcplx.h >
 
 
 #include "acdb.h"               // acdb definitions
@@ -46,18 +44,8 @@
 #include "acestext.h"
 #include "actrans.h"
 #include "rxobject.h"
-#include "brbrep.h"
-#include "brbftrav.h"
-#include "brface.h"
-#include "brfltrav.h"
 #include "dbelipse.h "
 
-#include "brloop.h"
-#include "bredge.h"
-#include "brlvtrav.h"
-#include "brvtx.h"
-#include "brbetrav.h"
-#include "breltrav.h"
 #include "dbspline.h"
 #include "dbgroup.h"
 #include "gesurf.h"
@@ -66,9 +54,6 @@
 #include "dbpl.h"
 #include <cmath>
 #include <afxdlgs.h>
-#include <vector>
-#include <brcplx.h>
-
 #include <vector>
 
 

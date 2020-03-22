@@ -40,8 +40,8 @@ CComModule _Module;
 #include <adslib.h>
 #include <rxmfcapi.h>
 
-#include "..\Tangent\tch10_com19.tlh"
-using namespace COMKERNALLib;
+#include "..\Tangent\TangentCom\tch10_com19_opening.tlh"
+using namespace TCH10_COM9_T20V5X64;
 //////////////////////////////////////////////////////////////////////////
 
 
