@@ -92,6 +92,7 @@
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Sunac_def.cpp" />
     <ClCompile Include="Tool\DoubleClickBlockReference.cpp" />
@@ -448,7 +449,7 @@
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2011_Win_64_and_32Bit\inc;$(ProjectDir);C:\Autodesk\Autodesk_ObjectARX_2011_Win_64_and_32Bit\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>ACRXAPP;RADPACK;ARX_2011;_AFXDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader />
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
