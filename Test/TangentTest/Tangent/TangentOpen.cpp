@@ -57,10 +57,10 @@ HRESULT CTangentOpen::SetTangentOpenProp(AcDbObjectId p_winId, CTOpenData p_winD
 	//else if (IsEqualCLSID(entClsid, __uuidof(TCH10_COM9_T20V4X64::ComOpening)))	//TODO 添加其他的天正版本库
 	//{
 	//}
-	//else
-	//{
-	//	hr = E_FAIL;
-	//}
+	else
+	{
+		hr = E_FAIL;
+	}
 
 	return hr;
 }
@@ -90,9 +90,10 @@ HRESULT CTangentOpen::SetTangentOpenProp_TCH10_COM9_T20V5X64( AcDbObjectId p_win
 		pWin->PutWidth(p_winData.width);
 		pWin->PutHeight(p_winData.height);
 	}
-	catch (HRESULT)
+	catch (HRESULT eHr)
 	{
-
+		acutPrintf(_T("\n Error SetTangentOpenProp_TCH10_COM9_T20V5X64."));
+		return eHr;
 	}
 
 
