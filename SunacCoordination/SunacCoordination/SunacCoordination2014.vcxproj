@@ -241,6 +241,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Sunac_def.cpp" />
+    <ClCompile Include="Tangent\TangentOpen.cpp" />
     <ClCompile Include="Tool\DoubleClickBlockReference.cpp" />
     <ClCompile Include="Tool\Excel\CExcel.cpp" />
     <ClCompile Include="Tool\Excel\Excel.cpp" />
@@ -377,6 +378,7 @@
     <ClInclude Include="Src\Reactor.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="Sunac_def.h" />
+    <ClInclude Include="Tangent\TangentOpen.h" />
     <ClInclude Include="Tool\DocLock.h" />
     <ClInclude Include="Tool\DoubleClickBlockReference.h" />
     <ClInclude Include="Tool\Excel\CApplication.h" />

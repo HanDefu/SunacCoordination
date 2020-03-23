@@ -8,6 +8,7 @@
 #include "WindowAutoName.h"
 #include "WindowSelect.h"
 #include "..\..\Src\DocumentData.h"
+#include "..\..\Tangent\TangentOpen.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -300,6 +301,15 @@ AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d
 	{
 		GetWindowAutoName()->AddWindowType(curWinAtt, id);
 	}
+
+	////插入天正门洞
+	//AcGePoint3d p_centerPt = AcGePoint3d(pos.x + curWinAtt.GetW() / 2, pos.y + curWinAtt.GetD() / 2, 0);
+	//CTOpenData p_winData;
+	//p_winData.width = curWinAtt.GetW();
+	//p_winData.height = curWinAtt.GetH();
+	//p_winData.bottomHeight = curWinAtt.GetHeightUnderWindow();
+	//p_winData.sWinCode = curWinAtt.GetInstanceCode();
+	//CTangentOpen::InsertWinOpenning(p_centerPt, p_winData);
 
 	return id;
 }
