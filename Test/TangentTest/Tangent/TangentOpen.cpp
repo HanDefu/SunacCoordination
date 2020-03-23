@@ -1,4 +1,4 @@
-
+#include "StdAfx.h"
 
 #include <afxwin.h>
 
@@ -29,6 +29,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 #include "TangentOpen.h"
+#include "..\Common/ComFun_ACAD_Common.h"
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -81,7 +82,7 @@ HRESULT CTangentOpen::InsertWinOpenning(AcGePoint3d p_centerPt, CTOpenData p_win
 	AcDbObjectId blockid = AcDbObjectId::kNull;
 	CString sPath = _T("D:\\test\\Sunac_test\\T√≈∂¥.dwg");
 	CString sBlockDefName = _T("T√≈∂¥");
-	//int nRet = MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, sPath, sBlockDefName, blockid, p_centerPt, 0, AcGeScale3d(1, 1, 1));
+	int nRet = MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, sPath, sBlockDefName, blockid, p_centerPt, 0, AcGeScale3d(1, 1, 1));
 	if (blockid==AcDbObjectId::kNull)
 	{
 		return E_FAIL;
@@ -90,7 +91,7 @@ HRESULT CTangentOpen::InsertWinOpenning(AcGePoint3d p_centerPt, CTOpenData p_win
 	YT_Explode(blockid, ACDB_MODEL_SPACE);
 
 	//////////////////////////////////////////////////////////////////////////
-	SetTangentOpenProp(blockid, p_winData);
+	return SetTangentOpenProp(blockid, p_winData);
 }
 
 HRESULT CTangentOpen::SetTangentOpenProp(AcDbObjectId p_winId, CTOpenData p_winData)

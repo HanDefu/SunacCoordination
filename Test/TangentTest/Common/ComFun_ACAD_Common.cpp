@@ -2,7 +2,7 @@
 
 #include "ComFun_Def.h"
 #include "ComFun_Str.h"
-#include "ComFun_Daqo.h"
+#include "ComFun_ACAD_Common.h"
 
 int MD2010_SetCurrentLayout(const ACHAR * layoutname)
 {

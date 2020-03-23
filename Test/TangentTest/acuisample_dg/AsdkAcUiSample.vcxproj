@@ -137,9 +137,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Common\ComFun_ACAD_Common.cpp" />
+    <ClCompile Include="..\Common\ComFun_Str.cpp" />
     <ClCompile Include="AsdkAcUiSample.cpp" />
-    <ClCompile Include="ComFun\ComFun_Daqo.cpp" />
-    <ClCompile Include="ComFun\ComFun_Str.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -151,9 +151,9 @@
     <ResourceCompile Include="AsdkAcUiSample.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Common\ComFun_ACAD_Common.h" />
+    <ClInclude Include="..\Common\ComFun_Str.h" />
     <ClInclude Include="AsdkAcUiSample.h" />
-    <ClInclude Include="ComFun\ComFun_Daqo.h" />
-    <ClInclude Include="ComFun\ComFun_Str.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="StdAfx.h" />
   </ItemGroup>

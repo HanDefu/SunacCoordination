@@ -21,7 +21,7 @@
 #include <acedads.h>
 #include "AsdkAcUiSample.h"
 #include "AcExtensionModule.h"
-#include "ComFun/ComFun_Daqo.h"
+#include "../Common/ComFun_ACAD_Common.h"
 
 //////////////////////////////////////////////////////////////////////////
 #include <afxwin.h>

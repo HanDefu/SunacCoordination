@@ -3,10 +3,10 @@
   <ItemGroup>
     <ClCompile Include="AsdkAcUiSample.cpp" />
     <ClCompile Include="StdAfx.cpp" />
-    <ClCompile Include="ComFun\ComFun_Daqo.cpp">
+    <ClCompile Include="..\Common\ComFun_ACAD_Common.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="ComFun\ComFun_Str.cpp">
+    <ClCompile Include="..\Common\ComFun_Str.cpp">
       <Filter>Common</Filter>
     </ClCompile>
   </ItemGroup>
@@ -14,10 +14,10 @@
     <ClInclude Include="AsdkAcUiSample.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="StdAfx.h" />
-    <ClInclude Include="ComFun\ComFun_Daqo.h">
+    <ClInclude Include="..\Common\ComFun_ACAD_Common.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="ComFun\ComFun_Str.h">
+    <ClInclude Include="..\Common\ComFun_Str.h">
       <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
