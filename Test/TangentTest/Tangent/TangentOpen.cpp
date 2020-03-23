@@ -1,3 +1,5 @@
+
+
 #include <afxwin.h>
 
 // ATL includes for sqareCmd.h
@@ -19,6 +21,7 @@
 
 //////////////////////////////////////////////////////////////////////////
 #include <opmext.h>
+#include <dbapserv.h>
 
 
 //#include "Tangent\TangentCom\tch10_com19.tlh"
@@ -28,6 +31,67 @@
 #include "TangentOpen.h"
 
 //////////////////////////////////////////////////////////////////////////
+
+AcDbObjectId AppendEntity(AcDbEntity *pEnt, const WCHAR * entry)
+{
+	AcDbDatabase *pDb = acdbHostApplicationServices()->workingDatabase();
+	AcDbBlockTable *pBt;
+	pDb->getBlockTable(pBt, AcDb::kForRead);
+	AcDbBlockTableRecord *pBtr;
+	pBt->getAt(entry, pBtr, AcDb::kForWrite);
+	AcDbObjectId entId;
+	pBtr->appendAcDbEntity(entId, pEnt);
+	pBtr->close();
+	pBt->close();
+	pEnt->close();
+	return entId;
+}
+
+std::vector<AcDbObjectId> YT_Explode(AcDbObjectId entId, const WCHAR * entry)
+{
+	// Add your code for command ahlzlARX._test here
+	std::vector<AcDbObjectId> ids;
+	AcDbEntity *pEnt = NULL;
+	acdbOpenObject(pEnt, entId, AcDb::kForWrite);
+	if(pEnt == 0)
+		return ids;
+
+	AcDbVoidPtrArray pExps;
+	if (pEnt->explode(pExps) == Acad::eOk)
+
+	{
+		for (int i = 0; i < pExps.length(); i++)
+		{
+			AcDbEntity *pExpEnt = (AcDbEntity*)pExps[i];
+			ids.push_back(AppendEntity(pExpEnt,entry));
+		}
+		pEnt->erase(true);
+	}
+	else
+	{
+		acutPrintf(_T("\n该对象不能被分解！"));
+	}
+	pEnt->close();
+
+	return ids;
+}
+
+HRESULT CTangentOpen::InsertWinOpenning(AcGePoint3d p_centerPt, CTOpenData p_winData)
+{
+	AcDbObjectId blockid = AcDbObjectId::kNull;
+	CString sPath = _T("D:\\test\\Sunac_test\\T门洞.dwg");
+	CString sBlockDefName = _T("T门洞");
+	//int nRet = MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, sPath, sBlockDefName, blockid, p_centerPt, 0, AcGeScale3d(1, 1, 1));
+	if (blockid==AcDbObjectId::kNull)
+	{
+		return E_FAIL;
+	}
+
+	YT_Explode(blockid, ACDB_MODEL_SPACE);
+
+	//////////////////////////////////////////////////////////////////////////
+	SetTangentOpenProp(blockid, p_winData);
+}
 
 HRESULT CTangentOpen::SetTangentOpenProp(AcDbObjectId p_winId, CTOpenData p_winData)
 {
