@@ -88,9 +88,11 @@ std::vector<AcDbObjectId> YT_Explode(AcDbObjectId entId, const WCHAR * entry = A
 	return ids;
 }
 
-HRESULT CTangentOpen::InsertWinOpenning(AcGePoint3d p_centerPt, CTOpenData p_winData)
+HRESULT CTangentOpen::InsertWinOpenning(AcGePoint3d p_centerPt, CTOpenData p_winData, AcDbObjectId &p_tWinOpenIdOut)
 {
-	CString sPath = _T("D:\\test\\Sunac_test\\T√≈∂¥.dwg");
+	p_tWinOpenIdOut = AcDbObjectId::kNull;
+
+	CString sPath = _T("D:\\test\\Sunac_test\\T√≈∂¥.dwg"); //TODO
 	CString sBlockDefName = _T("T√≈∂¥");
 	AcDbObjectId blockid = AcDbObjectId::kNull;
 	int nRet = MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, sPath, sBlockDefName, blockid, p_centerPt, 0, AcGeScale3d(1, 1, 1));
@@ -105,8 +107,10 @@ HRESULT CTangentOpen::InsertWinOpenning(AcGePoint3d p_centerPt, CTOpenData p_win
 		return E_FAIL;
 	}
 
+	p_tWinOpenIdOut = idsOut[0];
+
 	//////////////////////////////////////////////////////////////////////////
-	return SetTangentOpenProp(idsOut[0], p_winData);
+	return SetTangentOpenProp(p_tWinOpenIdOut, p_winData);
 }
 
 HRESULT CTangentOpen::SetTangentOpenProp(AcDbObjectId p_winId, CTOpenData p_winData)

@@ -23,6 +23,8 @@ CWinSetting::CWinSetting()
 	m_sWinOpenLayer = L"Sunac_Gridline_Glass_Open";
 	m_sWinNumberLayerLimian = L"Sunac_WinNumber_Limian";
 	m_sWinNumberLayerPingmian = L"Sunac_WinNumber_Pingmian";
+
+	m_bDrawTangentOpen = false;
 }
 
 
@@ -109,6 +111,7 @@ bool GlobalSetting::LoadFromXml()
 		if (xml.FindElem(_T("WindowSetting")));
 		{
 			xml.IntoElem();
+
 			if (xml.FindElem(_T("WinLayer")))
 				m_winSetting.m_sWinLayer = xml.GetData();
 			if (xml.FindElem(_T("WinFrameLayer")))
@@ -127,6 +130,10 @@ bool GlobalSetting::LoadFromXml()
 				m_winSetting.m_bUseAinLimian = ((xml.GetData() == _T("TRUE")) ? true : false);
 			if (xml.FindElem(_T("ShowLimianNumber")))
 				m_winSetting.m_bShowLimianNumber = ((xml.GetData() == _T("TRUE")) ? true : false);
+
+			if (xml.FindElem(_T("DrawTangentOpen")))
+				m_winSetting.m_bDrawTangentOpen = ((xml.GetData() == _T("TRUE")) ? true : false);
+
 			xml.OutOfElem();
 		}
 		xml.OutOfElem();
@@ -168,15 +175,18 @@ bool GlobalSetting::SaveToXml()
 		//将图层信息保存到xml
 		xml.AddElem(_T("WindowSetting"));
 		xml.IntoElem();
-		xml.AddElem(_T("WinLayer"), m_winSetting.m_sWinLayer);
-		xml.AddElem(_T("WinFrameLayer"), m_winSetting.m_sWinFrameLayer);
-		xml.AddElem(_T("WinWallLayer"), m_winSetting.m_sWinWallLayer);
-		xml.AddElem(_T("WinHardwareLayer"), m_winSetting.m_sWinHardwareLayer);
-		xml.AddElem(_T("WinOpenLayer"), m_winSetting.m_sWinOpenLayer);
-		xml.AddElem(_T("WinNumberLayerLimian"), m_winSetting.m_sWinNumberLayerLimian);
-		xml.AddElem(_T("WinNumberLayerPingmian"), m_winSetting.m_sWinNumberLayerPingmian);
-		xml.AddElem(_T("UseAinLimian"), m_winSetting.m_bUseAinLimian ? _T("TRUE") : _T("FALSE"));
-		xml.AddElem(_T("ShowLimianNumber"), m_winSetting.m_bShowLimianNumber ? _T("TRUE") : _T("FALSE"));
+		{
+			xml.AddElem(_T("WinLayer"), m_winSetting.m_sWinLayer);
+			xml.AddElem(_T("WinFrameLayer"), m_winSetting.m_sWinFrameLayer);
+			xml.AddElem(_T("WinWallLayer"), m_winSetting.m_sWinWallLayer);
+			xml.AddElem(_T("WinHardwareLayer"), m_winSetting.m_sWinHardwareLayer);
+			xml.AddElem(_T("WinOpenLayer"), m_winSetting.m_sWinOpenLayer);
+			xml.AddElem(_T("WinNumberLayerLimian"), m_winSetting.m_sWinNumberLayerLimian);
+			xml.AddElem(_T("WinNumberLayerPingmian"), m_winSetting.m_sWinNumberLayerPingmian);
+			xml.AddElem(_T("UseAinLimian"), m_winSetting.m_bUseAinLimian ? _T("TRUE") : _T("FALSE"));
+			xml.AddElem(_T("ShowLimianNumber"), m_winSetting.m_bShowLimianNumber ? _T("TRUE") : _T("FALSE"));
+			xml.AddElem(_T("DrawTangentOpen"), m_winSetting.m_bDrawTangentOpen ? _T("TRUE") : _T("FALSE"));
+		}
 		xml.OutOfElem();
 	}
 	xml.OutOfElem();

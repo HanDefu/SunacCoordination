@@ -303,15 +303,40 @@ AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d
 	}
 
 	////插入天正门洞
-	//AcGePoint3d p_centerPt = AcGePoint3d(pos.x + curWinAtt.GetW() / 2, pos.y + curWinAtt.GetD() / 2, 0);
-	//CTOpenData p_winData;
-	//p_winData.width = curWinAtt.GetW();
-	//p_winData.height = curWinAtt.GetH();
-	//p_winData.bottomHeight = curWinAtt.GetHeightUnderWindow();
-	//p_winData.sWinCode = curWinAtt.GetInstanceCode();
-	//CTangentOpen::InsertWinOpenning(p_centerPt, p_winData);
-
+	DrawTangentOpen(curWinAtt, pos, p_winDir);
 	return id;
+}
+
+bool CWindowGen::DrawTangentOpen(const AttrWindow& curWinAtt, const AcGePoint3d pos, E_DIRECTION p_winDir)//绘制天正门洞
+{
+	if (curWinAtt.m_viewDir!=E_VIEW_TOP) //只有平面图才绘制门洞
+		return true;
+
+	if (GlobalSetting::GetWinSetting()->m_bDrawTangentOpen == false)
+		return true;
+
+	AcGePoint3d centerPt;
+	if (p_winDir==E_DIR_BOTTOM || p_winDir==E_DIR_TOP)
+	{
+		centerPt = AcGePoint3d(pos.x + curWinAtt.GetW() / 2, pos.y + curWinAtt.GetD() / 2, 0);
+	}
+	else
+	{
+		centerPt = AcGePoint3d(pos.x + curWinAtt.GetD() / 2, pos.y + curWinAtt.GetW() / 2, 0);
+	}
+
+	CTOpenData tWinData;
+	tWinData.width = curWinAtt.GetW();
+	tWinData.height = curWinAtt.GetH();
+	tWinData.bottomHeight = curWinAtt.GetHeightUnderWindow();
+	tWinData.sWinCode = curWinAtt.GetInstanceCode();
+
+	AcDbObjectId tWinOpenIdOut = AcDbObjectId::kNull;
+	HRESULT hr = CTangentOpen::InsertWinOpenning(centerPt, tWinData, tWinOpenIdOut);
+
+	//TODO 添加和门窗的关联
+
+	return hr == Acad::eOk;
 }
 
 AcGePoint3d CWindowGen::GetWindowLeftBottomPos(AcDbObjectId p_id)
