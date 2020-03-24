@@ -158,10 +158,6 @@ public:
 	void SetIsFireproofWindow(bool p_isFireproofWindow){ m_isFireproofWindow = p_isFireproofWindow; }
 	bool GetIsFireproofWindow()const { return m_isFireproofWindow; }
 
-	CFloorInfo GetFloorInfo()const { return m_floorInfo; }
-	void SetFloorInfo(CFloorInfo p_info){ m_floorInfo = p_info; }
-
-
 	eViewDir GetViewDir()const { return m_viewDir; }
 	void SetViewDir(eViewDir p_view){ m_viewDir = p_view; }
 
@@ -211,8 +207,6 @@ public:
 	bool   m_isFireproofWindow;//是否防火窗
 	double m_wallDis;		 //外墙距离
 	double m_heightUnderWindow; //窗下墙高度
-
-	CFloorInfo m_floorInfo; //楼层信息
 
 	//////////////////////////////////////////////////////////////////////////
 	AcDbObjectId m_fromWinId;  // 1912 表示此门窗是源自fromWinId生成(如平面到立面生成），用户操作生成的fromWinId为空

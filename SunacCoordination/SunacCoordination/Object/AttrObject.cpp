@@ -65,6 +65,8 @@ void AttrObject::Clone(const AttrObject& p_src) //克隆只克隆数据，不克隆关联关系
 	//////////////////////////////////////////////////////////////////////////
 	//实例属性
 	SetInstanceCode(p_src.m_instanceCode);//实例编号
+
+	m_floorInfo = p_src.m_floorInfo; //楼层信息
 }
 
 Acad::ErrorStatus AttrObject::dwgInFields(AcDbDwgFiler* filer)
@@ -98,6 +100,17 @@ Acad::ErrorStatus AttrObject::dwgInFields(AcDbDwgFiler* filer)
 
 	filer->readString(tempStr);
 	m_quyuId = tempStr.kACharPtr();
+
+	if (m_version >= 6) //20200324 版本6：楼层信息从AttrWindow移到基类，以便支持所有的类型
+	{
+		filer->readString(tempStr);
+		CString sFloors = tempStr.kACharPtr();
+		m_floorInfo.SetFloors(sFloors);
+
+		double floorHeight;
+		filer->readItem(&floorHeight);
+		m_floorInfo.SetFloorHeight(floorHeight);
+	}
 
 	return filer->filerStatus();
 }
@@ -140,6 +153,12 @@ Acad::ErrorStatus AttrObject::dwgOutFields(AcDbDwgFiler* filer) const
 	filer->writeItem(m_quyuName);
 
 	filer->writeItem(m_quyuId);
+
+	//FILE_VERSION 6 新增
+	{
+		filer->writeItem(m_floorInfo.GetFloors());
+		filer->writeItem(m_floorInfo.GetFloorHeight());
+	}
 
 	return filer->filerStatus();
 }

@@ -278,7 +278,6 @@ void AttrWindow::Clone(const AttrWindow& rhs)
 	m_wallDis = rhs.m_wallDis;		 //外墙距离
 	m_heightUnderWindow = rhs.m_heightUnderWindow; //窗下墙高度
 
-	m_floorInfo = rhs.m_floorInfo; //楼层信息
 
 	//以下关联的实体关系保持原来的 
 	//m_fromWinId 
@@ -609,13 +608,16 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 	{
 		filer->readItem(&m_heightUnderWindow);
 
-		filer->readString(tempStr);
-		CString sFloors = tempStr.kACharPtr();
-		m_floorInfo.SetFloors(sFloors);
+		if (m_version<6) //20200324 版本6：楼层信息从AttrWindow移到基类，以便支持所有的类型
+		{
+			filer->readString(tempStr);
+			CString sFloors = tempStr.kACharPtr();
+			m_floorInfo.SetFloors(sFloors);
 
-		double floorHeight;
-		filer->readItem(&floorHeight);
-		m_floorInfo.SetFloorHeight(floorHeight);
+			double floorHeight;
+			filer->readItem(&floorHeight);
+			m_floorInfo.SetFloorHeight(floorHeight);
+		}
 	}
 
 	if (m_version >= 2)
@@ -739,8 +741,9 @@ Acad::ErrorStatus AttrWindow::dwgOutFields(AcDbDwgFiler* filer) const
 	{
 		filer->writeItem(m_heightUnderWindow);
 
-		filer->writeItem(m_floorInfo.GetFloors());
-		filer->writeItem(m_floorInfo.GetFloorHeight());
+		//20200324 版本6 注释：楼层信息从AttrWindow移到基类，以便支持所有的类型
+		//filer->writeItem(m_floorInfo.GetFloors());
+		//filer->writeItem(m_floorInfo.GetFloorHeight());
 	}
 	
 

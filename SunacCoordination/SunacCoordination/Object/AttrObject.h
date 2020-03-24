@@ -54,8 +54,11 @@ public:
 	void SetInstanceCodeObjectId(AcDbObjectId p_id);
 	CString GetInstanceCode()const { return m_instanceCode; }
 	AcDbObjectId GetInstanceCodeObjectId()const { return m_instanceCodeId; }
-
 	
+	//20200324 版本6：楼层信息从AttrWindow移到基类，以便支持所有的类型
+	CFloorInfo GetFloorInfo()const { return m_floorInfo; }
+	void SetFloorInfo(CFloorInfo p_info) { m_floorInfo = p_info; }
+
 public:
 	Adesk::Int32 m_version;		//文件版本 序列化时使用
 
@@ -71,6 +74,9 @@ public:
 	//实例属性
 	CString m_instanceCode;			//实例编号
 	AcDbObjectId m_instanceCodeId; //实例编号在图上显示的文字ID  201912
+
+
+	CFloorInfo m_floorInfo; //楼层信息 YUAN 20200324楼层信息从AttrWindow移到基类，以便支持所有的类型
 };
 
 
