@@ -176,8 +176,49 @@ void TangentOpenWindowTest()
 	}
 }
 
+//////////////////////////////////////////////////////////////////////////
+
+void Test2()
+{
+	ads_point pt;
+	acedInitGet(32,NULL);
+	if(acedGetPoint(NULL,_T("请选择插入点"),pt)!=RTNORM) //第一角点选择
+	{
+		return ;
+	}
+	AcGePoint3d ptOut = AcGePoint3d(pt[0], pt[1], pt[2]);
 
 
+	AcDbObjectId blockid = AcDbObjectId::kNull;
+	//CString sPath = _T("D:\\test\\Sunac_test\\T门洞.dwg");
+	CString sPath = _T("D:\\A3-南京大全.dwg");
+	HRESULT nRet = MD2010_InsertDwgFile(sPath, ptOut);
+	if (SUCCEEDED(nRet))
+	{
+		nRet = S_OK;
+	}
+}
+
+void Test3()
+{
+	ads_point pt;
+	acedInitGet(32,NULL);
+	if(acedGetPoint(NULL,_T("请选择插入点"),pt)!=RTNORM) //第一角点选择
+	{
+		return ;
+	}
+	AcGePoint3d ptOut = AcGePoint3d(pt[0], pt[1], pt[2]);
+
+
+	AcDbObjectId blockid = AcDbObjectId::kNull;
+	CString sPath = _T("D:\\A3-南京大全.dwg");
+	AcDbObjectIdArray idsOut;
+	HRESULT nRet = MD2010_InsertDwgFile2(sPath, ptOut, idsOut);
+	if (SUCCEEDED(nRet))
+	{
+		nRet = S_OK;
+	}
+}
 static void initApp()
 {
 
@@ -189,6 +230,24 @@ static void initApp()
 	  _T("YTEST"),
 	  ACRX_CMD_MODAL,
 	  Test,
+	  NULL,
+	  -1,
+	  theArxDLL.ModuleResourceInstance());
+
+  acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+	  _T("YTEST2"),
+	  _T("YTEST2"),
+	  ACRX_CMD_MODAL,
+	  Test2,
+	  NULL,
+	  -1,
+	  theArxDLL.ModuleResourceInstance());
+
+  acedRegCmds->addCommand(_T("ASDK_ACUI_SAMPLE"),
+	  _T("YTEST3"),
+	  _T("YTEST3"),
+	  ACRX_CMD_MODAL,
+	  Test3,
 	  NULL,
 	  -1,
 	  theArxDLL.ModuleResourceInstance());

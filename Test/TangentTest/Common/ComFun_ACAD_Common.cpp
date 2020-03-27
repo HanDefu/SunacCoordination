@@ -1,8 +1,36 @@
 #include "stdafx.h"
-
+#include <dbidmap.h>
 #include "ComFun_Def.h"
 #include "ComFun_Str.h"
 #include "ComFun_ACAD_Common.h"
+
+AcDbObjectId JHCOM_PostToModelSpace(AcDbEntity* pEnt)
+{
+	AcDbBlockTable *pBlockTable;
+	if (acdbHostApplicationServices()->workingDatabase()
+		->getBlockTable(pBlockTable, AcDb::kForRead) != Acad::eOk)
+	{
+		return AcDbObjectId::kNull;
+	}
+	//acdbHostApplicationServices()->workingDatabase()
+	//->getBlockTable(pBlockTable, AcDb::kForRead);
+	acDocManager->lockDocument(curDoc());
+	AcDbBlockTableRecord *pBlockTableRecord;
+	pBlockTable->getAt(ACDB_MODEL_SPACE, pBlockTableRecord,
+		AcDb::kForWrite);
+
+	AcDbObjectId entId;
+	if (pBlockTableRecord->appendAcDbEntity(entId, pEnt) != Acad::eOk)
+		return AcDbObjectId::kNull;
+
+	//pBlockTableRecord->appendAcDbEntity(entId, pEnt);
+	pBlockTable->close();
+	pBlockTableRecord->close();
+	pEnt->close();
+	acDocManager->unlockDocument(curDoc());
+
+	return entId;
+}
 
 int MD2010_SetCurrentLayout(const ACHAR * layoutname)
 {
@@ -249,4 +277,158 @@ void AppendAttributeToBlkRef(AcDbBlockReference * pBlkRef, AcDbAttributeDefiniti
 	// 向块参照追加属性对象
 	pBlkRef->appendAttribute(pAtt);
 	pAtt->close();
+}
+
+Acad::ErrorStatus MD2010_InsertDwgFile(const WCHAR *p_dwgPath, AcGePoint3d p_origin)
+{
+	acDocManager->lockDocument(curDoc());
+
+	Acad::ErrorStatus es; 
+
+	AcDbDatabase *pSrcDwg = NULL;
+
+	try
+	{
+		AcDbDatabase *pCurDb = acdbHostApplicationServices()->workingDatabase();
+
+		pSrcDwg = new AcDbDatabase(Adesk::kFalse);
+		es = pSrcDwg->readDwgFile(p_dwgPath);
+		if ( Acad::eOk!=es)
+			throw(es);
+
+		AcGeMatrix3d mat3d;
+		mat3d.setToIdentity();
+		mat3d.setToTranslation(p_origin.asVector());
+
+		es = pCurDb->insert(mat3d, pSrcDwg);
+		if (Acad::eOk!=es)
+			throw(es);
+	}
+	catch (Acad::ErrorStatus)
+	{
+		acutPrintf(L"\n插入块错误.");
+	}
+
+	if (pSrcDwg!=NULL)
+	{
+		delete pSrcDwg;
+		pSrcDwg = NULL;
+	}
+
+	acDocManager->unlockDocument(curDoc());
+
+	return es;
+}
+
+
+Acad::ErrorStatus  MD2010_InsertDwgFile2(const WCHAR *p_dwgPath, AcGePoint3d p_origin, AcDbObjectIdArray & p_idsOut)
+{
+	p_idsOut.removeAll();
+	
+	Acad::ErrorStatus es; 
+
+	AcDbDatabase *pSrcDwg = NULL;
+
+	acDocManager->lockDocument(curDoc());
+	try
+	{
+		AcDbDatabase *pCurDb = acdbHostApplicationServices()->workingDatabase();
+		AcDbBlockTable *pCurBlockTable = NULL;
+		es = pCurDb->getBlockTable(pCurBlockTable, AcDb::kForRead);
+		if (Acad::eOk!=es)
+			throw(es);
+
+		AcDbBlockTableRecord *pCurBlockTableRecord;
+		es = pCurBlockTable->getAt(ACDB_MODEL_SPACE, pCurBlockTableRecord,	AcDb::kForRead);
+		if (Acad::eOk!=es)
+			throw(es);
+
+		AcDbObjectId curDbMsId = pCurBlockTableRecord->objectId();
+		pCurBlockTableRecord->close();
+		pCurBlockTable->close();
+
+
+		//////////////////////////////////////////////////////////////////////////
+		pSrcDwg = new AcDbDatabase(Adesk::kFalse);
+		es = pSrcDwg->readDwgFile(p_dwgPath);
+		if (Acad::eOk!=es)
+			throw(es);
+
+		AcGeMatrix3d mat3d;
+		mat3d.setToIdentity();
+		mat3d.setToTranslation(p_origin.asVector());
+
+		//////////////////////////////////////////////////////////////////////////
+
+		AcDbBlockTable *pBlockTable;
+		es = pSrcDwg->getBlockTable(pBlockTable, AcDb::kForRead);
+		if (Acad::eOk!=es)
+			throw(es);
+
+		AcDbBlockTableRecord *pBlkTblRcd;
+		pBlockTable->getAt(ACDB_MODEL_SPACE, pBlkTblRcd, AcDb::kForRead);
+
+		AcDbObjectIdArray  sourceIds;
+
+		// 创建遍历器，依次访问模型空间的每一个实体
+		AcDbBlockTableRecordIterator *it = NULL;
+		pBlkTblRcd->newIterator(it);
+		for (it->start(); !it->done(); it->step())
+		{
+			AcDbObjectId idTemp;
+			es = it->getEntityId(idTemp);
+			if (Acad::eOk==es)
+			{
+				sourceIds.append(idTemp);
+			}
+		}
+		delete it;
+
+		AcDbIdMapping idMap;
+		es = pSrcDwg->wblockCloneObjects(sourceIds, curDbMsId, idMap, AcDb::kDrcReplace , false);
+		//Acad::ErrorStatus es = pSrcDwg->deepCloneObjects(sourceIds, curDbMsId, idMap);
+		if (es == Acad::eOk)
+		{
+			//变换处理
+			AcDbIdMappingIter iter(idMap);
+			for (iter.start(); !iter.done(); iter.next()) 
+			{
+				AcDbIdPair idPair;
+				if (!iter.getMap(idPair))
+					continue;
+
+				if (idPair.isCloned()) 
+				{
+					AcDbEntity* clonedEnt;
+					es = acdbOpenAcDbEntity(clonedEnt, idPair.value(), AcDb::kForWrite);
+					if (es == Acad::eOk) 
+					{
+						if (idPair.isPrimary()) 
+						{
+							p_idsOut.append(idPair.value());
+							clonedEnt->transformBy(mat3d);
+						}
+						clonedEnt->close();
+					}
+				}
+			}
+		}
+
+		pBlockTable->close();
+		pBlkTblRcd->close();
+	}
+	catch (Acad::ErrorStatus)
+	{
+		acutPrintf(L"\n插入块错误.");
+	}
+
+	if (pSrcDwg!=NULL)
+	{
+		delete pSrcDwg;
+		pSrcDwg = NULL;
+	}
+
+	acDocManager->unlockDocument(curDoc());
+
+	return es;
 }
