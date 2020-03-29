@@ -168,6 +168,10 @@ AttrWindow::AttrWindow()
 	//////////////////////////////////////////////////////////////////////////
 	m_fromWinId = AcDbObjectId::kNull;
 
+#ifdef INIT_HANLDLE_LATER_FOR_DWGIN 
+	m_fromWinHandle.setNull();
+#endif
+
 	m_tangentOpeningId = AcDbObjectId::kNull;
 }
 
@@ -637,9 +641,11 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 
 	if (m_version >= 4)
 	{
+#ifndef INIT_HANLDLE_LATER_FOR_DWGIN
 		AcDbHandle tempHandle;
 		filer->readItem(&tempHandle);
 		acdbHostApplicationServices()->workingDatabase()->getAcDbObjectId(m_fromWinId, false, tempHandle);
+
 		filer->readItem(&size);
 		for (UINT i = 0; i < size; i++)
 		{
@@ -648,11 +654,21 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 			es = acdbHostApplicationServices()->workingDatabase()->getAcDbObjectId(tempId, false, tempHandle);
 			if (es != Acad::eOk)
 			{
-				assert(false);
-				continue;
+				continue;	//当关联的实体在保存前已经删除会出现此情况
 			}
 			m_relatedWinIds.append(tempId);
 		}
+#else
+		filer->readItem(&m_fromWinHandle);
+
+		filer->readItem(&size);
+		for (UINT i = 0; i < size; i++)
+		{
+			AcDbHandle tempHandle;
+			filer->readItem(&tempHandle);
+			m_relatedWinHandles.push_back(tempHandle);
+		}
+#endif
 	}
 
 	if (m_version>=7)
@@ -1079,12 +1095,35 @@ void AttrWindow::SetMirror(bool p_bMirror)
 	m_isMirror = p_bMirror;
 }
 
-AcDbObjectId AttrWindow::GetFromWinId()const 
-{ 
+AcDbObjectId AttrWindow::GetFromWinId() 
+{
+#ifdef INIT_HANLDLE_LATER_FOR_DWGIN 
+	if (m_fromWinId==AcDbObjectId::kNull && m_fromWinHandle.isNull()==false)
+	{
+		acdbHostApplicationServices()->workingDatabase()->getAcDbObjectId(m_fromWinId, false, m_fromWinHandle);
+	}
+#endif
 	return m_fromWinId; 
 }
-AcDbObjectIdArray  AttrWindow::GetRelatedWinIds()const 
-{ 
+AcDbObjectIdArray  AttrWindow::GetRelatedWinIds() 
+{
+#ifdef INIT_HANLDLE_LATER_FOR_DWGIN 
+	if (m_relatedWinIds.length()==0 && m_relatedWinHandles.size()>0)
+	{
+		Acad::ErrorStatus es;
+		for (UINT i = 0; i < m_relatedWinHandles.size(); i++)
+		{
+			AcDbObjectId tempId;
+			es = acdbHostApplicationServices()->workingDatabase()->getAcDbObjectId(tempId, false, m_relatedWinHandles[i]);
+			if (es != Acad::eOk)
+			{
+				assert(false);
+				continue;
+			}
+			m_relatedWinIds.append(tempId);
+		}
+	}
+#endif
 	return m_relatedWinIds; 
 }
 

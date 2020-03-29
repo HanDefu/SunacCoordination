@@ -620,12 +620,12 @@ AcDbObjectId CWindowGen::UpdateOneWindow(const AcDbObjectId p_id, AttrWindow new
 		return newId;
 	}
 
-	const AttrWindow oldWinAtt = *pOldWinAtt;
+	AttrWindow oldWinAtt = *pOldWinAtt;
 	pOldWinAtt->close();
 	
 	AcDbObjectId fromWinId = AcDbObjectId::kNull;
 	AcDbObjectIdArray relatedWinIds;
-	if (oldWinAtt.GetFromWinId() ==AcDbObjectId::kNull) //自身是父节点门窗
+	if (oldWinAtt.GetFromWinId() == AcDbObjectId::kNull) //自身是父节点门窗
 	{
 		fromWinId = p_id;
 		relatedWinIds = oldWinAtt.GetRelatedWinIds();
