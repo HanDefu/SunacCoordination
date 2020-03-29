@@ -1387,11 +1387,7 @@ Acad::ErrorStatus JHCOM_handleStrToObjId(AcDbDatabase* db, LPCTSTR handleStr, Ac
 	Acad::ErrorStatus es;
 
 	es = db->getAcDbObjectId(objId, false, objHandle);
-	if (es != Acad::eOk) {
-		return Acad::eInvalidInput;
-	}
-	else
-		return Acad::eOk;
+	return es;
 }
 
 int JHCOM_SetEntityType(AcDbObjectId id, CString type)

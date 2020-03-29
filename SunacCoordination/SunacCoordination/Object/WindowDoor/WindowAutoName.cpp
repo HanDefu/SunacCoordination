@@ -299,6 +299,7 @@ bool CWindowAutoName::RenameWindows(const CString p_preName, const CString p_new
 
 Acad::ErrorStatus CWindowAutoName::ReadFromDwg(AcDbDwgFiler* pFiler, Adesk::Int32 p_version)
 {
+	Acad::ErrorStatus es;
 	Adesk::UInt32 nTypeSize;
 	pFiler->readItem(&nTypeSize);
 
@@ -317,8 +318,11 @@ Acad::ErrorStatus CWindowAutoName::ReadFromDwg(AcDbDwgFiler* pFiler, Adesk::Int3
 				pFiler->readItem(&tempHandle);
 
 				AcDbObjectId retId = AcDbObjectId::kNull;
-				acdbHostApplicationServices()->workingDatabase()->getAcDbObjectId(retId, false, tempHandle);
-				winClassify.m_winsInCad.push_back(retId);
+				es = acdbHostApplicationServices()->workingDatabase()->getAcDbObjectId(retId, false, tempHandle);
+				if (es == Acad::eOk)
+				{
+					winClassify.m_winsInCad.push_back(retId);
+				}
 			}
 		}
 
