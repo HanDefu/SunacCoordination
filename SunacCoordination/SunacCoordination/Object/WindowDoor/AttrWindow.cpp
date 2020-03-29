@@ -1079,6 +1079,28 @@ void AttrWindow::SetMirror(bool p_bMirror)
 	m_isMirror = p_bMirror;
 }
 
+AcDbObjectId AttrWindow::GetFromWinId()const 
+{ 
+	return m_fromWinId; 
+}
+AcDbObjectIdArray  AttrWindow::GetRelatedWinIds()const 
+{ 
+	return m_relatedWinIds; 
+}
+
+void AttrWindow::SetFromWinId(AcDbObjectId p_id)
+{
+	m_fromWinId = p_id;
+}
+void AttrWindow::SetRelatedWinIds(const AcDbObjectIdArray& p_relatedWinIds)
+{
+	m_relatedWinIds = p_relatedWinIds;
+}
+void AttrWindow::ClearWinsRelation() //移除关联关系
+{
+	m_relatedWinIds.removeAll();
+	m_fromWinId = AcDbObjectId::kNull;
+}
 AcDbObjectId AttrWindow::GetWinTangentOpenId()const 
 {
 	return m_tangentOpeningId; 

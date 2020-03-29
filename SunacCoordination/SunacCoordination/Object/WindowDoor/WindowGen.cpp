@@ -498,8 +498,8 @@ void CWindowGen::ModifyOneWindow(const AcDbObjectId p_id, AttrWindow newWinAtt)
 	const CWinInsertPara oldInsertPara = GetWindowInsertPara(p_id);
 	//以下信息保持和原来的不变
 	newWinAtt.m_viewDir = oldInsertPara.viewDir; 
-	newWinAtt.m_fromWinId = oldInsertPara.fromWinId;
-	newWinAtt.m_relatedWinIds = oldInsertPara.relatedWinIds;
+	newWinAtt.SetFromWinId(oldInsertPara.fromWinId);
+	newWinAtt.SetRelatedWinIds(oldInsertPara.relatedWinIds);
 	
 	//更新尺寸信息
 	UpdateRcWindowPara(p_id, newWinAtt, oldInsertPara.viewDir, oldInsertPara.bDetailWnd);
@@ -741,8 +741,8 @@ bool CWindowGen::SetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId p_fromWinId, 
 	if (pWinAtt==NULL)
 		return false;
 
-	pWinAtt->m_fromWinId = p_fromWinId;
-	pWinAtt->m_relatedWinIds = p_relatedIds;
+	pWinAtt->SetFromWinId( p_fromWinId);
+	pWinAtt->SetRelatedWinIds( p_relatedIds);
 
 	pWinAtt->close();
 

@@ -271,8 +271,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 			return;
 		}
 
-		pSelWinAttr->m_relatedWinIds.removeAll();
-		pSelWinAttr->m_fromWinId = AcDbObjectId::kNull;
+		pSelWinAttr->ClearWinsRelation();
 
 		AcDbObjectId idOut = CWindowGen::GenerateWindow(*pSelWinAttr, origin, winDir, false, AcDbObjectId::kNull);
 		assert(idOut != AcDbObjectId::kNull);

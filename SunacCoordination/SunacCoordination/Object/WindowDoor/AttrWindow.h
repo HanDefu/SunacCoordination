@@ -171,8 +171,11 @@ public:
 	bool IsMirror()const; 
 	void SetMirror(bool p_bMirror);
 
-	AcDbObjectId GetFromWinId()const { return m_fromWinId; }
-	AcDbObjectIdArray  GetRelatedWinIds()const { return m_relatedWinIds; }
+	AcDbObjectId GetFromWinId()const;
+	AcDbObjectIdArray  GetRelatedWinIds()const;
+	void SetFromWinId(AcDbObjectId p_id);
+	void SetRelatedWinIds(const AcDbObjectIdArray& p_relatedWinIds);
+	void ClearWinsRelation(); //移除关联关系
 
 
 	void SetWinTangentOpenId(AcDbObjectId p_winId, AcDbObjectId p_tangentOpenid);
@@ -213,11 +216,11 @@ public:
 	double m_wallDis;		 //外墙距离
 	double m_heightUnderWindow; //窗下墙高度
 
+protected:
 	//////////////////////////////////////////////////////////////////////////
 	AcDbObjectId m_fromWinId;  // 1912 表示此门窗是源自fromWinId生成(如平面到立面生成），用户操作生成的fromWinId为空
 	AcDbObjectIdArray m_relatedWinIds; //由当前门窗生成的其他门窗 // 1912  (如平面到立面生成）
 
-protected:
 	AcDbObjectId m_tangentOpeningId; //天正窗洞id 20200328, 在refactor里门窗生成时自动加入，门窗删除时清除
 };
 
