@@ -47,6 +47,8 @@ AttrObject& AttrObject::operator=(const AttrObject &rhs)
 	m_instanceCode = rhs.m_instanceCode;
 	m_instanceCodeId = rhs.m_instanceCodeId;
 	//SetInstanceCode(rhs.m_instanceCode);//ÊµÀý±àºÅ
+
+	m_floorInfo = rhs.m_floorInfo;
 	return *this;
 }
 
