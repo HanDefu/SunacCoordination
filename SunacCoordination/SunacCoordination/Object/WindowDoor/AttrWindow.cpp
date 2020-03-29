@@ -7,6 +7,7 @@
 #include "../../Common/ComFun_Sunac.h"
 #include "../../Common/ComFun_Math.h"
 #include "../../Common/TYFormula.h"
+#include "../../Src/DocumentData.h"
 
 eWindowDimType ToEWindowType(CString type)
 {
@@ -166,6 +167,8 @@ AttrWindow::AttrWindow()
 
 	//////////////////////////////////////////////////////////////////////////
 	m_fromWinId = AcDbObjectId::kNull;
+
+	m_tangentOpeningId = AcDbObjectId::kNull;
 }
 
 AttrWindow::~AttrWindow()
@@ -179,7 +182,7 @@ AttrWindow* AttrWindow::GetWinAtt(AcDbObjectId p_id)
 	AcDbObject* pObj = NULL;
 	TY_GetAttributeData(p_id, pObj);
 
-	AttrWindow *pWinAtt = dynamic_cast<AttrWindow *>(pObj);
+	AttrWindow *pWinAtt = AttrWindow::cast(pObj);
 
 	return pWinAtt;
 }
@@ -652,6 +655,23 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 		}
 	}
 
+	if (m_version>=7)
+	{
+		AcDbObjectId curId = objectId();
+		AcDbHandle tempHandle;
+		filer->readItem(&tempHandle);
+		if (filer->filerType()== AcDb::kFileFiler)
+		{
+			AcDbObjectId tWinOpenIdOut = AcDbObjectId::kNull;
+			acdbHostApplicationServices()->workingDatabase()->getAcDbObjectId(tWinOpenIdOut, false, tempHandle);
+			SetWinTangentOpenId(curId, tWinOpenIdOut);
+		}
+		else
+		{
+			m_tangentOpeningId = NULL;
+		}
+	}
+
 	return filer->filerStatus();
 }
 
@@ -761,6 +781,9 @@ Acad::ErrorStatus AttrWindow::dwgOutFields(AcDbDwgFiler* filer) const
 	{
 		filer->writeItem(m_relatedWinIds[i].handle());
 	}
+
+	//FILE_VERSION 7 ÐÂÔö
+	filer->writeItem(m_tangentOpeningId.handle());
 
 	return filer->filerStatus();
 }
@@ -1056,3 +1079,12 @@ void AttrWindow::SetMirror(bool p_bMirror)
 	m_isMirror = p_bMirror;
 }
 
+AcDbObjectId AttrWindow::GetWinTangentOpenId()const 
+{
+	return m_tangentOpeningId; 
+}
+void AttrWindow::SetWinTangentOpenId(AcDbObjectId p_winId, AcDbObjectId p_tangentOpenid)
+{
+	m_tangentOpeningId = p_tangentOpenid;
+	GetWinTangentOpenMap()->AddWindow(p_winId, p_tangentOpenid);
+}

@@ -174,6 +174,11 @@ public:
 	AcDbObjectId GetFromWinId()const { return m_fromWinId; }
 	AcDbObjectIdArray  GetRelatedWinIds()const { return m_relatedWinIds; }
 
+
+	void SetWinTangentOpenId(AcDbObjectId p_winId, AcDbObjectId p_tangentOpenid);
+	AcDbObjectId GetWinTangentOpenId()const;
+
+
 protected:
 	CWindowsDimData* GetDimDataByCode(CString p_sCode);
 	vector<CWindowsDimData> m_dimData; //存储W/W1/W2/W3   H/H1/H2/H3 R的尺寸数据
@@ -211,6 +216,9 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 	AcDbObjectId m_fromWinId;  // 1912 表示此门窗是源自fromWinId生成(如平面到立面生成），用户操作生成的fromWinId为空
 	AcDbObjectIdArray m_relatedWinIds; //由当前门窗生成的其他门窗 // 1912  (如平面到立面生成）
+
+protected:
+	AcDbObjectId m_tangentOpeningId; //天正窗洞id 20200328, 在refactor里门窗生成时自动加入，门窗删除时清除
 };
 
 typedef std::vector<AttrWindow> vAttrWindow;

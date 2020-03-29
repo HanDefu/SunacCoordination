@@ -6,12 +6,13 @@ using namespace std;
 #define  SUNAC_ATTRIBUTE_ENTITY L"SUNAC_ATTRIBUTE_ENTITY"
 
 
-#define  FILE_VERSION ((Adesk::Int32)6)
+#define  FILE_VERSION ((Adesk::Int32)7)
 //版本2，门窗增加深化设计材质属性保存
 //20191113 版本3，门窗增加窗下墙高度属性
 //20191213 版本4：门窗增加关联门窗和被关联门窗的句柄
 //20200317 版本5：门窗增加防火窗属性
 //20200324 版本6：楼层信息从AttrWindow移到基类，以便支持所有的类型
+//20200328 版本7：门窗新增天正窗洞id属性
 
 #define  WORK_LOCAL//是否本地工作模式
 #define	 CHECK_USE//是否检测权限

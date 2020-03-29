@@ -65,6 +65,7 @@ bool GetRealInput(const TCHAR* prompt, double defaultVal, int precision, double 
 bool GetStringInput(CString prompt, CString &strOut);
 
 AcDbObjectId TY_GetExtensionDictionaryID(AcDbObjectId id);
+AcDbObjectId TY_CreateExtensionDictionaryID(AcDbObjectId id);
 int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt);
 int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt);
 

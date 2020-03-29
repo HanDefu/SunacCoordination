@@ -113,6 +113,43 @@ HRESULT CTangentOpen::InsertWinOpenning(AcGePoint3d p_centerPt, CTOpenData p_win
 	return SetTangentOpenProp(p_tWinOpenIdOut, p_winData);
 }
 
+
+template<class T> //TCH10_COM9_T20V5X64::IComOpening
+HRESULT SetTangentOpenData( AcDbObjectId p_winId, CTOpenData p_winData, REFCLSID rclsid)
+{
+	HRESULT hr = S_OK;
+
+	CComPtr<T> pWin;
+	CComQIPtr<IAcadBaseObject> pSquareBase;
+	//CComQIPtr<IAcadBaseObject2> pSquareBase2;
+
+	try
+	{
+		if (FAILED(hr = pWin.CoCreateInstance(rclsid)))//__uuidof(TCH10_COM9_T20V5X64::ComOpening)
+			throw hr;
+
+		pSquareBase = pWin;
+		//pSquareBase2 = pWin;
+
+		if (pSquareBase==NULL)
+			throw E_POINTER;
+
+		pSquareBase->SetObjectId(p_winId);
+
+		pWin->PutWidth(p_winData.width);
+		pWin->PutHeight(p_winData.height);
+		pWin->PutWinSill(p_winData.bottomHeight);
+		pWin->PutLabel((_bstr_t)(p_winData.sWinCode));
+	}
+	catch (HRESULT eHr)
+	{
+		acutPrintf(_T("\n Error SetTangentOpenProp_TCH10_COM9_T20V5X64."));
+		return eHr;
+	}
+
+	return hr;
+}
+
 HRESULT CTangentOpen::SetTangentOpenProp(AcDbObjectId p_winId, CTOpenData p_winData)
 {
 	HRESULT hr = S_OK;
@@ -136,7 +173,7 @@ HRESULT CTangentOpen::SetTangentOpenProp(AcDbObjectId p_winId, CTOpenData p_winD
 
 	if ( IsEqualCLSID(entClsid, __uuidof(TCH10_COM9_T20V5X64::ComOpening)) )
 	{
-		return SetTangentOpenProp_TCH10_COM9_T20V5X64(p_winId, p_winData);
+		return SetTangentOpenData<TCH10_COM9_T20V5X64::IComOpening>(p_winId, p_winData, __uuidof(TCH10_COM9_T20V5X64::ComOpening));
 	}
 	//else if (IsEqualCLSID(entClsid, __uuidof(TCH10_COM9_T20V4X64::ComOpening)))	//TODO 添加其他的天正版本库
 	//{
@@ -149,43 +186,6 @@ HRESULT CTangentOpen::SetTangentOpenProp(AcDbObjectId p_winId, CTOpenData p_winD
 	return hr;
 }
 
-
-HRESULT CTangentOpen::SetTangentOpenProp_TCH10_COM9_T20V5X64( AcDbObjectId p_winId, CTOpenData p_winData)
-{
-	HRESULT hr = S_OK;
-
-	CComPtr<TCH10_COM9_T20V5X64::IComOpening> pWin;
-	CComQIPtr<IAcadBaseObject> pSquareBase;
-	//CComQIPtr<IAcadBaseObject2> pSquareBase2;
-
-	try
-	{
-		if (FAILED(hr = pWin.CoCreateInstance(__uuidof(TCH10_COM9_T20V5X64::ComOpening))))
-			throw hr;
-
-		pSquareBase = pWin;
-		//pSquareBase2 = pWin;
-
-		if (pSquareBase==NULL)
-			throw E_POINTER;
-
-		pSquareBase->SetObjectId(p_winId);
-
-		pWin->PutWidth(p_winData.width);
-		pWin->PutHeight(p_winData.height);
-		pWin->PutWinSill(p_winData.bottomHeight);
-		pWin->PutLabel((_bstr_t)(p_winData.sWinCode));
-	}
-	catch (HRESULT eHr)
-	{
-		acutPrintf(_T("\n Error SetTangentOpenProp_TCH10_COM9_T20V5X64."));
-		return eHr;
-	}
-
-
-	return hr;
-
-}
 
 //  CLSIDFromProgID()、CLSIDFromProgIDEx()	由 ProgID 得到 CLSID。没什么好说的，你自己都可以写，查注册表贝
 //	ProgIDFromCLSID()	由 CLSID 得到 ProgID，调用者使用完成后要释放 ProgID 的内存(注5)

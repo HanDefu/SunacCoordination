@@ -3756,3 +3756,26 @@ Acad::ErrorStatus  MD2010_InsertDwgFile2(const WCHAR *p_dwgPath, AcGePoint3d p_o
 
 	return es;
 }
+
+AcDbObjectId   GetBlockRecordId(const ACHAR* entryName)
+{
+	AcDbObjectId curDbMsId = AcDbObjectId::kNull;
+
+	Acad::ErrorStatus es;
+	AcDbDatabase *pCurDb = acdbHostApplicationServices()->workingDatabase();
+	AcDbBlockTable *pCurBlockTable = NULL;
+	es = pCurDb->getBlockTable(pCurBlockTable, AcDb::kForRead);
+	if (Acad::eOk != es)
+		return AcDbObjectId::kNull;
+
+	AcDbBlockTableRecord *pCurBlockTableRecord;
+	es = pCurBlockTable->getAt(entryName, pCurBlockTableRecord, AcDb::kForRead);
+	if (Acad::eOk == es)
+	{
+		curDbMsId = pCurBlockTableRecord->objectId();
+		pCurBlockTableRecord->close();
+	}
+	pCurBlockTable->close();
+
+	return curDbMsId;
+}

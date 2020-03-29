@@ -617,12 +617,27 @@ bool GetStringInput(CString prompt, CString &strOut)
 
 AcDbObjectId TY_GetExtensionDictionaryID(AcDbObjectId id)
 {
+	AcDbObjectId dicId = AcDbObjectId::kNull;
+
+	AcDbObject *pObj = NULL;
+	Acad::ErrorStatus es = acdbOpenObject(pObj, id, AcDb::kForRead);
+	if(pObj!=NULL)
+	{
+		dicId = pObj->extensionDictionary();
+		pObj->close();
+	}
+	return dicId;
+}
+
+AcDbObjectId TY_CreateExtensionDictionaryID(AcDbObjectId id)
+{
 	acDocManager->lockDocument(curDoc());
 
 	AcDbObjectId dicId = AcDbObjectId::kNull;
 
 	AcDbObject *pObj = NULL;
-	if(acdbOpenObject(pObj, id, AcDb::kForWrite)==Acad::eOk)
+	Acad::ErrorStatus es = acdbOpenObject(pObj, id, AcDb::kForWrite);
+	if(pObj!=NULL)
 	{
 		Acad::ErrorStatus es = pObj->createExtensionDictionary();
 		if (es == Acad::eOk || es == Acad::eAlreadyInDb)
@@ -637,6 +652,7 @@ AcDbObjectId TY_GetExtensionDictionaryID(AcDbObjectId id)
 	return dicId;
 }
 
+
 //把UI的信息数据写入图框
 int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt)
 {
@@ -645,7 +661,13 @@ int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt)
 
 	AcDbObjectId dicID = TY_GetExtensionDictionaryID(Id);
 	if (dicID == 0)
+	{
+		dicID = TY_CreateExtensionDictionaryID(Id);
+	}
+	if (dicID == 0) //若还创建后还是未成功，则返回-1
+	{
 		return -1;
+	}
 
 
 	//注意这里有时候加入不进去， 是因为没有注册
@@ -671,20 +693,23 @@ int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt)
 
 int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt)
 {
-	AcDbObjectId m_dicID = TY_GetExtensionDictionaryID(tkId);
-	if (m_dicID == 0)
+	pDataEnt = NULL;
+	AcDbObjectId dicID = TY_GetExtensionDictionaryID(tkId);
+	if (dicID == AcDbObjectId::kNull)
 		return -1;
 
 	AcDbDictionary *pDict = NULL;
-	if(acdbOpenObject(pDict, m_dicID, AcDb::kForRead)==Acad::eOk)
+	Acad::ErrorStatus es = acdbOpenObject(pDict, dicID, AcDb::kForRead);
+	if(es ==Acad::eOk)
 	{
-		Acad::ErrorStatus es =pDict->getAt(SUNAC_ATTRIBUTE_ENTITY, (AcDbObject*&)pDataEnt, AcDb::kForRead);
+		es = pDict->getAt(SUNAC_ATTRIBUTE_ENTITY, (AcDbObject*&)pDataEnt, AcDb::kForRead);
 		pDict->close();
-		if(pDataEnt == NULL)
-			return 68;
-		pDataEnt->close();
+		if (pDataEnt!=NULL)
+		{
+			pDataEnt->close();
+		}
 	}
-	return 0;
+	return pDataEnt == NULL ? 0 : -68;
 }
 
 bool TY_IsWindow(AcDbObjectId Id, eViewDir p_view)

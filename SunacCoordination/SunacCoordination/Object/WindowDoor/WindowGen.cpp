@@ -302,12 +302,12 @@ AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d
 		GetWindowAutoName()->AddWindowType(curWinAtt, id);
 	}
 
-	////插入天正门洞
-	DrawTangentOpen(curWinAtt, pos, p_winDir);
+	//插入天正门洞
+	DrawTangentOpen(id, curWinAtt, pos, p_winDir);
 	return id;
 }
 
-bool CWindowGen::DrawTangentOpen(const AttrWindow& curWinAtt, const AcGePoint3d pos, E_DIRECTION p_winDir)//绘制天正门洞
+bool CWindowGen::DrawTangentOpen(AcDbObjectId p_winId, const AttrWindow& curWinAtt, const AcGePoint3d pos, E_DIRECTION p_winDir)//绘制天正门洞
 {
 	if (curWinAtt.m_viewDir!=E_VIEW_TOP) //只有平面图才绘制门洞
 		return true;
@@ -334,7 +334,12 @@ bool CWindowGen::DrawTangentOpen(const AttrWindow& curWinAtt, const AcGePoint3d 
 	AcDbObjectId tWinOpenIdOut = AcDbObjectId::kNull;
 	HRESULT hr = CTangentOpen::InsertWinOpenning(centerPt, tWinData, tWinOpenIdOut);
 
-	//TODO 添加和门窗的关联
+	//添加和门窗的关联
+	AttrWindow* pWinAtt = AttrWindow::GetWinAtt(p_winId);
+	if (pWinAtt!=NULL)
+	{
+		pWinAtt->SetWinTangentOpenId(p_winId, tWinOpenIdOut);
+	}
 
 	return hr == Acad::eOk;
 }
