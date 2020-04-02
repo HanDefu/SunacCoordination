@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include <io.h>
 #include "ComFun_Str.h"
 #include "ComFun_Math.h"
 #include "ComFun_Sunac.h"
@@ -1444,4 +1445,20 @@ bool IsObjectExsit(AcDbObjectId p_id)
 	}
 
 	return false;
+}
+
+bool IsFileExist(const CString & strFileName)
+{
+	_tfinddata_t fileinfo;
+	intptr_t hFile = _tfindfirst(strFileName, &fileinfo);
+	if (hFile != -1)
+	{
+		_findclose(hFile);
+		return true;
+	}
+	else
+	{
+		_findclose(hFile);
+		return false;
+	}
 }

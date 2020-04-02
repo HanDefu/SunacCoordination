@@ -120,6 +120,8 @@ bool SelectViewDir(eViewDir& p_viewDir);
 vAcDbObjectId SelectWindows_old(eViewDir p_view, bool p_bAllWindow=false); //p_view==E_VIEW_ALL表示不限视图方向
 bool IsObjectExsit(AcDbObjectId p_id);
 
+bool IsFileExist(const CString & strFileName);
+
 
 
 

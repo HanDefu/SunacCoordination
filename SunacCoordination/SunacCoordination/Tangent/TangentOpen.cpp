@@ -30,6 +30,8 @@
 //////////////////////////////////////////////////////////////////////////
 #include "TangentOpen.h"
 #include "..\Common/ComFun_ACAD_Common.h"
+#include "..\Common\ComFun_Str.h"
+#include "..\Common\ComFun_Sunac.h"
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -92,7 +94,13 @@ HRESULT CTangentOpen::InsertWinOpenning(AcGePoint3d p_centerPt, CTOpenData p_win
 {
 	p_tWinOpenIdOut = AcDbObjectId::kNull;
 
-	CString sPath = _T("D:\\test\\Sunac_test\\T门洞.dwg"); //TODO
+	//CString sPath = _T("D:\\test\\Sunac_test\\T门洞.dwg"); 
+	CString sPath = MD2010_GetAppPath() + L"\\Sunac2019\\Data\\Template\\T门洞.dwg";
+	if (IsFileExist(sPath)==false)
+	{
+		acutPrintf(_T("文件不存在：")+ sPath + _T("\n"));
+		return E_FAIL;
+	}
 	CString sBlockDefName = _T("T门洞");
 	AcDbObjectId blockid = AcDbObjectId::kNull;
 	int nRet = MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, sPath, sBlockDefName, blockid, p_centerPt, 0, AcGeScale3d(1, 1, 1));
