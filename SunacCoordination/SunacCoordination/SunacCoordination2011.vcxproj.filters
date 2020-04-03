@@ -447,6 +447,9 @@
     <ClCompile Include="Tangent\TangentOpen.cpp">
       <Filter>Tangent</Filter>
     </ClCompile>
+    <ClCompile Include="Common\ThreadUtil.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command\Command.h">
@@ -946,6 +949,9 @@
     </ClInclude>
     <ClInclude Include="Tangent\TangentOpen.h">
       <Filter>Tangent</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ThreadUtil.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

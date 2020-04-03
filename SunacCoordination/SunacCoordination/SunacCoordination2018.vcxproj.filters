@@ -447,6 +447,9 @@
     <ClCompile Include="Common\ComFun_RectArray.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="Common\ThreadUtil.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command\Command.h">
@@ -945,6 +948,9 @@
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Common\ComFun_RectArray.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\ThreadUtil.h">
       <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
