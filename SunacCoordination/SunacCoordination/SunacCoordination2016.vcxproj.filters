@@ -7,9 +7,6 @@
     <Filter Include="Common">
       <UniqueIdentifier>{11dd7d1f-4890-41fd-8250-ac9813c516a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Object">
-      <UniqueIdentifier>{47c27ae7-f9ab-4dd8-a3d6-00588b046a83}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ProjectorFileMrg">
       <UniqueIdentifier>{fad3d801-9a7b-431f-801a-f344e243998e}</UniqueIdentifier>
     </Filter>
@@ -30,6 +27,12 @@
     </Filter>
     <Filter Include="Src">
       <UniqueIdentifier>{f9fc8650-54be-4ca7-9f0a-d086a0778da2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tangent">
+      <UniqueIdentifier>{783d1286-e4a2-4465-8564-497af39500f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{bc027158-5837-4fdb-8442-6c28f605111e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -83,108 +86,6 @@
     </ClCompile>
     <ClCompile Include="Common\TYRect.cpp">
       <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\AttrObject.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\RCBlock.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\RCDynamicBlock.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\RCObject.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\RCStandBlock.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\RCStdFacade.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\RCStdFill.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\RCWaterProof.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\RCXianJiao.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\AirCondition\AttrAirCon.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\AirCondition\RCAirCondition.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Bathroom\AttrBathroom.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Bathroom\BathroomAutoName.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Bathroom\BathroomCom.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Bathroom\BathroomGen.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Bathroom\RCBathroom.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Kitchen\AttrKitchen.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Kitchen\KitchenAutoName.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Kitchen\KitchenGen.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Kitchen\RCKitchen.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Railing\AttrRailing.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Railing\RCRailing.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Railing\RCRailingBoli.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Railing\RCRailingTieyi.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\WindowDoor\AttrWindow.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\WindowDoor\RCWindow.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\WindowDoor\WindowAutoName.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\WindowStatistic\AluminumSeries.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\WindowStatistic\AuxiliaryFrameSeries.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\WindowStatistic\DeductedSize.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\WindowStatistic\GlassSeries.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\WindowStatistic\WindowFormula.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\WindowStatistic\WindowMaterialUsage.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\WindowStatistic\WindowStatictic.cpp">
-      <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="ProjectorFileMrg\ProjectFile.cpp">
       <Filter>ProjectorFileMrg</Filter>
@@ -372,9 +273,6 @@
     <ClCompile Include="WebIO\SunacCadWeb\stdsoap2.cpp">
       <Filter>WebIO</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Railing\RailingStatistic.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="ProjectorFileMrg\FileUploadDownload.cpp">
       <Filter>ProjectorFileMrg</Filter>
     </ClCompile>
@@ -384,20 +282,8 @@
     <ClCompile Include="WebIO\WindowLocalDataFromDB.cpp">
       <Filter>WebIO</Filter>
     </ClCompile>
-    <ClCompile Include="Object\AirCondition\AirConStatistic.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\KitchenBathroom\KitchenBathroomProp.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\KitchenBathroom\KitchenBathroomStatistic.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="UI\DlgWindowAirCalc.cpp">
       <Filter>UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\WindowDoor\WindowTop2Front.cpp">
-      <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="Common\AES.cpp">
       <Filter>Common</Filter>
@@ -423,12 +309,6 @@
     <ClCompile Include="Command\CommandHighlight.cpp">
       <Filter>Command</Filter>
     </ClCompile>
-    <ClCompile Include="Object\WindowDoor\WindowGen.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\WindowDoor\WindowSelect.cpp">
-      <Filter>Object</Filter>
-    </ClCompile>
     <ClCompile Include="Common\ComFun_RectArray.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -437,6 +317,135 @@
     </ClCompile>
     <ClCompile Include="UI\DlgSetUp.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Tangent\TangentOpen.cpp">
+      <Filter>Tangent</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\AirCondition\AirConStatistic.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\AirCondition\AttrAirCon.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\AirCondition\RCAirCondition.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\AttrObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Bathroom\AttrBathroom.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Bathroom\BathroomAutoName.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Bathroom\BathroomCom.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Bathroom\BathroomGen.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Bathroom\RCBathroom.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\KitchenBathroom\KitchenBathroomProp.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\KitchenBathroom\KitchenBathroomStatistic.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Kitchen\AttrKitchen.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Kitchen\KitchenAutoName.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Kitchen\KitchenGen.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Kitchen\RCKitchen.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Railing\AttrRailing.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Railing\RailingStatistic.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Railing\RCRailing.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Railing\RCRailingBoli.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Railing\RCRailingTieyi.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCBlock.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCDynamicBlock.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCStandBlock.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCStdFacade.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCStdFill.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCWaterProof.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RCXianJiao.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowDoor\AttrWindow.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowDoor\RCWindow.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowDoor\WindowAutoName.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowDoor\WindowGen.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowDoor\WindowSelect.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowDoor\WindowTop2Front.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowStatistic\AluminumSeries.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowStatistic\AuxiliaryFrameSeries.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowStatistic\DeductedSize.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowStatistic\GlassSeries.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowStatistic\WindowFormula.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowStatistic\WindowMaterialUsage.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowStatistic\WindowStatictic.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowDoor\WinTangentOpenMap.cpp">
+      <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -493,114 +502,6 @@
     </ClInclude>
     <ClInclude Include="Common\TYRect.h">
       <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\AttrObject.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\KitchenBathroomProp.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\PrototypeCommonDef.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\RCBlock.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\RCDynamicBlock.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\RCObject.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\RCStandBlock.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\RCStdFacade.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\RCStdFill.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\RCWaterProof.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\RCXianJiao.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\AirCondition\AttrAirCon.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\AirCondition\RCAirCondition.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Bathroom\AttrBathroom.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Bathroom\BathroomAutoName.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Bathroom\BathroomCom.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Bathroom\BathroomGen.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Bathroom\RCBathroom.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Kitchen\AttrKitchen.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Kitchen\KitchenAutoName.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Kitchen\KitchenGen.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Kitchen\RCKitchen.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Railing\AttrRailing.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Railing\RCRailing.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Railing\RCRailingBoli.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Railing\RCRailingTieyi.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\WindowDoor\AttrWindow.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\WindowDoor\RCWindow.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\WindowDoor\WindowAutoName.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\WindowStatistic\AluminumSeries.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\WindowStatistic\AuxiliaryFrameSeries.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\WindowStatistic\DeductedSize.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\WindowStatistic\GlassSeries.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\WindowStatistic\WindowFormula.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\WindowStatistic\WindowMaterialUsage.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\WindowStatistic\WindowStatictic.h">
-      <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="ProjectorFileMrg\ProjectFile.h">
       <Filter>ProjectorFileMrg</Filter>
@@ -869,9 +770,6 @@
     <ClInclude Include="WebIO\SunacCadWeb\stdsoap2.h">
       <Filter>WebIO</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Railing\RailingStatistic.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="ProjectorFileMrg\FileUploadDownload.h">
       <Filter>ProjectorFileMrg</Filter>
     </ClInclude>
@@ -881,17 +779,8 @@
     <ClInclude Include="WebIO\WindowLocalDataFromDB.h">
       <Filter>WebIO</Filter>
     </ClInclude>
-    <ClInclude Include="Object\AirCondition\AirConStatistic.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\KitchenBathroom\KitchenBathroomStatistic.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="UI\DlgWindowAirCalc.h">
       <Filter>UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\WindowDoor\WindowTop2Front.h">
-      <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="Common\AES.h">
       <Filter>Common</Filter>
@@ -917,12 +806,6 @@
     <ClInclude Include="Command\CommandHighlight.h">
       <Filter>Command</Filter>
     </ClInclude>
-    <ClInclude Include="Object\WindowDoor\WindowGen.h">
-      <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\WindowDoor\WindowSelect.h">
-      <Filter>Object</Filter>
-    </ClInclude>
     <ClInclude Include="Common\ComFun_RectArray.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -931,6 +814,138 @@
     </ClInclude>
     <ClInclude Include="UI\DlgSetUp.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Tangent\TangentOpen.h">
+      <Filter>Tangent</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\AirCondition\AirConStatistic.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\AirCondition\AttrAirCon.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\AirCondition\RCAirCondition.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\AttrObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Bathroom\AttrBathroom.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Bathroom\BathroomAutoName.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Bathroom\BathroomCom.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Bathroom\BathroomGen.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Bathroom\RCBathroom.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\KitchenBathroom\KitchenBathroomProp.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\KitchenBathroom\KitchenBathroomStatistic.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Kitchen\AttrKitchen.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Kitchen\KitchenAutoName.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Kitchen\KitchenGen.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Kitchen\RCKitchen.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\PrototypeCommonDef.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Railing\AttrRailing.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Railing\RailingStatistic.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Railing\RCRailing.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Railing\RCRailingBoli.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Railing\RCRailingTieyi.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCBlock.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCDynamicBlock.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCStandBlock.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCStdFacade.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCStdFill.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCWaterProof.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RCXianJiao.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\AttrWindow.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\RCWindow.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\WindowAutoName.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\WindowGen.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\WindowSelect.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\WindowTop2Front.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowStatistic\AluminumSeries.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowStatistic\AuxiliaryFrameSeries.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowStatistic\DeductedSize.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowStatistic\GlassSeries.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowStatistic\WindowFormula.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowStatistic\WindowMaterialUsage.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowStatistic\WindowStatictic.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\WinTangentOpenMap.h">
+      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

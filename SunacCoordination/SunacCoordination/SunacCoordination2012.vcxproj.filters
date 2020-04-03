@@ -31,6 +31,9 @@
     <Filter Include="Src">
       <UniqueIdentifier>{abccc606-326d-483b-af22-cd5fa1999e83}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tangent">
+      <UniqueIdentifier>{665360b2-27ae-4a17-87cc-827575211f7e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Command\Command.cpp">
@@ -437,6 +440,12 @@
     </ClCompile>
     <ClCompile Include="UI\DlgSetUp.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowDoor\WinTangentOpenMap.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Tangent\TangentOpen.cpp">
+      <Filter>Tangent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -931,6 +940,12 @@
     </ClInclude>
     <ClInclude Include="UI\DlgSetUp.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\WinTangentOpenMap.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Tangent\TangentOpen.h">
+      <Filter>Tangent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
