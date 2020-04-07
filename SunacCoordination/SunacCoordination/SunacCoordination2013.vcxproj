@@ -37,6 +37,7 @@
     <ClCompile Include="Common\ComFun_Str.cpp" />
     <ClCompile Include="Common\ComFun_String.cpp" />
     <ClCompile Include="Common\ComFun_Sunac.cpp" />
+    <ClCompile Include="Common\ThreadUtil.cpp" />
     <ClCompile Include="Common\TYFormula.cpp" />
     <ClCompile Include="Common\TYRect.cpp" />
     <ClCompile Include="GlobalSetting.cpp" />
@@ -75,6 +76,7 @@
     <ClCompile Include="Object\WindowDoor\WindowGen.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowSelect.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowTop2Front.cpp" />
+    <ClCompile Include="Object\WindowDoor\WinTangentOpenMap.cpp" />
     <ClCompile Include="Object\WindowStatistic\AluminumSeries.cpp" />
     <ClCompile Include="Object\WindowStatistic\AuxiliaryFrameSeries.cpp" />
     <ClCompile Include="Object\WindowStatistic\DeductedSize.cpp" />
@@ -95,6 +97,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Sunac_def.cpp" />
+    <ClCompile Include="Tangent\TangentOpen.cpp" />
     <ClCompile Include="Tool\DoubleClickBlockReference.cpp" />
     <ClCompile Include="Tool\Excel\CExcel.cpp" />
     <ClCompile Include="Tool\Excel\Excel.cpp" />
@@ -179,6 +182,7 @@
     <ClInclude Include="Common\ComFun_Str.h" />
     <ClInclude Include="Common\ComFun_String.h" />
     <ClInclude Include="Common\ComFun_Sunac.h" />
+    <ClInclude Include="Common\ThreadUtil.h" />
     <ClInclude Include="Common\TYFormula.h" />
     <ClInclude Include="Common\TYRect.h" />
     <ClInclude Include="GlobalSetting.h" />
@@ -218,6 +222,7 @@
     <ClInclude Include="Object\WindowDoor\WindowGen.h" />
     <ClInclude Include="Object\WindowDoor\WindowSelect.h" />
     <ClInclude Include="Object\WindowDoor\WindowTop2Front.h" />
+    <ClInclude Include="Object\WindowDoor\WinTangentOpenMap.h" />
     <ClInclude Include="Object\WindowStatistic\AluminumSeries.h" />
     <ClInclude Include="Object\WindowStatistic\AuxiliaryFrameSeries.h" />
     <ClInclude Include="Object\WindowStatistic\DeductedSize.h" />
@@ -235,6 +240,7 @@
     <ClInclude Include="Src\Reactor.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="Sunac_def.h" />
+    <ClInclude Include="Tangent\TangentOpen.h" />
     <ClInclude Include="Tool\DocLock.h" />
     <ClInclude Include="Tool\DoubleClickBlockReference.h" />
     <ClInclude Include="Tool\Excel\CApplication.h" />
@@ -441,7 +447,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2013_Win_64_and_32Bit\inc;$(ProjectDir);C:\Autodesk\Autodesk_ObjectARX_2013_Win_64_and_32Bit\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2013_Win_64_and_32Bit\inc;$(ProjectDir);C:\Autodesk\Autodesk_ObjectARX_2013_Win_64_and_32Bit\utils\brep\inc;C:\Autodesk\Autodesk_ObjectARX_2013_Win_64_and_32Bit\inc-x64;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN64;RADPACK;ARX_2013;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <TreatWarningAsError>false</TreatWarningAsError>
