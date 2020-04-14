@@ -1,0 +1,545 @@
+﻿
+#pragma once
+//
+// interface IComOpening wrapper method implementations
+//
+
+inline double IComOpening::GetScale ( ) 
+{
+	double _result = 0;
+	HRESULT _hr = get_Scale(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline void IComOpening::PutScale ( double pVal ) {
+	HRESULT _hr = put_Scale(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline double IComOpening::GetLayoutRotation ( ) {
+	double _result = 0;
+	HRESULT _hr = get_LayoutRotation(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline void IComOpening::PutLayoutRotation ( double pVal ) {
+	HRESULT _hr = put_LayoutRotation(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline _bstr_t IComOpening::GetHoleType ( ) {
+	BSTR _result = 0;
+	HRESULT _hr = get_HoleType(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _bstr_t(_result, false);
+}
+
+inline void IComOpening::PutHoleType ( _bstr_t pVal ) {
+	HRESULT _hr = put_HoleType(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline double IComOpening::GetWinSill ( ) {
+	double _result = 0;
+	HRESULT _hr = get_WinSill(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline void IComOpening::PutWinSill ( double pVal ) {
+	HRESULT _hr = put_WinSill(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline double IComOpening::GetDoorSill ( ) {
+	double _result = 0;
+	HRESULT _hr = get_DoorSill(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline void IComOpening::PutDoorSill ( double pVal ) {
+	HRESULT _hr = put_DoorSill(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline double IComOpening::GetHeight ( ) {
+	double _result = 0;
+	HRESULT _hr = get_Height(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline void IComOpening::PutHeight ( double pVal ) {
+	HRESULT _hr = put_Height(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline double IComOpening::GetWidth ( ) {
+	double _result = 0;
+	HRESULT _hr = get_Width(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline void IComOpening::PutWidth ( double pVal ) {
+	HRESULT _hr = put_Width(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline double IComOpening::GetStruWinSill ( ) {
+	double _result = 0;
+	HRESULT _hr = get_StruWinSill(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline void IComOpening::PutStruWinSill ( double pVal ) {
+	HRESULT _hr = put_StruWinSill(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline double IComOpening::GetBayThick ( ) {
+	double _result = 0;
+	HRESULT _hr = get_BayThick(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline void IComOpening::PutBayThick ( double pVal ) {
+	HRESULT _hr = put_BayThick(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline double IComOpening::GetSlabThickness ( ) {
+	double _result = 0;
+	HRESULT _hr = get_SlabThickness(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline void IComOpening::PutSlabThickness ( double pVal ) {
+	HRESULT _hr = put_SlabThickness(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline double IComOpening::GetUFrame ( ) {
+	double _result = 0;
+	HRESULT _hr = get_UFrame(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline void IComOpening::PutUFrame ( double pVal ) {
+	HRESULT _hr = put_UFrame(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline double IComOpening::GetVFrame ( ) {
+	double _result = 0;
+	HRESULT _hr = get_VFrame(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline void IComOpening::PutVFrame ( double pVal ) {
+	HRESULT _hr = put_VFrame(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline _bstr_t IComOpening::GetOutlineArea ( ) {
+	BSTR _result = 0;
+	HRESULT _hr = get_OutlineArea(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _bstr_t(_result, false);
+}
+
+inline double IComOpening::GetOutlineLength ( ) {
+	double _result = 0;
+	HRESULT _hr = get_OutlineLength(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline _bstr_t IComOpening::GetLabel ( ) {
+	BSTR _result = 0;
+	HRESULT _hr = get_Label(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _bstr_t(_result, false);
+}
+
+inline void IComOpening::PutLabel ( _bstr_t pVal ) {
+	HRESULT _hr = put_Label(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline double IComOpening::GetTextHeight ( ) {
+	double _result = 0;
+	HRESULT _hr = get_TextHeight(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline void IComOpening::PutTextHeight ( double pVal ) {
+	HRESULT _hr = put_TextHeight(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline _bstr_t IComOpening::GetTextStyle ( ) {
+	BSTR _result = 0;
+	HRESULT _hr = get_TextStyle(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _bstr_t(_result, false);
+}
+
+inline void IComOpening::PutTextStyle ( _bstr_t pVal ) {
+	HRESULT _hr = put_TextStyle(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline _bstr_t IComOpening::GetHideLabel ( ) {
+	BSTR _result = 0;
+	HRESULT _hr = get_HideLabel(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _bstr_t(_result, false);
+}
+
+inline void IComOpening::PutHideLabel ( _bstr_t pVal ) {
+	HRESULT _hr = put_HideLabel(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline ACAD_LAYER IComOpening::GetTextLayer ( ) {
+	ACAD_LAYER _result;
+	HRESULT _hr = get_TextLayer(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline void IComOpening::PutTextLayer ( ACAD_LAYER pVal ) {
+	HRESULT _hr = put_TextLayer(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline ACAD_LAYER IComOpening::GetGlassLayer ( ) {
+	ACAD_LAYER _result;
+	HRESULT _hr = get_GlassLayer(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline void IComOpening::PutGlassLayer ( ACAD_LAYER pVal ) {
+	HRESULT _hr = put_GlassLayer(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline ACAD_LAYER IComOpening::GetFrameLayer ( ) {
+	ACAD_LAYER _result;
+	HRESULT _hr = get_FrameLayer(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline void IComOpening::PutFrameLayer ( ACAD_LAYER pVal ) {
+	HRESULT _hr = put_FrameLayer(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline ACAD_LAYER IComOpening::GetSlabLayer ( ) {
+	ACAD_LAYER _result;
+	HRESULT _hr = get_SlabLayer(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline void IComOpening::PutSlabLayer ( ACAD_LAYER pVal ) {
+	HRESULT _hr = put_SlabLayer(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline _bstr_t IComOpening::GetProStyle ( ) {
+	BSTR _result = 0;
+	HRESULT _hr = get_ProStyle(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _bstr_t(_result, false);
+}
+
+inline void IComOpening::PutProStyle ( _bstr_t pVal ) {
+	HRESULT _hr = put_ProStyle(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline _bstr_t IComOpening::GetLeftSlab ( ) {
+	BSTR _result = 0;
+	HRESULT _hr = get_LeftSlab(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _bstr_t(_result, false);
+}
+
+inline void IComOpening::PutLeftSlab ( _bstr_t pVal ) {
+	HRESULT _hr = put_LeftSlab(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline _bstr_t IComOpening::GetRightSlab ( ) {
+	BSTR _result = 0;
+	HRESULT _hr = get_RightSlab(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _bstr_t(_result, false);
+}
+
+inline void IComOpening::PutRightSlab ( _bstr_t pVal ) {
+	HRESULT _hr = put_RightSlab(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline double IComOpening::GetProWinSlabWidth ( ) {
+	double _result = 0;
+	HRESULT _hr = get_ProWinSlabWidth(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline void IComOpening::PutProWinSlabWidth ( double pVal ) {
+	HRESULT _hr = put_ProWinSlabWidth(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline double IComOpening::GetProWinSlabInsuThick ( ) {
+	double _result = 0;
+	HRESULT _hr = get_ProWinSlabInsuThick(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline void IComOpening::PutProWinSlabInsuThick ( double pVal ) {
+	HRESULT _hr = put_ProWinSlabInsuThick(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline _bstr_t IComOpening::GetSlot ( ) {
+	BSTR _result = 0;
+	HRESULT _hr = get_Slot(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _bstr_t(_result, false);
+}
+
+inline void IComOpening::PutSlot ( _bstr_t pVal ) {
+	HRESULT _hr = put_Slot(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline _bstr_t IComOpening::GetSlotMaterial ( ) {
+	BSTR _result = 0;
+	HRESULT _hr = get_SlotMaterial(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _bstr_t(_result, false);
+}
+
+inline void IComOpening::PutSlotMaterial ( _bstr_t pVal ) {
+	HRESULT _hr = put_SlotMaterial(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline double IComOpening::GetSlotExt ( ) {
+	double _result = 0;
+	HRESULT _hr = get_SlotExt(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline void IComOpening::PutSlotExt ( double pVal ) {
+	HRESULT _hr = put_SlotExt(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline double IComOpening::GetSlotWidth ( ) {
+	double _result = 0;
+	HRESULT _hr = get_SlotWidth(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline void IComOpening::PutSlotWidth ( double pVal ) {
+	HRESULT _hr = put_SlotWidth(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline double IComOpening::GetSlotInsuThick ( ) {
+	double _result = 0;
+	HRESULT _hr = get_SlotInsuThick(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline void IComOpening::PutSlotInsuThick ( double pVal ) {
+	HRESULT _hr = put_SlotInsuThick(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline _bstr_t IComOpening::GetSlotInsuCap ( ) {
+	BSTR _result = 0;
+	HRESULT _hr = get_SlotInsuCap(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _bstr_t(_result, false);
+}
+
+inline void IComOpening::PutSlotInsuCap ( _bstr_t pVal ) {
+	HRESULT _hr = put_SlotInsuCap(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline _bstr_t IComOpening::GetGetKind ( ) {
+	BSTR _result = 0;
+	HRESULT _hr = get_GetKind(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _bstr_t(_result, false);
+}
+
+inline _bstr_t IComOpening::GetGetSubKind ( ) {
+	BSTR _result = 0;
+	HRESULT _hr = get_GetSubKind(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _bstr_t(_result, false);
+}
+
+inline void IComOpening::PutGetSubKind ( _bstr_t pVal ) {
+	HRESULT _hr = put_GetSubKind(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline _bstr_t IComOpening::GetHoleStyle ( ) {
+	BSTR _result = 0;
+	HRESULT _hr = get_HoleStyle(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _bstr_t(_result, false);
+}
+
+inline void IComOpening::PutHoleStyle ( _bstr_t pVal ) {
+	HRESULT _hr = put_HoleStyle(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline _bstr_t IComOpening::GetEvacuationType ( ) {
+	BSTR _result = 0;
+	HRESULT _hr = get_EvacuationType(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _bstr_t(_result, false);
+}
+
+inline void IComOpening::PutEvacuationType ( _bstr_t pVal ) {
+	HRESULT _hr = put_EvacuationType(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline _bstr_t IComOpening::GetUpLevel ( ) {
+	BSTR _result = 0;
+	HRESULT _hr = get_UpLevel(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _bstr_t(_result, false);
+}
+
+inline void IComOpening::PutUpLevel ( _bstr_t pVal ) {
+	HRESULT _hr = put_UpLevel(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline short IComOpening::GetDoorLine ( ) {
+	short _result = 0;
+	HRESULT _hr = get_DoorLine(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline void IComOpening::PutDoorLine ( short pVal ) {
+	HRESULT _hr = put_DoorLine(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline double IComOpening::GetLineOffsetDist ( ) {
+	double _result = 0;
+	HRESULT _hr = get_LineOffsetDist(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline void IComOpening::PutLineOffsetDist ( double pVal ) {
+	HRESULT _hr = put_LineOffsetDist(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline _bstr_t IComOpening::GetStructure ( ) {
+	BSTR _result = 0;
+	HRESULT _hr = get_Structure(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _bstr_t(_result, false);
+}
+
+inline void IComOpening::PutStructure ( _bstr_t pVal ) {
+	HRESULT _hr = put_Structure(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline _bstr_t IComOpening::GetExtShading ( ) {
+	BSTR _result = 0;
+	HRESULT _hr = get_ExtShading(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _bstr_t(_result, false);
+}
+
+inline void IComOpening::PutExtShading ( _bstr_t pVal ) {
+	HRESULT _hr = put_ExtShading(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline double IComOpening::GetAreaRatio ( ) {
+	double _result = 0;
+	HRESULT _hr = get_AreaRatio(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline double IComOpening::GetConductivity ( ) {
+	double _result = 0;
+	HRESULT _hr = get_Conductivity(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _result;
+}
+
+inline _bstr_t IComOpening::GetUsage ( ) {
+	BSTR _result = 0;
+	HRESULT _hr = get_Usage(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _bstr_t(_result, false);
+}
+
+inline void IComOpening::PutUsage ( _bstr_t pVal ) {
+	HRESULT _hr = put_Usage(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline _bstr_t IComOpening::GetShadowType ( ) {
+	BSTR _result = 0;
+	HRESULT _hr = get_ShadowType(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _bstr_t(_result, false);
+}
+
+inline void IComOpening::PutShadowType ( _bstr_t pVal ) {
+	HRESULT _hr = put_ShadowType(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}
+
+inline _bstr_t IComOpening::GetIsHigh ( ) {
+	BSTR _result = 0;
+	HRESULT _hr = get_IsHigh(&_result);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+	return _bstr_t(_result, false);
+}
+
+inline void IComOpening::PutIsHigh ( _bstr_t pVal ) {
+	HRESULT _hr = put_IsHigh(pVal);
+	if (FAILED(_hr)) _com_issue_errorex(_hr, this, __uuidof(this));
+}

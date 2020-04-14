@@ -80,8 +80,7 @@ void CWindowDetail::DrawWindowDetail()
 	{
 		AttrWindow winAtt = winCountArray.GetWindow(i).winAtt;
 		winAtt.m_viewDir = E_VIEW_EXTEND;
-		winAtt.m_relatedWinIds.removeAll();
-		winAtt.m_fromWinId = AcDbObjectId::kNull;
+		winAtt.ClearWinsRelation();
 
 		//4.1首先插入门窗表模板
 		CWindowDetailTemplate winDetailTemplate;

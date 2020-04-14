@@ -48,6 +48,10 @@ CInstanceCodeTextMrg* GetInstanceCodeMrg()
 }
 
 
+CWinTangentOpenMap* GetWinTangentOpenMap()
+{
+	return &(CDocumentFactory::Instance().GetCurDocData()->m_winTangentMap);
+}
 
 //////////////////////////////////////////////////////////////////////////
 CDocumentFactory& CDocumentFactory::Instance()

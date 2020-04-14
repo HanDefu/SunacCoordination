@@ -65,6 +65,7 @@ bool GetRealInput(const TCHAR* prompt, double defaultVal, int precision, double 
 bool GetStringInput(CString prompt, CString &strOut);
 
 AcDbObjectId TY_GetExtensionDictionaryID(AcDbObjectId id);
+AcDbObjectId TY_CreateExtensionDictionaryID(AcDbObjectId id);
 int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt);
 int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt);
 
@@ -118,6 +119,8 @@ AcDbObjectId InsertBlockRefFromDwg(const TCHAR* fileName, const TCHAR* blkDefNam
 bool SelectViewDir(eViewDir& p_viewDir);
 vAcDbObjectId SelectWindows_old(eViewDir p_view, bool p_bAllWindow=false); //p_view==E_VIEW_ALL表示不限视图方向
 bool IsObjectExsit(AcDbObjectId p_id);
+
+bool IsFileExist(const CString & strFileName);
 
 
 

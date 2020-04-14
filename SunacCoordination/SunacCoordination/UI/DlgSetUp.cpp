@@ -17,8 +17,8 @@ IMPLEMENT_DYNAMIC(CDlgSetUp, CDialogEx)
 
 CDlgSetUp::CDlgSetUp(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CDlgSetUp::IDD, pParent)
-	, m_showLimianNumberDlg(TRUE)
-	, m_useAinLimianDlg(TRUE)
+	, m_showLimianNumberDlg(FALSE)
+	, m_useAinLimianDlg(FALSE)
 	, m_sFrameLayerDlg(_T(""))
 	, m_sHardWareLayerDlg(_T(""))
 	, m_sLayerDlg(_T(""))
@@ -37,8 +37,8 @@ CDlgSetUp::~CDlgSetUp()
 void CDlgSetUp::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-	DDX_Radio(pDX, IDC_SHOWLIMIANNUMBER, m_showLimianNumberDlg);
-	DDX_Radio(pDX, IDC_USEAINLIMIAN, m_useAinLimianDlg);
+	DDX_Radio(pDX, IDC_NOSHOWLIMIANNUMBER, m_showLimianNumberDlg);
+	DDX_Radio(pDX, IDC_NOUSEAINLIMIAN, m_useAinLimianDlg);
 	DDX_Control(pDX, IDC_WINNUMTEXTSIZE, m_winNumberTextSizeDlg);
 	DDX_Control(pDX, IDC_WINDETAILDIMRATE, m_winDetailDimRateDlg);
 	DDX_Text(pDX, IDC_WINFRAMELAYER, m_sFrameLayerDlg);
@@ -90,6 +90,9 @@ void CDlgSetUp::InitWinSetting()
 
 	((CComboBox*)GetDlgItem(IDC_WINNUMTEXTSIZE))->SetCurSel(3);//设置门窗字体编号默认显示100
 	((CComboBox*)GetDlgItem(IDC_WINDETAILDIMRATE))->SetCurSel(1);//设置门窗详图标注比例默认显示50
+
+	m_showLimianNumberDlg = GlobalSetting::GetInstance()->m_winSetting.m_bShowLimianNumber ? true : false;
+	m_useAinLimianDlg = GlobalSetting::GetInstance()->m_winSetting.m_bUseAinLimian ? true : false;
 
 	UpdateData(FALSE);
 }

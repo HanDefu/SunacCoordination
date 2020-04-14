@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="AsdkAcUiSample.cpp" />
+    <ClCompile Include="StdAfx.cpp" />
+    <ClCompile Include="..\Common\ComFun_ACAD_Common.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Common\ComFun_Str.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AsdkAcUiSample.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="..\Common\ComFun_ACAD_Common.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\ComFun_Str.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="AsdkAcUiSample.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\AsdkAcUiSample.rc2" />
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>{4a539907-4411-45fb-aca0-cc2dabb44a84}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

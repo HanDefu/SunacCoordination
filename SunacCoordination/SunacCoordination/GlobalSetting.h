@@ -24,7 +24,7 @@ public:
 	CString GetWinNumberLayerLimianDefault() { return L"Sunac_WinNumber_Limian";}
 
 
-
+public:
 	CString m_sWinLayer;		//门窗块图层
 
 	CString m_sWinFrameLayer;	//门窗框图层
@@ -36,12 +36,12 @@ public:
 	CString m_sWinNumberLayerPingmian;	//门窗平面图编号图层
 
 	bool m_bUseAinLimian;  //立面图是否使用塞缝尺寸
-
 	int m_numberTextSize; //门窗编号字体
-
 	bool m_bShowLimianNumber; //是否显示立面图的门窗编号
 
-	int m_bWinDetailDimRate; //门窗详图标注比例
+	int m_bWinDetailDimRate; //门窗详图标注比例			TODO 未添加序列化
+
+	bool m_bDrawTangentOpen;	//绘制平面图时同时绘制天正门洞
 };
 
 class GlobalSetting

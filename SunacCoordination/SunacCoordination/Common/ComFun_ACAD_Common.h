@@ -265,3 +265,8 @@ bool MD2012_CheckIsPolyline(AcDbObjectId id, vAcGePoint3d *pts=NULL);
 void testfunc();
 
 bool CreateThumbnailBmp(CString p_sDwgFilePath, CString p_sBmpFilePath);
+
+Acad::ErrorStatus          MD2010_InsertDwgFile(const WCHAR *p_dwgPath, AcGePoint3d p_origin);
+Acad::ErrorStatus          MD2010_InsertDwgFile2(const WCHAR *p_dwgPath, AcGePoint3d p_origin, AcDbObjectIdArray & p_idsOut);
+
+AcDbObjectId   GetBlockRecordId(const ACHAR* entryName);

@@ -7,6 +7,7 @@
 #include "../../Common/ComFun_Sunac.h"
 #include "../../Common/ComFun_Math.h"
 #include "../../Common/TYFormula.h"
+#include "../../Src/DocumentData.h"
 
 eWindowDimType ToEWindowType(CString type)
 {
@@ -166,6 +167,12 @@ AttrWindow::AttrWindow()
 
 	//////////////////////////////////////////////////////////////////////////
 	m_fromWinId = AcDbObjectId::kNull;
+
+#ifdef INIT_HANLDLE_LATER_FOR_DWGIN 
+	m_fromWinHandle.setNull();
+#endif
+
+	m_tangentOpeningId = AcDbObjectId::kNull;
 }
 
 AttrWindow::~AttrWindow()
@@ -179,7 +186,7 @@ AttrWindow* AttrWindow::GetWinAtt(AcDbObjectId p_id)
 	AcDbObject* pObj = NULL;
 	TY_GetAttributeData(p_id, pObj);
 
-	AttrWindow *pWinAtt = dynamic_cast<AttrWindow *>(pObj);
+	AttrWindow *pWinAtt = AttrWindow::cast(pObj);
 
 	return pWinAtt;
 }
@@ -278,7 +285,6 @@ void AttrWindow::Clone(const AttrWindow& rhs)
 	m_wallDis = rhs.m_wallDis;		 //外墙距离
 	m_heightUnderWindow = rhs.m_heightUnderWindow; //窗下墙高度
 
-	m_floorInfo = rhs.m_floorInfo; //楼层信息
 
 	//以下关联的实体关系保持原来的 
 	//m_fromWinId 
@@ -592,13 +598,16 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 
 	filer->readItem(&m_isMirrorWindow);
 
-	filer->readItem(&m_isFireproofWindow);
-
 	filer->readItem(&m_isMirror);
 
 	filer->readItem((Adesk::UInt32*)&m_viewDir);
 
 	filer->readItem(&m_isBayWindow);
+
+	if (m_version >= 5)
+	{
+		filer->readItem(&m_isFireproofWindow);
+	}
 
 	filer->readItem(&m_wallDis);
 
@@ -606,13 +615,16 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 	{
 		filer->readItem(&m_heightUnderWindow);
 
-		filer->readString(tempStr);
-		CString sFloors = tempStr.kACharPtr();
-		m_floorInfo.SetFloors(sFloors);
+		if (m_version<6) //20200324 版本6：楼层信息从AttrWindow移到基类，以便支持所有的类型
+		{
+			filer->readString(tempStr);
+			CString sFloors = tempStr.kACharPtr();
+			m_floorInfo.SetFloors(sFloors);
 
-		double floorHeight;
-		filer->readItem(&floorHeight);
-		m_floorInfo.SetFloorHeight(floorHeight);
+			double floorHeight;
+			filer->readItem(&floorHeight);
+			m_floorInfo.SetFloorHeight(floorHeight);
+		}
 	}
 
 	if (m_version >= 2)
@@ -629,9 +641,11 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 
 	if (m_version >= 4)
 	{
+#ifndef INIT_HANLDLE_LATER_FOR_DWGIN
 		AcDbHandle tempHandle;
 		filer->readItem(&tempHandle);
 		acdbHostApplicationServices()->workingDatabase()->getAcDbObjectId(m_fromWinId, false, tempHandle);
+
 		filer->readItem(&size);
 		for (UINT i = 0; i < size; i++)
 		{
@@ -640,10 +654,37 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 			es = acdbHostApplicationServices()->workingDatabase()->getAcDbObjectId(tempId, false, tempHandle);
 			if (es != Acad::eOk)
 			{
-				assert(false);
-				continue;
+				continue;	//当关联的实体在保存前已经删除会出现此情况
 			}
 			m_relatedWinIds.append(tempId);
+		}
+#else
+		filer->readItem(&m_fromWinHandle);
+
+		filer->readItem(&size);
+		for (UINT i = 0; i < size; i++)
+		{
+			AcDbHandle tempHandle;
+			filer->readItem(&tempHandle);
+			m_relatedWinHandles.push_back(tempHandle);
+		}
+#endif
+	}
+
+	if (m_version>=7)
+	{
+		AcDbObjectId curId = objectId();
+		AcDbHandle tempHandle;
+		filer->readItem(&tempHandle);
+		if (filer->filerType()== AcDb::kFileFiler)
+		{
+			AcDbObjectId tWinOpenIdOut = AcDbObjectId::kNull;
+			acdbHostApplicationServices()->workingDatabase()->getAcDbObjectId(tWinOpenIdOut, false, tempHandle);
+			SetWinTangentOpenId(curId, tWinOpenIdOut);
+		}
+		else
+		{
+			m_tangentOpeningId = NULL;
 		}
 	}
 
@@ -719,13 +760,16 @@ Acad::ErrorStatus AttrWindow::dwgOutFields(AcDbDwgFiler* filer) const
 
 	filer->writeItem(m_isMirrorWindow);
 
-	filer->writeItem(m_isFireproofWindow);
-
 	filer->writeItem(m_isMirror);
 
 	filer->writeItem((Adesk::UInt32)m_viewDir);
 
 	filer->writeItem(m_isBayWindow);
+
+	//FILE_VERSION 5 新增
+	{
+		filer->writeItem(m_isFireproofWindow);
+	}
 
 	filer->writeItem(m_wallDis);
 
@@ -733,8 +777,9 @@ Acad::ErrorStatus AttrWindow::dwgOutFields(AcDbDwgFiler* filer) const
 	{
 		filer->writeItem(m_heightUnderWindow);
 
-		filer->writeItem(m_floorInfo.GetFloors());
-		filer->writeItem(m_floorInfo.GetFloorHeight());
+		//20200324 版本6 注释：楼层信息从AttrWindow移到基类，以便支持所有的类型
+		//filer->writeItem(m_floorInfo.GetFloors());
+		//filer->writeItem(m_floorInfo.GetFloorHeight());
 	}
 	
 
@@ -752,6 +797,9 @@ Acad::ErrorStatus AttrWindow::dwgOutFields(AcDbDwgFiler* filer) const
 	{
 		filer->writeItem(m_relatedWinIds[i].handle());
 	}
+
+	//FILE_VERSION 7 新增
+	filer->writeItem(m_tangentOpeningId.handle());
 
 	return filer->filerStatus();
 }
@@ -1047,3 +1095,57 @@ void AttrWindow::SetMirror(bool p_bMirror)
 	m_isMirror = p_bMirror;
 }
 
+AcDbObjectId AttrWindow::GetFromWinId() 
+{
+#ifdef INIT_HANLDLE_LATER_FOR_DWGIN 
+	if (m_fromWinId==AcDbObjectId::kNull && m_fromWinHandle.isNull()==false)
+	{
+		acdbHostApplicationServices()->workingDatabase()->getAcDbObjectId(m_fromWinId, false, m_fromWinHandle);
+	}
+#endif
+	return m_fromWinId; 
+}
+AcDbObjectIdArray  AttrWindow::GetRelatedWinIds() 
+{
+#ifdef INIT_HANLDLE_LATER_FOR_DWGIN 
+	if (m_relatedWinIds.length()==0 && m_relatedWinHandles.size()>0)
+	{
+		Acad::ErrorStatus es;
+		for (UINT i = 0; i < m_relatedWinHandles.size(); i++)
+		{
+			AcDbObjectId tempId;
+			es = acdbHostApplicationServices()->workingDatabase()->getAcDbObjectId(tempId, false, m_relatedWinHandles[i]);
+			if (es != Acad::eOk)
+			{
+				assert(false);
+				continue;
+			}
+			m_relatedWinIds.append(tempId);
+		}
+	}
+#endif
+	return m_relatedWinIds; 
+}
+
+void AttrWindow::SetFromWinId(AcDbObjectId p_id)
+{
+	m_fromWinId = p_id;
+}
+void AttrWindow::SetRelatedWinIds(const AcDbObjectIdArray& p_relatedWinIds)
+{
+	m_relatedWinIds = p_relatedWinIds;
+}
+void AttrWindow::ClearWinsRelation() //移除关联关系
+{
+	m_relatedWinIds.removeAll();
+	m_fromWinId = AcDbObjectId::kNull;
+}
+AcDbObjectId AttrWindow::GetWinTangentOpenId()const 
+{
+	return m_tangentOpeningId; 
+}
+void AttrWindow::SetWinTangentOpenId(AcDbObjectId p_winId, AcDbObjectId p_tangentOpenid)
+{
+	m_tangentOpeningId = p_tangentOpenid;
+	GetWinTangentOpenMap()->AddWindow(p_winId, p_tangentOpenid);
+}

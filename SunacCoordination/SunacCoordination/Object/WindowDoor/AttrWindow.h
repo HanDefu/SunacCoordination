@@ -17,7 +17,7 @@
 #define ZFFCUSTOMOBJECTDB_DBXSERVICE_WINDOW "ZFFCUSTOMOBJECTDB_DBXSERVICE_WINDOW"
 #endif
 
-
+//#define INIT_HANLDLE_LATER_FOR_DWGIN //dwgin时使用handle,使用时才通过handle找到objectId
 
 //门窗取值参数类型
 typedef enum eWindowDimType
@@ -155,9 +155,8 @@ public:
 	bool SetHeightUnderWindow(double newValue);
 	double GetHeightUnderWindow()const { return m_heightUnderWindow; }
 
-	CFloorInfo GetFloorInfo()const { return m_floorInfo; }
-	void SetFloorInfo(CFloorInfo p_info){ m_floorInfo = p_info; }
-
+	void SetIsFireproofWindow(bool p_isFireproofWindow){ m_isFireproofWindow = p_isFireproofWindow; }
+	bool GetIsFireproofWindow()const { return m_isFireproofWindow; }
 
 	eViewDir GetViewDir()const { return m_viewDir; }
 	void SetViewDir(eViewDir p_view){ m_viewDir = p_view; }
@@ -172,8 +171,16 @@ public:
 	bool IsMirror()const; 
 	void SetMirror(bool p_bMirror);
 
-	AcDbObjectId GetFromWinId()const { return m_fromWinId; }
-	AcDbObjectIdArray  GetRelatedWinIds()const { return m_relatedWinIds; }
+	AcDbObjectId GetFromWinId();
+	AcDbObjectIdArray  GetRelatedWinIds();
+	void SetFromWinId(AcDbObjectId p_id);
+	void SetRelatedWinIds(const AcDbObjectIdArray& p_relatedWinIds);
+	void ClearWinsRelation(); //移除关联关系
+
+
+	void SetWinTangentOpenId(AcDbObjectId p_winId, AcDbObjectId p_tangentOpenid);
+	AcDbObjectId GetWinTangentOpenId()const;
+
 
 protected:
 	CWindowsDimData* GetDimDataByCode(CString p_sCode);
@@ -205,15 +212,21 @@ public:
 	eViewDir m_viewDir;//视图方向，平面图、立面图、侧视图
 
 	bool   m_isBayWindow;	 //是否凸窗
-	bool m_isFireproofWindow;//是否防火窗
+	bool   m_isFireproofWindow;//是否防火窗
 	double m_wallDis;		 //外墙距离
 	double m_heightUnderWindow; //窗下墙高度
 
-	CFloorInfo m_floorInfo; //楼层信息
-
+protected:
 	//////////////////////////////////////////////////////////////////////////
 	AcDbObjectId m_fromWinId;  // 1912 表示此门窗是源自fromWinId生成(如平面到立面生成），用户操作生成的fromWinId为空
 	AcDbObjectIdArray m_relatedWinIds; //由当前门窗生成的其他门窗 // 1912  (如平面到立面生成）
+#ifdef INIT_HANLDLE_LATER_FOR_DWGIN 
+	AcDbHandle m_fromWinHandle;
+	vector<AcDbHandle> m_relatedWinHandles;
+#endif 
+
+
+	AcDbObjectId m_tangentOpeningId; //天正窗洞id 20200328, 在refactor里门窗生成时自动加入，门窗删除时清除
 };
 
 typedef std::vector<AttrWindow> vAttrWindow;

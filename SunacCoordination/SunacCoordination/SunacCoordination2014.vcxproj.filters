@@ -400,6 +400,12 @@
     <ClCompile Include="Src\Reactor.cpp">
       <Filter>Src</Filter>
     </ClCompile>
+    <ClCompile Include="Tangent\TangentOpen.cpp">
+      <Filter>Tangent</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowDoor\WinTangentOpenMap.cpp">
+      <Filter>Object\WindowDoor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -889,6 +895,12 @@
     <ClInclude Include="Src\Reactor.h">
       <Filter>Src</Filter>
     </ClInclude>
+    <ClInclude Include="Tangent\TangentOpen.h">
+      <Filter>Tangent</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\WinTangentOpenMap.h">
+      <Filter>Object\WindowDoor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="UI">
@@ -965,6 +977,9 @@
     </Filter>
     <Filter Include="Src">
       <UniqueIdentifier>{efe70b79-2d79-4a9b-a5a8-790775b65eab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tangent">
+      <UniqueIdentifier>{31ef5119-52e2-4b3f-9600-8a1fffa4e47d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

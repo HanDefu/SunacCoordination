@@ -1,6 +1,7 @@
 #pragma once
 
 #include "..\Object\WindowDoor\WindowAutoName.h"
+#include "..\Object\WindowDoor\WinTangentOpenMap.h"
 #include "..\Object\Kitchen\KitchenAutoName.h"
 #include "..\Object\Bathroom\BathroomAutoName.h"
 
@@ -21,6 +22,8 @@ public:
 
 	CInstanceCodeTextMrg m_instanceCodeMrg;
 
+	CWinTangentOpenMap m_winTangentMap;
+
 	bool m_bLoad;
 };
 
@@ -28,6 +31,7 @@ CWindowAutoName* GetWindowAutoName();
 CKitchenAutoName* GetKitchenAutoName();
 CBathroomAutoName* GetBathroomAutoName();
 CInstanceCodeTextMrg* GetInstanceCodeMrg();
+CWinTangentOpenMap* GetWinTangentOpenMap();
 
 
 //////////////////////////////////////////////////////////////////////////

@@ -8,6 +8,7 @@
 #include "WindowAutoName.h"
 #include "WindowSelect.h"
 #include "..\..\Src\DocumentData.h"
+#include "..\..\Tangent\TangentOpen.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -301,7 +302,46 @@ AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d
 		GetWindowAutoName()->AddWindowType(curWinAtt, id);
 	}
 
+	//插入天正门洞
+	DrawTangentOpen(id, curWinAtt, pos, p_winDir);
 	return id;
+}
+
+bool CWindowGen::DrawTangentOpen(AcDbObjectId p_winId, const AttrWindow& curWinAtt, const AcGePoint3d pos, E_DIRECTION p_winDir)//绘制天正门洞
+{
+	if (curWinAtt.m_viewDir!=E_VIEW_TOP) //只有平面图才绘制门洞
+		return true;
+
+	if (GlobalSetting::GetWinSetting()->m_bDrawTangentOpen == false)
+		return true;
+
+	AcGePoint3d centerPt;
+	if (p_winDir==E_DIR_BOTTOM || p_winDir==E_DIR_TOP)
+	{
+		centerPt = AcGePoint3d(pos.x + curWinAtt.GetW() / 2, pos.y + curWinAtt.GetD() / 2, 0);
+	}
+	else
+	{
+		centerPt = AcGePoint3d(pos.x + curWinAtt.GetD() / 2, pos.y + curWinAtt.GetW() / 2, 0);
+	}
+
+	CTOpenData tWinData;
+	tWinData.width = curWinAtt.GetW();
+	tWinData.height = curWinAtt.GetH();
+	tWinData.bottomHeight = curWinAtt.GetHeightUnderWindow();
+	tWinData.sWinCode = curWinAtt.GetInstanceCode();
+
+	AcDbObjectId tWinOpenIdOut = AcDbObjectId::kNull;
+	HRESULT hr = CTangentOpen::InsertWinOpenning(centerPt, tWinData, tWinOpenIdOut);
+
+	//添加和门窗的关联
+	AttrWindow* pWinAtt = AttrWindow::GetWinAtt(p_winId);
+	if (pWinAtt!=NULL)
+	{
+		pWinAtt->SetWinTangentOpenId(p_winId, tWinOpenIdOut);
+	}
+
+	return hr == Acad::eOk;
 }
 
 AcGePoint3d CWindowGen::GetWindowLeftBottomPos(AcDbObjectId p_id)
@@ -458,8 +498,8 @@ void CWindowGen::ModifyOneWindow(const AcDbObjectId p_id, AttrWindow newWinAtt)
 	const CWinInsertPara oldInsertPara = GetWindowInsertPara(p_id);
 	//以下信息保持和原来的不变
 	newWinAtt.m_viewDir = oldInsertPara.viewDir; 
-	newWinAtt.m_fromWinId = oldInsertPara.fromWinId;
-	newWinAtt.m_relatedWinIds = oldInsertPara.relatedWinIds;
+	newWinAtt.SetFromWinId(oldInsertPara.fromWinId);
+	newWinAtt.SetRelatedWinIds(oldInsertPara.relatedWinIds);
 	
 	//更新尺寸信息
 	UpdateRcWindowPara(p_id, newWinAtt, oldInsertPara.viewDir, oldInsertPara.bDetailWnd);
@@ -580,12 +620,12 @@ AcDbObjectId CWindowGen::UpdateOneWindow(const AcDbObjectId p_id, AttrWindow new
 		return newId;
 	}
 
-	const AttrWindow oldWinAtt = *pOldWinAtt;
+	AttrWindow oldWinAtt = *pOldWinAtt;
 	pOldWinAtt->close();
 	
 	AcDbObjectId fromWinId = AcDbObjectId::kNull;
 	AcDbObjectIdArray relatedWinIds;
-	if (oldWinAtt.GetFromWinId() ==AcDbObjectId::kNull) //自身是父节点门窗
+	if (oldWinAtt.GetFromWinId() == AcDbObjectId::kNull) //自身是父节点门窗
 	{
 		fromWinId = p_id;
 		relatedWinIds = oldWinAtt.GetRelatedWinIds();
@@ -701,8 +741,8 @@ bool CWindowGen::SetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId p_fromWinId, 
 	if (pWinAtt==NULL)
 		return false;
 
-	pWinAtt->m_fromWinId = p_fromWinId;
-	pWinAtt->m_relatedWinIds = p_relatedIds;
+	pWinAtt->SetFromWinId( p_fromWinId);
+	pWinAtt->SetRelatedWinIds( p_relatedIds);
 
 	pWinAtt->close();
 
@@ -795,7 +835,9 @@ void CWindowGen::CreateWindowDoorCode(eViewDir p_viewDir, CWinInCad p_win, CStri
 	else
 	{
 		winWidth = GetWinWidth(p_win.m_winId);
-		heightOffset = -100 - GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize;
+		double winHeight = GetWinHeight(p_win.m_winId);
+		//heightOffset = -100 - GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize;
+		heightOffset = winHeight / 2 - GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize;
 	}
 
 	AcGePoint3d textPos(winWidth / 2, GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize + heightOffset, 0);

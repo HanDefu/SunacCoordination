@@ -25,6 +25,14 @@ class CMyDbReactor : public AcDbDatabaseReactor
 {
 public:
 	virtual void objectAppended(const AcDbDatabase* dwg, const AcDbObject* dbObj);
+	virtual void objectModified(const AcDbDatabase* dwg, const AcDbObject* dbObj);
+	virtual void objectErased(const AcDbDatabase* dwg, const AcDbObject* dbObj, Adesk::Boolean pErased = true);
+
+protected:
+	bool EraseWinTextWhenMirror(AcDbEntity* pEnt);
+	void WindowAppand(AcDbEntity* pEnt);
+	void WindowModifed(AcDbEntity* pEnt);
+	void WindowErase(AcDbEntity* pEnt);
 };
 
 extern CMyEditReactor* g_editorReactor;
