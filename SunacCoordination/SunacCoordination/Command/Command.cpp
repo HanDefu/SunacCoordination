@@ -163,6 +163,8 @@ void CMD_SunacWindowDetail()
 
 	CWindowDetail::DrawWindowDetail();
 }
+
+
 void CMD_SunacWindowFloorSetting()//门窗楼层设置
 {
 	if (WebIO::GetInstance()->IsLogin() == false)
@@ -401,6 +403,10 @@ void CMD_SunacRailingFloorSetting() //栏杆楼层设置
 	acutPrintf(_T("设置楼层信息成功\n"));
 }
 
+void CMD_SunacRailingTop2Front()
+{
+	//TODO
+}
 
 //线脚
 void CMD_SunacMoldings()

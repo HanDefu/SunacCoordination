@@ -63,7 +63,7 @@ void CMyDbReactor::WindowAppand(AcDbEntity* pEnt)
 	CDocLock docLock;
 	try
 	{
-		if (pWinAtt->m_viewDir != E_VIEW_TOP) //只有平面图才绘制门洞
+		if (pWinAtt->GetViewDir() != E_VIEW_TOP) //只有平面图才绘制门洞
 			throw Acad::eOk;
 		if (GlobalSetting::GetWinSetting()->m_bDrawTangentOpen == false)
 			throw Acad::eOk;
@@ -117,7 +117,7 @@ void CMyDbReactor::WindowModifed(AcDbEntity* pEnt)
 	CDocLock docLock;
 	try
 	{
-		if (pWinAtt->m_viewDir != E_VIEW_TOP) //只有平面图才绘制门洞
+		if (pWinAtt->GetViewDir() != E_VIEW_TOP) //只有平面图才绘制门洞
 			throw Acad::eOk;
 		if (GlobalSetting::GetWinSetting()->m_bDrawTangentOpen == false)
 			throw Acad::eOk;
@@ -199,7 +199,7 @@ void CMyDbReactor::WindowErase(AcDbEntity* pEnt)
 	CDocLock docLock;
 	try
 	{
-		if (pWinAtt->m_viewDir != E_VIEW_TOP) //只有平面图才绘制门洞
+		if (pWinAtt->GetViewDir() != E_VIEW_TOP) //只有平面图才绘制门洞
 			throw Acad::eOk;
 		if (GlobalSetting::GetWinSetting()->m_bDrawTangentOpen == false)
 			throw Acad::eOk;

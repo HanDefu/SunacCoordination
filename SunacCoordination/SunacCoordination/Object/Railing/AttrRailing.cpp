@@ -18,6 +18,8 @@ AttrRailing::AttrRailing()
 	m_fanKanHeight = 200;	//反坎高度
 	m_length = 3000;		//栏杆长
 	m_railingType = E_RAILING_TIEYI; //栏杆类型
+
+	m_viewDir = E_VIEW_FRONT;
 }
 
 AttrRailing::~AttrRailing()
@@ -149,7 +151,14 @@ CString AttrRailing::AutoInstanceCode()
 
 	return sInstanceCode;
 }
-
+void AttrRailing::SetViewDir(eViewDir p_view)
+{
+	if (p_view == E_VIEW_TOP || p_view == E_VIEW_FRONT)
+	{
+		m_viewDir = p_view;
+	}
+}
+//////////////////////////////////////////////////////////////////////////
 void CRailingCountArray::InitByRailingIds(const vAcDbObjectId& p_railingIds)
 {
 	vector<AttrRailing> railAttrs;

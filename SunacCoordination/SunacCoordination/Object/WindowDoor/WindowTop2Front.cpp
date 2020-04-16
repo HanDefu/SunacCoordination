@@ -94,7 +94,7 @@ bool CWindowTop2Front::GenFrontFromTop()
 	for (UINT i = 0; i < winAtts.size(); i++)
 	{
 		AttrWindow curWinAtt = *(winAtts[i]);
-		curWinAtt.m_viewDir = E_VIEW_FRONT;  //新生成的为立面图
+		curWinAtt.SetViewDir(E_VIEW_FRONT);  //新生成的为立面图
 
 		curWinAtt.ClearWinsRelation(); 
 		curWinAtt.SetFromWinId( winIds[i]);

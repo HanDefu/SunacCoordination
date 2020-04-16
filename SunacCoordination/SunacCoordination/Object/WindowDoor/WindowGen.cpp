@@ -242,7 +242,7 @@ AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d
 	CDocLock cLock;
 
 	CString p_sLayerName = GlobalSetting::GetWindowBlockLayer();
-	const eViewDir p_view = curWinAtt.m_viewDir;
+	const eViewDir p_view = curWinAtt.GetViewDir();
 	const double rotateAngle = GetBlockRotateAngle(curWinAtt, p_view, p_winDir);
 
 	CString sBlockDwgFileName = curWinAtt.GetPrototypeDwgFilePath(p_view);
@@ -309,7 +309,7 @@ AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d
 
 bool CWindowGen::DrawTangentOpen(AcDbObjectId p_winId, const AttrWindow& curWinAtt, const AcGePoint3d pos, E_DIRECTION p_winDir)//绘制天正门洞
 {
-	if (curWinAtt.m_viewDir!=E_VIEW_TOP) //只有平面图才绘制门洞
+	if (curWinAtt.GetViewDir() !=E_VIEW_TOP) //只有平面图才绘制门洞
 		return true;
 
 	if (GlobalSetting::GetWinSetting()->m_bDrawTangentOpen == false)
@@ -422,7 +422,7 @@ CWinInsertPara CWindowGen::GetWindowInsertPara(AcDbObjectId p_id) //根据已插入的
 	AttrWindow *pWinAtt = AttrWindow::GetWinAtt(p_id);
 	if (pWinAtt!=NULL)
 	{
-		insertPara.viewDir = pWinAtt->m_viewDir;
+		insertPara.viewDir = pWinAtt->GetViewDir();
 		insertPara.bDetailWnd = false;
 		insertPara.fromWinId = pWinAtt->GetFromWinId();
 		insertPara.relatedWinIds = pWinAtt->GetRelatedWinIds();
@@ -497,7 +497,7 @@ void CWindowGen::ModifyOneWindow(const AcDbObjectId p_id, AttrWindow newWinAtt)
 
 	const CWinInsertPara oldInsertPara = GetWindowInsertPara(p_id);
 	//以下信息保持和原来的不变
-	newWinAtt.m_viewDir = oldInsertPara.viewDir; 
+	newWinAtt.SetViewDir(oldInsertPara.viewDir);
 	newWinAtt.SetFromWinId(oldInsertPara.fromWinId);
 	newWinAtt.SetRelatedWinIds(oldInsertPara.relatedWinIds);
 	
@@ -855,10 +855,19 @@ void CWindowGen::CreateWindowDoorCode(eViewDir p_viewDir, CWinInCad p_win, CStri
 		assert(pText != NULL);
 		if (p_viewDir == E_VIEW_TOP)
 		{
-			if (p_win.m_rotateAngle >= PI)
-				pText->setRotation(p_win.m_rotateAngle - PI);
+			//if (p_win.m_rotateAngle >= PI)
+			//	pText->setRotation(p_win.m_rotateAngle - PI);
+			//else
+			//	pText->setRotation(p_win.m_rotateAngle);
+			if (p_win.m_rotateAngle>PI/4 && p_win.m_rotateAngle<PI*3/4 ||
+				p_win.m_rotateAngle>PI*5/ 4 && p_win.m_rotateAngle<PI * 7 / 4)
+			{
+				pText->setRotation(PI/2);
+			}
 			else
-				pText->setRotation(p_win.m_rotateAngle);
+			{
+				pText->setRotation(0);
+			}
 		}
 
 		pText->setHorizontalMode(AcDb::kTextMid);
@@ -977,9 +986,9 @@ void CWindowGen::AutoNameAllWindow()
 		winAtt.SetInstanceCode(sInstanceCode2);
 
 		//门窗编号生成
-		if (winAtt.m_viewDir == E_VIEW_TOP || GlobalSetting::GetInstance()->m_winSetting.m_bShowLimianNumber && winAtt.m_viewDir != E_VIEW_EXTEND)
+		if (winAtt.GetViewDir() == E_VIEW_TOP || GlobalSetting::GetInstance()->m_winSetting.m_bShowLimianNumber && winAtt.GetViewDir() != E_VIEW_EXTEND)
 		{
-			CreateWindowDoorCode(winAtt.m_viewDir, wins[i], sInstanceCode2);
+			CreateWindowDoorCode(winAtt.GetViewDir(), wins[i], sInstanceCode2);
 		}
 	}
 
