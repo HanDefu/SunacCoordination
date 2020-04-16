@@ -19,6 +19,7 @@ void CMD_SunacWindowsTable();//门窗表
 void CMD_SunacFloorWindowsTable();//地面门窗表
 void CMD_SunacWindowsStatistics();//统计算量
 void CMD_SunacWindowFloorSetting();//门窗楼层设置
+void CMD_SunacFloorSetting();//楼层设置
 void CMD_SunacWindowTop2Front();//门窗平面到立面
 void CMD_SunacWindowFront2Top();//门窗立面到平面
 void CMD_SunacWinAutoId();
