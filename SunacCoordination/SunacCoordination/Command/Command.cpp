@@ -163,6 +163,93 @@ void CMD_SunacWindowDetail()
 
 	CWindowDetail::DrawWindowDetail();
 }
+
+void CMD_SunacFloorSetting()//楼层设置
+{
+	if (WebIO::GetInstance()->IsLogin() == false)
+	{
+		acutPrintf(_T("请先登录\n"));
+		return;
+	}
+
+	//1.选择需要设置楼层的门窗
+	Acad::ErrorStatus es;
+	acutPrintf(L"\n请选择门窗");
+
+	ads_name sset;
+	acedSSGet(NULL, NULL, NULL, NULL, sset);
+
+	Adesk::Int32 length = 0;
+	acedSSLength(sset, &length);
+	vector<AcDbObjectId> ids;
+	for (int i = 0; i < length; i++)
+	{
+		ads_name ent;
+		acedSSName(sset, i, ent);
+
+		AcDbObjectId objId = 0;
+		es = acdbGetObjectId(objId, ent);
+		if (es != Acad::eOk || objId == AcDbObjectId::kNull)
+		{
+			continue;
+		}
+
+		ids.push_back(objId);
+	}
+	acedSSFree(sset);
+
+	//////////////////////////////////////////////////////////////////////////
+	CFloorInfo floorInfo;
+
+	//2. 楼层区间
+	CString sFloors;
+	bool bSuc = GetStringInput(_T("请输入楼层区间逗号分隔,(示例 2-5,7,8):"), sFloors);
+	if (bSuc==false)
+		return;
+
+	while (floorInfo.SetFloors(sFloors) == false && bSuc)
+	{
+		bSuc = GetStringInput(_T("格式错误，请输入楼层区间逗号分隔,(示例 2-5,7,8):"), sFloors);
+	}
+	if (bSuc == false)
+		return;
+
+	//////////////////////////////////////////////////////////////////////////
+	//3.层高
+	double height = 2950;
+	bSuc = GetRealInput(_T("请输入楼层高度:"), 2950, 0, height);
+	if (bSuc == false)
+		return;
+	while (floorInfo.SetFloorHeight(height) == false && bSuc)
+	{
+		bSuc = GetRealInput(_T("楼层高度错误，请输入楼层高度:"), 2950, 0, height);
+	}
+	if (bSuc == false)
+		return;
+
+
+	//////////////////////////////////////////////////////////////////////////
+	//设置到选中的门窗中
+	for (UINT i = 0; i < ids.size(); i++)
+	{
+		AcDbObject * pDataEnt = NULL;
+		TY_GetAttributeData(ids[i], pDataEnt);
+		if (pDataEnt==NULL)
+			continue;
+		AttrObject * pSunacObj = dynamic_cast<AttrObject*>(pDataEnt);
+		if (pSunacObj == NULL || pSunacObj->GetViewDir()!=E_VIEW_TOP)
+		{
+			pDataEnt->close();
+			continue;
+		}
+		 
+		pSunacObj->SetFloorInfo(floorInfo);
+	}
+
+	acutPrintf(_T("设置楼层信息成功\n"));
+}
+
+
 void CMD_SunacWindowFloorSetting()//门窗楼层设置
 {
 	if (WebIO::GetInstance()->IsLogin() == false)
@@ -401,6 +488,10 @@ void CMD_SunacRailingFloorSetting() //栏杆楼层设置
 	acutPrintf(_T("设置楼层信息成功\n"));
 }
 
+void CMD_SunacRailingTop2Front()
+{
+	//TODO
+}
 
 //线脚
 void CMD_SunacMoldings()

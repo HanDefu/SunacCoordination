@@ -300,12 +300,12 @@ void AddSubMenu(CAcadPopupMenu&IPopUpMenu, UINT MenuStartIndex)
 	VariantInit(&index);
 	V_VT(&index) = VT_I4;
 	V_I4(&index) = MenuStartIndex++;
-	IPopUpMenu.AddMenuItem(index, _T("产品标准"), _T("_SPALETTE "));
+	IPopUpMenu.AddMenuItem(index, _T("功能导航栏"), _T("_SPALETTE "));
 
-	VariantInit(&index);
-	V_VT(&index) = VT_I4;
-	V_I4(&index) = MenuStartIndex++;
-	IPopUpMenu.AddMenuItem(index, _T("设置"), _T("_SSETUP "));
+	//VariantInit(&index);
+	//V_VT(&index) = VT_I4;
+	//V_I4(&index) = MenuStartIndex++;
+	//IPopUpMenu.AddMenuItem(index, _T("设置"), _T("_SSETUP "));
 }
 
 void InitMenu()
@@ -1121,6 +1121,15 @@ static void initApp()
 		_T("SRAILINGFLOORSETTING"),
 		ACRX_CMD_MODAL | ACRX_CMD_USEPICKSET,
 		CMD_SunacRailingFloorSetting,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SRAILINGTOP2FRONT"),
+		_T("SRAILINGTOP2FRONT"),
+		ACRX_CMD_MODAL | ACRX_CMD_USEPICKSET,
+		CMD_SunacRailingTop2Front,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());

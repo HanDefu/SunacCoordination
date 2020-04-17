@@ -225,7 +225,7 @@ int CWindowSelect::FindWindowInBlock(const AcDbObjectId inputId, const eViewDir 
 		//AcDbObject * pDataEnt = 0;
 		//TY_GetAttributeData(inputId, pDataEnt);
 		//AttrWindow * pWindow = dynamic_cast<AttrWindow *>(pDataEnt);
-		//if (pWindow->m_viewDir==E_VIEW_TOP)
+		//if (pWindow->GetViewDir()==E_VIEW_TOP)
 		//{
 		//	winInCad.m_bMirror = !winInCad.m_bMirror;
 		//}
@@ -409,7 +409,7 @@ bool CWindowCountArray::InitByWindowAtts(const vector<AttrWindow>& p_winAtts, co
 			if (m_winCountArray[n].winAtt.GetInstanceCode().CompareNoCase(sInstanceCode) == 0)
 			{
 				bFind = true;
-				if (p_winAtts[i].m_viewDir == E_VIEW_TOP) //平面图
+				if (p_winAtts[i].GetViewDir() == E_VIEW_TOP) //平面图
 				{
 					if (0 == p_winAtts[i].m_floorInfo.GetFloorCount()) //若有未设置层数的情况，则返回false
 					{
@@ -434,7 +434,7 @@ bool CWindowCountArray::InitByWindowAtts(const vector<AttrWindow>& p_winAtts, co
 		{
 			CWindowAndCount winNew;
 			winNew.winAtt = p_winAtts[i];
-			if (p_winAtts[i].m_viewDir == E_VIEW_TOP) //平面图
+			if (p_winAtts[i].GetViewDir() == E_VIEW_TOP) //平面图
 			{
 				winNew.nCount = p_winAtts[i].m_floorInfo.GetFloorCount();
 			}

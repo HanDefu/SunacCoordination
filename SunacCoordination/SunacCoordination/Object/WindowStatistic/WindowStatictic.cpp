@@ -71,7 +71,7 @@ void CWindowStatictic::WindowClassify(const vector<AttrWindow>& p_winAtts)
 			if (m_windows[n].winAtt.GetInstanceCode().CompareNoCase(sInstanceCode)==0)
 			{
 				bFind = true;
-				if (p_winAtts[i].m_viewDir==E_VIEW_TOP) //平面图
+				if (p_winAtts[i].GetViewDir() ==E_VIEW_TOP) //平面图
 				{
 					m_windows[n].nCount+= p_winAtts[i].m_floorInfo.GetFloorCount();
 				}
@@ -87,7 +87,7 @@ void CWindowStatictic::WindowClassify(const vector<AttrWindow>& p_winAtts)
 		{
 			CWindowUsage winNew;
 			winNew.winAtt = p_winAtts[i];
-			if (p_winAtts[i].m_viewDir == E_VIEW_TOP) //平面图
+			if (p_winAtts[i].GetViewDir() == E_VIEW_TOP) //平面图
 			{
 				winNew.nCount = p_winAtts[i].m_floorInfo.GetFloorCount();
 			}

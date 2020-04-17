@@ -24,8 +24,34 @@
 #include <dbapserv.h>
 
 
-//#include "Tangent\TangentCom\tch10_com19.tlh"
-#include "TangentCom\tch10_com19_opening.tlh"
+//#include "TangentCom\tch10_com19_opening.tlh"
+
+#include "..\Tangent\TangentCom\T2013X64_tch9_com18.tlh"
+
+#include "..\Tangent\TangentCom\T2014X64_tch9_com18.tlh"
+#include "..\Tangent\TangentCom\T2014X64_tch9_com19.tlh"
+
+#include "..\Tangent\TangentCom\T20X64_tch10_com18.tlh"
+#include "..\Tangent\TangentCom\T20X64_tch10_com19.tlh"
+
+#include "..\Tangent\TangentCom\T20V2X64_tch10_com18.tlh"
+#include "..\Tangent\TangentCom\T20V2X64_tch10_com19.tlh"
+
+#include "..\Tangent\TangentCom\T20V3X64_tch10_com18.tlh"
+#include "..\Tangent\TangentCom\T20V3X64_tch10_com19.tlh"
+#include "..\Tangent\TangentCom\T20V3X64_tch10_com20.tlh"
+
+#include "..\Tangent\TangentCom\T20V4X64_tch10_com18.tlh"
+#include "..\Tangent\TangentCom\T20V4X64_tch10_com19.tlh"
+#include "..\Tangent\TangentCom\T20V4X64_tch10_com20.tlh"
+#include "..\Tangent\TangentCom\T20V4X64_tch10_com21.tlh"
+
+#include "..\Tangent\TangentCom\T20V5X64_tch10_com18.tlh"
+#include "..\Tangent\TangentCom\T20V5X64_tch10_com19.tlh"
+#include "..\Tangent\TangentCom\T20V5X64_tch10_com20.tlh"
+#include "..\Tangent\TangentCom\T20V5X64_tch10_com21.tlh"
+#include "..\Tangent\TangentCom\T20V5X64_tch10_com22.tlh"
+#include "..\Tangent\TangentCom\T20V5X64_tch10_com23.tlh"
 
 //////////////////////////////////////////////////////////////////////////
 #include "TangentOpen.h"
@@ -179,13 +205,90 @@ HRESULT CTangentOpen::SetTangentOpenProp(AcDbObjectId p_winId, CTOpenData p_winD
 
 	pent->close();
 
-	if ( IsEqualCLSID(entClsid, __uuidof(TCH10_COM9_T20V5X64::ComOpening)) )
-	{
-		return SetTangentOpenData<TCH10_COM9_T20V5X64::IComOpening>(p_winId, p_winData, __uuidof(TCH10_COM9_T20V5X64::ComOpening));
-	}
-	//else if (IsEqualCLSID(entClsid, __uuidof(TCH10_COM9_T20V4X64::ComOpening)))	//TODO 添加其他的天正版本库
+	//if ( IsEqualCLSID(entClsid, __uuidof(TCH10_COM9_T20V5X64::ComOpening)) )
 	//{
+	//	return SetTangentOpenData<TCH10_COM9_T20V5X64::IComOpening>(p_winId, p_winData, __uuidof(TCH10_COM9_T20V5X64::ComOpening));
 	//}
+	if (IsEqualCLSID(entClsid, __uuidof(T2013X64_tch9_com18::ComOpening)))
+	{
+		return SetTangentOpenData<T2013X64_tch9_com18::IComOpening>(p_winId, p_winData, __uuidof(T2013X64_tch9_com18::ComOpening));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T2014X64_tch9_com18::ComOpening)))
+	{
+		return SetTangentOpenData<T2014X64_tch9_com18::IComOpening>(p_winId, p_winData, __uuidof(T2014X64_tch9_com18::ComOpening));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T2014X64_tch9_com19::ComOpening)))
+	{
+		return SetTangentOpenData<T2014X64_tch9_com19::IComOpening>(p_winId, p_winData, __uuidof(T2014X64_tch9_com19::ComOpening));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20X64_tch10_com18::ComOpening)))
+	{
+		return SetTangentOpenData<T20X64_tch10_com18::IComOpening>(p_winId, p_winData, __uuidof(T20X64_tch10_com18::ComOpening));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20X64_tch10_com19::ComOpening)))
+	{
+		return SetTangentOpenData<T20X64_tch10_com19::IComOpening>(p_winId, p_winData, __uuidof(T20X64_tch10_com19::ComOpening));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V2X64_tch10_com18::ComOpening)))
+	{
+		return SetTangentOpenData<T20V2X64_tch10_com18::IComOpening>(p_winId, p_winData, __uuidof(T20V2X64_tch10_com18::ComOpening));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V2X64_tch10_com19::ComOpening)))
+	{
+		return SetTangentOpenData<T20V2X64_tch10_com19::IComOpening>(p_winId, p_winData, __uuidof(T20V2X64_tch10_com19::ComOpening));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V3X64_tch10_com18::ComOpening)))
+	{
+		return SetTangentOpenData<T20V3X64_tch10_com18::IComOpening>(p_winId, p_winData, __uuidof(T20V3X64_tch10_com18::ComOpening));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V3X64_tch10_com19::ComOpening)))
+	{
+		return SetTangentOpenData<T20V3X64_tch10_com19::IComOpening>(p_winId, p_winData, __uuidof(T20V3X64_tch10_com19::ComOpening));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V3X64_tch10_com20::ComOpening)))
+	{
+		return SetTangentOpenData<T20V3X64_tch10_com20::IComOpening>(p_winId, p_winData, __uuidof(T20V3X64_tch10_com20::ComOpening));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V4X64_tch10_com18::ComOpening)))
+	{
+		return SetTangentOpenData<T20V4X64_tch10_com18::IComOpening>(p_winId, p_winData, __uuidof(T20V4X64_tch10_com18::ComOpening));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V4X64_tch10_com19::ComOpening)))
+	{
+		return SetTangentOpenData<T20V4X64_tch10_com19::IComOpening>(p_winId, p_winData, __uuidof(T20V4X64_tch10_com19::ComOpening));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V4X64_tch10_com20::ComOpening)))
+	{
+		return SetTangentOpenData<T20V4X64_tch10_com20::IComOpening>(p_winId, p_winData, __uuidof(T20V4X64_tch10_com20::ComOpening));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V4X64_tch10_com21::ComOpening)))
+	{
+		return SetTangentOpenData<T20V4X64_tch10_com21::IComOpening>(p_winId, p_winData, __uuidof(T20V4X64_tch10_com21::ComOpening));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V5X64_tch10_com18::ComOpening)))
+	{
+		return SetTangentOpenData<T20V5X64_tch10_com18::IComOpening>(p_winId, p_winData, __uuidof(T20V5X64_tch10_com18::ComOpening));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V5X64_tch10_com19::ComOpening)))
+	{
+		return SetTangentOpenData<T20V5X64_tch10_com19::IComOpening>(p_winId, p_winData, __uuidof(T20V5X64_tch10_com19::ComOpening));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V5X64_tch10_com20::ComOpening)))
+	{
+		return SetTangentOpenData<T20V5X64_tch10_com20::IComOpening>(p_winId, p_winData, __uuidof(T20V5X64_tch10_com20::ComOpening));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V5X64_tch10_com21::ComOpening)))
+	{
+		return SetTangentOpenData<T20V5X64_tch10_com21::IComOpening>(p_winId, p_winData, __uuidof(T20V5X64_tch10_com21::ComOpening));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V5X64_tch10_com22::ComOpening)))
+	{
+		return SetTangentOpenData<T20V5X64_tch10_com22::IComOpening>(p_winId, p_winData, __uuidof(T20V5X64_tch10_com22::ComOpening));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V5X64_tch10_com23::ComOpening)))
+	{
+		return SetTangentOpenData<T20V5X64_tch10_com23::IComOpening>(p_winId, p_winData, __uuidof(T20V5X64_tch10_com23::ComOpening));
+	}
 	else
 	{
 		hr = E_FAIL;

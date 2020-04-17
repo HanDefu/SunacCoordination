@@ -22,6 +22,8 @@ AttrObject::AttrObject()
 	m_isDynamic = true;
 
 	m_instanceCodeId = AcDbObjectId::kNull;
+
+	m_viewDir = E_VIEW_TOP;
 }
 
 AttrObject::~AttrObject()
@@ -112,6 +114,8 @@ Acad::ErrorStatus AttrObject::dwgInFields(AcDbDwgFiler* filer)
 		double floorHeight;
 		filer->readItem(&floorHeight);
 		m_floorInfo.SetFloorHeight(floorHeight);
+
+		filer->readItem((Adesk::UInt32*)&m_viewDir);
 	}
 
 	return filer->filerStatus();
@@ -160,6 +164,8 @@ Acad::ErrorStatus AttrObject::dwgOutFields(AcDbDwgFiler* filer) const
 	{
 		filer->writeItem(m_floorInfo.GetFloors());
 		filer->writeItem(m_floorInfo.GetFloorHeight());
+
+		filer->writeItem((Adesk::UInt32)m_viewDir);
 	}
 
 	return filer->filerStatus();

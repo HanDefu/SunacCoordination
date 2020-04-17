@@ -1063,7 +1063,7 @@ CString AttrWindow::GetPrototypeDwgFilePath(eViewDir p_view)const
 bool AttrWindow::IsMxMirror()const //实际的矩阵是否镜像
 {
 	bool bMirror = m_isMirror;
-	if (m_viewDir == E_VIEW_TOP)
+	if (GetViewDir() == E_VIEW_TOP)
 	{
 		bMirror = !bMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题 Mirror
 	}
@@ -1072,7 +1072,7 @@ bool AttrWindow::IsMxMirror()const //实际的矩阵是否镜像
 }
 void AttrWindow::SetMxMirror(bool p_bMirror)
 {
-	if (m_viewDir == E_VIEW_TOP)
+	if (GetViewDir() == E_VIEW_TOP)
 	{
 		p_bMirror = !p_bMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题 Mirror
 	}

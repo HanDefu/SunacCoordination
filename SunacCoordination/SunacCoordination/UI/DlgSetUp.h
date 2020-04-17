@@ -16,7 +16,7 @@ public:
 	virtual ~CDlgSetUp();
 
 // 对话框数据
-	enum { IDD = IDD_DIALOG_SETUP };
+	enum { IDD = IDD_DIALOG_WIN_SETTING };
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
