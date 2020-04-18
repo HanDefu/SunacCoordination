@@ -83,7 +83,7 @@ AC_IMPLEMENT_EXTENSION_MODULE(theArxDLL);
 void CMD_YTest()
 {
 	int n = 0;
-	vector<CWinInCad> winsSelected = CWindowSelect::SelectWindows(E_VIEW_ALL, false);
+	vector<CSunacObjInCad> winsSelected = CWindowSelect::SelectSunacObjs(E_VIEW_ALL, false);
 	for (UINT i = 0; i < winsSelected.size(); i++)
 	{
 		if (winsSelected[i].m_bMxMirror)

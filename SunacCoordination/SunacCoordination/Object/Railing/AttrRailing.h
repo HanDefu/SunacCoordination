@@ -30,7 +30,7 @@ public:
 
 	virtual bool isEqualTo(AttrObject*other);//基础数据一致
 	virtual bool IsPrototypeEqual_test(const AttrRailing& p_att);
-	virtual eRCType GetType() {return RAILING;}
+	virtual eRCType GetType() {return S_RAILING;}
 
 	//{{AFX_ARX_METHODS(ZffDwgScale)
 	virtual Acad::ErrorStatus dwgOutFields(AcDbDwgFiler* pFiler) const;

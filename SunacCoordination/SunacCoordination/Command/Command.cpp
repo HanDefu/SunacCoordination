@@ -260,7 +260,7 @@ void CMD_SunacWindowFloorSetting()//门窗楼层设置
 	}
 
 	//1.选择需要设置楼层的门窗
-	const vector<CWinInCad> wins = CWindowSelect::SelectWindows(E_VIEW_TOP);
+	const vector<CSunacObjInCad> wins = CWindowSelect::SelectSunacObjs(E_VIEW_TOP);
 	if (wins.size() == 0)
 		return;
 
@@ -572,7 +572,7 @@ void CMD_SunacWindowsStatistics()
 	if (bSuc1 == false)
 		return;
 
-	const vector<CWinInCad> wins = CWindowSelect::SelectWindows(viewDir);
+	const vector<CSunacObjInCad> wins = CWindowSelect::SelectSunacObjs(viewDir);
 	if (wins.size() == 0)
 		return;	
 

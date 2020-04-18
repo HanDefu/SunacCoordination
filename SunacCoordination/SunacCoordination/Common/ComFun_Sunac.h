@@ -75,6 +75,8 @@ bool TY_Iskitchen(AcDbObjectId Id);
 bool TY_IsBathroom(AcDbObjectId Id);
 bool TY_IsAirCon(AcDbObjectId Id);
 bool TY_IsRailing(AcDbObjectId Id, eViewDir p_view);
+bool TY_IsSunacObj(AcDbObjectId Id, eRCType p_rcType, eViewDir p_view= E_VIEW_ALL);
+
 //////////////////////////////////////////////////////////////////////////
 
 eRCType TY_GetType(AcDbBlockReference *pBlockReference);

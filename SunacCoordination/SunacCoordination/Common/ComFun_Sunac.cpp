@@ -713,6 +713,33 @@ int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt)
 	return pDataEnt == NULL ? 0 : -68;
 }
 
+
+bool TY_IsSunacObj(AcDbObjectId Id, eRCType p_rcType, eViewDir p_view)
+{
+	switch (p_rcType)
+	{
+	case S_WINDOW:
+	case S_DOOR:
+		return TY_IsWindow(Id, p_view);
+		break;
+	case S_KITCHEN:
+		return TY_Iskitchen(Id);
+		break;
+	case S_BATHROOM:
+		return TY_IsBathroom(Id);
+		break;
+	case S_AIRCON:
+		return TY_IsAirCon(Id);
+		break;
+	case S_RAILING:
+		return TY_IsRailing(Id, p_view);
+		break;
+	default:
+		return false;
+		break;
+	}
+}
+
 bool TY_IsWindow(AcDbObjectId Id, eViewDir p_view)
 {
 	AcDbObject * pDataEnt = 0;
@@ -748,7 +775,7 @@ bool TY_IsRailing(AcDbObjectId Id, eViewDir p_view)
 eRCType TY_GetType(AcDbBlockReference *pBlockReference)
 {
 	if (pBlockReference == 0)
-		return TYPENUM;
+		return S_TYPENUM;
 	AcDbObject * pDataEnt = 0;
 	AcDbObjectId dictid = pBlockReference->extensionDictionary();
 
@@ -759,32 +786,32 @@ eRCType TY_GetType(AcDbBlockReference *pBlockReference)
 		pDict->close();
 		pDataEnt->close();
 		if(pDataEnt == NULL)
-			return TYPENUM;
+			return S_TYPENUM;
 
 		AttrWindow * pWindow = dynamic_cast<AttrWindow *>(pDataEnt);
 		if (pWindow != 0)
-			return WINDOW;
+			return S_WINDOW;
 
 		AttrKitchen * pKit = dynamic_cast<AttrKitchen *>(pDataEnt);
 		if (pKit != 0)
-			return KITCHEN;
+			return S_KITCHEN;
 
 		AttrBathroom * pBath= dynamic_cast<AttrBathroom *>(pDataEnt);
 		if (pBath != 0)
-			return Bathroom;
+			return S_BATHROOM;
 
 		AttrRailing * pRail = dynamic_cast<AttrRailing *>(pDataEnt);
 		if (pRail != 0)
-			return RAILING;
+			return S_RAILING;
 
 		AttrAirCon * pAir = dynamic_cast<AttrAirCon *>(pDataEnt);
 		if (pAir != 0)
-			return AIRCON;
+			return S_AIRCON;
 
-		return TYPENUM;
+		return S_TYPENUM;
 	}
 	else
-		return TYPENUM;
+		return S_TYPENUM;
 }
 
 bool TY_Iskitchen(AcDbObjectId Id)

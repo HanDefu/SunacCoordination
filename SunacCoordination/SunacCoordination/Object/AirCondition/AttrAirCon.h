@@ -47,7 +47,7 @@ public:
 	virtual Acad::ErrorStatus dwgInFields(AcDbDwgFiler* pFiler);
 	//}}AFX_ARX_METHODS
 
-	virtual eRCType GetType() {return AIRCON;}
+	virtual eRCType GetType() {return S_AIRCON;}
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
 	virtual bool IsPrototypeEqual_test(const AttrAirCon& p_att);
 

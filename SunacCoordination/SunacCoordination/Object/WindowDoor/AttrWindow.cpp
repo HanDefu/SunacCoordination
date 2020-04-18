@@ -694,8 +694,8 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 eRCType AttrWindow::GetType()const
 {
 	if (m_prototypeCode.Left(4) == L"Door")
-		return DOOR;
-	return WINDOW;
+		return S_DOOR;
+	return S_WINDOW;
 }
 
 CString AttrWindow::GetMainPrototypeCode()const //返回原型主编码，如Window_NC2_0 返回的值为Window_NC2
@@ -1020,7 +1020,7 @@ bool AttrWindow::IsInstanceEqual(const AttrWindow& p_att) const
 
 E_WindowAluminumType AttrWindow::GetWindowDoorAluminumType() const
 {
-	CString sType = (GetType() == WINDOW ? L"窗" : L"门");
+	CString sType = (GetType() == S_WINDOW ? L"窗" : L"门");
 
 	CString sFullName = m_openType;
 	if (m_openType.Find(sType)<0)

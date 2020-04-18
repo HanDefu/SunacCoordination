@@ -811,7 +811,7 @@ void CWindowDlg::SetEditMode(AcDbObjectId editId)
 
 		//////////////////////////////////////////////////////////////////////////
 		//初始门窗属性数据
-		m_radioDoorWindow = (m_attBeforeEdit.GetType() == DOOR) ? 0 : 1;
+		m_radioDoorWindow = (m_attBeforeEdit.GetType() == S_DOOR) ? 0 : 1;
 		WindowDoorChange();
 		m_nWidth = (int)m_attBeforeEdit.GetW();
 		m_nHeight = (int)m_attBeforeEdit.GetH();

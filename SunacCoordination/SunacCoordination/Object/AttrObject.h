@@ -44,7 +44,7 @@ public:
 	virtual Acad::ErrorStatus dwgInFileInfo(AcDbDwgFiler* pFiler, CDwgFileInfo& pFileInfo);
 	//}}AFX_ARX_METHODS
 	
-	virtual eRCType GetType(){return TYPENUM;}
+	virtual eRCType GetType(){return S_TYPENUM;}
 	virtual bool isEqualTo(AttrObject*other);//基础数据一致
 
 	CString GetFileName()const{ return m_file.fileName; }

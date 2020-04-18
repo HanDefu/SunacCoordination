@@ -18,16 +18,16 @@ using namespace std;
 #define	 CHECK_USE//是否检测权限
 
 //模块类型
-typedef enum eRCType
+enum eRCType
 {
-    WINDOW,//外窗
-	DOOR,//门
-	KITCHEN,//厨房
-	Bathroom,//卫生间
-	AIRCON,//空调
-	RAILING,//栏杆
-	TYPENUM
-}eRCType;
+    S_WINDOW,//外窗
+	S_DOOR,//门
+	S_KITCHEN,//厨房
+	S_BATHROOM,//卫生间
+	S_AIRCON,//空调
+	S_RAILING,//栏杆
+	S_TYPENUM
+};
 
 
 enum eViewDir

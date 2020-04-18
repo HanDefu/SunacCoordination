@@ -34,7 +34,7 @@ public:
 	virtual Acad::ErrorStatus dwgInFields(AcDbDwgFiler* pFiler);
 	//}}AFX_ARX_METHODS
 
-	virtual eRCType GetType() {return KITCHEN;}
+	virtual eRCType GetType() {return S_KITCHEN;}
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
 	bool IsInstanceEqual(const AttrKitchen& p_att) const;
 

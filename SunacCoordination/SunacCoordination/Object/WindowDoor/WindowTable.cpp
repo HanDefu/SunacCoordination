@@ -12,7 +12,7 @@ CWindowAndCount::CWindowAndCount()
 {
 	nCount = 0;
 }
-bool CWindowCountArray::InitByWindowIds(const vector<CWinInCad>& p_winIds)
+bool CWindowCountArray::InitByWindowIds(const vector<CSunacObjInCad>& p_winIds)
 {
 	vector<AttrWindow>  winAtts;
 	vector<AcDbObjectId>  winIds;

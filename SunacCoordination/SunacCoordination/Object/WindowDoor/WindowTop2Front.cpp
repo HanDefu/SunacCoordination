@@ -14,8 +14,8 @@
 bool CWindowTop2Front::GenFrontFromTop()
 {
 	//1.选择需要设置楼层的门窗
-	//vAcDbObjectId winIds = SelectWindows(E_VIEW_TOP);
-	const vector<CWinInCad> wins = CWindowSelect::SelectWindows(E_VIEW_TOP);
+	//vAcDbObjectId winIds = SelectSunacObjs(E_VIEW_TOP);
+	const vector<CSunacObjInCad> wins = CWindowSelect::SelectSunacObjs(E_VIEW_TOP);
 	vAcDbObjectId winIds;
 	for (UINT i = 0; i < wins.size(); i++)
 	{
@@ -112,7 +112,7 @@ bool CWindowTop2Front::GenFrontFromTop()
 		AcGePoint3d pos = posColum;
 		//yuan 选择左下角窗户时以下注释，Y方向选择楼层基准位置时放开
 		//pos.y += floorInfo.GetFloorHeight()* (curFloor - 1);
-		//if (curWinAtt.GetType() == WINDOW)
+		//if (curWinAtt.GetType() == S_WINDOW)
 		//{
 		//	pos.y += curWinAtt.GetHeightUnderWindow();
 		//}

@@ -175,7 +175,7 @@ void CWindowGen::UpdateRcWindowPara(const AcDbObjectId p_id, const AttrWindow& c
 	{
 		double B = -100; //设为无效值
 		
-		if (curWinAtt.GetType() == DOOR)
+		if (curWinAtt.GetType() == S_DOOR)
 		{
 			B = 1100;
 		}
@@ -267,7 +267,7 @@ AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d
 	{
 		if (GlobalSetting::GetInstance()->m_winSetting.m_bShowLimianNumber || p_view == E_VIEW_TOP)
 		{
-			CWinInCad winInCad;
+			CSunacObjInCad winInCad;
 			winInCad.m_winId = id;
 			winInCad.m_rootId = id;
 			winInCad.m_bMxMirror = curWinAtt.IsMxMirror();
@@ -808,7 +808,7 @@ AcDbObjectId CWindowGen::InsertWindowDoorCode(eViewDir p_viewDir, CString p_numb
 	return sWindowDoorTextId;
 }
 
-void CWindowGen::CreateWindowDoorCode(eViewDir p_viewDir, CWinInCad p_win, CString p_Code)
+void CWindowGen::CreateWindowDoorCode(eViewDir p_viewDir, CSunacObjInCad p_win, CString p_Code)
 {
 	//根据窗户的位置转换门窗编号位置
 	double winWidth = 1500;
@@ -891,7 +891,7 @@ double CWindowGen::GetWinHeight(AcDbObjectId p_id)
 	return maxWindowPt.y - minWindowPt.y;
 }
 
-bool CWindowGen::SelectWindows(vector<CWinInCad>& p_winsOut, vector<AcDbObjectId>& p_textIdsOut, bool &p_bAllOut)
+bool CWindowGen::SelectSunacObjs(vector<CSunacObjInCad>& p_winsOut, vector<AcDbObjectId>& p_textIdsOut, bool &p_bAllOut)
 {
 	CString sDir = _T("R");
 	bool bSuc = GetStringInput(_T("\n按区域选择[R],全部选择[A]<R>:"), sDir);
@@ -915,7 +915,7 @@ bool CWindowGen::SelectWindows(vector<CWinInCad>& p_winsOut, vector<AcDbObjectId
 
 	if (p_bAllOut)
 	{
-		p_winsOut = CWindowSelect::SelectWindows(E_VIEW_ALL, true);
+		p_winsOut = CWindowSelect::SelectSunacObjs(E_VIEW_ALL, true);
 		p_textIdsOut = CInstanceCodeTextMrg::GetAllInstanceCodeIds();
 	}
 	else
@@ -926,7 +926,7 @@ bool CWindowGen::SelectWindows(vector<CWinInCad>& p_winsOut, vector<AcDbObjectId
 			return false;
 
 		//////////////////////////////////////////////////////////////////////////
-		p_winsOut = CWindowSelect::SelectWindowsByRect(E_VIEW_ALL, rect);
+		p_winsOut = CWindowSelect::SelectSunacObjsByRect(E_VIEW_ALL, rect);
 
 		p_textIdsOut = CInstanceCodeTextMrg::GetInstanceCodeIdsInRect(rect);
 	}
@@ -936,11 +936,11 @@ bool CWindowGen::SelectWindows(vector<CWinInCad>& p_winsOut, vector<AcDbObjectId
 
 void CWindowGen::AutoNameAllWindow()
 {
-	vector<CWinInCad> wins;
+	vector<CSunacObjInCad> wins;
 	vector<AcDbObjectId> textIds;
 	bool bAll = false;
 	//1.  从CAD界面上获取所有的门窗
-	bool bSuc = SelectWindows(wins, textIds, bAll);
+	bool bSuc = SelectSunacObjs(wins, textIds, bAll);
 	if (wins.size() == 0)
 		return;
 	

@@ -20,7 +20,7 @@
 
 
 
-CWinInCad::CWinInCad()
+CSunacObjInCad::CSunacObjInCad()
 {
 	m_winId = AcDbObjectId::kNull;
 	m_rootId = AcDbObjectId::kNull;
@@ -30,7 +30,7 @@ CWinInCad::CWinInCad()
 }
 
 
-vector<CWinInCad> CWindowSelect::SelectWindows(eViewDir p_view, bool p_bAllWindow)
+vector<CSunacObjInCad> CWindowSelect::SelectSunacObjs(eViewDir p_view, bool p_bAllWindow)
 {
 	Acad::ErrorStatus es;
 
@@ -67,7 +67,7 @@ vector<CWinInCad> CWindowSelect::SelectWindows(eViewDir p_view, bool p_bAllWindo
 	acedSSFree(sset);
 	//////////////////////////////////////////////////////////////////////////
 
-	vector<CWinInCad> winsOut = GetWinsInObjectIds(ids ,p_view);//当前选择的ids
+	vector<CSunacObjInCad> winsOut = GetSunacObjsInObjectIds(ids ,p_view);//当前选择的ids
 
 	if (winsOut.size() == 0)
 	{
@@ -83,16 +83,16 @@ vector<CWinInCad> CWindowSelect::SelectWindows(eViewDir p_view, bool p_bAllWindo
 }
 
 
-vector<CWinInCad> CWindowSelect::GetWinsInObjectIds(const vector<AcDbObjectId>& p_ids, eViewDir p_view)
+vector<CSunacObjInCad> CWindowSelect::GetSunacObjsInObjectIds(const vector<AcDbObjectId>& p_ids, eViewDir p_view)
 {
-	vector<CWinInCad> winsOut;
+	vector<CSunacObjInCad> winsOut;
 	for (UINT i = 0; i < p_ids.size(); i++)
 	{
 		AcDbObjectId objId = p_ids[i];
 
-		vector<CWinInCad> winsTemp;
+		vector<CSunacObjInCad> winsTemp;
 		AcGeMatrix3d mxTemp = AcGeMatrix3d::kIdentity;
-		FindWindowsDeep(objId, p_view, mxTemp, winsTemp);
+		FindSunacObjsDeep(objId, p_view, mxTemp, winsTemp);
 		if (winsTemp.size() > 0)
 		{
 			for (UINT n = 0; n < winsTemp.size(); n++)
@@ -106,7 +106,7 @@ vector<CWinInCad> CWindowSelect::GetWinsInObjectIds(const vector<AcDbObjectId>& 
 	return winsOut;
 }
 
-vector<CWinInCad> CWindowSelect::SelectWindowsByRect(eViewDir p_view, TYRect p_rect)
+vector<CSunacObjInCad> CWindowSelect::SelectSunacObjsByRect(eViewDir p_view, TYRect p_rect)
 {
 	ads_point pt1, pt2;
 	pt1[X] = p_rect.GetLT().x;
@@ -143,7 +143,7 @@ vector<CWinInCad> CWindowSelect::SelectWindowsByRect(eViewDir p_view, TYRect p_r
 	acedSSFree(sset);
 	//////////////////////////////////////////////////////////////////////////
 
-	vector<CWinInCad> winsOut = GetWinsInObjectIds(ids, p_view);//当前选择的ids
+	vector<CSunacObjInCad> winsOut = GetSunacObjsInObjectIds(ids, p_view);//当前选择的ids
 
 	if (winsOut.size() == 0)
 	{
@@ -158,7 +158,7 @@ vector<CWinInCad> CWindowSelect::SelectWindowsByRect(eViewDir p_view, TYRect p_r
 	return winsOut;
 }
 
-int CWindowSelect::FindWindowsDeep(const AcDbObjectId inputId, const eViewDir viewDir, const AcGeMatrix3d p_parentMx, vector<CWinInCad> &outputIds)
+int CWindowSelect::FindSunacObjsDeep(const AcDbObjectId inputId, const eViewDir viewDir, const AcGeMatrix3d p_parentMx, vector<CSunacObjInCad> &outputIds)
 {
 	if (inputId == AcDbObjectId::kNull)
 		return 0;
@@ -180,11 +180,11 @@ int CWindowSelect::FindWindowsDeep(const AcDbObjectId inputId, const eViewDir vi
 
 	if (bArray) 
 	{
-		FindWindowInArray(inputId, viewDir, p_parentMx, outputIds);
+		FindSunacObjsInArray(inputId, viewDir, p_parentMx, outputIds);
 	}
 	else if (bBlock)
 	{
-		FindWindowInBlock(inputId, viewDir, p_parentMx, outputIds);
+		FindSunacObjsInBlock(inputId, viewDir, p_parentMx, outputIds);
 	}
 	//group情况 不用特定处理，在选择的时候还是多个单独的实体，只是一起选择
 	 
@@ -192,7 +192,7 @@ int CWindowSelect::FindWindowsDeep(const AcDbObjectId inputId, const eViewDir vi
 	return 0;
 }
 
-int CWindowSelect::FindWindowInBlock(const AcDbObjectId inputId, const eViewDir viewDir, const AcGeMatrix3d p_parentMx, vector<CWinInCad> &outputIds)
+int CWindowSelect::FindSunacObjsInBlock(const AcDbObjectId inputId, const eViewDir viewDir, const AcGeMatrix3d p_parentMx, vector<CSunacObjInCad> &outputIds)
 {
 	AcDbEntity * pEnt = 0;
 	Acad::ErrorStatus es = acdbOpenObject(pEnt, inputId, AcDb::kForRead);
@@ -209,7 +209,7 @@ int CWindowSelect::FindWindowInBlock(const AcDbObjectId inputId, const eViewDir 
 
 	if (TY_IsWindow(inputId, viewDir))
 	{
-		CWinInCad winInCad;
+		CSunacObjInCad winInCad;
 		winInCad.m_winId = inputId;
 		winInCad.m_rootId = inputId;
 		winInCad.m_bMxMirror = IsMxMirror(curMx);
@@ -234,7 +234,7 @@ int CWindowSelect::FindWindowInBlock(const AcDbObjectId inputId, const eViewDir 
 		MD2010_CycleBlockEntites(blockName, vidsToCheck);
 		for (int i = 0; i < vidsToCheck.size(); i++)
 		{
-			FindWindowsDeep(vidsToCheck[i], viewDir, curMx, outputIds);
+			FindSunacObjsDeep(vidsToCheck[i], viewDir, curMx, outputIds);
 		}
 	}
 
@@ -246,7 +246,7 @@ int CWindowSelect::FindWindowInBlock(const AcDbObjectId inputId, const eViewDir 
 	return 0;
 }
 
-int CWindowSelect::FindWindowInArray(const AcDbObjectId inputId, const eViewDir viewDir, const AcGeMatrix3d p_parentMx, vector<CWinInCad> &outputIds)
+int CWindowSelect::FindSunacObjsInArray(const AcDbObjectId inputId, const eViewDir viewDir, const AcGeMatrix3d p_parentMx, vector<CSunacObjInCad> &outputIds)
 {
 	AcDbEntity * pEnt = 0;
 	Acad::ErrorStatus es = acdbOpenObject(pEnt, inputId, AcDb::kForRead);
@@ -273,7 +273,7 @@ int CWindowSelect::FindWindowInArray(const AcDbObjectId inputId, const eViewDir 
 	vAcDbObjectId ids2;
 	for (int i = 0; i < ids.size(); i++)
 	{
-		FindWindowsDeep(ids[i], viewDir, curMx, outputIds);
+		FindSunacObjsDeep(ids[i], viewDir, curMx, outputIds);
 	}
 
 	return 0;

@@ -4,10 +4,10 @@
 #include "../../Common/TYRect.h"
 using namespace std;
 
-class CWinInCad
+class CSunacObjInCad
 {
 public:
-	CWinInCad();
+	CSunacObjInCad();
 
 public:
 	AcDbObjectId m_winId;
@@ -21,21 +21,21 @@ public:
 class CWindowSelect
 {
 public:
-	static vector<CWinInCad> SelectWindows(eViewDir p_view, bool p_bAllWindow = false);
-	static vector<CWinInCad> SelectWindowsByRect(eViewDir p_view, TYRect p_rect);
+	static vector<CSunacObjInCad> SelectSunacObjs(eViewDir p_view, bool p_bAllWindow = false);
+	static vector<CSunacObjInCad> SelectSunacObjsByRect(eViewDir p_view, TYRect p_rect);
 	
 	static bool IsReferenctMirror(const AcDbObjectId refId);	//只判断块引用本身是否是镜像
 
 	static AcGeMatrix3d GetReferenctWorldMatrix(const AcDbObjectId refId); //得到实体的完整镜像
 
 protected:
-	static vector<CWinInCad> GetWinsInObjectIds(const vector<AcDbObjectId>& p_ids, eViewDir p_view);
+	static vector<CSunacObjInCad> GetSunacObjsInObjectIds(const vector<AcDbObjectId>& p_ids, eViewDir p_view);
 
 
-	static int FindWindowsDeep(const AcDbObjectId inputId, const eViewDir viewDir, const AcGeMatrix3d p_parentMx, vector<CWinInCad> &outputIds);
+	static int FindSunacObjsDeep(const AcDbObjectId inputId, const eViewDir viewDir, const AcGeMatrix3d p_parentMx, vector<CSunacObjInCad> &outputIds);
 
-	static int FindWindowInBlock(const AcDbObjectId inputId, const eViewDir viewDir, const AcGeMatrix3d p_parentMx, vector<CWinInCad> &outputIds);
-	static int FindWindowInArray(const AcDbObjectId inputId, const eViewDir viewDir, const AcGeMatrix3d p_parentMx, vector<CWinInCad> &outputIds);
+	static int FindSunacObjsInBlock(const AcDbObjectId inputId, const eViewDir viewDir, const AcGeMatrix3d p_parentMx, vector<CSunacObjInCad> &outputIds);
+	static int FindSunacObjsInArray (const AcDbObjectId inputId, const eViewDir viewDir, const AcGeMatrix3d p_parentMx, vector<CSunacObjInCad> &outputIds);
 
 	static bool IsMxMirror(const AcGeMatrix3d p_parentMx); //通过矩阵判断是否做过镜像处理
 
