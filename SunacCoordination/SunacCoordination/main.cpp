@@ -1004,7 +1004,7 @@ static void initApp()
 		_T("SWINFLOOR"),
 		_T("SWINFLOOR"),
 		ACRX_CMD_MODAL,
-		CMD_SunacWindowFloorSetting,
+		CMD_SunacFloorSetting,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());

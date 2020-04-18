@@ -39,6 +39,7 @@
 #include "../Object/AirCondition/AirConStatistic.h"
 #include "../Object/WindowDoor/WindowTop2Front.h"
 #include "../Object/WindowDoor/WindowSelect.h"
+#include "../Object/WindowDoor/WindowTable.h"
 #include "../Object/WindowDoor/WindowGen.h"
 #include "../UI/ProjectManagementDlg.h"
 #include "../WebIO/WebIO.h"

@@ -75,22 +75,7 @@ typedef enum eWindowDoorPos//门窗位置关系
 	CHUIZHIKAI//垂直开
 } eWindowDoorPos;
 
-inline eWindowDoorPos ToEWindowDoorPos(CString type)
-{
-	if (type == "对开")
-	{
-		return DUIKAI;
-	} 
-	else if (type == "垂直开")
-	{
-		return CHUIZHIKAI;
-	}
-	else
-	{
-		ASSERT(FALSE);
-		return DUIKAI;
-	}
-}
+eWindowDoorPos ToEWindowDoorPos(CString type);
 
 struct CDwgFileInfo
 {

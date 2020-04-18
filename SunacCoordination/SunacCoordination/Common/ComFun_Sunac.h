@@ -64,6 +64,7 @@ bool TY_GetTwoPoints(AcGePoint3d &pnt1, AcGePoint3d &pnt2);
 bool GetRealInput(const TCHAR* prompt, double defaultVal, int precision, double &ret);
 bool GetStringInput(CString prompt, CString &strOut);
 
+//////////////////////////////////////////////////////////////////////////
 AcDbObjectId TY_GetExtensionDictionaryID(AcDbObjectId id);
 AcDbObjectId TY_CreateExtensionDictionaryID(AcDbObjectId id);
 int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt);
@@ -73,7 +74,8 @@ bool TY_IsWindow(AcDbObjectId Id, eViewDir p_view);
 bool TY_Iskitchen(AcDbObjectId Id);
 bool TY_IsBathroom(AcDbObjectId Id);
 bool TY_IsAirCon(AcDbObjectId Id);
-bool TY_IsRailing(AcDbObjectId Id);
+bool TY_IsRailing(AcDbObjectId Id, eViewDir p_view);
+//////////////////////////////////////////////////////////////////////////
 
 eRCType TY_GetType(AcDbBlockReference *pBlockReference);
 

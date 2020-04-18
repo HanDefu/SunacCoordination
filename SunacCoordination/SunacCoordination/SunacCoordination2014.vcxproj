@@ -219,6 +219,7 @@
     <ClCompile Include="Object\WindowDoor\WindowAutoName.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowGen.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowSelect.cpp" />
+    <ClCompile Include="Object\WindowDoor\WindowTable.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowTop2Front.cpp" />
     <ClCompile Include="Object\WindowDoor\WinTangentOpenMap.cpp" />
     <ClCompile Include="Object\WindowStatistic\AluminumSeries.cpp" />
@@ -361,6 +362,7 @@
     <ClInclude Include="Object\WindowDoor\WindowAutoName.h" />
     <ClInclude Include="Object\WindowDoor\WindowGen.h" />
     <ClInclude Include="Object\WindowDoor\WindowSelect.h" />
+    <ClInclude Include="Object\WindowDoor\WindowTable.h" />
     <ClInclude Include="Object\WindowDoor\WindowTop2Front.h" />
     <ClInclude Include="Object\WindowDoor\WinTangentOpenMap.h" />
     <ClInclude Include="Object\WindowStatistic\AluminumSeries.h" />

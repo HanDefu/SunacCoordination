@@ -406,6 +406,9 @@
     <ClCompile Include="Object\WindowDoor\WinTangentOpenMap.cpp">
       <Filter>Object\WindowDoor</Filter>
     </ClCompile>
+    <ClCompile Include="Object\WindowDoor\WindowTable.cpp">
+      <Filter>Object\WindowDoor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -899,6 +902,9 @@
       <Filter>Tangent</Filter>
     </ClInclude>
     <ClInclude Include="Object\WindowDoor\WinTangentOpenMap.h">
+      <Filter>Object\WindowDoor</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\WindowTable.h">
       <Filter>Object\WindowDoor</Filter>
     </ClInclude>
   </ItemGroup>

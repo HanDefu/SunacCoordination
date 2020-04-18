@@ -730,6 +730,21 @@ bool TY_IsWindow(AcDbObjectId Id, eViewDir p_view)
 	return true;
 }
 
+bool TY_IsRailing(AcDbObjectId Id, eViewDir p_view)
+{
+	AcDbObject * pDataEnt = 0;
+	TY_GetAttributeData(Id, pDataEnt);
+	AttrRailing * pRailing = dynamic_cast<AttrRailing *>(pDataEnt);
+	if (pRailing != 0)
+		return true;
+
+	if (p_view != E_VIEW_ALL)
+	{
+		return pRailing->GetViewDir() == p_view;
+	}
+	return false;
+}
+
 eRCType TY_GetType(AcDbBlockReference *pBlockReference)
 {
 	if (pBlockReference == 0)
@@ -782,15 +797,6 @@ bool TY_Iskitchen(AcDbObjectId Id)
 	return false;
 }
 
-bool TY_IsRailing(AcDbObjectId Id)
-{
-	AcDbObject * pDataEnt = 0;
-	TY_GetAttributeData(Id, pDataEnt);
-	AttrRailing * pKitchen = dynamic_cast<AttrRailing *>(pDataEnt);
-	if (pKitchen != 0)
-		return true;
-	return false;
-}
 
 bool TY_IsAirCon(AcDbObjectId Id)
 {

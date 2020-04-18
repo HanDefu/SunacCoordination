@@ -18,6 +18,7 @@
 #include "../Common/ComFun_String.h"
 #include "../Object/WindowDoor/RCWindow.h"
 #include "../Object/WindowDoor/WindowSelect.h"
+#include "../Object/WindowDoor/WindowTable.h"
 
 //门窗表
 void CMD_SunacWindowsTable()

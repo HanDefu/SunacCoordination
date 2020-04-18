@@ -3,6 +3,22 @@
 #include "Sunac_def.h"
 #include "Common/ComFun_String.h"
 
+eWindowDoorPos ToEWindowDoorPos(CString type)
+{
+	if (type == "对开")
+	{
+		return DUIKAI;
+	}
+	else if (type == "垂直开")
+	{
+		return CHUIZHIKAI;
+	}
+	else
+	{
+		ASSERT(FALSE);
+		return DUIKAI;
+	}
+}
 
 CString ViewDir2String(const eViewDir p_viewDir)
 {
