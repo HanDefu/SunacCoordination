@@ -146,6 +146,10 @@ CString AttrRailing::AutoInstanceCode()
 {
 	CString sInstanceCode;
 	sInstanceCode.Format(_T("%s_%d_%d"), m_prototypeCode, (int)(m_length), (int)(m_height));
+	if (sInstanceCode.Find(_T("Railing_"))==0)
+	{
+		sInstanceCode = sInstanceCode.Mid(8);
+	}
 
 	SetInstanceCode(sInstanceCode);
 

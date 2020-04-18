@@ -807,7 +807,7 @@ void CWindowDlg::SetEditMode(AcDbObjectId editId)
 
 		//属性更新镜像关系
 		m_attBeforeEdit = *pWinAtt;
-		m_attBeforeEdit.SetMxMirror(CWindowSelect::IsReferenctMirror(m_curEditWinId));
+		m_attBeforeEdit.SetMxMirror(CSunacSelect::IsReferenctMirror(m_curEditWinId));
 
 		//////////////////////////////////////////////////////////////////////////
 		//初始门窗属性数据

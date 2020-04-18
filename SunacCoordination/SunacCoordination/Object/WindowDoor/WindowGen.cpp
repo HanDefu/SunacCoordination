@@ -506,7 +506,7 @@ void CWindowGen::ModifyOneWindow(const AcDbObjectId p_id, AttrWindow newWinAtt)
 	UpdateWindowsAttribute(p_id, newWinAtt);
 
 	//´¦Àí¾µÏñ
-	bool bPreMxMirror = CWindowSelect::IsReferenctMirror(p_id);
+	bool bPreMxMirror = CSunacSelect::IsReferenctMirror(p_id);
 	if (newWinAtt.IsMxMirror()!= bPreMxMirror)
 	{
 		E_DIRECTION dirOut = E_DIR_TOP;
@@ -915,7 +915,7 @@ bool CWindowGen::SelectSunacObjs(vector<CSunacObjInCad>& p_winsOut, vector<AcDbO
 
 	if (p_bAllOut)
 	{
-		p_winsOut = CWindowSelect::SelectSunacObjs(E_VIEW_ALL, true);
+		p_winsOut = CSunacSelect::SelectSunacObjs(S_WINDOW, E_VIEW_ALL, true);
 		p_textIdsOut = CInstanceCodeTextMrg::GetAllInstanceCodeIds();
 	}
 	else
@@ -926,7 +926,7 @@ bool CWindowGen::SelectSunacObjs(vector<CSunacObjInCad>& p_winsOut, vector<AcDbO
 			return false;
 
 		//////////////////////////////////////////////////////////////////////////
-		p_winsOut = CWindowSelect::SelectSunacObjsByRect(E_VIEW_ALL, rect);
+		p_winsOut = CSunacSelect::SelectSunacObjsByRect(S_WINDOW, E_VIEW_ALL, rect);
 
 		p_textIdsOut = CInstanceCodeTextMrg::GetInstanceCodeIdsInRect(rect);
 	}

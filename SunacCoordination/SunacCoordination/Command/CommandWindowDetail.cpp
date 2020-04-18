@@ -61,7 +61,7 @@ void CWindowDetail::DrawWindowDetail()
 		return;
 	}
 
-	const vector<CSunacObjInCad> wins = CWindowSelect::SelectSunacObjs(viewDir);
+	const vector<CSunacObjInCad> wins = CSunacSelect::SelectSunacObjs(S_WINDOW, viewDir);
 	if (wins.size() == 0)
 		return;
 

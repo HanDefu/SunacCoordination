@@ -409,6 +409,9 @@
     <ClCompile Include="Object\WindowDoor\WindowTable.cpp">
       <Filter>Object\WindowDoor</Filter>
     </ClCompile>
+    <ClCompile Include="Object\Railing\RailingTop2Front.cpp">
+      <Filter>Object\Railing</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -906,6 +909,9 @@
     </ClInclude>
     <ClInclude Include="Object\WindowDoor\WindowTable.h">
       <Filter>Object\WindowDoor</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Railing\RailingTop2Front.h">
+      <Filter>Object\Railing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

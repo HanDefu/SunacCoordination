@@ -33,7 +33,7 @@ void CMD_SunacWindowsTable()
 	if (bSuc1 == false)
 		return;
 
-	const vector<CSunacObjInCad> wins = CWindowSelect::SelectSunacObjs(viewDir);
+	const vector<CSunacObjInCad> wins = CSunacSelect::SelectSunacObjs(S_WINDOW, viewDir);
 	if (wins.size() == 0)
 		return;
 
@@ -369,7 +369,7 @@ void CMD_SunacFloorWindowsTable()
 	//if (bSuc1 == false)
 	//	return;
 
-	const vector<CSunacObjInCad> wins = CWindowSelect::SelectSunacObjs(E_VIEW_TOP);
+	const vector<CSunacObjInCad> wins = CSunacSelect::SelectSunacObjs(S_WINDOW, E_VIEW_TOP);
 	if (wins.size() == 0)
 		return;
 

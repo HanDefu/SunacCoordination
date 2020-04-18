@@ -6,6 +6,12 @@
 #include <dbtable.h>
 #include <algorithm>
 
+//用于插入表格时排序
+static bool RailingCmp(const pair<AttrRailing, int>& x1, const pair<AttrRailing, int>& x2)
+{
+	return (x1.first.m_instanceCode < x2.first.m_instanceCode);
+}
+
 int CRailingStatistic::SelectRailings()
 {
 	m_allRailings.clear();
@@ -18,27 +24,44 @@ int CRailingStatistic::SelectRailings()
 	{
 		AcDbObject* pAttr = NULL;
 		TY_GetAttributeData(ids[i], pAttr);
+		if (pAttr==NULL)
+			continue;
+		
 		AttrRailing* pAttrRailing = AttrRailing::cast(pAttr);
 		if (pAttrRailing == NULL)
+		{
+			pAttr->close();
 			continue;
+		}
+
+		RailingClassify(pAttrRailing);
+
+		pAttr->close();
 		count++;
-		InsertRailing(pAttrRailing);
 	}
 
 	return count;
 }
 
-void CRailingStatistic::InsertRailing(AttrRailing* pAttr)
+void CRailingStatistic::RailingClassify(AttrRailing* pAttr) //栏杆按编号分类
 {
+	int nCurRailingCount = 1;
+	if (pAttr->GetViewDir() == E_VIEW_TOP)
+	{
+		nCurRailingCount = pAttr->m_floorInfo.GetFloorCount();
+	}
+
 	for (UINT i = 0; i < m_allRailings.size(); i++)
 	{
 		if (m_allRailings[i].first.m_instanceCode == pAttr->m_instanceCode)
 		{
-			m_allRailings[i].second++;
+			m_allRailings[i].second += nCurRailingCount;
 			return;
 		}
 	}
-	m_allRailings.push_back(make_pair(*pAttr, 1));
+
+	//未找到，则添加新的
+	m_allRailings.push_back(make_pair(*pAttr, nCurRailingCount));
 }
 
 AcDbObjectId CRailingStatistic::InsertTableToCAD(AcGePoint3d insertPos)
@@ -98,7 +121,7 @@ AcDbObjectId CRailingStatistic::InsertTableToCAD(AcGePoint3d insertPos)
 	pTable->generateLayout();
 
 	//设置标题
-	pTable->setTextString(0, 0, L"栏杆算量表");
+	pTable->setTextString(0, 0, L"栏杆表");
 	pTable->setTextString(1, 0, L"序号");
 	pTable->setTextString(1, 1, L"栏杆编号");
 	pTable->setTextString(1, 2, L"长度");
@@ -123,7 +146,3 @@ AcDbObjectId CRailingStatistic::InsertTableToCAD(AcGePoint3d insertPos)
 	return JHCOM_PostToModelSpace(pTable);
 }
 
-bool RailingCmp(const pair<AttrRailing, int>& x1, const pair<AttrRailing, int>& x2)
-{
-	return (x1.first.m_instanceCode < x2.first.m_instanceCode);
-}

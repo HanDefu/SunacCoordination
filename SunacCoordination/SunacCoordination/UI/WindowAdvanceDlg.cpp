@@ -184,7 +184,7 @@ void CWindowAdvanceDlg::OnBnClickedSelectOnDwg()
 
 	//vAcDbObjectId ids;
 	//JHCOM_SelectEnts(ids);
-	vector<CSunacObjInCad> wins = CWindowSelect::SelectSunacObjs(E_VIEW_ALL);
+	vector<CSunacObjInCad> wins = CSunacSelect::SelectSunacObjs(S_WINDOW, E_VIEW_ALL);
 
 	for (UINT i = 0; i < wins.size(); i++)
 	{

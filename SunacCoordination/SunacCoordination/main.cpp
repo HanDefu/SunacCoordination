@@ -83,7 +83,7 @@ AC_IMPLEMENT_EXTENSION_MODULE(theArxDLL);
 void CMD_YTest()
 {
 	int n = 0;
-	vector<CSunacObjInCad> winsSelected = CWindowSelect::SelectSunacObjs(E_VIEW_ALL, false);
+	vector<CSunacObjInCad> winsSelected = CSunacSelect::SelectSunacObjs(S_WINDOW, E_VIEW_ALL, false);
 	for (UINT i = 0; i < winsSelected.size(); i++)
 	{
 		if (winsSelected[i].m_bMxMirror)
@@ -1120,7 +1120,7 @@ static void initApp()
 		_T("SRAILINGFLOORSETTING"),
 		_T("SRAILINGFLOORSETTING"),
 		ACRX_CMD_MODAL | ACRX_CMD_USEPICKSET,
-		CMD_SunacRailingFloorSetting,
+		CMD_SunacFloorSetting,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());

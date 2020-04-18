@@ -762,14 +762,14 @@ bool TY_IsRailing(AcDbObjectId Id, eViewDir p_view)
 	AcDbObject * pDataEnt = 0;
 	TY_GetAttributeData(Id, pDataEnt);
 	AttrRailing * pRailing = dynamic_cast<AttrRailing *>(pDataEnt);
-	if (pRailing != 0)
-		return true;
+	if (pRailing == 0)
+		return false;
 
 	if (p_view != E_VIEW_ALL)
 	{
 		return pRailing->GetViewDir() == p_view;
 	}
-	return false;
+	return true;
 }
 
 eRCType TY_GetType(AcDbBlockReference *pBlockReference)
