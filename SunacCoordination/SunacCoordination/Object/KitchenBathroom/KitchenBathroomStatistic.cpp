@@ -98,8 +98,8 @@ int CKitchenBathroomStatistic::FindKBItem(const KitchenBathroomItem& pItem)
 
 AcDbObjectId CKitchenBathroomStatistic::InsertTableToCAD(AcGePoint3d insertPos)
 {
-	const double c_tableCellWidth[] = {20, 20, 40, 20, 50};
-	const double c_tableCellHeight = 6;
+	const double c_tableCellWidth[] = {700, 700, 1500, 700, 2000};
+	const double c_tableCellHeight = 300;
 
 	sort(m_allItems.begin(), m_allItems.end(), KBItemCmp);
 
@@ -139,7 +139,7 @@ AcDbObjectId CKitchenBathroomStatistic::InsertTableToCAD(AcGePoint3d insertPos)
 		for (int nColum = 0; nColum < columSize; nColum++)
 		{
 			pTable->setAlignment(nRow, nColum, AcDb::kMiddleCenter);
-			pTable->setTextHeight(nRow, nColum,2.5);
+			pTable->setTextHeight(nRow, nColum, 150);
 		}
 	}
 
