@@ -385,10 +385,12 @@ void CMD_SunacKitchenBathroomStatistic()
 {
 	CKitchenBathroomStatistic instance;
 	instance.SelectKitchenBathroom();
+
 	AcGePoint3d insertPoint;
 	bool bSuc = TY_GetPoint(insertPoint);
 	if (bSuc == false)
 		return;
+
 	instance.InsertTableToCAD(insertPoint);
 }
 
@@ -490,10 +492,12 @@ void CMD_SunacAirconditionerStatistic()
 {
 	CAirConStatistic instance;
 	instance.SelectAirCons();
+
 	AcGePoint3d insertPoint;
 	bool bSuc = TY_GetPoint(insertPoint);
 	if (bSuc == false)
 		return;
+
 	instance.InsertTableToCAD(insertPoint);
 }
 

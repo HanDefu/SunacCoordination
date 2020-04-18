@@ -19,11 +19,17 @@ int CAirConStatistic::SelectAirCons()
 	{
 		AcDbObject* pAttr = NULL;
 		TY_GetAttributeData(ids[i], pAttr);
-		AttrAirCon* pAttrAirCon = AttrAirCon::cast(pAttr);
-		if (pAttrAirCon == NULL)
+		if (pAttr==NULL)
 			continue;
-		count++;
-		InsertAirCon(pAttrAirCon);
+
+		AttrAirCon* pAttrAirCon = AttrAirCon::cast(pAttr);
+		if (pAttrAirCon != NULL)
+		{
+			count++;
+			InsertAirCon(pAttrAirCon);
+		}
+
+		pAttr->close();
 	}
 
 	return count;
@@ -35,7 +41,7 @@ void CAirConStatistic::InsertAirCon(AttrAirCon* pAttr)
 	{
 		if (JHCOM_equ(m_allAirCons[i].first, pAttr->m_power))
 		{
-			m_allAirCons[i].second++;
+			m_allAirCons[i].second += (pAttr->m_floorInfo.GetFloorCount());
 			return;
 		}
 	}
