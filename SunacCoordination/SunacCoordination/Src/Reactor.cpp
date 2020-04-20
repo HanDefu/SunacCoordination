@@ -55,6 +55,9 @@ void CMyDocReactor::documentToBeDestroyed(AcApDocument* pDocToDestroy)
 static int s_count = 1;
 void CMyDbReactor::WindowAppand(AcDbEntity* pEnt)
 {
+	if (GlobalSetting::GetWinSetting()->m_bDrawTangentOpen == false)
+		return;
+
 	AcDbObjectId curId = pEnt->objectId();
 	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(pEnt->objectId());
 	if (pWinAtt == NULL)
@@ -64,8 +67,6 @@ void CMyDbReactor::WindowAppand(AcDbEntity* pEnt)
 	try
 	{
 		if (pWinAtt->GetViewDir() != E_VIEW_TOP) //只有平面图才绘制门洞
-			throw Acad::eOk;
-		if (GlobalSetting::GetWinSetting()->m_bDrawTangentOpen == false)
 			throw Acad::eOk;
 		
 		//////////////////////////////////////////////////////////////////////////
@@ -108,6 +109,9 @@ void CMyDbReactor::WindowAppand(AcDbEntity* pEnt)
 
 void CMyDbReactor::WindowModifed(AcDbEntity* pEnt)
 {
+	if (GlobalSetting::GetWinSetting()->m_bDrawTangentOpen == false)
+		return;
+
 	AcDbObjectId curId = pEnt->objectId();
 	Acad::ErrorStatus es;
 	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(pEnt->objectId());
@@ -118,8 +122,6 @@ void CMyDbReactor::WindowModifed(AcDbEntity* pEnt)
 	try
 	{
 		if (pWinAtt->GetViewDir() != E_VIEW_TOP) //只有平面图才绘制门洞
-			throw Acad::eOk;
-		if (GlobalSetting::GetWinSetting()->m_bDrawTangentOpen == false)
 			throw Acad::eOk;
 
 		if (pWinAtt->GetWinTangentOpenId() == AcDbObjectId::kNull)
@@ -172,6 +174,9 @@ void CMyDbReactor::WindowModifed(AcDbEntity* pEnt)
 }
 void CMyDbReactor::WindowErase(AcDbEntity* pEnt)
 {
+	if (GlobalSetting::GetWinSetting()->m_bDrawTangentOpen == false)
+		return;
+
 	AcDbObjectId curId = pEnt->objectId();
 	AcDbObjectId dicID = pEnt->extensionDictionary();
 	if (dicID == AcDbObjectId::kNull)
@@ -200,8 +205,6 @@ void CMyDbReactor::WindowErase(AcDbEntity* pEnt)
 	try
 	{
 		if (pWinAtt->GetViewDir() != E_VIEW_TOP) //只有平面图才绘制门洞
-			throw Acad::eOk;
-		if (GlobalSetting::GetWinSetting()->m_bDrawTangentOpen == false)
 			throw Acad::eOk;
 
 		if (pWinAtt->GetWinTangentOpenId() == AcDbObjectId::kNull)
