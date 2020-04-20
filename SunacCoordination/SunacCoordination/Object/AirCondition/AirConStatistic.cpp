@@ -45,7 +45,7 @@ void CAirConStatistic::InsertAirCon(AttrAirCon* pAttr)
 			return;
 		}
 	}
-	m_allAirCons.push_back(make_pair(pAttr->m_power, 1));
+	m_allAirCons.push_back(make_pair(pAttr->m_power, pAttr->m_floorInfo.GetFloorCount()));
 }
 
 AcDbObjectId CAirConStatistic::InsertTableToCAD(AcGePoint3d insertPos)
@@ -105,7 +105,7 @@ AcDbObjectId CAirConStatistic::InsertTableToCAD(AcGePoint3d insertPos)
 	pTable->generateLayout();
 
 	//设置标题
-	pTable->setTextString(0, 0, L"空调算量表");
+	pTable->setTextString(0, 0, L"空调统计表");
 	pTable->setTextString(1, 0, L"序号");
 	pTable->setTextString(1, 1, L"匹数");
 	pTable->setTextString(1, 2, L"数量");
