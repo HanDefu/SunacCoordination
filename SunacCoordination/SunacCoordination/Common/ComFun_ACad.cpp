@@ -377,7 +377,7 @@ AcDbRegion * JHCOM_CreateRegionFromCurve(AcDbCurve * ploy)
 * Output          : NULL.
 * Return          : id : Object id returned by database.
 --------------------------------------------------------------------------*/
-AcDbObjectId JHCOM_PostToModelSpace(AcDbEntity* pEnt)
+AcDbObjectId JHCOM_PostToModelSpace(AcDbEntity* pEnt, CString entry)
 {
 	AcDbBlockTable *pBlockTable;
 	if (acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlockTable, AcDb::kForRead)!=Acad::eOk)
@@ -390,7 +390,7 @@ AcDbObjectId JHCOM_PostToModelSpace(AcDbEntity* pEnt)
 	//acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlockTable, AcDb::kForRead);
 	acDocManager->lockDocument(curDoc());
 	AcDbBlockTableRecord *pBlockTableRecord;
-	Acad::ErrorStatus es = pBlockTable->getAt(ACDB_MODEL_SPACE, pBlockTableRecord, AcDb::kForWrite);
+	Acad::ErrorStatus es = pBlockTable->getAt(entry, pBlockTableRecord, AcDb::kForWrite);
 	if (es==Acad::eOk)
 	{
 		es = pBlockTableRecord->appendAcDbEntity(entId, pEnt);

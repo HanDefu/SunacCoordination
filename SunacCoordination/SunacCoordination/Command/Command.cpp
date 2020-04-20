@@ -411,6 +411,8 @@ void CMD_SunacRailing()
 		AfxMessageBox(L"没有可以操作的文档");
 		return;
 	}
+
+	TYCOM_ShowWipeOutBoundary(false);
 	OpenRailingDlg();
 }
 

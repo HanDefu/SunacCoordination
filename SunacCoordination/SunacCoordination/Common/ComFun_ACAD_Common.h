@@ -270,3 +270,5 @@ Acad::ErrorStatus          MD2010_InsertDwgFile(const WCHAR *p_dwgPath, AcGePoin
 Acad::ErrorStatus          MD2010_InsertDwgFile2(const WCHAR *p_dwgPath, AcGePoint3d p_origin, AcDbObjectIdArray & p_idsOut);
 
 AcDbObjectId   GetBlockRecordId(const ACHAR* entryName);
+AcDbObjectId TYCOM_CreateWipeOut(AcGePoint3dArray &cbPtAry, CString entry = ACDB_MODEL_SPACE);
+void TYCOM_ShowWipeOutBoundary(bool show);

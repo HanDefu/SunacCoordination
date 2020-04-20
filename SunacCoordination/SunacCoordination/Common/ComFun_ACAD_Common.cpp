@@ -32,6 +32,10 @@
 #include "ComFun_ACad.h"
 #include "../Common/ComFun_Convert.h"
 #include "../Common/ComFun_Sunac.h"
+#include "../Common/ComFun_Layer.h"
+
+#include <dbwipe.h>//注意这个imgent.h有个先后顺序问题
+#include <imgent.h>
 
 AcDbObjectId MD2010_PostModalToBlockTable(const ACHAR* entryName, AcDbEntity *pent)
 {
@@ -3779,3 +3783,85 @@ AcDbObjectId   GetBlockRecordId(const ACHAR* entryName)
 
 	return curDbMsId;
 }
+
+static void trans3DTo2D(AcGePoint3dArray& arr3d, AcGePoint2dArray& arr2d)
+{
+	for (int i = 0; i < arr3d.length(); i++)
+	{
+		AcGePoint3d pt3d = arr3d.at(i);
+		AcGePoint2d pt2d(pt3d.x, pt3d.y);
+		arr2d.append(pt2d);
+	}
+}
+
+
+AcDbObjectId TYCOM_CreateWipeOut(AcGePoint3dArray &cbPtAry, CString entry)
+{
+	CString sRalingWipeOutLayerName = _T("Sunac_Railing_Wipeout");
+	if (JHCOM_GetLayerID(sRalingWipeOutLayerName) == AcDbObjectId::kNull)
+		JHCOM_CreateNewLayer(sRalingWipeOutLayerName);
+
+	//AcRxClass* pClass = AcRxClass::cast(acrxClassDictionary->at(L"AcDbWipeout"));
+	//AcDbWipeout *pWipeOut = (AcDbWipeout *)pClass->create();
+
+	AcDbWipeout *pWipeOut = new AcDbWipeout;
+
+	AcDbRasterImage *pImage = AcDbRasterImage::cast(pWipeOut);
+
+	// Set clip boundary
+	AcGePoint3d origin;
+	//AcGeVector3d u;
+	//AcGeVector3d v;
+	AcGeVector3d u(400, 0, 0);
+	AcGeVector3d v(0, 400, 0);
+
+	pImage->getOrientation(origin, u, v);
+	pImage->setOrientation(origin, u, v);
+	pImage->setClipBoundaryToWholeImage();
+
+	AcGeMatrix3d PixelToModel, ModelToPixel;
+	pImage->getPixelToModelTransform(PixelToModel);
+	ModelToPixel = PixelToModel.invert();
+
+	for (int i = 0; i < cbPtAry.length(); i++)
+	{
+		cbPtAry[i].transformBy(ModelToPixel);
+	}
+
+	AcGePoint2dArray poly2d;
+	//XdGeUtils::trans3DTo2D(&cbPtAry,poly2d);
+	trans3DTo2D(cbPtAry, poly2d);
+
+	pImage->setClipBoundary(AcDbRasterImage::kPoly, poly2d);
+	pImage->setDisplayOpt(AcDbRasterImage::kTransparent, Adesk::kFalse);
+	pImage->setDisplayOpt(AcDbRasterImage::kShow, Adesk::kFalse);
+	pImage->setDisplayOpt(AcDbRasterImage::kClip, Adesk::kFalse);
+	pImage->setDisplayOpt(AcDbRasterImage::kShowUnAligned, Adesk::kFalse);
+	pWipeOut->setLayer(sRalingWipeOutLayerName);
+
+	AcDbObjectId id = JHCOM_PostToModelSpace(pImage,entry);
+	pImage->close();
+	return id;
+}
+
+//设置wipeout的边框不显示 这个是一个全局变量的设置
+void TYCOM_ShowWipeOutBoundary(bool show)
+{
+	acDocManager->lockDocument(curDoc());
+	CString cmd;
+	if (show)
+		cmd = L"\nwipeout\nf\n\on\n";
+	else
+		cmd = L"\nwipeout\nf\n\off\n";
+
+	acDocManager->sendStringToExecute(curDoc(), cmd);
+	acDocManager->unlockDocument(curDoc());
+	//另外一种实现的办法是
+	/*
+	AcDbDatabase的命名对象字典中，与“ACAD_WIPEOUT_VARS”为主键的对象中保存着“AcDbWipeout”
+	对象是否显示边框的标记变量，这个变量的DXF组码为70，对应的变量类型为16位短整型，
+	把这个变量的值设为1就显示边框，设为0则隐藏边框。
+	如果采用特殊手段修改了这个变量，则需要手动刷新这个数据库中所有AcDbWipeout对象。
+	*/
+}
+

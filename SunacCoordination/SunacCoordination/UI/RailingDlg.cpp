@@ -130,7 +130,7 @@ void Test(AttrRailing& railingAtt)
 }
 
 void CRailingDlg::OnBnClickedInsertToCAD()
-{	
+{
 	UpdateData();
 
 	vector<CCellID> selCells = m_preRailing.GetSelectedCells();
