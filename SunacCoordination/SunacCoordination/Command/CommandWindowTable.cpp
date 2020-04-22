@@ -9,6 +9,7 @@
 #include <dbgroup.h>
 #include <geassign.h>
 #include <algorithm>
+#include <afxdisp.h>
 #include "accmd.h"
 #include "dbtable.h"
 #include "Command.h"
@@ -19,6 +20,8 @@
 #include "../Object/WindowDoor/RCWindow.h"
 #include "../Object/WindowDoor/WindowSelect.h"
 #include "../Object/WindowDoor/WindowTable.h"
+#include "../Common/ComFun_Convert.h"
+#include "../Tool/DocLock.h"
 
 //门窗表
 void CMD_SunacWindowsTable()
@@ -273,7 +276,6 @@ void CMD_SunacWindowsTable()
 	return;
 }
 
-
 //p_dataStartRow为开始行号, p_floorColumnCount为楼层列的数量，p_floorColumns为楼层信息(如：1,2-5,7,10-16)
 void WriteDataToTable(AcDbTable *p_table, int p_dataStartRow, int p_floorColumnCount, vector<CString> p_floorColumns, const CWindowAndCount& p_winAndCount)
 {
@@ -356,9 +358,101 @@ void WriteDataToTable(AcDbTable *p_table, int p_dataStartRow, int p_floorColumnC
 	//备注
 }
 
+void AddXDataForWinTable1(AcDbTable *p_table, AcGePoint3d p_pnt, vAcDbObjectId p_winIds)
+{
+	vAcDbHandle vHandles;
+	JHCOM_GetAcDbHandles(p_winIds, vHandles);
+
+	CString str;
+	CString strAppName = L"xData";
+	acdbRegApp(strAppName);
+
+	struct resbuf* pRb = acutBuildList(AcDb::kDxfRegAppName, strAppName, RTNONE);
+	struct resbuf* pRbNext = new struct resbuf;
+
+	for (int i = 0; i < vHandles.size(); i++)
+	{
+		str.Format(L"%d-%d", vHandles[i].high(), vHandles[i].low());
+		ACHAR* rbString = CStringToACHAR(str);
+		
+		//pRb->rbnext = new struct resbuf;
+		//pRb->rbnext->restype = AcDb::kDxfXdAsciiString;
+		//pRb->rbnext->resval.rstring = rbString; 
+		pRbNext->restype = AcDb::kDxfXdAsciiString;
+		pRbNext->resval.rstring = rbString; 
+		pRbNext = pRbNext->rbnext;
+	}
+
+	Acad::ErrorStatus es = p_table->setXData(pRb);
+	acutRelRb(pRb);
+}
+
+void AddXDataForWinTable2(AcDbTable *p_table, AcGePoint3d p_pnt, vAcDbObjectId p_winIds)
+{
+	vAcDbHandle vHandles;
+	JHCOM_GetAcDbHandles(p_winIds, vHandles);
+
+	CString str;
+
+	CString strAppName = L"xData";
+	acdbRegApp(strAppName);
+
+	struct resbuf* pRb = acutBuildList(AcDb::kDxfRegAppName, strAppName, RTNONE);
+
+	vector<struct resbuf> rb(vHandles.size());
+
+	pRb->rbnext = &rb[0];
+
+	for (int i = 0; i < vHandles.size(); i++)
+	{
+		str.Format(L"%d-%d", vHandles[i].high(), vHandles[i].low());
+		ACHAR* rbString = CStringToACHAR(str);
+
+		rb[i].rbnext->restype = AcDb::kDxfXdAsciiString;
+		rb[i].rbnext->resval.rstring = rbString;
+
+		if (vHandles.size() - 1 != i)
+			rb[i].rbnext = &rb[i + 1];
+	}
+
+	Acad::ErrorStatus es = p_table->setXData(pRb);
+}
+
+void AddXDataForWinTable(AcDbTable *p_table, AcGePoint3d p_pnt, vAcDbObjectId p_winIds)
+{
+	vAcDbHandle vHandles;
+	JHCOM_GetAcDbHandles(p_winIds, vHandles);
+
+	CString str, tStr;
+	str.Format(L"%d-%d", vHandles[0].high(), vHandles[0].low());
+
+	for (int i = 1; i < vHandles.size(); i++)
+	{
+		tStr.Format(L"%s,%d-%d", str, vHandles[i].high(), vHandles[i].low());
+		str = tStr;
+
+	}
+
+	struct resbuf* pRb;
+	CString strAppName = L"xData";
+	acdbRegApp(strAppName);
+
+	for (int i = 0; i < vHandles.size(); i++)
+	{
+		pRb = acutBuildList(AcDb::kDxfRegAppName, strAppName,
+			AcDb::kDxfXdAsciiString, str,
+			RTNONE);
+	}
+
+	Acad::ErrorStatus es = p_table->setXData(pRb);
+	acutRelRb(pRb);
+}
+
 //地面门窗表
 void CMD_SunacFloorWindowsTable()
 {
+	CDocLock lock;
+
 	CString info, str;
 
 	CCommandHighlight::GetInstance()->WindowDoorNoHighlight();
@@ -648,7 +742,6 @@ void CMD_SunacFloorWindowsTable()
 		}
 	}
 
-	AcDbObjectId tableId = JHCOM_PostToModelSpace(table);
 
 	//对选择的门窗高亮
 	vAcDbObjectId winIds;
@@ -658,5 +751,9 @@ void CMD_SunacFloorWindowsTable()
 	}
 	CCommandHighlight::GetInstance()->WindowDoorHighlight(winIds);
 
+	AddXDataForWinTable(table, pnt, winIds);
+
+	AcDbObjectId tableId = JHCOM_PostToModelSpace(table);
+	
 	return;
 }

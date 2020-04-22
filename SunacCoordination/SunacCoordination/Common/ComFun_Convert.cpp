@@ -298,6 +298,28 @@ int JHCOM_GetAcDbHandle(AcDbObjectId Id, AcDbHandle &handle)
 	return 69;
 }
 
+int JHCOM_GetAcDbHandles(vAcDbObjectId vIds, vAcDbHandle &vHandles)
+{
+	vHandles.clear();
+	AcDbObject *pobj = NULL;
+	for (int i = 0; i < vIds.size(); i++)
+	{
+		if (acdbOpenObject(pobj, vIds[i], AcDb::kForRead) == Acad::eOk)
+		{
+			AcDbHandle handle;
+			pobj->getAcDbHandle(handle);
+			vHandles.push_back(handle);
+		}
+		else
+		{
+			pobj->close();
+			return 69;
+		}
+	}
+	pobj->close();
+	return 0;
+}
+
 //×ª»»AcDbPolyline to GeCurve2d
 Acad::ErrorStatus JHCOM_convertPolylineToGeCurve(AcDbPolyline* pPoly, AcGeCurve2d*& pGeCurve)
 {
@@ -676,3 +698,15 @@ size_t HexStringToBytes(CString input, byte* pOutput)
 //	ACHAR* entryName = (ACHAR *)AstrW;
 //	return entryName;
 //}
+
+ACHAR* CStringToACHAR(CString cStr)
+{
+	string _str_Val = CW2A(cStr);
+	//string×ªconst char*
+	const char* ac = _str_Val.c_str();
+	//const char*×ªACHAR*
+	_bstr_t AStr = ac;
+	LPWSTR AstrW = LPTSTR(AStr);
+	ACHAR* entryName = (ACHAR *)AstrW;
+	return entryName;
+}

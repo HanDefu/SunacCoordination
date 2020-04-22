@@ -47,7 +47,7 @@ AcDbObjectId MD2010_PostModalToBlockTable(const ACHAR* entryName, AcDbEntity *pe
 	//保护和转换
 	if (pBlockTableRecord == NULL && wcscmp(entryName, L"*Model_Space") == 0)
 	{
-        pBlockTable->getAt(L"模型",pBlockTableRecord,AcDb::kForWrite);
+        Acad::ErrorStatus es = pBlockTable->getAt(L"模型",pBlockTableRecord,AcDb::kForWrite);
 	}
 	if (pBlockTableRecord == NULL && wcscmp(entryName, L"模型") == 0)
 	{

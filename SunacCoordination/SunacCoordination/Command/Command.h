@@ -24,6 +24,7 @@ void CMD_SunacWindowTop2Front();//门窗平面到立面
 void CMD_SunacWindowFront2Top();//门窗立面到平面
 void CMD_SunacWinAutoId();
 void CMD_SunacNoHighlight();
+void CMD_SunacWinTableCheck();
 
 //厨房
 void CMD_SunacKitchen();

@@ -846,6 +846,8 @@ void CWindowGen::CreateWindowDoorCode(eViewDir p_viewDir, CSunacObjInCad p_win, 
 	AcDbObjectId textId = InsertWindowDoorCode(p_viewDir, p_Code, textPos);
 	GetInstanceCodeMrg()->AddInstanceCode(p_win.m_rootId, textId);
 
+	
+
 	//对门窗编号位置进行细微调整，使其居中，间距适中
 	AcDbEntity * pEnt = 0;
 	Acad::ErrorStatus es = acdbOpenObject(pEnt, textId, AcDb::kForWrite);

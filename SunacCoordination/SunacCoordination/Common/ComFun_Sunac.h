@@ -126,6 +126,15 @@ bool IsObjectExsit(AcDbObjectId p_id);
 
 bool IsFileExist(const CString & strFileName);
 
+bool TYCOM_DeleteBlkXData(AcDbBlockReference *pBlkRef, CString Key);//É¾³ýXData
+bool TYCOM_DeleteBlkXData(AcDbObjectId id, CString Key);
+
+int TYCOM_SaveBlkString(AcDbBlockReference *pBlkRef, CString Key, CString value);
+int TYCOM_SaveBlkString(AcDbObjectId id, CString Key, CString value);
+
+int TYCOM_GetBlkString(AcDbBlockReference *pBlkRef, CString Key, CString &value);
+int TYCOM_GetBlkString(AcDbObjectId id, CString Key, CString &value);
+
 
 
 

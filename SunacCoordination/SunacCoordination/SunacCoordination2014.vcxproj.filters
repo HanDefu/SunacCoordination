@@ -412,6 +412,9 @@
     <ClCompile Include="Object\Railing\RailingTop2Front.cpp">
       <Filter>Object\Railing</Filter>
     </ClCompile>
+    <ClCompile Include="UI\WindowTableCheckDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -912,6 +915,9 @@
     </ClInclude>
     <ClInclude Include="Object\Railing\RailingTop2Front.h">
       <Filter>Object\Railing</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\WindowTableCheckDlg.h">
+      <Filter>UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

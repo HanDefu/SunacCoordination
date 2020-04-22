@@ -31,6 +31,7 @@
 #include "../UI/DlgLogin.h"
 #include "../UI/DlgSetUp.h"
 #include "../UI/WindowAdvanceDlg.h"
+#include "../UI/WindowTableCheckDlg.h"
 #include "../Common/ComFun_Math.h"
 #include "../Common/ComFun_ACad.h"
 #include "../Object/WindowStatistic/WindowStatictic.h"
@@ -338,6 +339,19 @@ void CMD_SunacNoHighlight()
 {
 	//取消高亮
 	CCommandHighlight::GetInstance()->WindowDoorNoHighlight();
+}
+
+void CMD_SunacWinTableCheck()
+{
+	// 以非模态方式启动对话框
+	if (g_winTableCheckDlg == NULL)
+	{
+		g_winTableCheckDlg = new CWindowTableCheckDlg(acedGetAcadFrame());
+		g_winTableCheckDlg->Create(IDD_DIALOG_WINTABLECHECK);
+	}
+
+	g_winTableCheckDlg->CenterWindow();
+	g_winTableCheckDlg->ShowWindow(SW_SHOW);
 }
 
 

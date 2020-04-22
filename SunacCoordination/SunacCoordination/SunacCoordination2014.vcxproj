@@ -285,6 +285,7 @@
     <ClCompile Include="UI\TreeCtrlEx.cpp" />
     <ClCompile Include="UI\WindowAdvanceDlg.cpp" />
     <ClCompile Include="UI\WindowDlg.cpp" />
+    <ClCompile Include="UI\WindowTableCheckDlg.cpp" />
     <ClCompile Include="WebIO\AirConditionLocalData.cpp" />
     <ClCompile Include="WebIO\AirConditionLocalDataFromDB.cpp" />
     <ClCompile Include="WebIO\AirconditionWebData.cpp" />
@@ -449,6 +450,7 @@
     <ClInclude Include="UI\TreeCtrlEx.h" />
     <ClInclude Include="UI\WindowAdvanceDlg.h" />
     <ClInclude Include="UI\WindowDlg.h" />
+    <ClInclude Include="UI\WindowTableCheckDlg.h" />
     <ClInclude Include="WebIO\AirConditionLocalData.h" />
     <ClInclude Include="WebIO\AirConditionLocalDataFromDB.h" />
     <ClInclude Include="WebIO\AirconditionWebData.h" />

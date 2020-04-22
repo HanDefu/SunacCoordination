@@ -19,6 +19,7 @@ File description:
 #include <algorithm>
 #include "../Common/ComFun_DynamicBlock.h"
 #include "../Common/ComFun_Sunac.h"
+#include "../Tool/DocLock.h"
 //#include "../Common/ComFun_Str.h"
 //Constructor
 RCDynamicBlock::RCDynamicBlock(void)
@@ -144,7 +145,7 @@ int RCDynamicBlock::SetParameter(CString key, CString value)
 
 int RCDynamicBlock::InitParameters()
 {
-	Acad::ErrorStatus es = acDocManager->lockDocument(curDoc());
+	CDocLock lock;
 	
 	if (m_id == 0)
 		return -1;
@@ -161,7 +162,7 @@ int RCDynamicBlock::InitParameters()
 
 	//Acad::ErrorStatus es;
 	AcDbEntity* pEnt = NULL;
-	es = acdbOpenObject(pEnt, m_id, AcDb::kForRead);
+	Acad::ErrorStatus es = acdbOpenObject(pEnt, m_id, AcDb::kForRead);
 	if (es != Acad::eOk)
 	{
 		if (pEnt)
@@ -232,18 +233,18 @@ int RCDynamicBlock::InitParameters()
 		delete pDynBlkRef;
 	}
 	pBlkTblRcd11->close();
-	es = acDocManager->unlockDocument(curDoc());
 	return noValue;
 }
 
 int RCDynamicBlock::RunParameters()
 {
-	Acad::ErrorStatus es = acDocManager->lockDocument(curDoc());
+	CDocLock lock;
+
 	if (m_id == 0)
 		return -1;
 
 	AcDbEntity* pEnt = NULL;
-	es = acdbOpenObject(pEnt, m_id, AcDb::kForRead);
+	Acad::ErrorStatus es = acdbOpenObject(pEnt, m_id, AcDb::kForRead);
 	if (es != Acad::eOk)
 	{
 		if (pEnt)
@@ -322,7 +323,6 @@ int RCDynamicBlock::RunParameters()
 
 	actrTransactionManager->flushGraphics();//必须lock住文档才有效果
 	acedUpdateDisplay();
-	es = acDocManager->unlockDocument(curDoc());
 	return 0;
 }
 
