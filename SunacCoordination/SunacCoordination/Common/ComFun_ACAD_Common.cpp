@@ -3850,9 +3850,9 @@ void TYCOM_ShowWipeOutBoundary(bool show)
 	acDocManager->lockDocument(curDoc());
 	CString cmd;
 	if (show)
-		cmd = L"\nwipeout\nf\n\on\n";
+		cmd = L"\nwipeout\nf\non\n";
 	else
-		cmd = L"\nwipeout\nf\n\off\n";
+		cmd = L"\nwipeout\nf\noff\n";
 
 	acDocManager->sendStringToExecute(curDoc(), cmd);
 	acDocManager->unlockDocument(curDoc());
