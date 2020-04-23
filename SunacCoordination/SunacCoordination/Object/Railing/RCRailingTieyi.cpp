@@ -52,11 +52,11 @@ CString CRCRailingTieyi::GetHandRailBlockName() const
 AcDbObjectId CRCRailingTieyi::CreateWipeOut()
 {
 	AcGePoint3dArray pnts;
-	pnts.append(AcGePoint3d(0, 0, 0));
-	pnts.append(AcGePoint3d(m_railingAtt.m_length, 0, 0));
-	pnts.append(AcGePoint3d(m_railingAtt.m_length, m_railingAtt.m_height, 0));
-	pnts.append(AcGePoint3d(0, m_railingAtt.m_height, 0));
-	pnts.append(AcGePoint3d(0, 0, 0));
+	pnts.append(AcGePoint3d(10, 0, 0));
+	pnts.append(AcGePoint3d(m_railingAtt.m_length-10, 0, 0));
+	pnts.append(AcGePoint3d(m_railingAtt.m_length-10, m_railingAtt.m_height, 0));
+	pnts.append(AcGePoint3d(0, m_railingAtt.m_height, 10));
+	pnts.append(AcGePoint3d(10, 0, 0));
 
 	return TYCOM_CreateWipeOut(pnts);
 }
