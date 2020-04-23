@@ -681,12 +681,10 @@ int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt)
 		pDict->close();
 		pDataEnt->close();
 
-		acDocManager->unlockDocument(curDoc());
 		return 0;
 	}
 	else
 	{
-		acDocManager->unlockDocument(curDoc());
 		return -3;
 	}
 }
