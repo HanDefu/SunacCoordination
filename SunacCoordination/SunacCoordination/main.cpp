@@ -1064,6 +1064,15 @@ static void initApp()
 		theArxDLL.ModuleResourceInstance());
 
 	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SWINTABLECHECK"),
+		_T("SWINTABLECHECK"),
+		ACRX_CMD_MODAL,
+		CMD_SunacWinTableCheck,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
 		_T("SKITCHEN"),
 		_T("SKITCHEN"),
 		ACRX_CMD_MODAL,

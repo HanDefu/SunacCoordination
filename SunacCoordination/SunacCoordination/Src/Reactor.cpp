@@ -176,7 +176,7 @@ void CMyDbReactor::WindowErase(AcDbEntity* pEnt)
 {
 	if (GlobalSetting::GetWinSetting()->m_bDrawTangentOpen == false)
 		return;
-
+resbuf
 	AcDbObjectId curId = pEnt->objectId();
 	AcDbObjectId dicID = pEnt->extensionDictionary();
 	if (dicID == AcDbObjectId::kNull)

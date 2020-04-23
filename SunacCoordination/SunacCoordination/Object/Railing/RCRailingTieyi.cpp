@@ -48,6 +48,17 @@ CString CRCRailingTieyi::GetHandRailBlockName() const
 	return sName;
 }
 
+AcDbObjectId CRCRailingTieyi::CreateWipeOut()
+{
+	AcGePoint3dArray pnts;
+	pnts.append(AcGePoint3d(0, 0, 0));
+	pnts.append(AcGePoint3d(m_railingAtt.m_length, 0, 0));
+	pnts.append(AcGePoint3d(m_railingAtt.m_length, m_railingAtt.m_height, 0));
+	pnts.append(AcGePoint3d(0, m_railingAtt.m_height, 0));
+	pnts.append(AcGePoint3d(0, 0, 0));
+
+	return TYCOM_CreateWipeOut(pnts);
+}
 
 AcDbObjectId CRCRailingTieyi::CreateRailingBlockDefine(CString sRailingDefName)
 {
@@ -59,9 +70,12 @@ AcDbObjectId CRCRailingTieyi::CreateRailingBlockDefine(CString sRailingDefName)
 	const AcGePoint3d leftTopPt = AcGePoint3d(start.x, start.y + m_railingAtt.m_height, 0); //栏杆整体的左上角点
 	const double railH = m_railingAtt.m_height - GetHandRailHeight();//扣除扶手的高度
 	const double centerY = leftTopPt.y - GetHandRailHeight() - railH / 2;
-
-
+	
 	AcDbObjectIdArray idsOut;
+
+	AcDbObjectId idWipeOut = CreateWipeOut();
+	idsOut.append(idWipeOut);
+	
 	//2.1 非标段
 	AcGePoint3d pos1 = AcGePoint3d(leftTopPt.x + GetK(), centerY, 0); //左上角点x方向上减去与结构墙间隙，y方向上减去扶手的厚度,然后考虑居中位置
 	AcDbObjectId id1 = GenerateRailing_NonStandard(pos1);

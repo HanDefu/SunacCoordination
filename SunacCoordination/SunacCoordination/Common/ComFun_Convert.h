@@ -142,6 +142,8 @@ AcGePoint3d       JHCOM_UcsToEcs(AcGePoint3d pt, AcGeVector3d normal);
 --------------------------------------------------------------------------*/
 int JHCOM_GetAcDbHandle(AcDbObjectId Id, AcDbHandle &handle);
 
+int JHCOM_GetAcDbHandles(vAcDbObjectId vIds, vAcDbHandle &vHandles);
+
 /*-------------------------------------------------------------------------
 * Function Name   : JHCOM_ConvertDbCurveToGeCurve
 * Description     : This function convert AcDbPolyline to AcGeCurve2d.
@@ -187,3 +189,5 @@ CString BytesToHexString(const byte* input, size_t length);//×Ö½Ú×ª»¯³É16½øÖÆ×Ö·
 size_t HexStringToBytes(CString input, byte* pOutput);//16½øÖÆ×Ö·û×ª»¯³É×Ö½Ú
 
 ACHAR* DoubleToACHAR(long double len);//½«double×ª³Éconst ACHAR*
+
+ACHAR* CStringToACHAR(CString cStr);

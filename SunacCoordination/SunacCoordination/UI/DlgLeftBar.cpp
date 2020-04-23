@@ -136,6 +136,9 @@ LRESULT DlgLeftBar::OnClickedPopupMenu(WPARAM mID, LPARAM notUsed)
 	case ID_COMMAND_WINDOWNOHIGHLIGHT:
 		SendCommandToCAD(_T("SNOHIGHLIGHT")); //取消高亮
 		break;
+	case ID_COMMAND_WINDOWTABLECHECK:
+		SendCommandToCAD(_T("SWINTABLECHECK")); //门窗表检查
+		break;
 
 	case ID_COMMAND_KITCHEN:
 		SendCommandToCAD(_T("SKITCHEN"));

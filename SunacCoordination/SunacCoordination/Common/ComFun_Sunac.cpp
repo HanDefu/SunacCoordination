@@ -670,15 +670,14 @@ int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt)
 		return -1;
 	}
 
+	CDocLock lock;
 
 	//注意这里有时候加入不进去， 是因为没有注册
-	Acad::ErrorStatus es = acDocManager->lockDocument(curDoc());
-
 	AcDbDictionary *pDict = NULL;
 	if (acdbOpenObject(pDict, dicID, AcDb::kForWrite) == Acad::eOk)
 	{
 		AcDbObjectId patternID = NULL;
-		es =pDict->setAt(SUNAC_ATTRIBUTE_ENTITY, pDataEnt, patternID);
+		Acad::ErrorStatus es = pDict->setAt(SUNAC_ATTRIBUTE_ENTITY, pDataEnt, patternID);
 		pDict->close();
 		pDataEnt->close();
 
@@ -1494,4 +1493,123 @@ bool IsFileExist(const CString & strFileName)
 		_findclose(hFile);
 		return false;
 	}
+}
+
+bool TYCOM_DeleteBlkXData(AcDbBlockReference *pBlkRef, CString Key)
+{
+	CString strAppName(Key);
+	//注册应用程序名称
+	acdbRegApp(Key);
+
+	//创建结果缓冲区链表
+	struct resbuf *rb = acutBuildList(AcDb::kDxfRegAppName, strAppName, RTNONE);
+	//应用程序名称
+
+	//设置内容为空的结果缓冲区链表就是删除扩展数据
+	pBlkRef->setXData(rb);
+
+	acutRelRb(rb);
+
+	pBlkRef->close();
+
+	return true;
+}
+
+bool TYCOM_DeleteBlkXData(AcDbObjectId id, CString Key)
+{
+	AcDbBlockReference *pBlkRef = 0;
+	AcDbEntity *pEnt = 0;
+	Acad::ErrorStatus es = acdbOpenObject(pEnt, id, AcDb::kForWrite);
+	if (es == Acad::eOk)
+	{
+		pBlkRef = AcDbBlockReference::cast(pEnt);
+		if (pBlkRef)
+		{
+			TYCOM_DeleteBlkXData(pBlkRef, Key);
+		}
+		pEnt->close();
+	}
+	return 0;
+}
+
+int TYCOM_SaveBlkString(AcDbBlockReference *pBlkRef, CString Key, CString value)
+{
+	if (pBlkRef == 0)
+		return -1;
+	////扩展数据的内容
+	struct resbuf* pRb;
+	////注册应用程序名称
+	acdbRegApp(Key);
+	CString strAppName(Key);
+	//创建结果缓冲区链表
+	pRb = acutBuildList(AcDb::kDxfRegAppName, strAppName,
+		AcDb::kDxfXdAsciiString, value,
+		RTNONE);
+
+	Acad::ErrorStatus es = pBlkRef->setXData(pRb);
+
+	acutRelRb(pRb);
+	pBlkRef->close();
+
+	return 0;
+}
+
+int TYCOM_SaveBlkString(AcDbObjectId id, CString Key, CString value)
+{
+	AcDbBlockReference *pBlkRef = 0;
+	AcDbEntity *pEnt = 0;
+	Acad::ErrorStatus es = acdbOpenObject(pEnt, id, AcDb::kForWrite);
+	if (es == Acad::eOk)
+	{
+		pBlkRef = AcDbBlockReference::cast(pEnt);
+		if (pBlkRef)
+		{
+			TYCOM_SaveBlkString(pBlkRef, Key, value);
+		}
+		pEnt->close();
+	}
+	return 0;
+}
+
+int TYCOM_GetBlkString(AcDbObjectId id, CString Key, CString &value)
+{
+	AcDbBlockReference *pBlkRef = 0;
+	AcDbEntity *pEnt = 0;
+	Acad::ErrorStatus es = acdbOpenObject(pEnt, id, AcDb::kForWrite);
+	if (es == Acad::eOk)
+	{
+		pBlkRef = AcDbBlockReference::cast(pEnt);
+		if (pBlkRef)
+		{
+			TYCOM_GetBlkString(pBlkRef, Key, value);
+		}
+		pEnt->close();
+	}
+	return 0;
+}
+
+int TYCOM_GetBlkString(AcDbBlockReference *pBlkRef, CString Key, CString &value)
+{
+	if (pBlkRef == 0)
+		return -1;
+
+	struct resbuf* pRb;
+	pRb = pBlkRef->xData(Key);
+
+	if (pRb != NULL)
+	{
+		////在命令行显示所有的扩展数据
+		struct resbuf* pTemp;
+		pTemp = pRb;
+		////首先要跳过应用程序名称
+		pTemp = pTemp->rbnext;
+		value = pTemp->resval.rstring;
+		acutRelRb(pRb);
+	}
+	else
+	{
+		acutPrintf(_T("\n该实体不包含任何的扩展数据"));
+	}
+
+	return 0;
 }
