@@ -8,6 +8,7 @@
 #include "../../Common/ComFun_ACAD_Common.h"
 #include "../../Common/ComFun_ACad.h"
 #include "../../Common/ComFun_Sunac.h"
+#include "../../Tool/DocLock.h"
 
 //////////////////////////////////////////////////////////////////////////
 CRCRailingTieyi::CRCRailingTieyi()
@@ -62,10 +63,10 @@ AcDbObjectId CRCRailingTieyi::CreateWipeOut()
 
 AcDbObjectId CRCRailingTieyi::CreateRailingBlockDefine(CString sRailingDefName)
 {
+	CDocLock doclock;
 	AcGePoint3d start = AcGePoint3d::kOrigin;
 
 	//2 插入到图形
-	acDocManager->lockDocument(curDoc());
 
 	const AcGePoint3d leftTopPt = AcGePoint3d(start.x, start.y + m_railingAtt.m_height, 0); //栏杆整体的左上角点
 	const double railH = m_railingAtt.m_height - GetHandRailHeight();//扣除扶手的高度
@@ -112,8 +113,6 @@ AcDbObjectId CRCRailingTieyi::CreateRailingBlockDefine(CString sRailingDefName)
 	pAttRailing->SetInstanceCode(sRailingDefName);
 	TY_AddAttributeData(blkDefId, pAttRailing);
 	pAttRailing->close();
-
-	acDocManager->unlockDocument(curDoc());
 
 	return blkDefId;
 }

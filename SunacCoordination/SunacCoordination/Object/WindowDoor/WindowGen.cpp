@@ -767,7 +767,7 @@ bool CWindowGen::GetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId& p_fromWinId,
 AcDbObjectId CWindowGen::InsertWindowDoorCode(eViewDir p_viewDir, CString p_number, AcGePoint3d p_pos)
 {
 	//调整门窗编号文字为水平居中显示
-	acDocManager->lockDocument(curDoc());
+	CDocLock doclock;
 
 	AcDbObjectId sWindowDoorTextId;
 	CString oldLayerName;
@@ -802,8 +802,6 @@ AcDbObjectId CWindowGen::InsertWindowDoorCode(eViewDir p_viewDir, CString p_numb
 		p_number);
 
 	MD2010_SetCurrentLayer(oldLayerName);
-
-	acDocManager->unlockDocument(curDoc());
 
 	return sWindowDoorTextId;
 }
