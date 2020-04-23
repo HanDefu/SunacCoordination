@@ -651,4 +651,5 @@ void CloseModelessDialogs()
 	CloseAirconditionerDlg();
 	CloseWindowAdvanceDlg();
 	CloseProjectManagementDlg();
+	CloseWindowTableCheckDlg();
 }

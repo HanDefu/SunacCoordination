@@ -358,92 +358,27 @@ void WriteDataToTable(AcDbTable *p_table, int p_dataStartRow, int p_floorColumnC
 	//备注
 }
 
-void AddXDataForWinTable1(AcDbTable *p_table, AcGePoint3d p_pnt, vAcDbObjectId p_winIds)
-{
-	vAcDbHandle vHandles;
-	JHCOM_GetAcDbHandles(p_winIds, vHandles);
-
-	CString str;
-	CString strAppName = L"xData";
-	acdbRegApp(strAppName);
-
-	struct resbuf* pRb = acutBuildList(AcDb::kDxfRegAppName, strAppName, RTNONE);
-	struct resbuf* pRbNext = new struct resbuf;
-
-	for (int i = 0; i < vHandles.size(); i++)
-	{
-		str.Format(L"%d-%d", vHandles[i].high(), vHandles[i].low());
-		ACHAR* rbString = CStringToACHAR(str);
-		
-		//pRb->rbnext = new struct resbuf;
-		//pRb->rbnext->restype = AcDb::kDxfXdAsciiString;
-		//pRb->rbnext->resval.rstring = rbString; 
-		pRbNext->restype = AcDb::kDxfXdAsciiString;
-		pRbNext->resval.rstring = rbString; 
-		pRbNext = pRbNext->rbnext;
-	}
-
-	Acad::ErrorStatus es = p_table->setXData(pRb);
-	acutRelRb(pRb);
-}
-
-void AddXDataForWinTable2(AcDbTable *p_table, AcGePoint3d p_pnt, vAcDbObjectId p_winIds)
-{
-	vAcDbHandle vHandles;
-	JHCOM_GetAcDbHandles(p_winIds, vHandles);
-
-	CString str;
-
-	CString strAppName = L"xData";
-	acdbRegApp(strAppName);
-
-	struct resbuf* pRb = acutBuildList(AcDb::kDxfRegAppName, strAppName, RTNONE);
-
-	vector<struct resbuf> rb(vHandles.size());
-
-	pRb->rbnext = &rb[0];
-
-	for (int i = 0; i < vHandles.size(); i++)
-	{
-		str.Format(L"%d-%d", vHandles[i].high(), vHandles[i].low());
-		ACHAR* rbString = CStringToACHAR(str);
-
-		rb[i].rbnext->restype = AcDb::kDxfXdAsciiString;
-		rb[i].rbnext->resval.rstring = rbString;
-
-		if (vHandles.size() - 1 != i)
-			rb[i].rbnext = &rb[i + 1];
-	}
-
-	Acad::ErrorStatus es = p_table->setXData(pRb);
-}
-
 void AddXDataForWinTable(AcDbTable *p_table, AcGePoint3d p_pnt, vAcDbObjectId p_winIds)
 {
 	vAcDbHandle vHandles;
 	JHCOM_GetAcDbHandles(p_winIds, vHandles);
 
-	CString str, tStr;
-	str.Format(L"%d-%d", vHandles[0].high(), vHandles[0].low());
-
-	for (int i = 1; i < vHandles.size(); i++)
-	{
-		tStr.Format(L"%s,%d-%d", str, vHandles[i].high(), vHandles[i].low());
-		str = tStr;
-
-	}
-
-	struct resbuf* pRb;
+	CString str;
 	CString strAppName = L"xData";
 	acdbRegApp(strAppName);
 
+	struct resbuf* pRb = acutBuildList(AcDb::kDxfRegAppName, strAppName, RTNONE);
+	struct resbuf* pRbNext = pRb;
+
+	ACHAR handleBuffer[20];
 	for (int i = 0; i < vHandles.size(); i++)
 	{
-		pRb = acutBuildList(AcDb::kDxfRegAppName, strAppName,
-			AcDb::kDxfXdAsciiString, str,
-			RTNONE);
+		vHandles[i].getIntoAsciiBuffer(handleBuffer);
+		struct resbuf* pRbTemp = acutBuildList(AcDb::kDxfXdHandle, handleBuffer, RTNONE);
+		pRbNext->rbnext = pRbTemp;
+		pRbNext = pRbTemp;
 	}
-
+	
 	Acad::ErrorStatus es = p_table->setXData(pRb);
 	acutRelRb(pRb);
 }

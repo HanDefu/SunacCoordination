@@ -62,6 +62,8 @@ void CWindowTableCheckDlg::OnBnClickedButtonWintableselect()
 
 	DeleteBrightBox();
 
+	g_winTableCheckDlg->ShowWindow(SW_HIDE);
+
 	vAcDbObjectId ids;
 	JHCOM_SelectEnts(ids);
 
@@ -71,49 +73,9 @@ void CWindowTableCheckDlg::OnBnClickedButtonWintableselect()
 		GetWinIdFromWinTableXData(ids[i], vWinIds);
 		CreateBrightBox(vWinIds);
 	}
-}
 
-//void CWindowTableCheckDlg::GetWinIdFromWinTableXData(AcDbObjectId p_tableId, vector<AcDbObjectId> &vWinIds)
-//{
-//	AcDbObject *pEnt = NULL;
-//	Acad::ErrorStatus es = acdbOpenAcDbObject(pEnt, p_tableId, AcDb::kForRead);
-//	AcDbTable* pTable = AcDbTable::cast(pEnt);
-//	if (pTable == NULL)
-//		return;
-//
-//	struct resbuf* pRb = pTable->xData(L"xData");
-//	if (pRb == NULL)
-//		return;
-//
-//	pEnt->close();
-//	pTable->close();
-//
-//	struct resbuf *pTemp = pRb;
-//	pTemp = pTemp->rbnext;
-//
-//	vCString vStr;
-//	CString sValue = pTemp->resval.rstring;
-//	vStr.push_back(sValue);
-//	while (pTemp->rbnext != NULL)
-//	{
-//		sValue = pTemp->rbnext->resval.rstring;
-//		vStr.push_back(sValue);
-//		pTemp = pTemp->rbnext;
-//	}
-//
-//	for (int i = 0; i < vStr.size(); i++)
-//	{
-//		AcDbHandle handle;
-//		AcDbObjectId winId;
-//		vCString vStrHandle = YT_SplitCString(vStr[i], L'-');
-//		handle.setHigh(_ttoi(vStrHandle[0]));
-//		handle.setLow(_ttoi(vStrHandle[1]));
-//		JHCOM_GetObjectIDFromAcDbHandle(handle, winId);
-//		vWinIds.push_back(winId);
-//	}
-//
-//	acutRelRb(pRb);
-//}
+	g_winTableCheckDlg->ShowWindow(SW_SHOW);
+}
 
 void CWindowTableCheckDlg::GetWinIdFromWinTableXData(AcDbObjectId p_tableId, vector<AcDbObjectId> &vWinIds)
 {
@@ -132,18 +94,18 @@ void CWindowTableCheckDlg::GetWinIdFromWinTableXData(AcDbObjectId p_tableId, vec
 
 	struct resbuf *pTemp = pRb;
 	pTemp = pTemp->rbnext;
-	CString sValue = pTemp->resval.rstring;
-	vCString vStr = YT_SplitCString(sValue, L',');
 
-	for (int i = 0; i < vStr.size(); i++)
+	AcDbHandle handle = AcDbHandle(pTemp->resval.rstring);
+	AcDbObjectId winId;
+	JHCOM_GetObjectIDFromAcDbHandle(handle, winId);
+	vWinIds.push_back(winId);
+
+	while (pTemp->rbnext != NULL)
 	{
-		AcDbHandle handle;
-		AcDbObjectId winId;
-		vCString vStrHandle = YT_SplitCString(vStr[i], L'-');
-		handle.setHigh(_ttoi(vStrHandle[0]));
-		handle.setLow(_ttoi(vStrHandle[1]));
+		handle = AcDbHandle(pTemp->rbnext->resval.rstring);
 		JHCOM_GetObjectIDFromAcDbHandle(handle, winId);
 		vWinIds.push_back(winId);
+		pTemp = pTemp->rbnext;
 	}
 
 	acutRelRb(pRb);
