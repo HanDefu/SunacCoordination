@@ -58,7 +58,7 @@ void CMyDbReactor::WindowAppand(AcDbEntity* pEnt)
 	if (GlobalSetting::GetWinSetting()->m_bDrawTangentOpen == false)
 		return;
 
-	AcDbObjectId curId = pEnt->objectId();
+	const AcDbObjectId curId = pEnt->objectId();
 	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(pEnt->objectId());
 	if (pWinAtt == NULL)
 		return ;
@@ -70,15 +70,13 @@ void CMyDbReactor::WindowAppand(AcDbEntity* pEnt)
 			throw Acad::eOk;
 		
 		//////////////////////////////////////////////////////////////////////////
-
-		AcDbExtents ext;
-		pEnt->getGeomExtents(ext);
+		//在copyclip(ctrl+c)和pasterclip(ctrl+v)复制粘贴时会调用objectAppended两次，第一次是拷贝到临时的块定义中，第二次是加入到modelspace，在此进行判断
 		const AcDbObjectId owner =  pEnt->ownerId();
 		const AcDbObjectId modespaceId = GetBlockRecordId(ACDB_MODEL_SPACE);
-
-		//在copyclip(ctrl+c)和pasterclip(ctrl+v)复制粘贴时会调用objectAppended两次，第一次是拷贝到临时的块定义中，第二次是加入到modelspace，在此进行判断
 		if (owner==modespaceId)
 		{
+			AcDbExtents ext;
+			pEnt->getGeomExtents(ext);
 			AcGePoint3d centerPt = (ext.minPoint() + ext.maxPoint().asVector()) / 2;
 
 			CTOpenData tWinData;
@@ -86,17 +84,21 @@ void CMyDbReactor::WindowAppand(AcDbEntity* pEnt)
 			tWinData.height = pWinAtt->GetH();
 			tWinData.bottomHeight = pWinAtt->GetHeightUnderWindow();
 		
-			CString str; 
-			str.Format(_T("%s_%d"), pWinAtt->GetInstanceCode(), s_count);
-			s_count++;
-			pWinAtt->SetInstanceCode(str);
+
+			//test
+			{
+				CString str;
+				str.Format(_T("%s_%d"), pWinAtt->GetInstanceCode(), s_count);
+				s_count++;
+				pWinAtt->SetInstanceCode(str);
+			}
 
 			tWinData.sWinCode = pWinAtt->GetInstanceCode();
 
 			AcDbObjectId tWinOpenIdOut = AcDbObjectId::kNull;
 			HRESULT hr = CTangentOpen::InsertWinOpenning(centerPt, tWinData, tWinOpenIdOut);
 
-			pWinAtt->SetWinTangentOpenId(curId, tWinOpenIdOut);
+			GetWinTangentOpenMap()->AddWindow(curId, tWinOpenIdOut);
 		}
 	}
 	catch (Acad::ErrorStatus )
@@ -112,26 +114,30 @@ void CMyDbReactor::WindowModifed(AcDbEntity* pEnt)
 	if (GlobalSetting::GetWinSetting()->m_bDrawTangentOpen == false)
 		return;
 
-	AcDbObjectId curId = pEnt->objectId();
+	const AcDbObjectId curId = pEnt->objectId();
 	Acad::ErrorStatus es;
 	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(pEnt->objectId());
 	if (pWinAtt == NULL)
 		return;
 
 	CDocLock docLock;
+
+
 	try
 	{
 		if (pWinAtt->GetViewDir() != E_VIEW_TOP) //只有平面图才绘制门洞
 			throw Acad::eOk;
 
-		if (pWinAtt->GetWinTangentOpenId() == AcDbObjectId::kNull)
+		const AcDbObjectId owner = pEnt->ownerId();
+		const AcDbObjectId modespaceId = GetBlockRecordId(ACDB_MODEL_SPACE);
+		if (owner != modespaceId)
+			throw Acad::eOk;
+
+		//只有tangentOpenId中能找到的实体才更新门洞
+		AcDbObjectId tangentOpenId = GetWinTangentOpenMap()->GetTangentOpenId(curId);
+		if (tangentOpenId == AcDbObjectId::kNull)
 		{
-			AcDbObjectId tangentOpenId = GetWinTangentOpenMap()->GetTangentOpenId(curId);
-			if (tangentOpenId == AcDbObjectId::kNull)
-			{
-				throw Acad::eNullObjectId;
-			}
-			pWinAtt->SetWinTangentOpenId(curId, tangentOpenId);
+			throw Acad::eNullObjectId;
 		}
 
 		//更新位置
@@ -141,7 +147,7 @@ void CMyDbReactor::WindowModifed(AcDbEntity* pEnt)
 			throw Acad::eFailed;
 		
 		AcDbEntity *pTOpenningEnt = NULL;
-		es = acdbOpenObject(pTOpenningEnt, pWinAtt->GetWinTangentOpenId(), AcDb::kForWrite);
+		es = acdbOpenObject(pTOpenningEnt, tangentOpenId, AcDb::kForWrite);
 		if (es == Acad::eOk &&pTOpenningEnt != NULL)
 		{
 			AcDbExtents extWinOpening;
@@ -163,7 +169,7 @@ void CMyDbReactor::WindowModifed(AcDbEntity* pEnt)
 		tWinData.height = pWinAtt->GetH();
 		tWinData.bottomHeight = pWinAtt->GetHeightUnderWindow();
 		tWinData.sWinCode = pWinAtt->GetInstanceCode();
-		CTangentOpen::SetTangentOpenProp(pWinAtt->GetWinTangentOpenId(), tWinData);
+		CTangentOpen::SetTangentOpenProp(tangentOpenId, tWinData);
 	}
 	catch (Acad::ErrorStatus)
 	{
@@ -172,6 +178,7 @@ void CMyDbReactor::WindowModifed(AcDbEntity* pEnt)
 
 	pWinAtt->close();
 }
+
 void CMyDbReactor::WindowErase(AcDbEntity* pEnt)
 {
 	if (GlobalSetting::GetWinSetting()->m_bDrawTangentOpen == false)
@@ -197,7 +204,6 @@ void CMyDbReactor::WindowErase(AcDbEntity* pEnt)
 		}
 	}
 
-	//AttrWindow * pWinAtt = AttrWindow::GetWinAtt(pEnt->objectId());
 	if (pWinAtt == NULL)
 		return;
 
@@ -207,22 +213,24 @@ void CMyDbReactor::WindowErase(AcDbEntity* pEnt)
 		if (pWinAtt->GetViewDir() != E_VIEW_TOP) //只有平面图才绘制门洞
 			throw Acad::eOk;
 
-		if (pWinAtt->GetWinTangentOpenId() == AcDbObjectId::kNull)
+		const AcDbObjectId owner = pEnt->ownerId();
+		const AcDbObjectId modespaceId = GetBlockRecordId(ACDB_MODEL_SPACE);
+		if (owner != modespaceId)
+			throw Acad::eOk;
+		
+		AcDbObjectId tangentOpenId = GetWinTangentOpenMap()->GetTangentOpenId(curId);
+		//AcDbObjectId tangentOpenId = pWinAtt->GetWinTangentOpenId();
+		if (tangentOpenId != AcDbObjectId::kNull)
 		{
-			AcDbObjectId tangentOpenId = GetWinTangentOpenMap()->GetTangentOpenId(curId);
-			if (tangentOpenId == AcDbObjectId::kNull)
+			AcDbEntity *pTOpenningEnt = NULL;
+			Acad::ErrorStatus es = acdbOpenObject(pTOpenningEnt, tangentOpenId, AcDb::kForWrite);
+			if (es == Acad::eOk &&pTOpenningEnt != NULL)
 			{
-				throw Acad::eNullObjectId;
+				pTOpenningEnt->erase();
+				pTOpenningEnt->close();
 			}
-			pWinAtt->SetWinTangentOpenId(curId, tangentOpenId);
-		}
 
-		AcDbEntity *pTOpenningEnt = NULL;
-		Acad::ErrorStatus es = acdbOpenObject(pTOpenningEnt, pWinAtt->GetWinTangentOpenId(), AcDb::kForWrite);
-		if (es == Acad::eOk &&pTOpenningEnt != NULL)
-		{
-			pTOpenningEnt->erase();
-			pTOpenningEnt->close();
+			GetWinTangentOpenMap()->RemoveWindow(curId);
 		}
 	}
 	catch (Acad::ErrorStatus)
@@ -241,8 +249,6 @@ void CMyDbReactor::objectAppended(const AcDbDatabase* dwg, const AcDbObject* dbO
 	
 	//镜像时移除门窗编号
 	//bool bSuc = EraseWinTextWhenMirror(pEnt);
-	//if (bSuc)
-	//	return;
 
 	WindowAppand(pEnt);
 }

@@ -17,6 +17,8 @@ Acad::ErrorStatus CDocumentData::ReadFromDwg(AcDbDwgFiler* pFiler, Adesk::Int32 
 	m_kitchenAutoName.ReadFromDwg(pFiler, p_version);
 	m_bathroomAutoName.ReadFromDwg(pFiler, p_version);
 
+	m_winTangentMap.ReadFromDwg(pFiler, p_version);
+
 	m_bLoad = true; //YUAN DocSerialize
 
 	return Acad::eOk;
@@ -26,6 +28,8 @@ Acad::ErrorStatus CDocumentData::WriteToDwg(AcDbDwgFiler* pFiler)
 	m_winAutoName.WriteToDwg(pFiler);
 	m_kitchenAutoName.WriteToDwg(pFiler);
 	m_bathroomAutoName.WriteToDwg(pFiler);
+
+	m_winTangentMap.WriteToDwg(pFiler);
 
 	return Acad::eOk;
 }

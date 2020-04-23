@@ -171,8 +171,6 @@ AttrWindow::AttrWindow()
 #ifdef INIT_HANLDLE_LATER_FOR_DWGIN 
 	m_fromWinHandle.setNull();
 #endif
-
-	m_tangentOpeningId = AcDbObjectId::kNull;
 }
 
 AttrWindow::~AttrWindow()
@@ -300,8 +298,6 @@ const CWindowsDimData* AttrWindow::GetDimData(CString p_sCode)const
 			return &(m_dimData[i]);
 		}
 	}
-
-	//assert(false);
 	return NULL;
 }
 
@@ -671,21 +667,10 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 #endif
 	}
 
-	if (m_version>=7)
+	if (m_version==7) //FILE_VERSION 7 新增后又移除
 	{
-		AcDbObjectId curId = objectId();
 		AcDbHandle tempHandle;
 		filer->readItem(&tempHandle);
-		if (filer->filerType()== AcDb::kFileFiler)
-		{
-			AcDbObjectId tWinOpenIdOut = AcDbObjectId::kNull;
-			acdbHostApplicationServices()->workingDatabase()->getAcDbObjectId(tWinOpenIdOut, false, tempHandle);
-			SetWinTangentOpenId(curId, tWinOpenIdOut);
-		}
-		else
-		{
-			m_tangentOpeningId = NULL;
-		}
 	}
 
 	return filer->filerStatus();
@@ -798,8 +783,8 @@ Acad::ErrorStatus AttrWindow::dwgOutFields(AcDbDwgFiler* filer) const
 		filer->writeItem(m_relatedWinIds[i].handle());
 	}
 
-	//FILE_VERSION 7 新增
-	filer->writeItem(m_tangentOpeningId.handle());
+	////FILE_VERSION 7 新增 后来在版本8移除
+	//filer->writeItem(m_tangentOpeningId.handle());
 
 	return filer->filerStatus();
 }
@@ -1140,12 +1125,4 @@ void AttrWindow::ClearWinsRelation() //移除关联关系
 	m_relatedWinIds.removeAll();
 	m_fromWinId = AcDbObjectId::kNull;
 }
-AcDbObjectId AttrWindow::GetWinTangentOpenId()const 
-{
-	return m_tangentOpeningId; 
-}
-void AttrWindow::SetWinTangentOpenId(AcDbObjectId p_winId, AcDbObjectId p_tangentOpenid)
-{
-	m_tangentOpeningId = p_tangentOpenid;
-	GetWinTangentOpenMap()->AddWindow(p_winId, p_tangentOpenid);
-}
+
