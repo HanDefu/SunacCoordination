@@ -978,3 +978,17 @@ void CRCRailing::CreateRailingDetailTextStyle(CString dimname)
 	pTextStyleTblRcd->close();
 	pTextStyleTbl->close();
 }
+
+
+
+AcDbObjectId CRCRailing::CreateWipeOut()
+{
+	AcGePoint3dArray pnts; //左侧、右侧、底侧各留20的量以免将墙体线也遮挡
+	pnts.append(AcGePoint3d(20, 20, 0));
+	pnts.append(AcGePoint3d(m_railingAtt.m_length - 20, 20, 0));
+	pnts.append(AcGePoint3d(m_railingAtt.m_length - 20, m_railingAtt.m_height, 0));
+	pnts.append(AcGePoint3d(20, m_railingAtt.m_height, 0));
+	pnts.append(AcGePoint3d(20, 20, 0));
+
+	return TYCOM_CreateWipeOut(pnts);
+}

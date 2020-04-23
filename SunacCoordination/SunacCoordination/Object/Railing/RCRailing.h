@@ -73,6 +73,10 @@ public:
 	static bool CheckRailingStartEndPt(AcGePoint3d& p_pnt1, AcGePoint3d& p_pnt2, int& p_width);//计算平面图插入点，使栏杆长为10的倍数
 	static void CheckRailingLength(int& p_width);
 
+
+
+	AcDbObjectId CreateWipeOut();
+
 protected:
 	virtual AcDbObjectId CreateRailingBlockDefine(CString sRailingDefName)= 0;
 	CString GetPrototypeFilePath()const ;

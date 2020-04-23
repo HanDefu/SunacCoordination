@@ -27,6 +27,7 @@ bool CRCRailingBoli::GenRailing()
 AcDbObjectId CRCRailingBoli::CreateRailingBlockDefine(CString sRailingDefName)
 {
 	CDocLock doclock;
+
 	AcGePoint3d start = AcGePoint3d::kOrigin;
 	//2 插入到图形
 
@@ -34,8 +35,12 @@ AcDbObjectId CRCRailingBoli::CreateRailingBlockDefine(CString sRailingDefName)
 	const double railH = m_railingAtt.m_height - GetHandRailHeight();//扣除扶手的高度
 	const double centerY = leftTopPt.y - GetHandRailHeight() - railH / 2;
 
-
 	AcDbObjectIdArray idsOut;
+
+	//支持栏杆遮挡
+	AcDbObjectId idWipeOut = CreateWipeOut();
+	idsOut.append(idWipeOut);
+
 	//2.1 左侧段
 	AcGePoint3d pos1 = AcGePoint3d(leftTopPt.x + GetK(), centerY, 0); //左上角点x方向上减去与结构墙间隙，y方向上减去扶手的厚度,然后考虑居中位置
 
