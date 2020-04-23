@@ -19,6 +19,7 @@ CDlgSetUp::CDlgSetUp(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CDlgSetUp::IDD, pParent)
 	, m_showLimianNumberDlg(FALSE)
 	, m_useAinLimianDlg(FALSE)
+	, m_bSupportTangent(FALSE)
 	, m_sFrameLayerDlg(_T(""))
 	, m_sHardWareLayerDlg(_T(""))
 	, m_sLayerDlg(_T(""))
@@ -39,6 +40,7 @@ void CDlgSetUp::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Radio(pDX, IDC_NOSHOWLIMIANNUMBER, m_showLimianNumberDlg);
 	DDX_Radio(pDX, IDC_NOUSEAINLIMIAN, m_useAinLimianDlg);
+	DDX_Radio(pDX, IDC_RADIO_SUPPORTTANGENT, m_bSupportTangent);
 	DDX_Control(pDX, IDC_WINNUMTEXTSIZE, m_winNumberTextSizeDlg);
 	DDX_Control(pDX, IDC_WINDETAILDIMRATE, m_winDetailDimRateDlg);
 	DDX_Text(pDX, IDC_WINFRAMELAYER, m_sFrameLayerDlg);
@@ -93,6 +95,7 @@ void CDlgSetUp::InitWinSetting()
 
 	m_showLimianNumberDlg = GlobalSetting::GetInstance()->m_winSetting.m_bShowLimianNumber ? true : false;
 	m_useAinLimianDlg = GlobalSetting::GetInstance()->m_winSetting.m_bUseAinLimian ? true : false;
+	m_bSupportTangent = GlobalSetting::GetInstance()->m_winSetting.m_bDrawTangentOpen ? true : false;
 
 	UpdateData(FALSE);
 }
@@ -160,6 +163,7 @@ void CDlgSetUp::OnBnClickedOk()
 	//ÆäËû
 	GlobalSetting::GetInstance()->m_winSetting.m_bUseAinLimian = m_useAinLimianDlg ? true : false;
 	GlobalSetting::GetInstance()->m_winSetting.m_bShowLimianNumber = m_showLimianNumberDlg ? true : false;
+	GlobalSetting::GetInstance()->m_winSetting.m_bDrawTangentOpen = m_bSupportTangent ? true : false;
 	
 	GlobalSetting::GetInstance()->UpdateToXml();
 

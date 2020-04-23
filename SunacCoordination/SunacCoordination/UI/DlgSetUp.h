@@ -26,6 +26,7 @@ protected:
 public:
 	BOOL m_showLimianNumberDlg;	//是否显示立面图的门窗编号
 	BOOL m_useAinLimianDlg;		//立面图是否使用塞缝尺寸
+	BOOL m_bSupportTangent;
 
 	CComboBox m_winNumberTextSizeDlg;//门窗编号字体
 	CComboBox m_winDetailDimRateDlg;//门窗编号字体
