@@ -26,9 +26,9 @@
 //门窗表
 void CMD_SunacWindowsTable()
 {
-	CString info, str;
+	CString str;
 
-	CCommandHighlight::GetInstance()->WindowDoorNoHighlight();
+	CCommandHighlight::GetInstance()->SunacNoHighlight();
 
 	//第一步：选择需要统计的门窗
 	eViewDir viewDir = E_VIEW_FRONT;
@@ -271,7 +271,7 @@ void CMD_SunacWindowsTable()
 	{
 		winIds.push_back(wins[i].m_winId);
 	}
-	CCommandHighlight::GetInstance()->WindowDoorHighlight(winIds);
+	CCommandHighlight::GetInstance()->SunacHighlight(winIds);
 
 	return;
 }
@@ -325,22 +325,16 @@ void WriteDataToTable(AcDbTable *p_table, int p_dataStartRow, int p_floorColumnC
 				continue;
 			}
 
-			int numWindowDoor = nCount / nFloorCount;
+			int numWindowDoor = pWinAtt->GetFloorInfo().GetFloorCountByFloorIndex(nStart);
 			str.Format(L"%d*%d", numWindowDoor, nFloorCount);
 			p_table->setTextString(p_dataStartRow, 4 + i, str);
 			nAllFloorCount.push_back(numWindowDoor * nFloorCount);
 		}
 		else
 		{
-			int nFloorCount = _ttoi(p_floorColumns[i]);
-		/*	if (nFloorCount == 0)
-			{
-				AfxMessageBox(_T("门窗楼层信息设置有误"));
-				return;
-			}*/
-
-			nAllFloorCount.push_back(p_winAndCount.nCount / pWinAtt->GetFloorInfo().GetFloorCount());
-			str.Format(L"%d", nAllFloorCount[i]);
+			int numWindowDoor = pWinAtt->GetFloorInfo().GetFloorCountByFloorIndex(_ttoi(p_floorColumns[i]));
+			nAllFloorCount.push_back(numWindowDoor);
+			str.Format(L"%d", numWindowDoor);
 			p_table->setTextString(p_dataStartRow, 4 + i, str);
 		}
 	}
@@ -363,7 +357,6 @@ void AddXDataForWinTable(AcDbTable *p_table, AcGePoint3d p_pnt, vAcDbObjectId p_
 	vAcDbHandle vHandles;
 	JHCOM_GetAcDbHandles(p_winIds, vHandles);
 
-	CString str;
 	CString strAppName = L"xData";
 	acdbRegApp(strAppName);
 
@@ -388,9 +381,7 @@ void CMD_SunacFloorWindowsTable()
 {
 	CDocLock lock;
 
-	CString info, str;
-
-	CCommandHighlight::GetInstance()->WindowDoorNoHighlight();
+	CCommandHighlight::GetInstance()->SunacNoHighlight();
 
 	//第一步：选择需要统计的门窗
 	//eViewDir viewDir = E_VIEW_TOP;
@@ -684,7 +675,7 @@ void CMD_SunacFloorWindowsTable()
 	{
 		winIds.push_back(wins[i].m_winId);
 	}
-	CCommandHighlight::GetInstance()->WindowDoorHighlight(winIds);
+	CCommandHighlight::GetInstance()->SunacHighlight(winIds);
 
 	AddXDataForWinTable(table, pnt, winIds);
 

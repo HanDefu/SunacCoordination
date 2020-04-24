@@ -214,3 +214,19 @@ int CFloorInfo::GetFloorCountByFloor(CString p_sFloor)const
 
 	return nCount;
 }
+
+
+int CFloorInfo::GetFloorCountByFloorIndex(int p_nFloor)const
+{
+	int nCount = 0;
+	for (UINT j = 0; j < m_nAllFloors.size(); j++)
+	{
+		if (m_nAllFloors[j] == p_nFloor)
+		{
+			nCount++;
+		}
+	}
+
+	return nCount;
+
+}

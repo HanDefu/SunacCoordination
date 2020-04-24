@@ -51,7 +51,7 @@ void CWindowDetail::DrawWindowDetail()
 {
 	CDocLock lockEnt;
 
-	CCommandHighlight::GetInstance()->WindowDoorNoHighlight();
+	CCommandHighlight::GetInstance()->SunacNoHighlight();
 
 	//第一步：选择需要统计的门窗
 	eViewDir viewDir = E_VIEW_FRONT;
@@ -105,7 +105,7 @@ void CWindowDetail::DrawWindowDetail()
 	{
 		winIds.push_back(wins[i].m_winId);
 	}
-	CCommandHighlight::GetInstance()->WindowDoorHighlight(winIds);
+	CCommandHighlight::GetInstance()->SunacHighlight(winIds);
 
 	return;
 }

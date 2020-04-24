@@ -113,35 +113,48 @@ void CWindowTableCheckDlg::GetWinIdFromWinTableXData(AcDbObjectId p_tableId, vec
 
 void CWindowTableCheckDlg::CreateBrightBox(vector<AcDbObjectId> vWinIds)
 {
-	int offset = 20;
+	int offsetx = 100, offsety = 300;;
 
 	for (int i = 0; i < vWinIds.size(); i++)
 	{
-		//vector<AcDbObjectId> vTextIds = GetInstanceCodeMrg()->FindTextIds(vWinIds[i]);
-		//for (int i = 0; i < vTextIds.size(); i++)
-		//{
-			AcGePoint3d minPt, maxPt;
-			JHCOM_GetObjectMinMaxPoint(vWinIds[i], minPt, maxPt);
+		AcGePoint3d minPt, maxPt;
+		JHCOM_GetObjectMinMaxPoint(vWinIds[i], minPt, maxPt);
 
-			AcGePoint2d ptLeftBottom, ptRightBottom, ptRightTop, ptLeftTop;
-			ptLeftBottom.set(minPt.x - offset, minPt.y - offset);
-			ptRightBottom.set(maxPt.x + offset, minPt.y - offset);
-			ptRightTop.set(maxPt.x + offset, maxPt.y + offset);
-			ptLeftTop.set(minPt.x - offset, maxPt.y + offset);
+		AcGePoint2d ptLeftBottom, ptRightBottom, ptRightTop, ptLeftTop;
+		ptLeftBottom.set(minPt.x - offsetx, minPt.y - offsetx);
+		ptRightBottom.set(maxPt.x + offsetx, minPt.y - offsetx);
+		ptRightTop.set(maxPt.x + offsetx, maxPt.y + offsety);
+		ptLeftTop.set(minPt.x - offsetx, maxPt.y + offsety);
+		
+		AcDbPolyline *pPoly = new AcDbPolyline(4);
+		pPoly->addVertexAt(0, ptLeftTop, 0, 100, 100);
+		pPoly->addVertexAt(1, ptLeftBottom, 0, 100, 100);
+		pPoly->addVertexAt(2, ptRightBottom, 0, 100, 100);
+		pPoly->addVertexAt(3, ptRightTop, 0, 100, 100);
+		pPoly->setClosed(Adesk::kTrue);
+		pPoly->setColorIndex(2);
 
-			AcDbPolyline *pPoly = new AcDbPolyline(4);
-			pPoly->addVertexAt(0, ptLeftTop, 0, 1, 1);
-			pPoly->addVertexAt(1, ptLeftBottom, 0, 1, 1);
-			pPoly->addVertexAt(2, ptRightBottom, 0, 1, 1);
-			pPoly->addVertexAt(3, ptRightTop, 0, 1, 1);
-			pPoly->setClosed(Adesk::kTrue);
-			pPoly->setColorIndex(2);
+		AcDbPolyline *pPoly1 = new AcDbPolyline(2);
+		pPoly1->addVertexAt(0, ptLeftTop, 0, 100, 100);
+		pPoly1->addVertexAt(1, ptRightBottom, 0, 100, 100);
+		pPoly1->setColorIndex(2);
 
-			AcDbObjectId polyId = MD2010_PostModalToBlockTable(ACDB_MODEL_SPACE, pPoly);
-			pPoly->close();
+		AcDbPolyline *pPoly2 = new AcDbPolyline(2);
+		pPoly2->addVertexAt(0, ptLeftBottom, 0, 100, 100);
+		pPoly2->addVertexAt(1, ptRightTop, 0, 100, 100);
+		pPoly2->setColorIndex(2);
 
-			m_polyBrightBoxId.push_back(polyId);
-	//	}
+		AcDbObjectId polyId = MD2010_PostModalToBlockTable(ACDB_MODEL_SPACE, pPoly);
+		AcDbObjectId polyId1 = MD2010_PostModalToBlockTable(ACDB_MODEL_SPACE, pPoly1);
+		AcDbObjectId polyId2 = MD2010_PostModalToBlockTable(ACDB_MODEL_SPACE, pPoly2);
+
+		pPoly->close();
+		pPoly1->close();
+		pPoly2->close();
+
+		m_polyBrightBoxId.push_back(polyId);
+		m_polyBrightBoxId.push_back(polyId1);
+		m_polyBrightBoxId.push_back(polyId2);
 	}
 }
 

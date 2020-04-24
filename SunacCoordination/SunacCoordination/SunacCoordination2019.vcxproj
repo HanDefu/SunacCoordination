@@ -59,6 +59,7 @@
     <ClCompile Include="Object\Kitchen\RCKitchen.cpp" />
     <ClCompile Include="Object\Railing\AttrRailing.cpp" />
     <ClCompile Include="Object\Railing\RailingStatistic.cpp" />
+    <ClCompile Include="Object\Railing\RailingTop2Front.cpp" />
     <ClCompile Include="Object\Railing\RCRailing.cpp" />
     <ClCompile Include="Object\Railing\RCRailingBoli.cpp" />
     <ClCompile Include="Object\Railing\RCRailingTieyi.cpp" />
@@ -75,6 +76,7 @@
     <ClCompile Include="Object\WindowDoor\WindowAutoName.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowGen.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowSelect.cpp" />
+    <ClCompile Include="Object\WindowDoor\WindowTable.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowTop2Front.cpp" />
     <ClCompile Include="Object\WindowDoor\WinTangentOpenMap.cpp" />
     <ClCompile Include="Object\WindowStatistic\AluminumSeries.cpp" />
@@ -142,6 +144,7 @@
     <ClCompile Include="UI\WaterproofDlg.cpp" />
     <ClCompile Include="UI\WindowAdvanceDlg.cpp" />
     <ClCompile Include="UI\WindowDlg.cpp" />
+    <ClCompile Include="UI\WindowTableCheckDlg.cpp" />
     <ClCompile Include="WebIO\AirConditionLocalData.cpp" />
     <ClCompile Include="WebIO\AirConditionLocalDataFromDB.cpp" />
     <ClCompile Include="WebIO\AirconditionWebData.cpp" />
@@ -205,6 +208,7 @@
     <ClInclude Include="Object\PrototypeCommonDef.h" />
     <ClInclude Include="Object\Railing\AttrRailing.h" />
     <ClInclude Include="Object\Railing\RailingStatistic.h" />
+    <ClInclude Include="Object\Railing\RailingTop2Front.h" />
     <ClInclude Include="Object\Railing\RCRailing.h" />
     <ClInclude Include="Object\Railing\RCRailingBoli.h" />
     <ClInclude Include="Object\Railing\RCRailingTieyi.h" />
@@ -221,6 +225,7 @@
     <ClInclude Include="Object\WindowDoor\WindowAutoName.h" />
     <ClInclude Include="Object\WindowDoor\WindowGen.h" />
     <ClInclude Include="Object\WindowDoor\WindowSelect.h" />
+    <ClInclude Include="Object\WindowDoor\WindowTable.h" />
     <ClInclude Include="Object\WindowDoor\WindowTop2Front.h" />
     <ClInclude Include="Object\WindowDoor\WinTangentOpenMap.h" />
     <ClInclude Include="Object\WindowStatistic\AluminumSeries.h" />
@@ -309,6 +314,7 @@
     <ClInclude Include="UI\WaterproofDlg.h" />
     <ClInclude Include="UI\WindowAdvanceDlg.h" />
     <ClInclude Include="UI\WindowDlg.h" />
+    <ClInclude Include="UI\WindowTableCheckDlg.h" />
     <ClInclude Include="WebIO\AirConditionLocalData.h" />
     <ClInclude Include="WebIO\AirConditionLocalDataFromDB.h" />
     <ClInclude Include="WebIO\AirconditionWebData.h" />

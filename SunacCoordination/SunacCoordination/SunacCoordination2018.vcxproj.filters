@@ -450,6 +450,15 @@
     <ClCompile Include="Common\ThreadUtil.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="UI\WindowTableCheckDlg.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowDoor\WindowTable.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Railing\RailingTop2Front.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command\Command.h">
@@ -952,6 +961,15 @@
     </ClInclude>
     <ClInclude Include="Common\ThreadUtil.h">
       <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\WindowTableCheckDlg.h">
+      <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\WindowTable.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Railing\RailingTop2Front.h">
+      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -338,7 +338,7 @@ void CMD_SunacWinAutoId()
 void CMD_SunacNoHighlight()
 {
 	//取消高亮
-	CCommandHighlight::GetInstance()->WindowDoorNoHighlight();
+	CCommandHighlight::GetInstance()->SunacNoHighlight();
 }
 
 void CMD_SunacWinTableCheck()
@@ -444,15 +444,14 @@ void CMD_SunacRailingDetail()
 
 void CMD_SunacRailingStatistic()
 {
-	CRailingStatistic instance;
-	instance.SelectRailings();
-
-	AcGePoint3d insertPoint;
-	bool bSuc = TY_GetPoint(insertPoint);
-	if (bSuc == false)
+	if (WebIO::GetInstance()->IsLogin() == false)
+	{
+		acutPrintf(_T("请先登录\n"));
 		return;
+	}
 
-	instance.InsertTableToCAD(insertPoint);
+	CRailingStatistic instance;
+	instance.InsertRailingTableToCAD();
 }
 
 void CMD_SunacRailingTop2Front()
@@ -538,7 +537,7 @@ void CMD_SunacWaterproof()
 //统计算量
 void CMD_SunacWindowsStatistics()
 {
-	CCommandHighlight::GetInstance()->WindowDoorNoHighlight();
+	CCommandHighlight::GetInstance()->SunacNoHighlight();
 
 	//第一步：选择需要统计的门窗
 	eViewDir viewDir = E_VIEW_FRONT;
@@ -571,7 +570,7 @@ void CMD_SunacWindowsStatistics()
 		AfxMessageBox(_T("部分窗户型材系列未设置"));
 
 		//对未设置型材系列的门窗高亮
-		CCommandHighlight::GetInstance()->WindowDoorHighlight(idsNonAlserials);
+		CCommandHighlight::GetInstance()->SunacHighlight(idsNonAlserials);
 		return;
 	}
 
@@ -593,7 +592,7 @@ void CMD_SunacWindowsStatistics()
 	{
 		winIds.push_back(wins[i].m_winId);
 	}
-	CCommandHighlight::GetInstance()->WindowDoorHighlight(winIds);
+	CCommandHighlight::GetInstance()->SunacHighlight(winIds);
 }
 
 void CADPalette_AddP()

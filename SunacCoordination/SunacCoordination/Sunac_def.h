@@ -103,6 +103,7 @@ public:
 	int GetFloorCount()const{ return (int)(m_nAllFloors.size()); }
 	vector<int> GetAllFloor()const{ return m_nAllFloors; }
 	int GetFloorCountByFloor(CString p_sFloor)const;
+	int GetFloorCountByFloorIndex(int p_nFloor)const;
 
 	bool SetFloorHeight(double p_height);
 	double GetFloorHeight()const { return m_floorHeight; }
@@ -114,5 +115,5 @@ protected:
 	CString m_sFloors; //楼层范围，逗号分隔，多楼层用-分隔，示例： 2-5,7
 	double m_floorHeight; //层高
 
-	vector<int> m_nAllFloors;
+	vector<int> m_nAllFloors; //数字int表示楼层，举例：1，1,1,2,2,3,3. 表示1楼有3个门窗，2楼有2个门窗、3楼有3个门窗
 };
