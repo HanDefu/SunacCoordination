@@ -28,7 +28,6 @@ public:
 	virtual double GetMinWidth()const { return 0; }
 	virtual double GetMinHeight()const { return 400; }
 
-	AcDbObjectId CreateWipeOut();
 protected:
 	virtual bool GenRailing(); //计算各段的长度
 	virtual int GenStandardSegCount(double p_lenth, double p_segLength)const; //计算标准栏杆数量，p_lenth为栏杆长，p_segLength为栏杆的标准段长

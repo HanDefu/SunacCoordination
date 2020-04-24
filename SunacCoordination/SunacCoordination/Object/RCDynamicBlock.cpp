@@ -361,9 +361,7 @@ AcDbObjectId RCDynamicBlock::InsertFromFile(CString fileName, AcGePoint3d origin
 	CString str;
 	str.Format(L"_%d",tick);
 	m_blockRecordName = CString(blockname) + str;
-	acDocManager->lockDocument(curDoc());
 	MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, fileName, m_blockRecordName,  m_id, origin, angle, AcGeScale3d(1), layerName, color);
-	acDocManager->unlockDocument(curDoc());
 	return m_id;
 }
 */

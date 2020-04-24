@@ -302,7 +302,7 @@ AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d
 		GetWindowAutoName()->AddWindowType(curWinAtt, id);
 	}
 
-	//插入天正门洞
+	//插入天正门洞(因在生成门窗appand到模型空间时尚未添加门窗属性，因此不能在反应器中自动天正门洞，需要在生成时添加门洞）
 	DrawTangentOpen(id, curWinAtt, pos, p_winDir);
 	return id;
 }
@@ -338,7 +338,7 @@ bool CWindowGen::DrawTangentOpen(AcDbObjectId p_winId, const AttrWindow& curWinA
 	AttrWindow* pWinAtt = AttrWindow::GetWinAtt(p_winId);
 	if (pWinAtt!=NULL)
 	{
-		pWinAtt->SetWinTangentOpenId(p_winId, tWinOpenIdOut);
+		GetWinTangentOpenMap()->AddWindow(p_winId, tWinOpenIdOut);
 	}
 
 	return hr == Acad::eOk;
@@ -767,7 +767,7 @@ bool CWindowGen::GetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId& p_fromWinId,
 AcDbObjectId CWindowGen::InsertWindowDoorCode(eViewDir p_viewDir, CString p_number, AcGePoint3d p_pos)
 {
 	//调整门窗编号文字为水平居中显示
-	acDocManager->lockDocument(curDoc());
+	CDocLock doclock;
 
 	AcDbObjectId sWindowDoorTextId;
 	CString oldLayerName;
@@ -802,8 +802,6 @@ AcDbObjectId CWindowGen::InsertWindowDoorCode(eViewDir p_viewDir, CString p_numb
 		p_number);
 
 	MD2010_SetCurrentLayer(oldLayerName);
-
-	acDocManager->unlockDocument(curDoc());
 
 	return sWindowDoorTextId;
 }

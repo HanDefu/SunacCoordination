@@ -632,7 +632,7 @@ AcDbObjectId TY_GetExtensionDictionaryID(AcDbObjectId id)
 
 AcDbObjectId TY_CreateExtensionDictionaryID(AcDbObjectId id)
 {
-	acDocManager->lockDocument(curDoc());
+	CDocLock doclock;
 
 	AcDbObjectId dicId = AcDbObjectId::kNull;
 
@@ -647,9 +647,7 @@ AcDbObjectId TY_CreateExtensionDictionaryID(AcDbObjectId id)
 		}
 		pObj->close();
 	}
-
-	acDocManager->unlockDocument(curDoc());
-
+	
 	return dicId;
 }
 
