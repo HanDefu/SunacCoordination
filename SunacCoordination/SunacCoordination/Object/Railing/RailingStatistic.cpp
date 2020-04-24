@@ -149,147 +149,6 @@ AcDbObjectId CRailingStatistic::InsertTableToCAD(AcGePoint3d insertPos)
 	return JHCOM_PostToModelSpace(pTable);
 }
 
-//void CRailingStatistic::InsertRailingTableToCAD(AcGePoint3d insertPos)
-//{
-//	CDocLock lock;
-//
-//	CCommandHighlight::GetInstance()->SunacNoHighlight();
-//
-//	//1、选择需要统计的栏杆
-//	const vector<CSunacObjInCad> railings = CSunacSelect::SelectSunacObjs(S_RAILING, E_VIEW_TOP);
-//	vAcDbObjectId ringIds;
-//	for (UINT i = 0; i < railings.size(); i++)
-//	{
-//		ringIds.push_back(railings[i].m_winId);
-//	}
-//	if (ringIds.size() == 0)
-//		return;
-//
-//	//2、确定插入点
-//	AcGePoint3d pnt;
-//	bool bSuc = TY_GetPoint(pnt, L"请选择栏杆表插入点");
-//	if (bSuc == false)
-//		return;
-//
-//	//3、读取栏杆数据并确定是否设置楼层
-//	vAcDbObjectId idsNoFloorInfo; //没有设置楼层的栏杆
-//	vector<AttrRailing*>  railingAtts;
-//
-//	for (UINT i = 0; i < ringIds.size(); i++)
-//	{
-//		AcDbObject * pDataEnt = 0;
-//		TY_GetAttributeData(ringIds[i], pDataEnt);
-//		if (pDataEnt == NULL)
-//			continue;
-//
-//		AttrRailing * pRailing = dynamic_cast<AttrRailing *>(pDataEnt);
-//		if (pRailing == NULL)
-//		{
-//			pDataEnt->close();
-//			continue;
-//		}
-//
-//		if (pRailing->GetFloorInfo().GetAllFloor().size() == 0)
-//		{
-//			idsNoFloorInfo.push_back(ringIds[i]);
-//		}
-//
-//		railingAtts.push_back(pRailing);
-//		pRailing->close();
-//	}
-//
-//	if (idsNoFloorInfo.size() > 0)
-//	{
-//		AfxMessageBox(_T("部分栏杆未设置楼层和层高"));
-//		CCommandHighlight::GetInstance()->SunacHighlight(idsNoFloorInfo);
-//		return;
-//	}
-//
-//	//4、根据楼层信息确定栏杆表列数
-//	std::vector<CString> floorColumns;
-//	for (int i = 0; i < railingAtts.size(); i++)
-//	{
-//		std::vector<CString> floorsTemp = YT_SplitCString(railingAtts[i]->GetFloorInfo().GetFloors(), L',');
-//		for (UINT j = 0; j < floorsTemp.size(); j++)
-//		{
-//			bool bFind = false;
-//			for (UINT n = 0; n < floorColumns.size(); n++)
-//			{
-//				if (floorColumns[n].CompareNoCase(floorsTemp[j]) == 0)
-//				{
-//					bFind = true;
-//					break;
-//				}
-//			}
-//
-//			if (bFind == false)
-//			{
-//				floorColumns.push_back(floorsTemp[j]);
-//			}
-//		}
-//	}
-//
-//	sort(floorColumns.begin(), floorColumns.end(), CFloorInfo::FloorLessCmp);
-//
-//	const int floorColumnCount = (int)floorColumns.size();
-//
-//	//5、开始输出数据，填写表格信息
-//	AcDbTable *table = new AcDbTable();
-//	table->setPosition(pnt);
-//	table->setAlignment(AcDb::kMiddleCenter);
-//
-//	//5.1 设置行数列数, 说明：2 是标题栏行数, 7是除去设置楼层信息列之外的列数
-//	int numRailing = railingAtts.size();
-//	int allRowNum = 2 + numRailing;
-//	table->setNumRows(allRowNum);
-//	table->setNumColumns(7 + floorColumnCount);
-//	table->setColumnWidth(1000);
-//	table->setRowHeight(300);
-//	//特殊行列处理
-//	table->setColumnWidth(0, 700);	
-//	table->setRowHeight(1, 500);
-//	//字体设置
-//	table->setTextHeight(0, 0, 100); 
-//	for (int i = 1; i < allRowNum; i++)
-//	{
-//		for (int j = 0; j < 7 + floorColumnCount; j++)
-//		{
-//			table->setTextHeight(i, j, 100);
-//			table->setAlignment(i, j, AcDb::kMiddleCenter);
-//		}
-//	}
-//	//合并单元格
-//	table->mergeCells(0, 0, 0, 6 + floorColumnCount);
-//
-//	//5.2 将数据写入表格
-//	//写入标题
-//	Acad::ErrorStatus es;
-//	es = table->setTextString(0, 0, L"栏杆表");//0,0起头
-//	table->setTextString(1, 0, L"类型");
-//	table->setTextString(1, 1, L"设计编号");
-//	table->setTextString(1, 2, L"栏杆高度(mm)");
-//	table->setTextString(1, 3, L"栏杆高度(mm)");
-//	for (int i = 0; i < floorColumnCount; i++)
-//	{
-//		table->setTextString(1, 4 + i, floorColumns[i] + L"F");
-//	}
-//	table->setTextString(1, 4 + floorColumnCount, L"合计");
-//	table->setTextString(1, 5 + floorColumnCount, L"选用图集");
-//	table->setTextString(1, 6 + floorColumnCount, L"备注");
-//
-//	//合并行，写入类型和选用图集
-//	table->mergeCells(2, allRowNum - 1, 0, 0);
-//	table->setTextString(2, 0, L"镀锌铝合金栏杆");
-//	table->mergeCells(2, allRowNum - 1, 5 + floorColumnCount, 5 + floorColumnCount);
-//	table->setTextString(2, 5 + floorColumnCount, L"详门窗详图");
-//
-//	for (int i = 0; i < numRailing; i++)
-//	{
-//		
-//	}
-//
-//}
-
 void CRailingStatistic::InsertRailingTableToCAD()
 {
 	CDocLock lock;
@@ -421,19 +280,53 @@ void CRailingStatistic::InsertRailingTableToCAD()
 	table->setTextString(1, 6 + floorColumnCount, L"备注");
 	table->mergeCells(2, allRowNum - 1, 6 + floorColumnCount, 6 + floorColumnCount);
 
-	//合并行，写入类型和选用图集
-	table->mergeCells(2, allRowNum - 1, 0, 0);
-	table->setTextString(2, 0, L"镀锌铝合金栏杆");
+	//合并行，写入选用图集
 	table->mergeCells(2, allRowNum - 1, 5 + floorColumnCount, 5 + floorColumnCount);
 	table->setTextString(2, 5 + floorColumnCount, L"详门窗详图");
 
+	//根据类型拆分栏杆
+	m_blRailings.clear();
+	m_tyRailings.clear();
 	for (int i = 0; i < numRailing; i++)
 	{
 		const CRailingAndCount& railingAndCount = railingCountArray.GetRailing(i);
-		WriteDataToRailingTable(table, 2 + i, floorColumnCount, floorColumns, railingAndCount);
+		SpliteRailingByType(railingAndCount);
 	}
 
-	//对选择的门窗高亮
+	//将开始行号设为2，结束行号设为1
+	int dataStartRow = 2;
+	int dataEndRow = 1;
+
+	//输出铁艺
+	int nRailingNumTY = (int)m_tyRailings.size();
+	if (nRailingNumTY > 0)
+	{
+		dataEndRow = dataStartRow + nRailingNumTY - 1;
+		table->mergeCells(dataStartRow, dataEndRow, 0, 0);
+		table->setTextString(dataStartRow, 0, L"铁艺栏杆");
+		for (int i = 0; i < nRailingNumTY; i++)
+		{
+			const CRailingAndCount& railingAndCount = m_tyRailings[i];
+			WriteDataToRailingTable(table, dataStartRow + i, floorColumnCount, floorColumns, railingAndCount);
+		}
+	}
+	
+	//输出玻璃
+	int nRailingNumBL = (int)m_blRailings.size();
+	if (nRailingNumBL > 0)
+	{
+		dataStartRow = dataEndRow + 1;
+		dataEndRow = dataStartRow + nRailingNumBL - 1;
+		table->mergeCells(dataStartRow, dataEndRow, 0, 0);
+		table->setTextString(dataStartRow, 0, L"玻璃栏杆");
+		for (int i = 0; i < nRailingNumBL; i++)
+		{
+			const CRailingAndCount& railingAndCount = m_blRailings[i];
+			WriteDataToRailingTable(table, dataStartRow + i, floorColumnCount, floorColumns, railingAndCount);
+		}
+	}
+
+	//对选择的栏杆高亮
 	CCommandHighlight::GetInstance()->SunacHighlight(ringIds);
 
 	AcDbObjectId tableId = JHCOM_PostToModelSpace(table);
@@ -505,4 +398,14 @@ void CRailingStatistic::WriteDataToRailingTable(AcDbTable *p_table, int p_dataSt
 	p_table->setTextString(p_dataStartRow, 4 + p_floorColumnCount, str);
 
 	//备注
+}
+
+void CRailingStatistic::SpliteRailingByType(const CRailingAndCount& railingAndCount)
+{
+	const AttrRailing * pRailingAtt = &(railingAndCount.railAtt);
+	if (pRailingAtt->m_railingType == E_RAILING_TIEYI)
+		m_tyRailings.push_back(railingAndCount);
+
+	if (pRailingAtt->m_railingType == E_RAILING_BOLI)
+		m_blRailings.push_back(railingAndCount);
 }

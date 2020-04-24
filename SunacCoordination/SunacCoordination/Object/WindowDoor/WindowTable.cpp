@@ -141,7 +141,7 @@ int CWindowCountArray::GetWindowsCount()
 	return count;
 }
 
-void CSplitWindowDoorArray::SplitWindowDoor(int p_numWindowDoor, const CWindowAndCount& winAndCount)
+void CSplitWindowDoorArray::SplitWindowDoor(const CWindowAndCount& winAndCount)
 {
 	const AttrWindow * pWinAtt = &(winAndCount.winAtt);
 	if (pWinAtt->GetPrototypeCode().Find(L"NC") >= 0 || pWinAtt->GetInstanceCode().Find(L"NZC") >= 0)

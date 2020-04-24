@@ -541,7 +541,7 @@ void CMD_SunacFloorWindowsTable()
 	for (int i = 0; i < numWindowDoor; i++)
 	{
 		const CWindowAndCount& winAndCount = winCountArray.GetWindow(i);
-		splitWindowDoorArray.SplitWindowDoor(numWindowDoor, winAndCount);
+		splitWindowDoorArray.SplitWindowDoor(winAndCount);
 	}
 
 	//3.4 按照各个类型的门窗将数据写入表格

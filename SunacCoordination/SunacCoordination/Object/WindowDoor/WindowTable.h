@@ -38,7 +38,7 @@ private:
 class CSplitWindowDoorArray
 {
 public:
-	void SplitWindowDoor(int p_numWindowDoor, const CWindowAndCount& winAndCount); //将m_winCountArray拆分成各个类型的门窗(NC、NDC...)
+	void SplitWindowDoor(const CWindowAndCount& winAndCount); //将m_winCountArray拆分成各个类型的门窗(NC、NDC...)
 	void ClearSplitWindowDoor(); //清空m_winNC等vector
 
 	int GetWindowNCCount()const { return (int)(m_winNC.size()); }
