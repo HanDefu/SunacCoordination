@@ -352,7 +352,7 @@ void WriteDataToTable(AcDbTable *p_table, int p_dataStartRow, int p_floorColumnC
 	//备注
 }
 
-void AddXDataForWinTable(AcDbTable *p_table, AcGePoint3d p_pnt, vAcDbObjectId p_winIds)
+void AddXDataForWinTable(AcDbTable *p_table, vAcDbObjectId p_winIds)
 {
 	vAcDbHandle vHandles;
 	JHCOM_GetAcDbHandles(p_winIds, vHandles);
@@ -677,7 +677,7 @@ void CMD_SunacFloorWindowsTable()
 	}
 	CCommandHighlight::GetInstance()->SunacHighlight(winIds);
 
-	AddXDataForWinTable(table, pnt, winIds);
+	AddXDataForWinTable(table, winIds);
 
 	AcDbObjectId tableId = JHCOM_PostToModelSpace(table);
 	
