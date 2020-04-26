@@ -18,6 +18,9 @@ int CKitchenBathroomStatistic::SelectKitchenBathroom()
 	{
 		AcDbObject* pAttr = NULL;
 		TY_GetAttributeData(ids[i], pAttr);
+		if (pAttr==NULL)
+			continue;
+
 		AttrKitchen* pAttrKitchen = AttrKitchen::cast(pAttr);
 		AttrBathroom* pAttrBathroom = AttrBathroom::cast(pAttr);
 		if (pAttrKitchen != NULL)
@@ -30,6 +33,8 @@ int CKitchenBathroomStatistic::SelectKitchenBathroom()
 			count++;
 			InsertBathroom(pAttrBathroom);
 		}
+
+		pAttr->close();
 	}
 
 	return count;
@@ -38,7 +43,7 @@ int CKitchenBathroomStatistic::SelectKitchenBathroom()
 void CKitchenBathroomStatistic::InsertKitchen(AttrKitchen* pAttr)
 {
 	KitchenBathroomItem item;
-	item.amount = 1;
+	item.amount = pAttr->m_floorInfo.GetFloorCount();
 	if (!pAttr->m_shuiPenType.IsEmpty())
 	{
 		item.name = L"ÀÆ≈Ë";
@@ -62,7 +67,7 @@ void CKitchenBathroomStatistic::InsertKitchen(AttrKitchen* pAttr)
 void CKitchenBathroomStatistic::InsertBathroom(AttrBathroom* pAttr)
 {
 	KitchenBathroomItem item;
-	item.amount = 1;
+	item.amount = pAttr->m_floorInfo.GetFloorCount();
 	if (!pAttr->m_taipenWidth.IsEmpty())
 	{
 		item.name = L"Ã®≈Ë";
@@ -83,7 +88,7 @@ void CKitchenBathroomStatistic::InsertKBItem(const KitchenBathroomItem& pItem)
 	if (pos == -1)
 		m_allItems.push_back(pItem);
 	else
-		m_allItems[pos].amount++;
+		m_allItems[pos].amount += pItem.amount;
 }
 
 int CKitchenBathroomStatistic::FindKBItem(const KitchenBathroomItem& pItem)
@@ -98,8 +103,8 @@ int CKitchenBathroomStatistic::FindKBItem(const KitchenBathroomItem& pItem)
 
 AcDbObjectId CKitchenBathroomStatistic::InsertTableToCAD(AcGePoint3d insertPos)
 {
-	const double c_tableCellWidth[] = {20, 20, 40, 20, 50};
-	const double c_tableCellHeight = 6;
+	const double c_tableCellWidth[] = {700, 700, 1500, 700, 2000};
+	const double c_tableCellHeight = 300;
 
 	sort(m_allItems.begin(), m_allItems.end(), KBItemCmp);
 
@@ -139,7 +144,7 @@ AcDbObjectId CKitchenBathroomStatistic::InsertTableToCAD(AcGePoint3d insertPos)
 		for (int nColum = 0; nColum < columSize; nColum++)
 		{
 			pTable->setAlignment(nRow, nColum, AcDb::kMiddleCenter);
-			pTable->setTextHeight(nRow, nColum,2.5);
+			pTable->setTextHeight(nRow, nColum, 150);
 		}
 	}
 

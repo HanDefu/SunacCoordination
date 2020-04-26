@@ -462,20 +462,14 @@ void CBathroomDlg::OnBnClickedButtonRange()
 
 	if (m_windowDir == E_DIR_UNKNOWN)
 	{
-		do
+		ads_point pt;
+		acedInitGet(32,NULL);
+		if(acedGetPoint(NULL,L"\n选择窗的位置\n",pt)!=RTNORM) //第一角点选择
 		{
-			ads_point pt;
-			acedInitGet(32,NULL);
-			if(acedGetPoint(NULL,L"\n选择窗的位置\n",pt)!=RTNORM) //第一角点选择
-			{
-				ShowWindow(true);
-				return;
-			}
-			m_windowDir = GetDir(pt);
-			if (m_doorDir == m_windowDir)
-				AfxMessageBox(_T("门窗方向不能相同\n"));
+			ShowWindow(true);
+			return;
 		}
-		while (m_doorDir == m_windowDir);
+		m_windowDir = GetDir(pt);
 
 		ShowInfo();
 	}*/
@@ -524,11 +518,7 @@ void CBathroomDlg::OnBnClickedButtonDoorDir()
 	E_DIRECTION temp = GetDir(pt);
 	if (m_doorDir == temp) //未修改，直接跳过
 		return;
-	if (m_windowDir == temp)
-	{
-		acutPrintf(_T("门窗方向不能相同\n"));
-		return;
-	}
+
 	m_doorDir = temp;
 	if (m_windowDir == E_DIR_UNKNOWN)
 		return;
@@ -558,11 +548,7 @@ void CBathroomDlg::OnBnClickedButtonWindowDir()
 	E_DIRECTION temp = GetDir(pt);
 	if (m_windowDir == temp) //未修改，直接跳过
 		return;
-	if (m_doorDir == temp)
-	{
-		acutPrintf(_T("门窗方向不能相同\n"));
-		return;
-	}
+
 	m_windowDir = temp;
 	if (m_doorDir == E_DIR_UNKNOWN)
 		return;
@@ -579,16 +565,6 @@ void CBathroomDlg::OnBnClickedButtonSearch()
 		AfxMessageBox(_T("请先选择卫生间范围\n"));
 		return;
 	}
-	/*if (m_doorDir == E_DIR_UNKNOWN || m_windowDir == E_DIR_UNKNOWN)
-	{
-		AfxMessageBox(_T("请先选择门窗方向\n"));
-		return;
-	}
-	if (m_windowDir == m_doorDir)
-	{
-		AfxMessageBox(_T("门窗方向不能相同\n"));
-		return;
-	}*/
 
 	//////////////////////////////////////////////////////////////////////////
 	//2. 搜索原型

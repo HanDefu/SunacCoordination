@@ -9,6 +9,7 @@
 #include <dbgroup.h>
 #include <geassign.h>
 #include <algorithm>
+#include <afxdisp.h>
 #include "accmd.h"
 #include "dbtable.h"
 #include "Command.h"
@@ -18,13 +19,16 @@
 #include "../Common/ComFun_String.h"
 #include "../Object/WindowDoor/RCWindow.h"
 #include "../Object/WindowDoor/WindowSelect.h"
+#include "../Object/WindowDoor/WindowTable.h"
+#include "../Common/ComFun_Convert.h"
+#include "../Tool/DocLock.h"
 
 //门窗表
 void CMD_SunacWindowsTable()
 {
-	CString info, str;
+	CString str;
 
-	CCommandHighlight::GetInstance()->WindowDoorNoHighlight();
+	CCommandHighlight::GetInstance()->SunacNoHighlight();
 
 	//第一步：选择需要统计的门窗
 	eViewDir viewDir = E_VIEW_FRONT;
@@ -32,7 +36,7 @@ void CMD_SunacWindowsTable()
 	if (bSuc1 == false)
 		return;
 
-	const vector<CWinInCad> wins = CWindowSelect::SelectWindows(viewDir);
+	const vector<CSunacObjInCad> wins = CSunacSelect::SelectSunacObjs(S_WINDOW, viewDir);
 	if (wins.size() == 0)
 		return;
 
@@ -267,11 +271,10 @@ void CMD_SunacWindowsTable()
 	{
 		winIds.push_back(wins[i].m_winId);
 	}
-	CCommandHighlight::GetInstance()->WindowDoorHighlight(winIds);
+	CCommandHighlight::GetInstance()->SunacHighlight(winIds);
 
 	return;
 }
-
 
 //p_dataStartRow为开始行号, p_floorColumnCount为楼层列的数量，p_floorColumns为楼层信息(如：1,2-5,7,10-16)
 void WriteDataToTable(AcDbTable *p_table, int p_dataStartRow, int p_floorColumnCount, vector<CString> p_floorColumns, const CWindowAndCount& p_winAndCount)
@@ -322,22 +325,16 @@ void WriteDataToTable(AcDbTable *p_table, int p_dataStartRow, int p_floorColumnC
 				continue;
 			}
 
-			int numWindowDoor = nCount / nFloorCount;
+			int numWindowDoor = pWinAtt->GetFloorInfo().GetFloorCountByFloorIndex(nStart);
 			str.Format(L"%d*%d", numWindowDoor, nFloorCount);
 			p_table->setTextString(p_dataStartRow, 4 + i, str);
 			nAllFloorCount.push_back(numWindowDoor * nFloorCount);
 		}
 		else
 		{
-			int nFloorCount = _ttoi(p_floorColumns[i]);
-		/*	if (nFloorCount == 0)
-			{
-				AfxMessageBox(_T("门窗楼层信息设置有误"));
-				return;
-			}*/
-
-			nAllFloorCount.push_back(p_winAndCount.nCount / pWinAtt->GetFloorInfo().GetFloorCount());
-			str.Format(L"%d", nAllFloorCount[i]);
+			int numWindowDoor = pWinAtt->GetFloorInfo().GetFloorCountByFloorIndex(_ttoi(p_floorColumns[i]));
+			nAllFloorCount.push_back(numWindowDoor);
+			str.Format(L"%d", numWindowDoor);
 			p_table->setTextString(p_dataStartRow, 4 + i, str);
 		}
 	}
@@ -355,12 +352,36 @@ void WriteDataToTable(AcDbTable *p_table, int p_dataStartRow, int p_floorColumnC
 	//备注
 }
 
+void AddXDataForWinTable(AcDbTable *p_table, vAcDbObjectId p_winIds)
+{
+	vAcDbHandle vHandles;
+	JHCOM_GetAcDbHandles(p_winIds, vHandles);
+
+	CString strAppName = L"xData";
+	acdbRegApp(strAppName);
+
+	struct resbuf* pRb = acutBuildList(AcDb::kDxfRegAppName, strAppName, RTNONE);
+	struct resbuf* pRbNext = pRb;
+
+	ACHAR handleBuffer[20];
+	for (int i = 0; i < vHandles.size(); i++)
+	{
+		vHandles[i].getIntoAsciiBuffer(handleBuffer);
+		struct resbuf* pRbTemp = acutBuildList(AcDb::kDxfXdHandle, handleBuffer, RTNONE);
+		pRbNext->rbnext = pRbTemp;
+		pRbNext = pRbTemp;
+	}
+	
+	Acad::ErrorStatus es = p_table->setXData(pRb);
+	acutRelRb(pRb);
+}
+
 //地面门窗表
 void CMD_SunacFloorWindowsTable()
 {
-	CString info, str;
+	CDocLock lock;
 
-	CCommandHighlight::GetInstance()->WindowDoorNoHighlight();
+	CCommandHighlight::GetInstance()->SunacNoHighlight();
 
 	//第一步：选择需要统计的门窗
 	//eViewDir viewDir = E_VIEW_TOP;
@@ -368,7 +389,7 @@ void CMD_SunacFloorWindowsTable()
 	//if (bSuc1 == false)
 	//	return;
 
-	const vector<CWinInCad> wins = CWindowSelect::SelectWindows(E_VIEW_TOP);
+	const vector<CSunacObjInCad> wins = CSunacSelect::SelectSunacObjs(S_WINDOW, E_VIEW_TOP);
 	if (wins.size() == 0)
 		return;
 
@@ -520,7 +541,7 @@ void CMD_SunacFloorWindowsTable()
 	for (int i = 0; i < numWindowDoor; i++)
 	{
 		const CWindowAndCount& winAndCount = winCountArray.GetWindow(i);
-		splitWindowDoorArray.SplitWindowDoor(numWindowDoor, winAndCount);
+		splitWindowDoorArray.SplitWindowDoor(winAndCount);
 	}
 
 	//3.4 按照各个类型的门窗将数据写入表格
@@ -647,7 +668,6 @@ void CMD_SunacFloorWindowsTable()
 		}
 	}
 
-	AcDbObjectId tableId = JHCOM_PostToModelSpace(table);
 
 	//对选择的门窗高亮
 	vAcDbObjectId winIds;
@@ -655,7 +675,11 @@ void CMD_SunacFloorWindowsTable()
 	{
 		winIds.push_back(wins[i].m_winId);
 	}
-	CCommandHighlight::GetInstance()->WindowDoorHighlight(winIds);
+	CCommandHighlight::GetInstance()->SunacHighlight(winIds);
 
+	AddXDataForWinTable(table, winIds);
+
+	AcDbObjectId tableId = JHCOM_PostToModelSpace(table);
+	
 	return;
 }

@@ -19,11 +19,17 @@ int CAirConStatistic::SelectAirCons()
 	{
 		AcDbObject* pAttr = NULL;
 		TY_GetAttributeData(ids[i], pAttr);
-		AttrAirCon* pAttrAirCon = AttrAirCon::cast(pAttr);
-		if (pAttrAirCon == NULL)
+		if (pAttr==NULL)
 			continue;
-		count++;
-		InsertAirCon(pAttrAirCon);
+
+		AttrAirCon* pAttrAirCon = AttrAirCon::cast(pAttr);
+		if (pAttrAirCon != NULL)
+		{
+			count++;
+			InsertAirCon(pAttrAirCon);
+		}
+
+		pAttr->close();
 	}
 
 	return count;
@@ -35,17 +41,17 @@ void CAirConStatistic::InsertAirCon(AttrAirCon* pAttr)
 	{
 		if (JHCOM_equ(m_allAirCons[i].first, pAttr->m_power))
 		{
-			m_allAirCons[i].second++;
+			m_allAirCons[i].second += (pAttr->m_floorInfo.GetFloorCount());
 			return;
 		}
 	}
-	m_allAirCons.push_back(make_pair(pAttr->m_power, 1));
+	m_allAirCons.push_back(make_pair(pAttr->m_power, pAttr->m_floorInfo.GetFloorCount()));
 }
 
 AcDbObjectId CAirConStatistic::InsertTableToCAD(AcGePoint3d insertPos)
 {
-	const double c_tableCellWidth[] = {20, 20, 20, 50};
-	const double c_tableCellHeight = 6;
+	const double c_tableCellWidth[] = {700, 700, 700, 2000};
+	const double c_tableCellHeight = 300;
 
 	sort(m_allAirCons.begin(), m_allAirCons.end());
 
@@ -85,7 +91,7 @@ AcDbObjectId CAirConStatistic::InsertTableToCAD(AcGePoint3d insertPos)
 		for (int nColum = 0; nColum < columSize; nColum++)
 		{
 			pTable->setAlignment(nRow, nColum, AcDb::kMiddleCenter);
-			pTable->setTextHeight(nRow, nColum,2.5);
+			pTable->setTextHeight(nRow, nColum, 150);
 		}
 	}
 
@@ -99,7 +105,7 @@ AcDbObjectId CAirConStatistic::InsertTableToCAD(AcGePoint3d insertPos)
 	pTable->generateLayout();
 
 	//设置标题
-	pTable->setTextString(0, 0, L"空调算量表");
+	pTable->setTextString(0, 0, L"空调统计表");
 	pTable->setTextString(1, 0, L"序号");
 	pTable->setTextString(1, 1, L"匹数");
 	pTable->setTextString(1, 2, L"数量");

@@ -6,28 +6,29 @@ using namespace std;
 #define  SUNAC_ATTRIBUTE_ENTITY L"SUNAC_ATTRIBUTE_ENTITY"
 
 
-#define  FILE_VERSION ((Adesk::Int32)7)
+#define  FILE_VERSION ((Adesk::Int32)8)
 //版本2，门窗增加深化设计材质属性保存
 //20191113 版本3，门窗增加窗下墙高度属性
 //20191213 版本4：门窗增加关联门窗和被关联门窗的句柄
 //20200317 版本5：门窗增加防火窗属性
 //20200324 版本6：楼层信息从AttrWindow移到基类，以便支持所有的类型
 //20200328 版本7：门窗新增天正窗洞id属性
+//20200423 版本8：门窗和天正门洞关联单独保存
 
 #define  WORK_LOCAL//是否本地工作模式
 #define	 CHECK_USE//是否检测权限
 
 //模块类型
-typedef enum eRCType
+enum eRCType
 {
-    WINDOW,//外窗
-	DOOR,//门
-	KITCHEN,//厨房
-	Bathroom,//卫生间
-	AIRCON,//空调
-	RAILING,//栏杆
-	TYPENUM
-}eRCType;
+    S_WINDOW,//外窗
+	S_DOOR,//门
+	S_KITCHEN,//厨房
+	S_BATHROOM,//卫生间
+	S_AIRCON,//空调
+	S_RAILING,//栏杆
+	S_TYPENUM
+};
 
 
 enum eViewDir
@@ -75,22 +76,7 @@ typedef enum eWindowDoorPos//门窗位置关系
 	CHUIZHIKAI//垂直开
 } eWindowDoorPos;
 
-inline eWindowDoorPos ToEWindowDoorPos(CString type)
-{
-	if (type == "对开")
-	{
-		return DUIKAI;
-	} 
-	else if (type == "垂直开")
-	{
-		return CHUIZHIKAI;
-	}
-	else
-	{
-		ASSERT(FALSE);
-		return DUIKAI;
-	}
-}
+eWindowDoorPos ToEWindowDoorPos(CString type);
 
 struct CDwgFileInfo
 {
@@ -118,6 +104,7 @@ public:
 	int GetFloorCount()const{ return (int)(m_nAllFloors.size()); }
 	vector<int> GetAllFloor()const{ return m_nAllFloors; }
 	int GetFloorCountByFloor(CString p_sFloor)const;
+	int GetFloorCountByFloorIndex(int p_nFloor)const;
 
 	bool SetFloorHeight(double p_height);
 	double GetFloorHeight()const { return m_floorHeight; }
@@ -129,5 +116,5 @@ protected:
 	CString m_sFloors; //楼层范围，逗号分隔，多楼层用-分隔，示例： 2-5,7
 	double m_floorHeight; //层高
 
-	vector<int> m_nAllFloors;
+	vector<int> m_nAllFloors; //数字int表示楼层，举例：1，1,1,2,2,3,3. 表示1楼有3个门窗，2楼有2个门窗、3楼有3个门窗
 };

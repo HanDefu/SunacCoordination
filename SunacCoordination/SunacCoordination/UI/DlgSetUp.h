@@ -16,7 +16,7 @@ public:
 	virtual ~CDlgSetUp();
 
 // 对话框数据
-	enum { IDD = IDD_DIALOG_SETUP };
+	enum { IDD = IDD_DIALOG_WIN_SETTING };
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
@@ -26,6 +26,7 @@ protected:
 public:
 	BOOL m_showLimianNumberDlg;	//是否显示立面图的门窗编号
 	BOOL m_useAinLimianDlg;		//立面图是否使用塞缝尺寸
+	BOOL m_bSupportTangent;
 
 	CComboBox m_winNumberTextSizeDlg;//门窗编号字体
 	CComboBox m_winDetailDimRateDlg;//门窗编号字体

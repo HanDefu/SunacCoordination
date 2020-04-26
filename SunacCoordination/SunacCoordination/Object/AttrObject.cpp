@@ -22,6 +22,8 @@ AttrObject::AttrObject()
 	m_isDynamic = true;
 
 	m_instanceCodeId = AcDbObjectId::kNull;
+
+	m_viewDir = E_VIEW_TOP;
 }
 
 AttrObject::~AttrObject()
@@ -49,6 +51,7 @@ AttrObject& AttrObject::operator=(const AttrObject &rhs)
 	//SetInstanceCode(rhs.m_instanceCode);//实例编号
 
 	m_floorInfo = rhs.m_floorInfo;
+	m_viewDir = rhs.m_viewDir;
 	return *this;
 }
 
@@ -69,6 +72,7 @@ void AttrObject::Clone(const AttrObject& p_src) //克隆只克隆数据，不克隆关联关系
 	SetInstanceCode(p_src.m_instanceCode);//实例编号
 
 	m_floorInfo = p_src.m_floorInfo; //楼层信息
+	m_viewDir = p_src.m_viewDir;
 }
 
 Acad::ErrorStatus AttrObject::dwgInFields(AcDbDwgFiler* filer)
@@ -112,6 +116,8 @@ Acad::ErrorStatus AttrObject::dwgInFields(AcDbDwgFiler* filer)
 		double floorHeight;
 		filer->readItem(&floorHeight);
 		m_floorInfo.SetFloorHeight(floorHeight);
+
+		filer->readItem((Adesk::UInt32*)&m_viewDir);
 	}
 
 	return filer->filerStatus();
@@ -160,6 +166,8 @@ Acad::ErrorStatus AttrObject::dwgOutFields(AcDbDwgFiler* filer) const
 	{
 		filer->writeItem(m_floorInfo.GetFloors());
 		filer->writeItem(m_floorInfo.GetFloorHeight());
+
+		filer->writeItem((Adesk::UInt32)m_viewDir);
 	}
 
 	return filer->filerStatus();

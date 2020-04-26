@@ -58,29 +58,29 @@ void CDoubleClickBlockReference::startEdit( AcDbEntity *pEnt, AcGePoint3d pt )
 		CAcModuleResourceOverride resOverride;
 		switch (rcType)
 		{
-		case WINDOW:
+		case S_WINDOW:
 			{
 				OpenWindowDlg(pBlockReference->objectId());
 				break;
 			}
 			
-		case KITCHEN:
+		case S_KITCHEN:
 			{
 				OpenKitchenDlg(pBlockReference);
 				break;
 			}
 			
-		case Bathroom:
+		case S_BATHROOM:
 			{
 				OpenBathroomDlg(pBlockReference);
 				break;
 			}
-		case RAILING:
+		case S_RAILING:
 			{
 				OpenRailingDlg(pBlockReference);
 				break;
 			}
-		case AIRCON:
+		case S_AIRCON:
 			{
 				OpenAirconditionerDlg(pBlockReference);
 				break;

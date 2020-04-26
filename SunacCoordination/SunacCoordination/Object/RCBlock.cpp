@@ -20,6 +20,7 @@ File description:
 #include "../Common/ComFun_ACAD_Common.h"
 #include "../Common/ComFun_String.h"
 #include "../Common/ComFun_Layer.h"
+#include "../Tool/DocLock.h"
 #include <acdocman.h>
 
 //default constructor
@@ -49,7 +50,7 @@ AcDbObjectId RCBlock::Insert(CString fileName, AcGePoint3d origin, double angle,
 {
 	m_blockRecordName = FilePathToFileNameWithoutExtension(fileName);
 
-	acDocManager->lockDocument(curDoc());
+	CDocLock doclock;
 	//检查图层是否存在，不存在则创建
 	AcDbObjectId layerId = JHCOM_GetLayerID(layerName);
 	if (layerId==AcDbObjectId::kNull)
@@ -58,7 +59,6 @@ AcDbObjectId RCBlock::Insert(CString fileName, AcGePoint3d origin, double angle,
 	}
 
 	MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, fileName, m_blockRecordName,  m_id, origin, angle, AcGeScale3d(1), layerName, color);
-	acDocManager->unlockDocument(curDoc());
 	return m_id;
 }
 

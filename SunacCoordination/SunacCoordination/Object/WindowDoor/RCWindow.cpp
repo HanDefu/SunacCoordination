@@ -266,7 +266,7 @@ AcDbObjectId RCWindow::Insert(CString fileName, AcGePoint3d origin, double angle
 {
 	m_blockRecordName = FilePathToFileNameWithoutExtension(fileName);
 
-	acDocManager->lockDocument(curDoc());
+	CDocLock doclock;
 	//检查图层是否存在，不存在则创建
 	AcDbObjectId layerId = JHCOM_GetLayerID(layerName);
 	if (layerId==AcDbObjectId::kNull)
@@ -279,11 +279,9 @@ AcDbObjectId RCWindow::Insert(CString fileName, AcGePoint3d origin, double angle
 	MD2010_SetCurrentLayer(layerName);
 	AcDbObjectId BlockDefineId = MD2010_InsertBlockDefineFromPathName(fileName,m_blockRecordName);
 
-	//TODO 叶明远
 	ModifyLayerName(BlockDefineId);
 
 	MD2010_InsertBlockReference_Layout(ACDB_MODEL_SPACE, m_blockRecordName, m_id, origin, angle, AcGeScale3d(1), color);
 	MD2010_SetCurrentLayer(name);
-	acDocManager->unlockDocument(curDoc());
 	return m_id;
 }

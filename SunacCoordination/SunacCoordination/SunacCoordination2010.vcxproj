@@ -59,6 +59,7 @@
     <ClCompile Include="Object\Kitchen\RCKitchen.cpp" />
     <ClCompile Include="Object\Railing\AttrRailing.cpp" />
     <ClCompile Include="Object\Railing\RailingStatistic.cpp" />
+    <ClCompile Include="Object\Railing\RailingTop2Front.cpp" />
     <ClCompile Include="Object\Railing\RCRailing.cpp" />
     <ClCompile Include="Object\Railing\RCRailingBoli.cpp" />
     <ClCompile Include="Object\Railing\RCRailingTieyi.cpp" />
@@ -75,6 +76,7 @@
     <ClCompile Include="Object\WindowDoor\WindowAutoName.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowGen.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowSelect.cpp" />
+    <ClCompile Include="Object\WindowDoor\WindowTable.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowTop2Front.cpp" />
     <ClCompile Include="Object\WindowDoor\WinTangentOpenMap.cpp" />
     <ClCompile Include="Object\WindowStatistic\AluminumSeries.cpp" />
@@ -110,8 +112,6 @@
     <ClCompile Include="UI\DlgLogin.cpp" />
     <ClCompile Include="UI\DlgSetUp.cpp" />
     <ClCompile Include="UI\DlgWindowAirCalc.cpp" />
-    <ClCompile Include="UI\FacadeDlg.cpp" />
-    <ClCompile Include="UI\FillingDlg.cpp" />
     <ClCompile Include="UI\GridCellForPreview.cpp" />
     <ClCompile Include="UI\GridCellWithPicture.cpp" />
     <ClCompile Include="UI\GridCtrlEx.cpp" />
@@ -131,7 +131,6 @@
     <ClCompile Include="UI\GridCtrl_src\TitleTip.cpp" />
     <ClCompile Include="UI\GsPreviewCtrl.cpp" />
     <ClCompile Include="UI\KitchenDlg.cpp" />
-    <ClCompile Include="UI\MoldingsDlg.cpp" />
     <ClCompile Include="UI\MyPalette.cpp" />
     <ClCompile Include="UI\MyPaletteSet.cpp" />
     <ClCompile Include="UI\NewDirDlg.cpp" />
@@ -139,9 +138,9 @@
     <ClCompile Include="UI\ProjectManagementDlg.cpp" />
     <ClCompile Include="UI\RailingDlg.cpp" />
     <ClCompile Include="UI\TreeCtrlEx.cpp" />
-    <ClCompile Include="UI\WaterproofDlg.cpp" />
     <ClCompile Include="UI\WindowAdvanceDlg.cpp" />
     <ClCompile Include="UI\WindowDlg.cpp" />
+    <ClCompile Include="UI\WindowTableCheckDlg.cpp" />
     <ClCompile Include="WebIO\AirConditionLocalData.cpp" />
     <ClCompile Include="WebIO\AirConditionLocalDataFromDB.cpp" />
     <ClCompile Include="WebIO\AirconditionWebData.cpp" />
@@ -205,6 +204,7 @@
     <ClInclude Include="Object\PrototypeCommonDef.h" />
     <ClInclude Include="Object\Railing\AttrRailing.h" />
     <ClInclude Include="Object\Railing\RailingStatistic.h" />
+    <ClInclude Include="Object\Railing\RailingTop2Front.h" />
     <ClInclude Include="Object\Railing\RCRailing.h" />
     <ClInclude Include="Object\Railing\RCRailingBoli.h" />
     <ClInclude Include="Object\Railing\RCRailingTieyi.h" />
@@ -221,6 +221,7 @@
     <ClInclude Include="Object\WindowDoor\WindowAutoName.h" />
     <ClInclude Include="Object\WindowDoor\WindowGen.h" />
     <ClInclude Include="Object\WindowDoor\WindowSelect.h" />
+    <ClInclude Include="Object\WindowDoor\WindowTable.h" />
     <ClInclude Include="Object\WindowDoor\WindowTop2Front.h" />
     <ClInclude Include="Object\WindowDoor\WinTangentOpenMap.h" />
     <ClInclude Include="Object\WindowStatistic\AluminumSeries.h" />
@@ -267,8 +268,6 @@
     <ClInclude Include="UI\DlgLogin.h" />
     <ClInclude Include="UI\DlgSetUp.h" />
     <ClInclude Include="UI\DlgWindowAirCalc.h" />
-    <ClInclude Include="UI\FacadeDlg.h" />
-    <ClInclude Include="UI\FillingDlg.h" />
     <ClInclude Include="UI\GridCellForPreview.h" />
     <ClInclude Include="UI\GridCellWithPicture.h" />
     <ClInclude Include="UI\GridCtrlEx.h" />
@@ -298,7 +297,6 @@
     <ClInclude Include="UI\Menu\CAcadPopupMenuItem.h" />
     <ClInclude Include="UI\Menu\CAcadPopupMenus.h" />
     <ClInclude Include="UI\Menu\Menu_Def.h" />
-    <ClInclude Include="UI\MoldingsDlg.h" />
     <ClInclude Include="UI\MyPalette.h" />
     <ClInclude Include="UI\MyPaletteSet.h" />
     <ClInclude Include="UI\NewDirDlg.h" />
@@ -306,9 +304,9 @@
     <ClInclude Include="UI\ProjectManagementDlg.h" />
     <ClInclude Include="UI\RailingDlg.h" />
     <ClInclude Include="UI\TreeCtrlEx.h" />
-    <ClInclude Include="UI\WaterproofDlg.h" />
     <ClInclude Include="UI\WindowAdvanceDlg.h" />
     <ClInclude Include="UI\WindowDlg.h" />
+    <ClInclude Include="UI\WindowTableCheckDlg.h" />
     <ClInclude Include="WebIO\AirConditionLocalData.h" />
     <ClInclude Include="WebIO\AirConditionLocalDataFromDB.h" />
     <ClInclude Include="WebIO\AirconditionWebData.h" />
@@ -457,7 +455,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2010_Win_64_and_32Bit\inc;$(ProjectDir);C:\Autodesk\Autodesk_ObjectARX_2010_Win_64_and_32Bit\utils\brep\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Autodesk\Autodesk_ObjectARX_2010_Win_64_and_32Bit\inc;C:\Autodesk\Autodesk_ObjectARX_2010_Win_64_and_32Bit\inc-win32;C:\Autodesk\Autodesk_ObjectARX_2010_Win_64_and_32Bit\utils\brep\inc;$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>ACRXAPP;RADPACK;ARX_2010;_AFXDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <TreatWarningAsError>false</TreatWarningAsError>
@@ -465,7 +463,7 @@
     <Link>
       <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2010_Win_64_and_32Bit\lib;C:\Autodesk\Autodesk_ObjectARX_2010_Win_64_and_32Bit\lib-win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2010_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
-      <AdditionalDependencies>acdbmgd.lib;Tool\SQLite\x86\sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>acdbmgd.lib;AcWipeoutObj18.lib;Tool\SQLite\x86\sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)SunacCAD2010X86.arx</OutputFile>
       <DelayLoadDLLs>sqlite3.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
@@ -484,7 +482,7 @@
       <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2010_Win_64_and_32Bit\lib;C:\Autodesk\Autodesk_ObjectARX_2010_Win_64_and_32Bit\lib-x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2010_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
       <TargetMachine>MachineX64</TargetMachine>
-      <AdditionalDependencies>acdbmgd.lib;Tool\SQLite\sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>acdbmgd.lib;AcWipeoutObj18.lib;Tool\SQLite\sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)SunacCAD2010X64.arx</OutputFile>
       <DelayLoadDLLs>sqlite3.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>

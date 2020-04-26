@@ -632,7 +632,7 @@ AcDbObjectId TY_GetExtensionDictionaryID(AcDbObjectId id)
 
 AcDbObjectId TY_CreateExtensionDictionaryID(AcDbObjectId id)
 {
-	acDocManager->lockDocument(curDoc());
+	CDocLock doclock;
 
 	AcDbObjectId dicId = AcDbObjectId::kNull;
 
@@ -647,9 +647,7 @@ AcDbObjectId TY_CreateExtensionDictionaryID(AcDbObjectId id)
 		}
 		pObj->close();
 	}
-
-	acDocManager->unlockDocument(curDoc());
-
+	
 	return dicId;
 }
 
@@ -670,24 +668,21 @@ int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt)
 		return -1;
 	}
 
+	CDocLock lock;
 
 	//注意这里有时候加入不进去， 是因为没有注册
-	Acad::ErrorStatus es = acDocManager->lockDocument(curDoc());
-
 	AcDbDictionary *pDict = NULL;
 	if (acdbOpenObject(pDict, dicID, AcDb::kForWrite) == Acad::eOk)
 	{
 		AcDbObjectId patternID = NULL;
-		es =pDict->setAt(SUNAC_ATTRIBUTE_ENTITY, pDataEnt, patternID);
+		Acad::ErrorStatus es = pDict->setAt(SUNAC_ATTRIBUTE_ENTITY, pDataEnt, patternID);
 		pDict->close();
 		pDataEnt->close();
 
-		acDocManager->unlockDocument(curDoc());
 		return 0;
 	}
 	else
 	{
-		acDocManager->unlockDocument(curDoc());
 		return -3;
 	}
 }
@@ -713,6 +708,33 @@ int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt)
 	return pDataEnt == NULL ? 0 : -68;
 }
 
+
+bool TY_IsSunacObj(AcDbObjectId Id, eRCType p_rcType, eViewDir p_view)
+{
+	switch (p_rcType)
+	{
+	case S_WINDOW:
+	case S_DOOR:
+		return TY_IsWindow(Id, p_view);
+		break;
+	case S_KITCHEN:
+		return TY_Iskitchen(Id);
+		break;
+	case S_BATHROOM:
+		return TY_IsBathroom(Id);
+		break;
+	case S_AIRCON:
+		return TY_IsAirCon(Id);
+		break;
+	case S_RAILING:
+		return TY_IsRailing(Id, p_view);
+		break;
+	default:
+		return false;
+		break;
+	}
+}
+
 bool TY_IsWindow(AcDbObjectId Id, eViewDir p_view)
 {
 	AcDbObject * pDataEnt = 0;
@@ -730,10 +752,25 @@ bool TY_IsWindow(AcDbObjectId Id, eViewDir p_view)
 	return true;
 }
 
+bool TY_IsRailing(AcDbObjectId Id, eViewDir p_view)
+{
+	AcDbObject * pDataEnt = 0;
+	TY_GetAttributeData(Id, pDataEnt);
+	AttrRailing * pRailing = dynamic_cast<AttrRailing *>(pDataEnt);
+	if (pRailing == 0)
+		return false;
+
+	if (p_view != E_VIEW_ALL)
+	{
+		return pRailing->GetViewDir() == p_view;
+	}
+	return true;
+}
+
 eRCType TY_GetType(AcDbBlockReference *pBlockReference)
 {
 	if (pBlockReference == 0)
-		return TYPENUM;
+		return S_TYPENUM;
 	AcDbObject * pDataEnt = 0;
 	AcDbObjectId dictid = pBlockReference->extensionDictionary();
 
@@ -744,32 +781,32 @@ eRCType TY_GetType(AcDbBlockReference *pBlockReference)
 		pDict->close();
 		pDataEnt->close();
 		if(pDataEnt == NULL)
-			return TYPENUM;
+			return S_TYPENUM;
 
 		AttrWindow * pWindow = dynamic_cast<AttrWindow *>(pDataEnt);
 		if (pWindow != 0)
-			return WINDOW;
+			return S_WINDOW;
 
 		AttrKitchen * pKit = dynamic_cast<AttrKitchen *>(pDataEnt);
 		if (pKit != 0)
-			return KITCHEN;
+			return S_KITCHEN;
 
 		AttrBathroom * pBath= dynamic_cast<AttrBathroom *>(pDataEnt);
 		if (pBath != 0)
-			return Bathroom;
+			return S_BATHROOM;
 
 		AttrRailing * pRail = dynamic_cast<AttrRailing *>(pDataEnt);
 		if (pRail != 0)
-			return RAILING;
+			return S_RAILING;
 
 		AttrAirCon * pAir = dynamic_cast<AttrAirCon *>(pDataEnt);
 		if (pAir != 0)
-			return AIRCON;
+			return S_AIRCON;
 
-		return TYPENUM;
+		return S_TYPENUM;
 	}
 	else
-		return TYPENUM;
+		return S_TYPENUM;
 }
 
 bool TY_Iskitchen(AcDbObjectId Id)
@@ -782,15 +819,6 @@ bool TY_Iskitchen(AcDbObjectId Id)
 	return false;
 }
 
-bool TY_IsRailing(AcDbObjectId Id)
-{
-	AcDbObject * pDataEnt = 0;
-	TY_GetAttributeData(Id, pDataEnt);
-	AttrRailing * pKitchen = dynamic_cast<AttrRailing *>(pDataEnt);
-	if (pKitchen != 0)
-		return true;
-	return false;
-}
 
 bool TY_IsAirCon(AcDbObjectId Id)
 {
@@ -1461,4 +1489,123 @@ bool IsFileExist(const CString & strFileName)
 		_findclose(hFile);
 		return false;
 	}
+}
+
+bool TYCOM_DeleteBlkXData(AcDbBlockReference *pBlkRef, CString Key)
+{
+	CString strAppName(Key);
+	//注册应用程序名称
+	acdbRegApp(Key);
+
+	//创建结果缓冲区链表
+	struct resbuf *rb = acutBuildList(AcDb::kDxfRegAppName, strAppName, RTNONE);
+	//应用程序名称
+
+	//设置内容为空的结果缓冲区链表就是删除扩展数据
+	pBlkRef->setXData(rb);
+
+	acutRelRb(rb);
+
+	pBlkRef->close();
+
+	return true;
+}
+
+bool TYCOM_DeleteBlkXData(AcDbObjectId id, CString Key)
+{
+	AcDbBlockReference *pBlkRef = 0;
+	AcDbEntity *pEnt = 0;
+	Acad::ErrorStatus es = acdbOpenObject(pEnt, id, AcDb::kForWrite);
+	if (es == Acad::eOk)
+	{
+		pBlkRef = AcDbBlockReference::cast(pEnt);
+		if (pBlkRef)
+		{
+			TYCOM_DeleteBlkXData(pBlkRef, Key);
+		}
+		pEnt->close();
+	}
+	return 0;
+}
+
+int TYCOM_SaveBlkString(AcDbBlockReference *pBlkRef, CString Key, CString value)
+{
+	if (pBlkRef == 0)
+		return -1;
+	////扩展数据的内容
+	struct resbuf* pRb;
+	////注册应用程序名称
+	acdbRegApp(Key);
+	CString strAppName(Key);
+	//创建结果缓冲区链表
+	pRb = acutBuildList(AcDb::kDxfRegAppName, strAppName,
+		AcDb::kDxfXdAsciiString, value,
+		RTNONE);
+
+	Acad::ErrorStatus es = pBlkRef->setXData(pRb);
+
+	acutRelRb(pRb);
+	pBlkRef->close();
+
+	return 0;
+}
+
+int TYCOM_SaveBlkString(AcDbObjectId id, CString Key, CString value)
+{
+	AcDbBlockReference *pBlkRef = 0;
+	AcDbEntity *pEnt = 0;
+	Acad::ErrorStatus es = acdbOpenObject(pEnt, id, AcDb::kForWrite);
+	if (es == Acad::eOk)
+	{
+		pBlkRef = AcDbBlockReference::cast(pEnt);
+		if (pBlkRef)
+		{
+			TYCOM_SaveBlkString(pBlkRef, Key, value);
+		}
+		pEnt->close();
+	}
+	return 0;
+}
+
+int TYCOM_GetBlkString(AcDbObjectId id, CString Key, CString &value)
+{
+	AcDbBlockReference *pBlkRef = 0;
+	AcDbEntity *pEnt = 0;
+	Acad::ErrorStatus es = acdbOpenObject(pEnt, id, AcDb::kForWrite);
+	if (es == Acad::eOk)
+	{
+		pBlkRef = AcDbBlockReference::cast(pEnt);
+		if (pBlkRef)
+		{
+			TYCOM_GetBlkString(pBlkRef, Key, value);
+		}
+		pEnt->close();
+	}
+	return 0;
+}
+
+int TYCOM_GetBlkString(AcDbBlockReference *pBlkRef, CString Key, CString &value)
+{
+	if (pBlkRef == 0)
+		return -1;
+
+	struct resbuf* pRb;
+	pRb = pBlkRef->xData(Key);
+
+	if (pRb != NULL)
+	{
+		////在命令行显示所有的扩展数据
+		struct resbuf* pTemp;
+		pTemp = pRb;
+		////首先要跳过应用程序名称
+		pTemp = pTemp->rbnext;
+		value = pTemp->resval.rstring;
+		acutRelRb(pRb);
+	}
+	else
+	{
+		acutPrintf(_T("\n该实体不包含任何的扩展数据"));
+	}
+
+	return 0;
 }

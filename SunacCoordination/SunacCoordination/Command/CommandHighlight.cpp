@@ -12,21 +12,21 @@ CCommandHighlight::~CCommandHighlight()
 {
 }
 
-void CCommandHighlight::WindowDoorHighlight(vAcDbObjectId p_windoorIds)
+void CCommandHighlight::SunacHighlight(vAcDbObjectId p_sunacIds)
 {
-	WindowDoorNoHighlight();
-	for (UINT i = 0; i < p_windoorIds.size(); i++)
+	SunacNoHighlight();
+	for (UINT i = 0; i < p_sunacIds.size(); i++)
 	{
-		JHCOM_HilightObject(p_windoorIds[i], true);
-		m_winHighlights.push_back(p_windoorIds[i]);
+		JHCOM_HilightObject(p_sunacIds[i], true);
+		m_sunacHighlights.push_back(p_sunacIds[i]);
 	}
 }
 
-void CCommandHighlight::WindowDoorNoHighlight()
+void CCommandHighlight::SunacNoHighlight()
 {
-	for (UINT i = 0; i < m_winHighlights.size(); i++)
+	for (UINT i = 0; i < m_sunacHighlights.size(); i++)
 	{
-		JHCOM_HilightObject(m_winHighlights[i], false);
+		JHCOM_HilightObject(m_sunacHighlights[i], false);
 	}
-	m_winHighlights.clear();
+	m_sunacHighlights.clear();
 }

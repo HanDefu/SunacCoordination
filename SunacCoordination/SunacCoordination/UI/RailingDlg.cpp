@@ -130,7 +130,7 @@ void Test(AttrRailing& railingAtt)
 }
 
 void CRailingDlg::OnBnClickedInsertToCAD()
-{	
+{
 	UpdateData();
 
 	vector<CCellID> selCells = m_preRailing.GetSelectedCells();
@@ -170,6 +170,7 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 
 	//平面图的栏杆长度为选择的插入点的间距
 	const eViewDir viewDir = (eViewDir)m_comboViewDir.GetCurSel();
+	railingAtt.SetViewDir(viewDir);
 	AcGePoint3d pnt1, pnt2;
 	if (viewDir == E_VIEW_TOP)
 	{
@@ -186,17 +187,16 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 			return;
 		}
 
-		CRCRailing* pRailingTop = NULL;
 		int nRailingTopLength = 0;
-		bool bSucTop = pRailingTop->GenerateInsertPt(pnt1, pnt2, nRailingTopLength);
+		bool bSucTop = CRCRailing::CheckRailingStartEndPt(pnt1, pnt2, nRailingTopLength);
 		if (bSucTop == false)
 		{
 			ShowWindow(SW_SHOW);
 			return;
 		}
 
+		m_width = nRailingTopLength;
 		railingAtt.m_length = nRailingTopLength;
-		delete pRailingTop;
 	}
 
 	//生成
@@ -236,6 +236,7 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 	{
 		//选择插入点
 		ShowWindow(SW_HIDE);
+
 		AcGePoint3d pnt;
 		if (m_pCurEdit == NULL)
 		{
@@ -259,14 +260,8 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 		int nRet = pRailing->GenerateRailing(pnt, railingId);
 	}
 
-	/*if (Acad::eOk == acdbOpenObject(m_pCurEdit, railingId, AcDb::kForRead))
-	{
-		m_pCurEdit->close();
-	}*/
-
 	delete pRailing;
-	
-	//ShowWindow(TRUE);
+
 	OnOK();
 }
 

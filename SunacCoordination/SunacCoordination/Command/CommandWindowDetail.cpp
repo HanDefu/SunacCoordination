@@ -14,6 +14,7 @@
 #include "../Object/WindowDoor/RCWindow.h"
 #include "../Object/WindowDoor/WindowGen.h"
 #include "../Object/WindowDoor/WindowSelect.h"
+#include "../Object/WindowDoor/WindowTable.h"
 #include "../Common/ComFun_ACad.h"
 #include "../Common/ComFun_Str.h"
 #include "../Common/ComFun_Sunac.h"
@@ -50,7 +51,7 @@ void CWindowDetail::DrawWindowDetail()
 {
 	CDocLock lockEnt;
 
-	CCommandHighlight::GetInstance()->WindowDoorNoHighlight();
+	CCommandHighlight::GetInstance()->SunacNoHighlight();
 
 	//第一步：选择需要统计的门窗
 	eViewDir viewDir = E_VIEW_FRONT;
@@ -60,7 +61,7 @@ void CWindowDetail::DrawWindowDetail()
 		return;
 	}
 
-	const vector<CWinInCad> wins = CWindowSelect::SelectWindows(viewDir);
+	const vector<CSunacObjInCad> wins = CSunacSelect::SelectSunacObjs(S_WINDOW, viewDir);
 	if (wins.size() == 0)
 		return;
 
@@ -79,7 +80,7 @@ void CWindowDetail::DrawWindowDetail()
 	for (int i = 0; i < winCountArray.GetCount(); i++)
 	{
 		AttrWindow winAtt = winCountArray.GetWindow(i).winAtt;
-		winAtt.m_viewDir = E_VIEW_EXTEND;
+		winAtt.SetViewDir(E_VIEW_EXTEND);
 		winAtt.ClearWinsRelation();
 
 		//4.1首先插入门窗表模板
@@ -104,7 +105,7 @@ void CWindowDetail::DrawWindowDetail()
 	{
 		winIds.push_back(wins[i].m_winId);
 	}
-	CCommandHighlight::GetInstance()->WindowDoorHighlight(winIds);
+	CCommandHighlight::GetInstance()->SunacHighlight(winIds);
 
 	return;
 }

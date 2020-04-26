@@ -328,8 +328,7 @@ void CKitchenDlg::OnBnClickedButtonDoorDir()//门方向
 
 	if (m_windowDir == temp)
 	{
-		AfxMessageBox(_T("门窗方向不能相同\n"));
-		return;
+		AfxMessageBox(_T("门窗方向不能相同,请修改门方向或窗方向\n"));
 	}
 
 	m_doorDir = temp;
@@ -365,8 +364,7 @@ void CKitchenDlg::OnBnClickedButtonWindowDir()//窗方向
 
 	if (m_doorDir == temp)
 	{
-		AfxMessageBox(_T("门窗方向不能相同\n"));
-		return;
+		AfxMessageBox(_T("门窗方向不能相同,请修改门方向或窗方向\n"));
 	}
 	m_windowDir = temp;
 	if (m_doorDir == E_DIR_UNKNOWN)

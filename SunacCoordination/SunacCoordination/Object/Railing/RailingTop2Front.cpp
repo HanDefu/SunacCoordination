@@ -2,31 +2,28 @@
 #include <dbidmap.h>
 #include "../../Common/ComFun_ACad.h"
 #include "../../Common/ComFun_Sunac.h"
-#include "WindowTop2Front.h"
-#include "AttrWindow.h"
-#include "RCWindow.h"
-#include "WindowGen.h"
-#include "WindowSelect.h"
 #include "..\..\Src\DocumentData.h"
 #include "..\..\GlobalSetting.h"
+#include "..\WindowDoor\WindowSelect.h"
+#include "RailingTop2Front.h"
+#include "RCRailing.h"
 
 
-bool CWindowTop2Front::GenFrontFromTop()
+bool CRailingTop2Front::GenFrontFromTop()
 {
-	//1.—°‘Ò–Ë“™…Ë÷√¬•≤„µƒ√≈¥∞
-	//vAcDbObjectId winIds = SelectSunacObjs(E_VIEW_TOP);
-	const vector<CSunacObjInCad> wins = CSunacSelect::SelectSunacObjs(S_WINDOW, E_VIEW_TOP);
-	vAcDbObjectId winIds;
-	for (UINT i = 0; i < wins.size(); i++)
+	//1.—°‘Ò–Ë“™…Ë÷√¬•≤„µƒ¿∏∏À
+	const vector<CSunacObjInCad> railings = CSunacSelect::SelectSunacObjs(S_RAILING, E_VIEW_TOP);
+	vAcDbObjectId ringIds;
+	for (UINT i = 0; i < railings.size(); i++)
 	{
-		winIds.push_back(wins[i].m_winId);
+		ringIds.push_back(railings[i].m_winId);
 	}
-	if (winIds.size() == 0)
+	if (ringIds.size() == 0)
 		return false;
 
 
 	E_DIRECTION windowDir = E_DIR_BOTTOM;
-	bool bSuc1 = GetTopViewWindowDirection(windowDir);
+	bool bSuc1 = GetTopViewDirection(windowDir);
 	if (bSuc1 == false)
 		return false;
 
@@ -37,34 +34,41 @@ bool CWindowTop2Front::GenFrontFromTop()
 
 	//////////////////////////////////////////////////////////////////////////
 	AcDbObjectIdArray idsNoFloorInfo; //√ª”–…Ë÷√¬•≤„µƒ¥∞ªß
-	vector<AttrWindow*>  winAtts;
+	vector<AttrRailing*>  railingAtts;
 	vector<AcGePoint3d> allPos; //≤Â»Îµ„
 	vector<AcDbExtents> allExtents; //≤Â»Îµ„
-	for (UINT i = 0; i < winIds.size(); i++)
+	for (UINT i = 0; i < ringIds.size(); i++)
 	{
-		RCWindow oneWindow;
-		oneWindow.m_id = winIds[i];
-		oneWindow.InitParameters();
-
-		AttrWindow* pAtt = oneWindow.GetAttribute();
-		if (pAtt != NULL)
+		AcDbObject * pDataEnt = 0;
+		TY_GetAttributeData(ringIds[i], pDataEnt);
+		if (pDataEnt==NULL)
+			continue;
+		
+		AttrRailing * pRailing = dynamic_cast<AttrRailing *>(pDataEnt);
+		if (pRailing == NULL)
 		{
-			if (pAtt->GetFloorInfo().GetAllFloor().size() == 0)
-			{
-				idsNoFloorInfo.append(winIds[i]);
-			}
-
-			winAtts.push_back(pAtt);
-			//pAtt->close();
-
-			allPos.push_back(oneWindow.m_blockInsertPos);
-			allExtents.push_back(oneWindow.m_blockExtent);
+			pDataEnt->close();
+			continue;
 		}
+
+		if (pRailing->GetFloorInfo().GetAllFloor().size() == 0)
+		{
+			idsNoFloorInfo.append(ringIds[i]);
+		}
+
+		railingAtts.push_back(pRailing);
+		pRailing->close();
+
+		AcGePoint3d blockInsertPos;
+		AcDbExtents blockExtent;
+		GetBlockInsertPosAndExtent(ringIds[i], blockInsertPos, blockExtent);
+		allPos.push_back(blockInsertPos);
+		allExtents.push_back(blockExtent);
 	}
 
 	if (idsNoFloorInfo.length() > 0)
 	{
-		AfxMessageBox(_T("≤ø∑÷¥∞ªßŒ¥…Ë÷√¬•≤„∫Õ≤„∏ﬂ"));
+		AfxMessageBox(_T("≤ø∑÷¿∏∏ÀŒ¥…Ë÷√¬•≤„∫Õ≤„∏ﬂ"));
 		for (int i = 0; i < idsNoFloorInfo.length(); i++)
 		{
 			JHCOM_HilightObject(idsNoFloorInfo[i], true);
@@ -91,19 +95,19 @@ bool CWindowTop2Front::GenFrontFromTop()
 
 	//////////////////////////////////////////////////////////////////////////
 	AcDbObjectIdArray idsOut;
-	for (UINT i = 0; i < winAtts.size(); i++)
+	for (UINT i = 0; i < railingAtts.size(); i++)
 	{
-		AttrWindow curWinAtt = *(winAtts[i]);
-		curWinAtt.SetViewDir(E_VIEW_FRONT);  //–¬…˙≥…µƒŒ™¡¢√ÊÕº
+		AttrRailing curRailingAtt = *(railingAtts[i]);
+		curRailingAtt.SetViewDir(E_VIEW_FRONT);  //–¬…˙≥…µƒŒ™¡¢√ÊÕº
 
-		curWinAtt.ClearWinsRelation(); 
-		curWinAtt.SetFromWinId( winIds[i]);
+		//curRailingAtt.ClearWinsRelation();
+		//curRailingAtt.SetFromWinId(ringIds[i]);
 
 		//µ±«∞¡–µƒ≤Â»Îµ„
 		AcGePoint3d posColum = insertPos;
 		posColum.x += allXvalue[i] - minX;
 
-		const CFloorInfo floorInfo = curWinAtt.GetFloorInfo();
+		const CFloorInfo floorInfo = curRailingAtt.GetFloorInfo();
 		const vector<int>  allFloos = floorInfo.GetAllFloor();
 		if (allFloos.size() == 0)
 			continue;
@@ -112,31 +116,61 @@ bool CWindowTop2Front::GenFrontFromTop()
 		AcGePoint3d pos = posColum;
 		//yuan —°‘Ò◊Ûœ¬Ω«¥∞ªß ±“‘œ¬◊¢ Õ£¨Y∑ΩœÚ—°‘Ò¬•≤„ª˘◊ºŒª÷√ ±∑≈ø™
 		//pos.y += floorInfo.GetFloorHeight()* (curFloor - 1);
-		//if (curWinAtt.GetType() == S_WINDOW)
+		//if (curWinAtt.GetType() == WINDOW)
 		//{
 		//	pos.y += curWinAtt.GetHeightUnderWindow();
 		//}
 
-		AcDbObjectId idOut = CWindowGen::GenerateWindow(curWinAtt, pos, E_DIR_BOTTOM, false, winIds[i]);
-
+		AcDbObjectId railingId;
+		CRCRailing* pRailing = CreateRailing(curRailingAtt);
+		int nRet = pRailing->GenerateRailing(pos, railingId);
+		
 		//∆‰À˚¬•≤„∏¥÷∆∑Ω Ω
-		AcDbObjectIdArray windowObjIds = CopyAllFloorByOneFloor(idOut, winAtts[i]);
-		winAtts[i]->SetRelatedWinIds(windowObjIds);
+		AcDbObjectIdArray railingObjIds = CopyAllFloorByOneFloor(railingId, &curRailingAtt);
+		//railingAtts[i]->SetRelatedWinIds(windowObjIds);
 
-		idsOut.append(windowObjIds);
+		idsOut.append(railingObjIds);
 	}
-
 
 	return true;
 }
 
-AcDbObjectIdArray CWindowTop2Front::CopyAllFloorByOneFloor(const AcDbObjectId& oneFloorId, const AttrWindow* pWinAtt)
+bool CRailingTop2Front::GetBlockInsertPosAndExtent(const AcDbObjectId p_id, AcGePoint3d& p_blockInsertPos, AcDbExtents& p_blockExtent)
+{
+	Acad::ErrorStatus es;
+	AcDbEntity* pEnt = NULL;
+	es = acdbOpenObject(pEnt, p_id, AcDb::kForRead);
+	if (es != Acad::eOk)
+	{
+		if (pEnt)
+			pEnt->close();
+		return false;
+	}
+
+	if (pEnt->isA() != AcDbBlockReference::desc())
+	{
+		pEnt->close();
+		return 1;
+	}
+
+	AcDbBlockReference *pBlkRef = AcDbBlockReference::cast(pEnt);
+	if (pBlkRef!=NULL)
+	{
+		p_blockInsertPos = pBlkRef->position();
+		pBlkRef->getGeomExtents(p_blockExtent);
+	}
+
+	pEnt->close();
+	return true;
+}
+
+AcDbObjectIdArray CRailingTop2Front::CopyAllFloorByOneFloor(const AcDbObjectId& oneFloorId, const AttrRailing* pRailingAtt)
 {
 	AcDbObjectIdArray windowObjIds;
 	windowObjIds.append(oneFloorId);
 	
 	//∆‰À˚¬•≤„≤…”√∏¥÷∆∑Ω Ω
-	const CFloorInfo floorInfo = pWinAtt->GetFloorInfo();
+	const CFloorInfo floorInfo = pRailingAtt->GetFloorInfo();
 	const vector<int>  allFloos = floorInfo.GetAllFloor();
 	if (allFloos.size() == 0)
 		return windowObjIds;
@@ -157,7 +191,7 @@ AcDbObjectIdArray CWindowTop2Front::CopyAllFloorByOneFloor(const AcDbObjectId& o
 			windowObjIds.append(objListCloned);
 
 			//∏¥÷∆∫Ûµƒ“≤º”µΩ√˚≥∆ø‚÷–
-			GetWindowAutoName()->AddWindowType(pWinAtt->GetInstanceCode(),  objListCloned[0]);
+			//GetWindowAutoName()->AddWindowType(pRailingAtt->GetInstanceCode(),  objListCloned[0]);
 		}
 	}
 
@@ -165,7 +199,7 @@ AcDbObjectIdArray CWindowTop2Front::CopyAllFloorByOneFloor(const AcDbObjectId& o
 }
 
 
-bool CWindowTop2Front::GetTopViewWindowDirection(E_DIRECTION &windowDir) //µ√µΩ∆Ω√Ê¥∞ªßµƒ∑ΩŒª£¨…œ°¢œ¬◊Û”“
+bool CRailingTop2Front::GetTopViewDirection(E_DIRECTION &windowDir) //µ√µΩ∆Ω√Ê¥∞ªßµƒ∑ΩŒª£¨…œ°¢œ¬◊Û”“
 {
 	windowDir = E_DIR_BOTTOM;
 
@@ -174,7 +208,7 @@ bool CWindowTop2Front::GetTopViewWindowDirection(E_DIRECTION &windowDir) //µ√µΩ∆
 	bool bSuc = false;
 	do 
 	{
-		bSuc = GetStringInput(_T("\n«Î ‰»Î¥∞ªß≥ØœÚ[∂´(E) Œ˜(W) ƒœ(S) ±±(N)]<S>:"), sDir);
+		bSuc = GetStringInput(_T("\n«Î ‰»Î≥ØœÚ[∂´(E) Œ˜(W) ƒœ(S) ±±(N)]<S>:"), sDir);
 		if (bSuc == false)
 			return false;
 
@@ -212,7 +246,7 @@ bool CWindowTop2Front::GetTopViewWindowDirection(E_DIRECTION &windowDir) //µ√µΩ∆
 	return bSuc;
 }
 
-vector<double> CWindowTop2Front::GetAllXValueInFrontView(const vector<AcDbExtents> &allExtents, const E_DIRECTION windowDir) //ªÒ»°∏˜¥∞ªß‘⁄¡¢√Ê ”Õº…œµƒx÷µ
+vector<double> CRailingTop2Front::GetAllXValueInFrontView(const vector<AcDbExtents> &allExtents, const E_DIRECTION windowDir) //ªÒ»°∏˜¥∞ªß‘⁄¡¢√Ê ”Õº…œµƒx÷µ
 {
 	vector<double> allXvalue;
 

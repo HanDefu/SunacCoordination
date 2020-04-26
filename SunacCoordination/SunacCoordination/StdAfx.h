@@ -103,6 +103,7 @@ typedef vector<WCHAR *>::iterator itvWCHAR;
 typedef vector<AcDbObjectId> vAcDbObjectId;
 typedef vector<AcDbObjectId>::iterator itvAcDbObjectId;
 typedef vector<vAcDbObjectId> vvAcDbObjectId;
+typedef vector<AcDbHandle> vAcDbHandle;
 
 typedef vector<AcGePoint3d> vAcGePoint3d;
 typedef vector<AcGePoint3d>::iterator itvAcGePoint3d;

@@ -44,7 +44,7 @@ public:
 	virtual Acad::ErrorStatus dwgInFileInfo(AcDbDwgFiler* pFiler, CDwgFileInfo& pFileInfo);
 	//}}AFX_ARX_METHODS
 	
-	virtual eRCType GetType(){return TYPENUM;}
+	virtual eRCType GetType(){return S_TYPENUM;}
 	virtual bool isEqualTo(AttrObject*other);//基础数据一致
 
 	CString GetFileName()const{ return m_file.fileName; }
@@ -58,6 +58,9 @@ public:
 	//20200324 版本6：楼层信息从AttrWindow移到基类，以便支持所有的类型
 	CFloorInfo GetFloorInfo()const { return m_floorInfo; }
 	void SetFloorInfo(CFloorInfo p_info) { m_floorInfo = p_info; }
+
+	virtual eViewDir GetViewDir()const { return m_viewDir; }
+	virtual void SetViewDir(eViewDir p_view) { } //默认不能改变视图方向
 
 public:
 	Adesk::Int32 m_version;		//文件版本 序列化时使用
@@ -77,6 +80,8 @@ public:
 
 
 	CFloorInfo m_floorInfo; //楼层信息 YUAN 20200324楼层信息从AttrWindow移到基类，以便支持所有的类型
+
+	eViewDir m_viewDir;//视图方向，平面图、立面图、侧视图 YUAN 20200324楼层信息从AttrWindow移到基类，以便支持所有的类型
 };
 
 

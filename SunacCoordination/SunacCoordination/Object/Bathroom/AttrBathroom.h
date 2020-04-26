@@ -40,7 +40,7 @@ public:
 	virtual Acad::ErrorStatus dwgOutFields(AcDbDwgFiler* pFiler) const;
 	virtual Acad::ErrorStatus dwgInFields(AcDbDwgFiler* pFiler);
 	//}}AFX_ARX_METHODS
-	virtual eRCType GetType() {return Bathroom;}
+	virtual eRCType GetType() {return S_BATHROOM;}
 	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
 	bool IsInstanceEqual(const AttrBathroom& p_att) const;
 

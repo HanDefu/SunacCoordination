@@ -1,6 +1,7 @@
 #pragma once
 
 #include "AttrRailing.h"
+#include <dbtable.h>
 
 using namespace std;
 
@@ -8,15 +9,18 @@ class CRailingStatistic
 {
 public:
 	int SelectRailings();
-	void InsertRailing(AttrRailing* pAttr);
 
 	AcDbObjectId InsertTableToCAD(AcGePoint3d insertPos);
+	void InsertRailingTableToCAD();
+	void WriteDataToRailingTable(AcDbTable *p_table, int p_dataStartRow, int p_floorColumnCount, vector<CString> p_floorColumns, const CRailingAndCount& p_railingAndCount);
+	void SpliteRailingByType(const CRailingAndCount& railingAndCount);
 
+protected:
+	void RailingClassify(AttrRailing* pAttr);
 	vector<pair<AttrRailing, int>> AllRailings(){ return m_allRailings; }
 
 protected:
 	vector<pair<AttrRailing, int>> m_allRailings;
+	vector<CRailingAndCount> m_tyRailings; //铁艺栏杆
+	vector<CRailingAndCount> m_blRailings; //玻璃栏杆
 };
-
-//用于插入表格时排序
-bool RailingCmp(const pair<AttrRailing, int>& x1, const pair<AttrRailing, int>& x2);

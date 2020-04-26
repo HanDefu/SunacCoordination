@@ -14,10 +14,10 @@ public:
 		return &instance;
 	}
 
-	void WindowDoorHighlight(vAcDbObjectId p_windoorIds);
-	void WindowDoorNoHighlight();
+	void SunacHighlight(vAcDbObjectId p_sunacIds);
+	void SunacNoHighlight();
 	
 private:
-	vAcDbObjectId m_winHighlights;
+	vAcDbObjectId m_sunacHighlights;
 };
 

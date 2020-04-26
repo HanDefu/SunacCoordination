@@ -13,7 +13,7 @@
 * Output          : NULL.
 * Return          : id : Object id returned by database.
 --------------------------------------------------------------------------*/
-AcDbObjectId      JHCOM_PostToModelSpace(AcDbEntity* pEnt);
+AcDbObjectId      JHCOM_PostToModelSpace(AcDbEntity* pEnt, CString entry = ACDB_MODEL_SPACE);
 
 /*-------------------------------------------------------------------------
 * Function Name   : JHCOM_DeleteCadObject

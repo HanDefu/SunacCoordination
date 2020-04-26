@@ -22,6 +22,7 @@
 //////////////////////////////////////////////////////////////////////////
 #include <opmext.h>
 #include <dbapserv.h>
+#include "..\Tool\DocLock.h"
 
 
 //#include "TangentCom\tch10_com19_opening.tlh"
@@ -71,7 +72,7 @@ AcDbObjectId AppendEntity(AcDbEntity *pEnt, const WCHAR * entry = ACDB_MODEL_SPA
 		return AcDbObjectId::kNull;
 	}
 
-	acDocManager->lockDocument(curDoc());
+	CDocLock doclock;
 	AcDbBlockTableRecord *pBlockTableRecord;
 	Acad::ErrorStatus es = pBlockTable->getAt(entry, pBlockTableRecord, AcDb::kForWrite);
 	if (es == Acad::eOk)
@@ -82,7 +83,6 @@ AcDbObjectId AppendEntity(AcDbEntity *pEnt, const WCHAR * entry = ACDB_MODEL_SPA
 
 	pBlockTable->close();
 	pEnt->close();
-	acDocManager->unlockDocument(curDoc());
 
 	return entId;
 }

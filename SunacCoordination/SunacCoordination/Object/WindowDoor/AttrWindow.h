@@ -123,6 +123,8 @@ public:
 	bool HasValue(CString p_sCode)const;
 	bool IsValueCanbeSet(CString p_sCode)const; //当前代号对应的值能否被设置
 	double GetValue(CString p_sCode, bool bDefaultValue = false) const;
+	bool SetValue(CString p_sCode, double p_dValue);
+
 	double GetH(bool bDefaultValue = false) const { return GetValue(L"H", bDefaultValue); }
 	double GetH1(bool bDefaultValue = false) const { return GetValue(L"H1", bDefaultValue); }
 	double GetH2(bool bDefaultValue = false) const { return GetValue(L"H2", bDefaultValue); }
@@ -134,9 +136,6 @@ public:
 	double GetA(bool bDefaultValue = false) const { return GetValue(L"a", bDefaultValue); } //塞缝尺寸
 	double GetR(bool bDefaultValue = false) const { return GetValue(L"R", bDefaultValue); }
 	double GetD(bool bDefaultValue = false) const { return GetValue(L"D", bDefaultValue); } //墙厚度
-
-	bool SetValue(CString p_sCode, double p_dValue);
-
 	bool SetH(double newValue) { return SetValue(L"H", newValue); }
 	bool SetH1(double newValue) { return SetValue(L"H1", newValue); }
 	bool SetH2(double newValue) { return SetValue(L"H2", newValue); }
@@ -158,8 +157,7 @@ public:
 	void SetIsFireproofWindow(bool p_isFireproofWindow){ m_isFireproofWindow = p_isFireproofWindow; }
 	bool GetIsFireproofWindow()const { return m_isFireproofWindow; }
 
-	eViewDir GetViewDir()const { return m_viewDir; }
-	void SetViewDir(eViewDir p_view){ m_viewDir = p_view; }
+	virtual void SetViewDir(eViewDir p_view){ m_viewDir = p_view; }
 
 	CString GetPrototypeDwgFilePath(eViewDir p_view)const;
 
@@ -176,11 +174,6 @@ public:
 	void SetFromWinId(AcDbObjectId p_id);
 	void SetRelatedWinIds(const AcDbObjectIdArray& p_relatedWinIds);
 	void ClearWinsRelation(); //移除关联关系
-
-
-	void SetWinTangentOpenId(AcDbObjectId p_winId, AcDbObjectId p_tangentOpenid);
-	AcDbObjectId GetWinTangentOpenId()const;
-
 
 protected:
 	CWindowsDimData* GetDimDataByCode(CString p_sCode);
@@ -209,7 +202,6 @@ public:
 	//以下属性为具体外窗插入时才设置,单个窗户实例的属性，非原型属性
 	//视图属性
 	bool m_isMirror;//由于用户会通过CAD镜像，m_isMirror在使用时不一定准确，需要在使用前根据图形更新数据
-	eViewDir m_viewDir;//视图方向，平面图、立面图、侧视图
 
 	bool   m_isBayWindow;	 //是否凸窗
 	bool   m_isFireproofWindow;//是否防火窗
@@ -224,9 +216,6 @@ protected:
 	AcDbHandle m_fromWinHandle;
 	vector<AcDbHandle> m_relatedWinHandles;
 #endif 
-
-
-	AcDbObjectId m_tangentOpeningId; //天正窗洞id 20200328, 在refactor里门窗生成时自动加入，门窗删除时清除
 };
 
 typedef std::vector<AttrWindow> vAttrWindow;

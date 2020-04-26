@@ -64,6 +64,7 @@ bool TY_GetTwoPoints(AcGePoint3d &pnt1, AcGePoint3d &pnt2);
 bool GetRealInput(const TCHAR* prompt, double defaultVal, int precision, double &ret);
 bool GetStringInput(CString prompt, CString &strOut);
 
+//////////////////////////////////////////////////////////////////////////
 AcDbObjectId TY_GetExtensionDictionaryID(AcDbObjectId id);
 AcDbObjectId TY_CreateExtensionDictionaryID(AcDbObjectId id);
 int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt);
@@ -73,7 +74,10 @@ bool TY_IsWindow(AcDbObjectId Id, eViewDir p_view);
 bool TY_Iskitchen(AcDbObjectId Id);
 bool TY_IsBathroom(AcDbObjectId Id);
 bool TY_IsAirCon(AcDbObjectId Id);
-bool TY_IsRailing(AcDbObjectId Id);
+bool TY_IsRailing(AcDbObjectId Id, eViewDir p_view);
+bool TY_IsSunacObj(AcDbObjectId Id, eRCType p_rcType, eViewDir p_view= E_VIEW_ALL);
+
+//////////////////////////////////////////////////////////////////////////
 
 eRCType TY_GetType(AcDbBlockReference *pBlockReference);
 
@@ -121,6 +125,15 @@ vAcDbObjectId SelectWindows_old(eViewDir p_view, bool p_bAllWindow=false); //p_v
 bool IsObjectExsit(AcDbObjectId p_id);
 
 bool IsFileExist(const CString & strFileName);
+
+bool TYCOM_DeleteBlkXData(AcDbBlockReference *pBlkRef, CString Key);//É¾³ýXData
+bool TYCOM_DeleteBlkXData(AcDbObjectId id, CString Key);
+
+int TYCOM_SaveBlkString(AcDbBlockReference *pBlkRef, CString Key, CString value);
+int TYCOM_SaveBlkString(AcDbObjectId id, CString Key, CString value);
+
+int TYCOM_GetBlkString(AcDbBlockReference *pBlkRef, CString Key, CString &value);
+int TYCOM_GetBlkString(AcDbObjectId id, CString Key, CString &value);
 
 
 

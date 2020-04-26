@@ -114,9 +114,9 @@ LRESULT DlgLeftBar::OnClickedPopupMenu(WPARAM mID, LPARAM notUsed)
 	case ID_COMMAND_WINDOW_TOP2FRONT: //平面到立面
 		SendCommandToCAD(_T("SWINFTOP2FRONT"));
 		break;
-	case ID_COMMAND_WINDOW_FRONT2TOP: //立面到平面
-		SendCommandToCAD(_T("SWINFFRONT2TOP"));
-		break;
+	//case ID_COMMAND_WINDOW_FRONT2TOP: //立面到平面
+	//	SendCommandToCAD(_T("SWINFFRONT2TOP"));
+	//	break;
 
 	case ID_COMMAND_WINDOWQUANTITY://门窗算量
 		SendCommandToCAD(_T("SWINSTATISTICS"));
@@ -130,8 +130,14 @@ LRESULT DlgLeftBar::OnClickedPopupMenu(WPARAM mID, LPARAM notUsed)
 	case ID_COMMAND_WINDOWAUTOID:
 		SendCommandToCAD(_T("SWINAUTOID")); //自动编号
 		break;
+	case ID_COMMAND_WINSETTING:
+		SendCommandToCAD(_T("SSETUP")); //门窗设置
+		break;
 	case ID_COMMAND_WINDOWNOHIGHLIGHT:
 		SendCommandToCAD(_T("SNOHIGHLIGHT")); //取消高亮
+		break;
+	case ID_COMMAND_WINDOWTABLECHECK:
+		SendCommandToCAD(_T("SWINTABLECHECK")); //门窗表检查
 		break;
 
 	case ID_COMMAND_KITCHEN:
@@ -154,6 +160,9 @@ LRESULT DlgLeftBar::OnClickedPopupMenu(WPARAM mID, LPARAM notUsed)
 		break;
 	case ID_COMMAND_RAILINGFLOORSETTING:
 		SendCommandToCAD(_T("SRAILINGFLOORSETTING"));
+		break;
+	case ID_COMMAND_RAILING_TOP2FRONT:
+		SendCommandToCAD(_T("SRAILINGTOP2FRONT"));
 		break;
 	case ID_COMMAND_AIRCONDITIONER:
 		SendCommandToCAD(_T("SAIRCONDITIONER"));

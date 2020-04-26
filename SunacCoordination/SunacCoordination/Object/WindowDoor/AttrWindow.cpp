@@ -171,8 +171,6 @@ AttrWindow::AttrWindow()
 #ifdef INIT_HANLDLE_LATER_FOR_DWGIN 
 	m_fromWinHandle.setNull();
 #endif
-
-	m_tangentOpeningId = AcDbObjectId::kNull;
 }
 
 AttrWindow::~AttrWindow()
@@ -300,8 +298,6 @@ const CWindowsDimData* AttrWindow::GetDimData(CString p_sCode)const
 			return &(m_dimData[i]);
 		}
 	}
-
-	//assert(false);
 	return NULL;
 }
 
@@ -671,21 +667,10 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 #endif
 	}
 
-	if (m_version>=7)
+	if (m_version==7) //FILE_VERSION 7 新增后又移除
 	{
-		AcDbObjectId curId = objectId();
 		AcDbHandle tempHandle;
 		filer->readItem(&tempHandle);
-		if (filer->filerType()== AcDb::kFileFiler)
-		{
-			AcDbObjectId tWinOpenIdOut = AcDbObjectId::kNull;
-			acdbHostApplicationServices()->workingDatabase()->getAcDbObjectId(tWinOpenIdOut, false, tempHandle);
-			SetWinTangentOpenId(curId, tWinOpenIdOut);
-		}
-		else
-		{
-			m_tangentOpeningId = NULL;
-		}
 	}
 
 	return filer->filerStatus();
@@ -694,8 +679,8 @@ Acad::ErrorStatus AttrWindow::dwgInFields(AcDbDwgFiler* filer)
 eRCType AttrWindow::GetType()const
 {
 	if (m_prototypeCode.Left(4) == L"Door")
-		return DOOR;
-	return WINDOW;
+		return S_DOOR;
+	return S_WINDOW;
 }
 
 CString AttrWindow::GetMainPrototypeCode()const //返回原型主编码，如Window_NC2_0 返回的值为Window_NC2
@@ -798,8 +783,8 @@ Acad::ErrorStatus AttrWindow::dwgOutFields(AcDbDwgFiler* filer) const
 		filer->writeItem(m_relatedWinIds[i].handle());
 	}
 
-	//FILE_VERSION 7 新增
-	filer->writeItem(m_tangentOpeningId.handle());
+	////FILE_VERSION 7 新增 后来在版本8移除
+	//filer->writeItem(m_tangentOpeningId.handle());
 
 	return filer->filerStatus();
 }
@@ -1020,7 +1005,7 @@ bool AttrWindow::IsInstanceEqual(const AttrWindow& p_att) const
 
 E_WindowAluminumType AttrWindow::GetWindowDoorAluminumType() const
 {
-	CString sType = (GetType() == WINDOW ? L"窗" : L"门");
+	CString sType = (GetType() == S_WINDOW ? L"窗" : L"门");
 
 	CString sFullName = m_openType;
 	if (m_openType.Find(sType)<0)
@@ -1063,7 +1048,7 @@ CString AttrWindow::GetPrototypeDwgFilePath(eViewDir p_view)const
 bool AttrWindow::IsMxMirror()const //实际的矩阵是否镜像
 {
 	bool bMirror = m_isMirror;
-	if (m_viewDir == E_VIEW_TOP)
+	if (GetViewDir() == E_VIEW_TOP)
 	{
 		bMirror = !bMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题 Mirror
 	}
@@ -1072,7 +1057,7 @@ bool AttrWindow::IsMxMirror()const //实际的矩阵是否镜像
 }
 void AttrWindow::SetMxMirror(bool p_bMirror)
 {
-	if (m_viewDir == E_VIEW_TOP)
+	if (GetViewDir() == E_VIEW_TOP)
 	{
 		p_bMirror = !p_bMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题 Mirror
 	}
@@ -1140,12 +1125,4 @@ void AttrWindow::ClearWinsRelation() //移除关联关系
 	m_relatedWinIds.removeAll();
 	m_fromWinId = AcDbObjectId::kNull;
 }
-AcDbObjectId AttrWindow::GetWinTangentOpenId()const 
-{
-	return m_tangentOpeningId; 
-}
-void AttrWindow::SetWinTangentOpenId(AcDbObjectId p_winId, AcDbObjectId p_tangentOpenid)
-{
-	m_tangentOpeningId = p_tangentOpenid;
-	GetWinTangentOpenMap()->AddWindow(p_winId, p_tangentOpenid);
-}
+

@@ -83,7 +83,7 @@ AC_IMPLEMENT_EXTENSION_MODULE(theArxDLL);
 void CMD_YTest()
 {
 	int n = 0;
-	vector<CWinInCad> winsSelected = CWindowSelect::SelectWindows(E_VIEW_ALL, false);
+	vector<CSunacObjInCad> winsSelected = CSunacSelect::SelectSunacObjs(S_WINDOW, E_VIEW_ALL, false);
 	for (UINT i = 0; i < winsSelected.size(); i++)
 	{
 		if (winsSelected[i].m_bMxMirror)
@@ -300,12 +300,12 @@ void AddSubMenu(CAcadPopupMenu&IPopUpMenu, UINT MenuStartIndex)
 	VariantInit(&index);
 	V_VT(&index) = VT_I4;
 	V_I4(&index) = MenuStartIndex++;
-	IPopUpMenu.AddMenuItem(index, _T("产品标准"), _T("_SPALETTE "));
+	IPopUpMenu.AddMenuItem(index, _T("功能导航栏"), _T("_SPALETTE "));
 
-	VariantInit(&index);
-	V_VT(&index) = VT_I4;
-	V_I4(&index) = MenuStartIndex++;
-	IPopUpMenu.AddMenuItem(index, _T("设置"), _T("_SSETUP "));
+	//VariantInit(&index);
+	//V_VT(&index) = VT_I4;
+	//V_I4(&index) = MenuStartIndex++;
+	//IPopUpMenu.AddMenuItem(index, _T("设置"), _T("_SSETUP "));
 }
 
 void InitMenu()
@@ -1004,7 +1004,7 @@ static void initApp()
 		_T("SWINFLOOR"),
 		_T("SWINFLOOR"),
 		ACRX_CMD_MODAL,
-		CMD_SunacWindowFloorSetting,
+		CMD_SunacFloorSetting,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());
@@ -1059,6 +1059,15 @@ static void initApp()
 		_T("SNOHIGHLIGHT"),
 		ACRX_CMD_MODAL,
 		CMD_SunacNoHighlight,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SWINTABLECHECK"),
+		_T("SWINTABLECHECK"),
+		ACRX_CMD_MODAL,
+		CMD_SunacWinTableCheck,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());
@@ -1120,7 +1129,16 @@ static void initApp()
 		_T("SRAILINGFLOORSETTING"),
 		_T("SRAILINGFLOORSETTING"),
 		ACRX_CMD_MODAL | ACRX_CMD_USEPICKSET,
-		CMD_SunacRailingFloorSetting,
+		CMD_SunacFloorSetting,
+		NULL,
+		-1,
+		theArxDLL.ModuleResourceInstance());
+
+	acedRegCmds->addCommand(_T("SUNAC"),
+		_T("SRAILINGTOP2FRONT"),
+		_T("SRAILINGTOP2FRONT"),
+		ACRX_CMD_MODAL | ACRX_CMD_USEPICKSET,
+		CMD_SunacRailingTop2Front,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());

@@ -212,7 +212,7 @@ void CRCRailing::CreateRailingTop(AcGePoint3d p_pnt1, AcGePoint3d p_pnt2)
 	CString sRailingDefName = m_railingAtt.GetInstanceCode();
 
 	int nRailingTopLength = 0;
-	bool bSul = GenerateInsertPt(p_pnt1, p_pnt2, nRailingTopLength);
+	bool bSul = CheckRailingStartEndPt(p_pnt1, p_pnt2, nRailingTopLength);
 	if (bSul == false)
 		return;
 
@@ -263,20 +263,22 @@ AcDbObjectId CRCRailing::GenerateRailingTop(CString p_blockName, AcGePoint3d p_p
 	pBlkTbl->close();
 
 	AcGePoint2d ptLeftBottom, ptRightBottom, ptRightTop, ptLeftTop;
+
+	const double halfWidth = 40; //栏杆半厚度
 	
 	if (p_pnt1.y == p_pnt2.y)
 	{
-		ptLeftBottom.set(p_pnt1.x, p_pnt1.y - 50);
-		ptRightBottom.set(p_pnt2.x, p_pnt2.y - 50);
-		ptRightTop.set(p_pnt2.x, p_pnt2.y + 50);
-		ptLeftTop.set(p_pnt1.x, p_pnt1.y + 50);
+		ptLeftBottom.set(p_pnt1.x, p_pnt1.y - halfWidth);
+		ptRightBottom.set(p_pnt2.x, p_pnt2.y - halfWidth);
+		ptRightTop.set(p_pnt2.x, p_pnt2.y + halfWidth);
+		ptLeftTop.set(p_pnt1.x, p_pnt1.y + halfWidth);
 	}
 	else if (p_pnt1.x == p_pnt2.x)
 	{
-		ptLeftBottom.set(p_pnt1.x - 50, p_pnt1.y);
-		ptRightBottom.set(p_pnt1.x + 50, p_pnt1.y);
-		ptRightTop.set(p_pnt2.x + 50, p_pnt2.y);
-		ptLeftTop.set(p_pnt2.x - 50, p_pnt2.y);
+		ptLeftBottom.set(p_pnt1.x - halfWidth, p_pnt1.y);
+		ptRightBottom.set(p_pnt1.x + halfWidth, p_pnt1.y);
+		ptRightTop.set(p_pnt2.x + halfWidth, p_pnt2.y);
+		ptLeftTop.set(p_pnt2.x - halfWidth, p_pnt2.y);
 	}
 	else
 		return false;
@@ -301,7 +303,7 @@ AcDbObjectId CRCRailing::GenerateRailingTop(CString p_blockName, AcGePoint3d p_p
 	return entId;
 }
 
-bool CRCRailing::GenerateInsertPt(AcGePoint3d& p_pnt1, AcGePoint3d& p_pnt2, int& p_width)
+bool CRCRailing::CheckRailingStartEndPt(AcGePoint3d& p_pnt1, AcGePoint3d& p_pnt2, int& p_length)
 {
 	int nError = 20; //选择两个点的间距误差
 	bool bSul = true;
@@ -314,22 +316,22 @@ bool CRCRailing::GenerateInsertPt(AcGePoint3d& p_pnt1, AcGePoint3d& p_pnt2, int&
 	else if (fabs(p_pnt2.y - p_pnt1.y) <= nError && fabs(p_pnt2.x - p_pnt1.x) > nError)
 	{
 		p_pnt2.y = p_pnt1.y;
-		p_width = (int)fabs(p_pnt2.x - p_pnt1.x);
-		GenerateRailingLength(p_width);
+		p_length = (int)fabs(p_pnt2.x - p_pnt1.x);
+		CheckRailingLength(p_length);
 		if (p_pnt2.x - p_pnt1.x > 0)
-			p_pnt2.x = p_pnt1.x + p_width;
+			p_pnt2.x = p_pnt1.x + p_length;
 		else
-			p_pnt2.x = p_pnt1.x - p_width;
+			p_pnt2.x = p_pnt1.x - p_length;
 	}
 	else if (fabs(p_pnt2.x - p_pnt1.x) <= nError && fabs(p_pnt2.y - p_pnt1.y) > nError)
 	{
 		p_pnt2.x = p_pnt1.x;
-		p_width = (int)fabs(p_pnt2.y - p_pnt1.y);
-		GenerateRailingLength(p_width);
+		p_length = (int)fabs(p_pnt2.y - p_pnt1.y);
+		CheckRailingLength(p_length);
 		if (p_pnt2.y - p_pnt1.y > 0)
-			p_pnt2.y = p_pnt1.y + p_width;
+			p_pnt2.y = p_pnt1.y + p_length;
 		else
-			p_pnt2.y = p_pnt1.y - p_width;
+			p_pnt2.y = p_pnt1.y - p_length;
 	}
 	else
 	{
@@ -340,16 +342,17 @@ bool CRCRailing::GenerateInsertPt(AcGePoint3d& p_pnt1, AcGePoint3d& p_pnt2, int&
 	return bSul;
 }
 
-void CRCRailing::GenerateRailingLength(int& p_width)
+void CRCRailing::CheckRailingLength(int& p_length)
 {
-	int nRemainder = p_width % 10;
-	if (nRemainder % 10 < 5)
+	const int nAlignSize = 50;
+	int nRemainder = p_length % nAlignSize;
+	if (nRemainder % nAlignSize < (nAlignSize/2))
 	{
-		p_width -= nRemainder;
+		p_length -= nRemainder;
 	}
 	else
 	{
-		p_width += 10 - nRemainder;
+		p_length += nAlignSize - nRemainder;
 	}
 }
 
@@ -974,4 +977,18 @@ void CRCRailing::CreateRailingDetailTextStyle(CString dimname)
 	pTextStyleTbl->add(pTextStyleTblRcd);
 	pTextStyleTblRcd->close();
 	pTextStyleTbl->close();
+}
+
+
+
+AcDbObjectId CRCRailing::CreateWipeOut()
+{
+	AcGePoint3dArray pnts; //左侧、右侧、底侧各留20的量以免将墙体线也遮挡
+	pnts.append(AcGePoint3d(20, 20, 0));
+	pnts.append(AcGePoint3d(m_railingAtt.m_length - 20, 20, 0));
+	pnts.append(AcGePoint3d(m_railingAtt.m_length - 20, m_railingAtt.m_height, 0));
+	pnts.append(AcGePoint3d(20, m_railingAtt.m_height, 0));
+	pnts.append(AcGePoint3d(20, 20, 0));
+
+	return TYCOM_CreateWipeOut(pnts);
 }

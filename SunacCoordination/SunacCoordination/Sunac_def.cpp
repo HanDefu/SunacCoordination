@@ -3,6 +3,22 @@
 #include "Sunac_def.h"
 #include "Common/ComFun_String.h"
 
+eWindowDoorPos ToEWindowDoorPos(CString type)
+{
+	if (type == "对开")
+	{
+		return DUIKAI;
+	}
+	else if (type == "垂直开")
+	{
+		return CHUIZHIKAI;
+	}
+	else
+	{
+		ASSERT(FALSE);
+		return DUIKAI;
+	}
+}
 
 CString ViewDir2String(const eViewDir p_viewDir)
 {
@@ -197,4 +213,20 @@ int CFloorInfo::GetFloorCountByFloor(CString p_sFloor)const
 	}
 
 	return nCount;
+}
+
+
+int CFloorInfo::GetFloorCountByFloorIndex(int p_nFloor)const
+{
+	int nCount = 0;
+	for (UINT j = 0; j < m_nAllFloors.size(); j++)
+	{
+		if (m_nAllFloors[j] == p_nFloor)
+		{
+			nCount++;
+		}
+	}
+
+	return nCount;
+
 }

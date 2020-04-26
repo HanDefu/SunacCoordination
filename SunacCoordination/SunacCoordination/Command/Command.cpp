@@ -31,14 +31,17 @@
 #include "../UI/DlgLogin.h"
 #include "../UI/DlgSetUp.h"
 #include "../UI/WindowAdvanceDlg.h"
+#include "../UI/WindowTableCheckDlg.h"
 #include "../Common/ComFun_Math.h"
 #include "../Common/ComFun_ACad.h"
 #include "../Object/WindowStatistic/WindowStatictic.h"
 #include "../Object/KitchenBathroom/KitchenBathroomStatistic.h"
 #include "../Object/Railing/RailingStatistic.h"
+#include "../Object/Railing/RailingTop2Front.h"
 #include "../Object/AirCondition/AirConStatistic.h"
 #include "../Object/WindowDoor/WindowTop2Front.h"
 #include "../Object/WindowDoor/WindowSelect.h"
+#include "../Object/WindowDoor/WindowTable.h"
 #include "../Object/WindowDoor/WindowGen.h"
 #include "../UI/ProjectManagementDlg.h"
 #include "../WebIO/WebIO.h"
@@ -163,6 +166,93 @@ void CMD_SunacWindowDetail()
 
 	CWindowDetail::DrawWindowDetail();
 }
+
+void CMD_SunacFloorSetting()//楼层设置
+{
+	if (WebIO::GetInstance()->IsLogin() == false)
+	{
+		acutPrintf(_T("请先登录\n"));
+		return;
+	}
+
+	//1.选择需要设置楼层的门窗
+	Acad::ErrorStatus es;
+	acutPrintf(L"\n请选择门窗");
+
+	ads_name sset;
+	acedSSGet(NULL, NULL, NULL, NULL, sset);
+
+	Adesk::Int32 length = 0;
+	acedSSLength(sset, &length);
+	vector<AcDbObjectId> ids;
+	for (int i = 0; i < length; i++)
+	{
+		ads_name ent;
+		acedSSName(sset, i, ent);
+
+		AcDbObjectId objId = 0;
+		es = acdbGetObjectId(objId, ent);
+		if (es != Acad::eOk || objId == AcDbObjectId::kNull)
+		{
+			continue;
+		}
+
+		ids.push_back(objId);
+	}
+	acedSSFree(sset);
+
+	//////////////////////////////////////////////////////////////////////////
+	CFloorInfo floorInfo;
+
+	//2. 楼层区间
+	CString sFloors;
+	bool bSuc = GetStringInput(_T("请输入楼层区间逗号分隔,(示例 2-5,7,8):"), sFloors);
+	if (bSuc==false)
+		return;
+
+	while (floorInfo.SetFloors(sFloors) == false && bSuc)
+	{
+		bSuc = GetStringInput(_T("格式错误，请输入楼层区间逗号分隔,(示例 2-5,7,8):"), sFloors);
+	}
+	if (bSuc == false)
+		return;
+
+	//////////////////////////////////////////////////////////////////////////
+	//3.层高
+	double height = 2950;
+	bSuc = GetRealInput(_T("请输入楼层高度:"), 2950, 0, height);
+	if (bSuc == false)
+		return;
+	while (floorInfo.SetFloorHeight(height) == false && bSuc)
+	{
+		bSuc = GetRealInput(_T("楼层高度错误，请输入楼层高度:"), 2950, 0, height);
+	}
+	if (bSuc == false)
+		return;
+
+
+	//////////////////////////////////////////////////////////////////////////
+	//设置到选中的门窗中
+	for (UINT i = 0; i < ids.size(); i++)
+	{
+		AcDbObject * pDataEnt = NULL;
+		TY_GetAttributeData(ids[i], pDataEnt);
+		if (pDataEnt==NULL)
+			continue;
+		AttrObject * pSunacObj = dynamic_cast<AttrObject*>(pDataEnt);
+		if (pSunacObj == NULL || pSunacObj->GetViewDir()!=E_VIEW_TOP)
+		{
+			pDataEnt->close();
+			continue;
+		}
+		 
+		pSunacObj->SetFloorInfo(floorInfo);
+	}
+
+	acutPrintf(_T("设置楼层信息成功\n"));
+}
+
+
 void CMD_SunacWindowFloorSetting()//门窗楼层设置
 {
 	if (WebIO::GetInstance()->IsLogin() == false)
@@ -172,7 +262,7 @@ void CMD_SunacWindowFloorSetting()//门窗楼层设置
 	}
 
 	//1.选择需要设置楼层的门窗
-	const vector<CWinInCad> wins = CWindowSelect::SelectWindows(E_VIEW_TOP);
+	const vector<CSunacObjInCad> wins = CSunacSelect::SelectSunacObjs(S_WINDOW, E_VIEW_TOP);
 	if (wins.size() == 0)
 		return;
 
@@ -248,7 +338,20 @@ void CMD_SunacWinAutoId()
 void CMD_SunacNoHighlight()
 {
 	//取消高亮
-	CCommandHighlight::GetInstance()->WindowDoorNoHighlight();
+	CCommandHighlight::GetInstance()->SunacNoHighlight();
+}
+
+void CMD_SunacWinTableCheck()
+{
+	// 以非模态方式启动对话框
+	if (g_winTableCheckDlg == NULL)
+	{
+		g_winTableCheckDlg = new CWindowTableCheckDlg(acedGetAcadFrame());
+		g_winTableCheckDlg->Create(IDD_DIALOG_WINTABLECHECK);
+	}
+
+	g_winTableCheckDlg->CenterWindow();
+	g_winTableCheckDlg->ShowWindow(SW_SHOW);
 }
 
 
@@ -296,10 +399,12 @@ void CMD_SunacKitchenBathroomStatistic()
 {
 	CKitchenBathroomStatistic instance;
 	instance.SelectKitchenBathroom();
+
 	AcGePoint3d insertPoint;
 	bool bSuc = TY_GetPoint(insertPoint);
 	if (bSuc == false)
 		return;
+
 	instance.InsertTableToCAD(insertPoint);
 }
 
@@ -320,6 +425,8 @@ void CMD_SunacRailing()
 		AfxMessageBox(L"没有可以操作的文档");
 		return;
 	}
+
+	TYCOM_ShowWipeOutBoundary(false);
 	OpenRailingDlg();
 }
 
@@ -337,16 +444,17 @@ void CMD_SunacRailingDetail()
 
 void CMD_SunacRailingStatistic()
 {
-	CRailingStatistic instance;
-	instance.SelectRailings();
-	AcGePoint3d insertPoint;
-	bool bSuc = TY_GetPoint(insertPoint);
-	if (bSuc == false)
+	if (WebIO::GetInstance()->IsLogin() == false)
+	{
+		acutPrintf(_T("请先登录\n"));
 		return;
-	instance.InsertTableToCAD(insertPoint);
+	}
+
+	CRailingStatistic instance;
+	instance.InsertRailingTableToCAD();
 }
 
-void CMD_SunacRailingFloorSetting() //栏杆楼层设置
+void CMD_SunacRailingTop2Front()
 {
 	if (WebIO::GetInstance()->IsLogin() == false)
 	{
@@ -354,53 +462,8 @@ void CMD_SunacRailingFloorSetting() //栏杆楼层设置
 		return;
 	}
 
-	//1.选择需要设置楼层的栏杆
-	CRailingStatistic railingStatistic;
-	railingStatistic.SelectRailings();
-
-	if (railingStatistic.AllRailings().size() == 0)
-		return;
-
-	CFloorInfo floorInfo;
-
-	//2. 楼层区间
-	CString sFloors;
-	bool bSuc = GetStringInput(_T("请输入楼层区间逗号分隔,(示例 2-5,7,8):"), sFloors);
-	if (bSuc == false)
-		return;
-
-	while (floorInfo.SetFloors(sFloors) == false && bSuc)
-	{
-		bSuc = GetStringInput(_T("格式错误，请输入楼层区间逗号分隔,(示例 2-5,7,8):"), sFloors);
-	}
-	if (bSuc == false)
-		return;
-
-	////////////////////////////////////////////////////////////////////////////
-	////3.层高
-	//double height = 2950;
-	//bSuc = GetRealInput(_T("请输入楼层高度:"), 2950, 0, height);
-	//if (bSuc == false)
-	//	return;
-	//while (floorInfo.SetFloorHeight(height) == false && bSuc)
-	//{
-	//	bSuc = GetRealInput(_T("楼层高度错误，请输入楼层高度:"), 2950, 0, height);
-	//}
-	//if (bSuc == false)
-	//	return;
-
-	//////////////////////////////////////////////////////////////////////////
-	//设置到选中的栏杆中
-	for (UINT i = 0; i <railingStatistic.AllRailings().size(); i++)
-	{
-		AttrRailing* pAtt = new AttrRailing;
-		pAtt->SetFloorInfo(floorInfo);
-		pAtt->close();
-	}
-
-	acutPrintf(_T("设置楼层信息成功\n"));
+	CRailingTop2Front::GenFrontFromTop();
 }
-
 
 //线脚
 void CMD_SunacMoldings()
@@ -444,10 +507,12 @@ void CMD_SunacAirconditionerStatistic()
 {
 	CAirConStatistic instance;
 	instance.SelectAirCons();
+
 	AcGePoint3d insertPoint;
 	bool bSuc = TY_GetPoint(insertPoint);
 	if (bSuc == false)
 		return;
+
 	instance.InsertTableToCAD(insertPoint);
 }
 
@@ -472,7 +537,7 @@ void CMD_SunacWaterproof()
 //统计算量
 void CMD_SunacWindowsStatistics()
 {
-	CCommandHighlight::GetInstance()->WindowDoorNoHighlight();
+	CCommandHighlight::GetInstance()->SunacNoHighlight();
 
 	//第一步：选择需要统计的门窗
 	eViewDir viewDir = E_VIEW_FRONT;
@@ -480,7 +545,7 @@ void CMD_SunacWindowsStatistics()
 	if (bSuc1 == false)
 		return;
 
-	const vector<CWinInCad> wins = CWindowSelect::SelectWindows(viewDir);
+	const vector<CSunacObjInCad> wins = CSunacSelect::SelectSunacObjs(S_WINDOW, viewDir);
 	if (wins.size() == 0)
 		return;	
 
@@ -505,7 +570,7 @@ void CMD_SunacWindowsStatistics()
 		AfxMessageBox(_T("部分窗户型材系列未设置"));
 
 		//对未设置型材系列的门窗高亮
-		CCommandHighlight::GetInstance()->WindowDoorHighlight(idsNonAlserials);
+		CCommandHighlight::GetInstance()->SunacHighlight(idsNonAlserials);
 		return;
 	}
 
@@ -527,7 +592,7 @@ void CMD_SunacWindowsStatistics()
 	{
 		winIds.push_back(wins[i].m_winId);
 	}
-	CCommandHighlight::GetInstance()->WindowDoorHighlight(winIds);
+	CCommandHighlight::GetInstance()->SunacHighlight(winIds);
 }
 
 void CADPalette_AddP()
@@ -585,4 +650,5 @@ void CloseModelessDialogs()
 	CloseAirconditionerDlg();
 	CloseWindowAdvanceDlg();
 	CloseProjectManagementDlg();
+	CloseWindowTableCheckDlg();
 }

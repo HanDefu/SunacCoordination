@@ -248,7 +248,7 @@ void CWindowDlg::OnBnClickedButtonInsert()
 
 	//////////////////////////////////////////////////////////////////////////
 	const eViewDir viewDir = (eViewDir)m_comboViewDir.GetCurSel();
-	pSelWinAttr->m_viewDir = viewDir;
+	pSelWinAttr->SetViewDir(viewDir);
 	E_DIRECTION winDir = E_DIR_BOTTOM;
 	if (viewDir == E_VIEW_TOP)
 	{
@@ -320,7 +320,7 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 		//若是编辑模式，保持原来的镜像关系
 		if (m_bEditMode)
 		{
-			m_winPrototypes[i].m_viewDir = m_attBeforeEdit.m_viewDir;
+			m_winPrototypes[i].SetViewDir(m_attBeforeEdit.GetViewDir());
 			m_winPrototypes[i].SetMirror( m_attBeforeEdit.m_isMirror);
 		}
 	}
@@ -580,11 +580,11 @@ void CWindowDlg::OnSelChangedView()
 
 	CString sView = TYUI_GetComboBoxText(m_comboViewDir);
 	if (sView == L"平面")
-		pSelWinAttr->m_viewDir = E_VIEW_TOP;
+		pSelWinAttr->SetViewDir(E_VIEW_TOP);
 	else if (sView == L"立面")
-		pSelWinAttr->m_viewDir = E_VIEW_FRONT;
+		pSelWinAttr->SetViewDir(E_VIEW_FRONT);
 	else if (sView == L"侧视")
-		pSelWinAttr->m_viewDir = E_VIEW_LEFT;
+		pSelWinAttr->SetViewDir(E_VIEW_LEFT);
 
 	if (sView == L"平面")
 	{
@@ -807,11 +807,11 @@ void CWindowDlg::SetEditMode(AcDbObjectId editId)
 
 		//属性更新镜像关系
 		m_attBeforeEdit = *pWinAtt;
-		m_attBeforeEdit.SetMxMirror(CWindowSelect::IsReferenctMirror(m_curEditWinId));
+		m_attBeforeEdit.SetMxMirror(CSunacSelect::IsReferenctMirror(m_curEditWinId));
 
 		//////////////////////////////////////////////////////////////////////////
 		//初始门窗属性数据
-		m_radioDoorWindow = (m_attBeforeEdit.GetType() == DOOR) ? 0 : 1;
+		m_radioDoorWindow = (m_attBeforeEdit.GetType() == S_DOOR) ? 0 : 1;
 		WindowDoorChange();
 		m_nWidth = (int)m_attBeforeEdit.GetW();
 		m_nHeight = (int)m_attBeforeEdit.GetH();
@@ -831,7 +831,7 @@ void CWindowDlg::SetEditMode(AcDbObjectId editId)
 		str.Format(_T("%d"), (int)m_attBeforeEdit.m_wallDis);//距外墙距离	
 		TYUI_SetText(m_comboOutWallDistance, str);
 
-		str = ViewDir2String(m_attBeforeEdit.m_viewDir);
+		str = ViewDir2String(m_attBeforeEdit.GetViewDir());
 		TYUI_SetText(m_comboViewDir, str);
 		m_btnMirror.SetCheck(m_attBeforeEdit.m_isMirror ? TRUE :FALSE);
 
@@ -881,7 +881,7 @@ void CWindowDlg::InsertAllWindows_Test()
 
 		//////////////////////////////////////////////////////////////////////////
 		const eViewDir viewDir = (eViewDir)m_comboViewDir.GetCurSel();
-		pSelWinAttr->m_viewDir = viewDir;
+		pSelWinAttr->SetViewDir(viewDir);
 		E_DIRECTION winDir = E_DIR_BOTTOM;
 		if (viewDir == E_VIEW_TOP)
 		{
