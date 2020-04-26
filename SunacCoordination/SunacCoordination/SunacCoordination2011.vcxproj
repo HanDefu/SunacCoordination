@@ -467,7 +467,7 @@
     <Link>
       <AdditionalLibraryDirectories>C:\Autodesk\Autodesk_ObjectARX_2011_Win_64_and_32Bit\lib;C:\Autodesk\Autodesk_ObjectARX_2011_Win_64_and_32Bit\lib-win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ModuleDefinitionFile>C:\Autodesk\Autodesk_ObjectARX_2011_Win_64_and_32Bit\inc\AcRxDefault.def</ModuleDefinitionFile>
-      <AdditionalDependencies>acdbmgd.lib;Tool\SQLite\x86\sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>acdbmgd.lib;AcWipeoutObj18.lib;Tool\SQLite\x86\sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)SunacCAD2011X86.arx</OutputFile>
       <DelayLoadDLLs>sqlite3.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>

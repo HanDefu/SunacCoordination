@@ -270,7 +270,7 @@ void CRailingStatistic::InsertRailingTableToCAD()
 	table->setTextString(1, 0, L"类型");
 	table->setTextString(1, 1, L"设计编号");
 	table->setTextString(1, 2, L"栏杆高度(mm)");
-	table->setTextString(1, 3, L"栏杆高度(mm)");
+	table->setTextString(1, 3, L"栏杆长度(mm)");
 	for (int i = 0; i < floorColumnCount; i++)
 	{
 		table->setTextString(1, 4 + i, floorColumns[i] + L"F");
