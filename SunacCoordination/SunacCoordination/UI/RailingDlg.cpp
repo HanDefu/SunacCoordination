@@ -424,7 +424,7 @@ void CRailingDlg::SetEditMode(AcDbBlockReference* pBlock)
 		return;
 
 	AcDbObject* pAtt = NULL;
-	TY_GetAttributeData(pBlock->objectId(), pAtt);
+	TY_GetAttributeData(pBlock->objectId(), pAtt, true);
 	AttrRailing *pRailing = dynamic_cast<AttrRailing *>(pAtt);
 	if (pRailing == NULL)
 		return;

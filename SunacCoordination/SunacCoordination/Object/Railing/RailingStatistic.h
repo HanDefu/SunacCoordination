@@ -16,7 +16,7 @@ public:
 	void SpliteRailingByType(const CRailingAndCount& railingAndCount);
 
 protected:
-	void RailingClassify(AttrRailing* pAttr);
+	void RailingClassify(const AttrRailing* pAttr);
 	vector<pair<AttrRailing, int>> AllRailings(){ return m_allRailings; }
 
 protected:

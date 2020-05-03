@@ -523,7 +523,7 @@ void CKitchenDlg::SetEditMode(AcDbBlockReference* pBlock)
 		return;
 
 	AcDbObject* pAtt = NULL;
-	TY_GetAttributeData(pBlock->objectId(), pAtt);
+	TY_GetAttributeData(pBlock->objectId(), pAtt, true);
 	AttrKitchen *pKitchen = dynamic_cast<AttrKitchen *>(pAtt);
 	if (pKitchen == NULL)
 		return;

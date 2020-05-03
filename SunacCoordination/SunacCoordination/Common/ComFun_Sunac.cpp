@@ -687,7 +687,7 @@ int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt)
 	}
 }
 
-int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt)
+int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt, bool p_bRead)
 {
 	pDataEnt = NULL;
 	AcDbObjectId dicID = TY_GetExtensionDictionaryID(tkId);
@@ -699,6 +699,9 @@ int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt)
 	if(es ==Acad::eOk)
 	{
 		es = pDict->getAt(SUNAC_ATTRIBUTE_ENTITY, (AcDbObject*&)pDataEnt, AcDb::kForRead);
+		//es = pDict->getAt(SUNAC_ATTRIBUTE_ENTITY, (AcDbObject*&)pDataEnt, p_bRead ? AcDb::kForRead : AcDb::kForWrite);
+		assert(es == Acad::eOk);
+
 		pDict->close();
 		if (pDataEnt!=NULL)
 		{
@@ -738,16 +741,20 @@ bool TY_IsSunacObj(AcDbObjectId Id, eRCType p_rcType, eViewDir p_view)
 bool TY_IsWindow(AcDbObjectId Id, eViewDir p_view)
 {
 	AcDbObject * pDataEnt = 0;
+	TY_GetAttributeData(Id, pDataEnt, true);
+	if (pDataEnt == NULL)
+		return false;
 
-	TY_GetAttributeData(Id, pDataEnt);
 	AttrWindow * pWindow = dynamic_cast<AttrWindow *>(pDataEnt);
 	if (pWindow == NULL)
 		return false;
 
+	bool bWindow = true;
 	if (p_view != E_VIEW_ALL)
 	{
-		return pWindow->GetViewDir() == p_view;
+		bWindow = pWindow->GetViewDir() == p_view;
 	}
+	pWindow->close();
 
 	return true;
 }
@@ -755,16 +762,19 @@ bool TY_IsWindow(AcDbObjectId Id, eViewDir p_view)
 bool TY_IsRailing(AcDbObjectId Id, eViewDir p_view)
 {
 	AcDbObject * pDataEnt = 0;
-	TY_GetAttributeData(Id, pDataEnt);
+	TY_GetAttributeData(Id, pDataEnt, true);
+	if (pDataEnt == NULL)
+		return false;
 	AttrRailing * pRailing = dynamic_cast<AttrRailing *>(pDataEnt);
 	if (pRailing == 0)
 		return false;
 
+	bool isRailing = true;
 	if (p_view != E_VIEW_ALL)
 	{
-		return pRailing->GetViewDir() == p_view;
+		isRailing = pRailing->GetViewDir() == p_view;
 	}
-	return true;
+	return isRailing;
 }
 
 eRCType TY_GetType(AcDbBlockReference *pBlockReference)
@@ -811,10 +821,10 @@ eRCType TY_GetType(AcDbBlockReference *pBlockReference)
 
 bool TY_Iskitchen(AcDbObjectId Id)
 {
-	AcDbObject * pDataEnt = 0;
-	TY_GetAttributeData(Id, pDataEnt);
+	AcDbObject * pDataEnt = NULL;
+	TY_GetAttributeData(Id, pDataEnt, true);
 	AttrKitchen * pKitchen = dynamic_cast<AttrKitchen *>(pDataEnt);
-	if (pKitchen != 0)
+	if (pKitchen != NULL)
 		return true;
 	return false;
 }
@@ -822,25 +832,23 @@ bool TY_Iskitchen(AcDbObjectId Id)
 
 bool TY_IsAirCon(AcDbObjectId Id)
 {
-	AcDbObject * pDataEnt = 0;
-	TY_GetAttributeData(Id, pDataEnt);
+	AcDbObject * pDataEnt = NULL;
+	TY_GetAttributeData(Id, pDataEnt, true);
 	AttrAirCon * pKitchen = dynamic_cast<AttrAirCon *>(pDataEnt);
-	if (pKitchen != 0)
+	if (pKitchen != NULL)
 		return true;
 	return false;
 }
 
 bool TY_IsBathroom(AcDbObjectId Id)
 {
-	AcDbObject * pDataEnt = 0;
-	TY_GetAttributeData(Id, pDataEnt);
+	AcDbObject * pDataEnt = NULL;
+	TY_GetAttributeData(Id, pDataEnt, true);
 	AttrBathroom * pKitchen = dynamic_cast<AttrBathroom *>(pDataEnt);
-	if (pKitchen != 0)
+	if (pKitchen != NULL)
 		return true;
 	return false;
 }
-
-
 
 int vFind(RCPairKeyDValue &A, vRCPairKeyDValue &B)
 {

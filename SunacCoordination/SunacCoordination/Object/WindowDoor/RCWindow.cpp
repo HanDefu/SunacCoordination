@@ -152,7 +152,7 @@ AttrWindow * RCWindow::GetAttribute()
 	if (m_pAttribute == NULL)
 	{
 		AcDbObject * pDataEnt = 0;
-		TY_GetAttributeData(m_id, pDataEnt);
+		TY_GetAttributeData(m_id, pDataEnt, false);
 		m_pAttribute = dynamic_cast<AttrWindow *>(pDataEnt);
 	}
 	return m_pAttribute;

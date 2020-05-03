@@ -181,7 +181,7 @@ void CBathroomDlg::SetEditMode(AcDbBlockReference* pBlock)
 		return;
 
 	AcDbObject* pAtt = NULL;
-	TY_GetAttributeData(pBlock->objectId(), pAtt);
+	TY_GetAttributeData(pBlock->objectId(), pAtt, true);
 	AttrBathroom *pBathroom = dynamic_cast<AttrBathroom *>(pAtt);
 	if (pBathroom == NULL)
 		return;

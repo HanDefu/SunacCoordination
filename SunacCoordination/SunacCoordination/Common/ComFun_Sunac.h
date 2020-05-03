@@ -68,7 +68,7 @@ bool GetStringInput(CString prompt, CString &strOut);
 AcDbObjectId TY_GetExtensionDictionaryID(AcDbObjectId id);
 AcDbObjectId TY_CreateExtensionDictionaryID(AcDbObjectId id);
 int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt);
-int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt);
+int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt, bool p_bRead);
 
 bool TY_IsWindow(AcDbObjectId Id, eViewDir p_view);
 bool TY_Iskitchen(AcDbObjectId Id);
