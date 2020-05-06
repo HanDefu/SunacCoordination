@@ -35,7 +35,7 @@ int CAirConStatistic::SelectAirCons()
 	return count;
 }
 
-void CAirConStatistic::InsertAirCon(AttrAirCon* pAttr)
+void CAirConStatistic::InsertAirCon(const AttrAirCon* pAttr)
 {
 	for (UINT i = 0; i < m_allAirCons.size(); i++)
 	{

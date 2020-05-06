@@ -29,6 +29,10 @@ CWindowAdvanceDlg::CWindowAdvanceDlg(CWnd* pParent /*=NULL*/)
 
 CWindowAdvanceDlg::~CWindowAdvanceDlg()
 {
+	for (UINT i = 0; i < m_selAttrWindows.size(); i++)
+	{
+		m_selAttrWindows[i]->close();
+	}
 }
 
 void CWindowAdvanceDlg::OnOK()

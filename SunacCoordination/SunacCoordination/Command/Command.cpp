@@ -247,6 +247,7 @@ void CMD_SunacFloorSetting()//楼层设置
 		}
 		 
 		pSunacObj->SetFloorInfo(floorInfo);
+		pDataEnt->close();
 	}
 
 	acutPrintf(_T("设置楼层信息成功\n"));

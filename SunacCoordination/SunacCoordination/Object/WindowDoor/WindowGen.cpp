@@ -339,6 +339,7 @@ bool CWindowGen::DrawTangentOpen(AcDbObjectId p_winId, const AttrWindow& curWinA
 	if (pWinAtt!=NULL)
 	{
 		GetWinTangentOpenMap()->AddWindow(p_winId, tWinOpenIdOut);
+		pWinAtt->close();
 	}
 
 	return hr == Acad::eOk;
@@ -717,17 +718,22 @@ bool CWindowGen::RenameWindow(const AcDbObjectId p_id, CString p_sNewName, const
 			RenameWindow(ids[i], p_sNewName, true);
 		}
 	}
+	pWinAtt->close();
 	return true;
 }
 
 bool CWindowGen::DeleteWindowObj(const AcDbObjectId p_id)
 {
 	AttrWindow *pWinAtt = AttrWindow::GetWinAtt(p_id);
-	if (pWinAtt!=NULL &&pWinAtt->GetInstanceCodeObjectId()!=AcDbObjectId::kNull)
+	if (pWinAtt != NULL)
 	{
-		JHCOM_DeleteCadObject(pWinAtt->GetInstanceCodeObjectId());
+		if (pWinAtt->GetInstanceCodeObjectId() != AcDbObjectId::kNull)
+		{
+			JHCOM_DeleteCadObject(pWinAtt->GetInstanceCodeObjectId());
+		}
 		pWinAtt->close();
 	}
+
 
 	JHCOM_DeleteCadObject(p_id);
 

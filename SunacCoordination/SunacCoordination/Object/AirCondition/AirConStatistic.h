@@ -8,7 +8,7 @@ class CAirConStatistic
 {
 public:
 	int SelectAirCons();
-	void InsertAirCon(AttrAirCon* pAttr);
+	void InsertAirCon(const AttrAirCon* pAttr);
 
 	AcDbObjectId InsertTableToCAD(AcGePoint3d insertPos);
 
