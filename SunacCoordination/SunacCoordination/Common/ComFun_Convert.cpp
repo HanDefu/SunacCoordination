@@ -308,15 +308,14 @@ int JHCOM_GetAcDbHandles(vAcDbObjectId vIds, vAcDbHandle &vHandles)
 		{
 			AcDbHandle handle;
 			pobj->getAcDbHandle(handle);
+			pobj->close();
 			vHandles.push_back(handle);
 		}
 		else
 		{
-			pobj->close();
 			return 69;
 		}
 	}
-	pobj->close();
 	return 0;
 }
 

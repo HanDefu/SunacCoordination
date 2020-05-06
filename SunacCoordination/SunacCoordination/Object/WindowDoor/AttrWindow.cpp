@@ -1060,10 +1060,12 @@ void AttrWindow::SetMxMirror(bool p_bMirror)
 {
 	if (GetViewDir() == E_VIEW_TOP)
 	{
-		m_isMirror = !m_isMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题 Mirror
+		m_isMirror = !p_bMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题 Mirror
 	}
-
-	m_isMirror = p_bMirror;
+	else
+	{
+		m_isMirror = p_bMirror;
+	}
 }
 
 bool AttrWindow::IsMirror()const//非对称窗型才有镜像
