@@ -155,6 +155,11 @@ void CRailingStatistic::InsertRailingTableToCAD()
 
 	CCommandHighlight::GetInstance()->SunacNoHighlight();
 
+	//将表格图层设置为0层，创建完表格后将图层修改回当前图层
+	CString oldLayerName;
+	MD2010_GetCurrentLayer(oldLayerName);
+	MD2010_SetCurrentLayer(L"0");
+
 	//1、选择需要统计的栏杆
 	const vector<CSunacObjInCad> railings = CSunacSelect::SelectSunacObjs(S_RAILING, E_VIEW_TOP);
 	vAcDbObjectId ringIds;
@@ -238,6 +243,7 @@ void CRailingStatistic::InsertRailingTableToCAD()
 	AcDbTable *table = new AcDbTable();
 	table->setPosition(pnt);
 	table->setAlignment(AcDb::kMiddleCenter);
+	table->setColorIndex(7);
 
 	//5.1 设置行数列数, 说明：2 是标题栏行数, 7是除去设置楼层信息列之外的列数
 	int numRailing = (int)railingCountArray.GetCount();
@@ -330,6 +336,8 @@ void CRailingStatistic::InsertRailingTableToCAD()
 	CCommandHighlight::GetInstance()->SunacHighlight(ringIds);
 
 	AcDbObjectId tableId = JHCOM_PostToModelSpace(table);
+
+	MD2010_SetCurrentLayer(oldLayerName);
 
 	return;
 }
