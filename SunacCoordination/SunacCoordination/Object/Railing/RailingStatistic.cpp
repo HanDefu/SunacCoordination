@@ -243,7 +243,7 @@ void CRailingStatistic::InsertRailingTableToCAD()
 	AcDbTable *table = new AcDbTable();
 	table->setPosition(pnt);
 	table->setAlignment(AcDb::kMiddleCenter);
-	table->setColorIndex(7);
+	table->setColorIndex(256);
 
 	//5.1 设置行数列数, 说明：2 是标题栏行数, 7是除去设置楼层信息列之外的列数
 	int numRailing = (int)railingCountArray.GetCount();

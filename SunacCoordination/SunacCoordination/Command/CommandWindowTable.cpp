@@ -463,7 +463,7 @@ void CMD_SunacFloorWindowsTable()
 	//t通用设置
 	table->setPosition(pnt);
 	table->setAlignment(AcDb::kMiddleCenter);
-	table->setColorIndex(7);
+	table->setColorIndex(256);
 
 	//1.设置行数列数, 说明：2 是标题栏行数
 	int numWindowDoor = (int)winCountArray.GetCount();
