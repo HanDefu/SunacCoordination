@@ -311,10 +311,6 @@ int JHCOM_GetAcDbHandles(vAcDbObjectId vIds, vAcDbHandle &vHandles)
 			pobj->close();
 			vHandles.push_back(handle);
 		}
-		else
-		{
-			return 69;
-		}
 	}
 	return 0;
 }
