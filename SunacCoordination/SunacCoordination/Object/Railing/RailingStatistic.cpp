@@ -26,7 +26,7 @@ int CRailingStatistic::SelectRailings()
 	for (UINT i = 0; i < ids.size(); i++)
 	{
 		AcDbObject* pAttr = NULL;
-		TY_GetAttributeData(ids[i], pAttr);
+		TY_GetAttributeData(ids[i], pAttr, true);
 		if (pAttr==NULL)
 			continue;
 		
@@ -46,7 +46,7 @@ int CRailingStatistic::SelectRailings()
 	return count;
 }
 
-void CRailingStatistic::RailingClassify(AttrRailing* pAttr) //栏杆按编号分类
+void CRailingStatistic::RailingClassify(const AttrRailing* pAttr) //栏杆按编号分类
 {
 	int nCurRailingCount = 1;
 	if (pAttr->GetViewDir() == E_VIEW_TOP)
@@ -177,7 +177,7 @@ void CRailingStatistic::InsertRailingTableToCAD()
 	for (UINT i = 0; i < ringIds.size(); i++)
 	{
 		AcDbObject * pDataEnt = 0;
-		TY_GetAttributeData(ringIds[i], pDataEnt);
+		TY_GetAttributeData(ringIds[i], pDataEnt, true);
 		if (pDataEnt == NULL)
 			continue;
 

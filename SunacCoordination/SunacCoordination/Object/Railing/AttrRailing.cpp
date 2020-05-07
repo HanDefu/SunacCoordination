@@ -170,7 +170,7 @@ void CRailingCountArray::InitByRailingIds(const vAcDbObjectId& p_railingIds)
 	for (UINT i = 0; i < p_railingIds.size(); i++)
 	{
 		AcDbObject* pAttr = NULL;
-		TY_GetAttributeData(p_railingIds[i], pAttr);
+		TY_GetAttributeData(p_railingIds[i], pAttr, true);
 		AttrRailing* pAttrRailing = AttrRailing::cast(pAttr);
 		if (pAttrRailing != NULL)
 		{

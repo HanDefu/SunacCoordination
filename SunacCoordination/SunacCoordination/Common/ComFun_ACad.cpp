@@ -22,6 +22,7 @@
 #include <dbapserv.h>
 #include "ComFun_ACAD_Common.h"
 #include "ComFun_Def.h"
+#include "..\Tool\DocLock.h"
 
 using namespace std;
 
@@ -61,7 +62,7 @@ bool JHCOM_GetString(CString prompt, CString &str)
 --------------------------------------------------------------------------*/
 Acad::ErrorStatus JHCOM_ChangeObjectColor(AcDbObjectId entId, Adesk::UInt16 colorIndex)
 {
-	AcDbEntity *pEntity;
+	AcDbEntity *pEntity = NULL;
 	// 打开图形数据库中的对象
 	acdbOpenObject(pEntity, entId, AcDb::kForWrite);
 	// 修改实体的颜色
@@ -73,8 +74,9 @@ Acad::ErrorStatus JHCOM_ChangeObjectColor(AcDbObjectId entId, Adesk::UInt16 colo
 
 int JHCOM_GetObjectColor(AcDbObjectId entId, AcCmColor &color)
 {
-	AcDbEntity *pEntity;
+	AcDbEntity *pEntity = NULL;
 	// 打开图形数据库中的对象
+
 	acdbOpenObject(pEntity, entId, AcDb::kForRead);
 	// 修改实体的颜色
 	color = pEntity->color();
@@ -85,7 +87,7 @@ int JHCOM_GetObjectColor(AcDbObjectId entId, AcCmColor &color)
 
 int JHCOM_GetObjectColor(AcDbObjectId entId)
 {
-	AcDbEntity *pEntity;
+	AcDbEntity *pEntity = NULL;
 	// 打开图形数据库中的对象
 	acdbOpenObject(pEntity, entId, AcDb::kForRead);
 	// 修改实体的颜色
@@ -130,19 +132,18 @@ void JHCOM_DeleteCadObject(AcDbObjectId id)
 {  
 	if(id == 0)
 		return;
-	AcDbEntity* pDel = NULL;  
-	acDocManager->lockDocument(curDoc());
+	AcDbEntity* pDel = NULL;
+	CDocLock lock;
 	if(Acad::eOk == acdbOpenObject(pDel,id,AcDb::kForWrite))  
 	{
 		pDel->erase();
 		pDel->close();  
 	}
-	acDocManager->unlockDocument(curDoc());
 }  
 
 void JHCOM_DeleteCadObjectArray(AcDbObjectIdArray ids)
 {
-	acDocManager->lockDocument(curDoc());
+	CDocLock lock;
 
 	for (int i = 0; i < ids.length(); i++)
 	{
@@ -153,8 +154,6 @@ void JHCOM_DeleteCadObjectArray(AcDbObjectIdArray ids)
 			pDel->close();
 		}
 	}
-
-	acDocManager->unlockDocument(curDoc());
 }
 
 /*-------------------------------------------------------------------------
@@ -387,8 +386,8 @@ AcDbObjectId JHCOM_PostToModelSpace(AcDbEntity* pEnt, CString entry)
 
 	AcDbObjectId entId = AcDbObjectId::kNull;
 
+	CDocLock lock;
 	//acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlockTable, AcDb::kForRead);
-	acDocManager->lockDocument(curDoc());
 	AcDbBlockTableRecord *pBlockTableRecord;
 	Acad::ErrorStatus es = pBlockTable->getAt(entry, pBlockTableRecord, AcDb::kForWrite);
 	if (es==Acad::eOk)
@@ -399,7 +398,6 @@ AcDbObjectId JHCOM_PostToModelSpace(AcDbEntity* pEnt, CString entry)
 
 	pBlockTable->close();
 	pEnt->close();
-	acDocManager->unlockDocument(curDoc());
 
 	return entId;
 }
@@ -1092,7 +1090,7 @@ void JHCOM_HilightObject(const AcDbObjectId& objId, bool highlight)
 {
 	//TCHAR dummy[133];
 
-	AcDbEntity *pEnt;
+	AcDbEntity *pEnt=NULL;
 	Acad::ErrorStatus es = acdbOpenAcDbEntity(pEnt, objId, AcDb::kForRead);
 	if(pEnt == NULL)
 		return;
@@ -1138,7 +1136,7 @@ void JHCOM_DeleteGroup(const AcDbObjectId& objId)
 
 bool JHCOM_IsObjectShown(const AcDbObjectId& objId)
 {
-	AcDbEntity *pEnt;
+	AcDbEntity *pEnt = NULL;
 	Acad::ErrorStatus es = acdbOpenAcDbEntity(pEnt, objId, AcDb::kForRead);
 	if(pEnt == NULL)
 		return false;
@@ -1154,9 +1152,9 @@ bool JHCOM_IsObjectShown(const AcDbObjectId& objId)
 
 void JHCOM_ShowObject(const AcDbObjectId& objId, bool show, bool refresh)
 {
-	AcDbEntity *pEnt;
+	AcDbEntity *pEnt = NULL;
 
-	acDocManager->lockDocument(curDoc());
+	CDocLock lock;
 	Acad::ErrorStatus es = acdbOpenAcDbEntity(pEnt, objId, AcDb::kForWrite);
 	if(pEnt == NULL)
 		return;
@@ -1172,14 +1170,12 @@ void JHCOM_ShowObject(const AcDbObjectId& objId, bool show, bool refresh)
 		actrTransactionManager->flushGraphics();//必须lock住文档才有效果
 		acedUpdateDisplay();
 	}
-	
-	acDocManager->unlockDocument(curDoc());
 }
 
 void JHCOM_ShowGroup(const AcDbObjectId& objId, bool show)
 {
 	AcDbObjectIdArray ids;
-	acDocManager->lockDocument(curDoc());
+	CDocLock lock;
 	JHCOM_GetGroupObject(objId, ids);
 	for (int i = 0; i < ids.length(); i++)
 	{
@@ -1187,7 +1183,6 @@ void JHCOM_ShowGroup(const AcDbObjectId& objId, bool show)
 	}
 	actrTransactionManager->flushGraphics();//必须lock住文档才有效果
 	acedUpdateDisplay();
-	acDocManager->unlockDocument(curDoc());
 }
 
 
@@ -1249,7 +1244,7 @@ bool JHCOM_IsPointOnCircle(AcGePoint3d pnt, double r)
 --------------------------------------------------------------------------*/
 Acad::ErrorStatus JHCOM_GetObjectMinMaxPoint(AcDbObjectId entId, AcGePoint3d &minPt, AcGePoint3d &maxPt)
 {
-	AcDbEntity *pEntity;
+	AcDbEntity *pEntity = NULL;
 	// 打开图形数据库中的对象
 	Acad::ErrorStatus  es = acdbOpenObject(pEntity, entId, AcDb::kForRead);
 	if (pEntity == 0)
@@ -1340,7 +1335,7 @@ bool ComparePoint(const AcGePoint3d& p1, const AcGePoint3d& p2)
 
 int JHCOM_Get3dPolylinePoints(AcDbObjectId entId, vAcGePoint3d &vpoints)
 {
-	AcDbEntity *pEntity;
+	AcDbEntity *pEntity = NULL;
 	// 打开图形数据库中的对象
 	acdbOpenObject(pEntity, entId, AcDb::kForRead);
 	if(pEntity == NULL)
@@ -1420,8 +1415,8 @@ int MD2010_OpenAndCloseRecord(const WCHAR * blockname)
 
 int TYCOM_FlushBlockDisplay(AcDbObjectId blkId)
 {
+	CDocLock lock;
 	AcDbEntity *pEnt = 0;
-	acDocManager->lockDocument(curDoc());
 	if (acdbOpenObject(pEnt,blkId,AcDb::kForWrite)==Acad::eOk)
 	{
 		pEnt->recordGraphicsModified();
@@ -1429,6 +1424,5 @@ int TYCOM_FlushBlockDisplay(AcDbObjectId blkId)
 		pEnt->draw();
 		pEnt->close();
 	}
-	acDocManager->unlockDocument(curDoc());
 	return 0;
 }

@@ -21,6 +21,7 @@ bool CWindowCountArray::InitByWindowIds(const vector<CSunacObjInCad>& p_winIds)
 		AttrWindow* pAtt = AttrWindow::GetWinAtt(p_winIds[i].m_winId);
 		if (pAtt != NULL)
 		{
+			pAtt->close();
 			AttrWindow attTemp(*pAtt);
 			attTemp.SetMxMirror(p_winIds[i].m_bMxMirror);
 			CString sInstanceCode = GetWindowAutoName()->GetWindowName(attTemp);

@@ -182,8 +182,7 @@ AttrWindow::~AttrWindow()
 AttrWindow* AttrWindow::GetWinAtt(AcDbObjectId p_id)
 {
 	AcDbObject* pObj = NULL;
-	TY_GetAttributeData(p_id, pObj);
-
+	TY_GetAttributeData(p_id, pObj, false);
 	AttrWindow *pWinAtt = AttrWindow::cast(pObj);
 
 	return pWinAtt;
@@ -988,17 +987,19 @@ bool AttrWindow::IsInstanceEqual(const AttrWindow& p_att) const
 		return false;
 	}
 
-	//是否有附框， 附框尺寸通常是相同的，不进行比较
-	if (m_material.bHasAuxiliaryFrame!=p_att.m_material.bHasAuxiliaryFrame)
-	{
-		return false;
-	}
 
-	//型材
-	if (0!=m_material.sAluminumSerial.CompareNoCase( p_att.m_material.sAluminumSerial))
-	{
-		return false;
-	}
+	//2020 0430 绘制门窗时，还未设置门窗附框和型材系列，因此门窗编号在未设置时不考虑附框或型材系列 TODOyuan
+	////是否有附框， 附框尺寸通常是相同的，不进行比较
+	//if (m_material.bHasAuxiliaryFrame!=p_att.m_material.bHasAuxiliaryFrame)
+	//{
+	//	return false;
+	//}
+
+	////型材
+	//if (0!=m_material.sAluminumSerial.CompareNoCase( p_att.m_material.sAluminumSerial))
+	//{
+	//	return false;
+	//}
 
 	return true;
 }
@@ -1059,10 +1060,12 @@ void AttrWindow::SetMxMirror(bool p_bMirror)
 {
 	if (GetViewDir() == E_VIEW_TOP)
 	{
-		p_bMirror = !p_bMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题 Mirror
+		m_isMirror = !p_bMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题 Mirror
 	}
-
-	m_isMirror = p_bMirror;
+	else
+	{
+		m_isMirror = p_bMirror;
+	}
 }
 
 bool AttrWindow::IsMirror()const//非对称窗型才有镜像

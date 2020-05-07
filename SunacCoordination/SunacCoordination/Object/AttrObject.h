@@ -57,7 +57,7 @@ public:
 	
 	//20200324 版本6：楼层信息从AttrWindow移到基类，以便支持所有的类型
 	CFloorInfo GetFloorInfo()const { return m_floorInfo; }
-	void SetFloorInfo(CFloorInfo p_info) { m_floorInfo = p_info; }
+	void SetFloorInfo(CFloorInfo p_info) { m_floorInfo = p_info;  close(); }
 
 	virtual eViewDir GetViewDir()const { return m_viewDir; }
 	virtual void SetViewDir(eViewDir p_view) { } //默认不能改变视图方向

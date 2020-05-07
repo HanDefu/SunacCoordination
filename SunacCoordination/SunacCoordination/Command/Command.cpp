@@ -236,7 +236,7 @@ void CMD_SunacFloorSetting()//楼层设置
 	for (UINT i = 0; i < ids.size(); i++)
 	{
 		AcDbObject * pDataEnt = NULL;
-		TY_GetAttributeData(ids[i], pDataEnt);
+		TY_GetAttributeData(ids[i], pDataEnt, false);
 		if (pDataEnt==NULL)
 			continue;
 		AttrObject * pSunacObj = dynamic_cast<AttrObject*>(pDataEnt);
@@ -247,6 +247,7 @@ void CMD_SunacFloorSetting()//楼层设置
 		}
 		 
 		pSunacObj->SetFloorInfo(floorInfo);
+		pDataEnt->close();
 	}
 
 	acutPrintf(_T("设置楼层信息成功\n"));

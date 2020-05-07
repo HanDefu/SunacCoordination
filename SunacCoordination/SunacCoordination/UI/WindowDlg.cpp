@@ -797,7 +797,7 @@ void CWindowDlg::SetEditMode(AcDbObjectId editId)
 		TYUI_Disable(*GetDlgItem(IDC_RADIO_WINDOW));
 
 		AcDbObject* pAtt = NULL;
-		TY_GetAttributeData(m_curEditWinId, pAtt);
+		TY_GetAttributeData(m_curEditWinId, pAtt, true);
 		const AttrWindow *pWinAtt = dynamic_cast<AttrWindow *>(pAtt);
 		if (pWinAtt == NULL)
 		{

@@ -29,6 +29,10 @@ CWindowAdvanceDlg::CWindowAdvanceDlg(CWnd* pParent /*=NULL*/)
 
 CWindowAdvanceDlg::~CWindowAdvanceDlg()
 {
+	for (UINT i = 0; i < m_selAttrWindows.size(); i++)
+	{
+		m_selAttrWindows[i]->close();
+	}
 }
 
 void CWindowAdvanceDlg::OnOK()
@@ -189,7 +193,7 @@ void CWindowAdvanceDlg::OnBnClickedSelectOnDwg()
 	for (UINT i = 0; i < wins.size(); i++)
 	{
 		AcDbObject* pAttr = NULL;
-		TY_GetAttributeData(wins[i].m_winId, pAttr);
+		TY_GetAttributeData(wins[i].m_winId, pAttr, false);
 		AttrWindow* pAttrWindow = AttrWindow::cast(pAttr);
 		if (pAttrWindow == NULL)
 			continue;
