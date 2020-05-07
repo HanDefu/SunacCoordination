@@ -45,19 +45,19 @@ public:
 	//}}AFX_ARX_METHODS
 	
 	virtual eRCType GetType(){return S_TYPENUM;}
-	virtual bool isEqualTo(AttrObject*other);//基础数据一致
+	virtual bool isEqualTo(const AttrObject*other) const ;//基础数据一致
 
 	CString GetFileName()const{ return m_file.fileName; }
 	void SetFileName(CString p_str){ m_file.fileName = p_str; }
 
 	void SetInstanceCode(CString  bianHao);
-	void SetInstanceCodeObjectId(AcDbObjectId p_id);
+	void SetInstanceCodeObjectId(AcDbObjectId p_id); //编号文字id
 	CString GetInstanceCode()const { return m_instanceCode; }
-	AcDbObjectId GetInstanceCodeObjectId()const { return m_instanceCodeId; }
+	AcDbObjectId GetInstanceCodeObjectId()const { return m_instanceCodeId; }//编号文字id
 	
 	//20200324 版本6：楼层信息从AttrWindow移到基类，以便支持所有的类型
 	CFloorInfo GetFloorInfo()const { return m_floorInfo; }
-	void SetFloorInfo(CFloorInfo p_info) { m_floorInfo = p_info; }
+	void SetFloorInfo(CFloorInfo p_info) { m_floorInfo = p_info;  close(); }
 
 	virtual eViewDir GetViewDir()const { return m_viewDir; }
 	virtual void SetViewDir(eViewDir p_view) { } //默认不能改变视图方向

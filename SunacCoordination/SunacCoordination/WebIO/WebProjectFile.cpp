@@ -418,6 +418,12 @@ CProjectFile CWebProjectFile::LoadFileData(CMarkup xml)
 		{
 			prjFile.m_sFileUrl = xml.GetData();
 		}
+		if (xml.FindElem(_T("FileSize")))
+		{
+			USES_CONVERSION;
+			long long nSize = _tstoi64(xml.GetData());
+			prjFile.m_sFileSize = FileSizeToString(nSize);
+		}
 		if (xml.FindElem(_T("Creator")))
 		{
 			prjFile.m_sCreator = xml.GetData();

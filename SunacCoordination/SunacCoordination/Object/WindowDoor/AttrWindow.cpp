@@ -179,19 +179,22 @@ AttrWindow::~AttrWindow()
 }
 
 
-AttrWindow* AttrWindow::GetWinAtt(AcDbObjectId p_id)
+AttrWindow* AttrWindow::GetWinAtt(AcDbObjectId p_id, bool bReadMode)
 {
 	AcDbObject* pObj = NULL;
-	TY_GetAttributeData(p_id, pObj);
-
+	TY_GetAttributeData(p_id, pObj, bReadMode);
 	AttrWindow *pWinAtt = AttrWindow::cast(pObj);
+	if (pWinAtt!=NULL && bReadMode)
+	{
+		pWinAtt->close();
+	}
 
 	return pWinAtt;
 }
 CString AttrWindow::GetWinInstanceCode(AcDbObjectId p_id)
 {
 	CString sNumber;
-	AttrWindow* pWinAtt = GetWinAtt(p_id);
+	const AttrWindow* pWinAtt = GetWinAtt(p_id, true);
 	if (pWinAtt!=NULL)
 	{
 		sNumber = pWinAtt->GetInstanceCode();
@@ -789,12 +792,12 @@ Acad::ErrorStatus AttrWindow::dwgOutFields(AcDbDwgFiler* filer) const
 	return filer->filerStatus();
 }
 
-bool AttrWindow::isEqualTo(AttrObject*other)
+bool AttrWindow::isEqualTo(const AttrObject*other) const
 {
 	if (other == 0)
 		return false;
 
-	AttrWindow * pRealObj = dynamic_cast<AttrWindow *>(other);
+	const AttrWindow * pRealObj = dynamic_cast<const AttrWindow *>(other);
 	if (pRealObj == 0)
 		return false;
 
@@ -988,17 +991,19 @@ bool AttrWindow::IsInstanceEqual(const AttrWindow& p_att) const
 		return false;
 	}
 
-	//是否有附框， 附框尺寸通常是相同的，不进行比较
-	if (m_material.bHasAuxiliaryFrame!=p_att.m_material.bHasAuxiliaryFrame)
-	{
-		return false;
-	}
 
-	//型材
-	if (0!=m_material.sAluminumSerial.CompareNoCase( p_att.m_material.sAluminumSerial))
-	{
-		return false;
-	}
+	//2020 0430 绘制门窗时，还未设置门窗附框和型材系列，因此门窗编号在未设置时不考虑附框或型材系列 TODOyuan
+	////是否有附框， 附框尺寸通常是相同的，不进行比较
+	//if (m_material.bHasAuxiliaryFrame!=p_att.m_material.bHasAuxiliaryFrame)
+	//{
+	//	return false;
+	//}
+
+	////型材
+	//if (0!=m_material.sAluminumSerial.CompareNoCase( p_att.m_material.sAluminumSerial))
+	//{
+	//	return false;
+	//}
 
 	return true;
 }
@@ -1059,10 +1064,12 @@ void AttrWindow::SetMxMirror(bool p_bMirror)
 {
 	if (GetViewDir() == E_VIEW_TOP)
 	{
-		p_bMirror = !p_bMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题 Mirror
+		m_isMirror = !p_bMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题 Mirror
 	}
-
-	m_isMirror = p_bMirror;
+	else
+	{
+		m_isMirror = p_bMirror;
+	}
 }
 
 bool AttrWindow::IsMirror()const//非对称窗型才有镜像
@@ -1080,7 +1087,7 @@ void AttrWindow::SetMirror(bool p_bMirror)
 	m_isMirror = p_bMirror;
 }
 
-AcDbObjectId AttrWindow::GetFromWinId() 
+AcDbObjectId AttrWindow::GetFromWinId() const
 {
 #ifdef INIT_HANLDLE_LATER_FOR_DWGIN 
 	if (m_fromWinId==AcDbObjectId::kNull && m_fromWinHandle.isNull()==false)
@@ -1090,7 +1097,7 @@ AcDbObjectId AttrWindow::GetFromWinId()
 #endif
 	return m_fromWinId; 
 }
-AcDbObjectIdArray  AttrWindow::GetRelatedWinIds() 
+AcDbObjectIdArray  AttrWindow::GetRelatedWinIds()  const
 {
 #ifdef INIT_HANLDLE_LATER_FOR_DWGIN 
 	if (m_relatedWinIds.length()==0 && m_relatedWinHandles.size()>0)

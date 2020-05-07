@@ -6,7 +6,7 @@
 #include "../../Common/ComFun_Sunac.h"
 #include "../../Common/ComFun_ACad.h"
 #include "../../Common/ComFun_String.h"
-#include "../../Command/CommandHighlight.h"
+#include "../../src/DocumentData.h"
 #include "..\WindowDoor\WindowSelect.h"
 
 //用于插入表格时排序
@@ -26,7 +26,7 @@ int CRailingStatistic::SelectRailings()
 	for (UINT i = 0; i < ids.size(); i++)
 	{
 		AcDbObject* pAttr = NULL;
-		TY_GetAttributeData(ids[i], pAttr);
+		TY_GetAttributeData(ids[i], pAttr, true);
 		if (pAttr==NULL)
 			continue;
 		
@@ -46,7 +46,7 @@ int CRailingStatistic::SelectRailings()
 	return count;
 }
 
-void CRailingStatistic::RailingClassify(AttrRailing* pAttr) //栏杆按编号分类
+void CRailingStatistic::RailingClassify(const AttrRailing* pAttr) //栏杆按编号分类
 {
 	int nCurRailingCount = 1;
 	if (pAttr->GetViewDir() == E_VIEW_TOP)
@@ -153,7 +153,7 @@ void CRailingStatistic::InsertRailingTableToCAD()
 {
 	CDocLock lock;
 
-	CCommandHighlight::GetInstance()->SunacNoHighlight();
+	GetHightLightTool()->NoHighlight();
 
 	//将表格图层设置为0层，创建完表格后将图层修改回当前图层
 	CString oldLayerName;
@@ -182,7 +182,7 @@ void CRailingStatistic::InsertRailingTableToCAD()
 	for (UINT i = 0; i < ringIds.size(); i++)
 	{
 		AcDbObject * pDataEnt = 0;
-		TY_GetAttributeData(ringIds[i], pDataEnt);
+		TY_GetAttributeData(ringIds[i], pDataEnt, true);
 		if (pDataEnt == NULL)
 			continue;
 
@@ -204,7 +204,7 @@ void CRailingStatistic::InsertRailingTableToCAD()
 	if (idsNoFloorInfo.size() > 0)
 	{
 		AfxMessageBox(_T("部分栏杆未设置楼层和层高"));
-		CCommandHighlight::GetInstance()->SunacHighlight(idsNoFloorInfo);
+		GetHightLightTool()->Highlight(idsNoFloorInfo);
 		return;
 	}
 
@@ -333,7 +333,7 @@ void CRailingStatistic::InsertRailingTableToCAD()
 	}
 
 	//对选择的栏杆高亮
-	CCommandHighlight::GetInstance()->SunacHighlight(ringIds);
+	GetHightLightTool()->Highlight(ringIds);
 
 	AcDbObjectId tableId = JHCOM_PostToModelSpace(table);
 

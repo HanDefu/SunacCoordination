@@ -44,7 +44,7 @@ public:
 
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedCancel();
-	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);///---01.
+	afx_msg LRESULT onAcadKeepFocus(WPARAM, LPARAM);///---01
 
 	void InitWinSetting();
 

@@ -48,7 +48,7 @@
 #include "Command.h"
 #include "CommandWindowDetail.h"
 #include "../Object/Railing/RCRailing.h"
-#include "CommandHighlight.h"
+#include "../src/DocumentData.h"
 
 
 void SendCommandToCAD(CString cmd) //此函数尚未调通
@@ -236,7 +236,7 @@ void CMD_SunacFloorSetting()//楼层设置
 	for (UINT i = 0; i < ids.size(); i++)
 	{
 		AcDbObject * pDataEnt = NULL;
-		TY_GetAttributeData(ids[i], pDataEnt);
+		TY_GetAttributeData(ids[i], pDataEnt, false);
 		if (pDataEnt==NULL)
 			continue;
 		AttrObject * pSunacObj = dynamic_cast<AttrObject*>(pDataEnt);
@@ -247,6 +247,7 @@ void CMD_SunacFloorSetting()//楼层设置
 		}
 		 
 		pSunacObj->SetFloorInfo(floorInfo);
+		pDataEnt->close();
 	}
 
 	acutPrintf(_T("设置楼层信息成功\n"));
@@ -338,7 +339,7 @@ void CMD_SunacWinAutoId()
 void CMD_SunacNoHighlight()
 {
 	//取消高亮
-	CCommandHighlight::GetInstance()->SunacNoHighlight();
+	GetHightLightTool()->NoHighlight();
 }
 
 void CMD_SunacWinTableCheck()
@@ -537,7 +538,7 @@ void CMD_SunacWaterproof()
 //统计算量
 void CMD_SunacWindowsStatistics()
 {
-	CCommandHighlight::GetInstance()->SunacNoHighlight();
+	GetHightLightTool()->NoHighlight();
 
 	//第一步：选择需要统计的门窗
 	eViewDir viewDir = E_VIEW_FRONT;
@@ -570,7 +571,7 @@ void CMD_SunacWindowsStatistics()
 		AfxMessageBox(_T("部分窗户型材系列未设置"));
 
 		//对未设置型材系列的门窗高亮
-		CCommandHighlight::GetInstance()->SunacHighlight(idsNonAlserials);
+		GetHightLightTool()->Highlight(idsNonAlserials);
 		return;
 	}
 
@@ -592,7 +593,7 @@ void CMD_SunacWindowsStatistics()
 	{
 		winIds.push_back(wins[i].m_winId);
 	}
-	CCommandHighlight::GetInstance()->SunacHighlight(winIds);
+	GetHightLightTool()->Highlight(winIds);
 }
 
 void CADPalette_AddP()

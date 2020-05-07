@@ -40,7 +40,7 @@ bool CRailingTop2Front::GenFrontFromTop()
 	for (UINT i = 0; i < ringIds.size(); i++)
 	{
 		AcDbObject * pDataEnt = 0;
-		TY_GetAttributeData(ringIds[i], pDataEnt);
+		TY_GetAttributeData(ringIds[i], pDataEnt, true);
 		if (pDataEnt==NULL)
 			continue;
 		
@@ -189,9 +189,6 @@ AcDbObjectIdArray CRailingTop2Front::CopyAllFloorByOneFloor(const AcDbObjectId& 
 			TYCOM_Move(objListCloned[0], vOffset);
 
 			windowObjIds.append(objListCloned);
-
-			//复制后的也加到名称库中
-			//GetWindowAutoName()->AddWindowType(pRailingAtt->GetInstanceCode(),  objListCloned[0]);
 		}
 	}
 

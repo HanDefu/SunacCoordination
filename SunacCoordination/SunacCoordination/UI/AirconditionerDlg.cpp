@@ -338,7 +338,7 @@ void CAirconditionerDlg::SetEditMode(AcDbBlockReference* pBlock)
 		return;
 
 	AcDbObject* pAtt = NULL;
-	TY_GetAttributeData(pBlock->objectId(), pAtt);
+	TY_GetAttributeData(pBlock->objectId(), pAtt, true);
 	AttrAirCon *pAirCon = dynamic_cast<AttrAirCon *>(pAtt);
 	if (pAirCon == NULL)
 		return;

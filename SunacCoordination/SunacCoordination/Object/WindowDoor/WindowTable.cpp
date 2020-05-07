@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include <algorithm>
 #include "WindowTable.h"
 #include "WindowAutoName.h"
 #include "..\..\Common\ComFun_Def.h"
@@ -12,13 +13,21 @@ CWindowAndCount::CWindowAndCount()
 {
 	nCount = 0;
 }
+bool WindowAndCountLessFunc(const CWindowAndCount& p_winC1, const CWindowAndCount& p_winC2)
+{
+	int nRet = p_winC1.winAtt.GetInstanceCode().CompareNoCase(p_winC2.winAtt.GetInstanceCode());
+
+	return nRet < 0;
+}
+
+//////////////////////////////////////////////////////////////////////////
 bool CWindowCountArray::InitByWindowIds(const vector<CSunacObjInCad>& p_winIds)
 {
 	vector<AttrWindow>  winAtts;
 	vector<AcDbObjectId>  winIds;
 	for (UINT i = 0; i < p_winIds.size(); i++)
 	{
-		AttrWindow* pAtt = AttrWindow::GetWinAtt(p_winIds[i].m_winId);
+		const AttrWindow* pAtt = AttrWindow::GetWinAtt(p_winIds[i].m_winId, true);
 		if (pAtt != NULL)
 		{
 			AttrWindow attTemp(*pAtt);
@@ -44,7 +53,7 @@ bool CWindowCountArray::InitByWindowIds(const vAcDbObjectId& p_winIds)
 		oneWindow.m_id = p_winIds[i];
 		oneWindow.InitParameters();
 
-		AttrWindow* pAtt = oneWindow.GetAttribute();
+		const AttrWindow* pAtt = oneWindow.GetAttributeConst();
 		if (pAtt != NULL)
 		{
 			AttrWindow attTemp(*pAtt);
@@ -109,6 +118,9 @@ bool CWindowCountArray::InitByWindowAtts(const vector<AttrWindow>& p_winAtts, co
 			m_winCountArray.push_back(winNew);
 		}
 	}
+
+	//≈≈–Ú
+	sort(m_winCountArray.begin(), m_winCountArray.end(), WindowAndCountLessFunc);
 
 	return bSuc;
 }

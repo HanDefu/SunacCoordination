@@ -116,12 +116,12 @@ Acad::ErrorStatus AttrBathroom::dwgOutFields(AcDbDwgFiler* filer) const
 	return filer->filerStatus();
 }
 
-bool AttrBathroom::isEqualTo(AttrObject*other)
+bool AttrBathroom::isEqualTo(const AttrObject*other)const
 {
 	if (other == 0)
 		return false;
 
-	AttrBathroom * pRealObj = dynamic_cast<AttrBathroom *>(other);
+	const AttrBathroom * pRealObj = dynamic_cast<const AttrBathroom *>(other);
 	if (pRealObj == 0)
 		return false;
 

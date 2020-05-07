@@ -30,7 +30,6 @@ File description:
 //Constructor
 RCWindow::RCWindow(void)
 {
-	m_pAttribute = 0;
 }
 
 //Destructor
@@ -43,13 +42,11 @@ RCWindow::~RCWindow(void)
 //Constructor
 RCWindow::RCWindow(const RCWindow &other):RCDynamicBlock(other)
 {
-	m_pAttribute = other.m_pAttribute;
 }
 
 //Operator = 
 RCWindow & RCWindow::operator=(const RCWindow &other)
 {
-	m_pAttribute = other.m_pAttribute;
 	return *this;
 }
 
@@ -149,13 +146,22 @@ int RCWindow::SetA(double newValue)
 
 AttrWindow * RCWindow::GetAttribute()
 {
-	if (m_pAttribute == NULL)
-	{
-		AcDbObject * pDataEnt = 0;
-		TY_GetAttributeData(m_id, pDataEnt);
-		m_pAttribute = dynamic_cast<AttrWindow *>(pDataEnt);
-	}
-	return m_pAttribute;
+	AcDbObject * pDataEnt = 0;
+	TY_GetAttributeData(m_id, pDataEnt, false);
+
+	AttrWindow* pAttribute = dynamic_cast<AttrWindow *>(pDataEnt);
+
+	return pAttribute;
+}
+
+const AttrWindow * RCWindow::GetAttributeConst()
+{
+	AcDbObject * pDataEnt = 0;
+	TY_GetAttributeData(m_id, pDataEnt, true);
+
+	const AttrWindow* pAttribute = dynamic_cast<AttrWindow *>(pDataEnt);
+
+	return pAttribute;
 }
 
 void RCWindow::AddAttribute(AttrWindow * attr)
@@ -176,8 +182,8 @@ bool RCWindow::isEqualTo(RCObject*other)
 	if (!RCDynamicBlock::isEqualTo(other))
 		return false;
 
-	AttrWindow * thisAttr = GetAttribute();
-	AttrWindow * otherAttr = pObj->GetAttribute();
+	const AttrWindow * thisAttr = GetAttributeConst();
+	const AttrWindow * otherAttr = pObj->GetAttributeConst();
 	if (!thisAttr->isEqualTo(otherAttr))
 		return false;
 
@@ -197,7 +203,7 @@ void RCWindow::SetInstanceCode(CString str)
 }
 CString RCWindow::GetInstanceCode()
 {
-	return GetAttribute()->GetInstanceCode();
+	return GetAttributeConst()->GetInstanceCode();
 }
 
 void RCWindow::ModifyLayerName(AcDbObjectId BlockDefineId)

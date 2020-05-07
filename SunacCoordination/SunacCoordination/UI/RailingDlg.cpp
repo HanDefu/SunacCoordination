@@ -48,7 +48,7 @@ IMPLEMENT_DYNAMIC(CRailingDlg, CAcUiDialog)
 CRailingDlg::CRailingDlg(CWnd* pParent /*=NULL*/)
 	: CAcUiDialog(CRailingDlg::IDD, pParent)
 	, m_height(1200)
-	, m_width(5400)
+	, m_width(4200)
 	, m_bRailingAutoName(TRUE)
 	, m_sRailingId(_T(""))
 {
@@ -424,7 +424,7 @@ void CRailingDlg::SetEditMode(AcDbBlockReference* pBlock)
 		return;
 
 	AcDbObject* pAtt = NULL;
-	TY_GetAttributeData(pBlock->objectId(), pAtt);
+	TY_GetAttributeData(pBlock->objectId(), pAtt, true);
 	AttrRailing *pRailing = dynamic_cast<AttrRailing *>(pAtt);
 	if (pRailing == NULL)
 		return;

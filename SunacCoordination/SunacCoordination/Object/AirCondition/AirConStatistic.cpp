@@ -18,7 +18,7 @@ int CAirConStatistic::SelectAirCons()
 	for (UINT i = 0; i < ids.size(); i++)
 	{
 		AcDbObject* pAttr = NULL;
-		TY_GetAttributeData(ids[i], pAttr);
+		TY_GetAttributeData(ids[i], pAttr, true);
 		if (pAttr==NULL)
 			continue;
 
@@ -35,7 +35,7 @@ int CAirConStatistic::SelectAirCons()
 	return count;
 }
 
-void CAirConStatistic::InsertAirCon(AttrAirCon* pAttr)
+void CAirConStatistic::InsertAirCon(const AttrAirCon* pAttr)
 {
 	for (UINT i = 0; i < m_allAirCons.size(); i++)
 	{

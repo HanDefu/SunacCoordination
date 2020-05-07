@@ -59,7 +59,7 @@ void CMyDbReactor::WindowAppand(AcDbEntity* pEnt)
 		return;
 
 	const AcDbObjectId curId = pEnt->objectId();
-	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(pEnt->objectId());
+	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(pEnt->objectId(), false);
 	if (pWinAtt == NULL)
 		return ;
 
@@ -75,6 +75,13 @@ void CMyDbReactor::WindowAppand(AcDbEntity* pEnt)
 		const AcDbObjectId modespaceId = GetBlockRecordId(ACDB_MODEL_SPACE);
 		if (owner==modespaceId)
 		{
+			//ÃÅ´°±àºÅ
+			CString sInstanceCode = GetWindowAutoName()->GetWindowName(*pWinAtt);
+			pWinAtt->SetInstanceCode(sInstanceCode);
+			GetWindowAutoName()->AddWindowType(*pWinAtt, curId);
+			//////////////////////////////////////////////////////////////////////////
+
+
 			AcDbExtents ext;
 			pEnt->getGeomExtents(ext);
 			AcGePoint3d centerPt = (ext.minPoint() + ext.maxPoint().asVector()) / 2;
@@ -82,17 +89,7 @@ void CMyDbReactor::WindowAppand(AcDbEntity* pEnt)
 			CTOpenData tWinData;
 			tWinData.width = pWinAtt->GetW();
 			tWinData.height = pWinAtt->GetH();
-			tWinData.bottomHeight = pWinAtt->GetHeightUnderWindow();
-		
-
-			//test
-			{
-				CString str;
-				str.Format(_T("%s_%d"), pWinAtt->GetInstanceCode(), s_count);
-				s_count++;
-				pWinAtt->SetInstanceCode(str);
-			}
-
+			tWinData.bottomHeight = pWinAtt->GetHeightUnderWindow();		
 			tWinData.sWinCode = pWinAtt->GetInstanceCode();
 
 			AcDbObjectId tWinOpenIdOut = AcDbObjectId::kNull;
@@ -116,7 +113,7 @@ void CMyDbReactor::WindowModifed(AcDbEntity* pEnt)
 
 	const AcDbObjectId curId = pEnt->objectId();
 	Acad::ErrorStatus es;
-	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(pEnt->objectId());
+	const AttrWindow * pWinAtt = AttrWindow::GetWinAtt(pEnt->objectId(), true);
 	if (pWinAtt == NULL)
 		return;
 
@@ -175,8 +172,6 @@ void CMyDbReactor::WindowModifed(AcDbEntity* pEnt)
 	{
 
 	}
-
-	pWinAtt->close();
 }
 
 void CMyDbReactor::WindowErase(AcDbEntity* pEnt)

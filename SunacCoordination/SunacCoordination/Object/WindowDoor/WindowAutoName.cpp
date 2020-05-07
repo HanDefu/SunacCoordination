@@ -63,17 +63,11 @@ void CWinClassify::CheckAndRemoveObjectNotBelong() //¼ì²éAcDbObjectIdÊÇ·ñÓÐÐ§£¬Õ
 
 bool CWinClassify::IsObjectBelongThisClassify(AcDbObjectId p_id) //ÅÐ¶ÏÊÇ·ñºÍ´ËÃÅ´°·ÖÀàÏàÍ¬
 {
-	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(p_id);
+	const AttrWindow * pWinAtt = AttrWindow::GetWinAtt(p_id, true);
 	if (pWinAtt == NULL)
 		return false;
 
 	bool bSuc = pWinAtt->IsInstanceEqual(m_winAtt);
-	pWinAtt->close();
-
-	if (bSuc)
-	{
-		assert(pWinAtt->IsInstanceEqual(m_winAtt));
-	}
 
 	return bSuc;
 }
@@ -406,13 +400,12 @@ bool CWindowAutoName::AddObject(AcDbObjectId p_id)
 	if (pWinClassify != NULL)
 		return true; //ÒÑ´æÔÚ
 	
-	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(p_id);
+	const AttrWindow * pWinAtt = AttrWindow::GetWinAtt(p_id, true);
 	if (pWinAtt == NULL)
 		return false;
 	
 	AddWindowType(*pWinAtt, p_id);
 
-	pWinAtt->close();
 	return true;
 }
 void CWindowAutoName::RemoveObject(AcDbObjectId p_id) //ÃÅ´°²ÎÊý±ä»¯Ê±µ÷ÓÃ´Ëº¯Êý¸üÐÂ
@@ -456,14 +449,13 @@ void CWindowAutoName::RemoveEmptyClassify()
 }
 bool CWindowAutoName::UpdateObject(AcDbObjectId p_id)//ÃÅ´°²ÎÊý±ä»¯Ê±µ÷ÓÃ´Ëº¯Êý¸üÐÂ£¬°üÀ¨Ãû³Æ±ä»¯£¬ÊôÐÔ±ä»¯
 {
-	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(p_id);
+	const AttrWindow * pWinAtt = AttrWindow::GetWinAtt(p_id, true);
 	if (pWinAtt == NULL)
 		return false;
 
 	RemoveObject(p_id);
 
 	AddWindowType(*pWinAtt, p_id);
-	pWinAtt->close();
 
 	return true;
 }

@@ -46,11 +46,10 @@ void CDoubleClickBlockReference::startEdit( AcDbEntity *pEnt, AcGePoint3d pt )
 	{
 		AcDbBlockReference *pBlockReference = AcDbBlockReference::cast(pEnt);
 
-		//AcApDocument *pDoc = acDocManager->curDocument();
-		//acDocManager->lockDocument(pDoc);
-		//// 将实体的打开状态升级为可写状态
-		////pBlockReference->upgradeOpen();
-		//acDocManager->unlockDocument(pDoc);
+		// 将实体的打开状态升级为可写状态
+		//acDocManager->lockDocument(acDocManager->curDocument());
+		//pBlockReference->upgradeOpen();
+		//acDocManager->unlockDocument(acDocManager->curDocument());
 
 		eRCType rcType = TY_GetType(pBlockReference);
 		pBlockReference->close();

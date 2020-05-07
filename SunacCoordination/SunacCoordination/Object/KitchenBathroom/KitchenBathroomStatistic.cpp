@@ -17,7 +17,7 @@ int CKitchenBathroomStatistic::SelectKitchenBathroom()
 	for (UINT i = 0; i < ids.size(); i++)
 	{
 		AcDbObject* pAttr = NULL;
-		TY_GetAttributeData(ids[i], pAttr);
+		TY_GetAttributeData(ids[i], pAttr, true);
 		if (pAttr==NULL)
 			continue;
 

@@ -4,6 +4,7 @@
 #include "..\Object\WindowDoor\WinTangentOpenMap.h"
 #include "..\Object\Kitchen\KitchenAutoName.h"
 #include "..\Object\Bathroom\BathroomAutoName.h"
+#include "ObjHighlight.h"
 
 //文档数据，都通过GetCurDocData获取，以便确保拿到的是当前文档的数据
 class CDocumentData
@@ -24,6 +25,8 @@ public:
 
 	CWinTangentOpenMap m_winTangentMap;
 
+	CObjsHighlight  m_hightLight; //用于过程处理，不需要保存
+
 	bool m_bLoad;
 };
 
@@ -32,6 +35,7 @@ CKitchenAutoName* GetKitchenAutoName();
 CBathroomAutoName* GetBathroomAutoName();
 CInstanceCodeTextMrg* GetInstanceCodeMrg();
 CWinTangentOpenMap* GetWinTangentOpenMap();
+CObjsHighlight* GetHightLightTool();
 
 
 //////////////////////////////////////////////////////////////////////////

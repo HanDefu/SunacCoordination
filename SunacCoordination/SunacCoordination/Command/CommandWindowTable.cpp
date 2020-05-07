@@ -13,7 +13,7 @@
 #include "accmd.h"
 #include "dbtable.h"
 #include "Command.h"
-#include "../Command/CommandHighlight.h"
+#include "../src/DocumentData.h"
 #include "../Common/ComFun_Sunac.h"
 #include "../Common/ComFun_ACad.h"
 #include "../Common/ComFun_String.h"
@@ -28,7 +28,7 @@ void CMD_SunacWindowsTable()
 {
 	CString str;
 
-	CCommandHighlight::GetInstance()->SunacNoHighlight();
+	GetHightLightTool()->NoHighlight();
 
 	//第一步：选择需要统计的门窗
 	eViewDir viewDir = E_VIEW_FRONT;
@@ -271,7 +271,7 @@ void CMD_SunacWindowsTable()
 	{
 		winIds.push_back(wins[i].m_winId);
 	}
-	CCommandHighlight::GetInstance()->SunacHighlight(winIds);
+	GetHightLightTool()->Highlight(winIds);
 
 	return;
 }
@@ -381,7 +381,7 @@ void CMD_SunacFloorWindowsTable()
 {
 	CDocLock lock;
 
-	CCommandHighlight::GetInstance()->SunacNoHighlight();
+	GetHightLightTool()->NoHighlight();
 
 	//将表格图层设置为0层，创建完表格后将图层修改回当前图层
 	CString oldLayerName;
@@ -676,7 +676,7 @@ void CMD_SunacFloorWindowsTable()
 	{
 		winIds.push_back(wins[i].m_winId);
 	}
-	CCommandHighlight::GetInstance()->SunacHighlight(winIds);
+	GetHightLightTool()->Highlight(winIds);
 
 	AddXDataForWinTable(table, winIds);
 

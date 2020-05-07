@@ -36,7 +36,9 @@ namespace RemoveCuiDoubleClick
             List<DoubleClickAction> dcsToRemove = new List<DoubleClickAction>();
             foreach (DoubleClickAction dc in cs.MenuGroup.DoubleClickActions)
             {
-                if (dc.DxfName.CompareTo("BLOCKREF") == 0 || dc.DxfName.CompareTo("DYNBLOCKREF") == 0)
+                if (dc.DxfName.CompareTo("BLOCKREF") == 0 || dc.DxfName.CompareTo("DYNBLOCKREF")==0
+                    || dc.DxfName.CompareTo("ATTBLOCKREF") == 0 || dc.DxfName.CompareTo("ATTDYNBLOCKREF") == 0||
+                    dc.DxfName.CompareTo("ATTRLIB") == 0)
                 {
                     dcsToRemove.Add(dc);
                 }
