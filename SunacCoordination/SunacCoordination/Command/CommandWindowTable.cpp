@@ -383,12 +383,12 @@ void CMD_SunacFloorWindowsTable()
 
 	GetHightLightTool()->NoHighlight();
 
-	//第一步：选择需要统计的门窗
-	//eViewDir viewDir = E_VIEW_TOP;
-	//bool bSuc1 = SelectViewDir(viewDir);
-	//if (bSuc1 == false)
-	//	return;
+	//将表格图层设置为0层，创建完表格后将图层修改回当前图层
+	CString oldLayerName;
+	MD2010_GetCurrentLayer(oldLayerName);
+	MD2010_SetCurrentLayer(L"0");
 
+	//第一步：选择需要统计的门窗
 	const vector<CSunacObjInCad> wins = CSunacSelect::SelectSunacObjs(S_WINDOW, E_VIEW_TOP);
 	if (wins.size() == 0)
 		return;
@@ -463,6 +463,7 @@ void CMD_SunacFloorWindowsTable()
 	//t通用设置
 	table->setPosition(pnt);
 	table->setAlignment(AcDb::kMiddleCenter);
+	table->setColorIndex(7);
 
 	//1.设置行数列数, 说明：2 是标题栏行数
 	int numWindowDoor = (int)winCountArray.GetCount();
@@ -681,5 +682,7 @@ void CMD_SunacFloorWindowsTable()
 
 	AcDbObjectId tableId = JHCOM_PostToModelSpace(table);
 	
+	MD2010_SetCurrentLayer(oldLayerName);
+
 	return;
 }

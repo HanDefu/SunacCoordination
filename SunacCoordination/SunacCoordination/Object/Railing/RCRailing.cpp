@@ -419,7 +419,7 @@ void CRCRailing::CreateRailingDetailDim(const AttrRailing& railAtt, AcDbObjectId
 	CString sRailingLayerName = L"Sunac_dim";
 	if (JHCOM_GetLayerID(sRailingLayerName) == AcDbObjectId::kNull)
 	{
-		JHCOM_CreateNewLayer(sRailingLayerName);
+		JHCOM_CreateNewLayer(sRailingLayerName, 7);
 	}
 
 	MD2010_SetCurrentLayer(sRailingLayerName);
@@ -619,7 +619,7 @@ AcDbObjectId CRCRailing::DrawRailingWhiteWall(const AttrRailing& railAtt, AcDbOb
 	CString sWindowDoorLayerName = L"Sunac_wall";
 	if (JHCOM_GetLayerID(sWindowDoorLayerName) == AcDbObjectId::kNull)
 	{
-		JHCOM_CreateNewLayer(sWindowDoorLayerName);
+		JHCOM_CreateNewLayer(sWindowDoorLayerName, 7);
 	}
 
 	MD2010_SetCurrentLayer(sWindowDoorLayerName);
@@ -674,7 +674,7 @@ AcDbObjectId CRCRailing::DrawRailingYellowWall(const AttrRailing& railAtt, AcDbO
 	CString sWindowDoorLayerName = L"Sunac_wall";
 	if (JHCOM_GetLayerID(sWindowDoorLayerName) == AcDbObjectId::kNull)
 	{
-		JHCOM_CreateNewLayer(sWindowDoorLayerName);
+		JHCOM_CreateNewLayer(sWindowDoorLayerName, 2);
 	}
 
 	MD2010_SetCurrentLayer(sWindowDoorLayerName);
@@ -728,7 +728,7 @@ AcDbObjectId CRCRailing::DrawRailingFill(const AttrRailing& railAtt, AcDbObjectI
 	CString sWindowDoorLayerName = L"Sunac_fill";
 	if (JHCOM_GetLayerID(sWindowDoorLayerName) == AcDbObjectId::kNull)
 	{
-		JHCOM_CreateNewLayer(sWindowDoorLayerName);
+		JHCOM_CreateNewLayer(sWindowDoorLayerName, 8);
 	}
 
 	MD2010_SetCurrentLayer(sWindowDoorLayerName);
@@ -851,6 +851,7 @@ AcDbObjectId CRCRailing::CreateDimension(AcGePoint3d start, AcGePoint3d end, AcG
 	CString entryName;
 	entryName.Format(_T("%d"), (int)size);
 	AcDbAlignedDimension  *pDim = new AcDbAlignedDimension(start, end, dimlinpnt, entryName, dimStyleId);
+	pDim->setColorIndex(7);
 
 	AcDbObjectId dimID = MD2010_PostModalToBlockTable(ACDB_MODEL_SPACE, pDim);
 
