@@ -707,6 +707,22 @@ int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt, bool p_bRead)
 			pDataEnt->close();
 		}
 	}
+
+	//if (pDataEnt != NULL && p_bRead == false)
+	//{
+	//	AcDbObject* pEnt = NULL;
+	//	Acad::ErrorStatus es = acdbOpenObject(pEnt, tkId, AcDb::kForWrite);
+	//	if (es == Acad::eOk)
+	//	{
+	//		AcDbBlockReference* pRef = AcDbBlockReference::cast(pEnt);
+	//		if (pRef != NULL)
+	//		{
+	//			pRef->setNormal(AcGeVector3d::kZAxis);
+	//		}
+	//		pEnt->close();
+	//	}
+	//}
+
 	return pDataEnt == NULL ? 0 : -68;
 }
 

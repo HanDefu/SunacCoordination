@@ -20,7 +20,7 @@
 #include "../Common/ComFun_Sunac.h"
 #include "../Tool/DocLock.h"
 #include "CommandWindowDetail.h"
-#include "../Command/CommandHighlight.h"
+#include "../src/DocumentData.h"
 #include "..\GlobalSetting.h"
 #include "../Common/ComFun_Math.h"
 #include "../Common/ComFun_Layer.h"
@@ -51,7 +51,7 @@ void CWindowDetail::DrawWindowDetail()
 {
 	CDocLock lockEnt;
 
-	CCommandHighlight::GetInstance()->SunacNoHighlight();
+	GetHightLightTool()->NoHighlight();
 
 	//第一步：选择需要统计的门窗
 	eViewDir viewDir = E_VIEW_FRONT;
@@ -105,7 +105,7 @@ void CWindowDetail::DrawWindowDetail()
 	{
 		winIds.push_back(wins[i].m_winId);
 	}
-	CCommandHighlight::GetInstance()->SunacHighlight(winIds);
+	GetHightLightTool()->Highlight(winIds);
 
 	return;
 }

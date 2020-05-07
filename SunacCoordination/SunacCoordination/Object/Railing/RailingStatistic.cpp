@@ -6,7 +6,7 @@
 #include "../../Common/ComFun_Sunac.h"
 #include "../../Common/ComFun_ACad.h"
 #include "../../Common/ComFun_String.h"
-#include "../../Command/CommandHighlight.h"
+#include "../../src/DocumentData.h"
 #include "..\WindowDoor\WindowSelect.h"
 
 //用于插入表格时排序
@@ -153,7 +153,7 @@ void CRailingStatistic::InsertRailingTableToCAD()
 {
 	CDocLock lock;
 
-	CCommandHighlight::GetInstance()->SunacNoHighlight();
+	GetHightLightTool()->NoHighlight();
 
 	//1、选择需要统计的栏杆
 	const vector<CSunacObjInCad> railings = CSunacSelect::SelectSunacObjs(S_RAILING, E_VIEW_TOP);
@@ -199,7 +199,7 @@ void CRailingStatistic::InsertRailingTableToCAD()
 	if (idsNoFloorInfo.size() > 0)
 	{
 		AfxMessageBox(_T("部分栏杆未设置楼层和层高"));
-		CCommandHighlight::GetInstance()->SunacHighlight(idsNoFloorInfo);
+		GetHightLightTool()->Highlight(idsNoFloorInfo);
 		return;
 	}
 
@@ -327,7 +327,7 @@ void CRailingStatistic::InsertRailingTableToCAD()
 	}
 
 	//对选择的栏杆高亮
-	CCommandHighlight::GetInstance()->SunacHighlight(ringIds);
+	GetHightLightTool()->Highlight(ringIds);
 
 	AcDbObjectId tableId = JHCOM_PostToModelSpace(table);
 
