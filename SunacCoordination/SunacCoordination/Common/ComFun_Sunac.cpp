@@ -700,7 +700,6 @@ int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt, bool p_bRead)
 	{
 		es = pDict->getAt(SUNAC_ATTRIBUTE_ENTITY, (AcDbObject*&)pDataEnt, AcDb::kForRead);
 		//es = pDict->getAt(SUNAC_ATTRIBUTE_ENTITY, (AcDbObject*&)pDataEnt, p_bRead ? AcDb::kForRead : AcDb::kForWrite);
-		assert(es == Acad::eOk);
 
 		pDict->close();
 		if (pDataEnt!=NULL)
