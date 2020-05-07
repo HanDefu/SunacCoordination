@@ -69,7 +69,7 @@ AcDbObjectId CAirConStatistic::InsertTableToCAD(AcGePoint3d insertPos)
 
 	AcDbTable* pTable = new AcDbTable;
 	pTable->setTableStyle(idTblStyle);
-	pTable->setColorIndex(7);
+	pTable->setColorIndex(256);
 
 	pTable->suppressTitleRow(false);//标题需要保留
 	pTable->suppressHeaderRow(true); //表头不需要
