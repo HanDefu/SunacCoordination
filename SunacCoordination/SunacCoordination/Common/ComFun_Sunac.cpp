@@ -698,30 +698,19 @@ int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt, bool p_bRead)
 	Acad::ErrorStatus es = acdbOpenObject(pDict, dicID, AcDb::kForRead);
 	if(es ==Acad::eOk)
 	{
-		es = pDict->getAt(SUNAC_ATTRIBUTE_ENTITY, (AcDbObject*&)pDataEnt, AcDb::kForRead);
-		//es = pDict->getAt(SUNAC_ATTRIBUTE_ENTITY, (AcDbObject*&)pDataEnt, p_bRead ? AcDb::kForRead : AcDb::kForWrite);
+		//es = pDict->getAt(SUNAC_ATTRIBUTE_ENTITY, (AcDbObject*&)pDataEnt, AcDb::kForRead);
+		es = pDict->getAt(SUNAC_ATTRIBUTE_ENTITY, (AcDbObject*&)pDataEnt, p_bRead ? AcDb::kForRead : AcDb::kForWrite);
 
 		pDict->close();
 		if (pDataEnt!=NULL)
 		{
+			if (p_bRead==false)
+			{
+				pDataEnt->assertWriteEnabled();
+			}
 			pDataEnt->close();
 		}
 	}
-
-	//if (pDataEnt != NULL && p_bRead == false)
-	//{
-	//	AcDbObject* pEnt = NULL;
-	//	Acad::ErrorStatus es = acdbOpenObject(pEnt, tkId, AcDb::kForWrite);
-	//	if (es == Acad::eOk)
-	//	{
-	//		AcDbBlockReference* pRef = AcDbBlockReference::cast(pEnt);
-	//		if (pRef != NULL)
-	//		{
-	//			pRef->setNormal(AcGeVector3d::kZAxis);
-	//		}
-	//		pEnt->close();
-	//	}
-	//}
 
 	return pDataEnt == NULL ? 0 : -68;
 }

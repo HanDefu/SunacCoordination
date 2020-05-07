@@ -43,7 +43,7 @@ public:
 	//驱动参数
 	int RunParameters();
 
-	virtual bool isEqualTo(RCObject*other = 0);//基础数据一致
+	virtual bool isEqualTo(RCObject*other);//基础数据一致
 
 	//virtual AcDbObjectId InsertFromFile(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color);
 

@@ -229,7 +229,7 @@ void CWindowGen::AddWinAtt(const AcDbObjectId p_id, const AttrWindow&  p_winAtt)
 void CWindowGen::UpdateWindowsAttribute(const AcDbObjectId p_id, const AttrWindow& p_winAtt)
 {
 	//把数据记录在图框的扩展字典中
-	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(p_id);
+	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(p_id, false);
 	if (pWinAtt!=NULL)
 	{
 		pWinAtt->Clone(p_winAtt); //只更新数据，不更新关联关系
@@ -335,11 +335,10 @@ bool CWindowGen::DrawTangentOpen(AcDbObjectId p_winId, const AttrWindow& curWinA
 	HRESULT hr = CTangentOpen::InsertWinOpenning(centerPt, tWinData, tWinOpenIdOut);
 
 	//添加和门窗的关联
-	AttrWindow* pWinAtt = AttrWindow::GetWinAtt(p_winId);
+	const AttrWindow* pWinAtt = AttrWindow::GetWinAtt(p_winId, true);
 	if (pWinAtt!=NULL)
 	{
 		GetWinTangentOpenMap()->AddWindow(p_winId, tWinOpenIdOut);
-		pWinAtt->close();
 	}
 
 	return hr == Acad::eOk;
@@ -420,14 +419,13 @@ CWinInsertPara CWindowGen::GetWindowInsertPara(AcDbObjectId p_id) //根据已插入的
 	insertPara.sLayerName = JHCOM_GetEntityLayer(p_id);
 	GetWindowInsertDir(p_id, insertPara.insertDir);
 
-	AttrWindow *pWinAtt = AttrWindow::GetWinAtt(p_id);
+	const AttrWindow *pWinAtt = AttrWindow::GetWinAtt(p_id, true);
 	if (pWinAtt!=NULL)
 	{
 		insertPara.viewDir = pWinAtt->GetViewDir();
 		insertPara.bDetailWnd = false;
 		insertPara.fromWinId = pWinAtt->GetFromWinId();
 		insertPara.relatedWinIds = pWinAtt->GetRelatedWinIds();
-		pWinAtt->close();
 	}
 	else
 	{
@@ -468,10 +466,9 @@ CWinInsertPara CWindowGen::GetWindowInsertPara(AcDbObjectId p_id) //根据已插入的
 
 bool CWindowGen::IsPrototypeCodeSame(const AcDbObjectId p_id, const AttrWindow& newWinAtt)
 {
-	AttrWindow *pOldWinAtt = AttrWindow::GetWinAtt(p_id);
+	const AttrWindow *pOldWinAtt = AttrWindow::GetWinAtt(p_id, true);
 	if (pOldWinAtt != NULL)
 	{
-		pOldWinAtt->close();
 		return pOldWinAtt->m_prototypeCode.CompareNoCase(newWinAtt.m_prototypeCode) == 0;
 	}
 	else
@@ -612,7 +609,7 @@ AcDbObjectId CWindowGen::UpdateOneWindow(const AcDbObjectId p_id, AttrWindow new
 	}
 
 	const CWinInsertPara insertPara = GetWindowInsertPara(p_id);
-	AttrWindow *pOldWinAtt = AttrWindow::GetWinAtt(p_id);
+	const AttrWindow *pOldWinAtt = AttrWindow::GetWinAtt(p_id, true);
 	if (pOldWinAtt==NULL) //门窗详图等情况则直接删除之前的门窗
 	{
 		DeleteWindowObj(p_id);
@@ -622,8 +619,7 @@ AcDbObjectId CWindowGen::UpdateOneWindow(const AcDbObjectId p_id, AttrWindow new
 	}
 
 	AttrWindow oldWinAtt = *pOldWinAtt;
-	pOldWinAtt->close();
-	
+
 	AcDbObjectId fromWinId = AcDbObjectId::kNull;
 	AcDbObjectIdArray relatedWinIds;
 	if (oldWinAtt.GetFromWinId() == AcDbObjectId::kNull) //自身是父节点门窗
@@ -704,7 +700,7 @@ AcDbObjectId CWindowGen::UpdateOneWindow(const AcDbObjectId p_id, AttrWindow new
 
 bool CWindowGen::RenameWindow(const AcDbObjectId p_id, CString p_sNewName, const bool bUpdateRelatedWin) //只是重命名，不更改其他
 {
-	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(p_id);
+	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(p_id, false);
 	if (pWinAtt == NULL)
 		return false;
 
@@ -724,16 +720,14 @@ bool CWindowGen::RenameWindow(const AcDbObjectId p_id, CString p_sNewName, const
 
 bool CWindowGen::DeleteWindowObj(const AcDbObjectId p_id)
 {
-	AttrWindow *pWinAtt = AttrWindow::GetWinAtt(p_id);
+	const AttrWindow *pWinAtt = AttrWindow::GetWinAtt(p_id, true);
 	if (pWinAtt != NULL)
 	{
 		if (pWinAtt->GetInstanceCodeObjectId() != AcDbObjectId::kNull)
 		{
 			JHCOM_DeleteCadObject(pWinAtt->GetInstanceCodeObjectId());
 		}
-		pWinAtt->close();
 	}
-
 
 	JHCOM_DeleteCadObject(p_id);
 
@@ -743,7 +737,7 @@ bool CWindowGen::DeleteWindowObj(const AcDbObjectId p_id)
 }
 bool CWindowGen::SetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId p_fromWinId, AcDbObjectIdArray p_relatedIds)
 {
-	AttrWindow *pWinAtt = AttrWindow::GetWinAtt(p_id);
+	AttrWindow *pWinAtt = AttrWindow::GetWinAtt(p_id, false);
 	if (pWinAtt==NULL)
 		return false;
 
@@ -757,14 +751,13 @@ bool CWindowGen::SetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId p_fromWinId, 
 
 bool CWindowGen::GetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId& p_fromWinId, AcDbObjectIdArray& p_relatedIds)
 {
-	AttrWindow *pWinAtt = AttrWindow::GetWinAtt(p_id);
+	const AttrWindow *pWinAtt = AttrWindow::GetWinAtt(p_id, true);
 	if (pWinAtt == NULL)
 		return false;
 
 	p_fromWinId = pWinAtt->GetFromWinId();
 	p_relatedIds = pWinAtt->GetRelatedWinIds();
 
-	pWinAtt->close();
 	return true;
 
 }
@@ -971,7 +964,7 @@ void CWindowGen::AutoNameAllWindow()
 	for (UINT i = 0; i < wins.size(); i++)
 	{
 		//3.1 对所有的门窗获取名称
-		AttrWindow* pWinAtt = AttrWindow::GetWinAtt(wins[i].m_winId);
+		AttrWindow* pWinAtt = AttrWindow::GetWinAtt(wins[i].m_winId, false);
 		if (pWinAtt==NULL)
 			continue;
 

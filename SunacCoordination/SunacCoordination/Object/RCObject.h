@@ -41,8 +41,8 @@ public:
 	void SetUserData(void * userData){m_userData = userData;}
 	void *GetUserData(){return m_userData;}
 
-	virtual bool isEqualToAll(RCObject*other = 0);//所有数据完全一致
-	virtual bool isEqualTo(RCObject*other = 0);//基础数据一致
+	virtual bool isEqualToAll(RCObject*other);//所有数据完全一致
+	virtual bool isEqualTo(RCObject*other);//基础数据一致
 
 	virtual RCTYPE GetType(){return T_TYPE_NUM;}
 

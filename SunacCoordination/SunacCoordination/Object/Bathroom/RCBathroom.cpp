@@ -22,7 +22,6 @@ File description:
 //Constructor
 RCBathroom::RCBathroom(void)
 {
-	m_pAttribute = 0;
 }
 
 //Destructor
@@ -35,7 +34,6 @@ RCBathroom::~RCBathroom(void)
 //Constructor
 RCBathroom::RCBathroom(const RCBathroom &other):RCDynamicBlock(other)
 {
-	m_pAttribute = other.m_pAttribute;
 }
 
 //Operator = 
@@ -51,13 +49,11 @@ void RCBathroom::Draw()
 
 AttrBathroom * RCBathroom::GetAttribute()
 {
-	if (m_pAttribute == 0)
-	{
-		AcDbObject * pDataEnt = 0;
-		TY_GetAttributeData(m_id, pDataEnt, false);
-		m_pAttribute = dynamic_cast<AttrBathroom *>(pDataEnt);
-	}
-	return m_pAttribute;
+	AcDbObject * pDataEnt = 0;
+	TY_GetAttributeData(m_id, pDataEnt, false);
+	AttrBathroom * pAttribute = dynamic_cast<AttrBathroom *>(pDataEnt);
+
+	return pAttribute;
 }
 
 void RCBathroom::AddAttribute(AttrBathroom * attr)

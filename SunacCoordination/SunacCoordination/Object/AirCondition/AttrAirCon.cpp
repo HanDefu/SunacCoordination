@@ -98,12 +98,12 @@ Acad::ErrorStatus AttrAirCon::dwgOutFields(AcDbDwgFiler* filer) const
 	return filer->filerStatus();
 }
 
-bool AttrAirCon::isEqualTo(AttrObject*other)
+bool AttrAirCon::isEqualTo(const AttrObject*other)const
 {
 	if (other == 0)
 		return false;
 
-	AttrAirCon * pRealObj = dynamic_cast<AttrAirCon *>(other);
+	const AttrAirCon * pRealObj = dynamic_cast<const AttrAirCon *>(other);
 	if (pRealObj == 0)
 		return false;
 

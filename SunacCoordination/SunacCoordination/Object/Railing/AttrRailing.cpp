@@ -75,12 +75,12 @@ Acad::ErrorStatus AttrRailing::dwgOutFields(AcDbDwgFiler* filer) const
 	return filer->filerStatus();
 }
 
-bool AttrRailing::isEqualTo(AttrObject*other)
+bool AttrRailing::isEqualTo(const AttrObject*other)const
 {
 	if (other == 0)
 		return false;
 
-	AttrRailing * pRealObj = dynamic_cast<AttrRailing *>(other);
+	const AttrRailing * pRealObj = dynamic_cast<const AttrRailing *>(other);
 	if (pRealObj == 0)
 		return false;
 

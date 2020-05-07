@@ -59,7 +59,7 @@ void CMyDbReactor::WindowAppand(AcDbEntity* pEnt)
 		return;
 
 	const AcDbObjectId curId = pEnt->objectId();
-	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(pEnt->objectId());
+	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(pEnt->objectId(), false);
 	if (pWinAtt == NULL)
 		return ;
 
@@ -113,7 +113,7 @@ void CMyDbReactor::WindowModifed(AcDbEntity* pEnt)
 
 	const AcDbObjectId curId = pEnt->objectId();
 	Acad::ErrorStatus es;
-	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(pEnt->objectId());
+	const AttrWindow * pWinAtt = AttrWindow::GetWinAtt(pEnt->objectId(), true);
 	if (pWinAtt == NULL)
 		return;
 
@@ -172,8 +172,6 @@ void CMyDbReactor::WindowModifed(AcDbEntity* pEnt)
 	{
 
 	}
-
-	pWinAtt->close();
 }
 
 void CMyDbReactor::WindowErase(AcDbEntity* pEnt)

@@ -88,7 +88,7 @@ public:
 	AttrWindow();
 	virtual ~AttrWindow();
 
-	static AttrWindow* GetWinAtt(AcDbObjectId p_id);
+	static AttrWindow* GetWinAtt(AcDbObjectId p_id, bool bReadMode);
 	static CString GetWinInstanceCode(AcDbObjectId p_id);
 
 	//AttrWindow(const AttrWindow &other);
@@ -103,7 +103,7 @@ public:
 	//}}AFX_ARX_METHODS
 
 	virtual eRCType GetType()const;
-	virtual bool isEqualTo(AttrObject*other);//窗型是否一致
+	virtual bool isEqualTo(const AttrObject*other) const;//窗型是否一致
 	bool IsPrototypeEqual_test(const AttrWindow& p_att);
 	bool IsInstanceEqual(const AttrWindow& p_att) const;//主要用于自动编号区分
 
@@ -169,8 +169,8 @@ public:
 	bool IsMirror()const; 
 	void SetMirror(bool p_bMirror);
 
-	AcDbObjectId GetFromWinId();
-	AcDbObjectIdArray  GetRelatedWinIds();
+	AcDbObjectId GetFromWinId() const;
+	AcDbObjectIdArray  GetRelatedWinIds() const;
 	void SetFromWinId(AcDbObjectId p_id);
 	void SetRelatedWinIds(const AcDbObjectIdArray& p_relatedWinIds);
 	void ClearWinsRelation(); //移除关联关系

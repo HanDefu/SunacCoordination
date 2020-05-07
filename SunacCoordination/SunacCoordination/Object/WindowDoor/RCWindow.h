@@ -60,15 +60,15 @@ public:
 	CString GetInstanceCode();
 
 	AttrWindow * GetAttribute();
+	const AttrWindow * GetAttributeConst();
 	void AddAttribute(AttrWindow * attr);
 
 	virtual RCWindow * Clone();
 	virtual void Draw();
 
-	virtual bool isEqualTo(RCObject*other = 0);//基础数据一致
+	virtual bool isEqualTo(RCObject*other);//基础数据一致
 
 protected: 
-	AttrWindow *m_pAttribute;
 };
 
 typedef std::vector<RCWindow> vRCWindow;

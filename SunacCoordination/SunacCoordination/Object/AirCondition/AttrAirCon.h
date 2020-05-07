@@ -48,7 +48,7 @@ public:
 	//}}AFX_ARX_METHODS
 
 	virtual eRCType GetType() {return S_AIRCON;}
-	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
+	virtual bool isEqualTo(const AttrObject*other)const;//基础数据一致
 	virtual bool IsPrototypeEqual_test(const AttrAirCon& p_att);
 
 	CString AutoInstanceCode(); //空调自动编号只考虑匹数，仅用于统计，不用于查找块

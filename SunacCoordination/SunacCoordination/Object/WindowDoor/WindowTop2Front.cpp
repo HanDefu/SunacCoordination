@@ -126,6 +126,10 @@ bool CWindowTop2Front::GenFrontFromTop()
 		idsOut.append(windowObjIds);
 	}
 
+	for (UINT i = 0; i < winAtts.size(); i++)
+	{
+		winAtts[i]->close();
+	}
 
 	return true;
 }

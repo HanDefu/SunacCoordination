@@ -27,10 +27,9 @@ bool CWindowCountArray::InitByWindowIds(const vector<CSunacObjInCad>& p_winIds)
 	vector<AcDbObjectId>  winIds;
 	for (UINT i = 0; i < p_winIds.size(); i++)
 	{
-		AttrWindow* pAtt = AttrWindow::GetWinAtt(p_winIds[i].m_winId);
+		const AttrWindow* pAtt = AttrWindow::GetWinAtt(p_winIds[i].m_winId, true);
 		if (pAtt != NULL)
 		{
-			pAtt->close();
 			AttrWindow attTemp(*pAtt);
 			attTemp.SetMxMirror(p_winIds[i].m_bMxMirror);
 			CString sInstanceCode = GetWindowAutoName()->GetWindowName(attTemp);
@@ -54,7 +53,7 @@ bool CWindowCountArray::InitByWindowIds(const vAcDbObjectId& p_winIds)
 		oneWindow.m_id = p_winIds[i];
 		oneWindow.InitParameters();
 
-		AttrWindow* pAtt = oneWindow.GetAttribute();
+		const AttrWindow* pAtt = oneWindow.GetAttributeConst();
 		if (pAtt != NULL)
 		{
 			AttrWindow attTemp(*pAtt);
