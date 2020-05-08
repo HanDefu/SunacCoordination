@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Command\Command.cpp" />
-    <ClCompile Include="Command\CommandHighlight.cpp" />
     <ClCompile Include="Command\CommandWindowDetail.cpp" />
     <ClCompile Include="Command\CommandWindowTable.cpp" />
     <ClCompile Include="Common\AcessDatabase.cpp" />
@@ -92,6 +91,7 @@
     <ClCompile Include="ProjectorFileMrg\ProjectInfo.cpp" />
     <ClCompile Include="Src\DocumentData.cpp" />
     <ClCompile Include="Src\DocumentDataSerialize.cpp" />
+    <ClCompile Include="Src\ObjHighlight.cpp" />
     <ClCompile Include="Src\Reactor.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -167,7 +167,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command\Command.h" />
-    <ClInclude Include="Command\CommandHighlight.h" />
     <ClInclude Include="Command\CommandWindowDetail.h" />
     <ClInclude Include="Command\CommandWindowTable.h" />
     <ClInclude Include="Common\AcessDatabase.h" />
@@ -242,6 +241,7 @@
     <ClInclude Include="res\resource.h" />
     <ClInclude Include="Src\DocumentData.h" />
     <ClInclude Include="Src\DocumentDataSerialize.h" />
+    <ClInclude Include="Src\ObjHighlight.h" />
     <ClInclude Include="Src\Reactor.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="Sunac_def.h" />
