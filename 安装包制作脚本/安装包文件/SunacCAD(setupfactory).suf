@@ -4173,12 +4173,12 @@ g_HandleSystemReboot();
 </SessionVar>
 <SessionVar>
 <Name>%Copyright%</Name>
-<Value>Copyright © 2011 %CompanyName%</Value>
+<Value>Copyright ?2020 %CompanyName%</Value>
 <Type>1</Type>
 </SessionVar>
 <SessionVar>
 <Name>%CompanyURL%</Name>
-<Value>http://www.sunac.com.cn</Value>
+<Value>http://ades.sunac.com.cn/</Value>
 <Type>1</Type>
 </SessionVar>
 <SessionVar>
