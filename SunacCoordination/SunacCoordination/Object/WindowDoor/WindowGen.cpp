@@ -304,6 +304,11 @@ AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d
 
 	//插入天正门洞(因在生成门窗appand到模型空间时尚未添加门窗属性，因此不能在反应器中自动天正门洞，需要在生成时添加门洞）
 	DrawTangentOpen(id, curWinAtt, pos, p_winDir);
+
+	//刷新
+	actrTransactionManager->flushGraphics();//必须lock住文档才有效果 
+	acedUpdateDisplay();
+
 	return id;
 }
 

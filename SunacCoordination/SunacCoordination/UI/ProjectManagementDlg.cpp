@@ -251,10 +251,10 @@ BOOL CProjectManagementDlg::OnInitDialog()
 	
 	SetWindowPos(NULL, xPos, yPos, 0, 0, SWP_NOOWNERZORDER|SWP_NOSIZE|SWP_NOZORDER);
 
-	CFont Font;
-	Font.CreatePointFont(160, L"");
-	m_StcRootName.SetFont(&Font);
-	Font.Detach();
+	CFont font;
+	font.CreatePointFont(160, L"");
+	m_StcRootName.SetFont(&font);
+	font.Detach();
 
 	m_selectedDir = nullptr;
 
