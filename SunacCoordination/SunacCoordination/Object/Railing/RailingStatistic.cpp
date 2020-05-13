@@ -215,24 +215,8 @@ void CRailingStatistic::InsertRailingTableToCAD()
 	std::vector<CString> floorColumns;
 	for (int i = 0; i < railingCountArray.GetCount(); i++)
 	{
-		std::vector<CString> floorsTemp = YT_SplitCString(railingCountArray.GetRailing(i).railAtt.GetFloorInfo().GetFloors(), L',');
-		for (UINT j = 0; j < floorsTemp.size(); j++)
-		{
-			bool bFind = false;
-			for (UINT n = 0; n < floorColumns.size(); n++)
-			{
-				if (floorColumns[n].CompareNoCase(floorsTemp[j]) == 0)
-				{
-					bFind = true;
-					break;
-				}
-			}
-
-			if (bFind == false)
-			{
-				floorColumns.push_back(floorsTemp[j]);
-			}
-		}
+		CRailingAndCount railAndCount = railingCountArray.GetRailing(i);
+		GetRailFloorColumns(railAndCount, floorColumns);
 	}
 
 	sort(floorColumns.begin(), floorColumns.end(), CFloorInfo::FloorLessCmp);
@@ -313,7 +297,9 @@ void CRailingStatistic::InsertRailingTableToCAD()
 		for (int i = 0; i < nRailingNumTY; i++)
 		{
 			const CRailingAndCount& railingAndCount = m_tyRailings[i];
-			WriteDataToRailingTable(table, dataStartRow + i, floorColumnCount, floorColumns, railingAndCount);
+			vector<CString> railFloorColumns;
+			GetRailFloorColumns(railingAndCount, railFloorColumns);
+			WriteDataToRailingTable(table, dataStartRow + i, floorColumnCount, railFloorColumns, floorColumns, railingAndCount);
 		}
 	}
 	
@@ -328,7 +314,9 @@ void CRailingStatistic::InsertRailingTableToCAD()
 		for (int i = 0; i < nRailingNumBL; i++)
 		{
 			const CRailingAndCount& railingAndCount = m_blRailings[i];
-			WriteDataToRailingTable(table, dataStartRow + i, floorColumnCount, floorColumns, railingAndCount);
+			vector<CString> railFloorColumns;
+			GetRailFloorColumns(railingAndCount, railFloorColumns);
+			WriteDataToRailingTable(table, dataStartRow + i, floorColumnCount, railFloorColumns, floorColumns, railingAndCount);
 		}
 	}
 
@@ -342,7 +330,7 @@ void CRailingStatistic::InsertRailingTableToCAD()
 	return;
 }
 
-void CRailingStatistic::WriteDataToRailingTable(AcDbTable *p_table, int p_dataStartRow, int p_floorColumnCount, vector<CString> p_floorColumns, const CRailingAndCount& p_railingAndCount)
+void CRailingStatistic::WriteDataToRailingTable(AcDbTable *p_table, int p_dataStartRow, int p_floorColumnCount, vector<CString> p_railFloorColumns, vector<CString> p_floorColumns, const CRailingAndCount& p_railingAndCount)
 {
 	CString str, str1;
 	const AttrRailing * pRailingAttr = &(p_railingAndCount.railAtt);
@@ -362,36 +350,43 @@ void CRailingStatistic::WriteDataToRailingTable(AcDbTable *p_table, int p_dataSt
 	vector<int> nAllFloorCount; //用于合计
 	nAllFloorCount.clear();
 
-	for (int i = 0; i < p_floorColumnCount; i++)
+
+	for (int j = 0; j < p_railFloorColumns.size(); j++)
 	{
-		// 将p_floorColumns按"-"拆分，确定是否有楼层区间
-		int nPos = p_floorColumns[i].Find(_T('-'));
-		if (nPos >= 0)
+		for (int i = 0; i < p_floorColumns.size(); i++)
 		{
-			CString str1 = p_floorColumns[i].Left(nPos);
-			CString str2 = p_floorColumns[i].Mid(nPos + 1);
-			int nStart = _ttoi(str1);
-			int nEnd = _ttoi(str2);
-			if (nStart > nEnd || nStart == 0)
+			if (p_floorColumns[i] == p_railFloorColumns[j])
 			{
-				AfxMessageBox(_T("栏杆楼层信息设置有误"));
-				return;
+				// 将p_floorColumns按"-"拆分，确定是否有楼层区间
+				int nPos = p_floorColumns[i].Find(_T('-'));
+				if (nPos >= 0)
+				{
+					CString str1 = p_floorColumns[i].Left(nPos);
+					CString str2 = p_floorColumns[i].Mid(nPos + 1);
+					int nStart = _ttoi(str1);
+					int nEnd = _ttoi(str2);
+					if (nStart > nEnd || nStart == 0)
+					{
+						AfxMessageBox(_T("栏杆楼层信息设置有误"));
+						return;
+					}
+
+					int nFloorCount = nEnd - nStart + 1;
+
+					int numRailing = p_railingAndCount.nCount;
+					str.Format(L"%d*%d=%d", numRailing, nFloorCount, numRailing * nFloorCount);
+					p_table->setTextString(p_dataStartRow, 4 + i, str);
+					nAllFloorCount.push_back(numRailing * nFloorCount);
+				}
+				else
+				{
+					int nFloorCount = _ttoi(p_floorColumns[i]);
+
+					nAllFloorCount.push_back(p_railingAndCount.nCount);
+					str.Format(L"%d", nAllFloorCount[i]);
+					p_table->setTextString(p_dataStartRow, 4 + i, str);
+				}
 			}
-
-			int nFloorCount = nEnd - nStart + 1;
-
-			int numRailing = p_railingAndCount.nCount;
-			str.Format(L"%d*%d=%d", numRailing, nFloorCount, numRailing * nFloorCount);
-			p_table->setTextString(p_dataStartRow, 4 + i, str);
-			nAllFloorCount.push_back(numRailing * nFloorCount);
-		}
-		else
-		{
-			int nFloorCount = _ttoi(p_floorColumns[i]);
-	
-			nAllFloorCount.push_back(p_railingAndCount.nCount);
-			str.Format(L"%d", nAllFloorCount[i]);
-			p_table->setTextString(p_dataStartRow, 4 + i, str);
 		}
 	}
 
@@ -416,4 +411,27 @@ void CRailingStatistic::SpliteRailingByType(const CRailingAndCount& railingAndCo
 
 	if (pRailingAtt->m_railingType == E_RAILING_BOLI)
 		m_blRailings.push_back(railingAndCount);
+}
+
+void CRailingStatistic::GetRailFloorColumns(CRailingAndCount railAndCount, vector<CString>& floorColumns)
+{	
+	std::vector<CString> floorsTemp = YT_SplitCString(railAndCount.railAtt.GetFloorInfo().GetFloors(), L',');
+	for (UINT j = 0; j < floorsTemp.size(); j++)
+	{
+		bool bFind = false;
+		for (UINT n = 0; n < floorColumns.size(); n++)
+		{
+			if (floorColumns[n].CompareNoCase(floorsTemp[j]) == 0)
+			{
+				bFind = true;
+				break;
+			}
+		}
+
+		if (bFind == false)
+		{
+			floorColumns.push_back(floorsTemp[j]);
+		}
+	}
+	sort(floorColumns.begin(), floorColumns.end(), CFloorInfo::FloorLessCmp);
 }
