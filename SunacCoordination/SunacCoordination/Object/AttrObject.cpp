@@ -182,7 +182,7 @@ Acad::ErrorStatus AttrObject::dwgOutFileInfo(AcDbDwgFiler* filer, const CDwgFile
 	return Acad::eOk;
 }
 
-bool AttrObject::isEqualTo(AttrObject*other)
+bool AttrObject::isEqualTo(const AttrObject*other) const
 {
 	if (other == 0)
 		return false;

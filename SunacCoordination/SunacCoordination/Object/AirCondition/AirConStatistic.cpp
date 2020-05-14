@@ -50,6 +50,11 @@ void CAirConStatistic::InsertAirCon(const AttrAirCon* pAttr)
 
 AcDbObjectId CAirConStatistic::InsertTableToCAD(AcGePoint3d insertPos)
 {
+	//将表格图层设置为0层，创建完表格后将图层修改回当前图层
+	CString oldLayerName;
+	MD2010_GetCurrentLayer(oldLayerName);
+	MD2010_SetCurrentLayer(L"0");
+
 	const double c_tableCellWidth[] = {700, 700, 700, 2000};
 	const double c_tableCellHeight = 300;
 
@@ -64,6 +69,7 @@ AcDbObjectId CAirConStatistic::InsertTableToCAD(AcGePoint3d insertPos)
 
 	AcDbTable* pTable = new AcDbTable;
 	pTable->setTableStyle(idTblStyle);
+	pTable->setColorIndex(256);
 
 	pTable->suppressTitleRow(false);//标题需要保留
 	pTable->suppressHeaderRow(true); //表头不需要
@@ -125,5 +131,9 @@ AcDbObjectId CAirConStatistic::InsertTableToCAD(AcGePoint3d insertPos)
 
 	pTable->setRegen();
 
-	return JHCOM_PostToModelSpace(pTable);
+	AcDbObjectId tableId = JHCOM_PostToModelSpace(pTable);
+
+	MD2010_SetCurrentLayer(oldLayerName);
+
+	return tableId;
 }

@@ -57,6 +57,10 @@ CWinTangentOpenMap* GetWinTangentOpenMap()
 	return &(CDocumentFactory::Instance().GetCurDocData()->m_winTangentMap);
 }
 
+CObjsHighlight* GetHightLightTool()
+{
+	return &(CDocumentFactory::Instance().GetCurDocData()->m_hightLight);
+}
 //////////////////////////////////////////////////////////////////////////
 CDocumentFactory& CDocumentFactory::Instance()
 {

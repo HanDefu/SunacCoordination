@@ -12,8 +12,9 @@ public:
 
 	AcDbObjectId InsertTableToCAD(AcGePoint3d insertPos);
 	void InsertRailingTableToCAD();
-	void WriteDataToRailingTable(AcDbTable *p_table, int p_dataStartRow, int p_floorColumnCount, vector<CString> p_floorColumns, const CRailingAndCount& p_railingAndCount);
+	void WriteDataToRailingTable(AcDbTable *p_table, int p_dataStartRow, int p_floorColumnCount, vector<CString> p_railFloorColumns, vector<CString> p_floorColumns, const CRailingAndCount& p_railingAndCount);
 	void SpliteRailingByType(const CRailingAndCount& railingAndCount);
+	void GetRailFloorColumns(CRailingAndCount railAndCount, vector<CString>& floorColumns);
 
 protected:
 	void RailingClassify(const AttrRailing* pAttr);

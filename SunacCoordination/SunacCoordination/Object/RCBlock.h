@@ -22,7 +22,7 @@ public:
 	RCBlock(const RCBlock &other);
 	virtual ~RCBlock(void);
 	
-	virtual bool isEqualTo(RCObject*other = 0);//基础数据一致
+	virtual bool isEqualTo(RCObject*other);//基础数据一致
 	virtual RCBlock & operator=(const RCBlock &rhs);
 
 	virtual AcDbObjectId Insert(CString fileName, AcGePoint3d origin, double angle, CString layerName, int color);

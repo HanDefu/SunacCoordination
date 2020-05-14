@@ -121,12 +121,12 @@ Acad::ErrorStatus AttrKitchen::dwgOutFields(AcDbDwgFiler* filer) const
 	return filer->filerStatus();
 }
 
-bool AttrKitchen::isEqualTo(AttrObject*other)
+bool AttrKitchen::isEqualTo(const AttrObject*other)const
 {
 	if (other == 0)
 		return false;
 
-	AttrKitchen * pRealObj = dynamic_cast<AttrKitchen *>(other);
+	const AttrKitchen * pRealObj = dynamic_cast<const AttrKitchen *>(other);
 	if (pRealObj == 0)
 		return false;
 

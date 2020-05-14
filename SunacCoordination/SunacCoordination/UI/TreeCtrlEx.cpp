@@ -12,7 +12,9 @@ void CTreeCtrlEx::UpdateMenuIDRange(CMenu* pMenu)
 			m_EndID = max(m_EndID, pMenu->GetMenuItemID(i));
 		}
 		else
+		{
 			UpdateMenuIDRange(pSubMenu);
+		}
 	}
 }
 
@@ -235,7 +237,7 @@ void CTreeCtrlEx::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
 		{
 			//在菜单项上输出菜单文本
 			CFont Font;
-			Font.CreatePointFont(105,_T("Calibri"));//创建字体
+			Font.CreatePointFont(90,_T("Calibri"));//创建菜单字体
 			pDC->SelectObject(&Font);
 			CRect rectText = lpDrawItemStruct->rcItem;
 			rectText.left += 20;
@@ -257,8 +259,9 @@ void CTreeCtrlEx::OnClickedPopupMenu(UINT nID)
 void CTreeCtrlEx::DrawItemText(CDC * pDC,HTREEITEM pItem,CRect Rect)
 {
 	CFont Font;
-	Font.CreatePointFont(90,_T("Calibri"));//创建字体
+	Font.CreatePointFont(90,_T("Calibri"));//创建侧边栏字体
 	pDC->SelectObject(&Font);
+
 	CString ItemText = GetItemText(pItem);
 	pDC->SetBkMode(TRANSPARENT);
 	pDC->DrawText(ItemText, Rect, DT_SINGLELINE|DT_LEFT|DT_VCENTER);//显示项文本
@@ -268,6 +271,7 @@ void CTreeCtrlEx::SetMenuID(UINT menuID)
 {
 	CMenu menu;
 	menu.LoadMenu(menuID);
+
 	UpdateMenuIDRange(&menu);
 	m_MenuID = menuID;
 }

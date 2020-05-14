@@ -40,7 +40,6 @@ public:
 	void AddAttribute(AttrBathroom * attr);
 
 protected: 
-	AttrBathroom * m_pAttribute;
 };
 
 typedef std::vector<RCBathroom> vRCBathroom;

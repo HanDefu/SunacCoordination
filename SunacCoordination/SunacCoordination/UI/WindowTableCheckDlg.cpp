@@ -11,6 +11,8 @@
 #include "..\Common\ComFun_ACad.h"
 #include "..\Src\DocumentData.h"
 #include "..\Tool\DocLock.h"
+#include "..\Object\WindowDoor\WindowAutoName.h"
+#include "Src/DocumentData.h"
 
 CWindowTableCheckDlg* g_winTableCheckDlg = NULL;
 
@@ -114,9 +116,35 @@ void CWindowTableCheckDlg::GetWinIdFromWinTableXData(AcDbObjectId p_tableId, vec
 void CWindowTableCheckDlg::CreateBrightBox(vector<AcDbObjectId> vWinIds)
 {
 	int offsetx = 100, offsety = 300;;
+	int count = 1;
 
 	for (int i = 0; i < vWinIds.size(); i++)
 	{
+		AcDbEntity* pEnt = NULL;
+		if (acdbOpenAcDbEntity(pEnt, vWinIds[i], AcDb::kForRead) != Acad::eOk)
+		{
+			vAcDbObjectId textIds = GetInstanceCodeMrg()->FindTextIds(vWinIds[i]);
+			AcDbText *pText = NULL;
+			if (Acad::eOk == acdbOpenObject(pText, textIds[0], AcDb::kForRead))
+			{
+				CString sCode = pText->textString();
+				pText->close();
+				AfxMessageBox(L"门窗" + sCode + L"未找到");
+				continue;
+			}
+			else
+			{
+				if (count == 1)
+				{
+					AfxMessageBox(L"门窗表统计的门窗未找到");
+					count++;
+				}
+				continue;
+			}
+		}
+		else
+			pEnt->close();
+
 		AcGePoint3d minPt, maxPt;
 		JHCOM_GetObjectMinMaxPoint(vWinIds[i], minPt, maxPt);
 

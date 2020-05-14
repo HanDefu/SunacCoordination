@@ -179,18 +179,22 @@ AttrWindow::~AttrWindow()
 }
 
 
-AttrWindow* AttrWindow::GetWinAtt(AcDbObjectId p_id)
+AttrWindow* AttrWindow::GetWinAtt(AcDbObjectId p_id, bool bReadMode)
 {
 	AcDbObject* pObj = NULL;
-	TY_GetAttributeData(p_id, pObj, false);
+	TY_GetAttributeData(p_id, pObj, bReadMode);
 	AttrWindow *pWinAtt = AttrWindow::cast(pObj);
+	if (pWinAtt!=NULL && bReadMode)
+	{
+		pWinAtt->close();
+	}
 
 	return pWinAtt;
 }
 CString AttrWindow::GetWinInstanceCode(AcDbObjectId p_id)
 {
 	CString sNumber;
-	AttrWindow* pWinAtt = GetWinAtt(p_id);
+	const AttrWindow* pWinAtt = GetWinAtt(p_id, true);
 	if (pWinAtt!=NULL)
 	{
 		sNumber = pWinAtt->GetInstanceCode();
@@ -788,12 +792,12 @@ Acad::ErrorStatus AttrWindow::dwgOutFields(AcDbDwgFiler* filer) const
 	return filer->filerStatus();
 }
 
-bool AttrWindow::isEqualTo(AttrObject*other)
+bool AttrWindow::isEqualTo(const AttrObject*other) const
 {
 	if (other == 0)
 		return false;
 
-	AttrWindow * pRealObj = dynamic_cast<AttrWindow *>(other);
+	const AttrWindow * pRealObj = dynamic_cast<const AttrWindow *>(other);
 	if (pRealObj == 0)
 		return false;
 
@@ -1083,7 +1087,7 @@ void AttrWindow::SetMirror(bool p_bMirror)
 	m_isMirror = p_bMirror;
 }
 
-AcDbObjectId AttrWindow::GetFromWinId() 
+AcDbObjectId AttrWindow::GetFromWinId() const
 {
 #ifdef INIT_HANLDLE_LATER_FOR_DWGIN 
 	if (m_fromWinId==AcDbObjectId::kNull && m_fromWinHandle.isNull()==false)
@@ -1093,7 +1097,7 @@ AcDbObjectId AttrWindow::GetFromWinId()
 #endif
 	return m_fromWinId; 
 }
-AcDbObjectIdArray  AttrWindow::GetRelatedWinIds() 
+AcDbObjectIdArray  AttrWindow::GetRelatedWinIds()  const
 {
 #ifdef INIT_HANLDLE_LATER_FOR_DWGIN 
 	if (m_relatedWinIds.length()==0 && m_relatedWinHandles.size()>0)

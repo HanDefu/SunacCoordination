@@ -14,12 +14,13 @@ public:
 	AcDbObjectIdArray objIds;
 };
 
+bool WindowAndCountLessFunc(const CWindowAndCount& p_winC1, const CWindowAndCount& p_winC2);
+
 class CWindowCountArray
 {
 	bool InitByWindowIds(const vAcDbObjectId& p_winIds);
 public:
 	bool InitByWindowIds(const vector<CSunacObjInCad>& p_winIds);
-	bool InitByWindowAtts(const vector<AttrWindow>& p_winAtts, const vector<AcDbObjectId>& p_ids);
 
 	int GetCount()const { return (int)(m_winCountArray.size()); }
 
@@ -30,6 +31,9 @@ public:
 	int GetWindowsCount();
 
 	const CWindowAndCount& GetWindow(int p_index) { return m_winCountArray[p_index]; }
+
+protected:
+	bool InitByWindowAtts(const vector<AttrWindow>& p_winAtts, const vector<AcDbObjectId>& p_ids);
 
 private:
 	vector<CWindowAndCount> m_winCountArray;
@@ -50,7 +54,7 @@ public:
 	int GetDoorWMCount()const { return (int)(m_doorWM.size()); }
 	int GetDoorWLCCount()const { return (int)(m_doorWLC.size()); }
 
-	const CWindowAndCount& GetWindowNC(int p_index) { return m_winNC[p_index]; }
+	CWindowAndCount& GetWindowNC(int p_index) { return m_winNC[p_index]; }
 	const CWindowAndCount& GetWindowNDC(int p_index) { return m_winNDC[p_index]; }
 	const CWindowAndCount& GetWindowWC(int p_index) { return m_winWC[p_index]; }
 	const CWindowAndCount& GetWindowTC(int p_index) { return m_winTC[p_index]; }

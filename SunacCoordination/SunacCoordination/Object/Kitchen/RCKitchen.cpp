@@ -58,13 +58,10 @@ RCKitchen * RCKitchen::Clone()
 
 AttrKitchen * RCKitchen::GetAttribute()
 {
-	if (m_pAttribute == 0)
-	{
-		AcDbObject * pDataEnt = 0;
-		TY_GetAttributeData(m_id, pDataEnt, false);
-		m_pAttribute = dynamic_cast<AttrKitchen *>(pDataEnt);
-	}
-	return m_pAttribute;
+	AcDbObject * pDataEnt = 0;
+	TY_GetAttributeData(m_id, pDataEnt, false);
+	AttrKitchen * pAttribute = dynamic_cast<AttrKitchen *>(pDataEnt);
+	return pAttribute;
 }
 
 void RCKitchen::AddAttribute(AttrKitchen * attr)

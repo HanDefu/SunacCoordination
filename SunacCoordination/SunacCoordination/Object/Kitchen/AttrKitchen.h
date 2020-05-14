@@ -35,7 +35,7 @@ public:
 	//}}AFX_ARX_METHODS
 
 	virtual eRCType GetType() {return S_KITCHEN;}
-	virtual bool isEqualTo(AttrObject*other = 0);//基础数据一致
+	virtual bool isEqualTo(const AttrObject*other)const;//基础数据一致
 	bool IsInstanceEqual(const AttrKitchen& p_att) const;
 
 	CString GetPrototypeCode() const;

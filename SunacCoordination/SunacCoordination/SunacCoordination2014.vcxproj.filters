@@ -376,9 +376,6 @@
     <ClCompile Include="Src\DocumentData.cpp">
       <Filter>Src</Filter>
     </ClCompile>
-    <ClCompile Include="Command\CommandHighlight.cpp">
-      <Filter>Command</Filter>
-    </ClCompile>
     <ClCompile Include="Object\WindowDoor\WindowGen.cpp">
       <Filter>Object\WindowDoor</Filter>
     </ClCompile>
@@ -414,6 +411,9 @@
     </ClCompile>
     <ClCompile Include="UI\WindowTableCheckDlg.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\ObjHighlight.cpp">
+      <Filter>Src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -877,9 +877,6 @@
     <ClInclude Include="Src\DocumentData.h">
       <Filter>Src</Filter>
     </ClInclude>
-    <ClInclude Include="Command\CommandHighlight.h">
-      <Filter>Command</Filter>
-    </ClInclude>
     <ClInclude Include="Object\WindowDoor\WindowGen.h">
       <Filter>Object\WindowDoor</Filter>
     </ClInclude>
@@ -918,6 +915,9 @@
     </ClInclude>
     <ClInclude Include="UI\WindowTableCheckDlg.h">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\ObjHighlight.h">
+      <Filter>Src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
