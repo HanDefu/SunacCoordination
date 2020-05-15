@@ -32,9 +32,15 @@ CSunacObjInCad::CSunacObjInCad()
 
 vector<CSunacObjInCad> CSunacSelect::SelectSunacObjs(const eRCType p_rcType, eViewDir p_view, bool p_bAllWindow)
 {
-	Acad::ErrorStatus es;
+	Acad::ErrorStatus es;	
 
-	acutPrintf(L"\n请选择融创对象");
+	CString sType = ToCstring(p_rcType);
+	CString sViewDir = _T("图");
+	if (E_VIEW_TOP == p_view)
+		sViewDir = _T("平面图");
+	else if (E_VIEW_FRONT == p_view)
+		sViewDir = _T("立面图");
+	acutPrintf(L"\n请在" + sViewDir + L"上选择" + sType);
 
 	ads_name sset;
 	if (p_bAllWindow)

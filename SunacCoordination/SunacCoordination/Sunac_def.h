@@ -30,6 +30,7 @@ enum eRCType
 	S_TYPENUM
 };
 
+CString ToCstring(eRCType p_type);
 
 enum eViewDir
 {

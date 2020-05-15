@@ -5,6 +5,7 @@
 #include "WindowTableCheckDlg.h"
 #include "afxdialogex.h"
 #include "dbtable.h"
+#include <dbobjptr.h>
 #include "..\Common\ComFun_Interactive.h"
 #include "..\Common\ComFun_Sunac.h"
 #include "..\Common\ComFun_String.h"
@@ -81,32 +82,29 @@ void CWindowTableCheckDlg::OnBnClickedButtonWintableselect()
 
 void CWindowTableCheckDlg::GetWinIdFromWinTableXData(AcDbObjectId p_tableId, vector<AcDbObjectId> &vWinIds)
 {
-	AcDbObject *pEnt = NULL;
-	Acad::ErrorStatus es = acdbOpenAcDbObject(pEnt, p_tableId, AcDb::kForRead);
-	AcDbTable* pTable = AcDbTable::cast(pEnt);
-	if (pTable == NULL)
+	AcDbObjectPointer<AcDbTable> pEnt(p_tableId, AcDb::kForRead);
+	if (pEnt.openStatus() != Acad::eOk)
 		return;
 
-	struct resbuf* pRb = pTable->xData(L"xData");
+	struct resbuf* pRb = pEnt->xData(L"xData");
 	if (pRb == NULL)
 		return;
-
-	pEnt->close();
-	pTable->close();
-
+	
 	struct resbuf *pTemp = pRb;
 	pTemp = pTemp->rbnext;
 
 	AcDbHandle handle = AcDbHandle(pTemp->resval.rstring);
 	AcDbObjectId winId;
 	JHCOM_GetObjectIDFromAcDbHandle(handle, winId);
-	vWinIds.push_back(winId);
+	if (winId!=AcDbObjectId::kNull)
+		vWinIds.push_back(winId);
 
 	while (pTemp->rbnext != NULL)
 	{
 		handle = AcDbHandle(pTemp->rbnext->resval.rstring);
 		JHCOM_GetObjectIDFromAcDbHandle(handle, winId);
-		vWinIds.push_back(winId);
+		if (winId != AcDbObjectId::kNull)
+			vWinIds.push_back(winId);
 		pTemp = pTemp->rbnext;
 	}
 
@@ -124,13 +122,15 @@ void CWindowTableCheckDlg::CreateBrightBox(vector<AcDbObjectId> vWinIds)
 		if (acdbOpenAcDbEntity(pEnt, vWinIds[i], AcDb::kForRead) != Acad::eOk)
 		{
 			vAcDbObjectId textIds = GetInstanceCodeMrg()->FindTextIds(vWinIds[i]);
+			if (textIds.size()==0)
+				continue;
+
 			AcDbText *pText = NULL;
 			if (Acad::eOk == acdbOpenObject(pText, textIds[0], AcDb::kForRead))
 			{
-				CString sCode = pText->textString();
 				pText->close();
+				CString sCode = pText->textString();
 				AfxMessageBox(L"门窗" + sCode + L"未找到");
-				continue;
 			}
 			else
 			{
@@ -139,8 +139,9 @@ void CWindowTableCheckDlg::CreateBrightBox(vector<AcDbObjectId> vWinIds)
 					AfxMessageBox(L"门窗表统计的门窗未找到");
 					count++;
 				}
-				continue;
 			}
+
+			continue;
 		}
 		else
 			pEnt->close();

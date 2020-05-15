@@ -3,6 +3,34 @@
 #include "Sunac_def.h"
 #include "Common/ComFun_String.h"
 
+
+CString ToCstring(eRCType p_type)
+{
+	CString str;
+	switch (p_type)
+	{
+	case S_WINDOW:
+	case S_DOOR:
+		return _T("门窗");
+		break;
+	case S_KITCHEN:
+		return _T("厨房");
+		break;
+	case S_BATHROOM:
+		return _T("卫生间");
+		break;
+	case S_AIRCON:
+		return _T("空调");
+		break;
+	case S_RAILING:
+		return _T("栏杆");
+		break;
+	default:
+		break;
+	}
+	return str;
+}
+
 eWindowDoorPos ToEWindowDoorPos(CString type)
 {
 	if (type == "对开")

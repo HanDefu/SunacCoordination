@@ -492,10 +492,11 @@ void CRailingDlg::OnCbnSelchangeComboViewdir()
 	if (sView == L"Æ½Ãæ")
 	{
 		TYUI_Disable(*GetDlgItem(IDC_EDIT_HOLEWIDTH));
-		
+		TYUI_Disable(*GetDlgItem(IDC_BUTTON_SELECTLINE));		
 	}
 	else
 	{
 		TYUI_Enable(*GetDlgItem(IDC_EDIT_HOLEWIDTH));
+		TYUI_Enable(*GetDlgItem(IDC_BUTTON_SELECTLINE));
 	}
 }
