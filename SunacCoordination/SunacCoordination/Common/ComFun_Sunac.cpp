@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include <io.h>
+#include <dbobjptr.h>
 #include "ComFun_Str.h"
 #include "ComFun_Math.h"
 #include "ComFun_Sunac.h"
@@ -42,20 +43,12 @@ bool DQ_IsALine(AcDbObjectId entId)
 bool DQ_IsBlockReference(AcDbObjectId id)
 {
 	if (id == 0)
-	{
 		return false;
-	}
-	AcDbEntity * pEnt = 0;
-	Acad::ErrorStatus es = acdbOpenObject(pEnt, id, AcDb::kForRead);
-	// Make sure its a block reference
-	AcDbBlockReference * pBR = AcDbBlockReference::cast(pEnt);
-	if (pBR == NULL)
-	{
-		if(pEnt)
-		    pEnt->close();
-		return false;
-	}
-	pEnt->close();
+
+	AcDbObjectPointer<AcDbBlockReference>pBR(id, AcDb::kForRead);
+
+	Acad::ErrorStatus es = pBR.openStatus();
+	return es == Acad::eOk;
 	return true;
 }
 
@@ -689,6 +682,7 @@ int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt)
 
 int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt, bool p_bRead)
 {
+	CDocLock lock;
 	pDataEnt = NULL;
 	AcDbObjectId dicID = TY_GetExtensionDictionaryID(tkId);
 	if (dicID == AcDbObjectId::kNull)

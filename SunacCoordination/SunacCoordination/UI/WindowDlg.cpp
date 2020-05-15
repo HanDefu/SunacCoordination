@@ -226,9 +226,8 @@ void CWindowDlg::OnBnClickedButtonInsert()
 	pSelWinAttr->SetW1(W1);
 	pSelWinAttr->SetH2(H2);
 	pSelWinAttr->SetW3(W3);
-	pSelWinAttr->SetH3(H3);
+	pSelWinAttr->SetHeightUnderWindow(H3);
 	pSelWinAttr->SetD(m_nThickness);
-	pSelWinAttr->m_heightUnderWindow = TYUI_GetDouble(m_comboH3);//窗下墙高度
 
 	//是否防火窗
 	if (((CButton *)GetDlgItem(IDC_ISFIREPROOF_RADIO))->GetCheck())
@@ -565,7 +564,7 @@ void CWindowDlg::OnSelChangedH3()
 		return;
 
 	CString sSel = TYUI_GetComboBoxText(m_comboH3);
-	pSelWinAttr->SetH3(_ttoi(sSel));
+	pSelWinAttr->SetHeightUnderWindow(_ttoi(sSel));
 
 	//更改参数会引起实例编号变化，需更新
 	UpdateInstanceCode();

@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include <dbobjptr.h>
 #include "..\..\Common\ComFun_Sunac.h"
 #include "..\..\Common\ComFun_ACad.h"
 #include "..\..\Common\ComFun_Layer.h"
@@ -361,22 +362,12 @@ bool CWindowGen::GetWindowInsertPos(AcDbObjectId p_id, AcGePoint3d &p_insertPos,
 	p_insertPos = AcGePoint3d::kOrigin;
 	p_angle = 0;
 
-	AcDbEntity* pEnt = NULL;
-	Acad::ErrorStatus es = acdbOpenObject(pEnt, p_id, AcDb::kForRead);
-	if (es!=Acad::eOk )
+	AcDbObjectPointer<AcDbBlockReference> pRef(p_id, AcDb::kForRead);
+	if (pRef.openStatus() == Acad::eOk)
 	{
-		return false;
+		p_insertPos = pRef->position();
+		p_angle = pRef->rotation();
 	}
-	
-	AcDbBlockReference *pBlockReference = AcDbBlockReference::cast(pEnt);
-	if (pBlockReference==NULL)
-	{
-		return false;
-	}
-
-	p_insertPos = pBlockReference->position();
-	p_angle = pBlockReference->rotation();
-	pBlockReference->close();
 	return true;
 }
 
@@ -490,13 +481,6 @@ void CWindowGen::ModifyOneWindow(const AcDbObjectId p_id, AttrWindow newWinAtt)
 		assert(false);
 		return;
 	}
-	AcDbEntity *pEnt = NULL;
-	Acad::ErrorStatus es = acdbOpenObject(pEnt, p_id, AcDb::kForRead);
-	if (es!=Acad::eOk || pEnt==NULL)
-	{
-		return;
-	}
-	pEnt->close();
 
 	const CWinInsertPara oldInsertPara = GetWindowInsertPara(p_id);
 	//以下信息保持和原来的不变
@@ -529,6 +513,7 @@ void CWindowGen::ModifyOneWindow(const AcDbObjectId p_id, AttrWindow newWinAtt)
 
 AcDbObjectId CWindowGen::UpdateWindow(const AcDbObjectId p_id, AttrWindow newWinAtt, const bool bUpdateRelatedWin, bool bUpdateSameInstanceCode)
 {
+	CDocLock lock;
 	const CString oldInstanceCode = AttrWindow::GetWinInstanceCode(p_id);
 	if (bUpdateSameInstanceCode==false || oldInstanceCode.IsEmpty())
 	{
