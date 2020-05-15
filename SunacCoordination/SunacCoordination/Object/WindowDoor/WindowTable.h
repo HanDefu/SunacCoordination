@@ -54,7 +54,7 @@ public:
 	int GetDoorWMCount()const { return (int)(m_doorWM.size()); }
 	int GetDoorWLCCount()const { return (int)(m_doorWLC.size()); }
 
-	const CWindowAndCount& GetWindowNC(int p_index) { return m_winNC[p_index]; }
+	CWindowAndCount& GetWindowNC(int p_index) { return m_winNC[p_index]; }
 	const CWindowAndCount& GetWindowNDC(int p_index) { return m_winNDC[p_index]; }
 	const CWindowAndCount& GetWindowWC(int p_index) { return m_winWC[p_index]; }
 	const CWindowAndCount& GetWindowTC(int p_index) { return m_winTC[p_index]; }

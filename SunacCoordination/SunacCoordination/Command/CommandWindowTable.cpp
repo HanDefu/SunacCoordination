@@ -276,8 +276,8 @@ void CMD_SunacWindowsTable()
 	return;
 }
 
-//p_dataStartRow为开始行号, p_floorColumnCount为楼层列的数量，p_floorColumns为楼层信息(如：1,2-5,7,10-16)
-void WriteDataToTable(AcDbTable *p_table, int p_dataStartRow, int p_floorColumnCount, vector<CString> p_floorColumns, const CWindowAndCount& p_winAndCount)
+//p_dataStartRow为开始行号, p_floorColumnCount为楼层列的数量，p_floorColumns为所有楼层信息(如：1,2-5,7,10-16)，p_WinFloorColumns为单个门窗楼层信息
+void WriteDataToTable(AcDbTable *p_table, int p_dataStartRow, int p_floorColumnCount, vector<CString> p_WinFloorColumns, vector<CString> p_floorColumns, const CWindowAndCount& p_winAndCount)
 {
 	CString str, str1;
 	const AttrWindow * pWinAtt = &(p_winAndCount.winAtt);
@@ -291,51 +291,51 @@ void WriteDataToTable(AcDbTable *p_table, int p_dataStartRow, int p_floorColumnC
 	H.Format(L"%d", (int)(pWinAtt->GetH()));
 	p_table->setTextString(p_dataStartRow, 3, W + L"*" + H);
 
-	//if (0 == pWinAtt->GetFloorInfo().GetFloorCount())
-	//{
-	//	AfxMessageBox(_T("门窗未设置楼层信息"));
-	//	return;
-	//}
-
 	//楼层列
 	vector<int> nAllFloorCount; //用于合计
 	nAllFloorCount.clear();
 
-	for (int i = 0; i < p_floorColumnCount; i++)
+	for (int j = 0; j < p_WinFloorColumns.size(); j++)
 	{
-		// 将p_floorColumns按"-"拆分，确定是否有楼层区间
-		int nPos = p_floorColumns[i].Find(_T('-'));
-		if (nPos >= 0) 
+		for (int i = 0; i < p_floorColumns.size(); i++)
 		{
-			CString str1 = p_floorColumns[i].Left(nPos);
-			CString str2 = p_floorColumns[i].Mid(nPos + 1);
-			int nStart = _ttoi(str1);
-			int nEnd = _ttoi(str2);
-			if (nStart > nEnd || nStart == 0)
+			if (p_floorColumns[i] == p_WinFloorColumns[j])
 			{
-				AfxMessageBox(_T("门窗楼层信息设置有误"));
-				return;
+				// 将p_floorColumns按"-"拆分，确定是否有楼层区间
+				int nPos = p_floorColumns[i].Find(_T('-'));
+				if (nPos >= 0)
+				{
+					CString str1 = p_floorColumns[i].Left(nPos);
+					CString str2 = p_floorColumns[i].Mid(nPos + 1);
+					int nStart = _ttoi(str1);
+					int nEnd = _ttoi(str2);
+					if (nStart > nEnd || nStart == 0)
+					{
+						AfxMessageBox(_T("门窗楼层信息设置有误"));
+						return;
+					}
+
+					int nFloorCount = nEnd - nStart + 1;
+
+					int nCount = pWinAtt->GetFloorInfo().GetFloorCountByFloor(p_floorColumns[i]);
+					if (nCount == 0)
+					{
+						continue;
+					}
+
+					int numWindowDoor = pWinAtt->GetFloorInfo().GetFloorCountByFloorIndex(nEnd);
+					str.Format(L"%d*%d", numWindowDoor, nFloorCount);
+					p_table->setTextString(p_dataStartRow, 4 + i, str);
+					nAllFloorCount.push_back(numWindowDoor * nFloorCount);
+				}
+				else
+				{
+					int numWindowDoor = pWinAtt->GetFloorInfo().GetFloorCountByFloorIndex(_ttoi(p_floorColumns[i]));
+					nAllFloorCount.push_back(numWindowDoor);
+					str.Format(L"%d", numWindowDoor);
+					p_table->setTextString(p_dataStartRow, 4 + i, str);
+				}
 			}
-
-			int nFloorCount = nEnd - nStart + 1;
-
-			int nCount = pWinAtt->GetFloorInfo().GetFloorCountByFloor(p_floorColumns[i]);
-			if (nCount==0)
-			{
-				continue;
-			}
-
-			int numWindowDoor = pWinAtt->GetFloorInfo().GetFloorCountByFloorIndex(nStart);
-			str.Format(L"%d*%d", numWindowDoor, nFloorCount);
-			p_table->setTextString(p_dataStartRow, 4 + i, str);
-			nAllFloorCount.push_back(numWindowDoor * nFloorCount);
-		}
-		else
-		{
-			int numWindowDoor = pWinAtt->GetFloorInfo().GetFloorCountByFloorIndex(_ttoi(p_floorColumns[i]));
-			nAllFloorCount.push_back(numWindowDoor);
-			str.Format(L"%d", numWindowDoor);
-			p_table->setTextString(p_dataStartRow, 4 + i, str);
 		}
 	}
 	
@@ -374,6 +374,30 @@ void AddXDataForWinTable(AcDbTable *p_table, vAcDbObjectId p_winIds)
 	
 	Acad::ErrorStatus es = p_table->setXData(pRb);
 	acutRelRb(pRb);
+}
+
+void GetWinFloorColumns(CWindowAndCount windowAndCount, vector<CString>& floorColumns)
+{
+	std::vector<CString> floorsTemp = YT_SplitCString(windowAndCount.winAtt.GetFloorInfo().GetFloors(), L',');
+	for (UINT j = 0; j < floorsTemp.size(); j++)
+	{
+		bool bFind = false;
+		for (UINT n = 0; n < floorColumns.size(); n++)
+		{
+			if (floorColumns[n].CompareNoCase(floorsTemp[j]) == 0)
+			{
+				bFind = true;
+				break;
+			}
+		}
+
+		if (bFind == false)
+		{
+			floorColumns.push_back(floorsTemp[j]);
+		}
+	}
+
+	sort(floorColumns.begin(), floorColumns.end(), CFloorInfo::FloorLessCmp);
 }
 
 //地面门窗表
@@ -433,24 +457,8 @@ void CMD_SunacFloorWindowsTable()
 	std::vector<CString> floorColumns;
 	for (int i = 0; i < winCountArray.GetCount(); i++)
 	{
-		std::vector<CString> floorsTemp = YT_SplitCString(winCountArray.GetWindow(i).winAtt.GetFloorInfo().GetFloors(), L',');
-		for (UINT j = 0; j < floorsTemp.size(); j++)
-		{
-			bool bFind = false;
-			for (UINT n = 0; n < floorColumns.size(); n++)
-			{
-				if (floorColumns[n].CompareNoCase(floorsTemp[j]) == 0)
-				{
-					bFind = true;
-					break;
-				}
-			}
-
-			if (bFind == false)
-			{
-				floorColumns.push_back(floorsTemp[j]);
-			}
-		}
+		CWindowAndCount windowAndCount = winCountArray.GetWindow(i);
+		GetWinFloorColumns(windowAndCount, floorColumns);
 	}
 
 	sort(floorColumns.begin(), floorColumns.end(), CFloorInfo::FloorLessCmp);
@@ -560,7 +568,9 @@ void CMD_SunacFloorWindowsTable()
 		for (int i = 0; i < numDoorWM; i++)
 		{
 			const CWindowAndCount& winAndCount = splitWindowDoorArray.GetDoorWM(i);
-			WriteDataToTable(table, dataStartRow + i, floorColumnCount, floorColumns, winAndCount);
+			vector<CString> winFloorColumns;
+			GetWinFloorColumns(winAndCount, winFloorColumns);
+			WriteDataToTable(table, dataStartRow + i, floorColumnCount, winFloorColumns, floorColumns, winAndCount);
 		}
 	}
 
@@ -575,7 +585,9 @@ void CMD_SunacFloorWindowsTable()
 		for (int i = 0; i < numDoorWLC; i++)
 		{
 			const CWindowAndCount& winAndCount = splitWindowDoorArray.GetDoorWLC(i);
-			WriteDataToTable(table, dataStartRow + i, floorColumnCount, floorColumns, winAndCount);
+			vector<CString> winFloorColumns;
+			GetWinFloorColumns(winAndCount, winFloorColumns);
+			WriteDataToTable(table, dataStartRow + i, floorColumnCount, winFloorColumns, floorColumns, winAndCount);
 		}
 	}
 
@@ -590,7 +602,9 @@ void CMD_SunacFloorWindowsTable()
 		for (int i = 0; i < numDoorTLM; i++)
 		{
 			const CWindowAndCount& winAndCount = splitWindowDoorArray.GetDoorTLM(i);
-			WriteDataToTable(table, dataStartRow + i, floorColumnCount, floorColumns, winAndCount);
+			vector<CString> winFloorColumns;
+			GetWinFloorColumns(winAndCount, winFloorColumns);
+			WriteDataToTable(table, dataStartRow + i, floorColumnCount, winFloorColumns, floorColumns, winAndCount);
 		}
 	}
 
@@ -605,7 +619,9 @@ void CMD_SunacFloorWindowsTable()
 		for (int i = 0; i < numDoorTSTLM; i++)
 		{
 			const CWindowAndCount& winAndCount = splitWindowDoorArray.GetDoorTSTLM(i);
-			WriteDataToTable(table, dataStartRow + i, floorColumnCount, floorColumns, winAndCount);
+			vector<CString> winFloorColumns;
+			GetWinFloorColumns(winAndCount, winFloorColumns);
+			WriteDataToTable(table, dataStartRow + i, floorColumnCount, winFloorColumns, floorColumns, winAndCount);
 		}
 	}
 
@@ -620,7 +636,9 @@ void CMD_SunacFloorWindowsTable()
 		for (int i = 0; i < numWindowNC; i++)
 		{
 			const CWindowAndCount& winAndCount = splitWindowDoorArray.GetWindowNC(i);
-			WriteDataToTable(table, dataStartRow + i, floorColumnCount, floorColumns, winAndCount);
+			vector<CString> winFloorColumns;
+			GetWinFloorColumns(winAndCount, winFloorColumns);
+			WriteDataToTable(table, dataStartRow + i, floorColumnCount, winFloorColumns, floorColumns, winAndCount);
 		}
 	}
 
@@ -635,7 +653,9 @@ void CMD_SunacFloorWindowsTable()
 		for (int i = 0; i < numWindowNDC; i++)
 		{
 			const CWindowAndCount& winAndCount = splitWindowDoorArray.GetWindowNDC(i);
-			WriteDataToTable(table, dataStartRow + i, floorColumnCount, floorColumns, winAndCount);
+			vector<CString> winFloorColumns;
+			GetWinFloorColumns(winAndCount, winFloorColumns);
+			WriteDataToTable(table, dataStartRow + i, floorColumnCount, winFloorColumns, floorColumns, winAndCount);
 		}
 	}
 
@@ -650,7 +670,9 @@ void CMD_SunacFloorWindowsTable()
 		for (int i = 0; i < numWindowTC; i++)
 		{
 			const CWindowAndCount& winAndCount = splitWindowDoorArray.GetWindowTC(i);
-			WriteDataToTable(table, dataStartRow + i, floorColumnCount, floorColumns, winAndCount);
+			vector<CString> winFloorColumns;
+			GetWinFloorColumns(winAndCount, winFloorColumns);
+			WriteDataToTable(table, dataStartRow + i, floorColumnCount, winFloorColumns, floorColumns, winAndCount);
 		}
 	}
 
@@ -665,7 +687,9 @@ void CMD_SunacFloorWindowsTable()
 		for (int i = 0; i < numWindowWC; i++)
 		{
 			const CWindowAndCount& winAndCount = splitWindowDoorArray.GetWindowWC(i);
-			WriteDataToTable(table, dataStartRow + i, floorColumnCount, floorColumns, winAndCount);
+			vector<CString> winFloorColumns;
+			GetWinFloorColumns(winAndCount, winFloorColumns);
+			WriteDataToTable(table, dataStartRow + i, floorColumnCount, winFloorColumns, floorColumns, winAndCount);
 		}
 	}
 
