@@ -115,5 +115,6 @@ public:
 	static vector<AcDbObjectId> GetInstanceCodeIdsInRect(const TYRect p_rect);
 
 protected:
-	map<AcDbObjectId, vector<AcDbObjectId>> m_instanceMap; //key是门窗的id，若为多门窗构成的块，则取最上层的块引用的id，此id可能对应多个门窗编号，因此使用vector
+	//key是门窗的id，若为多门窗构成的块，则key取最上层的块引用的id，此id可能对应多个门窗编号，因此使用vector
+	map<AcDbObjectId, vector<AcDbObjectId>> m_instanceMap; 
 };
