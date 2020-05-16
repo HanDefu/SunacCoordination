@@ -43,6 +43,7 @@ enum eViewDir
 };
 
 CString ViewDir2String(const eViewDir p_viewDir);
+eViewDir String2ViewDir(const CString p_sDir);
 
 enum E_DIRECTION
 {

@@ -66,6 +66,27 @@ CString ViewDir2String(const eViewDir p_viewDir)
 	}
 }
 
+eViewDir String2ViewDir(const CString p_sDir)
+{
+	eViewDir dir = E_VIEW_TOP;
+	if (p_sDir== _T("立面"))
+		dir = E_VIEW_FRONT;
+	else if (p_sDir == _T("平面"))
+		dir = E_VIEW_TOP;
+	else if (p_sDir == _T("侧面"))
+		dir = E_VIEW_LEFT;
+	else if (p_sDir == _T("展开"))
+		dir = E_VIEW_EXTEND;
+	else if (p_sDir == _T("全部"))
+		dir = E_VIEW_ALL;
+	else
+	{
+		assert(false);
+	}
+
+	return dir;
+}
+
 E_DIRECTION String2Direction(CString p_sDir)
 {
 	if (p_sDir.Find(_T("下"))>=0 || p_sDir.Find(_T("南"))>=0 || p_sDir.CompareNoCase(_T("S"))==0)

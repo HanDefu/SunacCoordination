@@ -690,6 +690,7 @@ AcDbObjectId CWindowGen::UpdateOneWindow(const AcDbObjectId p_id, AttrWindow new
 
 bool CWindowGen::RenameWindow(const AcDbObjectId p_id, CString p_sNewName, const bool bUpdateRelatedWin) //只是重命名，不更改其他
 {
+	CDocLock lock;
 	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(p_id, false);
 	if (pWinAtt == NULL)
 		return false;
@@ -925,6 +926,7 @@ bool CWindowGen::SelectSunacObjs(vector<CSunacObjInCad>& p_winsOut, vector<AcDbO
 
 void CWindowGen::AutoNameAllWindow()
 {
+	CDocLock lock;
 	vector<CSunacObjInCad> wins;
 	vector<AcDbObjectId> textIds;
 	bool bAll = false;
@@ -975,10 +977,13 @@ void CWindowGen::AutoNameAllWindow()
 		winAtt.SetInstanceCode(sInstanceCode2);
 
 		//门窗编号生成
-		if (winAtt.GetViewDir() == E_VIEW_TOP || GlobalSetting::GetInstance()->m_winSetting.m_bShowLimianNumber && winAtt.GetViewDir() != E_VIEW_EXTEND)
+		if (winAtt.GetViewDir() == E_VIEW_TOP ||  //平面图必须编号
+			GSINST->m_winSetting.m_bShowLimianNumber && winAtt.GetViewDir() != E_VIEW_EXTEND) //立面图是否编号取决于设置
 		{
 			CreateWindowDoorCode(winAtt.GetViewDir(), wins[i], sInstanceCode2);
 		}
+
+		pWinAtt->close();
 	}
 
 	acutPrintf(L"\n门窗自动编号完成\n");

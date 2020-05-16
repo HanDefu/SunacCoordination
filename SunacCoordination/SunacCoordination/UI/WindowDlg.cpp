@@ -578,14 +578,10 @@ void CWindowDlg::OnSelChangedView()
 		return;
 
 	CString sView = TYUI_GetComboBoxText(m_comboViewDir);
-	if (sView == L"平面")
-		pSelWinAttr->SetViewDir(E_VIEW_TOP);
-	else if (sView == L"立面")
-		pSelWinAttr->SetViewDir(E_VIEW_FRONT);
-	else if (sView == L"侧视")
-		pSelWinAttr->SetViewDir(E_VIEW_LEFT);
+	const eViewDir eView = String2ViewDir(sView);
+	pSelWinAttr->SetViewDir(eView);
 
-	if (sView == L"平面")
+	if (eView == E_VIEW_TOP)
 	{
 		TYUI_Show(*GetDlgItem(IDC_STATIC_DIR));
 		TYUI_Show(m_comboInsertDir);
@@ -790,11 +786,6 @@ void CWindowDlg::SetEditMode(AcDbObjectId editId)
 	}
 	else
 	{
-		TYUI_Disable(m_comboViewDir); //修改模式下不可修改视图
-		TYUI_Disable(m_comboInsertDir); //修改模式下不可修改视图
-		TYUI_Disable(*GetDlgItem(IDC_RADIO_DOOR));
-		TYUI_Disable(*GetDlgItem(IDC_RADIO_WINDOW));
-
 		AcDbObject* pAtt = NULL;
 		TY_GetAttributeData(m_curEditWinId, pAtt, true);
 		const AttrWindow *pWinAtt = dynamic_cast<AttrWindow *>(pAtt);
@@ -803,6 +794,12 @@ void CWindowDlg::SetEditMode(AcDbObjectId editId)
 			assert(false);
 			return;
 		}
+
+		m_comboViewDir.SelectString(0, ViewDir2String(pWinAtt->m_viewDir));
+		TYUI_Disable(m_comboViewDir); //修改模式下不可修改视图
+		TYUI_Disable(m_comboInsertDir); //修改模式下不可修改视图
+		TYUI_Disable(*GetDlgItem(IDC_RADIO_DOOR));
+		TYUI_Disable(*GetDlgItem(IDC_RADIO_WINDOW));
 
 		//属性更新镜像关系
 		m_attBeforeEdit = *pWinAtt;
