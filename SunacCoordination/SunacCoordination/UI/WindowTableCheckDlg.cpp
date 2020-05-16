@@ -113,39 +113,18 @@ void CWindowTableCheckDlg::GetWinIdFromWinTableXData(AcDbObjectId p_tableId, vec
 
 void CWindowTableCheckDlg::CreateBrightBox(vector<AcDbObjectId> vWinIds)
 {
-	int offsetx = 100, offsety = 300;;
-	int count = 1;
+	int offsetx = 100;
+	int offsety = 300;
 
+	bool bSuc = true;
 	for (int i = 0; i < vWinIds.size(); i++)
 	{
-		AcDbEntity* pEnt = NULL;
-		if (acdbOpenAcDbEntity(pEnt, vWinIds[i], AcDb::kForRead) != Acad::eOk)
+		if (IsObjectExsit(vWinIds[i])==false)
 		{
-			vAcDbObjectId textIds = GetInstanceCodeMrg()->FindTextIds(vWinIds[i]);
-			if (textIds.size()==0)
-				continue;
-
-			AcDbText *pText = NULL;
-			if (Acad::eOk == acdbOpenObject(pText, textIds[0], AcDb::kForRead))
-			{
-				pText->close();
-				CString sCode = pText->textString();
-				AfxMessageBox(L"门窗" + sCode + L"未找到");
-			}
-			else
-			{
-				if (count == 1)
-				{
-					AfxMessageBox(L"门窗表统计的门窗未找到");
-					count++;
-				}
-			}
-
+			bSuc = false;
 			continue;
 		}
-		else
-			pEnt->close();
-
+		
 		AcGePoint3d minPt, maxPt;
 		JHCOM_GetObjectMinMaxPoint(vWinIds[i], minPt, maxPt);
 
@@ -184,6 +163,11 @@ void CWindowTableCheckDlg::CreateBrightBox(vector<AcDbObjectId> vWinIds)
 		m_polyBrightBoxId.push_back(polyId);
 		m_polyBrightBoxId.push_back(polyId1);
 		m_polyBrightBoxId.push_back(polyId2);
+	}
+
+	if (bSuc==false)
+	{
+		AfxMessageBox(L"部分门窗表统计的门窗未找到，可能已被删除");
 	}
 }
 

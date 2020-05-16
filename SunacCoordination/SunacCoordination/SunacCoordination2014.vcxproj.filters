@@ -415,6 +415,9 @@
     <ClCompile Include="Object\WindowDoor\WindowTable.cpp">
       <Filter>Object\WindowDoor</Filter>
     </ClCompile>
+    <ClCompile Include="Object\WindowDoor\InstanceCodeTextMrg.cpp">
+      <Filter>Object\WindowDoor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -917,6 +920,9 @@
       <Filter>Object\WindowDoor</Filter>
     </ClInclude>
     <ClInclude Include="Object\WindowDoor\WindowTable.h">
+      <Filter>Object\WindowDoor</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\InstanceCodeTextMrg.h">
       <Filter>Object\WindowDoor</Filter>
     </ClInclude>
   </ItemGroup>

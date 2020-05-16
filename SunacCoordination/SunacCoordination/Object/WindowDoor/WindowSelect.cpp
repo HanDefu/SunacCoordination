@@ -29,6 +29,10 @@ CSunacObjInCad::CSunacObjInCad()
 	m_mx = AcGeMatrix3d::kIdentity;
 }
 
+bool CSunacObjInCad::operator < (const CSunacObjInCad& p_obj) const
+{
+	return m_rootId < p_obj.m_rootId;
+}
 
 vector<CSunacObjInCad> CSunacSelect::SelectSunacObjs(const eRCType p_rcType, eViewDir p_view, bool p_bAllWindow)
 {

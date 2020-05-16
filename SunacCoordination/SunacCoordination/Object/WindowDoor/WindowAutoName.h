@@ -94,27 +94,3 @@ protected:
 	vector<CWinClassify> m_allTypeWindows; //所有窗型
 };
 
-//门窗编号等管理类
-class CInstanceCodeTextMrg
-{
-	friend CDocumentData;
-	CInstanceCodeTextMrg();
-public:
-	~CInstanceCodeTextMrg();
-
-	void AddInstanceCode(AcDbObjectId p_id, AcDbObjectId p_textId);
-	void RemoveInstanceCode(AcDbObjectId p_winId); //p_id是门窗块引用或者块多层级块的id
-	void RemoveInstanceCodeText(AcDbObjectId p_textId);
-	void RemoveInvalidInstanceCode();  //移除无效的门窗编号，无效的门窗编号为门窗本体被删除的编号
-	void RemoveAll();
-
-	vector<AcDbObjectId> FindTextIds(AcDbObjectId p_keyId);
-
-	//得到当前图纸范围内的所有的门窗编号文字的id
-	static vector<AcDbObjectId> GetAllInstanceCodeIds();
-	static vector<AcDbObjectId> GetInstanceCodeIdsInRect(const TYRect p_rect);
-
-protected:
-	//key是门窗的id，若为多门窗构成的块，则key取最上层的块引用的id，此id可能对应多个门窗编号，因此使用vector
-	map<AcDbObjectId, vector<AcDbObjectId>> m_instanceMap; 
-};

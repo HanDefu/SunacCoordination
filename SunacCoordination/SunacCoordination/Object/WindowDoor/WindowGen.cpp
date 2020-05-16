@@ -723,7 +723,7 @@ bool CWindowGen::DeleteWindowObj(const AcDbObjectId p_id)
 	JHCOM_DeleteCadObject(p_id);
 
 	GetWindowAutoName()->RemoveObject(p_id);
-	GetInstanceCodeMrg()->RemoveInstanceCode(p_id);
+	GetInstanceCodeMrg()->RemoveInstanceCodeByWinId(p_id);
 	return true;
 }
 bool CWindowGen::SetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId p_fromWinId, AcDbObjectIdArray p_relatedIds)
@@ -798,6 +798,11 @@ AcDbObjectId CWindowGen::InsertWindowDoorCode(eViewDir p_viewDir, CString p_numb
 
 void CWindowGen::CreateWindowDoorCode(eViewDir p_viewDir, CSunacObjInCad p_win, CString p_Code)
 {
+	//若已经存在，则直接修改原来的编号值
+	bool bSuc = GetInstanceCodeMrg()->SetNewInstanceCode(p_win, p_Code);
+	if (bSuc) 
+		return;
+	
 	//根据窗户的位置转换门窗编号位置
 	double winWidth = 1500;
 	double heightOffset = 0;
@@ -807,12 +812,10 @@ void CWindowGen::CreateWindowDoorCode(eViewDir p_viewDir, CSunacObjInCad p_win, 
 		double h = GetWinHeight(p_win.m_winId);
 
 		winWidth = max(w, h);
-
 		if (winWidth < 1200)
 		{
 			winWidth = min(w, h);
 		}
-
 		if (winWidth < 500)
 		{
 			winWidth = max(w, h);
@@ -832,8 +835,7 @@ void CWindowGen::CreateWindowDoorCode(eViewDir p_viewDir, CSunacObjInCad p_win, 
 	textPos.transformBy(p_win.m_mx);
 
 	AcDbObjectId textId = InsertWindowDoorCode(p_viewDir, p_Code, textPos);
-	GetInstanceCodeMrg()->AddInstanceCode(p_win.m_rootId, textId);
-
+	GetInstanceCodeMrg()->AddInstanceCode(p_win, textId);
 	
 
 	//对门窗编号位置进行细微调整，使其居中，间距适中
@@ -935,22 +937,6 @@ void CWindowGen::AutoNameAllWindow()
 	if (wins.size() == 0)
 		return;
 	
-	//2. 对原来的门窗分类有效性进行检查，移除不匹配和已删除的项
-	if (bAll)
-	{
-		GetInstanceCodeMrg()->RemoveAll();
-
-		GetWindowAutoName()->CheckAndRemoveObjectNotBelong();
-	}
-	else
-	{
-		for (UINT i = 0; i < textIds.size(); i++)
-		{
-			GetInstanceCodeMrg()->RemoveInstanceCodeText(textIds[i]);
-			JHCOM_DeleteCadObject(textIds[i]);
-		}
-		textIds.clear();
-	}
 
 	//3. 将门窗加入到类型库
 	for (UINT i = 0; i < wins.size(); i++)
@@ -985,6 +971,15 @@ void CWindowGen::AutoNameAllWindow()
 
 		pWinAtt->close();
 	}
+
+	//////////////////////////////////////////////////////////////////////////
+	//2. 对原来的门窗分类有效性进行检查，移除不匹配和已删除的项
+	//for (UINT i = 0; i < textIds.size(); i++)
+	//{
+	//	if (false == GetInstanceCodeMrg()->IsTextIdIn(textIds[i]))
+	//		JHCOM_DeleteCadObject(textIds[i]);
+	//}
+	GetWindowAutoName()->CheckAndRemoveObjectNotBelong();
 
 	acutPrintf(L"\n门窗自动编号完成\n");
 }

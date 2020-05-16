@@ -214,6 +214,7 @@
     <ClCompile Include="Object\RCWaterProof.cpp" />
     <ClCompile Include="Object\RCXianJiao.cpp" />
     <ClCompile Include="Object\WindowDoor\AttrWindow.cpp" />
+    <ClCompile Include="Object\WindowDoor\InstanceCodeTextMrg.cpp" />
     <ClCompile Include="Object\WindowDoor\RCWindow.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowAutoName.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowGen.cpp" />
@@ -359,6 +360,7 @@
     <ClInclude Include="Object\RCWaterProof.h" />
     <ClInclude Include="Object\RCXianJiao.h" />
     <ClInclude Include="Object\WindowDoor\AttrWindow.h" />
+    <ClInclude Include="Object\WindowDoor\InstanceCodeTextMrg.h" />
     <ClInclude Include="Object\WindowDoor\RCWindow.h" />
     <ClInclude Include="Object\WindowDoor\WindowAutoName.h" />
     <ClInclude Include="Object\WindowDoor\WindowGen.h" />
