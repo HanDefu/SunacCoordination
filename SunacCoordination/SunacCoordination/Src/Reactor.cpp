@@ -63,24 +63,23 @@ void CMyDbReactor::WindowAppand(AcDbEntity* pEnt)
 	if (pWinAtt == NULL)
 		return ;
 
-	CDocLock docLock;
 	try
 	{
 		if (pWinAtt->GetViewDir() != E_VIEW_TOP) //只有平面图才绘制门洞
 			throw Acad::eOk;
-		
+
 		//////////////////////////////////////////////////////////////////////////
 		//在copyclip(ctrl+c)和pasterclip(ctrl+v)复制粘贴时会调用objectAppended两次，第一次是拷贝到临时的块定义中，第二次是加入到modelspace，在此进行判断
 		const AcDbObjectId owner =  pEnt->ownerId();
 		const AcDbObjectId modespaceId = GetBlockRecordId(ACDB_MODEL_SPACE);
 		if (owner==modespaceId)
 		{
+			//CDocLock docLock;
 			//门窗编号
 			CString sInstanceCode = GetWindowAutoName()->GetWindowName(*pWinAtt);
 			pWinAtt->SetInstanceCode(sInstanceCode);
 			GetWindowAutoName()->AddWindowType(*pWinAtt, curId);
 			//////////////////////////////////////////////////////////////////////////
-
 
 			AcDbExtents ext;
 			pEnt->getGeomExtents(ext);
@@ -116,10 +115,7 @@ void CMyDbReactor::WindowModifed(AcDbEntity* pEnt)
 	const AttrWindow * pWinAtt = AttrWindow::GetWinAtt(pEnt->objectId(), true);
 	if (pWinAtt == NULL)
 		return;
-
-	CDocLock docLock;
-
-
+	
 	try
 	{
 		if (pWinAtt->GetViewDir() != E_VIEW_TOP) //只有平面图才绘制门洞
@@ -142,7 +138,8 @@ void CMyDbReactor::WindowModifed(AcDbEntity* pEnt)
 		es = pEnt->getGeomExtents(extWin);
 		if (es != Acad::eOk)
 			throw Acad::eFailed;
-		
+
+		CDocLock docLock;
 		AcDbEntity *pTOpenningEnt = NULL;
 		es = acdbOpenObject(pTOpenningEnt, tangentOpenId, AcDb::kForWrite);
 		if (es == Acad::eOk &&pTOpenningEnt != NULL)
@@ -202,7 +199,6 @@ void CMyDbReactor::WindowErase(AcDbEntity* pEnt)
 	if (pWinAtt == NULL)
 		return;
 
-	CDocLock docLock;
 	try
 	{
 		if (pWinAtt->GetViewDir() != E_VIEW_TOP) //只有平面图才绘制门洞
@@ -212,11 +208,12 @@ void CMyDbReactor::WindowErase(AcDbEntity* pEnt)
 		const AcDbObjectId modespaceId = GetBlockRecordId(ACDB_MODEL_SPACE);
 		if (owner != modespaceId)
 			throw Acad::eOk;
-		
+
 		AcDbObjectId tangentOpenId = GetWinTangentOpenMap()->GetTangentOpenId(curId);
 		//AcDbObjectId tangentOpenId = pWinAtt->GetWinTangentOpenId();
 		if (tangentOpenId != AcDbObjectId::kNull)
 		{
+			CDocLock docLock;
 			AcDbEntity *pTOpenningEnt = NULL;
 			Acad::ErrorStatus es = acdbOpenObject(pTOpenningEnt, tangentOpenId, AcDb::kForWrite);
 			if (es == Acad::eOk &&pTOpenningEnt != NULL)

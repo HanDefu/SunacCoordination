@@ -11,7 +11,12 @@ public:
 			pDoc = curDoc();
 		}
 		m_pDoc = pDoc;
-		acDocManager->lockDocument(pDoc, lockMode);
+		Acad::ErrorStatus es = acDocManager->lockDocument(pDoc, lockMode);
+		assert(es == Acad::eOk);
+		if (es!=Acad::eOk)
+		{
+			acutPrintf(_T("lockÎÄµµÊ§°Ü\n"));
+		}
 	}
 	//CDocLock &operator=(const CDocLock &p_docLock);
 	~CDocLock()

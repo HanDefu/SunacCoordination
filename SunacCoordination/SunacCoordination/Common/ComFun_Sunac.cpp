@@ -651,6 +651,7 @@ int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt)
 	if (pDataEnt == 0)
 		return -2;
 
+	CDocLock lock;
 	AcDbObjectId dicID = TY_GetExtensionDictionaryID(Id);
 	if (dicID == 0)
 	{
@@ -661,7 +662,6 @@ int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt)
 		return -1;
 	}
 
-	CDocLock lock;
 
 	//注意这里有时候加入不进去， 是因为没有注册
 	AcDbDictionary *pDict = NULL;
@@ -682,11 +682,17 @@ int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt)
 
 int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt, bool p_bRead)
 {
-	CDocLock lock;
 	pDataEnt = NULL;
 	AcDbObjectId dicID = TY_GetExtensionDictionaryID(tkId);
 	if (dicID == AcDbObjectId::kNull)
 		return -1;
+
+	if (p_bRead==false)
+	{
+		Acad::ErrorStatus es = acDocManager->lockDocument(curDoc(), AcAp::kWrite);
+	}
+	//CDocLock lock(curDoc(), p_bRead ? AcAp::kRead :AcAp::kWrite);
+
 
 	AcDbDictionary *pDict = NULL;
 	Acad::ErrorStatus es = acdbOpenObject(pDict, dicID, AcDb::kForRead);
@@ -704,6 +710,11 @@ int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt, bool p_bRead)
 			}
 			pDataEnt->close();
 		}
+	}
+
+	if (p_bRead == false)
+	{
+		acDocManager->unlockDocument(curDoc());
 	}
 
 	return pDataEnt == NULL ? 0 : -68;
