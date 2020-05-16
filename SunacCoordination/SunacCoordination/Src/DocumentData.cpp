@@ -19,6 +19,8 @@ Acad::ErrorStatus CDocumentData::ReadFromDwg(AcDbDwgFiler* pFiler, Adesk::Int32 
 
 	m_winTangentMap.ReadFromDwg(pFiler, p_version);
 
+	m_instanceCodeMrg.ReadFromDwg(pFiler, p_version); //FILE_VERSION 版本9添加
+
 	m_bLoad = true; //YUAN DocSerialize
 
 	return Acad::eOk;
@@ -30,6 +32,8 @@ Acad::ErrorStatus CDocumentData::WriteToDwg(AcDbDwgFiler* pFiler)
 	m_bathroomAutoName.WriteToDwg(pFiler);
 
 	m_winTangentMap.WriteToDwg(pFiler);
+
+	m_instanceCodeMrg.WriteToDwg(pFiler);//FILE_VERSION 版本9添加
 
 	return Acad::eOk;
 }

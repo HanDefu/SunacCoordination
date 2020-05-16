@@ -1,6 +1,7 @@
 #pragma once
 
 #include "..\Object\WindowDoor\WindowAutoName.h"
+#include "..\Object\WindowDoor\InstanceCodeTextMrg.h"
 #include "..\Object\WindowDoor\WinTangentOpenMap.h"
 #include "..\Object\Kitchen\KitchenAutoName.h"
 #include "..\Object\Bathroom\BathroomAutoName.h"

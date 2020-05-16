@@ -9,9 +9,11 @@ class CSunacObjInCad
 public:
 	CSunacObjInCad();
 
+	bool operator < (const CSunacObjInCad& p_obj)const;
+
 public:
-	AcDbObjectId m_winId;
-	AcDbObjectId m_rootId; //针对块中块的根节点
+	AcDbObjectId m_winId;	//门窗id，若是组合后的块参照，则为块定义内部的门窗id
+	AcDbObjectId m_rootId; //针对块中块的根节点, 若常规门窗，则和m_winId 相同
 	bool m_bMxMirror;	   //门窗块的矩阵是否镜像
 	double m_rotateAngle;  //门窗块的旋转角度
 	AcGeMatrix3d m_mx;

@@ -4,7 +4,6 @@
 #include "stdafx.h"
 #include "../Command/Command.h"
 #include "../Command/CommandWindowDetail.h"
-#include "../Command/CommandWindowTable.h"
 #include "DlgLeftBar.h"
 #include "../res/resource.h"
 #include "..\ProjectorFileMrg\ProjectFileMrg.h"

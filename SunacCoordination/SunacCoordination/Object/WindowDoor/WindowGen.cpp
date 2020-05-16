@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include <dbobjptr.h>
 #include "..\..\Common\ComFun_Sunac.h"
 #include "..\..\Common\ComFun_ACad.h"
 #include "..\..\Common\ComFun_Layer.h"
@@ -361,22 +362,12 @@ bool CWindowGen::GetWindowInsertPos(AcDbObjectId p_id, AcGePoint3d &p_insertPos,
 	p_insertPos = AcGePoint3d::kOrigin;
 	p_angle = 0;
 
-	AcDbEntity* pEnt = NULL;
-	Acad::ErrorStatus es = acdbOpenObject(pEnt, p_id, AcDb::kForRead);
-	if (es!=Acad::eOk )
+	AcDbObjectPointer<AcDbBlockReference> pRef(p_id, AcDb::kForRead);
+	if (pRef.openStatus() == Acad::eOk)
 	{
-		return false;
+		p_insertPos = pRef->position();
+		p_angle = pRef->rotation();
 	}
-	
-	AcDbBlockReference *pBlockReference = AcDbBlockReference::cast(pEnt);
-	if (pBlockReference==NULL)
-	{
-		return false;
-	}
-
-	p_insertPos = pBlockReference->position();
-	p_angle = pBlockReference->rotation();
-	pBlockReference->close();
 	return true;
 }
 
@@ -490,13 +481,6 @@ void CWindowGen::ModifyOneWindow(const AcDbObjectId p_id, AttrWindow newWinAtt)
 		assert(false);
 		return;
 	}
-	AcDbEntity *pEnt = NULL;
-	Acad::ErrorStatus es = acdbOpenObject(pEnt, p_id, AcDb::kForRead);
-	if (es!=Acad::eOk || pEnt==NULL)
-	{
-		return;
-	}
-	pEnt->close();
 
 	const CWinInsertPara oldInsertPara = GetWindowInsertPara(p_id);
 	//以下信息保持和原来的不变
@@ -529,6 +513,7 @@ void CWindowGen::ModifyOneWindow(const AcDbObjectId p_id, AttrWindow newWinAtt)
 
 AcDbObjectId CWindowGen::UpdateWindow(const AcDbObjectId p_id, AttrWindow newWinAtt, const bool bUpdateRelatedWin, bool bUpdateSameInstanceCode)
 {
+	CDocLock lock;
 	const CString oldInstanceCode = AttrWindow::GetWinInstanceCode(p_id);
 	if (bUpdateSameInstanceCode==false || oldInstanceCode.IsEmpty())
 	{
@@ -705,6 +690,7 @@ AcDbObjectId CWindowGen::UpdateOneWindow(const AcDbObjectId p_id, AttrWindow new
 
 bool CWindowGen::RenameWindow(const AcDbObjectId p_id, CString p_sNewName, const bool bUpdateRelatedWin) //只是重命名，不更改其他
 {
+	CDocLock lock;
 	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(p_id, false);
 	if (pWinAtt == NULL)
 		return false;
@@ -737,7 +723,7 @@ bool CWindowGen::DeleteWindowObj(const AcDbObjectId p_id)
 	JHCOM_DeleteCadObject(p_id);
 
 	GetWindowAutoName()->RemoveObject(p_id);
-	GetInstanceCodeMrg()->RemoveInstanceCode(p_id);
+	GetInstanceCodeMrg()->RemoveInstanceCodeByWinId(p_id);
 	return true;
 }
 bool CWindowGen::SetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId p_fromWinId, AcDbObjectIdArray p_relatedIds)
@@ -812,6 +798,11 @@ AcDbObjectId CWindowGen::InsertWindowDoorCode(eViewDir p_viewDir, CString p_numb
 
 void CWindowGen::CreateWindowDoorCode(eViewDir p_viewDir, CSunacObjInCad p_win, CString p_Code)
 {
+	//若已经存在，则直接修改原来的编号值
+	bool bSuc = GetInstanceCodeMrg()->SetNewInstanceCode(p_win, p_Code);
+	if (bSuc) 
+		return;
+	
 	//根据窗户的位置转换门窗编号位置
 	double winWidth = 1500;
 	double heightOffset = 0;
@@ -821,12 +812,10 @@ void CWindowGen::CreateWindowDoorCode(eViewDir p_viewDir, CSunacObjInCad p_win, 
 		double h = GetWinHeight(p_win.m_winId);
 
 		winWidth = max(w, h);
-
 		if (winWidth < 1200)
 		{
 			winWidth = min(w, h);
 		}
-
 		if (winWidth < 500)
 		{
 			winWidth = max(w, h);
@@ -846,8 +835,7 @@ void CWindowGen::CreateWindowDoorCode(eViewDir p_viewDir, CSunacObjInCad p_win, 
 	textPos.transformBy(p_win.m_mx);
 
 	AcDbObjectId textId = InsertWindowDoorCode(p_viewDir, p_Code, textPos);
-	GetInstanceCodeMrg()->AddInstanceCode(p_win.m_rootId, textId);
-
+	GetInstanceCodeMrg()->AddInstanceCode(p_win, textId);
 	
 
 	//对门窗编号位置进行细微调整，使其居中，间距适中
@@ -940,6 +928,7 @@ bool CWindowGen::SelectSunacObjs(vector<CSunacObjInCad>& p_winsOut, vector<AcDbO
 
 void CWindowGen::AutoNameAllWindow()
 {
+	CDocLock lock;
 	vector<CSunacObjInCad> wins;
 	vector<AcDbObjectId> textIds;
 	bool bAll = false;
@@ -948,22 +937,6 @@ void CWindowGen::AutoNameAllWindow()
 	if (wins.size() == 0)
 		return;
 	
-	//2. 对原来的门窗分类有效性进行检查，移除不匹配和已删除的项
-	if (bAll)
-	{
-		GetInstanceCodeMrg()->RemoveAll();
-
-		GetWindowAutoName()->CheckAndRemoveObjectNotBelong();
-	}
-	else
-	{
-		for (UINT i = 0; i < textIds.size(); i++)
-		{
-			GetInstanceCodeMrg()->RemoveInstanceCodeText(textIds[i]);
-			JHCOM_DeleteCadObject(textIds[i]);
-		}
-		textIds.clear();
-	}
 
 	//3. 将门窗加入到类型库
 	for (UINT i = 0; i < wins.size(); i++)
@@ -990,11 +963,23 @@ void CWindowGen::AutoNameAllWindow()
 		winAtt.SetInstanceCode(sInstanceCode2);
 
 		//门窗编号生成
-		if (winAtt.GetViewDir() == E_VIEW_TOP || GlobalSetting::GetInstance()->m_winSetting.m_bShowLimianNumber && winAtt.GetViewDir() != E_VIEW_EXTEND)
+		if (winAtt.GetViewDir() == E_VIEW_TOP ||  //平面图必须编号
+			GSINST->m_winSetting.m_bShowLimianNumber && winAtt.GetViewDir() != E_VIEW_EXTEND) //立面图是否编号取决于设置
 		{
 			CreateWindowDoorCode(winAtt.GetViewDir(), wins[i], sInstanceCode2);
 		}
+
+		pWinAtt->close();
 	}
+
+	//////////////////////////////////////////////////////////////////////////
+	//2. 对原来的门窗分类有效性进行检查，移除不匹配和已删除的项
+	//for (UINT i = 0; i < textIds.size(); i++)
+	//{
+	//	if (false == GetInstanceCodeMrg()->IsTextIdIn(textIds[i]))
+	//		JHCOM_DeleteCadObject(textIds[i]);
+	//}
+	GetWindowAutoName()->CheckAndRemoveObjectNotBelong();
 
 	acutPrintf(L"\n门窗自动编号完成\n");
 }

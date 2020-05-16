@@ -14,7 +14,7 @@
 #include "../Object/WindowDoor/RCWindow.h"
 #include "../Object/WindowDoor/WindowGen.h"
 #include "../Object/WindowDoor/WindowSelect.h"
-#include "../Object/WindowDoor/WindowTable.h"
+#include "../Object/WindowDoor/WindowTableClassify.h"
 #include "../Common/ComFun_ACad.h"
 #include "../Common/ComFun_Str.h"
 #include "../Common/ComFun_Sunac.h"

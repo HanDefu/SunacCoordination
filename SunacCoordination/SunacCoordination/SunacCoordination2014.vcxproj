@@ -166,7 +166,6 @@
   <ItemGroup>
     <ClCompile Include="Command\Command.cpp" />
     <ClCompile Include="Command\CommandWindowDetail.cpp" />
-    <ClCompile Include="Command\CommandWindowTable.cpp" />
     <ClCompile Include="Common\AcessDatabase.cpp" />
     <ClCompile Include="Common\AES.cpp" />
     <ClCompile Include="Common\ComFun_ACad.cpp" />
@@ -215,11 +214,13 @@
     <ClCompile Include="Object\RCWaterProof.cpp" />
     <ClCompile Include="Object\RCXianJiao.cpp" />
     <ClCompile Include="Object\WindowDoor\AttrWindow.cpp" />
+    <ClCompile Include="Object\WindowDoor\InstanceCodeTextMrg.cpp" />
     <ClCompile Include="Object\WindowDoor\RCWindow.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowAutoName.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowGen.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowSelect.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowTable.cpp" />
+    <ClCompile Include="Object\WindowDoor\WindowTableClassify.cpp" />
     <ClCompile Include="Object\WindowDoor\WindowTop2Front.cpp" />
     <ClCompile Include="Object\WindowDoor\WinTangentOpenMap.cpp" />
     <ClCompile Include="Object\WindowStatistic\AluminumSeries.cpp" />
@@ -309,7 +310,6 @@
   <ItemGroup>
     <ClInclude Include="Command\Command.h" />
     <ClInclude Include="Command\CommandWindowDetail.h" />
-    <ClInclude Include="Command\CommandWindowTable.h" />
     <ClInclude Include="Common\AcessDatabase.h" />
     <ClInclude Include="Common\AES.h" />
     <ClInclude Include="Common\ComFun_ACad.h" />
@@ -360,11 +360,13 @@
     <ClInclude Include="Object\RCWaterProof.h" />
     <ClInclude Include="Object\RCXianJiao.h" />
     <ClInclude Include="Object\WindowDoor\AttrWindow.h" />
+    <ClInclude Include="Object\WindowDoor\InstanceCodeTextMrg.h" />
     <ClInclude Include="Object\WindowDoor\RCWindow.h" />
     <ClInclude Include="Object\WindowDoor\WindowAutoName.h" />
     <ClInclude Include="Object\WindowDoor\WindowGen.h" />
     <ClInclude Include="Object\WindowDoor\WindowSelect.h" />
     <ClInclude Include="Object\WindowDoor\WindowTable.h" />
+    <ClInclude Include="Object\WindowDoor\WindowTableClassify.h" />
     <ClInclude Include="Object\WindowDoor\WindowTop2Front.h" />
     <ClInclude Include="Object\WindowDoor\WinTangentOpenMap.h" />
     <ClInclude Include="Object\WindowStatistic\AluminumSeries.h" />
