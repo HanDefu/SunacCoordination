@@ -3732,8 +3732,8 @@ Acad::ErrorStatus  MD2010_InsertDwgFile2(const WCHAR *p_dwgPath, AcGePoint3d p_o
 				if (idPair.isCloned())
 				{
 					AcDbEntity* clonedEnt;
-					es = acdbOpenAcDbEntity(clonedEnt, idPair.value(), AcDb::kForWrite);
-					if (es == Acad::eOk)
+					Acad::ErrorStatus esTemp = acdbOpenAcDbEntity(clonedEnt, idPair.value(), AcDb::kForWrite);
+					if (esTemp == Acad::eOk)
 					{
 						if (idPair.isPrimary())
 						{
