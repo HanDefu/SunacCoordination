@@ -107,21 +107,16 @@ void CMD_ShowCADPalette()
 //设置
 void CMD_SetUp()
 {
-	CAcModuleResourceOverride resOverride;
-
 	if (WebIO::GetInstance()->IsLogin() == false)
 	{
-		AfxMessageBox(_T("请先登录"));
+		acutPrintf(_T("请先登录\n"));
+		return;
 	}
-	else
-	{
-		CDlgSetUp dlg;
-		if (IDOK == dlg.DoModal())
-		{
-			CADPalette_RemoveP();
-			CADPalette_AddP();
-		}
-	}
+
+	CAcModuleResourceOverride resOverride;
+
+	CDlgSetUp dlg;
+	dlg.DoModal();
 }
 
 //窗

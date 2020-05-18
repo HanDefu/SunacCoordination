@@ -208,10 +208,8 @@ void CWindowGen::UpdateRcWindowPara(const AcDbObjectId p_id, const AttrWindow& c
 						oneWindow.SetParameter(L"B", B);
 					}
 				}
-
 			}			
-		}
-		
+		}		
 	}
 	oneWindow.RunParameters();
 	if (p_view == E_VIEW_FRONT || p_view == E_VIEW_EXTEND)
@@ -229,6 +227,7 @@ void CWindowGen::AddWinAtt(const AcDbObjectId p_id, const AttrWindow&  p_winAtt)
 }
 void CWindowGen::UpdateWindowsAttribute(const AcDbObjectId p_id, const AttrWindow& p_winAtt)
 {
+	CDocLock lock;
 	//把数据记录在图框的扩展字典中
 	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(p_id, false);
 	if (pWinAtt!=NULL)
@@ -240,8 +239,6 @@ void CWindowGen::UpdateWindowsAttribute(const AcDbObjectId p_id, const AttrWindo
 
 AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d pos, E_DIRECTION p_winDir, bool p_bDetailWnd, const AcDbObjectId p_fromWinId)
 {
-	CDocLock cLock;
-
 	CString p_sLayerName = GlobalSetting::GetWindowBlockLayer();
 	const eViewDir p_view = curWinAtt.GetViewDir();
 	const double rotateAngle = GetBlockRotateAngle(curWinAtt, p_view, p_winDir);
@@ -513,7 +510,6 @@ void CWindowGen::ModifyOneWindow(const AcDbObjectId p_id, AttrWindow newWinAtt)
 
 AcDbObjectId CWindowGen::UpdateWindow(const AcDbObjectId p_id, AttrWindow newWinAtt, const bool bUpdateRelatedWin, bool bUpdateSameInstanceCode)
 {
-	CDocLock lock;
 	const CString oldInstanceCode = AttrWindow::GetWinInstanceCode(p_id);
 	if (bUpdateSameInstanceCode==false || oldInstanceCode.IsEmpty())
 	{
@@ -608,6 +604,8 @@ AcDbObjectId CWindowGen::UpdateOneWindow(const AcDbObjectId p_id, AttrWindow new
 		return newId;
 	}
 
+	newWinAtt.SetViewDir(pOldWinAtt->GetViewDir());
+
 	AttrWindow oldWinAtt = *pOldWinAtt;
 
 	AcDbObjectId fromWinId = AcDbObjectId::kNull;
@@ -651,6 +649,7 @@ AcDbObjectId CWindowGen::UpdateOneWindow(const AcDbObjectId p_id, AttrWindow new
 				const CWinInsertPara newInsertPara = GetWindowInsertPara(fromWinId);
 				DeleteWindowObj(fromWinId);
 
+				newWinAtt.SetViewDir(newInsertPara.viewDir);
 				newMainId = GenerateWindow(newWinAtt, newInsertPara.insertPos, newInsertPara.insertDir, newInsertPara.bDetailWnd, AcDbObjectId::kNull);
 				if (p_id==fromWinId)
 					outId = newMainId;
@@ -667,6 +666,7 @@ AcDbObjectId CWindowGen::UpdateOneWindow(const AcDbObjectId p_id, AttrWindow new
 				const CWinInsertPara newInsertPara = GetWindowInsertPara(relatedWinIds[i]);
 				DeleteWindowObj(relatedWinIds[i]);
 
+				newWinAtt.SetViewDir(newInsertPara.viewDir);
 				AcDbObjectId newId = GenerateWindow(newWinAtt, newInsertPara.insertPos, newInsertPara.insertDir, newInsertPara.bDetailWnd, AcDbObjectId::kNull);
 				newRelatedIds.append(newId);
 				if (p_id == relatedWinIds[i])
@@ -690,7 +690,6 @@ AcDbObjectId CWindowGen::UpdateOneWindow(const AcDbObjectId p_id, AttrWindow new
 
 bool CWindowGen::RenameWindow(const AcDbObjectId p_id, CString p_sNewName, const bool bUpdateRelatedWin) //只是重命名，不更改其他
 {
-	CDocLock lock;
 	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(p_id, false);
 	if (pWinAtt == NULL)
 		return false;
@@ -935,8 +934,7 @@ void CWindowGen::AutoNameAllWindow()
 	//1.  从CAD界面上获取所有的门窗
 	bool bSuc = SelectSunacObjs(wins, textIds, bAll);
 	if (wins.size() == 0)
-		return;
-	
+		return;	
 
 	//3. 将门窗加入到类型库
 	for (UINT i = 0; i < wins.size(); i++)

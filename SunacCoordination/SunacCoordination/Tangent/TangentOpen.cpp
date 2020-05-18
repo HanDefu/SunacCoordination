@@ -18,6 +18,7 @@
 #include <acdb.h>
 #include <adslib.h>
 #include <rxmfcapi.h>
+#include <dbobjptr.h>
 
 //////////////////////////////////////////////////////////////////////////
 #include <opmext.h>
@@ -89,29 +90,32 @@ AcDbObjectId AppendEntity(AcDbEntity *pEnt, const WCHAR * entry = ACDB_MODEL_SPA
 
 std::vector<AcDbObjectId> YT_Explode(AcDbObjectId entId, const WCHAR * entry = ACDB_MODEL_SPACE)
 {
-	// Add your code for command ahlzlARX._test here
+	CDocLock docLock;
+
 	std::vector<AcDbObjectId> ids;
-	AcDbEntity *pEnt = NULL;
-	acdbOpenObject(pEnt, entId, AcDb::kForWrite);
-	if(pEnt == 0)
-		return ids;
 
-	AcDbVoidPtrArray pExps;
-	if (pEnt->explode(pExps) == Acad::eOk)
-
+	AcDbObjectPointer<AcDbEntity> pEnt(entId, AcDb::kForWrite);
+	if (pEnt.openStatus()==Acad::eOk)
 	{
-		for (int i = 0; i < pExps.length(); i++)
+		AcDbVoidPtrArray pExps;
+		if (pEnt->explode(pExps) == Acad::eOk)
 		{
-			AcDbEntity *pExpEnt = (AcDbEntity*)pExps[i];
-			ids.push_back(AppendEntity(pExpEnt,entry));
+			for (int i = 0; i < pExps.length(); i++)
+			{
+				AcDbEntity *pExpEnt = (AcDbEntity*)pExps[i];
+				AcDbObjectId idOut = AppendEntity(pExpEnt, entry);
+				if (idOut!= AcDbObjectId::kNull)
+				{
+					ids.push_back(idOut);
+				}
+			}
+			pEnt->erase(true);
 		}
-		pEnt->erase(true);
+		else
+		{
+			acutPrintf(_T("\n该对象不能被分解！"));
+		}
 	}
-	else
-	{
-		acutPrintf(_T("\n该对象不能被分解！"));
-	}
-	pEnt->close();
 
 	return ids;
 }
@@ -127,21 +131,37 @@ HRESULT CTangentOpen::InsertWinOpenning(AcGePoint3d p_centerPt, CTOpenData p_win
 		acutPrintf(_T("文件不存在：")+ sPath + _T("\n"));
 		return E_FAIL;
 	}
+
+
+#if 1
+	AcDbObjectIdArray idsOut;
+	Acad::ErrorStatus es = MD2010_InsertDwgFile2(sPath, p_centerPt, idsOut);
+	if (es == Acad::eOk)
+	{
+		p_tWinOpenIdOut = idsOut[0];
+	}
+	else
+	{
+		acutPrintf(_T("插入天正门洞失败\n"));
+	}
+
+#else
 	CString sBlockDefName = _T("T门洞");
 	AcDbObjectId blockid = AcDbObjectId::kNull;
 	int nRet = MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, sPath, sBlockDefName, blockid, p_centerPt, 0, AcGeScale3d(1, 1, 1));
-	if (blockid==AcDbObjectId::kNull)
+	if (blockid == AcDbObjectId::kNull)
 	{
 		return E_FAIL;
 	}
 
 	std::vector<AcDbObjectId> idsOut = YT_Explode(blockid, ACDB_MODEL_SPACE);
-	if (idsOut.size()!=1)
+	if (idsOut.size() != 1)
 	{
 		return E_FAIL;
 	}
 
 	p_tWinOpenIdOut = idsOut[0];
+#endif
 
 	//////////////////////////////////////////////////////////////////////////
 	return SetTangentOpenProp(p_tWinOpenIdOut, p_winData);
