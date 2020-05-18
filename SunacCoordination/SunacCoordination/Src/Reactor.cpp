@@ -1,4 +1,5 @@
 #include "StdAfx.h"
+#include <dbobjptr.h>
 #include "Reactor.h"
 #include "../GlobalSetting.h"
 #include "..\Object\WindowDoor\AttrWindow.h"
@@ -6,6 +7,7 @@
 #include "..\Tool\DocLock.h"
 #include "..\src\DocumentData.h"
 #include "..\Common\ComFun_ACAD_Common.h"
+#include "..\Common\ComFun_Math.h"
 
 CMyEditReactor* g_editorReactor = NULL;
 CMyDocReactor* g_docReactor = NULL;
@@ -136,24 +138,58 @@ void CMyDbReactor::WindowModifed(AcDbEntity* pEnt)
 		//更新位置
 		AcDbExtents extWin;
 		es = pEnt->getGeomExtents(extWin);
+		AcGePoint3d minPt = extWin.minPoint();
+		AcGePoint3d maxPt = extWin.maxPoint();
+		AcDbBlockReference* pWinRef = AcDbBlockReference::cast(pEnt);
+		if (pWinRef!=NULL)
+		{
+			const double winWidth = pWinAtt->GetW();
+			const double winThick = pWinAtt->GetD();
+			AcGePoint3d insertPos = pWinRef->position();
+			if (JHCOM_equ((extWin.maxPoint().x-extWin.minPoint().x), winWidth, 0.1))
+			{
+				//南北方向 水平窗
+				if (abs(extWin.minPoint().y -  insertPos.y )< (winThick +1)) //门窗平面图在底部，开启扇在上 比较时+1是为了防止精度问题
+				{
+					maxPt = AcGePoint3d(maxPt.x, minPt.y+winThick, 0);
+				}
+				else //门窗平面图在顶部，开启扇在下
+				{
+					minPt = AcGePoint3d(minPt.x, maxPt.y - winThick, 0);
+				}				
+			}
+			else
+			{
+				//东西方向窗,垂直窗
+				if (abs(extWin.minPoint().x - insertPos.x) < (winThick + 1)) //门窗平面图在左侧，开启扇在右侧
+				{
+					maxPt = AcGePoint3d(minPt.x + winThick, maxPt.y , 0);
+				}
+				else //门窗平面图在右侧，开启扇在左侧
+				{
+					minPt = AcGePoint3d(maxPt.x - winThick, minPt.y, 0);
+				}
+			}
+		}
+		AcGePoint3d winCenter = (minPt + maxPt.asVector()) / 2;
+
 		if (es != Acad::eOk)
 			throw Acad::eFailed;
 
 		CDocLock docLock;
-		AcDbEntity *pTOpenningEnt = NULL;
-		es = acdbOpenObject(pTOpenningEnt, tangentOpenId, AcDb::kForWrite);
-		if (es == Acad::eOk &&pTOpenningEnt != NULL)
+		AcDbObjectPointer<AcDbEntity> pTOpenningEnt(tangentOpenId, AcDb::kForWrite);
+		if (pTOpenningEnt.openStatus() == Acad::eOk &&pTOpenningEnt != NULL)
 		{
 			AcDbExtents extWinOpening;
 			es = pTOpenningEnt->getGeomExtents(extWinOpening);
+			AcGePoint3d winOpeningCenter = (extWinOpening.minPoint() + extWinOpening.maxPoint().asVector()) / 2;
 			if (es==Acad::eOk)
 			{
+				//通过中心点得到所有的门窗
 				AcGeMatrix3d xform;
-				xform.setToTranslation(extWin.minPoint() - extWinOpening.minPoint());
+				xform.setToTranslation(winCenter - winOpeningCenter);
 				es = pTOpenningEnt->transformBy(xform);
 			}
-
-			pTOpenningEnt->close();
 		}
 
 
