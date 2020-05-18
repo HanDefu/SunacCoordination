@@ -339,9 +339,6 @@
     <ClCompile Include="Command\CommandWindowDetail.cpp">
       <Filter>Command</Filter>
     </ClCompile>
-    <ClCompile Include="Command\CommandWindowTable.cpp">
-      <Filter>Command</Filter>
-    </ClCompile>
     <ClCompile Include="UI\AirconditionerDlg.cpp">
       <Filter>UI</Filter>
     </ClCompile>
@@ -458,6 +455,12 @@
     </ClCompile>
     <ClCompile Include="Src\ObjHighlight.cpp">
       <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowDoor\InstanceCodeTextMrg.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowDoor\WindowTableClassify.cpp">
+      <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -809,9 +812,6 @@
     <ClInclude Include="Command\CommandWindowDetail.h">
       <Filter>Command</Filter>
     </ClInclude>
-    <ClInclude Include="Command\CommandWindowTable.h">
-      <Filter>Command</Filter>
-    </ClInclude>
     <ClInclude Include="UI\AirconditionerDlg.h">
       <Filter>UI</Filter>
     </ClInclude>
@@ -958,6 +958,12 @@
     </ClInclude>
     <ClInclude Include="Src\ObjHighlight.h">
       <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\InstanceCodeTextMrg.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\WindowTableClassify.h">
+      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
