@@ -422,7 +422,8 @@ double AttrWindow::GetTongFengQty(bool bDefaultValue/* = false*/) const
 		}
 		else if (es == E_PS_Success)
 		{
-			return ret / 1E6;
+			double tongFengQty = ret / 1E6; //面积按平方米
+			return max(tongFengQty, 0);
 		}
 		else
 		{
