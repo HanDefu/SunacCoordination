@@ -66,8 +66,7 @@ protected:
 	//插入门窗编号
 	static AcDbObjectId InsertWindowDoorCode(eViewDir p_viewDir, CString p_number, AcGePoint3d p_pos);
 	static void CreateWindowDoorCode(eViewDir p_viewDir, CSunacObjInCad p_win, CString p_Code);
-	static double GetWinWidth(AcDbObjectId p_id);
-	static double GetWinHeight(AcDbObjectId p_id);
+	static bool GetWinWidthHeight(AcDbObjectId p_id, double& p_widthOut, double& p_heightOut);
 
 
 	static bool DrawTangentOpen(AcDbObjectId p_winId, const AttrWindow& curWinAtt, const AcGePoint3d pos, E_DIRECTION p_winDir);//绘制天正门洞
