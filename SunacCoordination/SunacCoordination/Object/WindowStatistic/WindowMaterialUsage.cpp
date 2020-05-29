@@ -344,7 +344,7 @@ void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öĞÍ²ÄÊı¾
 		p_excel.SetCellValue(nRow, 9, str);
 
 		//ºÄËğ
-		str.Format(_T("%.2f%%"),dataOut.wastageRate);
+		str.Format(_T("%.1f%%"),dataOut.wastageRate * 100);
 		p_excel.SetCellValue(nRow, 12, str);
 
 		//ĞÍ²ÄÖÖÀà
