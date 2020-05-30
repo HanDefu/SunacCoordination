@@ -318,6 +318,147 @@ HRESULT CTangentOpen::SetTangentOpenProp(AcDbObjectId p_winId, CTOpenData p_winD
 }
 
 
+template<class T> 
+HRESULT GetTWallData(AcDbObjectId p_id, CTWallData& p_wallData, REFCLSID rclsid)
+{
+	HRESULT hr = S_OK;
+
+	CComPtr<T> pWall;
+	CComQIPtr<IAcadBaseObject> pSquareBase;
+	//CComQIPtr<IAcadBaseObject2> pSquareBase2;
+
+	try
+	{
+		if (FAILED(hr = pWall.CoCreateInstance(rclsid)))//__uuidof(TCH10_COM9_T20V5X64::ComWall)
+			throw hr;
+
+		pSquareBase = pWall;
+
+		if (pSquareBase == NULL)
+			throw E_POINTER;
+
+		p_wallData.thick = pWall->GetTotalWidth();
+		p_wallData.leftT = pWall->GetLeftWidth();
+		p_wallData.rightT = pWall->GetRightWidth();
+	}
+	catch (HRESULT eHr)
+	{
+		acutPrintf(_T("\n Error SetTangentOpenProp_TCH10_COM9_T20V5X64."));
+		return eHr;
+	}
+
+	return hr;
+}
+
+HRESULT CTangentOpen::GetTangentWallData(AcDbObjectId p_id, CTWallData& p_wallDataOut)
+{
+	HRESULT hr = S_OK;
+	if (p_id == AcDbObjectId::kNull)
+		return E_FAIL;
+
+	AcDbObjectPointer<AcDbEntity> pEnt(p_id, AcDb::kForRead);
+	if (pEnt.openStatus() != Acad::eOk)
+	{
+		return E_FAIL;
+	}
+
+	pEnt->getGeomExtents(p_wallDataOut.extents);
+
+	CLSID entClsid = { 0 };
+	Acad::ErrorStatus es = pEnt->getClassID(&entClsid);	//可根据entClsid来决定使用何种版本的天正插件初始化，返回的是ComOpening接口
+	if (es != Acad::eOk)
+		return E_FAIL;
+
+	if (IsEqualCLSID(entClsid, __uuidof(T2013X64_tch9_com18::ComWall)))
+	{
+		return GetTWallData<T2013X64_tch9_com18::IComWall>(p_id, p_wallDataOut, __uuidof(T2013X64_tch9_com18::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T2014X64_tch9_com18::ComWall)))
+	{
+		return GetTWallData<T2014X64_tch9_com18::IComWall>(p_id, p_wallDataOut, __uuidof(T2014X64_tch9_com18::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T2014X64_tch9_com19::ComWall)))
+	{
+		return GetTWallData<T2014X64_tch9_com19::IComWall>(p_id, p_wallDataOut, __uuidof(T2014X64_tch9_com19::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20X64_tch10_com18::ComWall)))
+	{
+		return GetTWallData<T20X64_tch10_com18::IComWall>(p_id, p_wallDataOut, __uuidof(T20X64_tch10_com18::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20X64_tch10_com19::ComWall)))
+	{
+		return GetTWallData<T20X64_tch10_com19::IComWall>(p_id, p_wallDataOut, __uuidof(T20X64_tch10_com19::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V2X64_tch10_com18::ComWall)))
+	{
+		return GetTWallData<T20V2X64_tch10_com18::IComWall>(p_id, p_wallDataOut, __uuidof(T20V2X64_tch10_com18::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V2X64_tch10_com19::ComWall)))
+	{
+		return GetTWallData<T20V2X64_tch10_com19::IComWall>(p_id, p_wallDataOut, __uuidof(T20V2X64_tch10_com19::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V3X64_tch10_com18::ComWall)))
+	{
+		return GetTWallData<T20V3X64_tch10_com18::IComWall>(p_id, p_wallDataOut, __uuidof(T20V3X64_tch10_com18::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V3X64_tch10_com19::ComWall)))
+	{
+		return GetTWallData<T20V3X64_tch10_com19::IComWall>(p_id, p_wallDataOut, __uuidof(T20V3X64_tch10_com19::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V3X64_tch10_com20::ComWall)))
+	{
+		return GetTWallData<T20V3X64_tch10_com20::IComWall>(p_id, p_wallDataOut, __uuidof(T20V3X64_tch10_com20::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V4X64_tch10_com18::ComWall)))
+	{
+		return GetTWallData<T20V4X64_tch10_com18::IComWall>(p_id, p_wallDataOut, __uuidof(T20V4X64_tch10_com18::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V4X64_tch10_com19::ComWall)))
+	{
+		return GetTWallData<T20V4X64_tch10_com19::IComWall>(p_id, p_wallDataOut, __uuidof(T20V4X64_tch10_com19::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V4X64_tch10_com20::ComWall)))
+	{
+		return GetTWallData<T20V4X64_tch10_com20::IComWall>(p_id, p_wallDataOut, __uuidof(T20V4X64_tch10_com20::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V4X64_tch10_com21::ComWall)))
+	{
+		return GetTWallData<T20V4X64_tch10_com21::IComWall>(p_id, p_wallDataOut, __uuidof(T20V4X64_tch10_com21::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V5X64_tch10_com18::ComWall)))
+	{
+		return GetTWallData<T20V5X64_tch10_com18::IComWall>(p_id, p_wallDataOut, __uuidof(T20V5X64_tch10_com18::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V5X64_tch10_com19::ComWall)))
+	{
+		return GetTWallData<T20V5X64_tch10_com19::IComWall>(p_id, p_wallDataOut, __uuidof(T20V5X64_tch10_com19::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V5X64_tch10_com20::ComWall)))
+	{
+		return GetTWallData<T20V5X64_tch10_com20::IComWall>(p_id, p_wallDataOut, __uuidof(T20V5X64_tch10_com20::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V5X64_tch10_com21::ComWall)))
+	{
+		return GetTWallData<T20V5X64_tch10_com21::IComWall>(p_id, p_wallDataOut, __uuidof(T20V5X64_tch10_com21::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V5X64_tch10_com22::ComWall)))
+	{
+		return GetTWallData<T20V5X64_tch10_com22::IComWall>(p_id, p_wallDataOut, __uuidof(T20V5X64_tch10_com22::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V5X64_tch10_com23::ComWall)))
+	{
+		return GetTWallData<T20V5X64_tch10_com23::IComWall>(p_id, p_wallDataOut, __uuidof(T20V5X64_tch10_com23::ComWall));
+	}
+	else
+	{
+		hr = E_FAIL;
+	}
+
+
+	return E_FAIL;
+}
+
+
 //  CLSIDFromProgID()、CLSIDFromProgIDEx()	由 ProgID 得到 CLSID。没什么好说的，你自己都可以写，查注册表贝
 //	ProgIDFromCLSID()	由 CLSID 得到 ProgID，调用者使用完成后要释放 ProgID 的内存(注5)
 //	CoCreateGuid()	随机生成一个 GUID

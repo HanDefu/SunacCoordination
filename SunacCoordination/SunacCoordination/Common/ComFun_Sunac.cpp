@@ -1626,3 +1626,34 @@ int TYCOM_GetBlkString(AcDbBlockReference *pBlkRef, CString Key, CString &value)
 
 	return 0;
 }
+
+AcDbObjectIdArray GetIdsCrossRect(const TYRect p_rect)
+{
+	AcDbObjectIdArray ids;
+	struct resbuf *rb = NULL;
+	ads_name ssname;
+
+	ads_point pt1, pt2;
+	pt1[X] = p_rect.GetLT().x;
+	pt1[Y] = p_rect.GetLT().y;
+	pt1[Z] = p_rect.GetLT().z;
+	pt2[X] = p_rect.GetRB().x;
+	pt2[Y] = p_rect.GetRB().y;
+	pt2[Z] = p_rect.GetRB().z;
+	acedSSGet(TEXT("C"), pt1, pt2, rb, ssname);//筛选在rect范围内的结果
+
+	Adesk::Int32 length;
+	acedSSLength(ssname, &length);
+	for (int i = 0; i < length; i++)
+	{
+		ads_name ent;
+		acedSSName(ssname, i, ent);
+		AcDbObjectId objId;
+		acdbGetObjectId(objId, ent);
+		ids.append(objId);
+	}
+
+	acutRelRb(rb);
+	acedSSFree(ssname);
+	return ids;
+}
