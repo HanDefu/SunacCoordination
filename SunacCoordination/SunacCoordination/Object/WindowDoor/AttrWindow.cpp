@@ -979,6 +979,9 @@ bool AttrWindow::IsInstanceEqual(const AttrWindow& p_att) const
 		return false;
 	for (UINT i = 0; i < dim1.size(); i++)
 	{
+		if (dim1[i].sCodeName.CompareNoCase(_T("D")) == 0) //门窗厚度无需比较
+			continue;
+
 		if (!dim1[i].IsParaEqual(dim2[i]))
 			return false;
 	}

@@ -3,6 +3,7 @@
 #include "..\..\Common\ComFun_Sunac.h"
 #include "..\..\Common\ComFun_ACad.h"
 #include "..\..\Common\ComFun_Layer.h"
+#include "..\..\Common\ComFun_Math.h"
 #include "..\..\GlobalSetting.h"
 #include "..\..\Tool\DocLock.h"
 #include "WindowGen.h"
@@ -233,8 +234,45 @@ void CWindowGen::UpdateWindowsAttribute(const AcDbObjectId p_id, const AttrWindo
 	}
 }
 
+bool CWindowGen::GetNearTangentWall(const AcGePoint3d pos, AcGePoint3d& p_posOnWall, double& p_wallThick)
+{
+	p_posOnWall = pos;
+	TYRect nearRect(AcGePoint3d(pos.x - 100, pos.y - 100, 0), AcGePoint3d(pos.x + 100, pos.y + 100, 0));
+	AcDbObjectIdArray nearObjIds = GetIdsCrossRect(nearRect);
+	for (int i = 0; i < nearObjIds.length(); i++)
+	{
+		CTWallData walldata;
+		HRESULT hr = CTangentOpen::GetTangentWallData(nearObjIds[i], walldata);
+		if (SUCCEEDED(hr))
+		{
+			p_wallThick = walldata.thick;
+
+			AcGePoint3d minPt = walldata.extents.minPoint();
+			AcGePoint3d maxPt = walldata.extents.maxPoint();
+			double h = maxPt.y - minPt.y;
+			bool bH = JHCOM_equ(h, walldata.thick, 1);
+			if (bH)
+				p_posOnWall.y = minPt.y;
+			else
+				p_posOnWall.x = minPt.x;
+			return true;
+		}
+	}
+
+	return false;
+}
+
 AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d pos, E_DIRECTION p_winDir, bool p_bDetailWnd, const AcDbObjectId p_fromWinId)
 {
+	AcGePoint3d posOnWall = pos;
+	double wallThick = 200;
+	bool bFindTWall = GetNearTangentWall(pos, posOnWall, wallThick);
+	if (bFindTWall)
+	{
+		curWinAtt.SetD(wallThick);
+	}
+
+	//////////////////////////////////////////////////////////////////////////
 	CString p_sLayerName = GlobalSetting::GetWindowBlockLayer();
 	const eViewDir p_view = curWinAtt.GetViewDir();
 	const double rotateAngle = GetBlockRotateAngle(curWinAtt, p_view, p_winDir);
@@ -247,7 +285,7 @@ AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d
 	AddWinAtt(id, curWinAtt);
 
 	//移动窗型到插入点
-	AcGePoint3d insertPos = GetBlockInsertPos(id, curWinAtt, pos, p_view, p_winDir);
+	AcGePoint3d insertPos = GetBlockInsertPos(id, curWinAtt, posOnWall, p_view, p_winDir);
 	TYCOM_Move(id, insertPos.asVector());
 
 	//处理镜像
@@ -297,7 +335,10 @@ AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d
 	}
 
 	//插入天正门洞(因在生成门窗appand到模型空间时尚未添加门窗属性，因此不能在反应器中自动天正门洞，需要在生成时添加门洞）
-	DrawTangentOpen(id, curWinAtt, pos, p_winDir);
+	if (bFindTWall)
+	{
+		DrawTangentOpen(id, curWinAtt, posOnWall, p_winDir);
+	}
 
 	//刷新
 	actrTransactionManager->flushGraphics();//必须lock住文档才有效果 

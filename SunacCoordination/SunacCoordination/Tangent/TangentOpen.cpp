@@ -337,6 +337,7 @@ HRESULT GetTWallData(AcDbObjectId p_id, CTWallData& p_wallData, REFCLSID rclsid)
 		if (pSquareBase == NULL)
 			throw E_POINTER;
 
+		pSquareBase->SetObjectId(p_id);
 		p_wallData.thick = pWall->GetTotalWidth();
 		p_wallData.leftT = pWall->GetLeftWidth();
 		p_wallData.rightT = pWall->GetRightWidth();

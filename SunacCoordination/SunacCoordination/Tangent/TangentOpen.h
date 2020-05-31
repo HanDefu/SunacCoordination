@@ -5,7 +5,7 @@ struct CTOpenData
 	double width; 
 	double height;
 	double bottomHeight; //¥∞Ã®∏ﬂ
-	CString sWinCode;	//√≈¥∞±‡∫≈
+	CString sWinCode;	//√≈¥∞±‡∫≈ 
 };
 
 struct CTWallData

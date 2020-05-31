@@ -72,6 +72,8 @@ protected:
 	static bool DrawTangentOpen(AcDbObjectId p_winId, const AttrWindow& curWinAtt, const AcGePoint3d pos, E_DIRECTION p_winDir);//绘制天正门洞
 	//////////////////////////////////////////////////////////////////////////
 	static bool SelectSunacObjs(vector<CSunacObjInCad>& p_winsOut, vector<AcDbObjectId>& p_textIdsOut, bool &p_bAllOut);
+
+	static bool GetNearTangentWall(const AcGePoint3d pos, AcGePoint3d& p_posOnWall, double& p_wallThick);
 };
 
 
