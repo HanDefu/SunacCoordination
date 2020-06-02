@@ -234,8 +234,9 @@ void CWindowGen::UpdateWindowsAttribute(const AcDbObjectId p_id, const AttrWindo
 	}
 }
 
-bool CWindowGen::GetNearTangentWall(const AcGePoint3d pos, AcGePoint3d& p_posOnWall, double& p_wallThick)
+bool CWindowGen::GetNearTangentWall(const AcGePoint3d pos, E_DIRECTION p_winDir, AcGePoint3d& p_posOnWall, double& p_wallThick)
 {
+	bool bHDir = p_winDir == E_DIR_BOTTOM || p_winDir == E_DIR_TOP;
 	p_posOnWall = pos;
 	TYRect nearRect(AcGePoint3d(pos.x - 100, pos.y - 100, 0), AcGePoint3d(pos.x + 100, pos.y + 100, 0));
 	AcDbObjectIdArray nearObjIds = GetIdsCrossRect(nearRect);
@@ -250,12 +251,15 @@ bool CWindowGen::GetNearTangentWall(const AcGePoint3d pos, AcGePoint3d& p_posOnW
 			AcGePoint3d minPt = walldata.extents.minPoint();
 			AcGePoint3d maxPt = walldata.extents.maxPoint();
 			double h = maxPt.y - minPt.y;
-			bool bH = JHCOM_equ(h, walldata.thick, 1);
-			if (bH)
-				p_posOnWall.y = minPt.y;
-			else
-				p_posOnWall.x = minPt.x;
-			return true;
+			bool bWallH = JHCOM_equ(h, walldata.thick, 1);
+			if (bWallH==bHDir) //必须是和门窗方向相同的墙体
+			{
+				if (bWallH)
+					p_posOnWall.y = minPt.y;
+				else
+					p_posOnWall.x = minPt.x;
+				return true;
+			}
 		}
 	}
 
@@ -266,7 +270,7 @@ AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d
 {
 	AcGePoint3d posOnWall = pos;
 	double wallThick = 200;
-	bool bFindTWall = GetNearTangentWall(pos, posOnWall, wallThick);
+	bool bFindTWall = GetNearTangentWall(pos, p_winDir, posOnWall, wallThick);
 	if (bFindTWall)
 	{
 		curWinAtt.SetD(wallThick);
