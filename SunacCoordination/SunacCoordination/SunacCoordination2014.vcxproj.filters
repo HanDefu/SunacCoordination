@@ -418,6 +418,9 @@
     <ClCompile Include="Object\WindowDoor\InstanceCodeTextMrg.cpp">
       <Filter>Object\WindowDoor</Filter>
     </ClCompile>
+    <ClCompile Include="Common\PolylineJig.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="StdAfx.h">
@@ -924,6 +927,9 @@
     </ClInclude>
     <ClInclude Include="Object\WindowDoor\InstanceCodeTextMrg.h">
       <Filter>Object\WindowDoor</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\PolylineJig.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

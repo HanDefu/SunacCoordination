@@ -49,7 +49,7 @@ void CRCRailing::SetRailingAtt(const AttrRailing p_railingAtt)
 }
 bool CRCRailing::SetLength(double p_length) //设置栏杆总长度，参数(栏杆总长度)传进来，赋给m_length（总尺寸），返回GenRailing();
 {
-	m_railingAtt.m_length = p_length;
+	m_railingAtt.SetRLength(p_length);
 	return GenRailing(); //调用GenRailing()函数对栏杆总长进行判断，如果栏杆总长小于1550，返回false
 }
 CString CRCRailing::GetPrototypeFilePath()const
@@ -58,7 +58,7 @@ CString CRCRailing::GetPrototypeFilePath()const
 }
 bool CRCRailing::CheckLength()
 {
-	return (m_railingAtt.m_length >= GetMinWidth());
+	return (m_railingAtt.GetRLength() >= GetMinWidth());
 }
 bool CRCRailing::CheckHeight()
 {
@@ -83,7 +83,7 @@ int CRCRailing::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut)
 	if (sRailingDefName.IsEmpty())
 	{
 		assert(false);
-		sRailingDefName.Format(_T("%s_%d_%d"), m_railingAtt.m_prototypeCode, (int)(m_railingAtt.m_length), (int)(m_railingAtt.m_height));
+		sRailingDefName.Format(_T("%s_%d_%d"), m_railingAtt.m_prototypeCode, (int)(m_railingAtt.GetRLength()), (int)(m_railingAtt.m_height));
 	}
 
 	CString oldLayerName;
@@ -93,7 +93,7 @@ int CRCRailing::GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut)
 	if (!IsSampleDraw())
 	{
 		sRalingLayerName = _T("Sunac_Railing_Detail");
-		sRailingDefName.Format(_T("%s_%d_%d_%s"), m_railingAtt.m_prototypeCode, (int)(m_railingAtt.m_length), (int)(m_railingAtt.m_height), _T("Detail"));
+		sRailingDefName.Format(_T("%s_%d_%d_%s"), m_railingAtt.m_prototypeCode, (int)(m_railingAtt.GetRLength()), (int)(m_railingAtt.m_height), _T("Detail"));
 	}
 	
 	if (JHCOM_GetLayerID(sRalingLayerName)==AcDbObjectId::kNull)
@@ -205,18 +205,38 @@ CRCRailing* CreateRailing(const AttrRailing p_railingAtt)
 	return pRailing; 
 }
 
-void CRCRailing::CreateRailingTop(AcGePoint3d p_pnt1, AcGePoint3d p_pnt2)
+bool CRCRailing::CreateRailingTop(const vector<AcGePoint3d> p_pts)
 {
+	if (p_pts.size() < 2)
+		return false;
+
 	CDocLock lockEnt;
 
+	m_railingAtt.SetRailingPath(p_pts);
+
+	//int nRailingTopLength = 0;
+	//bool bSul = CheckRailingStartEndPt(p_pts[0], p_pts[p_pts.size()-1], nRailingTopLength);
+	//if (bSul == false)
+	//	return;
+
 	CString sRailingDefName = m_railingAtt.GetInstanceCode();
-
-	int nRailingTopLength = 0;
-	bool bSul = CheckRailingStartEndPt(p_pnt1, p_pnt2, nRailingTopLength);
-	if (bSul == false)
-		return;
-
-	sRailingDefName.Format(_T("%s_%d_%d_P"), m_railingAtt.m_prototypeCode, nRailingTopLength, (int)(m_railingAtt.m_height));
+	sRailingDefName.Format(_T("%s_%d_%d_P"), m_railingAtt.m_prototypeCode, (int)m_railingAtt.GetTotalLength(), (int)(m_railingAtt.m_height));
+	AcDbBlockTable *pBlkTbl = NULL;
+	acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForRead);
+	pBlkTbl->close();
+	//每次绘制使用新的块定义名称
+	CString sBlockName = sRailingDefName;
+	if (pBlkTbl->has(sBlockName))
+	{
+		for (UINT i = 0; i < 100; i++)
+		{
+			sBlockName.Format(_T("%s_%d"), sRailingDefName, i);
+			if (false == pBlkTbl->has(sBlockName))
+			{
+				break;
+			}
+		}
+	}
 
 	CString oldLayerName;
 	MD2010_GetCurrentLayer(oldLayerName);
@@ -228,15 +248,95 @@ void CRCRailing::CreateRailingTop(AcGePoint3d p_pnt1, AcGePoint3d p_pnt2)
 	}
 	MD2010_SetCurrentLayer(sRalingLayerName);
 
-	AcDbObjectId railingTopId = GenerateRailingTop(sRailingDefName, p_pnt1, p_pnt2);
+	AcDbObjectId railingTopId = GenerateRailingTop(sBlockName, p_pts);
 
 	MD2010_SetCurrentLayer(oldLayerName);
 
 	// 将多段线添加到模型空间
-	MD2010_InsertBlockReference_ModelSpace(sRailingDefName, railingTopId, p_pnt1);
+	MD2010_InsertBlockReference_ModelSpace(sBlockName, railingTopId, p_pts[0]);
 	AttrRailing* pAttRailing = new AttrRailing(m_railingAtt);
 	TY_AddAttributeData(railingTopId, pAttRailing);
 	pAttRailing->close();
+
+	return true;
+}
+
+AcDbObjectId CRCRailing::GenerateRailingTop(CString p_blockName, const vector<AcGePoint3d>& p_pts)
+{
+	if (p_pts.size() < 2)
+		return AcDbObjectId::kNull;
+
+	const double halfWidth = 40; //栏杆半厚度
+	
+	vector<AcGePoint3d> offsetPts1;
+	vector<AcGePoint3d> offsetPts2;
+	AcGeVector3d v0 = p_pts[1] - p_pts[0];
+	v0.normalize();
+	v0 = halfWidth * v0.crossProduct(AcGeVector3d::kZAxis); //偏移方向
+	offsetPts1.push_back(p_pts[0] + v0);
+	offsetPts2.push_back(p_pts[0] - v0);
+
+	const UINT nSize = (UINT)(p_pts.size());
+	for (UINT i = 1; i <nSize -1; i++)
+	{
+		AcGeVector3d v1 = p_pts[i - 1] - p_pts[i];
+		AcGeVector3d v2 = p_pts[i+1] - p_pts[i];
+		v1.normalize();
+		v2.normalize();
+		AcGeVector3d v = v1 + v2;
+		v.normalize();
+		double angle = acos(v1.dotProduct(v2));
+		if (angle>(-PI / 36) && angle<(PI / 36))
+			angle = PI / 36;
+
+		double len = halfWidth / sin(angle / 2);
+
+		offsetPts1.push_back(p_pts[i] - len*v);
+		offsetPts2.push_back(p_pts[i] + len*v);
+	}
+	//最后一点
+
+	AcGeVector3d vN = p_pts[nSize - 1] - p_pts[nSize - 2];
+	vN.normalize();
+	vN = halfWidth * vN.crossProduct(AcGeVector3d::kZAxis); //偏移方向
+	offsetPts1.push_back(p_pts[nSize-1] + vN);
+	offsetPts2.push_back(p_pts[nSize-1] - vN);
+
+	// 创建对应的多段线
+	AcDbPolyline *pPoly = new AcDbPolyline(nSize*2);
+	for (UINT i = 0; i < nSize; i++)
+	{
+		pPoly->addVertexAt(i, AcGePoint2d( offsetPts1[i].x, offsetPts1[i].y));
+	}
+	for (UINT i = 0; i < nSize; i++)
+	{
+		UINT n = nSize - 1 - i;
+		pPoly->addVertexAt(i+ nSize, AcGePoint2d(offsetPts2[n].x, offsetPts2[n].y));
+	}
+
+	pPoly->setClosed(Adesk::kTrue);
+	pPoly->setColorIndex(1);
+
+	//////////////////////////////////////////////////////////////////////////
+	// 创建新的块表记录
+	AcDbBlockTableRecord *pBlkTblRcd = new AcDbBlockTableRecord();
+	pBlkTblRcd->setName(p_blockName);
+
+	// 将块表记录添加到块表中
+	AcDbObjectId blkDefId;
+	AcDbBlockTable *pBlkTbl = NULL;
+	acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForWrite);
+	pBlkTbl->add(blkDefId, pBlkTblRcd);
+	pBlkTbl->close();
+
+	AcDbObjectId entId;
+	pBlkTblRcd->appendAcDbEntity(entId, pPoly);
+	pBlkTblRcd->setOrigin(p_pts[0]);
+
+	pPoly->close();
+	pBlkTblRcd->close();
+
+	return entId;
 }
 
 AcDbObjectId CRCRailing::GenerateRailingTop(CString p_blockName, AcGePoint3d p_pnt1, AcGePoint3d p_pnt2)
@@ -265,7 +365,7 @@ AcDbObjectId CRCRailing::GenerateRailingTop(CString p_blockName, AcGePoint3d p_p
 	AcGePoint2d ptLeftBottom, ptRightBottom, ptRightTop, ptLeftTop;
 
 	const double halfWidth = 40; //栏杆半厚度
-	
+
 	if (p_pnt1.y == p_pnt2.y)
 	{
 		ptLeftBottom.set(p_pnt1.x, p_pnt1.y - halfWidth);
@@ -424,7 +524,7 @@ void CRCRailing::CreateRailingDetailDim(const AttrRailing& railAtt, AcDbObjectId
 
 	MD2010_SetCurrentLayer(sRailingLayerName);
 
-	const double railingTotalLength = railAtt.m_length;
+	const double railingTotalLength = railAtt.GetRLength();
 	const double railingTotalHeight = railAtt.m_height;
 
 	TYRect rect;
@@ -624,7 +724,7 @@ AcDbObjectId CRCRailing::DrawRailingWhiteWall(const AttrRailing& railAtt, AcDbOb
 
 	MD2010_SetCurrentLayer(sWindowDoorLayerName);
 
-	const double railingTotalLength = railAtt.m_length;
+	const double railingTotalLength = railAtt.GetRLength();
 	const double railingTotalHeight = railAtt.m_height;
 
 	TYRect rect;
@@ -679,7 +779,7 @@ AcDbObjectId CRCRailing::DrawRailingYellowWall(const AttrRailing& railAtt, AcDbO
 
 	MD2010_SetCurrentLayer(sWindowDoorLayerName);
 
-	const double railingTotalLength = railAtt.m_length;
+	const double railingTotalLength = railAtt.GetRLength();
 	const double railingTotalHeight = railAtt.m_height;
 
 	TYRect rect;
@@ -733,7 +833,7 @@ AcDbObjectId CRCRailing::DrawRailingFill(const AttrRailing& railAtt, AcDbObjectI
 
 	MD2010_SetCurrentLayer(sWindowDoorLayerName);
 
-	const double railingTotalLength = railAtt.m_length;
+	const double railingTotalLength = railAtt.GetRLength();
 	const double railingTotalHeight = railAtt.m_height;
 
 	TYRect rect;
@@ -986,8 +1086,8 @@ AcDbObjectId CRCRailing::CreateWipeOut()
 {
 	AcGePoint3dArray pnts; //左侧、右侧、底侧各留20的量以免将墙体线也遮挡
 	pnts.append(AcGePoint3d(20, 20, 0));
-	pnts.append(AcGePoint3d(m_railingAtt.m_length - 20, 20, 0));
-	pnts.append(AcGePoint3d(m_railingAtt.m_length - 20, m_railingAtt.m_height, 0));
+	pnts.append(AcGePoint3d(m_railingAtt.GetRLength() - 20, 20, 0));
+	pnts.append(AcGePoint3d(m_railingAtt.GetRLength() - 20, m_railingAtt.m_height, 0));
 	pnts.append(AcGePoint3d(20, m_railingAtt.m_height, 0));
 	pnts.append(AcGePoint3d(20, 20, 0));
 

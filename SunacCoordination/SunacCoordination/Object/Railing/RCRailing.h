@@ -36,7 +36,7 @@ public:
 	virtual int GenerateRailing(AcGePoint3d start, AcDbObjectId &p_railingIdOut);
 
 	//////////////////////////////////////////////////////////////////////////
-	virtual double GetLength()const { return m_railingAtt.m_length; } //获取栏杆总长度
+	virtual double GetLength()const { return m_railingAtt.GetRLength(); } //获取栏杆总长度
 	virtual double GetK()const { return m_K; }		//获取栏杆侧边留空间隙
 	virtual double GetB()const { return m_B; }		//获取标准栏杆尺寸
 	virtual int GetN()const { return m_N; }
@@ -67,8 +67,9 @@ public:
 	static AcDbObjectId CreateHatch(const AcDbObjectIdArray &loopIds, bool bAssociative);
 
 	//栏杆平面图
+	AcDbObjectId GenerateRailingTop(CString p_blockName, const vector<AcGePoint3d>& p_pts);
 	AcDbObjectId GenerateRailingTop(CString p_blockName, AcGePoint3d p_pnt1, AcGePoint3d p_pnt2);
-	void CreateRailingTop(AcGePoint3d p_pnt1, AcGePoint3d p_pnt2);
+	bool CreateRailingTop(const vector<AcGePoint3d> p_pts);
 
 	static bool CheckRailingStartEndPt(AcGePoint3d& p_pnt1, AcGePoint3d& p_pnt2, int& p_width);//计算平面图插入点，使栏杆长为10的倍数
 	static void CheckRailingLength(int& p_width);

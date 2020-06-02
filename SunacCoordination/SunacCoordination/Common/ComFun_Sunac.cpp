@@ -6,11 +6,12 @@
 #include "ComFun_Sunac.h"
 #include "ComFun_Def.h"
 #include <acutmem.h>
-#include "ComFun_ACAD_Common.h"
 #include <dbmline.h>
 #include <dbhatch.h>
 #include <acedads.h>
 #include <dbidmap.h>
+#include "ComFun_ACAD_Common.h"
+#include "PolylineJig.h"
 #include "../Common/TYRect.h"
 #include "../Object\WindowDoor\AttrWindow.h"
 #include "../Object\AirCondition\AttrAirCon.h"
@@ -572,6 +573,40 @@ bool TY_GetTwoPoints(AcGePoint3d &pnt1, AcGePoint3d &pnt2)
 	pnt2 = AcGePoint3d(result[0],result[1],result[2]);
 
 	return true;
+}
+
+bool TY_GetPoints(vector<AcGePoint3d> &pntsOut)
+{
+	pntsOut.clear();
+	acedInitGet(32, NULL);
+
+	AcGePoint3d curPt = AcGePoint3d::kOrigin;
+
+	while (true)
+	{
+		if (pntsOut.size()==0)
+		{
+			ads_point pt;
+			if (acedGetPoint(NULL, L"ÇëÑ¡Ôñµã\n", pt) != RTNORM)
+			{
+				break;
+			}
+
+			curPt = AcGePoint3d(pt[0], pt[1], pt[2]);
+		}
+		else
+		{
+			CPolylineJig polylineJig;
+			if (false==polylineJig.doIt(pntsOut, curPt))
+			{
+				break;
+			}
+		}
+
+		pntsOut.push_back(curPt);
+	}
+	
+	return pntsOut.size()>0;
 }
 
 bool GetRealInput(const TCHAR* prompt, double defaultVal, int precision, double &ret)
