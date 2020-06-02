@@ -135,6 +135,8 @@ int TYCOM_SaveBlkString(AcDbObjectId id, CString Key, CString value);
 int TYCOM_GetBlkString(AcDbBlockReference *pBlkRef, CString Key, CString &value);
 int TYCOM_GetBlkString(AcDbObjectId id, CString Key, CString &value);
 
+AcDbObjectIdArray GetIdsCrossRect(const TYRect p_rect);
+
 
 
 

@@ -1,7 +1,9 @@
 #include "StdAfx.h"
+#include <dbobjptr.h>
 #include "..\..\Common\ComFun_Sunac.h"
 #include "..\..\Common\ComFun_ACad.h"
 #include "..\..\Common\ComFun_Layer.h"
+#include "..\..\Common\ComFun_Math.h"
 #include "..\..\GlobalSetting.h"
 #include "..\..\Tool\DocLock.h"
 #include "WindowGen.h"
@@ -82,15 +84,16 @@ double CWindowGen::GetBlockRotateAngle(const AttrWindow& curWinAtt, eViewDir p_v
 		switch (p_winDir)
 		{
 		case E_DIR_BOTTOM:
-			rotateAngle = PI;
+			rotateAngle = 0;
 			break;
 		case E_DIR_RIGHT:
-			rotateAngle = -PI / 2;
+			rotateAngle = PI / 2;
 			break;
 		case E_DIR_TOP:
+			rotateAngle = PI;
 			break;
 		case E_DIR_LEFT:
-			rotateAngle = PI / 2;
+			rotateAngle = -PI / 2;
 			break;
 		case E_DIR_UNKNOWN:
 		default:
@@ -104,11 +107,8 @@ double CWindowGen::GetBlockRotateAngle(const AttrWindow& curWinAtt, eViewDir p_v
 AcGePoint3d CWindowGen::GetBlockInsertPos(const AcDbObjectId p_id, const AttrWindow& curWinAtt, const AcGePoint3d pos, eViewDir p_view, E_DIRECTION p_winDir)
 {
 	double W = curWinAtt.GetW();
-
-	AcGePoint3d minPt, maxPt;
-	JHCOM_GetObjectMinMaxPoint(p_id, minPt, maxPt); //TODO 处理ucs坐标下的情况
-	W = (maxPt.x - minPt.x);
-
+	double D = curWinAtt.GetD();
+	
 	AcGePoint3d insertPos = pos;
 	if (p_view == E_VIEW_TOP)
 	{
@@ -116,17 +116,15 @@ AcGePoint3d CWindowGen::GetBlockInsertPos(const AcDbObjectId p_id, const AttrWin
 		switch (p_winDir)
 		{
 		case E_DIR_BOTTOM:	//南
-			offsetXY.x += W;
-			break;
 		case E_DIR_TOP:		//北
-			offsetXY.y += curWinAtt.GetD();
+			offsetXY.x += W/2;
+			offsetXY.y += D /2;
 			break;
 		case E_DIR_RIGHT:	//东
-			offsetXY.x += curWinAtt.GetD();
-			W = (maxPt.y - minPt.y);
-			offsetXY.y += W;
-			break;
 		case E_DIR_LEFT:	//西
+			offsetXY.x += D /2;
+			offsetXY.y += W / 2;
+			break;
 			break;
 		default:
 			break;
@@ -207,10 +205,8 @@ void CWindowGen::UpdateRcWindowPara(const AcDbObjectId p_id, const AttrWindow& c
 						oneWindow.SetParameter(L"B", B);
 					}
 				}
-
 			}			
-		}
-		
+		}		
 	}
 	oneWindow.RunParameters();
 	if (p_view == E_VIEW_FRONT || p_view == E_VIEW_EXTEND)
@@ -228,6 +224,7 @@ void CWindowGen::AddWinAtt(const AcDbObjectId p_id, const AttrWindow&  p_winAtt)
 }
 void CWindowGen::UpdateWindowsAttribute(const AcDbObjectId p_id, const AttrWindow& p_winAtt)
 {
+	CDocLock lock;
 	//把数据记录在图框的扩展字典中
 	AttrWindow * pWinAtt = AttrWindow::GetWinAtt(p_id, false);
 	if (pWinAtt!=NULL)
@@ -237,10 +234,45 @@ void CWindowGen::UpdateWindowsAttribute(const AcDbObjectId p_id, const AttrWindo
 	}
 }
 
+bool CWindowGen::GetNearTangentWall(const AcGePoint3d pos, AcGePoint3d& p_posOnWall, double& p_wallThick)
+{
+	p_posOnWall = pos;
+	TYRect nearRect(AcGePoint3d(pos.x - 100, pos.y - 100, 0), AcGePoint3d(pos.x + 100, pos.y + 100, 0));
+	AcDbObjectIdArray nearObjIds = GetIdsCrossRect(nearRect);
+	for (int i = 0; i < nearObjIds.length(); i++)
+	{
+		CTWallData walldata;
+		HRESULT hr = CTangentOpen::GetTangentWallData(nearObjIds[i], walldata);
+		if (SUCCEEDED(hr))
+		{
+			p_wallThick = walldata.thick;
+
+			AcGePoint3d minPt = walldata.extents.minPoint();
+			AcGePoint3d maxPt = walldata.extents.maxPoint();
+			double h = maxPt.y - minPt.y;
+			bool bH = JHCOM_equ(h, walldata.thick, 1);
+			if (bH)
+				p_posOnWall.y = minPt.y;
+			else
+				p_posOnWall.x = minPt.x;
+			return true;
+		}
+	}
+
+	return false;
+}
+
 AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d pos, E_DIRECTION p_winDir, bool p_bDetailWnd, const AcDbObjectId p_fromWinId)
 {
-	CDocLock cLock;
+	AcGePoint3d posOnWall = pos;
+	double wallThick = 200;
+	bool bFindTWall = GetNearTangentWall(pos, posOnWall, wallThick);
+	if (bFindTWall)
+	{
+		curWinAtt.SetD(wallThick);
+	}
 
+	//////////////////////////////////////////////////////////////////////////
 	CString p_sLayerName = GlobalSetting::GetWindowBlockLayer();
 	const eViewDir p_view = curWinAtt.GetViewDir();
 	const double rotateAngle = GetBlockRotateAngle(curWinAtt, p_view, p_winDir);
@@ -253,7 +285,7 @@ AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d
 	AddWinAtt(id, curWinAtt);
 
 	//移动窗型到插入点
-	AcGePoint3d insertPos = GetBlockInsertPos(id, curWinAtt, pos, p_view, p_winDir);
+	AcGePoint3d insertPos = GetBlockInsertPos(id, curWinAtt, posOnWall, p_view, p_winDir);
 	TYCOM_Move(id, insertPos.asVector());
 
 	//处理镜像
@@ -303,7 +335,10 @@ AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d
 	}
 
 	//插入天正门洞(因在生成门窗appand到模型空间时尚未添加门窗属性，因此不能在反应器中自动天正门洞，需要在生成时添加门洞）
-	DrawTangentOpen(id, curWinAtt, pos, p_winDir);
+	if (bFindTWall)
+	{
+		DrawTangentOpen(id, curWinAtt, posOnWall, p_winDir);
+	}
 
 	//刷新
 	actrTransactionManager->flushGraphics();//必须lock住文档才有效果 
@@ -361,22 +396,12 @@ bool CWindowGen::GetWindowInsertPos(AcDbObjectId p_id, AcGePoint3d &p_insertPos,
 	p_insertPos = AcGePoint3d::kOrigin;
 	p_angle = 0;
 
-	AcDbEntity* pEnt = NULL;
-	Acad::ErrorStatus es = acdbOpenObject(pEnt, p_id, AcDb::kForRead);
-	if (es!=Acad::eOk )
+	AcDbObjectPointer<AcDbBlockReference> pRef(p_id, AcDb::kForRead);
+	if (pRef.openStatus() == Acad::eOk)
 	{
-		return false;
+		p_insertPos = pRef->position();
+		p_angle = pRef->rotation();
 	}
-	
-	AcDbBlockReference *pBlockReference = AcDbBlockReference::cast(pEnt);
-	if (pBlockReference==NULL)
-	{
-		return false;
-	}
-
-	p_insertPos = pBlockReference->position();
-	p_angle = pBlockReference->rotation();
-	pBlockReference->close();
 	return true;
 }
 
@@ -384,33 +409,19 @@ bool CWindowGen::GetWindowInsertDir(AcDbObjectId p_id, E_DIRECTION & p_dirOut)
 {
 	p_dirOut = E_DIR_TOP; 
 
-	AcDbEntity * pEnt = 0;
-	Acad::ErrorStatus es = acdbOpenObject(pEnt, p_id, AcDb::kForRead);
-	if (es != Acad::eOk || pEnt == NULL)
-	{
-		assert(false);
+	AcDbObjectPointer<AcDbBlockReference> pBRef(p_id, AcDb::kForRead);
+	if (pBRef.openStatus() != Acad::eOk)
 		return false;
-	}
 
-	AcDbBlockReference * pBRef = AcDbBlockReference::cast(pEnt);
-	if (pBRef == NULL)
-	{
-		pEnt->close();
-		return false;
-	}
-	
 	double rotateAngle = pBRef->rotation();
-
-	if ((rotateAngle > -0.25*PI / 4 && rotateAngle < 0.25*PI) || rotateAngle>1.75*PI)
-		p_dirOut = E_DIR_TOP;
-	else if (rotateAngle > 0.25*PI &&rotateAngle < 0.75*PI)
-		p_dirOut = E_DIR_LEFT;
-	else if (rotateAngle > 0.75*PI &&rotateAngle < 1.25*PI)
-		p_dirOut = E_DIR_BOTTOM;
-	else if (rotateAngle > 1.25*PI &&rotateAngle < 1.75*PI)
+	if (rotateAngle > 0.25*PI && rotateAngle < 0.75*PI)
 		p_dirOut = E_DIR_RIGHT;
-
-	pEnt->close();
+	else if (rotateAngle > 0.75*PI && rotateAngle < 1.25*PI)
+		p_dirOut = E_DIR_TOP;
+	else if (rotateAngle > 1.25*PI && rotateAngle < 1.75*PI)
+		p_dirOut = E_DIR_LEFT;
+	else
+		p_dirOut = E_DIR_BOTTOM;
 
 	return true;
 }
@@ -441,28 +452,23 @@ CWinInsertPara CWindowGen::GetWindowInsertPara(AcDbObjectId p_id) //根据已插入的
 
 	//////////////////////////////////////////////////////////////////////////
 	//根据方位，重新得到插入点： 窗户外墙左侧点
+	double angle;
+	GetWindowInsertPos(p_id, insertPara.insertPos, angle);
+
 	if (insertPara.viewDir==E_VIEW_TOP)
 	{
 		switch (insertPara.insertDir)
 		{
 		case E_DIR_BOTTOM:	//下侧、南方
-		case E_DIR_LEFT:	//左侧、西方
-			insertPara.insertPos = insertPara.leftBottomPos;
-			break;
-		case E_DIR_RIGHT:	//右侧、东方
-			insertPara.insertPos = AcGePoint3d(insertPara.rightTopPos.x, insertPara.leftBottomPos.y, 0);
-			break;
 		case E_DIR_TOP:		//上侧、北方
-			insertPara.insertPos = AcGePoint3d(insertPara.leftBottomPos.x, insertPara.rightTopPos.y, 0);
+			insertPara.insertPos = AcGePoint3d(insertPara.insertPos.x - pWinAtt->GetW()/2, insertPara.rightTopPos.y - pWinAtt->GetD()/2, 0);
+		case E_DIR_LEFT:	//左侧、西方
+		case E_DIR_RIGHT:	//右侧、东方
+			insertPara.insertPos = AcGePoint3d(insertPara.insertPos.x - pWinAtt->GetD() / 2, insertPara.rightTopPos.y - pWinAtt->GetW() / 2, 0);
 			break;
 		default:
 			break;
 		}
-	}
-	else
-	{
-		double angle;
-		GetWindowInsertPos(p_id, insertPara.insertPos, angle);
 	}
 
 	return insertPara;
@@ -490,13 +496,6 @@ void CWindowGen::ModifyOneWindow(const AcDbObjectId p_id, AttrWindow newWinAtt)
 		assert(false);
 		return;
 	}
-	AcDbEntity *pEnt = NULL;
-	Acad::ErrorStatus es = acdbOpenObject(pEnt, p_id, AcDb::kForRead);
-	if (es!=Acad::eOk || pEnt==NULL)
-	{
-		return;
-	}
-	pEnt->close();
 
 	const CWinInsertPara oldInsertPara = GetWindowInsertPara(p_id);
 	//以下信息保持和原来的不变
@@ -623,6 +622,8 @@ AcDbObjectId CWindowGen::UpdateOneWindow(const AcDbObjectId p_id, AttrWindow new
 		return newId;
 	}
 
+	newWinAtt.SetViewDir(pOldWinAtt->GetViewDir());
+
 	AttrWindow oldWinAtt = *pOldWinAtt;
 
 	AcDbObjectId fromWinId = AcDbObjectId::kNull;
@@ -666,6 +667,7 @@ AcDbObjectId CWindowGen::UpdateOneWindow(const AcDbObjectId p_id, AttrWindow new
 				const CWinInsertPara newInsertPara = GetWindowInsertPara(fromWinId);
 				DeleteWindowObj(fromWinId);
 
+				newWinAtt.SetViewDir(newInsertPara.viewDir);
 				newMainId = GenerateWindow(newWinAtt, newInsertPara.insertPos, newInsertPara.insertDir, newInsertPara.bDetailWnd, AcDbObjectId::kNull);
 				if (p_id==fromWinId)
 					outId = newMainId;
@@ -682,6 +684,7 @@ AcDbObjectId CWindowGen::UpdateOneWindow(const AcDbObjectId p_id, AttrWindow new
 				const CWinInsertPara newInsertPara = GetWindowInsertPara(relatedWinIds[i]);
 				DeleteWindowObj(relatedWinIds[i]);
 
+				newWinAtt.SetViewDir(newInsertPara.viewDir);
 				AcDbObjectId newId = GenerateWindow(newWinAtt, newInsertPara.insertPos, newInsertPara.insertDir, newInsertPara.bDetailWnd, AcDbObjectId::kNull);
 				newRelatedIds.append(newId);
 				if (p_id == relatedWinIds[i])
@@ -737,7 +740,7 @@ bool CWindowGen::DeleteWindowObj(const AcDbObjectId p_id)
 	JHCOM_DeleteCadObject(p_id);
 
 	GetWindowAutoName()->RemoveObject(p_id);
-	GetInstanceCodeMrg()->RemoveInstanceCode(p_id);
+	GetInstanceCodeMrg()->RemoveInstanceCodeByWinId(p_id);
 	return true;
 }
 bool CWindowGen::SetWinRelationIDs(AcDbObjectId p_id, AcDbObjectId p_fromWinId, AcDbObjectIdArray p_relatedIds)
@@ -773,7 +776,6 @@ AcDbObjectId CWindowGen::InsertWindowDoorCode(eViewDir p_viewDir, CString p_numb
 	//调整门窗编号文字为水平居中显示
 	CDocLock doclock;
 
-	AcDbObjectId sWindowDoorTextId;
 	CString oldLayerName;
 	CString sWindowDoorLayerName = GlobalSetting::GetInstance()->m_winSetting.m_sWinNumberLayerPingmian;
 
@@ -800,7 +802,7 @@ AcDbObjectId CWindowGen::InsertWindowDoorCode(eViewDir p_viewDir, CString p_numb
 	MD2010_SetCurrentLayer(sWindowDoorLayerName);
 
 	//门窗编号插入点
-	sWindowDoorTextId = JHCOM_CreateText(p_pos,
+	AcDbObjectId sWindowDoorTextId = JHCOM_CreateText(p_pos,
 		AcGeVector3d(0, 0, 1),
 		GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize, 0,
 		p_number);
@@ -812,87 +814,61 @@ AcDbObjectId CWindowGen::InsertWindowDoorCode(eViewDir p_viewDir, CString p_numb
 
 void CWindowGen::CreateWindowDoorCode(eViewDir p_viewDir, CSunacObjInCad p_win, CString p_Code)
 {
+	//若已经存在，则直接修改原来的编号值
+	bool bSuc = GetInstanceCodeMrg()->SetNewInstanceCode(p_win, p_Code);
+	if (bSuc) 
+		return;
+	
 	//根据窗户的位置转换门窗编号位置
-	double winWidth = 1500;
-	double heightOffset = 0;
+	double offsetX = 0;
+	double offsetY = 0;
+	double angle = 0;
 	if (p_viewDir == E_VIEW_TOP)
 	{
-		double w = GetWinWidth(p_win.m_winId);
-		double h = GetWinHeight(p_win.m_winId);
+		offsetX = 0;
+		offsetY = -GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize -100;
 
-		winWidth = max(w, h);
-
-		if (winWidth < 1200)
+		if (p_win.m_rotateAngle>PI / 4 && p_win.m_rotateAngle<PI * 3 / 4 ||
+			p_win.m_rotateAngle>PI * 5 / 4 && p_win.m_rotateAngle < PI * 7 / 4)
 		{
-			winWidth = min(w, h);
+			angle = (PI / 2);
 		}
-
-		if (winWidth < 500)
-		{
-			winWidth = max(w, h);
-		}
-		
-		heightOffset = 50;
 	}
 	else
 	{
-		winWidth = GetWinWidth(p_win.m_winId);
-		double winHeight = GetWinHeight(p_win.m_winId);
-		//heightOffset = -100 - GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize;
-		heightOffset = winHeight / 2 - GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize;
+		double winWidth, winHeight = 0;
+		GetWinWidthHeight(p_win.m_winId, winWidth, winHeight);
+		offsetX = winWidth / 2;
+		offsetY = winHeight / 2 - GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize; //立面图居中显示编号
 	}
 
-	AcGePoint3d textPos(winWidth / 2, GlobalSetting::GetInstance()->m_winSetting.m_numberTextSize + heightOffset, 0);
+	AcGePoint3d textPos(offsetX, offsetY, 0);
 	textPos.transformBy(p_win.m_mx);
 
 	AcDbObjectId textId = InsertWindowDoorCode(p_viewDir, p_Code, textPos);
-	GetInstanceCodeMrg()->AddInstanceCode(p_win.m_rootId, textId);
+	GetInstanceCodeMrg()->AddInstanceCode(p_win, textId);	
 
-	
-
+	CDocLock doclock;
 	//对门窗编号位置进行细微调整，使其居中，间距适中
-	AcDbEntity * pEnt = 0;
-	Acad::ErrorStatus es = acdbOpenObject(pEnt, textId, AcDb::kForWrite);
-	if (es == Acad::eOk)
+	AcDbObjectPointer<AcDbText> pText(textId, AcDb::kForWrite);
+	if (pText.openStatus() == Acad::eOk)
 	{
-		AcDbText *pText = AcDbText::cast(pEnt);
-		assert(pText != NULL);
-		if (p_viewDir == E_VIEW_TOP)
-		{
-			//if (p_win.m_rotateAngle >= PI)
-			//	pText->setRotation(p_win.m_rotateAngle - PI);
-			//else
-			//	pText->setRotation(p_win.m_rotateAngle);
-			if (p_win.m_rotateAngle>PI/4 && p_win.m_rotateAngle<PI*3/4 ||
-				p_win.m_rotateAngle>PI*5/ 4 && p_win.m_rotateAngle<PI * 7 / 4)
-			{
-				pText->setRotation(PI/2);
-			}
-			else
-			{
-				pText->setRotation(0);
-			}
-		}
-
+		pText->setRotation(angle);
 		pText->setHorizontalMode(AcDb::kTextMid);
 		pText->setAlignmentPoint(textPos);
-
-		pText->close();
 	}
 }
 
-double CWindowGen::GetWinWidth(AcDbObjectId p_id)
+bool CWindowGen::GetWinWidthHeight(AcDbObjectId p_id, double& p_widthOut, double& p_heightOut)
 {
 	AcGePoint3d minWindowPt, maxWindowPt;
-	JHCOM_GetObjectMinMaxPoint(p_id, minWindowPt, maxWindowPt);
-	return maxWindowPt.x - minWindowPt.x;
-}
+	Acad::ErrorStatus es = JHCOM_GetObjectMinMaxPoint(p_id, minWindowPt, maxWindowPt);
+	if (es != Acad::eOk)
+		return false;
 
-double CWindowGen::GetWinHeight(AcDbObjectId p_id)
-{
-	AcGePoint3d minWindowPt, maxWindowPt;
-	JHCOM_GetObjectMinMaxPoint(p_id, minWindowPt, maxWindowPt);
-	return maxWindowPt.y - minWindowPt.y;
+	p_widthOut = maxWindowPt.x - minWindowPt.x;
+	p_heightOut = maxWindowPt.y - minWindowPt.y;
+	return true;
 }
 
 bool CWindowGen::SelectSunacObjs(vector<CSunacObjInCad>& p_winsOut, vector<AcDbObjectId>& p_textIdsOut, bool &p_bAllOut)
@@ -940,30 +916,14 @@ bool CWindowGen::SelectSunacObjs(vector<CSunacObjInCad>& p_winsOut, vector<AcDbO
 
 void CWindowGen::AutoNameAllWindow()
 {
+	CDocLock lock;
 	vector<CSunacObjInCad> wins;
 	vector<AcDbObjectId> textIds;
 	bool bAll = false;
 	//1.  从CAD界面上获取所有的门窗
 	bool bSuc = SelectSunacObjs(wins, textIds, bAll);
 	if (wins.size() == 0)
-		return;
-	
-	//2. 对原来的门窗分类有效性进行检查，移除不匹配和已删除的项
-	if (bAll)
-	{
-		GetInstanceCodeMrg()->RemoveAll();
-
-		GetWindowAutoName()->CheckAndRemoveObjectNotBelong();
-	}
-	else
-	{
-		for (UINT i = 0; i < textIds.size(); i++)
-		{
-			GetInstanceCodeMrg()->RemoveInstanceCodeText(textIds[i]);
-			JHCOM_DeleteCadObject(textIds[i]);
-		}
-		textIds.clear();
-	}
+		return;	
 
 	//3. 将门窗加入到类型库
 	for (UINT i = 0; i < wins.size(); i++)
@@ -990,11 +950,23 @@ void CWindowGen::AutoNameAllWindow()
 		winAtt.SetInstanceCode(sInstanceCode2);
 
 		//门窗编号生成
-		if (winAtt.GetViewDir() == E_VIEW_TOP || GlobalSetting::GetInstance()->m_winSetting.m_bShowLimianNumber && winAtt.GetViewDir() != E_VIEW_EXTEND)
+		if (winAtt.GetViewDir() == E_VIEW_TOP ||  //平面图必须编号
+			GSINST->m_winSetting.m_bShowLimianNumber && winAtt.GetViewDir() != E_VIEW_EXTEND) //立面图是否编号取决于设置
 		{
 			CreateWindowDoorCode(winAtt.GetViewDir(), wins[i], sInstanceCode2);
 		}
+
+		pWinAtt->close();
 	}
+
+	//////////////////////////////////////////////////////////////////////////
+	//2. 对原来的门窗分类有效性进行检查，移除不匹配和已删除的项
+	//for (UINT i = 0; i < textIds.size(); i++)
+	//{
+	//	if (false == GetInstanceCodeMrg()->IsTextIdIn(textIds[i]))
+	//		JHCOM_DeleteCadObject(textIds[i]);
+	//}
+	GetWindowAutoName()->CheckAndRemoveObjectNotBelong();
 
 	acutPrintf(L"\n门窗自动编号完成\n");
 }

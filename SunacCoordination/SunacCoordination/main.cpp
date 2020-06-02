@@ -27,7 +27,6 @@
 #include "accmd.h"
 #include "Common/ComFun_Sunac.h"
 #include "Common\ComFun_Str.h"
-#include "Command\CommandWindowTable.h"
 #include "command\CommandWindowDetail.h"
 #include "Command\Command.h"
 #include "UI\menu\Menu_Def.h"
@@ -1031,7 +1030,7 @@ static void initApp()
 		_T("SWINTABLE"),
 		_T("SWINTABLE"),
 		ACRX_CMD_MODAL,
-		CMD_SunacFloorWindowsTable,
+		CMD_SunacWindowsTable,
 		NULL,
 		-1,
 		theArxDLL.ModuleResourceInstance());

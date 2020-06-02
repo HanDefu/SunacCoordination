@@ -422,7 +422,8 @@ double AttrWindow::GetTongFengQty(bool bDefaultValue/* = false*/) const
 		}
 		else if (es == E_PS_Success)
 		{
-			return ret / 1E6;
+			double tongFengQty = ret / 1E6; //面积按平方米
+			return max(tongFengQty, 0);
 		}
 		else
 		{
@@ -978,6 +979,9 @@ bool AttrWindow::IsInstanceEqual(const AttrWindow& p_att) const
 		return false;
 	for (UINT i = 0; i < dim1.size(); i++)
 	{
+		if (dim1[i].sCodeName.CompareNoCase(_T("D")) == 0) //门窗厚度无需比较
+			continue;
+
 		if (!dim1[i].IsParaEqual(dim2[i]))
 			return false;
 	}
@@ -1052,24 +1056,11 @@ CString AttrWindow::GetPrototypeDwgFilePath(eViewDir p_view)const
 
 bool AttrWindow::IsMxMirror()const //实际的矩阵是否镜像
 {
-	bool bMirror = m_isMirror;
-	if (GetViewDir() == E_VIEW_TOP)
-	{
-		bMirror = !bMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题 Mirror
-	}
-
-	return (bMirror && (m_isMirrorWindow == false));
+	return (m_isMirror && (m_isMirrorWindow == false));
 }
 void AttrWindow::SetMxMirror(bool p_bMirror)
 {
-	if (GetViewDir() == E_VIEW_TOP)
-	{
-		m_isMirror = !p_bMirror; // yuan 1124 原来平面图原型的方向和立面图矛盾的问题 Mirror
-	}
-	else
-	{
-		m_isMirror = p_bMirror;
-	}
+	m_isMirror = p_bMirror;
 }
 
 bool AttrWindow::IsMirror()const//非对称窗型才有镜像

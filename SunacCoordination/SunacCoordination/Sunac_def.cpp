@@ -3,6 +3,34 @@
 #include "Sunac_def.h"
 #include "Common/ComFun_String.h"
 
+
+CString ToCstring(eRCType p_type)
+{
+	CString str;
+	switch (p_type)
+	{
+	case S_WINDOW:
+	case S_DOOR:
+		return _T("门窗");
+		break;
+	case S_KITCHEN:
+		return _T("厨房");
+		break;
+	case S_BATHROOM:
+		return _T("卫生间");
+		break;
+	case S_AIRCON:
+		return _T("空调");
+		break;
+	case S_RAILING:
+		return _T("栏杆");
+		break;
+	default:
+		break;
+	}
+	return str;
+}
+
 eWindowDoorPos ToEWindowDoorPos(CString type)
 {
 	if (type == "对开")
@@ -36,6 +64,27 @@ CString ViewDir2String(const eViewDir p_viewDir)
 		return _T("");
 		break;
 	}
+}
+
+eViewDir String2ViewDir(const CString p_sDir)
+{
+	eViewDir dir = E_VIEW_TOP;
+	if (p_sDir== _T("立面"))
+		dir = E_VIEW_FRONT;
+	else if (p_sDir == _T("平面"))
+		dir = E_VIEW_TOP;
+	else if (p_sDir == _T("侧面"))
+		dir = E_VIEW_LEFT;
+	else if (p_sDir == _T("展开"))
+		dir = E_VIEW_EXTEND;
+	else if (p_sDir == _T("全部"))
+		dir = E_VIEW_ALL;
+	else
+	{
+		assert(false);
+	}
+
+	return dir;
 }
 
 E_DIRECTION String2Direction(CString p_sDir)

@@ -18,6 +18,7 @@
 #include <acdb.h>
 #include <adslib.h>
 #include <rxmfcapi.h>
+#include <dbobjptr.h>
 
 //////////////////////////////////////////////////////////////////////////
 #include <opmext.h>
@@ -89,29 +90,32 @@ AcDbObjectId AppendEntity(AcDbEntity *pEnt, const WCHAR * entry = ACDB_MODEL_SPA
 
 std::vector<AcDbObjectId> YT_Explode(AcDbObjectId entId, const WCHAR * entry = ACDB_MODEL_SPACE)
 {
-	// Add your code for command ahlzlARX._test here
+	CDocLock docLock;
+
 	std::vector<AcDbObjectId> ids;
-	AcDbEntity *pEnt = NULL;
-	acdbOpenObject(pEnt, entId, AcDb::kForWrite);
-	if(pEnt == 0)
-		return ids;
 
-	AcDbVoidPtrArray pExps;
-	if (pEnt->explode(pExps) == Acad::eOk)
-
+	AcDbObjectPointer<AcDbEntity> pEnt(entId, AcDb::kForWrite);
+	if (pEnt.openStatus()==Acad::eOk)
 	{
-		for (int i = 0; i < pExps.length(); i++)
+		AcDbVoidPtrArray pExps;
+		if (pEnt->explode(pExps) == Acad::eOk)
 		{
-			AcDbEntity *pExpEnt = (AcDbEntity*)pExps[i];
-			ids.push_back(AppendEntity(pExpEnt,entry));
+			for (int i = 0; i < pExps.length(); i++)
+			{
+				AcDbEntity *pExpEnt = (AcDbEntity*)pExps[i];
+				AcDbObjectId idOut = AppendEntity(pExpEnt, entry);
+				if (idOut!= AcDbObjectId::kNull)
+				{
+					ids.push_back(idOut);
+				}
+			}
+			pEnt->erase(true);
 		}
-		pEnt->erase(true);
+		else
+		{
+			acutPrintf(_T("\n该对象不能被分解！"));
+		}
 	}
-	else
-	{
-		acutPrintf(_T("\n该对象不能被分解！"));
-	}
-	pEnt->close();
 
 	return ids;
 }
@@ -127,21 +131,37 @@ HRESULT CTangentOpen::InsertWinOpenning(AcGePoint3d p_centerPt, CTOpenData p_win
 		acutPrintf(_T("文件不存在：")+ sPath + _T("\n"));
 		return E_FAIL;
 	}
+
+
+#if 1
+	AcDbObjectIdArray idsOut;
+	Acad::ErrorStatus es = MD2010_InsertDwgFile2(sPath, p_centerPt, idsOut);
+	if (es == Acad::eOk)
+	{
+		p_tWinOpenIdOut = idsOut[0];
+	}
+	else
+	{
+		acutPrintf(_T("插入天正门洞失败\n"));
+	}
+
+#else
 	CString sBlockDefName = _T("T门洞");
 	AcDbObjectId blockid = AcDbObjectId::kNull;
 	int nRet = MD2010_InsertBlockFromPathName(ACDB_MODEL_SPACE, sPath, sBlockDefName, blockid, p_centerPt, 0, AcGeScale3d(1, 1, 1));
-	if (blockid==AcDbObjectId::kNull)
+	if (blockid == AcDbObjectId::kNull)
 	{
 		return E_FAIL;
 	}
 
 	std::vector<AcDbObjectId> idsOut = YT_Explode(blockid, ACDB_MODEL_SPACE);
-	if (idsOut.size()!=1)
+	if (idsOut.size() != 1)
 	{
 		return E_FAIL;
 	}
 
 	p_tWinOpenIdOut = idsOut[0];
+#endif
 
 	//////////////////////////////////////////////////////////////////////////
 	return SetTangentOpenProp(p_tWinOpenIdOut, p_winData);
@@ -295,6 +315,148 @@ HRESULT CTangentOpen::SetTangentOpenProp(AcDbObjectId p_winId, CTOpenData p_winD
 	}
 
 	return hr;
+}
+
+
+template<class T> 
+HRESULT GetTWallData(AcDbObjectId p_id, CTWallData& p_wallData, REFCLSID rclsid)
+{
+	HRESULT hr = S_OK;
+
+	CComPtr<T> pWall;
+	CComQIPtr<IAcadBaseObject> pSquareBase;
+	//CComQIPtr<IAcadBaseObject2> pSquareBase2;
+
+	try
+	{
+		if (FAILED(hr = pWall.CoCreateInstance(rclsid)))//__uuidof(TCH10_COM9_T20V5X64::ComWall)
+			throw hr;
+
+		pSquareBase = pWall;
+
+		if (pSquareBase == NULL)
+			throw E_POINTER;
+
+		pSquareBase->SetObjectId(p_id);
+		p_wallData.thick = pWall->GetTotalWidth();
+		p_wallData.leftT = pWall->GetLeftWidth();
+		p_wallData.rightT = pWall->GetRightWidth();
+	}
+	catch (HRESULT eHr)
+	{
+		acutPrintf(_T("\n Error SetTangentOpenProp_TCH10_COM9_T20V5X64."));
+		return eHr;
+	}
+
+	return hr;
+}
+
+HRESULT CTangentOpen::GetTangentWallData(AcDbObjectId p_id, CTWallData& p_wallDataOut)
+{
+	HRESULT hr = S_OK;
+	if (p_id == AcDbObjectId::kNull)
+		return E_FAIL;
+
+	AcDbObjectPointer<AcDbEntity> pEnt(p_id, AcDb::kForRead);
+	if (pEnt.openStatus() != Acad::eOk)
+	{
+		return E_FAIL;
+	}
+
+	pEnt->getGeomExtents(p_wallDataOut.extents);
+
+	CLSID entClsid = { 0 };
+	Acad::ErrorStatus es = pEnt->getClassID(&entClsid);	//可根据entClsid来决定使用何种版本的天正插件初始化，返回的是ComOpening接口
+	if (es != Acad::eOk)
+		return E_FAIL;
+
+	if (IsEqualCLSID(entClsid, __uuidof(T2013X64_tch9_com18::ComWall)))
+	{
+		return GetTWallData<T2013X64_tch9_com18::IComWall>(p_id, p_wallDataOut, __uuidof(T2013X64_tch9_com18::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T2014X64_tch9_com18::ComWall)))
+	{
+		return GetTWallData<T2014X64_tch9_com18::IComWall>(p_id, p_wallDataOut, __uuidof(T2014X64_tch9_com18::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T2014X64_tch9_com19::ComWall)))
+	{
+		return GetTWallData<T2014X64_tch9_com19::IComWall>(p_id, p_wallDataOut, __uuidof(T2014X64_tch9_com19::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20X64_tch10_com18::ComWall)))
+	{
+		return GetTWallData<T20X64_tch10_com18::IComWall>(p_id, p_wallDataOut, __uuidof(T20X64_tch10_com18::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20X64_tch10_com19::ComWall)))
+	{
+		return GetTWallData<T20X64_tch10_com19::IComWall>(p_id, p_wallDataOut, __uuidof(T20X64_tch10_com19::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V2X64_tch10_com18::ComWall)))
+	{
+		return GetTWallData<T20V2X64_tch10_com18::IComWall>(p_id, p_wallDataOut, __uuidof(T20V2X64_tch10_com18::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V2X64_tch10_com19::ComWall)))
+	{
+		return GetTWallData<T20V2X64_tch10_com19::IComWall>(p_id, p_wallDataOut, __uuidof(T20V2X64_tch10_com19::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V3X64_tch10_com18::ComWall)))
+	{
+		return GetTWallData<T20V3X64_tch10_com18::IComWall>(p_id, p_wallDataOut, __uuidof(T20V3X64_tch10_com18::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V3X64_tch10_com19::ComWall)))
+	{
+		return GetTWallData<T20V3X64_tch10_com19::IComWall>(p_id, p_wallDataOut, __uuidof(T20V3X64_tch10_com19::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V3X64_tch10_com20::ComWall)))
+	{
+		return GetTWallData<T20V3X64_tch10_com20::IComWall>(p_id, p_wallDataOut, __uuidof(T20V3X64_tch10_com20::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V4X64_tch10_com18::ComWall)))
+	{
+		return GetTWallData<T20V4X64_tch10_com18::IComWall>(p_id, p_wallDataOut, __uuidof(T20V4X64_tch10_com18::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V4X64_tch10_com19::ComWall)))
+	{
+		return GetTWallData<T20V4X64_tch10_com19::IComWall>(p_id, p_wallDataOut, __uuidof(T20V4X64_tch10_com19::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V4X64_tch10_com20::ComWall)))
+	{
+		return GetTWallData<T20V4X64_tch10_com20::IComWall>(p_id, p_wallDataOut, __uuidof(T20V4X64_tch10_com20::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V4X64_tch10_com21::ComWall)))
+	{
+		return GetTWallData<T20V4X64_tch10_com21::IComWall>(p_id, p_wallDataOut, __uuidof(T20V4X64_tch10_com21::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V5X64_tch10_com18::ComWall)))
+	{
+		return GetTWallData<T20V5X64_tch10_com18::IComWall>(p_id, p_wallDataOut, __uuidof(T20V5X64_tch10_com18::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V5X64_tch10_com19::ComWall)))
+	{
+		return GetTWallData<T20V5X64_tch10_com19::IComWall>(p_id, p_wallDataOut, __uuidof(T20V5X64_tch10_com19::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V5X64_tch10_com20::ComWall)))
+	{
+		return GetTWallData<T20V5X64_tch10_com20::IComWall>(p_id, p_wallDataOut, __uuidof(T20V5X64_tch10_com20::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V5X64_tch10_com21::ComWall)))
+	{
+		return GetTWallData<T20V5X64_tch10_com21::IComWall>(p_id, p_wallDataOut, __uuidof(T20V5X64_tch10_com21::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V5X64_tch10_com22::ComWall)))
+	{
+		return GetTWallData<T20V5X64_tch10_com22::IComWall>(p_id, p_wallDataOut, __uuidof(T20V5X64_tch10_com22::ComWall));
+	}
+	else if (IsEqualCLSID(entClsid, __uuidof(T20V5X64_tch10_com23::ComWall)))
+	{
+		return GetTWallData<T20V5X64_tch10_com23::IComWall>(p_id, p_wallDataOut, __uuidof(T20V5X64_tch10_com23::ComWall));
+	}
+	else
+	{
+		hr = E_FAIL;
+	}
+
+
+	return E_FAIL;
 }
 
 

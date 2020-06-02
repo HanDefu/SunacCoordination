@@ -145,9 +145,6 @@
     <ClCompile Include="Tool\Regedit.cpp">
       <Filter>Tool</Filter>
     </ClCompile>
-    <ClCompile Include="Command\CommandWindowTable.cpp">
-      <Filter>Command</Filter>
-    </ClCompile>
     <ClCompile Include="Command\CommandWindowDetail.cpp">
       <Filter>Command</Filter>
     </ClCompile>
@@ -403,9 +400,6 @@
     <ClCompile Include="Object\WindowDoor\WinTangentOpenMap.cpp">
       <Filter>Object\WindowDoor</Filter>
     </ClCompile>
-    <ClCompile Include="Object\WindowDoor\WindowTable.cpp">
-      <Filter>Object\WindowDoor</Filter>
-    </ClCompile>
     <ClCompile Include="Object\Railing\RailingTop2Front.cpp">
       <Filter>Object\Railing</Filter>
     </ClCompile>
@@ -414,6 +408,15 @@
     </ClCompile>
     <ClCompile Include="Src\ObjHighlight.cpp">
       <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowDoor\WindowTableClassify.cpp">
+      <Filter>Object\WindowDoor</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowDoor\WindowTable.cpp">
+      <Filter>Object\WindowDoor</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WindowDoor\InstanceCodeTextMrg.cpp">
+      <Filter>Object\WindowDoor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -629,9 +632,6 @@
     </ClInclude>
     <ClInclude Include="Tool\Regedit.h">
       <Filter>Tool</Filter>
-    </ClInclude>
-    <ClInclude Include="Command\CommandWindowTable.h">
-      <Filter>Command</Filter>
     </ClInclude>
     <ClInclude Include="Command\CommandWindowDetail.h">
       <Filter>Command</Filter>
@@ -907,9 +907,6 @@
     <ClInclude Include="Object\WindowDoor\WinTangentOpenMap.h">
       <Filter>Object\WindowDoor</Filter>
     </ClInclude>
-    <ClInclude Include="Object\WindowDoor\WindowTable.h">
-      <Filter>Object\WindowDoor</Filter>
-    </ClInclude>
     <ClInclude Include="Object\Railing\RailingTop2Front.h">
       <Filter>Object\Railing</Filter>
     </ClInclude>
@@ -918,6 +915,15 @@
     </ClInclude>
     <ClInclude Include="Src\ObjHighlight.h">
       <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\WindowTableClassify.h">
+      <Filter>Object\WindowDoor</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\WindowTable.h">
+      <Filter>Object\WindowDoor</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WindowDoor\InstanceCodeTextMrg.h">
+      <Filter>Object\WindowDoor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

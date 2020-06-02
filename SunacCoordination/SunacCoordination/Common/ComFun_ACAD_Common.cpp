@@ -40,19 +40,21 @@
 
 AcDbObjectId MD2010_PostModalToBlockTable(const ACHAR* entryName, AcDbEntity *pent)
 {
+	CDocLock docLock;
+	Acad::ErrorStatus es;
+
 	AcDbBlockTable *pBlockTable;
-	acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlockTable,AcDb::kForRead);
-	AcDbBlockTableRecord *pBlockTableRecord;
-	pBlockTable->getAt(entryName,pBlockTableRecord,AcDb::kForWrite);
-	
-	//保护和转换
+	es = acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlockTable,AcDb::kForRead);
+
+	AcDbBlockTableRecord *pBlockTableRecord = NULL;
+	es = pBlockTable->getAt(entryName,pBlockTableRecord,AcDb::kForWrite);
 	if (pBlockTableRecord == NULL && wcscmp(entryName, L"*Model_Space") == 0)
 	{
-        Acad::ErrorStatus es = pBlockTable->getAt(L"模型",pBlockTableRecord,AcDb::kForWrite);
+       es = pBlockTable->getAt(L"模型",pBlockTableRecord,AcDb::kForWrite);
 	}
-	if (pBlockTableRecord == NULL && wcscmp(entryName, L"模型") == 0)
+	else if (pBlockTableRecord == NULL && wcscmp(entryName, L"模型") == 0)
 	{
-		pBlockTable->getAt(L"*Model_Space",pBlockTableRecord,AcDb::kForWrite);
+		es = pBlockTable->getAt(L"*Model_Space",pBlockTableRecord, AcDb::kForWrite);
 	}
 
 	if(pBlockTableRecord == NULL)
@@ -61,8 +63,8 @@ AcDbObjectId MD2010_PostModalToBlockTable(const ACHAR* entryName, AcDbEntity *pe
 		return 0;
 	}
 
-	AcDbObjectId entID;
-	Acad::ErrorStatus es = pBlockTableRecord->appendAcDbEntity(entID,pent);
+	AcDbObjectId entID = AcDbObjectId::kNull;
+	es = pBlockTableRecord->appendAcDbEntity(entID,pent);
 
 	pBlockTable->close();
 	pBlockTableRecord->close();
@@ -1789,8 +1791,7 @@ int MD2010_InsertBlockReference_ModelSpace(const WCHAR * blockname, AcDbObjectId
 
 int MD2010_InsertBlockReference_Layout(const WCHAR * layoutname, const WCHAR * blockname, AcDbObjectId &entId, AcGePoint3d origin, double angle, AcGeScale3d scale, int color)
 {
-	AcDbBlockTable *pBlkTbl;
-
+	entId = AcDbObjectId::kNull;
 	if (MD2010_SetCurrentLayout(layoutname) == 1)
 	{
 		if (wcscmp(layoutname, ACDB_MODEL_SPACE) == 0)
@@ -1798,9 +1799,17 @@ int MD2010_InsertBlockReference_Layout(const WCHAR * layoutname, const WCHAR * b
 			if (MD2010_SetCurrentLayout(L"模型") == 1)
 				return 1;
 		}
-	}		
+	}
 
-	Acad::ErrorStatus es1 = acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForRead);
+	Acad::ErrorStatus es;
+
+	AcDbBlockTable *pBlkTbl = NULL;
+	es = acdbHostApplicationServices()->workingDatabase()->getBlockTable(pBlkTbl, AcDb::kForRead);
+	if (es!=Acad::eOk)
+	{
+		return 1;
+	}
+
 	if (!pBlkTbl->has(blockname))
 	{
 		acutPrintf(L"no blockdef %s\n", blockname);
@@ -1808,25 +1817,19 @@ int MD2010_InsertBlockReference_Layout(const WCHAR * layoutname, const WCHAR * b
 		return 1; 
 	}
 
-	Acad::ErrorStatus es;
+
 	// 获得用户指定的块表记录
 	AcDbObjectId blkDefId;
 	es = pBlkTbl->getAt(blockname, blkDefId);
 
 	// 创建块参照对象
-	AcDbBlockReference *pBlkRef = new AcDbBlockReference(origin, blkDefId);
-	// 将块参照添加到模型空间
-	AcDbBlockTableRecord *pBlkTblRcd;
-	if (wcscmp(layoutname, L"模型") != 0 && wcscmp(layoutname, ACDB_MODEL_SPACE) != 0)
-		es = pBlkTbl->getAt(ACDB_PAPER_SPACE, pBlkTblRcd, AcDb::kForWrite);
-	else
-		es = pBlkTbl->getAt(ACDB_MODEL_SPACE, pBlkTblRcd, AcDb::kForWrite);
-	if (es!=Acad::eOk)
-		return 1;
-
-	
-	//AcDbObjectId entId;
-	es = pBlkTblRcd->appendAcDbEntity(entId, pBlkRef);
+	AcDbBlockReference *pBlkRef = new AcDbBlockReference(origin, blkDefId);	
+	entId = MD2010_PostModalToBlockTable(layoutname, pBlkRef);
+	if (entId==AcDbObjectId::kNull)
+	{
+		delete pBlkRef;
+		return -2;
+	}
 
 	//修改参数
 	es = pBlkRef->setScaleFactors(scale);
@@ -1850,7 +1853,6 @@ int MD2010_InsertBlockReference_Layout(const WCHAR * layoutname, const WCHAR * b
 
 	// 关闭数据库的对象
 	es = pBlkRef->close();
-	es = pBlkTblRcd->close();
 	es = pBlkTbl->close();
 
 	return 0;
@@ -3730,8 +3732,8 @@ Acad::ErrorStatus  MD2010_InsertDwgFile2(const WCHAR *p_dwgPath, AcGePoint3d p_o
 				if (idPair.isCloned())
 				{
 					AcDbEntity* clonedEnt;
-					es = acdbOpenAcDbEntity(clonedEnt, idPair.value(), AcDb::kForWrite);
-					if (es == Acad::eOk)
+					Acad::ErrorStatus esTemp = acdbOpenAcDbEntity(clonedEnt, idPair.value(), AcDb::kForWrite);
+					if (esTemp == Acad::eOk)
 					{
 						if (idPair.isPrimary())
 						{

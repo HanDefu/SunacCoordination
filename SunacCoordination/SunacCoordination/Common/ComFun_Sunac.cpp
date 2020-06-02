@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include <io.h>
+#include <dbobjptr.h>
 #include "ComFun_Str.h"
 #include "ComFun_Math.h"
 #include "ComFun_Sunac.h"
@@ -42,20 +43,12 @@ bool DQ_IsALine(AcDbObjectId entId)
 bool DQ_IsBlockReference(AcDbObjectId id)
 {
 	if (id == 0)
-	{
 		return false;
-	}
-	AcDbEntity * pEnt = 0;
-	Acad::ErrorStatus es = acdbOpenObject(pEnt, id, AcDb::kForRead);
-	// Make sure its a block reference
-	AcDbBlockReference * pBR = AcDbBlockReference::cast(pEnt);
-	if (pBR == NULL)
-	{
-		if(pEnt)
-		    pEnt->close();
-		return false;
-	}
-	pEnt->close();
+
+	AcDbObjectPointer<AcDbBlockReference>pBR(id, AcDb::kForRead);
+
+	Acad::ErrorStatus es = pBR.openStatus();
+	return es == Acad::eOk;
 	return true;
 }
 
@@ -658,6 +651,7 @@ int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt)
 	if (pDataEnt == 0)
 		return -2;
 
+	CDocLock lock;
 	AcDbObjectId dicID = TY_GetExtensionDictionaryID(Id);
 	if (dicID == 0)
 	{
@@ -668,7 +662,6 @@ int TY_AddAttributeData(AcDbObjectId Id, AcDbObject *pDataEnt)
 		return -1;
 	}
 
-	CDocLock lock;
 
 	//注意这里有时候加入不进去， 是因为没有注册
 	AcDbDictionary *pDict = NULL;
@@ -694,6 +687,13 @@ int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt, bool p_bRead)
 	if (dicID == AcDbObjectId::kNull)
 		return -1;
 
+	if (p_bRead==false)
+	{
+		Acad::ErrorStatus es = acDocManager->lockDocument(curDoc(), AcAp::kWrite);
+	}
+	//CDocLock lock(curDoc(), p_bRead ? AcAp::kRead :AcAp::kWrite);
+
+
 	AcDbDictionary *pDict = NULL;
 	Acad::ErrorStatus es = acdbOpenObject(pDict, dicID, AcDb::kForRead);
 	if(es ==Acad::eOk)
@@ -710,6 +710,11 @@ int TY_GetAttributeData(AcDbObjectId tkId, AcDbObject *&pDataEnt, bool p_bRead)
 			}
 			pDataEnt->close();
 		}
+	}
+
+	if (p_bRead == false)
+	{
+		acDocManager->unlockDocument(curDoc());
 	}
 
 	return pDataEnt == NULL ? 0 : -68;
@@ -1620,4 +1625,35 @@ int TYCOM_GetBlkString(AcDbBlockReference *pBlkRef, CString Key, CString &value)
 	}
 
 	return 0;
+}
+
+AcDbObjectIdArray GetIdsCrossRect(const TYRect p_rect)
+{
+	AcDbObjectIdArray ids;
+	struct resbuf *rb = NULL;
+	ads_name ssname;
+
+	ads_point pt1, pt2;
+	pt1[X] = p_rect.GetLT().x;
+	pt1[Y] = p_rect.GetLT().y;
+	pt1[Z] = p_rect.GetLT().z;
+	pt2[X] = p_rect.GetRB().x;
+	pt2[Y] = p_rect.GetRB().y;
+	pt2[Z] = p_rect.GetRB().z;
+	acedSSGet(TEXT("C"), pt1, pt2, rb, ssname);//筛选在rect范围内的结果
+
+	Adesk::Int32 length;
+	acedSSLength(ssname, &length);
+	for (int i = 0; i < length; i++)
+	{
+		ads_name ent;
+		acedSSName(ssname, i, ent);
+		AcDbObjectId objId;
+		acdbGetObjectId(objId, ent);
+		ids.append(objId);
+	}
+
+	acutRelRb(rb);
+	acedSSFree(ssname);
+	return ids;
 }

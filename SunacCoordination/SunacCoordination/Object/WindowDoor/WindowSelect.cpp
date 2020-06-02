@@ -29,12 +29,18 @@ CSunacObjInCad::CSunacObjInCad()
 	m_mx = AcGeMatrix3d::kIdentity;
 }
 
+bool CSunacObjInCad::operator < (const CSunacObjInCad& p_obj) const
+{
+	return m_rootId < p_obj.m_rootId;
+}
 
 vector<CSunacObjInCad> CSunacSelect::SelectSunacObjs(const eRCType p_rcType, eViewDir p_view, bool p_bAllWindow)
 {
-	Acad::ErrorStatus es;
+	Acad::ErrorStatus es;	
 
-	acutPrintf(L"\n请选择融创对象");
+	CString sType = ToCstring(p_rcType);
+	CString sViewDir = ViewDir2String(p_view);
+	acutPrintf(L"\n请在" + sViewDir + L"图上选择" + sType);
 
 	ads_name sset;
 	if (p_bAllWindow)
@@ -108,6 +114,12 @@ vector<CSunacObjInCad> CSunacSelect::GetSunacObjsInObjectIds(const vector<AcDbOb
 
 vector<CSunacObjInCad> CSunacSelect::SelectSunacObjsByRect(const eRCType p_rcType, eViewDir p_view, TYRect p_rect)
 {
+	Acad::ErrorStatus es;
+
+	CString sType = ToCstring(p_rcType);
+	CString sViewDir = ViewDir2String(p_view);
+	acutPrintf(L"\n请在" + sViewDir + L"图上选择" + sType);
+
 	ads_point pt1, pt2;
 	pt1[X] = p_rect.GetLT().x;
 	pt1[Y] = p_rect.GetLT().y;
@@ -115,11 +127,7 @@ vector<CSunacObjInCad> CSunacSelect::SelectSunacObjsByRect(const eRCType p_rcTyp
 	pt2[X] = p_rect.GetRB().x;
 	pt2[Y] = p_rect.GetRB().y;
 	pt2[Z] = p_rect.GetRB().z;
-
-	Acad::ErrorStatus es;
-
-	acutPrintf(L"\n请选择门窗");
-
+	
 	ads_name sset;
 	acedSSGet(TEXT("W"), pt1, pt2, NULL, sset);//筛选在rect范围内的结果
 

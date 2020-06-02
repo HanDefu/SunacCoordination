@@ -124,7 +124,7 @@ bool WebIO::ParseLoginInfo(CMarkup xml)
 std::vector<AttrWindow>  WebIO::GetWindows(double width, double height, CString openType, int openNum, CString gongNengQu)const
 {
 #ifdef WORK_LOCAL		//本地模式
-	vAttrWindow Local = CWindowLocalDataFromDB::Instance()->GetWindows(width, height, openType, openNum, gongNengQu);
+	vAttrWindow Local = CWindowLocalDataFromDB::Instance()->GetWindowDoors(true, width, height, openType, openNum, gongNengQu);
 	return Local;
 #else
 	vAttrWindow Web = CWindowWebData::Instance()->GetWindows(width, height, openType, openNum, gongNengQu);
@@ -162,7 +162,7 @@ std::vector<AttrWindow>  WebIO::GetWindows(double width, double height, CString 
 std::vector<AttrWindow> WebIO::GetDoors(double width, double height, CString openType, int openNum, CString gongNengQu)const
 {
 #ifdef WORK_LOCAL//本地模式
-	vAttrWindow Local = CWindowLocalDataFromDB::Instance()->GetDoors(width, height, openType, openNum, gongNengQu);
+	vAttrWindow Local = CWindowLocalDataFromDB::Instance()->GetWindowDoors(false, width, height, openType, openNum, gongNengQu);
 	return Local;
 #else
 	vAttrWindow Web = CWindowWebData::Instance()->GetDoors(width, openType, openNum, gongNengQu);

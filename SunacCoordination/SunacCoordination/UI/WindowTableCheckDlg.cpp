@@ -5,6 +5,7 @@
 #include "WindowTableCheckDlg.h"
 #include "afxdialogex.h"
 #include "dbtable.h"
+#include <dbobjptr.h>
 #include "..\Common\ComFun_Interactive.h"
 #include "..\Common\ComFun_Sunac.h"
 #include "..\Common\ComFun_String.h"
@@ -81,32 +82,29 @@ void CWindowTableCheckDlg::OnBnClickedButtonWintableselect()
 
 void CWindowTableCheckDlg::GetWinIdFromWinTableXData(AcDbObjectId p_tableId, vector<AcDbObjectId> &vWinIds)
 {
-	AcDbObject *pEnt = NULL;
-	Acad::ErrorStatus es = acdbOpenAcDbObject(pEnt, p_tableId, AcDb::kForRead);
-	AcDbTable* pTable = AcDbTable::cast(pEnt);
-	if (pTable == NULL)
+	AcDbObjectPointer<AcDbTable> pEnt(p_tableId, AcDb::kForRead);
+	if (pEnt.openStatus() != Acad::eOk)
 		return;
 
-	struct resbuf* pRb = pTable->xData(L"xData");
+	struct resbuf* pRb = pEnt->xData(L"xData");
 	if (pRb == NULL)
 		return;
-
-	pEnt->close();
-	pTable->close();
-
+	
 	struct resbuf *pTemp = pRb;
 	pTemp = pTemp->rbnext;
 
 	AcDbHandle handle = AcDbHandle(pTemp->resval.rstring);
 	AcDbObjectId winId;
 	JHCOM_GetObjectIDFromAcDbHandle(handle, winId);
-	vWinIds.push_back(winId);
+	if (winId!=AcDbObjectId::kNull)
+		vWinIds.push_back(winId);
 
 	while (pTemp->rbnext != NULL)
 	{
 		handle = AcDbHandle(pTemp->rbnext->resval.rstring);
 		JHCOM_GetObjectIDFromAcDbHandle(handle, winId);
-		vWinIds.push_back(winId);
+		if (winId != AcDbObjectId::kNull)
+			vWinIds.push_back(winId);
 		pTemp = pTemp->rbnext;
 	}
 
@@ -115,36 +113,18 @@ void CWindowTableCheckDlg::GetWinIdFromWinTableXData(AcDbObjectId p_tableId, vec
 
 void CWindowTableCheckDlg::CreateBrightBox(vector<AcDbObjectId> vWinIds)
 {
-	int offsetx = 100, offsety = 300;;
-	int count = 1;
+	int offsetx = 100;
+	int offsety = 300;
 
+	bool bSuc = true;
 	for (int i = 0; i < vWinIds.size(); i++)
 	{
-		AcDbEntity* pEnt = NULL;
-		if (acdbOpenAcDbEntity(pEnt, vWinIds[i], AcDb::kForRead) != Acad::eOk)
+		if (IsObjectExsit(vWinIds[i])==false)
 		{
-			vAcDbObjectId textIds = GetInstanceCodeMrg()->FindTextIds(vWinIds[i]);
-			AcDbText *pText = NULL;
-			if (Acad::eOk == acdbOpenObject(pText, textIds[0], AcDb::kForRead))
-			{
-				CString sCode = pText->textString();
-				pText->close();
-				AfxMessageBox(L"门窗" + sCode + L"未找到");
-				continue;
-			}
-			else
-			{
-				if (count == 1)
-				{
-					AfxMessageBox(L"门窗表统计的门窗未找到");
-					count++;
-				}
-				continue;
-			}
+			bSuc = false;
+			continue;
 		}
-		else
-			pEnt->close();
-
+		
 		AcGePoint3d minPt, maxPt;
 		JHCOM_GetObjectMinMaxPoint(vWinIds[i], minPt, maxPt);
 
@@ -183,6 +163,11 @@ void CWindowTableCheckDlg::CreateBrightBox(vector<AcDbObjectId> vWinIds)
 		m_polyBrightBoxId.push_back(polyId);
 		m_polyBrightBoxId.push_back(polyId1);
 		m_polyBrightBoxId.push_back(polyId2);
+	}
+
+	if (bSuc==false)
+	{
+		AfxMessageBox(L"部分门窗表统计的门窗未找到，可能已被删除");
 	}
 }
 

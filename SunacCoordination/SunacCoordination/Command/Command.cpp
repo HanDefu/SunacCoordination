@@ -41,6 +41,7 @@
 #include "../Object/AirCondition/AirConStatistic.h"
 #include "../Object/WindowDoor/WindowTop2Front.h"
 #include "../Object/WindowDoor/WindowSelect.h"
+#include "../Object/WindowDoor/WindowTableClassify.h"
 #include "../Object/WindowDoor/WindowTable.h"
 #include "../Object/WindowDoor/WindowGen.h"
 #include "../UI/ProjectManagementDlg.h"
@@ -106,21 +107,16 @@ void CMD_ShowCADPalette()
 //设置
 void CMD_SetUp()
 {
-	CAcModuleResourceOverride resOverride;
-
 	if (WebIO::GetInstance()->IsLogin() == false)
 	{
-		AfxMessageBox(_T("请先登录"));
+		acutPrintf(_T("请先登录\n"));
+		return;
 	}
-	else
-	{
-		CDlgSetUp dlg;
-		if (IDOK == dlg.DoModal())
-		{
-			CADPalette_RemoveP();
-			CADPalette_AddP();
-		}
-	}
+
+	CAcModuleResourceOverride resOverride;
+
+	CDlgSetUp dlg;
+	dlg.DoModal();
 }
 
 //窗
@@ -165,6 +161,16 @@ void CMD_SunacWindowDetail()
 	}
 
 	CWindowDetail::DrawWindowDetail();
+}
+void CMD_SunacWindowsTable()
+{
+	if (WebIO::GetInstance()->IsLogin() == false)
+	{
+		acutPrintf(_T("请先登录\n"));
+		return;
+	}
+
+	CWindTableGen::SunacWindowsTable_TopView();
 }
 
 void CMD_SunacFloorSetting()//楼层设置
@@ -350,9 +356,9 @@ void CMD_SunacWinTableCheck()
 		g_winTableCheckDlg = new CWindowTableCheckDlg(acedGetAcadFrame());
 		g_winTableCheckDlg->Create(IDD_DIALOG_WINTABLECHECK);
 	}
-
-	g_winTableCheckDlg->CenterWindow();
+	
 	g_winTableCheckDlg->ShowWindow(SW_SHOW);
+	SetWindowPos(g_winTableCheckDlg->m_hWnd, NULL, 200, 160, 0, 0, SWP_NOSIZE);
 }
 
 
