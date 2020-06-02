@@ -100,6 +100,10 @@ bool CRailingTop2Front::GenFrontFromTop()
 		AttrRailing curRailingAtt = *(railingAtts[i]);
 		curRailingAtt.SetViewDir(E_VIEW_FRONT);  //新生成的为立面图
 
+		double length = railingAtts[i]->GetRLength(windowDir);  //根据方向获取长度
+		curRailingAtt.SetRLength(length);
+		curRailingAtt.AutoInstanceCode();
+
 		//curRailingAtt.ClearWinsRelation();
 		//curRailingAtt.SetFromWinId(ringIds[i]);
 

@@ -136,7 +136,7 @@ AcDbObjectId CRailingStatistic::InsertTableToCAD(AcGePoint3d insertPos)
 		sNum.Format(L"%d", i + 1);
 		pTable->setTextString(i + 2, 0, sNum);
 		pTable->setTextString(i + 2, 1, m_allRailings[i].first.m_instanceCode);
-		sNum.Format(L"%.0lf", m_allRailings[i].first.m_length);
+		sNum.Format(L"%.0lf", m_allRailings[i].first.GetTotalLength());
 		pTable->setTextString(i + 2, 2, sNum);
 		sNum.Format(L"%d", m_allRailings[i].second);
 		pTable->setTextString(i + 2, 3, sNum);
@@ -343,7 +343,7 @@ void CRailingStatistic::WriteDataToRailingTable(AcDbTable *p_table, int p_dataSt
 	p_table->setTextString(p_dataStartRow, 2, str);
 
 	//À¸¸Ë³¤¶È
-	str.Format(L"%d", (int)pRailingAttr->m_length);
+	str.Format(L"%d", (int)pRailingAttr->GetTotalLength());
 	p_table->setTextString(p_dataStartRow, 3, str);
 
 	//Â¥²ãÁĞ

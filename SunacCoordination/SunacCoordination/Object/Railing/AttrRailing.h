@@ -41,10 +41,20 @@ public:
 	
 	virtual void SetViewDir(eViewDir p_view);
 
+	void SetRLength(double p_len);
+	double GetRLength()const { return m_length; }
+	double GetRLength(E_DIRECTION p_dir);
+	double GetTotalLength()const;
+
+	void SetRailingPath(vector<AcGePoint3d> p_pathPts);
+
+protected:
+	double m_length;	//栏杆长
+	vector<AcGePoint3d> m_railPath; //栏杆路径（相对位置点，以第一点为原点）
+
 public:
     double m_height;		//栏杆高度
 	double m_fanKanHeight;	//反坎高度
-	double m_length;	//栏杆长
 	eRailingType m_railingType; //栏杆类型
 };
 

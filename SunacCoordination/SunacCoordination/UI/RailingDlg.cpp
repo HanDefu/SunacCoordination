@@ -155,7 +155,7 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 
 	AttrRailing railingAtt;
 	railingAtt.m_height = m_height;
-	railingAtt.m_length = m_width;
+	railingAtt.SetRLength(m_width);
 	railingAtt.m_prototypeCode = pCell->GetName();
 	railingAtt.m_railingType = railingAtt.m_prototypeCode.Find(_T("_T"))>0 ? E_RAILING_TIEYI : E_RAILING_BOLI;
 
@@ -171,7 +171,7 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 	//平面图的栏杆长度为选择的插入点的间距
 	const eViewDir viewDir = (eViewDir)m_comboViewDir.GetCurSel();
 	railingAtt.SetViewDir(viewDir);
-	AcGePoint3d pnt1, pnt2;
+	vector<AcGePoint3d> pts;
 	if (viewDir == E_VIEW_TOP)
 	{
 		if (m_pCurEdit != NULL)
@@ -180,23 +180,14 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 		}
 
 		ShowWindow(SW_HIDE);
-		bool bSuc = TY_GetTwoPoints(pnt1, pnt2);
+		bool bSuc = TY_GetPoints(pts);
 		if (bSuc == false)
 		{
 			ShowWindow(SW_SHOW);
 			return;
 		}
 
-		int nRailingTopLength = 0;
-		bool bSucTop = CRCRailing::CheckRailingStartEndPt(pnt1, pnt2, nRailingTopLength);
-		if (bSucTop == false)
-		{
-			ShowWindow(SW_SHOW);
-			return;
-		}
-
-		m_width = nRailingTopLength;
-		railingAtt.m_length = nRailingTopLength;
+		railingAtt.SetRailingPath(pts);
 	}
 
 	//生成
@@ -228,7 +219,7 @@ void CRailingDlg::OnBnClickedInsertToCAD()
 	//栏杆平面图生成
 	if (viewDir == E_VIEW_TOP)
 	{
-		pRailing->CreateRailingTop(pnt1, pnt2);
+		pRailing->CreateRailingTop(pts);
 		ShowWindow(SW_SHOW);
 		return;
 	}
@@ -429,7 +420,7 @@ void CRailingDlg::SetEditMode(AcDbBlockReference* pBlock)
 	if (pRailing == NULL)
 		return;
 
-	m_width = (int)(pRailing->m_length);
+	m_width = (int)(pRailing->GetRLength());
 	m_height = (int)(pRailing->m_height);
 	UpdateData(FALSE);
 
@@ -476,7 +467,7 @@ void CRailingDlg::OnSelChangedPreview(NMHDR *pNMHDR, LRESULT *pResult)
 	{
 		AttrRailing railingAtt;
 		railingAtt.m_height = m_height;
-		railingAtt.m_length = m_width;
+		railingAtt.SetRLength(m_width);
 		railingAtt.m_prototypeCode = pCell->GetName();
 
 		m_sRailingId =railingAtt.AutoInstanceCode();
