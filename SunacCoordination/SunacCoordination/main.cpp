@@ -1241,7 +1241,16 @@ static void initApp()
 	CDoubleClickBlockReference *pCircleEdit = new CDoubleClickBlockReference;
 	AcDbBlockReference::desc()->addX(AcDbDoubleClickEdit::desc(), pCircleEdit);	
 
-	LoadManagedDll(MD2010_GetAppPath() + L"\\Sunac2019\\External_DLL\\rcdc.dll");
+#if (defined ARX_2010) || (defined ARX_2011) || (defined ARX_2012)
+	LoadManagedDll(MD2010_GetAppPath() + L"\\Sunac2019\\External_DLL\\RemoveCuiDoubleClick-vs2008.dll");
+#elif (defined ARX_2013) || (defined ARX_2014)
+	LoadManagedDll(MD2010_GetAppPath() + L"\\Sunac2019\\External_DLL\\RemoveCuiDoubleClick-vs2010.dll");
+#elif (defined ARX_2015) || (defined ARX_2016)
+	LoadManagedDll(MD2010_GetAppPath() + L"\\Sunac2019\\External_DLL\\RemoveCuiDoubleClick-vs2012.dll");
+#elif (defined ARX_2017) || (defined ARX_2018 || (defined ARX_2019)
+	LoadManagedDll(MD2010_GetAppPath() + L"\\Sunac2019\\External_DLL\\RemoveCuiDoubleClick-vs2015.dll");
+#endif
+	
 
 	//Ìí¼Ó·´Ó¦Æ÷
 	g_editorReactor = new CMyEditReactor;
