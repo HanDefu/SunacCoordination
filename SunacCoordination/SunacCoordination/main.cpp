@@ -1247,7 +1247,7 @@ static void initApp()
 	LoadManagedDll(MD2010_GetAppPath() + L"\\Sunac2019\\External_DLL\\RemoveCuiDoubleClick-vs2010.dll");
 #elif (defined ARX_2015) || (defined ARX_2016)
 	LoadManagedDll(MD2010_GetAppPath() + L"\\Sunac2019\\External_DLL\\RemoveCuiDoubleClick-vs2012.dll");
-#elif (defined ARX_2017) || (defined ARX_2018 || (defined ARX_2019)
+#elif (defined ARX_2017) || (defined ARX_2018) || (defined ARX_2019)
 	LoadManagedDll(MD2010_GetAppPath() + L"\\Sunac2019\\External_DLL\\RemoveCuiDoubleClick-vs2015.dll");
 #endif
 	
