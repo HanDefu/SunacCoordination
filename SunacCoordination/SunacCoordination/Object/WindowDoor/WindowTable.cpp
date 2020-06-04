@@ -291,9 +291,9 @@ void CWindTableGen::WriteDataToTable(AcDbTable *p_table, int p_dataStartRow, int
 	vector<int> nAllFloorCount; //用于合计
 	nAllFloorCount.clear();
 
-	for (int j = 0; j < p_WinFloorColumns.size(); j++)
+	for (UINT j = 0; j < p_WinFloorColumns.size(); j++)
 	{
-		for (int i = 0; i < p_floorColumns.size(); i++)
+		for (UINT i = 0; i < p_floorColumns.size(); i++)
 		{
 			if (p_floorColumns[i] == p_WinFloorColumns[j])
 			{
@@ -337,7 +337,7 @@ void CWindTableGen::WriteDataToTable(AcDbTable *p_table, int p_dataStartRow, int
 
 	//合计
 	int allFloorCount = 0;
-	for (int i = 0; i < nAllFloorCount.size(); i++)
+	for (UINT i = 0; i < nAllFloorCount.size(); i++)
 	{
 		allFloorCount += nAllFloorCount[i];
 	}
@@ -360,7 +360,7 @@ void CWindTableGen::AddXDataForWinTable(AcDbTable *p_table, vAcDbObjectId p_winI
 	struct resbuf* pRbNext = pRb;
 
 	ACHAR handleBuffer[20];
-	for (int i = 0; i < vHandles.size(); i++)
+	for (UINT i = 0; i < vHandles.size(); i++)
 	{
 		vHandles[i].getIntoAsciiBuffer(handleBuffer);
 		struct resbuf* pRbTemp = acutBuildList(AcDb::kDxfXdAsciiString, handleBuffer, RTNONE);

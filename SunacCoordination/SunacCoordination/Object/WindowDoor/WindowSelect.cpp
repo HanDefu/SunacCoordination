@@ -240,7 +240,7 @@ int CSunacSelect::FindSunacObjsInBlock(const AcDbObjectId inputId, const eRCType
 	if (ret == 0)
 	{
 		MD2010_CycleBlockEntites(blockName, vidsToCheck);
-		for (int i = 0; i < vidsToCheck.size(); i++)
+		for (UINT i = 0; i < vidsToCheck.size(); i++)
 		{
 			FindSunacObjsDeep(vidsToCheck[i], p_rcType, viewDir, curMx, outputIds);
 		}
@@ -279,7 +279,7 @@ int CSunacSelect::FindSunacObjsInArray(const AcDbObjectId inputId, const eRCType
 #endif
 
 	vAcDbObjectId ids2;
-	for (int i = 0; i < ids.size(); i++)
+	for (UINT i = 0; i < ids.size(); i++)
 	{
 		FindSunacObjsDeep(ids[i], p_rcType, viewDir, curMx, outputIds);
 	}

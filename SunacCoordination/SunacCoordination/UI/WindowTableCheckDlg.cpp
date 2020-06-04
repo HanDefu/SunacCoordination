@@ -117,7 +117,7 @@ void CWindowTableCheckDlg::CreateBrightBox(vector<AcDbObjectId> vWinIds)
 	int offsety = 300;
 
 	bool bSuc = true;
-	for (int i = 0; i < vWinIds.size(); i++)
+	for (UINT i = 0; i < vWinIds.size(); i++)
 	{
 		if (IsObjectExsit(vWinIds[i])==false)
 		{
@@ -173,7 +173,7 @@ void CWindowTableCheckDlg::CreateBrightBox(vector<AcDbObjectId> vWinIds)
 
 void CWindowTableCheckDlg::DeleteBrightBox()
 {
-	for (int i = 0; i < m_polyBrightBoxId.size(); i++)
+	for (UINT i = 0; i < m_polyBrightBoxId.size(); i++)
 	{
 		JHCOM_DeleteCadObject(m_polyBrightBoxId[i]);
 	}

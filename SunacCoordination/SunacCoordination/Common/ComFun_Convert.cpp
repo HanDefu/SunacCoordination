@@ -302,7 +302,7 @@ int JHCOM_GetAcDbHandles(vAcDbObjectId vIds, vAcDbHandle &vHandles)
 {
 	vHandles.clear();
 	AcDbObject *pobj = NULL;
-	for (int i = 0; i < vIds.size(); i++)
+	for (UINT i = 0; i < vIds.size(); i++)
 	{
 		if (acdbOpenObject(pobj, vIds[i], AcDb::kForRead) == Acad::eOk)
 		{
