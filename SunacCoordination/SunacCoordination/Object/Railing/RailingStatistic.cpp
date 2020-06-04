@@ -351,9 +351,9 @@ void CRailingStatistic::WriteDataToRailingTable(AcDbTable *p_table, int p_dataSt
 	nAllFloorCount.clear();
 
 
-	for (int j = 0; j < p_railFloorColumns.size(); j++)
+	for (UINT j = 0; j < p_railFloorColumns.size(); j++)
 	{
-		for (int i = 0; i < p_floorColumns.size(); i++)
+		for (UINT i = 0; i < p_floorColumns.size(); i++)
 		{
 			if (p_floorColumns[i] == p_railFloorColumns[j])
 			{
@@ -392,7 +392,7 @@ void CRailingStatistic::WriteDataToRailingTable(AcDbTable *p_table, int p_dataSt
 
 	//ºÏ¼Æ
 	int allFloorCount = 0;
-	for (int i = 0; i < nAllFloorCount.size(); i++)
+	for (UINT i = 0; i < nAllFloorCount.size(); i++)
 	{
 		allFloorCount += nAllFloorCount[i];
 	}

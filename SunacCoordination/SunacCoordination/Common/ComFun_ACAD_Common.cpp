@@ -1974,7 +1974,7 @@ int TYCOM_DeepCycleBlockReferences(AcDbObjectId inputId, eViewDir viewDir, bool(
 	if (ret == 0)
 	{
 		MD2010_CycleBlockEntites(brecname, vidsToCheck);
-		for (int i = 0; i < vidsToCheck.size(); i++)
+		for (UINT i = 0; i < vidsToCheck.size(); i++)
 		{
 			TYCOM_DeepCycleBlockReferences(vidsToCheck[i], viewDir, IsWindowFunction, outputIds);
 		}
