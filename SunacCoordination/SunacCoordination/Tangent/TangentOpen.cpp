@@ -200,6 +200,10 @@ HRESULT SetTangentOpenData( AcDbObjectId p_winId, CTOpenData p_winData, REFCLSID
 		acutPrintf(_T("\n Error SetTangentOpenProp_TCH10_COM9_T20V5X64."));
 		return eHr;
 	}
+	catch (...)
+	{
+		return E_FAIL;
+	}
 
 	return hr;
 }
@@ -346,6 +350,10 @@ HRESULT GetTWallData(AcDbObjectId p_id, CTWallData& p_wallData, REFCLSID rclsid)
 	{
 		acutPrintf(_T("\n Error SetTangentOpenProp_TCH10_COM9_T20V5X64."));
 		return eHr;
+	}
+	catch (...)
+	{
+		return E_FAIL;
 	}
 
 	return hr;

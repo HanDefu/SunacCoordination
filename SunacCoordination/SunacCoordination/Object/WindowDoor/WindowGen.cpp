@@ -269,12 +269,18 @@ bool CWindowGen::GetNearTangentWall(const AcGePoint3d pos, E_DIRECTION p_winDir,
 AcDbObjectId  CWindowGen::GenerateWindow(AttrWindow curWinAtt, const AcGePoint3d pos, E_DIRECTION p_winDir, bool p_bDetailWnd, const AcDbObjectId p_fromWinId)
 {
 	AcGePoint3d posOnWall = pos;
-	double wallThick = 200;
-	bool bFindTWall = GetNearTangentWall(pos, p_winDir, posOnWall, wallThick);
-	if (bFindTWall)
+	bool bFindTWall = false;
+	if (curWinAtt.GetViewDir() == E_VIEW_TOP &&
+		GlobalSetting::GetWinSetting()->m_bDrawTangentOpen) //只有平面图才绘制门洞
 	{
-		curWinAtt.SetD(wallThick);
+		double wallThick = 200;
+		bFindTWall = GetNearTangentWall(pos, p_winDir, posOnWall, wallThick);
+		if (bFindTWall)
+		{
+			curWinAtt.SetD(wallThick);
+		}
 	}
+
 
 	//////////////////////////////////////////////////////////////////////////
 	CString p_sLayerName = GlobalSetting::GetWindowBlockLayer();
