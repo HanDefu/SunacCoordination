@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoveCuiDoubleClick", "RemoveCuiDoubleClick.csproj", "{FF964897-DB02-4F39-BECA-2AC87DBFF809}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoveCuiDoubleClick - vs2010", "RemoveCuiDoubleClick - vs2010.csproj", "{FF964897-DB02-4F39-BECA-2AC87DBFF809}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
