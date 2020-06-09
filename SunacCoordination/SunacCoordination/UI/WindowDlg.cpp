@@ -23,7 +23,7 @@ CWindowDlg::CWindowDlg(CWnd* pParent /*=NULL*/)
 	, m_radioDoorWindow(1)
 	, m_radioBayWindow(0)
 	, m_bAutoNumber(TRUE)
-	, m_nWidth(1500)
+	//, m_nWidth(1500)
 	, m_nHeight(1700)
 	, m_nThickness(200)
 	, m_isFireproof(TRUE)
@@ -109,8 +109,8 @@ void CWindowDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO_W3, m_comboW3);
 	DDX_Control(pDX, IDC_COMBO_H3, m_comboH3);
 	DDX_Control(pDX, IDC_COMBO_DIR, m_comboInsertDir);
-	DDX_Text(pDX, IDC_EDIT_WIDTH, m_nWidth);
-	DDV_MinMaxInt(pDX, m_nWidth, 100, 20000);
+	//DDX_Text(pDX, IDC_EDIT_WIDTH, m_nWidth);
+	//DDV_MinMaxInt(pDX, m_nWidth, 0, 20000);
 	DDX_Text(pDX, IDC_EDIT_HEIGHT, m_nHeight);
 	DDV_MinMaxInt(pDX, m_nHeight, 100, 5000);
 	DDX_Radio(pDX, IDC_ISFIREPROOF_RADIO, m_isFireproof);
@@ -157,8 +157,24 @@ BOOL CWindowDlg::OnInitDialog()
 	m_comboInsertDir.SetCurSel(0);
 	m_bAutoNumber = TRUE;
 	m_editWinNumber.SetReadOnly(TRUE);
+
+	SetDlgWidthEdit(1500);
 	
 	return TRUE;
+}
+
+int CWindowDlg::GetWidth()const
+{
+	CString sWidth;
+	GetDlgItem(IDC_EDIT_WIDTH)->GetWindowText(sWidth);
+	return _ttoi(sWidth);
+}
+
+void CWindowDlg::SetDlgWidthEdit(int p_W)
+{
+	CString sWidth;
+	sWidth.Format(_T("%d"), p_W);
+	GetDlgItem(IDC_EDIT_WIDTH)->SetWindowText(sWidth);
 }
 bool CWindowDlg::CheckValueModulo(CComboBox& comboBox, CString p_sType, int p_value, int moduloVale) //检查数据是否是50的模数
 {
@@ -187,21 +203,30 @@ void CWindowDlg::OnBnClickedButtonInsert()
 		return;
 	}
 
-	bool bWSuc = pSelWinAttr->SetW(m_nWidth);
-	if (bWSuc == false)
+	//YXZ 20200529不检查范围
+	const int nWidth = GetWidth();
+	if (nWidth<=100 || m_nHeight<=100)
 	{
-		double minW = 0;
-		double maxW = 0;
-		pSelWinAttr->GetWRange(minW, maxW);
-		if (m_nWidth > maxW || m_nWidth < minW)
-		{
-			CString str; 
-			str.Format(_T("洞口宽度不在此原型尺寸范围内(%d - %d)"), (int)minW, (int)maxW);
-			AfxMessageBox(str);
-			return;
-		}
+		AfxMessageBox(L"请设置门窗宽度和高度");
+		return;
 	}
+	//bool bWSuc = pSelWinAttr->SetW(nWidth);
+	//if (bWSuc == false)
+	//{
+	//	double minW = 0;
+	//	double maxW = 0;
+	//	pSelWinAttr->GetWRange(minW, maxW);
+	//	if (nWidth() > maxW || nWidth < minW)
+	//	{
+	//		CString str; 
+	//		str.Format(_T("洞口宽度不在此原型尺寸范围内(%d - %d)"), (int)minW, (int)maxW);
+	//		AfxMessageBox(str);
+	//		return;
+	//	}
+	//}
 
+	pSelWinAttr->SetW(nWidth);
+	pSelWinAttr->SetH(m_nHeight);
 	if (pSelWinAttr->GetTongFengQty(false) + TOL < TYUI_GetDouble(m_editVentilation))
 	{
 		AfxMessageBox(L"此原型不满足通风量要求");
@@ -295,14 +320,16 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 {
 	UpdateData();
 
+	const int nW = GetWidth();
+
 	CString openType = TYUI_GetComboBoxText(m_comboOpenType);
 	int openNum = _ttoi(TYUI_GetComboBoxText(m_comboOpenAmount));
 	CString areaType = TYUI_GetComboBoxText(m_comboAreaType);
 
 	if (m_radioDoorWindow == 0)
-		m_winPrototypes = WebIO::GetInstance()->GetDoors(m_nWidth, m_nHeight, openType, openNum, areaType);
+		m_winPrototypes = WebIO::GetInstance()->GetDoors(nW, m_nHeight, openType, openNum, areaType);
 	else
-		m_winPrototypes = WebIO::GetInstance()->GetWindows(m_nWidth, m_nHeight, openType, openNum, areaType);
+		m_winPrototypes = WebIO::GetInstance()->GetWindows(nW, m_nHeight, openType, openNum, areaType);
 	
 	for (UINT i = 0; i < m_winPrototypes.size(); i++)
 	{
@@ -313,7 +340,7 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 			m_winPrototypes.erase(m_winPrototypes.begin() + i--);
 		}
 
-		m_winPrototypes[i].SetW(m_nWidth);
+		m_winPrototypes[i].SetW(nW);
 		m_winPrototypes[i].SetH(m_nHeight);
 
 		//若是编辑模式，保持原来的镜像关系
@@ -328,7 +355,7 @@ void CWindowDlg::OnBnClickedButtonSearchwindow()
 
 	if (m_winPrototypes.empty())
 	{
-		AfxMessageBox(L"未找到符合条件的记录\n");
+		AfxMessageBox(L"未找到符合条件的原型，宽度为空可搜索所有原型\n");
 		return;
 	}
 }
@@ -439,7 +466,8 @@ void CWindowDlg::OnBnClickedSelOnDwg()
 
 	m_selectRect = rect;
 
-	m_nWidth = width;
+	//m_nWidth = width;
+	SetDlgWidthEdit(width);
 	if (height>=400 && height<3000) //若是平面图则将高度作为墙厚度
 	{
 		m_nHeight = height;
@@ -809,7 +837,8 @@ void CWindowDlg::SetEditMode(AcDbObjectId editId)
 		//初始门窗属性数据
 		m_radioDoorWindow = (m_attBeforeEdit.GetType() == S_DOOR) ? 0 : 1;
 		WindowDoorChange();
-		m_nWidth = (int)m_attBeforeEdit.GetW();
+		int nW = (int)m_attBeforeEdit.GetW();
+		SetDlgWidthEdit(nW);
 		m_nHeight = (int)m_attBeforeEdit.GetH();
 		m_radioBayWindow = m_attBeforeEdit.m_isBayWindow ? 0 : 1;
 		m_bAutoNumber = TRUE;
@@ -886,7 +915,7 @@ void CWindowDlg::InsertAllWindows_Test()
 		}
 
 		AcGePoint3d insertPt;
-		insertPt.x = origin.x + (m_nWidth + 100) * (i % 5);
+		insertPt.x = origin.x + (GetWidth() + 100) * (i % 5);
 		insertPt.y = origin.y + (m_nHeight + 100) * (i / 5);
 
 		AcDbObjectId idOut = CWindowGen::GenerateWindow(*pSelWinAttr, origin, winDir, false, AcDbObjectId::kNull);

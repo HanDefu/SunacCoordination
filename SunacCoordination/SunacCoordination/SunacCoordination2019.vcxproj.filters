@@ -474,6 +474,9 @@
     <ClCompile Include="Object\WindowDoor\WindowTableClassify.cpp">
       <Filter>Object</Filter>
     </ClCompile>
+    <ClCompile Include="Common\PolylineJig.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command\Command.h">
@@ -988,6 +991,9 @@
     </ClInclude>
     <ClInclude Include="Object\WindowDoor\WindowTableClassify.h">
       <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\PolylineJig.h">
+      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

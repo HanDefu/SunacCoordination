@@ -160,40 +160,28 @@ int RCDynamicBlock::InitParameters()
 	m_iKeyValues.clear();
 	m_dKeyValues.clear();
 
-	//Acad::ErrorStatus es;
-	AcDbEntity* pEnt = NULL;
-	Acad::ErrorStatus es = acdbOpenObject(pEnt, m_id, AcDb::kForRead);
-	if (es != Acad::eOk)
-	{
-		if (pEnt)
-			pEnt->close();
+	AcDbObjectPointer<AcDbBlockReference> pBlkRef(m_id, AcDb::kForRead);
+	if (pBlkRef.openStatus() != Acad::eOk)
 		return 1;
-	}
-	if (pEnt->isA() != AcDbBlockReference::desc())
-	{
-		pEnt->close();
-		return 1;
-	}
+	pBlkRef->close(); //关闭以便能以动态块的方式重建
 
-	AcDbBlockReference *pBlkRef = AcDbBlockReference::cast(pEnt);
 	m_blockInsertPos = pBlkRef->position();
 	pBlkRef->getGeomExtents(m_blockExtent);
-	// initialise a AcDbDynBlockReference from the object id of the blockreference
-	AcDbDynBlockReference* pDynBlkRef = new AcDbDynBlockReference(pBlkRef->objectId());
-	//Don't forget to close the blockreference here, otherwise you wont be able to modify properties
-	pEnt->close();
 
-
-	AcDbObjectId idBlkTblRcd= pDynBlkRef->dynamicBlockTableRecord();
-	AcDbObjectPointer<AcDbBlockTableRecord>pBlkTblRcd11(idBlkTblRcd, AcDb::kForRead);
-	if (pBlkTblRcd11.openStatus()!=Acad::eOk)
-	{
+	AcDbObjectPointer<AcDbBlockTableRecord>pBlkTblRcd11(pBlkRef->blockTableRecord(), AcDb::kForRead);
+	if (pBlkTblRcd11.openStatus() != Acad::eOk)
 		return 1;
-	}
+	pBlkTblRcd11->close();
 
 	ACHAR *pName = 0;
 	pBlkTblRcd11->getName(pName);
 	m_blockRecordName = pName;
+
+	//////////////////////////////////////////////////////////////////////////
+
+	// initialise a AcDbDynBlockReference from the object id of the blockreference
+	AcDbDynBlockReference* pDynBlkRef = new AcDbDynBlockReference(pBlkRef->objectId());
+	AcDbObjectId idBlkTblRcd= pDynBlkRef->dynamicBlockTableRecord();
 
 	bool noValue = true;
 	if (pDynBlkRef)

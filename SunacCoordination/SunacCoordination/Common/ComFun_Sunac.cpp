@@ -6,11 +6,12 @@
 #include "ComFun_Sunac.h"
 #include "ComFun_Def.h"
 #include <acutmem.h>
-#include "ComFun_ACAD_Common.h"
 #include <dbmline.h>
 #include <dbhatch.h>
 #include <acedads.h>
 #include <dbidmap.h>
+#include "ComFun_ACAD_Common.h"
+#include "PolylineJig.h"
 #include "../Common/TYRect.h"
 #include "../Object\WindowDoor\AttrWindow.h"
 #include "../Object\AirCondition\AttrAirCon.h"
@@ -572,6 +573,40 @@ bool TY_GetTwoPoints(AcGePoint3d &pnt1, AcGePoint3d &pnt2)
 	pnt2 = AcGePoint3d(result[0],result[1],result[2]);
 
 	return true;
+}
+
+bool TY_GetPoints(vector<AcGePoint3d> &pntsOut)
+{
+	pntsOut.clear();
+	acedInitGet(32, NULL);
+
+	AcGePoint3d curPt = AcGePoint3d::kOrigin;
+
+	while (true)
+	{
+		if (pntsOut.size()==0)
+		{
+			ads_point pt;
+			if (acedGetPoint(NULL, L"请选择点\n", pt) != RTNORM)
+			{
+				break;
+			}
+
+			curPt = AcGePoint3d(pt[0], pt[1], pt[2]);
+		}
+		else
+		{
+			CPolylineJig polylineJig;
+			if (false==polylineJig.doIt(pntsOut, curPt))
+			{
+				break;
+			}
+		}
+
+		pntsOut.push_back(curPt);
+	}
+	
+	return pntsOut.size()>0;
 }
 
 bool GetRealInput(const TCHAR* prompt, double defaultVal, int precision, double &ret)
@@ -1625,4 +1660,35 @@ int TYCOM_GetBlkString(AcDbBlockReference *pBlkRef, CString Key, CString &value)
 	}
 
 	return 0;
+}
+
+AcDbObjectIdArray GetIdsCrossRect(const TYRect p_rect)
+{
+	AcDbObjectIdArray ids;
+	struct resbuf *rb = NULL;
+	ads_name ssname;
+
+	ads_point pt1, pt2;
+	pt1[X] = p_rect.GetLT().x;
+	pt1[Y] = p_rect.GetLT().y;
+	pt1[Z] = p_rect.GetLT().z;
+	pt2[X] = p_rect.GetRB().x;
+	pt2[Y] = p_rect.GetRB().y;
+	pt2[Z] = p_rect.GetRB().z;
+	acedSSGet(TEXT("C"), pt1, pt2, rb, ssname);//筛选在rect范围内的结果
+
+	Adesk::Int32 length;
+	acedSSLength(ssname, &length);
+	for (int i = 0; i < length; i++)
+	{
+		ads_name ent;
+		acedSSName(ssname, i, ent);
+		AcDbObjectId objId;
+		acdbGetObjectId(objId, ent);
+		ids.append(objId);
+	}
+
+	acutRelRb(rb);
+	acedSSFree(ssname);
+	return ids;
 }

@@ -61,19 +61,22 @@ public:
 
 	void SetEditMode(AcDbObjectId editId);
 
-	double GetArea()const { return (double(m_nWidth*m_nHeight)) / 1e6; }
+	double GetArea()const { return (double(GetWidth()*m_nHeight)) / 1e6; }
 	bool CheckValueModulo(CComboBox& comboBox, CString p_sType, int p_value, int moduloVale = 50); //检查数据是否是50的模数
 
 	void InitPreviewGridByWindowPrototypes();
 
 	//插入全部，测试用
 	void InsertAllWindows_Test();
+
+	int GetWidth()const;
+	void SetDlgWidthEdit(int p_W);
 protected:
 	CGridCtrlWithPreview m_preWindow;
 
 	int m_radioDoorWindow; //门窗单选项
 
-	int m_nWidth;
+	//int m_nWidth;
 	int m_nHeight;
 	int m_nThickness;	//墙厚
 

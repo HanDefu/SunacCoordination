@@ -35,6 +35,7 @@
     <ClCompile Include="Common\ComFun_Str.cpp" />
     <ClCompile Include="Common\ComFun_String.cpp" />
     <ClCompile Include="Common\ComFun_Sunac.cpp" />
+    <ClCompile Include="Common\PolylineJig.cpp" />
     <ClCompile Include="Common\ThreadUtil.cpp" />
     <ClCompile Include="Common\TYFormula.cpp" />
     <ClCompile Include="Common\TYRect.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="Common\ComFun_Str.h" />
     <ClInclude Include="Common\ComFun_String.h" />
     <ClInclude Include="Common\ComFun_Sunac.h" />
+    <ClInclude Include="Common\PolylineJig.h" />
     <ClInclude Include="Common\ThreadUtil.h" />
     <ClInclude Include="Common\TYFormula.h" />
     <ClInclude Include="Common\TYRect.h" />

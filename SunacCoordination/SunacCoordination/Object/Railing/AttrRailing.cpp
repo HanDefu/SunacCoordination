@@ -145,7 +145,7 @@ bool AttrRailing::IsPrototypeEqual_test(const AttrRailing& p_att)
 CString AttrRailing::AutoInstanceCode()
 {
 	CString sInstanceCode;
-	sInstanceCode.Format(_T("%s_%d_%d"), m_prototypeCode, (int)(m_length), (int)(m_height));
+	sInstanceCode.Format(_T("%s_%d_%d"), m_prototypeCode, (int)(GetRLength()), (int)(m_height));
 	if (sInstanceCode.Find(_T("Railing_"))==0)
 	{
 		sInstanceCode = sInstanceCode.Mid(8);
@@ -160,6 +160,81 @@ void AttrRailing::SetViewDir(eViewDir p_view)
 	if (p_view == E_VIEW_TOP || p_view == E_VIEW_FRONT)
 	{
 		m_viewDir = p_view;
+	}
+}
+
+double AttrRailing::GetRLength(E_DIRECTION p_dir)
+{
+	if (m_railPath.size() < 2)
+		return m_length;
+
+	double minValue = 1e10;
+	double maxValue = -1e10;
+	switch (p_dir)
+	{
+	case E_DIR_BOTTOM:
+	case E_DIR_TOP:
+		for (UINT i = 0; i < m_railPath.size(); i++)
+		{
+			if (minValue > m_railPath[i].x)
+				minValue = m_railPath[i].x;
+			if (maxValue < m_railPath[i].x)
+				maxValue = m_railPath[i].x;			
+		}
+		break;
+	case E_DIR_RIGHT:
+	case E_DIR_LEFT:
+		for (UINT i = 0; i < m_railPath.size(); i++)
+		{
+			if (minValue > m_railPath[i].y)
+				minValue = m_railPath[i].y;
+			if (maxValue < m_railPath[i].y)
+				maxValue = m_railPath[i].y;
+		}
+		break;
+	case E_DIR_UNKNOWN:
+		break;
+	default:
+		break;
+	}
+
+	if (minValue > maxValue)
+		return 0;
+
+	return maxValue - minValue;
+}
+
+void AttrRailing::SetRLength(double p_len)
+{ 
+	m_length = p_len; 
+	m_railPath.clear();
+}
+double AttrRailing::GetTotalLength()const
+{
+	if (m_railPath.size() < 2)
+	{
+		return m_length;
+	}
+	else
+	{
+		double totalLen = 0;
+		for (UINT i = 1; i < m_railPath.size(); i++) //第一点为原点
+		{
+			totalLen += (m_railPath[i] - m_railPath[i-1]).length();
+		}
+		return totalLen;
+	}
+}
+
+void AttrRailing::SetRailingPath(vector<AcGePoint3d> p_pathPts)
+{
+	m_railPath = p_pathPts;
+
+	//存储的信息为相对低一点的坐标
+	AcGeVector3d offset = m_railPath[0].asVector();
+	for (UINT i = 0; i < p_pathPts.size(); i++)
+	{
+		m_railPath[i] = m_railPath[i] - offset;
 	}
 }
 //////////////////////////////////////////////////////////////////////////

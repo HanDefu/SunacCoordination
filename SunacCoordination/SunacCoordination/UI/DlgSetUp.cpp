@@ -127,7 +127,7 @@ void CDlgSetUp::OnBnClickedOk()
 	std::sort(sLayers.begin(), sLayers.end(), CompareWinSetUpLayer);
 
 	//判断各个图层不能相同
-	for (int i = 0; i < sLayers.size() - 1; i++)
+	for (UINT i = 0; i < sLayers.size() - 1; i++)
 	{
 		if (sLayers[i].CompareNoCase(sLayers[i + 1]) == 0)
 		{

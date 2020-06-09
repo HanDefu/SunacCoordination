@@ -262,18 +262,21 @@ vector<AttrWindow> CWindowLocalDataFromDB::GetAllDoors()const  //获取所有门
 	return alldoor;
 }
 
-std::vector<AttrWindow >  CWindowLocalDataFromDB::GetWindows(double width, double height, CString openType, int openNum, CString gongNengQu)const
+std::vector<AttrWindow >  CWindowLocalDataFromDB::GetWindowDoors(bool p_bWindow, double width, double height, CString openType, int openNum, CString gongNengQu)const
 {
+	bool bAllWidth = abs(width) < 1; //当宽度为0时宽度不作为检索条件
 	std::vector<AttrWindow> data;
 
 	for (UINT i =0; i < m_allWindowsData.size(); i++)
 	{
 		std::vector<CString> strs = YT_SplitCString(m_allWindowsData[i].m_prototypeCode, L'_');  //用"_"拆分
-		if (strs[0] != "Window")
+		bool bWindow = (strs[0] == L"Window");
+		if (bWindow!=p_bWindow)
 		{
 			continue;
 		}
 
+		//静态门窗只返回尺寸完全一致的
 		if (!m_allWindowsData[i].m_isDynamic)
 		{
 			double dimW = m_allWindowsData[i].GetW();
@@ -282,10 +285,13 @@ std::vector<AttrWindow >  CWindowLocalDataFromDB::GetWindows(double width, doubl
 				continue;
 		}
 
-		const CWindowsDimData* pDiwW = m_allWindowsData[i].GetDimData(_T("W"));
-		if (width < pDiwW->minValue || width > pDiwW->maxValue)
+		if (bAllWidth==false)
 		{
-			continue;
+			const CWindowsDimData* pDiwW = m_allWindowsData[i].GetDimData(_T("W"));
+			if (width < pDiwW->minValue || width > pDiwW->maxValue)
+			{
+				continue;
+			}
 		}
 
 		if (openType != L"不限")
@@ -311,60 +317,6 @@ std::vector<AttrWindow >  CWindowLocalDataFromDB::GetWindows(double width, doubl
 				continue;
 			}
 		}
-
-		data.push_back(m_allWindowsData[i]);
-	}
-
-	sort(data.begin(), data.end(), SortWinFun);
-	return data;
-}
-
-std::vector<AttrWindow >  CWindowLocalDataFromDB::GetDoors(double width, double height, CString openType, int openNum, CString gongNengQu)const
-{
-	std::vector<AttrWindow> data;
-
-	for (UINT i = 0; i < m_allWindowsData.size(); i++)
-	{
-		std::vector<CString> strs = YT_SplitCString(m_allWindowsData[i].m_prototypeCode, L'_');  //用"_"拆分
-		if (strs[0] != "Door")
-		{
-			continue;
-		}
-
-		const CWindowsDimData* pDiwW = m_allWindowsData[i].GetDimData(_T("W"));
-		if (width < pDiwW->minValue || width > pDiwW->maxValue)
-		{
-			continue;
-		}
-
-		if (openType != L"不限")
-		{
-			if (openType != m_allWindowsData[i].m_openType)
-			{
-				continue;
-			}
-		}
-
-		if (openNum != 0)
-		{
-			if (openNum != m_allWindowsData[i].m_openQty)
-			{
-				continue;
-			}
-		}
-
-		if (gongNengQu != L"不限")
-		{
-			if (gongNengQu != m_allWindowsData[i].m_gongNengquType)
-			{
-				continue;
-			}
-		}
-
-		/*if (tongFengLiang != m_allWindowsData[i].ventilationFormula)
-		{
-			continue;
-		}*/
 
 		data.push_back(m_allWindowsData[i]);
 	}
