@@ -338,14 +338,15 @@ void CWindowMaterialUsage::ExprotAlInfo(Excel::CExcelUtil& p_excel)//Êä³öÐÍ²ÄÊý¾
 		str.Format(_T("%.3f"),dataOut.weightPerMeter);
 		p_excel.SetCellValue(nRow, 8, str);
 
-		//×ÜÖØ
-		double totalWeight = length * alFormulas[i].m_nCount * dataOut.weightPerMeter / 1000;
-		str.Format(_T("%.2f"),totalWeight);
-		p_excel.SetCellValue(nRow, 9, str);
-
 		//ºÄËð
 		str.Format(_T("%.1f%%"),dataOut.wastageRate * 100);
 		p_excel.SetCellValue(nRow, 12, str);
+
+		//×ÜÖØ
+		double totalWeight = length * alFormulas[i].m_nCount * dataOut.weightPerMeter / 1000 * (1 + dataOut.wastageRate);
+		str.Format(_T("%.2f"),totalWeight);
+		p_excel.SetCellValue(nRow, 9, str);
+
 
 		//ÐÍ²ÄÖÖÀà
 		p_excel.SetCellValue(nRow, 13, AluminumTypeToCSting(dataOut.aluminumType));
