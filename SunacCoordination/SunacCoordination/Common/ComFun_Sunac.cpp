@@ -1376,12 +1376,9 @@ bool CloneObjects(AcDbObjectIdArray objList, AcDbObjectIdArray &objListCloned)
 {
 	Acad::ErrorStatus es;
 	objListCloned.removeAll();
-
-	AcDbBlockTable *pBlockTable;
-	es = acdbHostApplicationServices()->workingDatabase()->getSymbolTable(pBlockTable, AcDb::kForRead);
-	AcDbObjectId  modelSpaceId = AcDbObjectId::kNull;
-	pBlockTable->getAt(ACDB_MODEL_SPACE, modelSpaceId);
-	pBlockTable->close();
+	
+	AcDbDatabase *pDb = acdbHostApplicationServices()->workingDatabase();
+	AcDbObjectId modelSpaceId = acdbSymUtil()->blockModelSpaceId(pDb);
 	
 	AcDbIdMapping idMap;
 	es = acdbHostApplicationServices()->workingDatabase()->deepCloneObjects(objList, modelSpaceId, idMap);
