@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{FF964897-DB02-4F39-BECA-2AC87DBFF809}</ProjectGuid>
+    <ProjectGuid>{E52D7545-D814-4FC9-B775-19EC4C399ABC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RemoveCuiDoubleClick</RootNamespace>

@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{FF964897-DB02-4F39-BECA-2AC87DBFF809}</ProjectGuid>
+    <ProjectGuid>{D92C88A1-715E-49DE-8FAC-8BC0B6F5D896}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RemoveCuiDoubleClick</RootNamespace>
@@ -55,17 +55,21 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="accoremgd">
-      <HintPath>C:\Program Files\Autodesk\AutoCAD 2016\accoremgd.dll</HintPath>
+    <Reference Include="AcCoreMgd, Version=21.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Autodesk\Autodesk_ObjectARX_2015_Win_64_and_32Bit\inc\AcCoreMgd.dll</HintPath>
     </Reference>
-    <Reference Include="AcCui">
-      <HintPath>C:\Program Files\Autodesk\AutoCAD 2016\AcCui.dll</HintPath>
+    <Reference Include="AcCui, Version=21.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Autodesk\Autodesk_ObjectARX_2015_Win_64_and_32Bit\inc\AcCui.dll</HintPath>
     </Reference>
-    <Reference Include="acdbmgd">
-      <HintPath>C:\Program Files\Autodesk\AutoCAD 2016\acdbmgd.dll</HintPath>
+    <Reference Include="AcDbMgd, Version=21.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Autodesk\Autodesk_ObjectARX_2015_Win_64_and_32Bit\inc\AcDbMgd.dll</HintPath>
     </Reference>
-    <Reference Include="acmgd">
-      <HintPath>C:\Program Files\Autodesk\AutoCAD 2016\acmgd.dll</HintPath>
+    <Reference Include="AcMgd, Version=21.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Autodesk\Autodesk_ObjectARX_2015_Win_64_and_32Bit\inc\AcMgd.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

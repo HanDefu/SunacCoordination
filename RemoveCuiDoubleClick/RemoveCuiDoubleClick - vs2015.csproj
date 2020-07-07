@@ -55,21 +55,20 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="accoremgd, Version=20.1.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>K:\Share1\0506\accoremgd.dll</HintPath>
+    <Reference Include="AcCoreMgd">
+      <HintPath>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\AcCoreMgd.dll</HintPath>
     </Reference>
-    <Reference Include="AcCui, Version=20.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="AcCui, Version=18.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Autodesk\AutoCAD 2019\AcCui.dll</HintPath>
+      <HintPath>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\AcCui.dll</HintPath>
     </Reference>
-    <Reference Include="acdbmgd, Version=20.1.0.0, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="AcDbMgd, Version=18.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Autodesk\AutoCAD 2019\acdbmgd.dll</HintPath>
+      <HintPath>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\AcDbMgd.dll</HintPath>
     </Reference>
-    <Reference Include="acmgd, Version=20.1.0.0, Culture=neutral, processorArchitecture=AMD64">
+    <Reference Include="AcMgd, Version=18.0.0.0, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files\Autodesk\AutoCAD 2019\acmgd.dll</HintPath>
+      <HintPath>C:\Autodesk\Autodesk_ObjectARX_2017_Win_64_and_32Bit\inc\AcMgd.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
