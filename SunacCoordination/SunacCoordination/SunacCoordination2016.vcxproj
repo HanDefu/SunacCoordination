@@ -342,14 +342,6 @@
     <ClInclude Include="WebIO\WindowWebData.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="props\AcRxDefault.def" />
-    <None Include="props\aecmodeler.props" />
-    <None Include="props\arx.props" />
-    <None Include="props\brep.props" />
-    <None Include="props\dbx.props" />
-    <None Include="props\rxsdk_common.props" />
-    <None Include="props\rxsdk_debugcfg.props" />
-    <None Include="props\rxsdk_releasecfg.props" />
     <None Include="res\SunacCoordination.aps" />
     <None Include="WebIO\SunacCadWeb\ArgumentSettingServiceSoap.nsmap" />
   </ItemGroup>

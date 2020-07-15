@@ -1,0 +1,5 @@
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\obj\Release\RemoveCuiDoubleClick.csprojResolveAssemblyReference.cache
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Release\RemoveCuiDoubleClick-vs2010.dll
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Release\RemoveCuiDoubleClick-vs2010.pdb
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\obj\Release\RemoveCuiDoubleClick-vs2010.dll
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\obj\Release\RemoveCuiDoubleClick-vs2010.pdb
