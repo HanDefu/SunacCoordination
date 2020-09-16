@@ -3,6 +3,7 @@ ipch
 Temp
 x64
 .vs
+obj
 
 *.sdf
 *.opensdf

@@ -1,5 +1,0 @@
-E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Debug\RemoveCuiDoubleClick-vs2010.dll
-E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Debug\RemoveCuiDoubleClick-vs2010.pdb
-E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\obj\Debug\RemoveCuiDoubleClick - vs2010.csprojResolveAssemblyReference.cache
-E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\obj\Debug\RemoveCuiDoubleClick-vs2010.dll
-E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\obj\Debug\RemoveCuiDoubleClick-vs2010.pdb

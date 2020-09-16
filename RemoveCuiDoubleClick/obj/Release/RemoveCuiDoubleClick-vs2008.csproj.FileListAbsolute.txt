@@ -1,5 +1,0 @@
-E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\obj\Release\ResolveAssemblyReference.cache
-E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Release\RemoveCuiDoubleClick-vs2008.dll
-E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Release\RemoveCuiDoubleClick-vs2008.pdb
-E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\obj\Release\RemoveCuiDoubleClick-vs2008.dll
-E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\obj\Release\RemoveCuiDoubleClick-vs2008.pdb
