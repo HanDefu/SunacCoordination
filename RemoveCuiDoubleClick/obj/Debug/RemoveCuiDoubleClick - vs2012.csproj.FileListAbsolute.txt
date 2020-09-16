@@ -1,0 +1,24 @@
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\obj\Debug\RemoveCuiDoubleClick - vs2012.csprojResolveAssemblyReference.cache
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Debug\accoremgd.dll
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Debug\AcCui.dll
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Debug\acdbmgd.dll
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Debug\acmgd.dll
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Debug\AcMNUParser.dll
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Debug\AdUiPalettes.dll
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Debug\AcDx.dll
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Debug\AcDxPublishUi.dll
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Debug\AdWindows.dll
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Debug\AcMr.dll
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Debug\AcWindows.dll
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Debug\AcTcMgd.dll
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Debug\Autodesk.AutoCAD.Interop.Common.dll
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Debug\zh-CN\acdbmgd.resources.dll
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Debug\zh-CN\AcDx.resources.dll
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Debug\zh-CN\AcDxPublishUi.resources.dll
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Debug\zh-CN\AdWindows.resources.dll
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Debug\zh-CN\AcMr.resources.dll
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Debug\zh-CN\AcWindows.resources.dll
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Debug\RemoveCuiDoubleClick-vs2012.dll.dll
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\bin\Debug\RemoveCuiDoubleClick-vs2012.dll.pdb
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\obj\Debug\RemoveCuiDoubleClick-vs2012.dll.dll
+E:\Projects\融创\Src\SunacCoordination\RemoveCuiDoubleClick\obj\Debug\RemoveCuiDoubleClick-vs2012.dll.pdb
