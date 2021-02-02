@@ -10,6 +10,7 @@
 #include <dbhatch.h>
 #include <acedads.h>
 #include <dbidmap.h>
+#include <dbsymutl.h>
 #include "ComFun_ACAD_Common.h"
 #include "PolylineJig.h"
 #include "../Common/TYRect.h"
